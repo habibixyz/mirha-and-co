@@ -19,10 +19,9 @@ export default function RootLayout({
 
         {/* Navigation */}
         <nav className="flex justify-between items-center px-10 py-6">
-          <div className="text-lg tracking-widest">
-            MIRHA & CO.
-          </div>
-
+          <a href="/" className="text-lg tracking-widest hover:opacity-70">
+  MIRHA & CO.
+</a>
           <div className="space-x-8 text-sm tracking-wide">
             <a href="/shop" className="hover:opacity-70">Shop</a>
             <a href="/about" className="hover:opacity-70">About</a>
