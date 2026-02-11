@@ -4,9 +4,12 @@ import './globals.css'
 const playfair = Playfair_Display({ subsets: ['latin'] })
 
 export const metadata = {
-  title: 'Mirha & Co.',
-  description: 'Timeless objects for modern spaces.',
-}
+  title: "Mirha & Co.",
+  description: "Timeless objects for modern spaces.",
+  icons: {
+    icon: "/icon.png",
+  },
+};
 
 export default function RootLayout({
   children,
