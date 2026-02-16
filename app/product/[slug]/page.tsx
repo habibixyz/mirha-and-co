@@ -43,17 +43,15 @@ export default async function ProductPage({
           <div className="mt-14 space-y-6">
 
   {/* Stock Display */}
-  {product.stock > 0 ? (
-    <p className="text-sm text-neutral-700">
-      {product.stock <= 3
-        ? `Only ${product.stock} left in stock`
-        : "In stock"}
-    </p>
-  ) : (
-    <p className="text-sm text-red-600">
-      Out of stock
-    </p>
-  )}
+    {product.stock > 0 ? (
+  <p className="text-sm text-neutral-700">
+    One piece available. This piece will not be restocked.
+  </p>
+) : (
+  <p className="text-sm text-neutral-700">
+    This piece has been acquired.
+  </p>
+)}
 
   {/* Buy Button */}
   <button
@@ -66,7 +64,7 @@ export default async function ProductPage({
       }
     `}
   >
-    {product.stock === 0 ? "SOLD OUT" : "BUY NOW"}
+    {product.stock === 0 ? "ACQUIRED" : "ACQUIRE"}
   </button>
 
   <p className="text-xs text-neutral-500">
