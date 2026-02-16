@@ -24,7 +24,7 @@ export default function RootLayout({
       <body className={`${playfair.className} "bg-white text-neutral-900`}>
 
         {/* Header */}
-        <header className="flex justify-between items-center px-10 py-10 bg-white">
+        <header className="flex justify-between items-center px-6 md:px-10 py-6 bg-white text-neutral-900">
 
           {/* Left */}
           <Link href="/" className="font-light">
@@ -32,7 +32,7 @@ export default function RootLayout({
           </Link>
 
           {/* Right */}
-          <nav className="flex gap-8 font-light">
+          <nav className="flex gap-8 md:gap-8 font-light">
             <Link href="/shop">Shop</Link>
             <Link href="/about">About</Link>
             <Link href="/contact">Contact</Link>
