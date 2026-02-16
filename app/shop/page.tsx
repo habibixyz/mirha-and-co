@@ -1,46 +1,66 @@
+import { products } from "@/app/data/products";
 import Link from "next/link";
-import { products } from "../data/products";
+import Image from "next/image";
 
-export default function Shop() {
+export default function ShopPage() {
   return (
-    <main className="px-10 py-32 bg-white text-neutral-900">
+    <main className="px-6 py-28 max-w-4xl mx-auto">
 
-      <div className="max-w-4xl mx-auto text-center">
-
-        <h1 className="text-3xl tracking-wide mb-6">
+      {/* Header */}
+      <div className="text-center mb-20">
+        <h1 className="text-2xl tracking-wide mb-4">
           Collected Forms
         </h1>
-
-        <p className="mb-16 text-neutral-600">
+        <p className="text-sm text-neutral-500 max-w-xl mx-auto">
           A slow collection of sculptural objects, acquired one piece at a time.
         </p>
+      </div>
 
-        <div className="mb-10">
-          <img
-            src="/zola-hero.jpg"
-            alt="The Zola Bust - Solid Brass Sculptural Form"
-            className="mx-auto w-full max-w-md"
-          />
-        </div>
+      {/* Product List */}
+      <div className="space-y-20">
 
-        <h2 className="text-xl tracking-wide mb-2">
-          Collected Forms — No. 01
-        </h2>
+        {products.map((product) => (
+          <Link key={product.slug} href={`/shop/${product.slug}`}>
 
-        <p className="mb-6">
-          The Zola Bust
-        </p>
+            <div className="cursor-pointer group">
 
-        <p className="mb-10 text-sm text-neutral-600">
-          Solid brass. Natural patina. One piece only.
-        </p>
+              <div className="overflow-hidden mb-10">
+                <Image
+                  src={product.images[0]}
+                  alt={product.name}
+                  width={700}
+                  height={900}
+                  className="w-full object-cover transition duration-500 group-hover:scale-[1.01]"
+                />
+              </div>
 
-        <a
-          href="/shop/zola-bust"
-          className="border border-neutral-900 px-6 py-3 inline-block"
-        >
-          View Piece
-        </a>
+              <div className="space-y-2">
+
+                <h2 className="text-xl tracking-wide">
+                  {product.name}
+                </h2>
+
+                <p className="text-sm text-neutral-700">
+                  {"\u20B9"}
+                  {product.price.toLocaleString("en-IN")}
+                </p>
+
+                {product.stock === 0 ? (
+                  <p className="text-sm text-neutral-500">
+                    This piece has been acquired.
+                  </p>
+                ) : (
+                  <p className="text-sm text-neutral-600">
+                    One piece available.
+                  </p>
+                )}
+
+              </div>
+
+            </div>
+
+          </Link>
+        ))}
 
       </div>
 

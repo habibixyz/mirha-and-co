@@ -1,3 +1,4 @@
+import Script from "next/script";
 import "./globals.css";
 import Link from "next/link";
 import type { Metadata } from "next";
@@ -22,6 +23,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${playfair.className} "bg-white text-neutral-900`}>
+
+        {/* Razorpay Script */}
+        <Script
+          src="https://checkout.razorpay.com/v1/checkout.js"
+          strategy="beforeInteractive"
+        />
 
         {/* Header */}
         <header className="flex justify-between items-center px-6 md:px-10 py-6 bg-white text-neutral-900">
