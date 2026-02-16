@@ -1,48 +1,52 @@
 export default function About() {
   return (
-    <main className="bg-[#F5F1EA] text-[#4A3F35] min-h-screen flex items-center justify-center">
+    <main className="px-10 py-32 bg-white text-neutral-900">
+      <div className="max-w-3xl mx-auto text-center">
 
-      <section className="max-w-3xl px-6 text-center">
-
-        <h1 className="text-2xl md:text-3xl tracking-[0.2em] mb-12 md:mb-16">
+        <h1 className="text-3xl tracking-wide mb-10">
           About Mirha & Co.
         </h1>
 
-        <div className="space-y-8 text-base md:text-lg leading-relaxed opacity-80">
+        <div className="space-y-6 text-neutral-700 leading-relaxed">
 
           <p>
-            Mirha & Co. began with a quiet observation — that the smallest objects
+            Mirha & Co. began with a quiet observation that the smallest objects
             in a room often shape the way it feels.
           </p>
 
           <p>
-            In a world of fast production and disposable design, we are drawn to
-            pieces that carry weight — in material, in craftsmanship, in presence.
-            Objects that do not demand attention, yet never go unnoticed.
+            In a world of fast production and disposable design, we are drawn
+            to curated luxury interior décor that carries weight in material,
+            in craftsmanship, and in presence. Sculptural home objects that do
+            not demand attention, yet are never overlooked.
           </p>
 
           <p>
-            Our collections are inspired by old-world forms, time-worn textures,
-            and enduring materials. Each piece is thoughtfully selected for its
-            ability to live effortlessly within modern spaces while retaining
-            a sense of history.
+            Our collection is guided by old-world forms, time-worn textures,
+            and enduring materials. Each piece is acquired individually and
+            selected for its ability to live effortlessly within modern
+            heritage interiors while retaining a sense of history.
           </p>
 
           <p>
-            We release in limited quantities, choosing intention over excess.
-            No seasonal noise. No fleeting trends.
-            Only objects designed to age beautifully alongside you.
+            From artisan-crafted brass sculptures to vintage-inspired design
+            objects, every form is chosen for permanence and presence. We
+            believe collectible home décor should feel timeless, not seasonal.
+          </p>
+
+          <p>
+            No fleeting trends. No excess. Each one-of-one piece is acquired
+            with intention and will not be restocked.
+          </p>
+
+          <p className="mt-10 font-medium">
+            Mirha & Co. <br />
+            A curated archive of sculptural and collectible design.
           </p>
 
         </div>
 
-        <div className="mt-20 tracking-wide">
-          Mirha & Co. <br />
-          Timeless objects for modern spaces.
-        </div>
-
-      </section>
-
+      </div>
     </main>
   );
 }

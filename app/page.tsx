@@ -1,34 +1,67 @@
 export default function Home() {
   return (
-    <main className="bg-[#F5F1EA] text-[#4A3F35]">
+    <main>
 
       {/* Hero Section */}
-      <section className="flex flex-col items-center justify-center text-center py-40 px-6">
-        <h1 className="text-5xl md:text-6xl tracking-widest mb-6">
+      <section className="flex flex-col items-center justify-center text-center px-10 py-40 bg-[#eae4dd] text-neutral-900">
+        
+        <h1 className="text-5xl tracking-wide mb-6">
           MIRHA & CO.
         </h1>
 
-        <p className="text-lg md:text-xl mb-10 max-w-xl">
+        <p className="text-lg mb-8">
           Timeless objects for modern spaces.
         </p>
 
         <a
-          href="/shop"
-          className="border border-[#4A3F35] px-8 py-3 text-sm tracking-wide hover:bg-[#4A3F35] hover:text-white transition duration-300"
+          href="#collected-forms"
+          className="border border-neutral-900 px-6 py-3 inline-block"
         >
-          Shop Collection
+          View Collection
         </a>
+
+        <p className="mt-16 text-sm text-neutral-600 max-w-xl">
+          The inaugural piece from our Collected Forms series has been acquired.
+        </p>
+
       </section>
 
-      {/* Soft Launch Message */}
-      <section className="text-center pb-24 px-6 max-w-2xl mx-auto">
-        <p className="opacity-70 text-lg">
-          Our inaugural collection of timeless,
-          vintage-inspired objects will be unveiled soon.
 
-          
+      {/* Collected Forms Section */}
+      <section
+        id="collected-forms"
+        className="px-10 py-32 bg-white text-neutral-900"
+      >
+        <div className="max-w-4xl mx-auto text-center">
 
-        </p>
+          <h2 className="text-2xl tracking-wide mb-4">
+            Collected Forms — No. 01
+          </h2>
+
+          <p className="mb-10 text-lg">
+            The Zola Bust
+          </p>
+
+          <div className="mb-10">
+            <img
+              src="/zola-hero.jpg"
+              alt="The Zola Bust - Solid Brass Sculptural Form"
+              className="mx-auto w-full max-w-md"
+            />
+          </div>
+
+          <p className="mb-10 text-sm tracking-wide text-neutral-600">
+            Solid brass. Natural patina. One piece only.
+          </p>
+
+          <a
+            href="/shop/zola-bust"
+            className="border border-neutral-900 px-6 py-3 inline-block"
+          >
+            View Piece
+          </a>
+
+        </div>
       </section>
 
     </main>
