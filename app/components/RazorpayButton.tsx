@@ -3,6 +3,7 @@
 import { useState } from "react";
 
 interface RazorpayButtonProps {
+  productId: string;
   amount: number;
   productName: string;
 }
