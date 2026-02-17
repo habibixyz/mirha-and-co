@@ -1,4 +1,4 @@
-import { sendOrderEmail } from "@/app/lib/email";
+import { sendOrderEmail } from "@/lib/email";
 import { createClient } from "@supabase/supabase-js";
 
 export async function POST(req: Request) {
