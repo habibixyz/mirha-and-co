@@ -1,3 +1,8 @@
+export const metadata = {
+  title: "Morning Skincare Routine for Indian Skin (Step-by-Step Guide 2026)",
+  description: "Learn the perfect morning skincare routine for Indian skin. Simple, affordable and effective steps for glowing skin."
+};
+
 import { AffiliateCard } from "@/components/AffiliateCard";
 
 const AFFILIATE_TAG = "skinwithtanvi-21";

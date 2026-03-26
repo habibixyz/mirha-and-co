@@ -19,6 +19,7 @@ export default function BlogIndex() {
     { category: "WELLNESS",  title: "The Supplements Worth Taking (And the Ones That Are Just Hype)",      excerpt: "Honest breakdown. No sponsorships. Just research.",                               slug: "supplements-worth-taking",                     readTime: "9 min",  date: "Feb 2026"   },
     { category: "BEAUTY",    title: "The Right Order to Apply Your Skincare (Most People Get This Wrong)", excerpt: "Layering matters. This is the sequence that actually works.",                     slug: "skincare-layering-order",                      readTime: "5 min",  date: "Jan 2026"   },
     { category: "LIFESTYLE", title: "The 8 Amazon Buys That Changed How I Live at Home",                   excerpt: "Small upgrades. Massive difference to daily life.",                               slug: "amazon-home-buys",                             readTime: "6 min",  date: "Jan 2026"   },
+    {category: "BEAUTY",      title: "Best Sunscreens in India (2026) That Actually Work",                 excerpt: "No white cast. No greasy finish. Just sunscreens that people actually use daily.",slug: "best-sunscreens-india-2026",                   readTime: "5 min",  date: "March 2026" },
   ];
 
   const catColors: Record<string, string> = {
