@@ -52,24 +52,23 @@ export default function SunscreenPost() {
 
       <article className="post-body">
 
-        {/* INTRO */}
         <p>
-          Let’s get one thing clear — Indian skin doesn’t burn easily.  
-          But that doesn’t mean it’s protected.
+          Let's get one thing clear — Indian skin doesn't burn easily.
+          But that doesn't mean it's protected.
         </p>
 
         <p>
-          The real issue isn’t sunburn. It’s pigmentation.  
-          Acne marks that don’t fade. Uneven tone that keeps coming back.
+          The real issue isn't sunburn. It's pigmentation.
+          Acne marks that don't fade. Uneven tone that keeps coming back.
         </p>
 
         <p>
-          And in Indian weather — where UV exposure is almost constant —  
+          And in Indian weather — where UV exposure is almost constant —
           this adds up faster than most people realise.
         </p>
 
         <div className="highlight-box">
-          Sunscreen won’t transform your skin overnight — but it will stop things from getting worse.
+          Sunscreen won't transform your skin overnight — but it will stop things from getting worse.
         </div>
 
         <h2>The Picks (What Actually Works)</h2>
@@ -79,23 +78,23 @@ export default function SunscreenPost() {
         <h3>UV Doux Silicone Sunscreen — If You Have Oily Skin</h3>
 
         <p>
-          Most sunscreens fail for oily skin because they feel heavy.  
-          This one doesn’t.
+          Most sunscreens fail for oily skin because they feel heavy.
+          This one doesn't.
         </p>
 
         <p>
-          It has a silicone-gel texture, sits matte on the skin, and doesn’t clog pores easily.  
-          That’s why dermatologists in India recommend it a lot.
+          It has a silicone-gel texture, sits matte on the skin, and doesn't clog pores easily.
+          That's why dermatologists in India recommend it a lot.
         </p>
 
         <AffiliateCard
-  title="UV Doux Silicone Sunscreen Gel SPF 50"
-  description="A lightweight silicone-based sunscreen gel with SPF 50 PA++++. No white cast, non-greasy finish — works well under makeup and in humid Indian weather. One of the most recommended drugstore SPFs by Indian dermatologists."
-  asin="B01FS8F19S"
-  affiliateTag={AFFILIATE_TAG}
-  price="₹349"
-  badge="Best Budget"
-/>
+          title="UV Doux Silicone Sunscreen Gel SPF 50"
+          description="A lightweight silicone-based sunscreen gel with SPF 50 PA++++. No white cast, non-greasy finish — works well under makeup and in humid Indian weather. One of the most recommended drugstore SPFs by Indian dermatologists."
+          asin="B01FS8F19S"
+          affiliateTag={AFFILIATE_TAG}
+          price="₹349"
+          badge="Best Budget"
+        />
 
         <p>
           If your sunscreen makes you greasy by noon — this is probably the fix.
@@ -106,7 +105,7 @@ export default function SunscreenPost() {
         <h3>Bioderma Photoderm — If Your Skin Feels Dry</h3>
 
         <p>
-          Dry skin and sunscreen usually don’t get along.  
+          Dry skin and sunscreen usually don't get along.
           Either it pills, or it feels tight.
         </p>
 
@@ -116,6 +115,7 @@ export default function SunscreenPost() {
 
         <AffiliateCard
           title="Bioderma Photoderm SPF 50+"
+          description="A hydrating SPF 50+ sunscreen from Bioderma's Photoderm range. Comfortable on dry and normal skin — doesn't pill or feel tight. Lightweight enough for daily use without the stiff, cakey finish most sunscreens leave on drier skin types."
           asin="B001COZ48G"
           affiliateTag={AFFILIATE_TAG}
           price="₹1200+"
@@ -123,7 +123,7 @@ export default function SunscreenPost() {
         />
 
         <p>
-          It’s not lightweight — but that’s exactly why dry skin tends to prefer it.
+          It's not lightweight — but that's exactly why dry skin tends to prefer it.
         </p>
 
         {/* 3 */}
@@ -131,7 +131,7 @@ export default function SunscreenPost() {
         <h3>Heliocare 360 — If Pigmentation Is Your Main Concern</h3>
 
         <p>
-          If your issue is dark spots or uneven tone — regular sunscreen sometimes isn’t enough.
+          If your issue is dark spots or uneven tone — regular sunscreen sometimes isn't enough.
         </p>
 
         <p>
@@ -140,6 +140,7 @@ export default function SunscreenPost() {
 
         <AffiliateCard
           title="Heliocare 360 Pigment Solution SPF 50+"
+          description="A broad-spectrum SPF 50+ with added pigmentation-control technology. Goes beyond UV protection to actively target dark spots and uneven tone. Worth the price if melasma or post-acne marks are your primary skin concern."
           asin="B089DCX619"
           affiliateTag={AFFILIATE_TAG}
           price="₹2000+"
@@ -147,7 +148,7 @@ export default function SunscreenPost() {
         />
 
         <p>
-          Expensive — but makes more sense if you’re actively dealing with melasma or marks.
+          Expensive — but makes more sense if you're actively dealing with melasma or marks.
         </p>
 
         {/* 4 */}
@@ -155,7 +156,7 @@ export default function SunscreenPost() {
         <h3>Dot & Key Vitamin C Sunscreen — If You Want a Glow</h3>
 
         <p>
-          Not everyone wants a matte finish.  
+          Not everyone wants a matte finish.
           Some people want their sunscreen to actually look good on skin.
         </p>
 
@@ -165,6 +166,7 @@ export default function SunscreenPost() {
 
         <AffiliateCard
           title="Dot & Key Vitamin C Sunscreen"
+          description="SPF 50 sunscreen with Vitamin C for a brightening, skin-like finish. Gives a subtle glow rather than a matte or white-cast look — ideal if you want your sunscreen to double as a base. A good everyday pick for normal to combination skin."
           asin="B0BLK4YRSN"
           affiliateTag={AFFILIATE_TAG}
           price="₹500"
@@ -172,7 +174,7 @@ export default function SunscreenPost() {
         />
 
         <p>
-          Good everyday option if you don’t like “sunscreen feel”.
+          Good everyday option if you don't like "sunscreen feel".
         </p>
 
         {/* 5 */}
@@ -180,7 +182,7 @@ export default function SunscreenPost() {
         <h3>Lacto Calamine Sunscreen — Budget, But Works</h3>
 
         <p>
-          You don’t need to spend ₹1500 to use sunscreen daily.
+          You don't need to spend ₹1500 to use sunscreen daily.
         </p>
 
         <p>
@@ -189,6 +191,7 @@ export default function SunscreenPost() {
 
         <AffiliateCard
           title="Lacto Calamine Sunscreen SPF 50"
+          description="A no-fuss SPF 50 sunscreen at a price that makes daily reapplication guilt-free. Calamine helps control oil and redness — suitable for oily and acne-prone skin. Not the most advanced formula, but consistent use will always beat an expensive one you rarely apply."
           asin="B0CTTQQ8BT"
           affiliateTag={AFFILIATE_TAG}
           price="₹300"
@@ -201,11 +204,11 @@ export default function SunscreenPost() {
 
         {/* END */}
         <div className="verdict-box">
-          Sunscreen isn’t about finding the “best” one.  
-          It’s about finding one you won’t skip.
+          Sunscreen isn't about finding the "best" one.
+          It's about finding one you won't skip.
         </div>
 
       </article>
     </main>
   );
-} 
+}
