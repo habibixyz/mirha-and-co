@@ -89,12 +89,13 @@ export default function SunscreenPost() {
         </p>
 
         <AffiliateCard
-          title="UV Doux Silicone Sunscreen Gel SPF 50"
-          asin="B01FS8F19S"
-          affiliateTag={AFFILIATE_TAG}
-          price="₹700"
-          badge="Oily Skin"
-        />
+  title="UV Doux Silicone Sunscreen Gel SPF 50"
+  description="A lightweight silicone-based sunscreen gel with SPF 50 PA++++. No white cast, non-greasy finish — works well under makeup and in humid Indian weather. One of the most recommended drugstore SPFs by Indian dermatologists."
+  asin="B01FS8F19S"
+  affiliateTag={AFFILIATE_TAG}
+  price="₹349"
+  badge="Best Budget"
+/>
 
         <p>
           If your sunscreen makes you greasy by noon — this is probably the fix.
@@ -207,4 +208,4 @@ export default function SunscreenPost() {
       </article>
     </main>
   );
-}
+} 
