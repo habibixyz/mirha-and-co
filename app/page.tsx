@@ -1,438 +1,990 @@
-export default function Home() {
-  const featured = {
-    category: "BEAUTY",
-    title: "What Niacinamide Actually Does to Your Skin (India Edition)",
-    excerpt:
-      "Not 10 steps. Not a ₹15,000 routine. Three products, backed by dermatologists, that work on Indian skin in Indian weather.",
-    slug: "what-niacinamide-does-to-your-skin",
-    readTime: "6 min",
-  };
+"use client";
 
-  const posts = [
-    {
-      category: "WELLNESS",
-      title: "Morning Routines That Don't Require 2 Hours",
-      excerpt: "Five evidence-based habits. Twenty minutes. Real difference.",
-      slug: "morning-routines",
-      readTime: "5 min",
-    },
-    {
-      category: "BEAUTY",
-      title: "Best Niacinamide Serums in India Under ₹800 — Ranked by Ingredients",
-      excerpt: "We read every label so you don't have to. Here's what actually has the right concentration.",
-      slug: "best-niacinamide-serums-india",
-      readTime: "6 min",
-    },
-    {
-      category: "LIFESTYLE",
-      title: "Gift Guide for the Woman Who Has Everything",
-      excerpt: "Chosen for taste. All on Amazon India.",
-      slug: "gift-guide-woman-who-has-everything",
-      readTime: "7 min",
-    },
-    {
-      category: "WELLNESS",
-      title: "The Supplements Actually Worth Taking in India",
-      excerpt: "What the research says. What dermatologists recommend. What to skip.",
-      slug: "supplements-worth-taking",
-      readTime: "9 min",
-    },
-  ];
+import { useState, useMemo } from "react";
+import Link from "next/link";
+import { PRODUCTS } from "@/lib/products";
+
+// ─── TYPES ───────────────────────────────────────────────────────────────────
+type Product = {
+  id: number;
+  name: string;
+  brand: string;
+  category: string;
+  subcat: string;
+  mrp: number;
+  price: number;
+  rating: number;
+  reviews: string;
+  asin: string;
+  badge?: string;
+  description: string;
+  specs: Record<string, string>;
+  tags: string[];
+  image: string;
+};
+
+// ─── HELPERS ─────────────────────────────────────────────────────────────────
+function fmtINR(n: number) {
+  return "₹" + Math.round(n).toLocaleString("en-IN");
+}
+function discount(mrp: number, price: number) {
+  return mrp > price ? Math.round(((mrp - price) / mrp) * 100) : 0;
+}
+function StarRow({ rating }: { rating: number }) {
+  const full = Math.floor(rating);
+  const half = rating % 1 >= 0.5;
+  return (
+    <span style={{ color: "#F5A623", fontSize: 13, letterSpacing: 1 }}>
+      {"★".repeat(full)}
+      {half ? "½" : ""}
+      {"☆".repeat(5 - full - (half ? 1 : 0))}
+    </span>
+  );
+}
+
+
+// ─── CATEGORIES ──────────────────────────────────────────────────────────────
+const CATEGORIES = ["All", "Skincare", "Makeup", "Hair Care", "Body Care", "Wellness"];
+
+const CATEGORY_ACCENT: Record<string, string> = {
+  Skincare: "#00D1FF",
+  Makeup: "#E05C3A",
+  "Hair Care": "#C57BFF",
+  "Body Care": "#4ECBA8",
+  Wellness: "#F5A623",
+  All: "#E05C3A",
+};
+
+// ─── MODAL COMPONENT ─────────────────────────────────────────────────────────
+function ProductModal({
+  product,
+  onClose,
+}: {
+  product: Product;
+  onClose: () => void;
+}) {
+  const disc = discount(product.mrp, product.price);
+  const accent = CATEGORY_ACCENT[product.category] ?? "#E05C3A";
+  const affLink =
+  product.link ||
+  `https://www.amazon.in/dp/${product.asin}?tag=skinwithtanvi-21`;
 
   return (
-    <main>
-      <style>{`
-        .hero-section {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          min-height: 88vh;
-          max-height: 700px;
-        }
-        .hero-left {
-          background: var(--black);
-          display: flex;
-          flex-direction: column;
-          justify-content: flex-end;
-          padding: 4rem;
-          position: relative;
-          overflow: hidden;
-        }
-        .hero-left::before {
-          content: 'MIRHA';
-          position: absolute;
-          top: -2rem;
-          left: -1rem;
-          font-family: 'Bebas Neue', sans-serif;
-          font-size: 18rem;
-          color: rgba(255,255,255,0.03);
-          line-height: 1;
-          pointer-events: none;
-          white-space: nowrap;
-        }
-        .hero-right {
-          background: var(--rose);
-          display: flex;
-          flex-direction: column;
-          justify-content: flex-end;
-          padding: 4rem;
-          position: relative;
-          overflow: hidden;
-        }
-        .hero-cat {
-          font-size: 0.65rem;
-          letter-spacing: 0.3em;
-          text-transform: uppercase;
-          color: var(--rose);
-          margin-bottom: 1rem;
-          font-weight: 500;
-          font-family: 'DM Sans', sans-serif;
-        }
-        .hero-title {
-          font-family: 'DM Serif Display', serif;
-          font-size: clamp(1.8rem, 3.5vw, 2.8rem);
-          color: var(--white);
-          line-height: 1.15;
-          margin-bottom: 1.2rem;
-        }
-        .hero-excerpt {
-          font-size: 0.88rem;
-          color: rgba(255,255,255,0.55);
-          line-height: 1.7;
-          margin-bottom: 2rem;
-          max-width: 400px;
-          font-family: 'DM Sans', sans-serif;
-        }
-        .hero-cta {
-          display: inline-flex;
-          align-items: center;
-          gap: 0.8rem;
-          background: var(--rose);
-          color: var(--white);
-          padding: 0.9rem 1.8rem;
-          font-size: 0.7rem;
-          letter-spacing: 0.2em;
-          text-transform: uppercase;
-          font-weight: 500;
-          font-family: 'DM Sans', sans-serif;
-          text-decoration: none;
-          width: fit-content;
-          transition: background 0.2s;
-        }
-        .hero-cta:hover { background: #a83a2e; }
-        .hero-right-label {
-          font-size: 0.6rem;
-          letter-spacing: 0.25em;
-          text-transform: uppercase;
-          color: rgba(255,255,255,0.5);
-          font-family: 'DM Sans', sans-serif;
-          margin-bottom: 1rem;
-        }
-        .hero-right-stat {
-          font-family: 'Bebas Neue', sans-serif;
-          font-size: 5rem;
-          color: rgba(0,0,0,0.15);
-          line-height: 1;
-          margin-bottom: 0.3rem;
-        }
-        .hero-right-title {
-          font-family: 'DM Serif Display', serif;
-          font-size: 1.4rem;
-          color: var(--white);
-          font-style: italic;
-          margin-bottom: 1rem;
-          line-height: 1.3;
-        }
-        .hero-right-sub {
-          font-size: 0.78rem;
-          color: rgba(255,255,255,0.65);
-          line-height: 1.65;
-          font-family: 'DM Sans', sans-serif;
-          max-width: 280px;
-        }
-        .ticker {
-          background: var(--rose);
-          padding: 0.7rem 0;
-          overflow: hidden;
-          white-space: nowrap;
-        }
-        .ticker-inner {
-          display: inline-flex;
-          gap: 4rem;
-          animation: ticker 22s linear infinite;
-          font-size: 0.7rem;
-          letter-spacing: 0.2em;
-          text-transform: uppercase;
-          font-weight: 500;
-          font-family: 'DM Sans', sans-serif;
-          color: var(--white);
-        }
-        @keyframes ticker {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
-        }
-        .posts-section {
-          max-width: 1100px;
-          margin: 0 auto;
-          padding: 5rem 2.5rem;
-        }
-        .section-header {
-          display: flex;
-          justify-content: space-between;
-          align-items: baseline;
-          border-top: 3px solid var(--black);
-          padding-top: 1rem;
-          margin-bottom: 3rem;
-        }
-        .section-label {
-          font-family: 'Bebas Neue', sans-serif;
-          font-size: 1.8rem;
-          letter-spacing: 0.05em;
-        }
-        .section-link {
-          font-size: 0.68rem;
-          letter-spacing: 0.2em;
-          text-transform: uppercase;
-          color: var(--muted);
-          text-decoration: none;
-          font-family: 'DM Sans', sans-serif;
-          border-bottom: 1px solid var(--rule);
-          padding-bottom: 0.1rem;
-        }
-        .section-link:hover { color: var(--rose); border-color: var(--rose); }
-        .posts-grid {
-          display: grid;
-          grid-template-columns: repeat(2, 1fr);
-          gap: 0;
-        }
-        .post-card {
-          border: 1px solid var(--rule);
-          padding: 2.5rem;
-          transition: background 0.2s;
-          display: block;
-          text-decoration: none;
-          color: var(--ink);
-        }
-        .post-card:hover { background: var(--sand); }
-        .post-card-cat {
-          font-size: 0.6rem;
-          letter-spacing: 0.28em;
-          text-transform: uppercase;
-          font-weight: 500;
-          margin-bottom: 0.8rem;
-          font-family: 'DM Sans', sans-serif;
-        }
-        .post-card-title {
-          font-family: 'DM Serif Display', serif;
-          font-size: 1.25rem;
-          line-height: 1.25;
-          margin-bottom: 0.8rem;
-        }
-        .post-card-excerpt {
-          font-size: 0.83rem;
-          color: var(--muted);
-          line-height: 1.65;
-          margin-bottom: 1.2rem;
-          font-family: 'DM Sans', sans-serif;
-        }
-        .post-card-meta {
-          font-size: 0.65rem;
-          color: var(--muted);
-          letter-spacing: 0.1em;
-          text-transform: uppercase;
-          font-family: 'DM Sans', sans-serif;
-          display: flex;
-          align-items: center;
-          gap: 0.6rem;
-        }
-        .post-card-meta::before {
-          content: '';
-          width: 20px;
-          height: 1px;
-          background: var(--rose);
-          display: inline-block;
-        }
-        .why-section {
-          background: var(--sand);
-          padding: 5rem 2.5rem;
-          border-top: 2px solid var(--black);
-          border-bottom: 2px solid var(--black);
-        }
-        .why-inner {
-          max-width: 1100px;
-          margin: 0 auto;
-          display: grid;
-          grid-template-columns: 1fr 2fr;
-          gap: 5rem;
-          align-items: center;
-        }
-        .why-label {
-          font-family: 'Bebas Neue', sans-serif;
-          font-size: 4rem;
-          line-height: 1;
-          letter-spacing: 0.03em;
-        }
-        .why-grid {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 2rem;
-        }
-        .why-item-title {
-          font-family: 'DM Serif Display', serif;
-          font-size: 1rem;
-          margin-bottom: 0.4rem;
-          font-style: italic;
-        }
-        .why-item-text {
-          font-size: 0.82rem;
-          color: var(--muted);
-          line-height: 1.65;
-          font-family: 'DM Sans', sans-serif;
-        }
-        .cta-strip {
-          background: var(--black);
-          padding: 6rem 2.5rem;
-          text-align: center;
-        }
-        .cta-eyebrow {
-          font-size: 0.65rem;
-          letter-spacing: 0.3em;
-          text-transform: uppercase;
-          color: var(--rose);
-          margin-bottom: 1.5rem;
-          font-weight: 500;
-          font-family: 'DM Sans', sans-serif;
-        }
-        .cta-title {
-          font-family: 'Bebas Neue', sans-serif;
-          font-size: clamp(3rem, 8vw, 7rem);
-          letter-spacing: 0.04em;
-          color: var(--white);
-          line-height: 1;
-          margin-bottom: 1.5rem;
-        }
-        .cta-sub {
-          font-family: 'DM Serif Display', serif;
-          font-style: italic;
-          font-size: 1rem;
-          color: rgba(255,255,255,0.45);
-          max-width: 480px;
-          margin: 0 auto 2.5rem;
-          line-height: 1.7;
-        }
-        .cta-btn {
-          display: inline-flex;
-          align-items: center;
-          gap: 0.8rem;
-          background: var(--rose);
-          color: var(--white);
-          padding: 1rem 2.5rem;
-          font-size: 0.7rem;
-          letter-spacing: 0.2em;
-          text-transform: uppercase;
-          font-weight: 500;
-          text-decoration: none;
-          font-family: 'DM Sans', sans-serif;
-          transition: background 0.2s;
-        }
-        .cta-btn:hover { background: #a83a2e; }
-        @media (max-width: 768px) {
-          .hero-section { grid-template-columns: 1fr; max-height: none; min-height: auto; }
-          .hero-left, .hero-right { padding: 2.5rem 1.5rem; min-height: 50vh; }
-          .posts-grid { grid-template-columns: 1fr; }
-          .post-card { padding: 1.8rem 1.5rem; }
-          .posts-section { padding: 3rem 1.5rem; }
-          .why-inner { grid-template-columns: 1fr; gap: 2rem; }
-          .why-grid { grid-template-columns: 1fr; }
-        }
-      `}</style>
+    <div
+      onClick={(e) => e.target === e.currentTarget && onClose()}
+      style={{
+        position: "fixed",
+        inset: 0,
+        background: "rgba(0,0,0,0.72)",
+        zIndex: 200,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "20px",
+      }}
+    >
+      <div
+        style={{
+          background: "#161616",
+          border: "1px solid #2D2D2D",
+          borderRadius: 6,
+          width: "100%",
+          maxWidth: 640,
+          maxHeight: "88vh",
+          overflowY: "auto",
+        }}
+      >
+        <img
+    src={product.image}
+    alt={product.name}
+    style={{
+  width: "100%",
+  maxHeight: 320,
+  objectFit: "contain", // ✅ IMPORTANT
+  background: "#fff"
+}}
+  />
 
-      {/* HERO */}
-      <section className="hero-section">
-        <div className="hero-left">
-          <p className="hero-cat">{featured.category}</p>
-          <h1 className="hero-title">{featured.title}</h1>
-          <p className="hero-excerpt">{featured.excerpt}</p>
-          <a href={`/blog/${featured.slug}`} className="hero-cta">
-            Read Now →
-          </a>
+        {/* Modal Header */}
+        <div
+          style={{
+            padding: "24px 28px 20px",
+            borderBottom: "1px solid #222",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "flex-start",
+            gap: 16,
+          }}
+        >
+          <div style={{ flex: 1 }}>
+            <div
+              style={{
+                display: "inline-block",
+                background: `${accent}18`,
+                border: `1px solid ${accent}33`,
+                color: accent,
+                fontFamily: "monospace",
+                fontSize: 9,
+                letterSpacing: 2,
+                padding: "3px 10px",
+                borderRadius: 2,
+                marginBottom: 10,
+              }}
+            >
+              {product.subcat.toUpperCase()}
+            </div>
+            <h2
+              style={{
+                fontFamily: "'Bebas Neue', 'Arial Narrow', Impact, sans-serif",
+                fontSize: "clamp(22px, 4vw, 30px)",
+                fontWeight: 400,
+                margin: "0 0 4px",
+                lineHeight: 1.1,
+                letterSpacing: 1,
+                color: "#F0F0F0",
+              }}
+            >
+              {product.name}
+            </h2>
+            <div
+              style={{ fontFamily: "monospace", fontSize: 11, color: "#666" }}
+            >
+              {product.brand}
+            </div>
+          </div>
+          <button
+            onClick={onClose}
+            style={{
+              background: "transparent",
+              border: "1px solid #333",
+              color: "#666",
+              borderRadius: 4,
+              width: 34,
+              height: 34,
+              cursor: "pointer",
+              fontSize: 18,
+              lineHeight: 1,
+              flexShrink: 0,
+            }}
+          >
+            ×
+          </button>
         </div>
-        <div className="hero-right">
-          <p className="hero-right-label">Why This Site Exists</p>
-          <div className="hero-right-stat">₹0</div>
-          <p className="hero-right-title">Paid for any recommendation. Ever.</p>
-          <p className="hero-right-sub">
-            Built by someone who spent years in Indian beauty retail.
-            Every recommendation is based on ingredients, evidence,
-            and what dermatologists actually say — not what brands pay to promote.
+
+        <div style={{ padding: "24px 28px 32px" }}>
+          {/* Price Row */}
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(3, 1fr)",
+              gap: 12,
+              marginBottom: 24,
+            }}
+          >
+            {[
+              {
+                label: "Price",
+                value: fmtINR(product.price),
+                color: "#F0F0F0",
+                big: true,
+              },
+              {
+                label: "MRP",
+                value: fmtINR(product.mrp),
+                color: "#555",
+                strike: true,
+              },
+              {
+                label: "You Save",
+                value: disc > 0 ? `${disc}% off` : "Best Price",
+                color: "#4ECBA8",
+              },
+            ].map((s) => (
+              <div
+                key={s.label}
+                style={{
+                  background: "#1E1E1E",
+                  border: "1px solid #2A2A2A",
+                  borderRadius: 4,
+                  padding: "14px 16px",
+                }}
+              >
+                <div
+                  style={{
+                    fontFamily: "monospace",
+                    fontSize: 9,
+                    letterSpacing: 2,
+                    color: "#555",
+                    marginBottom: 6,
+                  }}
+                >
+                  {s.label.toUpperCase()}
+                </div>
+                <div
+                  style={{
+                    fontFamily:
+                      "'Bebas Neue', 'Arial Narrow', sans-serif",
+                    fontSize: s.big ? 28 : 22,
+                    color: s.color,
+                    textDecoration: s.strike ? "line-through" : "none",
+                    letterSpacing: 1,
+                  }}
+                >
+                  {s.value}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Rating */}
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: 10,
+              marginBottom: 20,
+              padding: "12px 16px",
+              background: "#1A1A1A",
+              border: "1px solid #2A2A2A",
+              borderRadius: 4,
+            }}
+          >
+            <StarRow rating={product.rating} />
+            <span
+  style={{
+    fontFamily: "monospace",
+    fontSize: 12,
+    color: "#888",
+  }}
+>
+  {product.rating} ★ rating
+</span>
+            {product.badge && (
+              <span
+                style={{
+                  marginLeft: "auto",
+                  background: `${accent}18`,
+                  border: `1px solid ${accent}33`,
+                  color: accent,
+                  fontFamily: "monospace",
+                  fontSize: 9,
+                  letterSpacing: 1,
+                  padding: "3px 8px",
+                  borderRadius: 2,
+                }}
+              >
+                {product.badge}
+              </span>
+            )}
+          </div>
+
+          {/* Description */}
+          <div style={{ marginBottom: 20 }}>
+            <div
+              style={{
+                fontFamily: "monospace",
+                fontSize: 10,
+                letterSpacing: 2,
+                color: "#555",
+                marginBottom: 10,
+                paddingBottom: 8,
+                borderBottom: "1px solid #222",
+              }}
+            >
+              ABOUT THIS PRODUCT
+            </div>
+            <p
+              style={{
+                fontSize: 14,
+                color: "#AAA",
+                lineHeight: 1.75,
+                margin: 0,
+              }}
+            >
+              {product.description}
+            </p>
+          </div>
+
+          {/* Specs */}
+          <div style={{ marginBottom: 24 }}>
+            <div
+              style={{
+                fontFamily: "monospace",
+                fontSize: 10,
+                letterSpacing: 2,
+                color: "#555",
+                marginBottom: 10,
+                paddingBottom: 8,
+                borderBottom: "1px solid #222",
+              }}
+            >
+              KEY DETAILS
+            </div>
+            {Object.entries(product.specs).map(([k, v]) => (
+              <div
+                key={k}
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "flex-start",
+                  gap: 16,
+                  padding: "9px 0",
+                  borderBottom: "1px solid #1E1E1E",
+                }}
+              >
+                <span
+                  style={{
+                    fontSize: 13,
+                    color: "#666",
+                    flexShrink: 0,
+                  }}
+                >
+                  {k}
+                </span>
+                <span
+                  style={{
+                    fontSize: 13,
+                    color: "#CCC",
+                    textAlign: "right",
+                    fontWeight: 500,
+                  }}
+                >
+                  {v}
+                </span>
+              </div>
+            ))}
+          </div>
+
+          {/* CTA */}
+          <a
+            href={affLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 10,
+              background: "#FF9900",
+              border: "none",
+              borderRadius: 4,
+              color: "#111",
+              fontSize: 15,
+              fontWeight: 600,
+              padding: "16px 24px",
+              textDecoration: "none",
+              width: "100%",
+              cursor: "pointer",
+            }}
+          >
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#111"
+              strokeWidth="2"
+            >
+              <path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+            </svg>
+            View on Amazon India
+          </a>
+          <p
+            style={{
+              textAlign: "center",
+              fontFamily: "monospace",
+              fontSize: 10,
+              color: "#444",
+              marginTop: 10,
+            }}
+          >
+            ✦ Affiliate link · Prices may vary · Prime eligible on most items
           </p>
         </div>
-      </section>
+      </div>
+    </div>
+  );
+}
 
-      {/* TICKER */}
-      <div className="ticker">
-        <div className="ticker-inner">
-          {["Beauty Research", "Wellness Science", "Amazon India Finds", "Honest Ingredient Reviews", "Dermatologist Picks", "India Focused", "Beauty Research", "Wellness Science", "Amazon India Finds", "Honest Ingredient Reviews", "Dermatologist Picks", "India Focused"].map((t, i) => (
-            <span key={i}>◆ {t}</span>
-          ))}
+// ─── PRODUCT CARD ─────────────────────────────────────────────────────────────
+function ProductCard({
+  product,
+  onClick,
+}: {
+  product: Product;
+  onClick: () => void;
+}) {
+  const disc = discount(product.mrp, product.price);
+  const accent = CATEGORY_ACCENT[product.category] ?? "#E05C3A";
+  const [hover, setHover] = useState(false);
+
+  return (
+    <div
+      onClick={onClick}
+      style={{
+        background: "#161616",
+        border: "1px solid #2A2A2A",
+        borderRadius: 6,
+        overflow: "hidden",
+        cursor: "pointer",
+        transition: "border-color 0.15s, transform 0.15s",
+        position: "relative",
+      }}
+      onMouseEnter={(e) => {
+        setHover(true);
+        (e.currentTarget as HTMLDivElement).style.borderColor = accent;
+        (e.currentTarget as HTMLDivElement).style.transform = "translateY(-2px)";
+      }}
+      onMouseLeave={(e) => {
+        setHover(false);
+        (e.currentTarget as HTMLDivElement).style.borderColor = "#2A2A2A";
+        (e.currentTarget as HTMLDivElement).style.transform = "translateY(0)";
+      }}
+    >
+      {hover && (
+      <div style={{ position: "absolute", inset: 0, background: "#111", zIndex: 5, display: "flex", alignItems: "center", justifyContent: "center", transition: "opacity 0.3s ease" }}>
+        <img src={product.image} />
+      </div>
+    )}
+
+      {/* Card top accent bar */}
+      <div style={{ height: 2, background: accent, opacity: 0.4 }} />
+      {/* PRODUCT IMAGE */}
+<div style={{ width: "100%", height: 180, overflow: "hidden", background: "#111" }}>
+  <img
+    src={product.image}
+    alt={product.name}
+    style={{
+      width: "100%",
+      height: "100%",
+      objectFit: "contain",
+      transition: "transform 0.3s ease",
+    }}
+    onMouseEnter={(e) => {
+      (e.currentTarget as HTMLImageElement).style.transform = "scale(1.05)";
+    }}
+    onMouseLeave={(e) => {
+      (e.currentTarget as HTMLImageElement).style.transform = "scale(1)";
+    }}
+  />
+</div>
+
+      <div style={{ padding: "20px 20px 18px" }}>
+        {/* Badge + Category */}
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            marginBottom: 14,
+          }}
+        >
+          <span
+            style={{
+              fontFamily: "monospace",
+              fontSize: 9,
+              letterSpacing: 2,
+              color: "#555",
+              textTransform: "uppercase",
+            }}
+          >
+            {product.subcat}
+          </span>
+          {product.badge && (
+            <span
+              style={{
+                background: `${accent}18`,
+                border: `1px solid ${accent}30`,
+                color: accent,
+                fontFamily: "monospace",
+                fontSize: 8,
+                letterSpacing: 1,
+                padding: "2px 7px",
+                borderRadius: 2,
+              }}
+            >
+              {product.badge}
+            </span>
+          )}
+        </div>
+
+        {/* Name */}
+        <h3
+          style={{
+            fontFamily:
+              "'Bebas Neue', 'Arial Narrow', Impact, sans-serif",
+            fontSize: "clamp(18px, 2.5vw, 22px)",
+            fontWeight: 400,
+            margin: "0 0 4px",
+            lineHeight: 1.15,
+            letterSpacing: 1,
+            color: "#F0F0F0",
+          }}
+        >
+          {product.name}
+        </h3>
+        <div
+          style={{
+            fontFamily: "monospace",
+            fontSize: 11,
+            color: "#555",
+            marginBottom: 14,
+          }}
+        >
+          {product.brand}
+        </div>
+
+        {/* Description preview */}
+        <p
+          style={{
+            fontSize: 13,
+            color: "#666",
+            lineHeight: 1.6,
+            margin: "0 0 18px",
+            display: "-webkit-box",
+            WebkitLineClamp: 2,
+            WebkitBoxOrient: "vertical",
+            overflow: "hidden",
+          }}
+        >
+          {product.description}
+        </p>
+
+        {/* Price */}
+        <div
+          style={{ display: "flex", alignItems: "baseline", gap: 10, marginBottom: 12 }}
+        >
+          <span
+            style={{
+              fontFamily: "'Bebas Neue', 'Arial Narrow', sans-serif",
+              fontSize: 28,
+              letterSpacing: 1,
+              color: "#F0F0F0",
+            }}
+          >
+            {fmtINR(product.price)}
+          </span>
+          {disc > 0 && (
+            <>
+              <span
+                style={{ fontSize: 13, color: "#555", textDecoration: "line-through" }}
+              >
+                {fmtINR(product.mrp)}
+              </span>
+              <span
+                style={{
+                  fontSize: 12,
+                  color: "#4ECBA8",
+                  fontFamily: "monospace",
+                  fontWeight: 600,
+                }}
+              >
+                {disc}% off
+              </span>
+            </>
+          )}
+        </div>
+
+        {/* Rating */}
+        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+          <StarRow rating={product.rating} />
+          <span
+            style={{
+              fontSize: 12,
+              color: "#555",
+              fontFamily: "monospace",
+            }}
+          >
+            {product.rating} · {product.reviews}
+          </span>
         </div>
       </div>
 
-      {/* WHY US */}
-      <section className="why-section">
-        <div className="why-inner">
-          <h2 className="why-label">WHY TRUST US?</h2>
-          <div className="why-grid">
+      {/* View button */}
+      <div
+        style={{
+          borderTop: "1px solid #222",
+          padding: "12px 20px",
+          fontFamily: "monospace",
+          fontSize: 11,
+          color: "#555",
+          letterSpacing: 1,
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <span>VIEW DETAILS</span>
+        <span style={{ color: accent }}>→</span>
+      </div>
+    </div>
+  );
+}
+
+// ─── MAIN PAGE ───────────────────────────────────────────────────────────────
+export default function BeautyShopPage() {
+  const [query, setQuery] = useState("");
+  const [activeCategory, setActiveCategory] = useState("All");
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+
+  const filtered = useMemo(() => {
+    const q = query.toLowerCase().trim();
+    return PRODUCTS.filter((p) => {
+      const catMatch =
+        activeCategory === "All" || p.category === activeCategory;
+      if (!q) return catMatch;
+      return (
+        catMatch &&
+        (p.name.toLowerCase().includes(q) ||
+          p.brand.toLowerCase().includes(q) ||
+          p.subcat.toLowerCase().includes(q) ||
+          p.description.toLowerCase().includes(q) ||
+          p.tags.some((t) => t.includes(q)))
+      );
+    });
+  }, [query, activeCategory]);
+
+  return (
+    <>
+      {/* ── Google Font ── */}
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+        * { box-sizing: border-box; }
+        body { margin: 0; }
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: #111; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; }
+        ::placeholder { color: #444; }
+        input:focus { outline: none; }
+        .product-grid-inner { 
+          display: grid; 
+          grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
+          gap: 16px; 
+        }
+      `}</style>
+
+      <div
+        style={{
+          background: "#0F0F0F",
+          minHeight: "100vh",
+          fontFamily: "'DM Sans', 'Helvetica Neue', sans-serif",
+          color: "#F0F0F0",
+        }}
+      >
+        {/* ── HERO ── */}
+        <div
+          style={{
+            borderBottom: "1px solid #1E1E1E",
+            padding: "56px 40px 44px",
+            maxWidth: 1200,
+            margin: "0 auto",
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              alignItems: "flex-end",
+              justifyContent: "space-between",
+              flexWrap: "wrap",
+              gap: 24,
+            }}
+          >
             <div>
-              <h3 className="why-item-title">Beauty Retail Background</h3>
-              <p className="why-item-text">Built by someone who worked in Indian beauty retail. We know how products are made, priced, and marketed — and what that means for you.</p>
+              <div
+                style={{
+                  fontFamily: "monospace",
+                  fontSize: 11,
+                  color: "#E05C3A",
+                  letterSpacing: "3px",
+                  marginBottom: 14,
+                }}
+              >
+                MIRHA &amp; CO. / BEAUTY SHOP
+              </div>
+              <h1
+                style={{
+                  fontFamily:
+                    "'Bebas Neue', 'Arial Narrow', Impact, sans-serif",
+                  fontSize: "clamp(52px, 8vw, 88px)",
+                  fontWeight: 400,
+                  lineHeight: 0.9,
+                  margin: 0,
+                  letterSpacing: 2,
+                  color: "#F0F0F0",
+                }}
+              >
+                BEAUTY
+                <br />
+                <span style={{ color: "#E05C3A" }}>PICKS.</span>
+              </h1>
             </div>
-            <div>
-              <h3 className="why-item-title">Ingredient-First Approach</h3>
-              <p className="why-item-text">We don't recommend by brand name or price tag. We read the label, check the concentration, and tell you what the science says.</p>
-            </div>
-            <div>
-              <h3 className="why-item-title">India Specific</h3>
-              <p className="why-item-text">Indian climate. Indian skin types. Indian budgets. Everything on this site is written for where you actually live, not a Western audience.</p>
-            </div>
-            <div>
-              <h3 className="why-item-title">Affiliate Links, Always Disclosed</h3>
-              <p className="why-item-text">Some links earn a commission. Always marked. The commission never decides what we recommend — the evidence does.</p>
+            <div style={{ maxWidth: 400 }}>
+              <p
+                style={{
+                  color: "#777",
+                  fontSize: 15,
+                  lineHeight: 1.75,
+                  margin: "0 0 16px",
+                }}
+              >
+                Hand-picked skincare, makeup, and hair care from Amazon India.
+                Real prices, honest picks — every link takes you straight to the
+                product.
+              </p>
+              <div
+                style={{
+                  display: "flex",
+                  gap: 20,
+                  fontFamily: "monospace",
+                  fontSize: 10,
+                  color: "#444",
+                }}
+              >
+                <span>✦ CURATED PICKS</span>
+                <span>✦ REAL PRICES</span>
+                <span>✦ INDIA ONLY</span>
+              </div>
             </div>
           </div>
         </div>
-      </section>
 
-      {/* LATEST POSTS */}
-      <section className="posts-section">
-        <div className="section-header">
-          <h2 className="section-label">Latest Posts</h2>
-          <a href="/blog" className="section-link">View All →</a>
+        <div
+          style={{
+            maxWidth: 1200,
+            margin: "0 auto",
+            padding: "36px 40px 80px",
+          }}
+        >
+          {/* ── SEARCH ── */}
+          <div
+            style={{
+              background: "#1A1A1A",
+              border: "1px solid #2D2D2D",
+              borderRadius: 4,
+              display: "flex",
+              alignItems: "center",
+              gap: 14,
+              padding: "0 16px",
+              marginBottom: 20,
+            }}
+          >
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#555"
+              strokeWidth="2"
+            >
+              <circle cx="11" cy="11" r="8" />
+              <path d="M21 21l-4.35-4.35" />
+            </svg>
+            <input
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Search — serum, moisturiser, kajal, hair oil, sunscreen..."
+              style={{
+                flex: 1,
+                background: "transparent",
+                border: "none",
+                color: "#F0F0F0",
+                fontSize: 15,
+                padding: "18px 0",
+                fontFamily: "'DM Sans', sans-serif",
+              }}
+            />
+            {query && (
+              <button
+                onClick={() => setQuery("")}
+                style={{
+                  background: "none",
+                  border: "none",
+                  cursor: "pointer",
+                  color: "#555",
+                  fontSize: 22,
+                  lineHeight: 1,
+                }}
+              >
+                ×
+              </button>
+            )}
+          </div>
+
+          {/* ── CATEGORY FILTERS ── */}
+          <div
+            style={{
+              display: "flex",
+              gap: 8,
+              flexWrap: "wrap",
+              marginBottom: 32,
+            }}
+          >
+            {CATEGORIES.map((cat) => {
+              const active = activeCategory === cat;
+              const accent = CATEGORY_ACCENT[cat] ?? "#E05C3A";
+              return (
+                <button
+                  key={cat}
+                  onClick={() => setActiveCategory(cat)}
+                  style={{
+                    background: active ? `${accent}18` : "transparent",
+                    border: `1px solid ${active ? accent : "#2D2D2D"}`,
+                    borderRadius: 2,
+                    padding: "8px 18px",
+                    fontSize: 13,
+                    color: active ? accent : "#666",
+                    cursor: "pointer",
+                    fontFamily: "monospace",
+                    letterSpacing: 1,
+                    transition: "all 0.15s",
+                  }}
+                  onMouseEnter={(e) => {
+                    if (!active) {
+                      (e.currentTarget as HTMLButtonElement).style.borderColor =
+                        accent;
+                      (e.currentTarget as HTMLButtonElement).style.color =
+                        accent;
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (!active) {
+                      (e.currentTarget as HTMLButtonElement).style.borderColor =
+                        "#2D2D2D";
+                      (e.currentTarget as HTMLButtonElement).style.color =
+                        "#666";
+                    }
+                  }}
+                >
+                  {cat.toUpperCase()}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* ── RESULTS HEADER ── */}
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "baseline",
+              marginBottom: 20,
+            }}
+          >
+            <h2
+              style={{
+                fontFamily:
+                  "'Bebas Neue', 'Arial Narrow', sans-serif",
+                fontSize: 28,
+                fontWeight: 400,
+                letterSpacing: 2,
+                color: "#F0F0F0",
+                margin: 0,
+              }}
+            >
+              {activeCategory === "All" ? "ALL PRODUCTS" : activeCategory.toUpperCase()}
+            </h2>
+            <span
+              style={{
+                fontFamily: "monospace",
+                fontSize: 11,
+                color: "#555",
+                letterSpacing: 1,
+              }}
+            >
+              {filtered.length} PRODUCT{filtered.length !== 1 ? "S" : ""}
+            </span>
+          </div>
+
+          {/* ── PRODUCT GRID ── */}
+          {filtered.length > 0 ? (
+            <div className="product-grid-inner">
+              {filtered.map((p) => (
+                <ProductCard
+                  key={p.id}
+                  product={p}
+                  onClick={() => setSelectedProduct(p)}
+                />
+              ))}
+            </div>
+          ) : (
+            <div
+              style={{
+                background: "#141414",
+                border: "1px solid #1E1E1E",
+                borderRadius: 4,
+                padding: "60px 32px",
+                textAlign: "center",
+              }}
+            >
+              <div
+                style={{
+                  fontFamily:
+                    "'Bebas Neue', 'Arial Narrow', sans-serif",
+                  fontSize: 22,
+                  letterSpacing: 3,
+                  color: "#2A2A2A",
+                  marginBottom: 8,
+                }}
+              >
+                NO PRODUCTS FOUND
+              </div>
+              <div
+                style={{
+                  fontFamily: "monospace",
+                  fontSize: 12,
+                  color: "#444",
+                }}
+              >
+                Try a different keyword or select a different category
+              </div>
+              <button
+                onClick={() => {
+                  setQuery("");
+                  setActiveCategory("All");
+                }}
+                style={{
+                  marginTop: 20,
+                  background: "transparent",
+                  border: "1px solid #2D2D2D",
+                  borderRadius: 2,
+                  color: "#888",
+                  fontFamily: "monospace",
+                  fontSize: 11,
+                  letterSpacing: 2,
+                  padding: "10px 20px",
+                  cursor: "pointer",
+                }}
+              >
+                ← CLEAR FILTERS
+              </button>
+            </div>
+          )}
+
+          {/* ── FOOTER NOTE ── */}
+          <div
+            style={{
+              marginTop: 60,
+              paddingTop: 24,
+              borderTop: "1px solid #1E1E1E",
+              fontFamily: "monospace",
+              fontSize: 11,
+              color: "#333",
+              lineHeight: 1.8,
+            }}
+          >
+            ✦ Affiliate links disclosed. Prices shown are approximate and may
+            change on Amazon. Independent reviews — honest opinions only.
+          </div>
         </div>
-        <div className="posts-grid">
-          {posts.map((post) => (
-            <a key={post.slug} href={`/blog/${post.slug}`} className="post-card">
-              <p className="post-card-cat" style={{ color: post.category === "BEAUTY" ? "var(--rose)" : post.category === "WELLNESS" ? "#4a7c6f" : "#7c6b4a" }}>
-                {post.category}
-              </p>
-              <h3 className="post-card-title">{post.title}</h3>
-              <p className="post-card-excerpt">{post.excerpt}</p>
-              <p className="post-card-meta">{post.readTime} read</p>
-            </a>
-          ))}
-        </div>
-      </section>
+      </div>
 
-      {/* CTA */}
-      <section className="cta-strip">
-        <p className="cta-eyebrow">The Journal</p>
-        <h2 className="cta-title">BEAUTY.<br />WELLNESS.<br />TRUTH.</h2>
-        <p className="cta-sub">
-          Research-backed guides for Indian women who want honest answers,
-          not another sponsored post.
-        </p>
-        <a href="/blog" className="cta-btn">Start Reading →</a>
-      </section>
-
-    </main>
+      {/* ── PRODUCT MODAL ── */}
+      {selectedProduct && (
+        <ProductModal
+          product={selectedProduct}
+          onClose={() => setSelectedProduct(null)}
+        />
+      )}
+    </>
   );
 }

@@ -1,6 +1,11 @@
 import "./globals.css";
 import Link from "next/link";
 import type { Metadata } from "next";
+import { DM_Sans } from "next/font/google";
+
+const bebasNeue = {
+  variable: "--font-bebas",
+};
 
 export const metadata: Metadata = {
   title: "Mirha & Co. — Beauty, Wellness & The Good Life",
@@ -40,6 +45,10 @@ export default function RootLayout({
               <Link href="/blog/category/beauty" className="nav-link">Beauty</Link>
               <Link href="/blog/category/wellness" className="nav-link">Wellness</Link>
               <Link href="/blog/category/lifestyle" className="nav-link">Lifestyle</Link>
+              <link
+  href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap"
+  rel="stylesheet"
+/>
             </nav>
 
             {/* LOGO */}
