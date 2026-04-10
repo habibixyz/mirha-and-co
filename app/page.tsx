@@ -21,6 +21,7 @@ type Product = {
   specs: Record<string, string>;
   tags: string[];
   image: string;
+  link?: string;
 };
 
 // ─── HELPERS ─────────────────────────────────────────────────────────────────
