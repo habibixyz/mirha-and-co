@@ -242,7 +242,7 @@ export const PRODUCTS = [
   id: 9,
   name: "Deconstruct Gel Sunscreen for Oily skin SPF 50 PA++++ 50gm",
   brand: "Deconstruct",
-  category: "skin care",
+  category: "skincare",
   subcat: "Sunscreen",
   mrp: 349,
   price: 281,
@@ -272,7 +272,7 @@ export const PRODUCTS = [
   id: 10,
   name: "Minimalist 10% Niacinamide Serum with Zinc 60ml",
   brand: "Minimalist",
-  category: "skin care",
+  category: "skincare",
   subcat: "Serum",
   mrp: 999,
   price: 950,
@@ -287,7 +287,7 @@ export const PRODUCTS = [
   specs: {
     "Skin Type": "All, Normal, Oily, Dry",
     "Key Ingredient": "Niacinamide, Zinc, Vitamin B3.",
-    "Texture": "Oil",
+    "Texture": "Serum",
     "Use": "Daily"
   },
 
@@ -296,7 +296,38 @@ export const PRODUCTS = [
   image: "/products/Niacinamide-Serum.jpg",
 
   link: "https://amzn.to/4ceFxl5"
+},
+
+{
+  id: 11,
+  name: "The Ordinary Niacinamide 10% + Zinc 1% 30ml",
+  brand: "The Ordinary",
+  category: "skin care",
+  subcat: "Serum",
+  mrp: 600,
+  price: 599,
+  rating: 4.3,
+  reviews: "54k",
+  asin: "B01MDTVZTZ",
+
+  badge: "Top Rated",
+
+  description: "Brightening & Smoothing Serum for Blemish-Prone Skin",
+
+  specs: {
+    "Skin Type": "All, Normal, Oily, Dry",
+    "Key Ingredient": "Niacinamide, Zinc.",
+    "Texture": "Serum",
+    "Use": "Daily"
+  },
+
+  tags: ["Blemishes treatment,", "removes acne marks", "Niacinamide ", "Serum"],
+
+  image: "/products/Ordinary-Niacinamide.jpg",
+
+  link: "https://amzn.to/4tFRRBV"
 }
+
 
 
 
