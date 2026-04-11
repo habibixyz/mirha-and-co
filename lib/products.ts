@@ -326,7 +326,7 @@ export const PRODUCTS = [
   image: "/products/Ordinary-Niacinamide.jpg",
 
   link: "https://amzn.to/4tFRRBV"
-}
+},
 
 
 
