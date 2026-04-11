@@ -33,7 +33,7 @@ export const PRODUCTS = [
   name: "Simple Kind To Skin Moisturising Facial Wash, 150 ml",
   brand: "Unilever",
   category: "skincare",
-  subcat: "Serum",
+  subcat: "Face Wash",
   mrp: 420,
   price: 329,
   rating: 4.2,
@@ -63,7 +63,7 @@ export const PRODUCTS = [
   name: "Minimalist 7% ALA + Glycolic Brightening Face Wash 100ml",
   brand: "Minimalist",
   category: "skincare",
-  subcat: "Serum",
+  subcat: "Face Wash",
   mrp: 399,
   price: 380,
   rating: 4.2,
@@ -236,7 +236,68 @@ export const PRODUCTS = [
   image: "/products/TRESemmé-Keratin.jpg",
 
   link: "https://amzn.to/3Q6pAWQ"
+},
+
+{
+  id: 9,
+  name: "Deconstruct Gel Sunscreen for Oily skin SPF 50 PA++++ 50gm",
+  brand: "Deconstruct",
+  category: "skin care",
+  subcat: "Sunscreen",
+  mrp: 349,
+  price: 281,
+  rating: 4.2,
+  reviews: "12.3k",
+  asin: "B0B45RB1RV",
+
+  badge: "Top Rated",
+
+  description: "100% Photostable Sunscreen |4 New Gen UV Filters |In-Vivo |Lightweight, Airy, Non-greasy |For oily, combination, normal skin |For Men & Women.",
+
+  specs: {
+    "Skin Type": "All, Normal, Oily, Dry",
+    "Key Ingredient": "Benzophenone-3, Butyl Methoxydibenzoylmethane, Ethylhexyl methoxycinnamate.",
+    "Texture": "Gel",
+    "Use": "Daily"
+  },
+
+  tags: ["Prevents tanning,", "Sun related ageing", "Sunscreen", "Non-oily absorption with no white cast"],
+
+  image: "/products/Deconstruct-Gel.jpg",
+
+  link: "https://amzn.to/47W1AvI"
+},
+
+{
+  id: 10,
+  name: "Minimalist 10% Niacinamide Serum with Zinc 60ml",
+  brand: "Minimalist",
+  category: "skin care",
+  subcat: "Serum",
+  mrp: 999,
+  price: 950,
+  rating: 4.2,
+  reviews: "24k",
+  asin: "B0DH88LZ11",
+
+  badge: "Skin Reset",
+
+  description: "Reduces Acne Marks, Controls Oil & Minimizes Pores | Vitamin B3 for Blemish-Free, Clear Skin | For Oily & Acne-Prone Skin | For external use only, Avoid contact with eyes, Keep away from naked flame or direct heat sources",
+
+  specs: {
+    "Skin Type": "All, Normal, Oily, Dry",
+    "Key Ingredient": "Niacinamide, Zinc, Vitamin B3.",
+    "Texture": "Oil",
+    "Use": "Daily"
+  },
+
+  tags: ["Blemishes treatment,", "removes acne marks", "Niacinamide", "Serum"],
+
+  image: "/products/Niacinamide-Serum.jpg",
+
+  link: "https://amzn.to/4ceFxl5"
 }
+
 
 
 ];
