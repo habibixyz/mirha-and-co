@@ -631,8 +631,12 @@ export default function BeautyShopPage() {
   const filtered = useMemo(() => {
     const q = query.toLowerCase().trim();
     return PRODUCTS.filter((p) => {
+
+      const normalize = (str: string) =>
+  str.toLowerCase().replace(/\s/g, "");
+
       const catMatch =
-        activeCategory === "All" || p.category.toLowerCase() === activeCategory.toLowerCase();
+        activeCategory === "All" ||  normalize(p.category) === normalize(activeCategory);
       if (!q) return catMatch;
       return (
         catMatch &&

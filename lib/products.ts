@@ -152,7 +152,7 @@ export const PRODUCTS = [
   id: 6,
   name: "mCaffeine Exfoliating Coffee Body Scrub Powder Jar 100gm",
   brand: "mCaffeine",
-  category: "bodycare",
+  category: "body care",
   subcat: "Body Scrub",
   mrp: 449,
   price: 369,
