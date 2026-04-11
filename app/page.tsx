@@ -632,7 +632,7 @@ export default function BeautyShopPage() {
     const q = query.toLowerCase().trim();
     return PRODUCTS.filter((p) => {
       const catMatch =
-        activeCategory === "All" || p.category === activeCategory;
+        activeCategory === "All" || p.category.toLowerCase() === activeCategory.toLowerCase();
       if (!q) return catMatch;
       return (
         catMatch &&
