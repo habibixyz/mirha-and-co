@@ -86,7 +86,96 @@ export const PRODUCTS = [
   image: "/products/Minimalist-ALA.jpg",
 
   link: "https://amzn.to/4cn8R9n"
-}
+},
 
+{
+  id: 4,
+  name: "Minimalist Sunscreen SPF 50 PA+++ with Niacinamide & Multi-Vitamins 100gm",
+  brand: "Minimalist",
+  category: "Skincare",
+  subcat: "Sunscreen",
+  mrp: 699,
+  price: 533,
+  rating: 4.1,
+  reviews: "31.3k",
+  asin: "B0DHY6LQTW",
+
+  badge: "Smart Buy",
+
+  description: "Clinically Tested in US (In-Vivo) | Lightweight with Multi-Vitamins | No White Cast | Broad Spectrum | Face Sunscreen for Men & Women | 100gm.",
+
+  specs: {
+    "Skin Type": "All, Combination, Dry, Normal, Oily, Sensitive",
+    "Key Ingredient": "Glycolic Acid",
+    "Texture": "cream",
+    "Use": "Daily"
+  },
+
+  tags: ["SPF 50 PA+++,", "Niacinamide", "Multi-Vitamins"],
+
+  image: "/products/Minimalist-Sunscreen.jpg",
+
+  link: "https://amzn.to/4muroFm"
+},
+
+{
+  id: 5,
+  name: "Aqualogica Radiance+ Dewy Sunscreen with Watermelon & Niacinamide with SPF 50 & PA++++ - 80g",
+  brand: "Aqualogica",
+  category: "Skincare",
+  subcat: "Sunscreen",
+  mrp: 599,
+  price: 388,
+  rating: 4.1,
+  reviews: "10k",
+  asin: "B0C9JPWLR4",
+
+  badge: "Best for Price",
+
+  description: "Broad Spectrum SPF 50+ PA++++ | UVA/B & Blue Light Protection | Anti-Pollution Factor (APF) Technology | In Vivo Tested | deal for Oily Skin Type| Fragrance-Free & No White Cast | For Radiant Skin.",
+
+  specs: {
+    "Skin Type": "All, Combination, Dry, Normal, Oily, Sensitive",
+    "Key Ingredient": "	hyaluronic acid, niacinamide, watermelon",
+    "Texture": "cream",
+    "Use": "Daily"
+  },
+
+  tags: ["SPF 50 PA+++,", "Niacinamide", "Anti-Pollution Factor (APF) Technology"],
+
+  image: "/products/Aqualogica-Radiance.jpg",
+
+  link: "https://amzn.to/3OcJtLm"
+},
+
+{
+  id: 5,
+  name: "mCaffeine Exfoliating Coffee Body Scrub Powder Jar 100gm",
+  brand: "mCaffeine",
+  category: "Bodycare",
+  subcat: "Sunscreen",
+  mrp: 449,
+  price: 369,
+  rating: 4.3,
+  reviews: "27.4k",
+  asin: "B07K4BFQK1",
+
+  badge: "Bestseller",
+
+  description: "mCaffeine Exfoliating Coffee Body Scrub Powder Jar for Tan Removal&Soft-Smooth Skin|De-Tan Bathing Scrub With Coconut Oil,Removes Dirt&Dead Skin From Neck,Knees,Elbows&Arms| All Skin Types.",
+
+  specs: {
+    "Skin Type": "All, Combination, Dry, Normal, Oily, Sensitive",
+    "Key Ingredient": "Coffee, Caffeine, Coconut Oil",
+    "Texture": "Powder",
+    "Use": "Daily"
+  },
+
+  tags: ["Dead Skin,", "Exfoliating", "Body Scrub"],
+
+  image: "/products/mCaffeine-Exfoliating.jpg",
+
+  link: "https://amzn.to/4eerGxJ"
+}
 
 ];
