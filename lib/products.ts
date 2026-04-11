@@ -176,6 +176,67 @@ export const PRODUCTS = [
   image: "/products/mCaffeine-Exfoliating.jpg",
 
   link: "https://amzn.to/4eerGxJ"
+},
+
+{
+  id: 7,
+  name: "DOVE Nourishing Bodywash, 825ml",
+  brand: "Dove",
+  category: "body care",
+  subcat: "Body Wash",
+  mrp: 560,
+  price: 302,
+  rating: 4.4,
+  reviews: "29k",
+  asin: "B07S7R626P",
+
+  badge: "Best for Price",
+
+  description: "For Soft and Smooth Skin, with Triple Hydration Serum & Glycerine, Dermatologically Tested, Paraben-Free, Sulphate-Free.",
+
+  specs: {
+    "Skin Type": "All, Combination, Dry, Normal, Oily, Sensitive",
+    "Key Ingredient": "Cocamidopropyl Betaine, Sodium Methyl Lauroyl Taurate, Sodium Lauroyl Isethionate, Glycerin, Perfume",
+    "Texture": "Cream",
+    "Use": "Daily"
+  },
+
+  tags: ["Moisturizing,", "Scented", "Body Wash"],
+
+  image: "/products/DOVE-Nourishing.jpg",
+
+  link: "https://amzn.to/41ZEWix"
+},
+
+{
+  id: 8,
+  name: "TRESemmé Keratin Smooth+ Shampoo 1000ml",
+  brand: "TRESemmé",
+  category: "hair care",
+  subcat: "Hair Wash",
+  mrp: 1370,
+  price: 634,
+  rating: 4.3,
+  reviews: "60k",
+  asin: "B07L3ZCJ53",
+
+  badge: "Best for Price",
+
+  description: "72H Frizz Control with Keratin Protein & Argan Oil | Paraben Free Smoothening Shampoo for Dry & Frizzy Hair.",
+
+  specs: {
+    "Skin Type": "All, Frizzy, Dull, Normal, Oily, Dry",
+    "Key Ingredient": "Water, Sodium Laureth Sulfate, Dimethiconol and Trideceth-10 and Tea-Dodecylbenzenesulfonate, Cocamidopropyl Betaine, Perfume, Sodium Chloride, Carbomer, Amodimethicone and Cetrimonium Chloride and Trideceth-12, Glycol Distearate, Guar Hydroxypropyltrimonium Chloride, Mica and Titanium Dioxide, Disodium Edta, DMDM Hydantoin, Hydrolyzed Keratin, Methylchloroisothiazolinone and Methylisothiazolinone, Sodium Hydroxide.",
+    "Texture": "Cream",
+    "Use": "Daily"
+  },
+
+  tags: ["Anti-Hair Loss,", "Paraben Free", "Hair Wash"],
+
+  image: "/products/TRESemmé-Keratin.jpg",
+
+  link: "https://amzn.to/3Q6pAWQ"
 }
+
 
 ];
