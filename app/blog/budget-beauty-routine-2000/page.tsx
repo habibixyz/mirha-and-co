@@ -468,17 +468,7 @@ export default function SkincareRoutineGuide() {
           <hr className="divider" />
 
           <div className="cta-section">
-            <h3>Ready to Start?</h3>
-            <p>
-              All 6 products above are on Amazon India, linked directly. Total investment: ₹2,500-3,000 for 3 months.
-            </p>
-            <p>
-              Start with the 3-step core routine. If it works, add one product. Give it 8 weeks. Track results in a Notes app.
-            </p>
-            <a href="/shop/skincare" className="cta-button">
-              View all skincare picks →
-            </a>
-          </div>
+           Believe in Mirha </div>
 
           <div className="affiliate-note">
             <strong>Disclosure:</strong> Links in this post are Amazon Associates affiliate links. I earn a small commission if you purchase through them — at no extra cost to you. All recommendations are based on my personal testing and verified customer reviews. I only recommend products I'd buy again myself.

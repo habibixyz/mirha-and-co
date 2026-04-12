@@ -635,16 +635,7 @@ export default function BudgetBeautyGuide() {
           <hr className="divider" />
 
           <div className="cta-section">
-            <h3>Ready to Start Your Budget Routine?</h3>
-            <p>
-              All products linked above are on Amazon India. Total: ₹2,000. Timeline: 3 months. Expected result: Noticeably better skin.
-            </p>
-            <p>
-              No need to spend ₹10,000 on skincare. These 8 products work. Start today.
-            </p>
-            <a href="/shop/skincare" className="cta-button">
-              View all budget picks →
-            </a>
+            Believe in Mirha
           </div>
 
           <div className="affiliate-note">
