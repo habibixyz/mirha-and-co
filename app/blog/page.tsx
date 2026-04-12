@@ -2,7 +2,7 @@ const AFFILIATE_TAG = "skinwithtanvi-21";
 
 export default function BlogIndex() {
   const featured = {
-    category: "BEAUTY",
+    category: "BEAUTY" as const,
     title: "What Niacinamide Actually Does to Your Skin (India Edition)",
     excerpt: "The complete, no-fluff guide — written for Indian skin, Indian weather, and Indian budgets.",
     slug: "what-niacinamide-does-to-your-skin",
@@ -13,7 +13,7 @@ export default function BlogIndex() {
 
   const posts = [
     { 
-      category: "BEAUTY", 
+      category: "BEAUTY" as const, 
       title: "The 12 Skincare Products That Actually Changed My Skin",
       excerpt: "After years of testing everything, these are the only products still on my shelf.",
       slug: "skincare-products-that-changed-my-skin",
@@ -23,7 +23,7 @@ export default function BlogIndex() {
       thumbnail: "🧴"
     },
     { 
-      category: "WELLNESS",
+      category: "WELLNESS" as const,
       title: "Morning Routines That Don't Require 2 Hours",
       excerpt: "Five things. Twenty minutes. A real difference.",
       slug: "morning-routines",
@@ -33,7 +33,7 @@ export default function BlogIndex() {
       thumbnail: "☀️"
     },
     { 
-      category: "BEAUTY",
+      category: "BEAUTY" as const,
       title: "Amazon Skincare Finds Under ₹1500 That Dermatologists Actually Use",
       excerpt: "Budget doesn't mean compromise. These prove it.",
       slug: "amazon-skincare-under-1500",
@@ -43,7 +43,7 @@ export default function BlogIndex() {
       thumbnail: "💰"
     },
     { 
-      category: "LIFESTYLE",
+      category: "LIFESTYLE" as const,
       title: "Gift Guides for the Woman Who Has Everything",
       excerpt: "She's impossible to shop for. We figured it out.",
       slug: "gift-guide-woman-who-has-everything",
@@ -53,7 +53,7 @@ export default function BlogIndex() {
       thumbnail: "🎁"
     },
     { 
-      category: "WELLNESS",
+      category: "WELLNESS" as const,
       title: "The Supplements Worth Taking (And the Ones That Are Just Hype)",
       excerpt: "Honest breakdown. No sponsorships. Just research.",
       slug: "supplements-worth-taking",
@@ -63,7 +63,7 @@ export default function BlogIndex() {
       thumbnail: "💊"
     },
     { 
-      category: "BEAUTY",
+      category: "BEAUTY" as const,
       title: "The Right Order to Apply Your Skincare (Most People Get This Wrong)",
       excerpt: "Layering matters. This is the sequence that actually works.",
       slug: "skincare-layering-order",
@@ -73,7 +73,7 @@ export default function BlogIndex() {
       thumbnail: "⚗️"
     },
     { 
-      category: "LIFESTYLE",
+      category: "LIFESTYLE" as const,
       title: "The 8 Amazon Buys That Changed How I Live at Home",
       excerpt: "Small upgrades. Massive difference to daily life.",
       slug: "amazon-home-buys",
@@ -83,7 +83,7 @@ export default function BlogIndex() {
       thumbnail: "🏠"
     },
     { 
-      category: "BEAUTY",
+      category: "BEAUTY" as const,
       title: "Best Sunscreens in India (2026) That Actually Work",
       excerpt: "No white cast. No greasy finish. Just sunscreens that people actually use daily.",
       slug: "best-sunscreens-india-2026",
@@ -246,7 +246,7 @@ export default function BlogIndex() {
         
         /* === SIDEBAR === */
         .blog-hero-side {
-          background: var(--black);
+          background: linear-gradient(135deg, #c8473a 0%, #8b4a4a 100%);
           padding: 3.5rem 3rem;
           display: flex;
           flex-direction: column;
@@ -260,68 +260,52 @@ export default function BlogIndex() {
           position: absolute;
           top: -50%; right: -50%;
           width: 400px; height: 400px;
-          background: radial-gradient(circle, rgba(200, 71, 58, 0.1) 0%, transparent 70%);
+          background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
           border-radius: 50%;
           pointer-events: none;
         }
         
-        .blog-hero-side-label {
-          font-size: 0.58rem;
-          letter-spacing: 0.35em;
-          text-transform: uppercase;
-          color: rgba(255,255,255,0.4);
-          margin-bottom: 1.5rem;
-          font-family: 'DM Sans', sans-serif;
-          font-weight: 600;
-        }
-        
-        .blog-hero-issue {
-          font-family: 'Bebas Neue', sans-serif;
-          font-size: 5.5rem;
-          color: var(--white);
-          line-height: 1;
-          margin-bottom: 0.2rem;
-          font-weight: 700;
-        }
-        
-        .blog-hero-issue-sub {
+        .blog-hero-side h2 {
           font-family: 'DM Serif Display', serif;
-          font-style: italic;
-          font-size: 1.15rem;
-          color: rgba(255,255,255,0.6);
-          margin-bottom: 2.5rem;
-          font-weight: 400;
+          font-size: 2.2rem;
+          color: white;
+          margin-top: 0;
+          margin-bottom: 1rem;
+          line-height: 1.2;
+          position: relative;
+          z-index: 1;
         }
         
-        .topic-list {
-          display: flex;
-          flex-direction: column;
-          gap: 0.95rem;
-        }
-        
-        .topic-item {
-          display: flex;
-          align-items: flex-start;
-          gap: 0.85rem;
-          font-size: 0.75rem;
-          color: rgba(255,255,255,0.55);
+        .blog-hero-side p {
+          font-size: 1rem;
+          color: rgba(255,255,255,0.95);
+          margin-bottom: 2rem;
+          line-height: 1.7;
           font-family: 'DM Sans', sans-serif;
-          line-height: 1.5;
-          padding-bottom: 0.95rem;
-          border-bottom: 1px solid rgba(255,255,255,0.08);
+          position: relative;
+          z-index: 1;
         }
         
-        .topic-item:last-child {
-          border-bottom: none;
-          padding-bottom: 0;
+        .sidebar-cta {
+          display: flex;
+          align-items: center;
+          gap: 1rem;
+          padding-top: 1.5rem;
+          border-top: 1px solid rgba(255,255,255,0.2);
+          position: relative;
+          z-index: 1;
         }
         
-        .topic-dot {
-          width: 5px; height: 5px;
-          border-radius: 50%;
-          background: var(--rose);
-          flex-shrink: 0;
-          margin-top: 0.4rem;
+        .sidebar-cta-icon {
+          font-size: 2.5rem;
+        }
+        
+        .sidebar-cta-text {
+          margin: 0;
+          font-size: 0.9rem;
+          color: rgba(255,255,255,0.85);
+          font-family: 'DM Sans', sans-serif;
+          line-height: 1.4;
         }
         
         /* === AFFILIATE STRIP === */
@@ -614,9 +598,6 @@ export default function BlogIndex() {
             align-items: flex-start;
             gap: 0.5rem;
           }
-          .blog-hero-issue {
-            font-size: 4rem;
-          }
         }
       `}</style>
 
@@ -638,52 +619,14 @@ export default function BlogIndex() {
           </div>
         </div>
         
-        <div className="blog-hero-side" style={{
-  background: 'linear-gradient(135deg, #c8473a 0%, #8b4a4a 100%)',
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'center',
-  padding: '3.5rem 3rem'
-}}>
-  <h2 style={{
-    fontFamily: "'DM Serif Display', serif",
-    fontSize: '2.2rem',
-    color: 'white',
-    marginTop: 0,
-    marginBottom: '1rem',
-    lineHeight: '1.2'
-  }}>
-    Your Skincare Journey
-  </h2>
-  <p style={{
-    fontSize: '1rem',
-    color: 'rgba(255,255,255,0.95)',
-    marginBottom: '2rem',
-    lineHeight: '1.7',
-    fontFamily: "'DM Sans', sans-serif"
-  }}>
-    Three guided steps to transform your routine: from choosing the perfect sunscreen to building a complete beauty regimen that fits your budget and lifestyle.
-  </p>
-  <div style={{
-    display: 'flex',
-    alignItems: 'center',
-    gap: '1rem',
-    paddingTop: '1.5rem',
-    borderTop: '1px solid rgba(255,255,255,0.2)'
-  }}>
-    <span style={{
-      fontSize: '2.5rem'
-    }}>✨</span>
-    <p style={{
-      margin: 0,
-      fontSize: '0.9rem',
-      color: 'rgba(255,255,255,0.85)',
-      fontFamily: "'DM Sans', sans-serif"
-    }}>
-      Start with sunscreen. Master the routine. Build your glow-up.
-    </p>
-  </div>
-</div>
+        <div className="blog-hero-side">
+          <h2>Your Skincare Journey</h2>
+          <p>Three guided steps to transform your routine: from choosing the perfect sunscreen to building a complete beauty regimen that fits your budget and lifestyle.</p>
+          <div className="sidebar-cta">
+            <span className="sidebar-cta-icon">✨</span>
+            <p className="sidebar-cta-text">Start with sunscreen. Master the routine. Build your glow-up.</p>
+          </div>
+        </div>
       </section>
 
       {/* === AFFILIATE DISCLOSURE === */}
