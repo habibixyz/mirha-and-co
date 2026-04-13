@@ -644,7 +644,7 @@ export default function BeautyShopPage() {
           p.brand.toLowerCase().includes(q) ||
           p.subcat.toLowerCase().includes(q) ||
           p.description.toLowerCase().includes(q) ||
-          p.tags.some((t) => t.includes(q)))
+          p.tags.some((t: string) => t.includes(q)))
       );
     });
   }, [query, activeCategory]);
