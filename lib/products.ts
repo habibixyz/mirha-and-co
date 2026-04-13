@@ -460,29 +460,6 @@ export const PRODUCTS = [
   },
   {
     id: 21,
-    name: "Faces Canada Comfy Matte Lip Color",
-    brand: "Faces Canada",
-    category: "Makeup",
-    subcat: "Lip Colour",
-    mrp: 449,
-    price: 299,
-    rating: 4.0,
-    reviews: "2k",
-    asin: "B09V7R5T6G",
-    badge: "Indian Shades",
-    description: "A comfortable matte that doesn't dry out your lips mid-day. Indian-friendly shade range spanning nudes to deep berries. 6-8 hours of wear without constant reapplication.",
-    specs: {
-      "Type": "Liquid Lipstick",
-      "Finish": "Matte",
-      "Longevity": "6-8 hours",
-      "Key Benefit": "Non-drying formula"
-    },
-    tags: ["lipstick", "matte", "lip colour", "long-lasting", "makeup"],
-    image: "/products/faces-canada.jpg",
-    link: "https://amzn.to/4szb6wh",
-  },
-  {
-    id: 22,
     name: "WOW Skin Science Apple Cider Vinegar Shampoo",
     brand: "WOW Skin Science",
     category: "Hair Care",
@@ -505,7 +482,7 @@ export const PRODUCTS = [
     link: "https://amzn.to/4tCPAaS",
   },
   {
-    id: 23,
+    id: 22,
     name: "Indulekha Bringha Hair Oil",
     brand: "Indulekha",
     category: "Hair Care",
@@ -528,7 +505,7 @@ export const PRODUCTS = [
     link: "https://amzn.to/4t4zLd7",
   },
   {
-    id: 24,
+    id: 23,
     name: "Dot & Key Vitamin C + E Super Bright Body Lotion",
     brand: "Dot & Key",
     category: "Body Care",
@@ -551,7 +528,7 @@ export const PRODUCTS = [
     link: "https://amzn.to/4t7Wq8d",
   },
   {
-    id: 25,
+    id: 24,
     name: "Vaseline Cocoa Radiant Body Lotion",
     brand: "Vaseline",
     category: "Body Care",
@@ -574,7 +551,7 @@ export const PRODUCTS = [
     link: "https://amzn.to/420LNs2",
   },
   {
-    id: 26,
+    id: 25,
     name: "Himalaya Wellness Ashwagandha Tablets — 60 Tab",
     brand: "Himalaya",
     category: "Wellness",
@@ -595,5 +572,5 @@ export const PRODUCTS = [
     tags: ["ashwagandha", "adaptogen", "wellness", "stress", "supplement", "ayurvedic"],
     image: "/products/Himalaya-Ashwagandha.jpg",
     link: "https://amzn.to/4td8ZPU",
-  },
+  }
 ];
