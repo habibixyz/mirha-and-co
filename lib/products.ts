@@ -364,8 +364,8 @@ export const PRODUCTS = [
   brand: "WishCare",
   category: "Skincare",
   subcat: "Sunscreen",
-  mrp: 499,
-  price: 364,
+  mrp: 444,
+  price: 316,
   rating: 4.5,
   reviews: "5.2k",
   asin: "B0CW1N7QRT",
@@ -390,19 +390,19 @@ export const PRODUCTS = [
 
 {
   id: 14,
-  name: "Dot & Key Watermelon Hyaluronic Serum 30ml",
+  name: "Dot & Key Watermelon Hyaluronic Serum 20ml",
   brand: "Dot & Key",
   category: "Skincare",
   subcat: "Serum",
-  mrp: 299,
-  price: 227,
-  rating: 4.3,
-  reviews: "10.3k",
-  asin: "B0DSLJVCXS",
+  mrp: 655,
+  price: 400,
+  rating: 4.2,
+  reviews: "1k",
+  asin: "B0FG2PQVK5",
   badge: "Hydration Pick",
   description: "Triple Hyaluronic Acid + Watermelon Extract for deep, lasting hydration. Lightweight, non-sticky formula that absorbs instantly. Perfect for dehydrated skin or anyone sitting in AC all day.",
   specs: {
-    "Volume": "30ml",
+    "Volume": "20ml",
     "Key Ingredients": "Hyaluronic Acid, Watermelon Extract",
     "Skin Type": "Dry, Dehydrated, Normal",
     "Texture": "Gel-Serum",
@@ -410,7 +410,7 @@ export const PRODUCTS = [
   },
   tags: ["hydration", "hyaluronic acid", "serum", "dry skin", "dewy", "watermelon"],
   image: "/products/DotAndKey-Watermelon-Serum.jpg",
-  link: "https://amzn.to/4vHZtpE",
+  link: "https://amzn.to/48HXQ12",
 }
 
 
