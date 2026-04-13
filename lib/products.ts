@@ -478,7 +478,7 @@ export const PRODUCTS = [
       "Key Benefit": "Non-drying formula"
     },
     tags: ["lipstick", "matte", "lip colour", "long-lasting", "makeup"],
-    image: "/products/Faces-Canada.jpg",
+    image: "/products/faces-canada.jpg",
     link: "https://amzn.to/4szb6wh",
   },
   {
