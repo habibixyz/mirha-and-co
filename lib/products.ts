@@ -328,6 +328,92 @@ export const PRODUCTS = [
   link: "https://amzn.to/4tFRRBV"
 },
 
+{
+  id: 12,
+  name: "Lakme SPF 50 PA++++ Sunscreen Lotion for Bright Skin 100 ml",
+  brand: "Lakme",
+  category: "Skincare",
+  subcat: "Sunscreen",
+  mrp: 669,
+  price: 282,
+  rating: 4.2,
+  reviews: "16.4k",
+  asin: "B00CS1KT96",
+
+  badge: "Budget Pick",
+
+  description: "In Vivo Tested | UVA UVB Blue Light Protection | Waterlight| No White Cast | Niacinamide| For All Skin Types| Blocks UV Rays, Reduce Pigmentation.",
+
+  specs: {
+    "Skin Type": "All, Combination, Dry, Normal, Oily, Sensitive",
+    "Key Ingredient": "	Aqua,Para Phenylene Diamine, Moneothanolamine, Hydroxypropyl Methyl Cellulose, Resorcinol, L-ascorbic acid, Propylene, Glycol, Pearl extract, Metaminophenol,Butylated Hydroxytoluene,2,4-diaminophenoxyethanol dihydrochloride, Ammonium Laureth Sulphate, Hydrogen Peroxide, Acrylates Copolymer, Cocamidopropyl, Betaine, Cocamide DEA, Salcyclic acid, Perfume",
+    "Texture": "Lotion",
+    "Use": "Daily"
+  },
+
+  tags: ["SPF 50 PA+++", "Sunscreen", "Niacinamide"],
+
+  image: "/products/Lakme-SPF50.jpg",
+
+  link: "https://amzn.to/3OCKQD8"
+},
+
+{
+  id: 13,
+  name: "WishCare Niacinamide Oil Balance Fluid Sunscreen SPF 50 PA++++ 50ml",
+  brand: "WishCare",
+  category: "Skincare",
+  subcat: "Sunscreen",
+  mrp: 499,
+  price: 364,
+  rating: 4.5,
+  reviews: "5.2k",
+  asin: "B0CW1N7QRT",
+
+  badge: "Value Deal",
+
+  description: "In-Vivo Tested | 8Hrs+ SPF Protection | Lightweight, Matte & No White Cast | Sunscreen SPF 50 For Oily Skin, Sensitive, Dry & Combination Skin | For Women & Men.",
+
+  specs: {
+    "Skin Type": "Oily Skin, Sensitive, Dry & Combination Skin ",
+    "Key Ingredient": "Niacinamide, Zinc PCA, CICA & Ceramides",
+    "Texture": "Lotion",
+    "Use": "Daily"
+  },
+
+  tags: ["SPF 50 PA+++", "Sunscreen", "Niacinamide"],
+
+  image: "/products/WishCare-Niacinamide.jpg",
+
+  link: "https://amzn.to/3Qgw99h"
+},
+
+{
+  id: 14,
+  name: "Dot & Key Watermelon Hyaluronic Serum 30ml",
+  brand: "Dot & Key",
+  category: "Skincare",
+  subcat: "Serum",
+  mrp: 299,
+  price: 227,
+  rating: 4.3,
+  reviews: "10.3k",
+  asin: "B0DSLJVCXS",
+  badge: "Hydration Pick",
+  description: "Triple Hyaluronic Acid + Watermelon Extract for deep, lasting hydration. Lightweight, non-sticky formula that absorbs instantly. Perfect for dehydrated skin or anyone sitting in AC all day.",
+  specs: {
+    "Volume": "30ml",
+    "Key Ingredients": "Hyaluronic Acid, Watermelon Extract",
+    "Skin Type": "Dry, Dehydrated, Normal",
+    "Texture": "Gel-Serum",
+    "Use": "AM & PM"
+  },
+  tags: ["hydration", "hyaluronic acid", "serum", "dry skin", "dewy", "watermelon"],
+  image: "/products/DotAndKey-Watermelon-Serum.jpg",
+  link: "https://amzn.to/4vHZtpE",
+}
+
+
 
 
 
