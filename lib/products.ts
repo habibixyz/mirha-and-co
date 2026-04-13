@@ -1,716 +1,599 @@
-export const PRODUCTS: Product[] = [
+export const PRODUCTS = [
   {
     id: 1,
     name: "Cetaphil Gentle Skin Hydrating Face Wash 118ml",
     brand: "Cetaphil",
-    category: "skincare",
+    category: "Skincare",
     subcat: "Face Wash",
     mrp: 459,
     price: 384,
     rating: 4.5,
     reviews: "1.3L+",
     asin: "B01CCGW4OE",
-
     badge: "Top Rated",
-
-    description:
-      "Paraben Free, Sulphate-Free Gentle Skin Hydrating Cleanser with Niacinamide, Vitamin B5 for Dry to Normal, Sensitive Skin.",
-
+    description: "Paraben Free, Sulphate-Free Gentle Skin Hydrating Cleanser with Niacinamide, Vitamin B5 for Dry to Normal, Sensitive Skin.",
     specs: {
       "Skin Type": "All Skin Types",
       "Key Ingredient": "Glycerin",
       "Texture": "Gel",
       "Use": "Daily cleanser"
     },
-
     tags: ["cleanser", "gentle", "face wash", "cetaphil"],
-
-    image: "/products/cetaphil-facewash.jpg" // 👈 ADD THIS
+    image: "/products/cetaphil-facewash.jpg",
   },
-
   {
-  id: 2,
-  name: "Simple Kind To Skin Moisturising Facial Wash, 150 ml",
-  brand: "Unilever",
-  category: "skincare",
-  subcat: "Face Wash",
-  mrp: 420,
-  price: 329,
-  rating: 4.2,
-  reviews: "5.5k",
-  asin: "B00V4R0ET0",
-
-  badge: "Bestseller",
-
-  description: "100% Soap-Free Moisturising Facewash with Panthenol for dry, sensitive skin | Reduces Visual Dryness & Strengthens Skin Barrier.",
-
-  specs: {
-    "Skin Type": "dry-skin / Strengthens-Skin",
-    "Key Ingredient": "glycerin",
-    "Texture": "cream",
-    "Use": "Daily"
+    id: 2,
+    name: "Simple Kind To Skin Moisturising Facial Wash, 150 ml",
+    brand: "Unilever",
+    category: "Skincare",
+    subcat: "Face Wash",
+    mrp: 420,
+    price: 329,
+    rating: 4.2,
+    reviews: "5.5k",
+    asin: "B00V4R0ET0",
+    badge: "Bestseller",
+    description: "100% Soap-Free Moisturising Facewash with Panthenol for dry, sensitive skin | Reduces Visual Dryness & Strengthens Skin Barrier.",
+    specs: {
+      "Skin Type": "Dry, Sensitive",
+      "Key Ingredient": "Glycerin",
+      "Texture": "Cream",
+      "Use": "Daily"
+    },
+    tags: ["Vitamin-E", "Panthenol", "Pro Amino"],
+    image: "/products/Simple-Moisturising.jpg",
+    link: "https://amzn.to/48nWKaG",
   },
-
-  tags: ["Vitamin-E", " Panthenol", "Pro Amino"],
-
-  image: "/products/Simple-Moisturising.jpg",
-
-  link: "https://amzn.to/48nWKaG"
-},
-
-{
-  id: 3,
-  name: "Minimalist 7% ALA + Glycolic Brightening Face Wash 100ml",
-  brand: "Minimalist",
-  category: "skincare",
-  subcat: "Face Wash",
-  mrp: 399,
-  price: 380,
-  rating: 4.2,
-  reviews: "3.2k",
-  asin: "B09VLDY46B",
-
-  badge: "Trending Now",
-
-  description: "Gentle Exfoliating Cleanser for Glowing Skin & Oil Control, Sulphate Free.",
-
-  specs: {
-    "Skin Type": "All, Combination, Dry, Normal, Oily, Sensitive",
-    "Key Ingredient": "Glycolic Acid",
-    "Texture": "cream",
-    "Use": "Daily"
+  {
+    id: 3,
+    name: "Minimalist 7% ALA + Glycolic Brightening Face Wash 100ml",
+    brand: "Minimalist",
+    category: "Skincare",
+    subcat: "Face Wash",
+    mrp: 399,
+    price: 380,
+    rating: 4.2,
+    reviews: "3.2k",
+    asin: "B09VLDY46B",
+    badge: "Trending Now",
+    description: "Gentle Exfoliating Cleanser for Glowing Skin & Oil Control, Sulphate Free.",
+    specs: {
+      "Skin Type": "All, Combination, Dry, Normal, Oily, Sensitive",
+      "Key Ingredient": "Glycolic Acid",
+      "Texture": "Cream",
+      "Use": "Daily"
+    },
+    tags: ["Alpha Lipoic Acid", "Vitamin B5", "face wash"],
+    image: "/products/Minimalist-ALA.jpg",
+    link: "https://amzn.to/4cn8R9n",
   },
-
-  tags: ["Alpha Lipoic Acid,", "Vitamin B5 (Panthenol)", "Alpha Lipoic Acid"],
-
-  image: "/products/Minimalist-ALA.jpg",
-
-  link: "https://amzn.to/4cn8R9n"
-},
-
-{
-  id: 4,
-  name: "Minimalist Sunscreen SPF 50 PA+++ with Niacinamide & Multi-Vitamins 100gm",
-  brand: "Minimalist",
-  category: "skincare",
-  subcat: "Sunscreen",
-  mrp: 699,
-  price: 533,
-  rating: 4.1,
-  reviews: "31.3k",
-  asin: "B0DHY6LQTW",
-
-  badge: "Smart Buy",
-
-  description: "Clinically Tested in US (In-Vivo) | Lightweight with Multi-Vitamins | No White Cast | Broad Spectrum | Face Sunscreen for Men & Women | 100gm.",
-
-  specs: {
-    "Skin Type": "All, Combination, Dry, Normal, Oily, Sensitive",
-    "Key Ingredient": "Glycolic Acid",
-    "Texture": "cream",
-    "Use": "Daily"
+  {
+    id: 4,
+    name: "Minimalist Sunscreen SPF 50 PA+++ with Niacinamide & Multi-Vitamins 100gm",
+    brand: "Minimalist",
+    category: "Skincare",
+    subcat: "Sunscreen",
+    mrp: 699,
+    price: 533,
+    rating: 4.1,
+    reviews: "31.3k",
+    asin: "B0DHY6LQTW",
+    badge: "Smart Buy",
+    description: "Clinically Tested in US (In-Vivo) | Lightweight with Multi-Vitamins | No White Cast | Broad Spectrum | Face Sunscreen for Men & Women | 100gm.",
+    specs: {
+      "Skin Type": "All, Combination, Dry, Normal, Oily, Sensitive",
+      "Key Ingredient": "Niacinamide, Multi-Vitamins",
+      "Texture": "Cream",
+      "Use": "Daily"
+    },
+    tags: ["SPF 50 PA+++", "Niacinamide", "Multi-Vitamins"],
+    image: "/products/Minimalist-Sunscreen.jpg",
+    link: "https://amzn.to/4muroFm",
   },
-
-  tags: ["SPF 50 PA+++,", "Niacinamide", "Multi-Vitamins"],
-
-  image: "/products/Minimalist-Sunscreen.jpg",
-
-  link: "https://amzn.to/4muroFm"
-},
-
-{
-  id: 5,
-  name: "Aqualogica Radiance+ Dewy Sunscreen with Watermelon & Niacinamide with SPF 50 & PA++++ - 80g",
-  brand: "Aqualogica",
-  category: "skincare",
-  subcat: "Sunscreen",
-  mrp: 599,
-  price: 388,
-  rating: 4.1,
-  reviews: "10k",
-  asin: "B0C9JPWLR4",
-
-  badge: "Best for Price",
-
-  description: "Broad Spectrum SPF 50+ PA++++ | UVA/B & Blue Light Protection | Anti-Pollution Factor (APF) Technology | In Vivo Tested | deal for Oily Skin Type| Fragrance-Free & No White Cast | For Radiant Skin.",
-
-  specs: {
-    "Skin Type": "All, Combination, Dry, Normal, Oily, Sensitive",
-    "Key Ingredient": "	hyaluronic acid, niacinamide, watermelon",
-    "Texture": "cream",
-    "Use": "Daily"
+  {
+    id: 5,
+    name: "Aqualogica Radiance+ Dewy Sunscreen with Watermelon & Niacinamide with SPF 50 & PA++++ - 80g",
+    brand: "Aqualogica",
+    category: "Skincare",
+    subcat: "Sunscreen",
+    mrp: 599,
+    price: 388,
+    rating: 4.1,
+    reviews: "10k",
+    asin: "B0C9JPWLR4",
+    badge: "Best for Price",
+    description: "Broad Spectrum SPF 50+ PA++++ | UVA/B & Blue Light Protection | Anti-Pollution Factor (APF) Technology | In Vivo Tested | Ideal for Oily Skin Type | Fragrance-Free & No White Cast | For Radiant Skin.",
+    specs: {
+      "Skin Type": "All, Combination, Dry, Normal, Oily, Sensitive",
+      "Key Ingredient": "Hyaluronic Acid, Niacinamide, Watermelon",
+      "Texture": "Cream",
+      "Use": "Daily"
+    },
+    tags: ["SPF 50 PA++++", "Niacinamide", "Anti-Pollution"],
+    image: "/products/Aqualogica-Radiance.jpg",
+    link: "https://amzn.to/3OcJtLm",
   },
-
-  tags: ["SPF 50 PA+++,", "Niacinamide", "Anti-Pollution Factor (APF) Technology"],
-
-  image: "/products/Aqualogica-Radiance.jpg",
-
-  link: "https://amzn.to/3OcJtLm"
-},
-
-{
-  id: 6,
-  name: "mCaffeine Exfoliating Coffee Body Scrub Powder Jar 100gm",
-  brand: "mCaffeine",
-  category: "body care",
-  subcat: "Body Scrub",
-  mrp: 449,
-  price: 369,
-  rating: 4.3,
-  reviews: "27.4k",
-  asin: "B07K4BFQK1",
-
-  badge: "Bestseller",
-
-  description: "mCaffeine Exfoliating Coffee Body Scrub Powder Jar for Tan Removal&Soft-Smooth Skin|De-Tan Bathing Scrub With Coconut Oil,Removes Dirt&Dead Skin From Neck,Knees,Elbows&Arms| All Skin Types.",
-
-  specs: {
-    "Skin Type": "All, Combination, Dry, Normal, Oily, Sensitive",
-    "Key Ingredient": "Coffee, Caffeine, Coconut Oil",
-    "Texture": "Powder",
-    "Use": "Daily"
+  {
+    id: 6,
+    name: "mCaffeine Exfoliating Coffee Body Scrub Powder Jar 100gm",
+    brand: "mCaffeine",
+    category: "Body Care",
+    subcat: "Body Scrub",
+    mrp: 449,
+    price: 369,
+    rating: 4.3,
+    reviews: "27.4k",
+    asin: "B07K4BFQK1",
+    badge: "Bestseller",
+    description: "mCaffeine Exfoliating Coffee Body Scrub Powder Jar for Tan Removal & Soft-Smooth Skin | De-Tan Bathing Scrub With Coconut Oil | Removes Dirt & Dead Skin | All Skin Types.",
+    specs: {
+      "Skin Type": "All Skin Types",
+      "Key Ingredient": "Coffee, Caffeine, Coconut Oil",
+      "Texture": "Powder",
+      "Use": "Daily"
+    },
+    tags: ["exfoliating", "body scrub", "tan removal", "coffee"],
+    image: "/products/mCaffeine-Exfoliating.jpg",
+    link: "https://amzn.to/4eerGxJ",
   },
-
-  tags: ["Dead Skin,", "Exfoliating", "Body Scrub"],
-
-  image: "/products/mCaffeine-Exfoliating.jpg",
-
-  link: "https://amzn.to/4eerGxJ"
-},
-
-{
-  id: 7,
-  name: "DOVE Nourishing Bodywash, 825ml",
-  brand: "Dove",
-  category: "body care",
-  subcat: "Body Wash",
-  mrp: 560,
-  price: 302,
-  rating: 4.4,
-  reviews: "29k",
-  asin: "B07S7R626P",
-
-  badge: "Best for Price",
-
-  description: "For Soft and Smooth Skin, with Triple Hydration Serum & Glycerine, Dermatologically Tested, Paraben-Free, Sulphate-Free.",
-
-  specs: {
-    "Skin Type": "All, Combination, Dry, Normal, Oily, Sensitive",
-    "Key Ingredient": "Cocamidopropyl Betaine, Sodium Methyl Lauroyl Taurate, Sodium Lauroyl Isethionate, Glycerin, Perfume",
-    "Texture": "Cream",
-    "Use": "Daily"
+  {
+    id: 7,
+    name: "DOVE Nourishing Bodywash, 825ml",
+    brand: "Dove",
+    category: "Body Care",
+    subcat: "Body Wash",
+    mrp: 560,
+    price: 302,
+    rating: 4.4,
+    reviews: "29k",
+    asin: "B07S7R626P",
+    badge: "Best for Price",
+    description: "For Soft and Smooth Skin, with Triple Hydration Serum & Glycerine, Dermatologically Tested, Paraben-Free, Sulphate-Free.",
+    specs: {
+      "Skin Type": "All Skin Types",
+      "Key Ingredient": "Glycerin",
+      "Texture": "Cream",
+      "Use": "Daily"
+    },
+    tags: ["moisturizing", "body wash", "paraben-free"],
+    image: "/products/DOVE-Nourishing.jpg",
+    link: "https://amzn.to/41ZEWix",
   },
-
-  tags: ["Moisturizing,", "Scented", "Body Wash"],
-
-  image: "/products/DOVE-Nourishing.jpg",
-
-  link: "https://amzn.to/41ZEWix"
-},
-
-{
-  id: 8,
-  name: "TRESemmé Keratin Smooth+ Shampoo 1000ml",
-  brand: "TRESemmé",
-  category: "hair care",
-  subcat: "Hair Wash",
-  mrp: 1370,
-  price: 634,
-  rating: 4.3,
-  reviews: "60k",
-  asin: "B07L3ZCJ53",
-
-  badge: "Best for Price",
-
-  description: "72H Frizz Control with Keratin Protein & Argan Oil | Paraben Free Smoothening Shampoo for Dry & Frizzy Hair.",
-
-  specs: {
-    "Skin Type": "All, Frizzy, Dull, Normal, Oily, Dry",
-    "Key Ingredient": "Water, Sodium Laureth Sulfate, Dimethiconol and Trideceth-10 and Tea-Dodecylbenzenesulfonate, Cocamidopropyl Betaine, Perfume, Sodium Chloride, Carbomer, Amodimethicone and Cetrimonium Chloride and Trideceth-12, Glycol Distearate, Guar Hydroxypropyltrimonium Chloride, Mica and Titanium Dioxide, Disodium Edta, DMDM Hydantoin, Hydrolyzed Keratin, Methylchloroisothiazolinone and Methylisothiazolinone, Sodium Hydroxide.",
-    "Texture": "Cream",
-    "Use": "Daily"
+  {
+    id: 8,
+    name: "TRESemmé Keratin Smooth+ Shampoo 1000ml",
+    brand: "TRESemmé",
+    category: "Hair Care",
+    subcat: "Hair Wash",
+    mrp: 1370,
+    price: 634,
+    rating: 4.3,
+    reviews: "60k",
+    asin: "B07L3ZCJ53",
+    badge: "Best for Price",
+    description: "72H Frizz Control with Keratin Protein & Argan Oil | Paraben Free Smoothening Shampoo for Dry & Frizzy Hair.",
+    specs: {
+      "Skin Type": "All, Frizzy, Dull, Normal, Oily, Dry",
+      "Key Ingredient": "Keratin Protein, Argan Oil",
+      "Texture": "Cream",
+      "Use": "Daily"
+    },
+    tags: ["anti-hair loss", "paraben free", "hair wash", "keratin"],
+    image: "/products/TRESemmé-Keratin.jpg",
+    link: "https://amzn.to/3Q6pAWQ",
   },
-
-  tags: ["Anti-Hair Loss,", "Paraben Free", "Hair Wash"],
-
-  image: "/products/TRESemmé-Keratin.jpg",
-
-  link: "https://amzn.to/3Q6pAWQ"
-},
-
-{
-  id: 9,
-  name: "Deconstruct Gel Sunscreen for Oily skin SPF 50 PA++++ 50gm",
-  brand: "Deconstruct",
-  category: "skincare",
-  subcat: "Sunscreen",
-  mrp: 349,
-  price: 281,
-  rating: 4.2,
-  reviews: "12.3k",
-  asin: "B0B45RB1RV",
-
-  badge: "Top Rated",
-
-  description: "100% Photostable Sunscreen |4 New Gen UV Filters |In-Vivo |Lightweight, Airy, Non-greasy |For oily, combination, normal skin |For Men & Women.",
-
-  specs: {
-    "Skin Type": "All, Normal, Oily, Dry",
-    "Key Ingredient": "Benzophenone-3, Butyl Methoxydibenzoylmethane, Ethylhexyl methoxycinnamate.",
-    "Texture": "Gel",
-    "Use": "Daily"
+  {
+    id: 9,
+    name: "Deconstruct Gel Sunscreen for Oily skin SPF 50 PA++++ 50gm",
+    brand: "Deconstruct",
+    category: "Skincare",
+    subcat: "Sunscreen",
+    mrp: 349,
+    price: 281,
+    rating: 4.2,
+    reviews: "12.3k",
+    asin: "B0B45RB1RV",
+    badge: "Top Rated",
+    description: "100% Photostable Sunscreen | 4 New Gen UV Filters | In-Vivo | Lightweight, Airy, Non-greasy | For oily, combination, normal skin | For Men & Women.",
+    specs: {
+      "Skin Type": "Oily, Normal, Combination",
+      "Key Ingredient": "UV Filters",
+      "Texture": "Gel",
+      "Use": "Daily"
+    },
+    tags: ["sunscreen", "SPF 50", "oily skin", "no white cast"],
+    image: "/products/Deconstruct-Gel.jpg",
+    link: "https://amzn.to/47W1AvI",
   },
-
-  tags: ["Prevents tanning,", "Sun related ageing", "Sunscreen", "Non-oily absorption with no white cast"],
-
-  image: "/products/Deconstruct-Gel.jpg",
-
-  link: "https://amzn.to/47W1AvI"
-},
-
-{
-  id: 10,
-  name: "Minimalist 10% Niacinamide Serum with Zinc 60ml",
-  brand: "Minimalist",
-  category: "skincare",
-  subcat: "Serum",
-  mrp: 999,
-  price: 950,
-  rating: 4.2,
-  reviews: "24k",
-  asin: "B0DH88LZ11",
-
-  badge: "Skin Reset",
-
-  description: "Reduces Acne Marks, Controls Oil & Minimizes Pores | Vitamin B3 for Blemish-Free, Clear Skin | For Oily & Acne-Prone Skin | For external use only, Avoid contact with eyes, Keep away from naked flame or direct heat sources",
-
-  specs: {
-    "Skin Type": "All, Normal, Oily, Dry",
-    "Key Ingredient": "Niacinamide, Zinc, Vitamin B3.",
-    "Texture": "Serum",
-    "Use": "Daily"
+  {
+    id: 10,
+    name: "Minimalist 10% Niacinamide Serum with Zinc 60ml",
+    brand: "Minimalist",
+    category: "Skincare",
+    subcat: "Serum",
+    mrp: 999,
+    price: 950,
+    rating: 4.2,
+    reviews: "24k",
+    asin: "B0DH88LZ11",
+    badge: "Skin Reset",
+    description: "Reduces Acne Marks, Controls Oil & Minimizes Pores | Vitamin B3 for Blemish-Free, Clear Skin | For Oily & Acne-Prone Skin.",
+    specs: {
+      "Skin Type": "Oily, Acne-Prone",
+      "Key Ingredient": "Niacinamide, Zinc, Vitamin B3",
+      "Texture": "Serum",
+      "Use": "Daily"
+    },
+    tags: ["niacinamide", "serum", "acne marks", "pores"],
+    image: "/products/Niacinamide-Serum.jpg",
+    link: "https://amzn.to/4ceFxl5",
   },
-
-  tags: ["Blemishes treatment,", "removes acne marks", "Niacinamide", "Serum"],
-
-  image: "/products/Niacinamide-Serum.jpg",
-
-  link: "https://amzn.to/4ceFxl5"
-},
-
-{
-  id: 11,
-  name: "The Ordinary Niacinamide 10% + Zinc 1% 30ml",
-  brand: "The Ordinary",
-  category: "skin care",
-  subcat: "Serum",
-  mrp: 600,
-  price: 599,
-  rating: 4.3,
-  reviews: "54k",
-  asin: "B01MDTVZTZ",
-
-  badge: "Top Rated",
-
-  description: "Brightening & Smoothing Serum for Blemish-Prone Skin",
-
-  specs: {
-    "Skin Type": "All, Normal, Oily, Dry",
-    "Key Ingredient": "Niacinamide, Zinc.",
-    "Texture": "Serum",
-    "Use": "Daily"
+  {
+    id: 11,
+    name: "The Ordinary Niacinamide 10% + Zinc 1% 30ml",
+    brand: "The Ordinary",
+    category: "Skincare",
+    subcat: "Serum",
+    mrp: 600,
+    price: 599,
+    rating: 4.3,
+    reviews: "54k",
+    asin: "B01MDTVZTZ",
+    badge: "Top Rated",
+    description: "Brightening & Smoothing Serum for Blemish-Prone Skin.",
+    specs: {
+      "Skin Type": "All, Normal, Oily, Dry",
+      "Key Ingredient": "Niacinamide, Zinc",
+      "Texture": "Serum",
+      "Use": "Daily"
+    },
+    tags: ["niacinamide", "serum", "acne marks", "brightening"],
+    image: "/products/Ordinary-Niacinamide.jpg",
+    link: "https://amzn.to/4tFRRBV",
   },
-
-  tags: ["Blemishes treatment,", "removes acne marks", "Niacinamide ", "Serum"],
-
-  image: "/products/Ordinary-Niacinamide.jpg",
-
-  link: "https://amzn.to/4tFRRBV"
-},
-
-{
-  id: 12,
-  name: "Lakme SPF 50 PA++++ Sunscreen Lotion for Bright Skin 100 ml",
-  brand: "Lakme",
-  category: "Skincare",
-  subcat: "Sunscreen",
-  mrp: 669,
-  price: 282,
-  rating: 4.2,
-  reviews: "16.4k",
-  asin: "B00CS1KT96",
-
-  badge: "Budget Pick",
-
-  description: "In Vivo Tested | UVA UVB Blue Light Protection | Waterlight| No White Cast | Niacinamide| For All Skin Types| Blocks UV Rays, Reduce Pigmentation.",
-
-  specs: {
-    "Skin Type": "All, Combination, Dry, Normal, Oily, Sensitive",
-    "Key Ingredient": "	Aqua,Para Phenylene Diamine, Moneothanolamine, Hydroxypropyl Methyl Cellulose, Resorcinol, L-ascorbic acid, Propylene, Glycol, Pearl extract, Metaminophenol,Butylated Hydroxytoluene,2,4-diaminophenoxyethanol dihydrochloride, Ammonium Laureth Sulphate, Hydrogen Peroxide, Acrylates Copolymer, Cocamidopropyl, Betaine, Cocamide DEA, Salcyclic acid, Perfume",
-    "Texture": "Lotion",
-    "Use": "Daily"
+  {
+    id: 12,
+    name: "Lakme SPF 50 PA++++ Sunscreen Lotion for Bright Skin 100 ml",
+    brand: "Lakme",
+    category: "Skincare",
+    subcat: "Sunscreen",
+    mrp: 669,
+    price: 282,
+    rating: 4.2,
+    reviews: "16.4k",
+    asin: "B00CS1KT96",
+    badge: "Budget Pick",
+    description: "In Vivo Tested | UVA UVB Blue Light Protection | Waterlight | No White Cast | Niacinamide | For All Skin Types | Blocks UV Rays, Reduce Pigmentation.",
+    specs: {
+      "Skin Type": "All Skin Types",
+      "Key Ingredient": "Niacinamide",
+      "Texture": "Lotion",
+      "Use": "Daily"
+    },
+    tags: ["SPF 50 PA++++", "sunscreen", "niacinamide", "budget"],
+    image: "/products/Lakme-SPF50.jpg",
+    link: "https://amzn.to/3OCKQD8",
   },
-
-  tags: ["SPF 50 PA+++", "Sunscreen", "Niacinamide"],
-
-  image: "/products/Lakme-SPF50.jpg",
-
-  link: "https://amzn.to/3OCKQD8"
-},
-
-{
-  id: 13,
-  name: "WishCare Niacinamide Oil Balance Fluid Sunscreen SPF 50 PA++++ 50ml",
-  brand: "WishCare",
-  category: "Skincare",
-  subcat: "Sunscreen",
-  mrp: 444,
-  price: 316,
-  rating: 4.5,
-  reviews: "5.2k",
-  asin: "B0CW1N7QRT",
-
-  badge: "Value Deal",
-
-  description: "In-Vivo Tested | 8Hrs+ SPF Protection | Lightweight, Matte & No White Cast | Sunscreen SPF 50 For Oily Skin, Sensitive, Dry & Combination Skin | For Women & Men.",
-
-  specs: {
-    "Skin Type": "Oily Skin, Sensitive, Dry & Combination Skin ",
-    "Key Ingredient": "Niacinamide, Zinc PCA, CICA & Ceramides",
-    "Texture": "Lotion",
-    "Use": "Daily"
+  {
+    id: 13,
+    name: "WishCare Niacinamide Oil Balance Fluid Sunscreen SPF 50 PA++++ 50ml",
+    brand: "WishCare",
+    category: "Skincare",
+    subcat: "Sunscreen",
+    mrp: 444,
+    price: 316,
+    rating: 4.5,
+    reviews: "5.2k",
+    asin: "B0CW1N7QRT",
+    badge: "Value Deal",
+    description: "In-Vivo Tested | 8Hrs+ SPF Protection | Lightweight, Matte & No White Cast | Sunscreen SPF 50 For Oily Skin, Sensitive, Dry & Combination Skin | For Women & Men.",
+    specs: {
+      "Skin Type": "Oily, Sensitive, Dry, Combination",
+      "Key Ingredient": "Niacinamide, Zinc PCA, CICA, Ceramides",
+      "Texture": "Lotion",
+      "Use": "Daily"
+    },
+    tags: ["SPF 50 PA++++", "sunscreen", "niacinamide", "matte"],
+    image: "/products/WishCare-Niacinamide.jpg",
+    link: "https://amzn.to/3Qgw99h",
   },
-
-  tags: ["SPF 50 PA+++", "Sunscreen", "Niacinamide"],
-
-  image: "/products/WishCare-Niacinamide.jpg",
-
-  link: "https://amzn.to/3Qgw99h"
-},
-
-{
-  id: 14,
-  name: "Dot & Key Watermelon Hyaluronic Serum",
-  brand: "Dot & Key",
-  category: "Skincare",
-  subcat: "Serum",
-  mrp: 449,
-  price: 400,
-  rating: 4.2,
-  reviews: "849",
-  asin: "B0FG2PQVK5",
-  badge: "Hydration Pick",
-  description: "Triple Hyaluronic Acid + Watermelon Extract for deep, lasting hydration. Lightweight, non-sticky formula that absorbs instantly. Perfect for dehydrated skin or anyone sitting in AC all day.",
-  specs: {
-    "Key Ingredients": "Hyaluronic Acid, Watermelon Extract, Niacinamide",
-    "Skin Type": "Dry, Dehydrated, Normal",
-    "Texture": "Gel-Serum",
-    "Use": "AM & PM"
+  {
+    id: 14,
+    name: "Dot & Key Watermelon Hyaluronic Serum",
+    brand: "Dot & Key",
+    category: "Skincare",
+    subcat: "Serum",
+    mrp: 449,
+    price: 400,
+    rating: 4.2,
+    reviews: "849",
+    asin: "B0FG2PQVK5",
+    badge: "Hydration Pick",
+    description: "Triple Hyaluronic Acid + Watermelon Extract for deep, lasting hydration. Lightweight, non-sticky formula that absorbs instantly. Perfect for dehydrated skin or anyone sitting in AC all day.",
+    specs: {
+      "Skin Type": "Dry, Dehydrated, Normal",
+      "Key Ingredient": "Hyaluronic Acid, Watermelon Extract, Niacinamide",
+      "Texture": "Gel-Serum",
+      "Use": "AM & PM"
+    },
+    tags: ["hydration", "hyaluronic acid", "serum", "dry skin", "watermelon"],
+    image: "/products/DotAndKey-Watermelon-Serum.jpg",
+    link: "https://amzn.to/3OcSTGJ",
   },
-  tags: ["hydration", "hyaluronic acid", "serum", "dry skin", "dewy", "watermelon", "niacinamide"],
-  image: "/products/DotAndKey-Watermelon-Serum.jpg",
-  link: "https://amzn.to/3OcSTGJ",
-},
-
-{
-  id: 15,
-  name: "Plum 15% Vitamin C Face Serum",
-  brand: "Plum",
-  category: "Skincare",
-  subcat: "Serum",
-  mrp: 550,
-  price: 445,
-  rating: 4.0,
-  reviews: "14.6k",
-  asin: "B095PRGHDX",
-  badge: "Glow Booster",
-  description: "Stable 15% Vitamin C with mandarin peel extract targets dullness, pigmentation, and uneven tone. Vegan and cruelty-free. Use in the morning before SPF for best results.",
-  specs: {
-    "Concentration": "15% Vitamin C",
-    "Key Ingredients": "Vitamin C, Mandarin Peel Extract",
-    "Skin Type": "All Skin Types",
-    "Fragrance-Free": "Yes",
-    "Use": "AM preferred"
+  {
+    id: 15,
+    name: "Plum 15% Vitamin C Face Serum",
+    brand: "Plum",
+    category: "Skincare",
+    subcat: "Serum",
+    mrp: 550,
+    price: 445,
+    rating: 4.0,
+    reviews: "14.6k",
+    asin: "B095PRGHDX",
+    badge: "Glow Booster",
+    description: "Stable 15% Vitamin C with mandarin peel extract targets dullness, pigmentation, and uneven tone. Vegan and cruelty-free. Use in the morning before SPF for best results.",
+    specs: {
+      "Skin Type": "All Skin Types",
+      "Key Ingredient": "Vitamin C, Mandarin Peel Extract",
+      "Concentration": "15% Vitamin C",
+      "Use": "AM preferred"
+    },
+    tags: ["vitamin c", "brightening", "serum", "glow", "pigmentation"],
+    image: "/products/Plum-15.jpg",
+    link: "https://amzn.to/4t7YmO1",
   },
-  tags: ["vitamin c", "brightening", "serum", "glow", "pigmentation", "tan removal", "vegan"],
-  image: "/products/Plum-15.jpg",
-  link: "https://amzn.to/4t7YmO1",
-},
-
-{
-  id: 16,
-  name: "Minimalist Retinol 0.3% + Squalane Serum",
-  brand: "Minimalist",
-  category: "Skincare",
-  subcat: "Serum",
-  mrp: 599,
-  price: 569,
-  rating: 4.2,
-  reviews: "8.3k",
-  asin: "B091JG3GJ5",
-  badge: "Anti-Ageing",
-  description: "Entry-level retinol (0.3%) in squalane base for a gentler introduction to vitamin A. Reduces fine lines, improves skin texture, and speeds up cell turnover. Night use only — always follow with SPF the next morning.",
-  specs: {
-    "Concentration": "0.3% Retinol",
-    "Key Ingredients": "Retinol, Squalane",
-    "Skin Type": "Normal, Combination, Oily",
-    "Fragrance-Free": "Yes",
-    "Use": "PM only"
+  {
+    id: 16,
+    name: "Minimalist Retinol 0.3% + Squalane Serum",
+    brand: "Minimalist",
+    category: "Skincare",
+    subcat: "Serum",
+    mrp: 599,
+    price: 569,
+    rating: 4.2,
+    reviews: "8.3k",
+    asin: "B091JG3GJ5",
+    badge: "Anti-Ageing",
+    description: "Entry-level retinol (0.3%) in squalane base for a gentler introduction to vitamin A. Reduces fine lines, improves skin texture, and speeds up cell turnover. Night use only — always follow with SPF the next morning.",
+    specs: {
+      "Skin Type": "Normal, Combination, Oily",
+      "Key Ingredient": "Retinol, Squalane",
+      "Concentration": "0.3% Retinol",
+      "Use": "PM only"
+    },
+    tags: ["retinol", "anti-ageing", "fine lines", "night serum", "squalane"],
+    image: "/products/Minimalist-Retinol.jpg",
+    link: "https://amzn.to/3OExEO6",
   },
-  tags: ["retinol", "anti-ageing", "fine lines", "night serum", "skin renewal", "texture", "squalane"],
-  image: "/products/Minimalist-Retinol.jpg",
-  link: "https://amzn.to/3OExEO6",
-},
-
-{
-  id: 17,
-  name: "Neutrogena Hydro Boost Water Gel Moisturiser",
-  brand: "Neutrogena",
-  category: "Skincare",
-  subcat: "Moisturiser",
-  mrp: 1050,
-  price: 730,
-  rating: 4.4,
-  reviews: "10.4k",
-  asin: "B00BQFTQW6",
-  badge: "Dermat Approved",
-  description: "Cult-favourite oil-free gel moisturiser with hyaluronic acid. Absorbs in seconds, keeps skin hydrated for 48 hours. The go-to for oily skin types who think they don't need a moisturiser — you do, just this one.",
-  specs: {
-    "Key Ingredient": "Hyaluronic Acid",
-    "Texture": "Water Gel",
-    "Skin Type": "Oily, Combination",
-    "Oil-Free": "Yes",
-    "SPF": "No"
+  {
+    id: 17,
+    name: "Neutrogena Hydro Boost Water Gel Moisturiser",
+    brand: "Neutrogena",
+    category: "Skincare",
+    subcat: "Moisturiser",
+    mrp: 1050,
+    price: 730,
+    rating: 4.4,
+    reviews: "10.4k",
+    asin: "B00BQFTQW6",
+    badge: "Dermat Approved",
+    description: "Cult-favourite oil-free gel moisturiser with hyaluronic acid. Absorbs in seconds, keeps skin hydrated for 48 hours. The go-to for oily skin types who think they don't need a moisturiser — you do, just this one.",
+    specs: {
+      "Skin Type": "Oily, Combination",
+      "Key Ingredient": "Hyaluronic Acid",
+      "Texture": "Water Gel",
+      "Use": "AM & PM"
+    },
+    tags: ["moisturiser", "hyaluronic acid", "gel", "oily skin", "oil-free"],
+    image: "/products/Neutrogena-Hydro.jpg",
+    link: "https://amzn.to/3Qa5pau",
   },
-  tags: ["moisturiser", "hyaluronic acid", "gel", "oily skin", "lightweight", "hydration", "oil-free"],
-  image: "/products/Neutrogena-Hydro.jpg",
-  link: "https://amzn.to/3Qa5pau",
-},
-
-{
-  id: 18,
-  name: "Cetaphil Moisturising Cream 250g",
-  brand: "Cetaphil",
-  category: "Skincare",
-  subcat: "Moisturiser",
-  mrp: 1349,
-  price: 1317,
-  rating: 4.5,
-  reviews: "4.2k",
-  asin: "B099MJH88B",
-  badge: "Sensitive Skin",
-  description: "The dermatologist gold standard for sensitive and dry skin. Fragrance-free, non-comedogenic, gentle enough for eczema-prone skin. Works on both face and body — one product, fewer decisions.",
-  specs: {
-    "Weight": "250g",
-    "Key Ingredients": "Glycerin, Niacinamide",
-    "Skin Type": "Sensitive, Dry",
-    "Fragrance-Free": "Yes",
-    "Non-Comedogenic": "Yes"
+  {
+    id: 18,
+    name: "Cetaphil Moisturising Cream 250g",
+    brand: "Cetaphil",
+    category: "Skincare",
+    subcat: "Moisturiser",
+    mrp: 1349,
+    price: 1317,
+    rating: 4.5,
+    reviews: "4.2k",
+    asin: "B099MJH88B",
+    badge: "Sensitive Skin",
+    description: "The dermatologist gold standard for sensitive and dry skin. Fragrance-free, non-comedogenic, gentle enough for eczema-prone skin. Works on both face and body — one product, fewer decisions.",
+    specs: {
+      "Skin Type": "Sensitive, Dry",
+      "Key Ingredient": "Glycerin, Niacinamide",
+      "Weight": "250g",
+      "Use": "AM & PM"
+    },
+    tags: ["moisturiser", "sensitive skin", "dry skin", "fragrance-free", "eczema"],
+    image: "/products/Cetaphil-Moisturisingz.jpg",
+    link: "https://amzn.to/3NYBSQA",
   },
-  tags: ["moisturiser", "sensitive skin", "dry skin", "fragrance-free", "eczema", "dermat", "cetaphil"],
-  image: "/products/Cetaphil-Moisturisingz.jpg",
-  link: "https://amzn.to/3NYBSQA",
-},
-
-{
-  id: 19,
-  name: "Maybelline Fit Me Matte+Poreless Foundation",
-  brand: "Maybelline",
-  category: "Makeup",
-  subcat: "Foundation",
-  mrp: 629,
-  price: 324,
-  rating: 4.2,
-  reviews: "21.2k",
-  asin: "B087XFYCDQ",
-  badge: "Bestseller",
-  description: "India's most-used drugstore foundation. Matte finish that blurs pores and holds through 8-hour work days in Indian humidity. Medium-to-full buildable coverage without looking cakey.",
-  specs: {
-    "Finish": "Matte",
-    "Coverage": "Medium to Full",
-    "Skin Type": "Oily, Combination",
-    "SPF": "No",
-    "Shades Available": "12+"
+  {
+    id: 19,
+    name: "Maybelline Fit Me Matte+Poreless Foundation",
+    brand: "Maybelline",
+    category: "Makeup",
+    subcat: "Foundation",
+    mrp: 629,
+    price: 324,
+    rating: 4.2,
+    reviews: "21.2k",
+    asin: "B087XFYCDQ",
+    badge: "Bestseller",
+    description: "India's most-used drugstore foundation. Matte finish that blurs pores and holds through 8-hour work days in Indian humidity. Medium-to-full buildable coverage without looking cakey.",
+    specs: {
+      "Skin Type": "Oily, Combination",
+      "Finish": "Matte",
+      "Coverage": "Medium to Full",
+      "Use": "Daily"
+    },
+    tags: ["foundation", "matte", "oily skin", "coverage", "makeup"],
+    image: "/products/Maybelline-New.jpg",
+    link: "https://amzn.to/4tCP38S",
   },
-  tags: ["foundation", "matte", "oily skin", "coverage", "makeup", "full coverage", "pore blurring", "drugstore"],
-  image: "/products/Maybelline-New.jpg",
-  link: "https://amzn.to/4tCP38S",
-},
-
-{
-  id: 20,
-  name: "L'Oréal Paris Kajal Magique",
-  brand: "L'Oréal Paris",
-  category: "Makeup",
-  subcat: "Kajal",
-  mrp: 449,
-  price: 269,
-  rating: 4.1,
-  reviews: "6.2k",
-  asin: "B01BY5KDEC",
-  badge: "Top Rated",
-  description: "Intensely pigmented kajal that actually stays put in Indian heat and humidity. Smooth glide, waterproof formula, and 12-hour wear. One of the most consistently reviewed eye products in India for a reason.",
-  specs: {
-    "Type": "Kajal",
-    "Finish": "Matte",
-    "Waterproof": "Yes",
-    "Longevity": "12 hours",
-    "Ophthalmologist Tested": "Yes"
+  {
+    id: 20,
+    name: "L'Oréal Paris Kajal Magique",
+    brand: "L'Oréal Paris",
+    category: "Makeup",
+    subcat: "Kajal",
+    mrp: 449,
+    price: 269,
+    rating: 4.1,
+    reviews: "6.2k",
+    asin: "B01BY5KDEC",
+    badge: "Top Rated",
+    description: "Intensely pigmented kajal that actually stays put in Indian heat and humidity. Smooth glide, waterproof formula, and 12-hour wear. One of the most consistently reviewed eye products in India for a reason.",
+    specs: {
+      "Type": "Kajal",
+      "Finish": "Matte",
+      "Waterproof": "Yes",
+      "Longevity": "12 hours"
+    },
+    tags: ["kajal", "eyeliner", "smudge-proof", "waterproof", "eyes"],
+    image: "/products/L'Oréal-Paris.jpg",
+    link: "https://amzn.to/4c9CAUn",
   },
-  tags: ["kajal", "kohl", "eyeliner", "smudge-proof", "waterproof", "eyes", "makeup", "black"],
-  image: "/products/L'Oréal-Paris.jpg",
-  link: "https://amzn.to/4c9CAUn",
-},
-
-{
-  id: 21,
-  name: "Faces Canada Comfy Matte Lip Color",
-  brand: "Faces Canada",
-  category: "Makeup",
-  subcat: "Lip Colour",
-  mrp: 449,
-  price: 299,
-  rating: 4.0,
-  reviews: "2k",
-  asin: "B09V7R5T6G",
-  badge: "Indian Shades",
-  description: "A comfortable matte that doesn't dry out your lips mid-day. Indian-friendly shade range spanning nudes to deep berries. 6–8 hours of wear without constant reapplication or that tight, chalky feeling.",
-  specs: {
-    "Type": "Liquid Lipstick",
-    "Finish": "Matte",
-    "Longevity": "6-8 hours",
-    "Cruelty-Free": "Yes",
-    "Key Benefit": "Non-drying formula"
+  {
+    id: 21,
+    name: "Faces Canada Comfy Matte Lip Color",
+    brand: "Faces Canada",
+    category: "Makeup",
+    subcat: "Lip Colour",
+    mrp: 449,
+    price: 299,
+    rating: 4.0,
+    reviews: "2k",
+    asin: "B09V7R5T6G",
+    badge: "Indian Shades",
+    description: "A comfortable matte that doesn't dry out your lips mid-day. Indian-friendly shade range spanning nudes to deep berries. 6-8 hours of wear without constant reapplication.",
+    specs: {
+      "Type": "Liquid Lipstick",
+      "Finish": "Matte",
+      "Longevity": "6-8 hours",
+      "Key Benefit": "Non-drying formula"
+    },
+    tags: ["lipstick", "matte", "lip colour", "long-lasting", "makeup"],
+    image: "/products/Faces-Canada.jpg",
+    link: "https://amzn.to/4szb6wh",
   },
-  tags: ["lipstick", "matte", "lip colour", "long-lasting", "makeup", "nude", "bold", "cruelty-free"],
-  image: "/products/Faces-Canada.jpg",
-  link: "https://amzn.to/4szb6wh",
-},
-
-{
-  id: 22,
-  name: "WOW Skin Science Apple Cider Vinegar Shampoo",
-  brand: "WOW Skin Science",
-  category: "Hair Care",
-  subcat: "Shampoo",
-  mrp: 374,
-  price: 319,
-  rating: 3.8,
-  reviews: "45k",
-  asin: "B09M8NN8DQ",
-  badge: "Trending",
-  description: "ACV shampoo that balances scalp pH, reduces dandruff, and clears product buildup. Sulphate-free and silicone-free. Especially effective during monsoon when oily scalp gets out of hand.",
-  specs: {
-    "Key Ingredient": "Apple Cider Vinegar",
-    "Sulphate-Free": "Yes",
-    "Silicone-Free": "Yes",
-    "Best For": "Oily scalp, dandruff, buildup"
+  {
+    id: 22,
+    name: "WOW Skin Science Apple Cider Vinegar Shampoo",
+    brand: "WOW Skin Science",
+    category: "Hair Care",
+    subcat: "Shampoo",
+    mrp: 374,
+    price: 319,
+    rating: 3.8,
+    reviews: "45k",
+    asin: "B09M8NN8DQ",
+    badge: "Trending",
+    description: "ACV shampoo that balances scalp pH, reduces dandruff, and clears product buildup. Sulphate-free and silicone-free. Especially effective during monsoon when oily scalp gets out of hand.",
+    specs: {
+      "Key Ingredient": "Apple Cider Vinegar",
+      "Sulphate-Free": "Yes",
+      "Silicone-Free": "Yes",
+      "Best For": "Oily scalp, dandruff, buildup"
+    },
+    tags: ["shampoo", "apple cider vinegar", "scalp", "dandruff", "sulphate-free"],
+    image: "/products/Wow-Skin.jpg",
+    link: "https://amzn.to/4tCPAaS",
   },
-  tags: ["shampoo", "apple cider vinegar", "scalp", "dandruff", "oily scalp", "hair wash", "sulphate-free"],
-  image: "/products/Wow-Skin.jpg",
-  link: "https://amzn.to/4tCPAaS",
-},
-
-{
-  id: 23,
-  name: "Indulekha Bringha Hair Oil",
-  brand: "Indulekha",
-  category: "Hair Care",
-  subcat: "Hair Oil",
-  mrp: 999,
-  price: 572,
-  rating: 4.1,
-  reviews: "74k",
-  asin: "B086QDT64L",
-  badge: "Ayurvedic Pick",
-  description: "The ayurvedic hair oil with actual clinical backing. Bringharaj (eclipta alba) is one of the few traditional ingredients with published studies on hair growth. Loved by Indian grandmothers and dermatologists alike — rare company.",
-  specs: {
-    "Key Ingredient": "Bringharaj (Eclipta Alba)",
-    "Type": "Hair Oil",
-    "Best For": "Hair fall, scalp health, growth",
-    "Ayurvedic": "Yes"
+  {
+    id: 23,
+    name: "Indulekha Bringha Hair Oil",
+    brand: "Indulekha",
+    category: "Hair Care",
+    subcat: "Hair Oil",
+    mrp: 999,
+    price: 572,
+    rating: 4.1,
+    reviews: "74k",
+    asin: "B086QDT64L",
+    badge: "Ayurvedic Pick",
+    description: "The ayurvedic hair oil with actual clinical backing. Bringharaj (eclipta alba) is one of the few traditional ingredients with published studies on hair growth. Loved by Indian grandmothers and dermatologists alike.",
+    specs: {
+      "Key Ingredient": "Bringharaj (Eclipta Alba)",
+      "Type": "Hair Oil",
+      "Best For": "Hair fall, scalp health, growth",
+      "Ayurvedic": "Yes"
+    },
+    tags: ["hair oil", "bringha", "ayurvedic", "hair fall", "growth"],
+    image: "/products/Indulekha-Bringha.jpg",
+    link: "https://amzn.to/4t4zLd7",
   },
-  tags: ["hair oil", "bringha", "ayurvedic", "hair fall", "scalp", "growth", "traditional", "indulekha"],
-  image: "/products/Indulekha-Bringha.jpg",
-  link: "https://amzn.to/4t4zLd7",
-},
-
-{
-  id: 24,
-  name: "Dot & Key Vitamin C + E Super Bright Body Lotion",
-  brand: "Dot & Key",
-  category: "Body Care",
-  subcat: "Body Lotion",
-  mrp: 359,
-  price: 316,
-  rating: 4.2,
-  reviews: "1.4k",
-  asin: "B0CHJTCGS3",
-  badge: "Glow Pick",
-  description: "Lightweight body lotion with Vitamin C, E and Niacinamide that targets tan lines, uneven body tone, and dullness. All the concerns Indian skin deals with — especially on arms, legs, and neck.",
-  specs: {
-    "Key Ingredients": "Vitamin C, Vitamin E, Niacinamide",
-    "Skin Type": "All",
-    "Best For": "Tan removal, brightening, uneven tone",
-    "Fragrance": "Light"
+  {
+    id: 24,
+    name: "Dot & Key Vitamin C + E Super Bright Body Lotion",
+    brand: "Dot & Key",
+    category: "Body Care",
+    subcat: "Body Lotion",
+    mrp: 359,
+    price: 316,
+    rating: 4.2,
+    reviews: "1.4k",
+    asin: "B0CHJTCGS3",
+    badge: "Glow Pick",
+    description: "Lightweight body lotion with Vitamin C, E and Niacinamide that targets tan lines, uneven body tone, and dullness. All the concerns Indian skin deals with — especially on arms, legs, and neck.",
+    specs: {
+      "Skin Type": "All",
+      "Key Ingredient": "Vitamin C, Vitamin E, Niacinamide",
+      "Best For": "Tan removal, brightening, uneven tone",
+      "Fragrance": "Light"
+    },
+    tags: ["body lotion", "vitamin c", "brightening", "tan removal", "niacinamide"],
+    image: "/products/Dot-Key-Vitamin.jpg",
+    link: "https://amzn.to/4t7Wq8d",
   },
-  tags: ["body lotion", "vitamin c", "brightening", "tan removal", "moisturiser", "niacinamide", "dot and key"],
-  image: "/products/Dot-Key-Vitamin.jpg",
-  link: "https://amzn.to/4t7Wq8d",
-},
-
-{
-  id: 25,
-  name: "Vaseline Cocoa Radiant Body Lotion",
-  brand: "Vaseline",
-  category: "Body Care",
-  subcat: "Body Lotion",
-  mrp: 799,
-  price: 720,
-  rating: 4.2,
-  reviews: "4.7k",
-  asin: "B0059MUJR8",
-  badge: "Best for Price",
-  description: "No-nonsense daily body moisturiser with cocoa butter. Absorbs without greasiness, keeps dry skin comfortable through the day. One of the best-value body lotions in India — the reviews don't lie.",
-  specs: {
-    "Key Ingredients": "Cocoa Butter, Petroleum Jelly",
-    "Skin Type": "Dry, Normal",
-    "SPF": "No",
-    "Fragrance": "Light cocoa"
+  {
+    id: 25,
+    name: "Vaseline Cocoa Radiant Body Lotion",
+    brand: "Vaseline",
+    category: "Body Care",
+    subcat: "Body Lotion",
+    mrp: 799,
+    price: 720,
+    rating: 4.2,
+    reviews: "4.7k",
+    asin: "B0059MUJR8",
+    badge: "Best for Price",
+    description: "No-nonsense daily body moisturiser with cocoa butter. Absorbs without greasiness, keeps dry skin comfortable through the day. One of the best-value body lotions in India.",
+    specs: {
+      "Skin Type": "Dry, Normal",
+      "Key Ingredient": "Cocoa Butter, Petroleum Jelly",
+      "Fragrance": "Light cocoa",
+      "Use": "Daily"
+    },
+    tags: ["body lotion", "cocoa", "dry skin", "affordable", "moisturiser"],
+    image: "/products/Vaseline-cream.jpg",
+    link: "https://amzn.to/420LNs2",
   },
-  tags: ["body lotion", "cocoa", "dry skin", "affordable", "everyday", "moisturiser", "vaseline"],
-  image: "/products/Vaseline-cream.jpg",
-  link: "https://amzn.to/420LNs2",
-},
-
-{
-  id: 26,
-  name: "Himalaya Wellness Ashwagandha Tablets — 60 Tab",
-  brand: "Himalaya",
-  category: "Wellness",
-  subcat: "Supplement",
-  mrp: 228,
-  price: 228,
-  rating: 4.2,
-  reviews: "40.3k",
-  asin: "B01DQV8BIM",
-  badge: "Adaptogen",
-  description: "One of the most studied adaptogens for stress, cortisol regulation, and sleep quality. Relevant to skin too — chronic stress is a major driver of breakouts and dullness. Himalaya's standardised formulation is among the most trusted in India.",
-  specs: {
-    "Count": "60 Tablets",
-    "Key Ingredient": "Ashwagandha Root Extract",
-    "Dose": "1-2 tablets daily",
-    "Vegetarian": "Yes",
-    "Ayurvedic": "Yes"
+  {
+    id: 26,
+    name: "Himalaya Wellness Ashwagandha Tablets — 60 Tab",
+    brand: "Himalaya",
+    category: "Wellness",
+    subcat: "Supplement",
+    mrp: 228,
+    price: 228,
+    rating: 4.2,
+    reviews: "40.3k",
+    asin: "B01DQV8BIM",
+    badge: "Adaptogen",
+    description: "One of the most studied adaptogens for stress, cortisol regulation, and sleep quality. Relevant to skin too — chronic stress is a major driver of breakouts and dullness. Himalaya's standardised formulation is among the most trusted in India.",
+    specs: {
+      "Count": "60 Tablets",
+      "Key Ingredient": "Ashwagandha Root Extract",
+      "Dose": "1-2 tablets daily",
+      "Vegetarian": "Yes"
+    },
+    tags: ["ashwagandha", "adaptogen", "wellness", "stress", "supplement", "ayurvedic"],
+    image: "/products/Himalaya-Ashwagandha.jpg",
+    link: "https://amzn.to/4td8ZPU",
   },
-  tags: ["ashwagandha", "adaptogen", "wellness", "stress", "supplement", "ayurvedic", "sleep", "cortisol"],
-  image: "/products/Himalaya-Ashwagandha.jpg",
-  link: "https://amzn.to/4td8ZPU",
-}
-
-
-
-
-
-
 ];
