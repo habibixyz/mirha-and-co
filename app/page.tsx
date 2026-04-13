@@ -2,8 +2,7 @@
 
 import { useState, useMemo } from "react";
 import Link from "next/link";
-import { PRODUCTS as RAW } from "@/lib/products";  // ✅ import at top
-const PRODUCTS = RAW as Product[];
+import { PRODUCTS } from "@/lib/products";
 
 // ─── TYPES ───────────────────────────────────────────────────────────────────
 type Product = {
