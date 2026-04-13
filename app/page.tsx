@@ -18,7 +18,7 @@ type Product = {
   asin: string;
   badge?: string;
   description: string;
-  specs: Record<string, string>;
+  specs: { [key: string]: string };
   tags: string[];
   image: string;
   link?: string;

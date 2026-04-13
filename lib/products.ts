@@ -1,4 +1,4 @@
-export const PRODUCTS = [
+export const PRODUCTS: Product[] = [
   {
     id: 1,
     name: "Cetaphil Gentle Skin Hydrating Face Wash 118ml",
