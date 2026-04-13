@@ -18,7 +18,7 @@ type Product = {
   asin: string;
   badge?: string;
   description: string;
-  specs: { [key: string]: string };
+  specs: Record<string, string | undefined>;
   tags: string[];
   image: string;
   link?: string;
@@ -321,40 +321,43 @@ function ProductModal({
             >
               KEY DETAILS
             </div>
-            {Object.entries(product.specs).map(([k, v]) => (
-              <div
-                key={k}
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "flex-start",
-                  gap: 16,
-                  padding: "9px 0",
-                  borderBottom: "1px solid #1E1E1E",
-                }}
-              >
-                <span
-                  style={{
-                    fontSize: 13,
-                    color: "#666",
-                    flexShrink: 0,
-                  }}
-                >
-                  {k}
-                </span>
-                <span
-                  style={{
-                    fontSize: 13,
-                    color: "#CCC",
-                    textAlign: "right",
-                    fontWeight: 500,
-                  }}
-                >
-                  {v}
-                </span>
-              </div>
-            ))}
-          </div>
+            {Object.entries(product.specs).map(([k, v]) =>
+  v ? (
+    <div
+      key={k}
+      style={{
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "flex-start",
+        gap: 16,
+        padding: "9px 0",
+        borderBottom: "1px solid #1E1E1E",
+      }}
+    >
+      <span
+        style={{
+          fontSize: 13,
+          color: "#666",
+          flexShrink: 0,
+        }}
+      >
+        {k}
+      </span>
+      <span
+        style={{
+          fontSize: 13,
+          color: "#CCC",
+          textAlign: "right",
+          fontWeight: 500,
+        }}
+      >
+        {v}
+      </span>
+    </div>
+  ) : null
+)}
+
+</div>
 
           {/* CTA */}
           <a
@@ -390,7 +393,7 @@ function ProductModal({
             </svg>
             View on Amazon India
           </a>
-          <p
+                    <p
             style={{
               textAlign: "center",
               fontFamily: "monospace",
@@ -443,10 +446,10 @@ function ProductCard({
       }}
     >
       {hover && (
-      <div style={{ position: "absolute", inset: 0, background: "#111", zIndex: 5, display: "flex", alignItems: "center", justifyContent: "center", transition: "opacity 0.3s ease" }}>
-        <img src={product.image} />
-      </div>
-    )}
+        <div style={{ position: "absolute", inset: 0, background: "#111", zIndex: 5, display: "flex", alignItems: "center", justifyContent: "center", transition: "opacity 0.3s ease" }}>
+          <img src={product.image} />
+        </div>
+      )}
 
       {/* Card top accent bar */}
       <div style={{ height: 2, background: accent, opacity: 0.4 }} />
