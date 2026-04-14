@@ -2,7 +2,7 @@
 
 import { PRODUCTS } from "@/lib/products";
 
-export function AffiliateCard(props) {
+export function AffiliateCard(props: any) {
   const { asin, onClick } = props;
 
   const product = PRODUCTS.find((p) => p.asin === asin);

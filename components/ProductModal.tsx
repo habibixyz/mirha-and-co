@@ -1,6 +1,11 @@
 "use client";
 
-export default function ProductModal({ product, onClose }) {
+type ProductModalProps = {
+  product: any;
+  onClose: () => void;
+};
+
+export default function ProductModal({ product, onClose }: ProductModalProps) {
   if (!product) return null;
 
   const affiliateUrl =
@@ -35,7 +40,7 @@ export default function ProductModal({ product, onClose }) {
           style={{ width: "100%", marginBottom: 12 }}
         />
 
-        <h3 style={{ marginBottom: 8 }}>{product.name}</h3>
+        <h3>{product.name}</h3>
 
         <p style={{ fontSize: 14, color: "#666" }}>
           {product.description}
