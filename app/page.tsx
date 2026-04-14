@@ -630,27 +630,38 @@ export default function BeautyShopPage() {
   const [query, setQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState("All");
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [selectedConcern, setSelectedConcern] = useState<string | null>(null);
 
   const filtered = useMemo(() => {
-    const q = query.toLowerCase().trim();
-    return PRODUCTS.filter((p) => {
+  const q = query.toLowerCase().trim();
 
-      const normalize = (str: string) =>
-  str.toLowerCase().replace(/\s/g, "");
+  return PRODUCTS.filter((p) => {
+    const normalize = (str: string) =>
+      str.toLowerCase().replace(/\s/g, "");
 
-      const catMatch =
-        activeCategory === "All" ||  normalize(p.category) === normalize(activeCategory);
-      if (!q) return catMatch;
-      return (
-        catMatch &&
-        (p.name.toLowerCase().includes(q) ||
-          p.brand.toLowerCase().includes(q) ||
-          p.subcat.toLowerCase().includes(q) ||
-          p.description.toLowerCase().includes(q) ||
-          p.tags.some((t: string) => t.includes(q)))
-      );
-    });
-  }, [query, activeCategory]);
+    const catMatch =
+      activeCategory === "All" ||
+      normalize(p.category) === normalize(activeCategory);
+
+    const concernMatch =
+      !selectedConcern ||
+      p.concerns?.includes(selectedConcern);
+
+    if (!q) return catMatch && concernMatch;
+
+    return (
+      catMatch &&
+      concernMatch &&
+      (
+        p.name.toLowerCase().includes(q) ||
+        p.brand.toLowerCase().includes(q) ||
+        p.subcat.toLowerCase().includes(q) ||
+        p.description.toLowerCase().includes(q) ||
+        p.tags.some((t: string) => t.includes(q))
+      )
+    );
+  });
+}, [query, activeCategory, selectedConcern]);
 
   return (
     <>
@@ -683,7 +694,7 @@ export default function BeautyShopPage() {
         <div
           style={{
             borderBottom: "1px solid #1E1E1E",
-            padding: "56px 40px 44px",
+            padding: "32px 40px 24px",
             maxWidth: 1200,
             margin: "0 auto",
           }}
@@ -868,7 +879,69 @@ export default function BeautyShopPage() {
               );
             })}
           </div>
+          
+          {/* ── CONCERN FILTERS ── */}
+<div
+  style={{
+    display: "flex",
+    gap: 8,
+    flexWrap: "wrap",
+    marginBottom: 24,
+  }}
+>
+  {["acne","pigmentation","dry skin","oily skin","anti-ageing","sunscreen"].map((c) => {
+    const active = selectedConcern === c;
 
+    return (
+      <button
+        key={c}
+        onClick={() => setSelectedConcern(c)}
+        style={{
+          background: active ? "#7C3AED22" : "transparent",
+          border: `1px solid ${active ? "#7C3AED" : "#2D2D2D"}`,
+          borderRadius: 20,
+          padding: "6px 14px",
+          fontSize: 12,
+          color: active ? "#A78BFA" : "#666",
+          cursor: "pointer",
+        }}
+      >
+        {c}
+      </button>
+    );
+  })}
+
+  <button
+    onClick={() => setSelectedConcern(null)}
+    style={{
+      marginLeft: 10,
+      fontSize: 12,
+      color: "#999",
+    }}
+  >
+    Clear
+  </button>
+</div>
+          {/* ── TOP PICKS ── */}
+<div style={{ marginBottom: 28 }}>
+  <h3 style={{
+    fontFamily: "monospace",
+    fontSize: 12,
+    letterSpacing: 2,
+    color: "#888",
+    marginBottom: 12
+  }}>
+    EDITOR'S PICKS
+  </h3>
+
+  <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 12 }}>
+    {PRODUCTS.slice(0, 5).map((p) => (
+      <div key={p.id} onClick={() => setSelectedProduct(p)}>
+        <img src={p.image} style={{ width: "100%", borderRadius: 4 }} />
+      </div>
+    ))}
+  </div>
+</div>
           {/* ── RESULTS HEADER ── */}
           <div
             style={{

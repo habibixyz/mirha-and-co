@@ -87,6 +87,7 @@ export const PRODUCTS = [
       "Use": "Daily"
     },
     tags: ["SPF 50 PA+++", "Niacinamide", "Multi-Vitamins"],
+    concerns: ["sunscreen", "oily skin"],
     image: "/products/Minimalist-Sunscreen.jpg",
     link: "https://amzn.to/4muroFm",
   },
@@ -110,6 +111,7 @@ export const PRODUCTS = [
       "Use": "Daily"
     },
     tags: ["SPF 50 PA++++", "Niacinamide", "Anti-Pollution"],
+    concerns: ["sunscreen", "oily skin"],
     image: "/products/Aqualogica-Radiance.jpg",
     link: "https://amzn.to/3OcJtLm",
   },
@@ -202,6 +204,7 @@ export const PRODUCTS = [
       "Use": "Daily"
     },
     tags: ["sunscreen", "SPF 50", "oily skin", "no white cast"],
+    concerns: ["sunscreen", "oily skin"],
     image: "/products/Deconstruct-Gel.jpg",
     link: "https://amzn.to/47W1AvI",
   },
@@ -225,6 +228,7 @@ export const PRODUCTS = [
       "Use": "Daily"
     },
     tags: ["niacinamide", "serum", "acne marks", "pores"],
+    concerns: ["acne", "oily skin", "pigmentation"],
     image: "/products/Niacinamide-Serum.jpg",
     link: "https://amzn.to/4ceFxl5",
   },
@@ -248,6 +252,7 @@ export const PRODUCTS = [
       "Use": "Daily"
     },
     tags: ["niacinamide", "serum", "acne marks", "brightening"],
+    concerns: ["acne", "oily skin", "pigmentation"],
     image: "/products/Ordinary-Niacinamide.jpg",
     link: "https://amzn.to/4tFRRBV",
   },
@@ -271,6 +276,7 @@ export const PRODUCTS = [
       "Use": "Daily"
     },
     tags: ["SPF 50 PA++++", "sunscreen", "niacinamide", "budget"],
+    concerns: ["sunscreen", "oily skin"],
     image: "/products/Lakme-SPF50.jpg",
     link: "https://amzn.to/3OCKQD8",
   },
@@ -294,6 +300,7 @@ export const PRODUCTS = [
       "Use": "Daily"
     },
     tags: ["SPF 50 PA++++", "sunscreen", "niacinamide", "matte"],
+    concerns: ["sunscreen", "oily skin"],
     image: "/products/WishCare-Niacinamide.jpg",
     link: "https://amzn.to/3Qgw99h",
   },
@@ -340,6 +347,7 @@ export const PRODUCTS = [
       "Use": "AM preferred"
     },
     tags: ["vitamin c", "brightening", "serum", "glow", "pigmentation"],
+    concerns: ["pigmentation", "glow"],
     image: "/products/Plum-15.jpg",
     link: "https://amzn.to/4t7YmO1",
   },
@@ -363,6 +371,7 @@ export const PRODUCTS = [
       "Use": "PM only"
     },
     tags: ["retinol", "anti-ageing", "fine lines", "night serum", "squalane"],
+    concerns: ["anti-ageing"],
     image: "/products/Minimalist-Retinol.jpg",
     link: "https://amzn.to/3OExEO6",
   },
@@ -386,6 +395,7 @@ export const PRODUCTS = [
       "Use": "AM & PM"
     },
     tags: ["moisturiser", "hyaluronic acid", "gel", "oily skin", "oil-free"],
+    concerns: ["dry skin"],
     image: "/products/Neutrogena-Hydro.jpg",
     link: "https://amzn.to/3Qa5pau",
   },
@@ -409,6 +419,7 @@ export const PRODUCTS = [
       "Use": "AM & PM"
     },
     tags: ["moisturiser", "sensitive skin", "dry skin", "fragrance-free", "eczema"],
+    concerns: ["dry skin"],
     image: "/products/Cetaphil-Moisturisingz.jpg",
     link: "https://amzn.to/3NYBSQA",
   },

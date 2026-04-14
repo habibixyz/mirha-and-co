@@ -92,6 +92,16 @@ export default function BlogIndex() {
       productCount: 9,
       thumbnail: "☀️🧴"
     },
+    {
+  category: "BEAUTY" as const,
+  title: "4-Step Indian Skincare Routine Under ₹2000 (That Actually Works)",
+  excerpt: "A simple, no-fluff routine built for Indian skin, weather, and budgets.",
+  slug: "budget-skincare-routine-under-2000",
+  readTime: "9 min",
+  date: "April 2026",
+  productCount: 9,
+  thumbnail: "🧴"
+},
   ];
 
   const catColors = {

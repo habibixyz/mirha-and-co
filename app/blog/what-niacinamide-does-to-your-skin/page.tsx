@@ -1,12 +1,10 @@
+"use client";
+
+import { useState } from "react";
 import { AffiliateCard } from "@/components/AffiliateCard";
+import ProductModal from "@/components/ProductModal";
 
 const AFFILIATE_TAG = "skinwithtanvi-21";
-
-export const metadata = {
-  title: "What Niacinamide Actually Does to Your Skin (India Edition) | Mirha & Co.",
-  description:
-    "Niacinamide is everywhere in Indian skincare right now — but does it actually work? We break down the science, the best products in India, and exactly how to use it.",
-};
 
 export default function NiacinamidePost() {
   return (

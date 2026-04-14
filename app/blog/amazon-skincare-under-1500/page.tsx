@@ -1,11 +1,10 @@
+"use client";
+
+import { useState } from "react";
 import { AffiliateCard } from "@/components/AffiliateCard";
+import ProductModal from "@/components/ProductModal";
 
 const AFFILIATE_TAG = "skinwithtanvi-21";
-
-export const metadata = {
-  title: "Best Skincare Products Under ₹1500 on Amazon India | Mirha & Co.",
-  description: "Dermatologist-approved skincare finds under ₹1500 on Amazon India. Budget doesn't mean compromise — these products prove it.",
-};
 
 export default function AmazonSkincarePost() {
   return (

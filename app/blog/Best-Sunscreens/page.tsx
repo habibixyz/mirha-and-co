@@ -1,4 +1,8 @@
+"use client";
+
+import { useState } from "react";
 import { AffiliateCard } from "@/components/AffiliateCard";
+import ProductModal from "@/components/ProductModal";";
 
 const AFFILIATE_TAG = "skinwithtanvi-21";
 

@@ -1,4 +1,5 @@
 import { AffiliateCard } from "@/components/AffiliateCard";
+import ProductModal from "@/components/ProductModal";
 
 const AFFILIATE_TAG = "mirhaandco-20"; // ← replace with your Amazon Associates tag
 
