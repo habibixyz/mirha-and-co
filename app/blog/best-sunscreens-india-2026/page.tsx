@@ -1,12 +1,11 @@
+"use client";
+
+import { useState } from "react";
 import { AffiliateCard } from "@/components/AffiliateCard";
+import ProductModal from "@/components/ProductModal";
 
 const AFFILIATE_TAG = "skinwithtanvi-21";
 
-export const metadata = {
-  title: "Best Sunscreens in India (2026) | No-BS Guide for Indian Skin",
-  description:
-    "A realistic, India-focused guide to sunscreens that actually work. No hype. Just what makes sense for oily, dry, and acne-prone skin.",
-};
 
 export default function SunscreenPost() {
   return (

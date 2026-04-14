@@ -6,11 +6,6 @@ import ProductModal from "@/components/ProductModal";
 
 const AFFILIATE_TAG = "skinwithtanvi-21";
 
-export const metadata = {
-  title: "8 Amazon India Buys That Changed How I Live at Home | Mirha & Co.",
-  description: "Small home upgrades under ₹1500 that make a real difference to daily life. All curated and available on Amazon India.",
-};
-
 export default function AmazonHomeBuysPost() {
   return (
     <main>
