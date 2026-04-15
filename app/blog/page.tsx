@@ -127,11 +127,13 @@ export default function BlogIndex() {
 },
   ];
 
-  const catColors = {
-    BEAUTY:    "#c8473a",
-    WELLNESS:  "#4a7c6f",
-    LIFESTYLE: "#7c6b4a",
-  };
+  const catColors: Record<string, string> = {
+  BEAUTY: "#e85c4a",
+  WELLNESS: "#f2c94c",
+  LIFESTYLE: "#6fcf97",
+  SKINCARE: "#bb6bd9",
+  HAIR: "#56ccf2",
+};
 
   return (
     <main>
