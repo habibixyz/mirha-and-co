@@ -12,6 +12,29 @@ export default function BlogIndex() {
   };
 
   const posts = [
+
+    {
+  category: "SKINCARE" as const,
+  title: "The Indian Pigmentation Playbook (Dermat-Backed Guide)",
+  excerpt: "A complete guide to treating pigmentation in Indian skin using the right actives and routines.",
+  slug: "pigmentation-guide",
+  readTime: "12 min",
+  date: "April 2026",
+  productCount: 8,
+  thumbnail: "✨"
+},
+
+   {
+  category: "HAIR" as const,
+  title: "Why Your Hair Won’t Stop Falling (Hard Water India Guide)",
+  excerpt: "The hidden cause of hair fall in Indian cities — and the exact protocol to fix it.",
+  slug: "hard-water-hair",
+  readTime: "11 min",
+  date: "April 2026",
+  productCount: 8,
+  thumbnail: "💧"
+},
+
     { 
       category: "BEAUTY" as const, 
       title: "The 12 Skincare Products That Actually Changed My Skin",
