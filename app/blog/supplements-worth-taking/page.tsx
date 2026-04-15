@@ -1,11 +1,11 @@
+"use client";
+
+import { useState } from "react";
 import { AffiliateCard } from "@/components/AffiliateCard";
+import ProductModal from "@/components/ProductModal";
 
 const AFFILIATE_TAG = "skinwithtanvi-21";
 
-export const metadata = {
-  title: "The Supplements Actually Worth Taking in India | Mirha & Co.",
-  description: "Honest breakdown of which supplements have real evidence behind them — and which ones are just expensive hype. India-specific guide.",
-};
 
 export default function SupplementsPost() {
   return (

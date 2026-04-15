@@ -1,11 +1,11 @@
+"use client";
+
+import { useState } from "react";
 import { AffiliateCard } from "@/components/AffiliateCard";
+import ProductModal from "@/components/ProductModal";
 
 const AFFILIATE_TAG = "skinwithtanvi-21";
 
-export const metadata = {
-  title: "Gift Guide for the Woman Who Has Everything | Mirha & Co.",
-  description: "She's impossible to shop for. The solution isn't spending more — it's choosing better. All on Amazon India.",
-};
 
 export default function GiftGuidePost() {
   return (

@@ -1,12 +1,10 @@
+"use client";
+
+import { useState } from "react";
 import { AffiliateCard } from "@/components/AffiliateCard";
 import ProductModal from "@/components/ProductModal";
 
 const AFFILIATE_TAG = "skinwithtanvi-21";
-
-export const metadata = {
-  title: "The Right Order to Apply Skincare — Most People Get This Wrong | Mirha & Co.",
-  description: "Applying skincare in the wrong order means products sit on top of each other instead of absorbing. Here's the correct sequence for Indian skin.",
-};
 
 export default function SkincareOrderPost() {
   return (

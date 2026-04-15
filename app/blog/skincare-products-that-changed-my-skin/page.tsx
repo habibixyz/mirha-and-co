@@ -1,13 +1,11 @@
+"use client";
+
+import { useState } from "react";
 import { AffiliateCard } from "@/components/AffiliateCard";
 import ProductModal from "@/components/ProductModal";
 
 const AFFILIATE_TAG = "mirhaandco-20"; // ← replace with your Amazon Associates tag
 
-export const metadata = {
-  title: "The 12 Skincare Products That Actually Changed My Skin | Mirha & Co.",
-  description:
-    "After years of testing everything, these are the only products still on my shelf. All available on Amazon.",
-};
 
 export default function SkincarePost() {
   return (

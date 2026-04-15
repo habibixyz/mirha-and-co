@@ -1,11 +1,10 @@
+"use client";
+
+import { useState } from "react";
 import { AffiliateCard } from "@/components/AffiliateCard";
+import ProductModal from "@/components/ProductModal";
 
 const AFFILIATE_TAG = "skinwithtanvi-21";
-
-export const metadata = {
-  title: "Morning Routines That Don't Require 2 Hours | Mirha & Co.",
-  description: "Five evidence-based morning habits. Twenty minutes. A real difference to your day — without the 5am alarm or cold plunge.",
-};
 
 export default function MorningRoutinesPost() {
   return (

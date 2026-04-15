@@ -929,6 +929,56 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* ── BUSINESS ENQUIRIES ── */}
+<div style={{
+  background: "#faf8f5",
+  padding: "3rem 2.5rem",
+  textAlign: "center",
+  borderTop: "1px solid #e0dcd6"
+}}>
+  <p style={{
+    fontFamily: "'DM Sans', sans-serif",
+    fontSize: "0.75rem",
+    letterSpacing: "0.2em",
+    textTransform: "uppercase",
+    color: "var(--rose)",
+    marginBottom: "0.8rem"
+  }}>
+    Business Enquiries
+  </p>
+
+  <p style={{
+    fontFamily: "'DM Sans', sans-serif",
+    fontSize: "0.9rem",
+    color: "#6a635d",
+    marginBottom: "0.6rem"
+  }}>
+    For partnerships, collaborations, or brand enquiries:
+  </p>
+
+  <a
+    href="mailto:mirhcobiz@gmail.com"
+    style={{
+      fontFamily: "'DM Serif Display', serif",
+      fontSize: "1.1rem",
+      color: "var(--black)",
+      textDecoration: "none",
+      borderBottom: "1px solid var(--rule)"
+    }}
+  >
+    mirhcobiz@gmail.com
+  </a>
+
+  <p style={{
+    fontFamily: "'DM Sans', sans-serif",
+    fontSize: "0.7rem",
+    color: "#8a8278",
+    marginTop: "0.6rem"
+  }}>
+    We typically respond within 24–48 hours.
+  </p>
+</div>
+
     </main>
   );
 }
