@@ -7,12 +7,9 @@ export function AffiliateCard(props: any) {
 
   const product = PRODUCTS.find((p) => p.asin === asin);
 
-  // ✅ fallback support (THIS FIXES YOUR ISSUE)
   const title = product?.name || props.title;
   const description = product?.description || props.description;
-  const price = product?.price
-    ? `₹${product.price}`
-    : props.price;
+  const price = product?.price ? `₹${product.price}` : props.price;
   const image = product?.image || props.imageUrl;
   const badge = product?.badge || props.badge;
 
@@ -24,14 +21,16 @@ export function AffiliateCard(props: any) {
     <div
       onClick={() => onClick?.(product)}
       style={{
-        display: "grid",
-        gridTemplateColumns: "140px 1fr",
+        display: "flex",
+        flexDirection: "column",
         border: "1px solid var(--rule)",
         background: "#fff",
-        margin: "2rem 0",
-        position: "relative",
+        margin: "1.5rem auto",
+        maxWidth: "360px",
+        borderRadius: "14px",
         overflow: "hidden",
         cursor: "pointer",
+        transition: "all 0.2s ease",
       }}
     >
       {/* Badge */}
@@ -39,15 +38,14 @@ export function AffiliateCard(props: any) {
         <div
           style={{
             position: "absolute",
-            top: 0,
-            left: 0,
+            top: 10,
+            left: 10,
             background: "var(--rose)",
             color: "#fff",
             fontSize: "0.55rem",
             letterSpacing: "0.2em",
             textTransform: "uppercase",
-            fontWeight: 500,
-            padding: "0.3rem 0.7rem",
+            padding: "0.3rem 0.6rem",
             zIndex: 2,
           }}
         >
@@ -59,10 +57,8 @@ export function AffiliateCard(props: any) {
       <div
         style={{
           background: "var(--sand)",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          minHeight: "160px",
+          width: "100%",
+          height: "200px",
           overflow: "hidden",
         }}
       >
@@ -80,23 +76,19 @@ export function AffiliateCard(props: any) {
       {/* Body */}
       <div
         style={{
-          padding: "1.5rem 1.8rem",
+          padding: "1.2rem",
           display: "flex",
           flexDirection: "column",
-          justifyContent: "center",
-          borderLeft: "1px solid var(--rule)",
         }}
       >
         {/* Label */}
         <p
           style={{
             fontSize: "0.55rem",
-            letterSpacing: "0.28em",
+            letterSpacing: "0.25em",
             textTransform: "uppercase",
             color: "var(--rose)",
-            fontWeight: 500,
-            marginBottom: "0.5rem",
-            fontFamily: "'DM Sans', sans-serif",
+            marginBottom: "0.4rem",
           }}
         >
           Found on Amazon
@@ -106,11 +98,10 @@ export function AffiliateCard(props: any) {
         <h3
           style={{
             fontFamily: "'DM Serif Display', serif",
-            fontSize: "1.1rem",
-            fontWeight: 400,
+            fontSize: "1.05rem",
             lineHeight: 1.3,
             color: "var(--ink)",
-            marginBottom: "0.6rem",
+            marginBottom: "0.5rem",
           }}
         >
           {title}
@@ -119,16 +110,13 @@ export function AffiliateCard(props: any) {
         {/* Description */}
         <p
           style={{
-            fontSize: "0.8rem",
+            fontSize: "0.78rem",
             color: "var(--muted)",
-            lineHeight: 1.65,
-            marginBottom: "1.2rem",
-            fontFamily: "'DM Sans', sans-serif",
+            lineHeight: 1.6,
+            marginBottom: "1rem",
           }}
         >
-          {description
-            ? description.slice(0, 120) + "..."
-            : ""}
+          {description ? description.slice(0, 100) + "..." : ""}
         </p>
 
         {/* Price + CTA */}
@@ -136,57 +124,47 @@ export function AffiliateCard(props: any) {
           style={{
             display: "flex",
             alignItems: "center",
-            gap: "1.2rem",
-            flexWrap: "wrap",
+            justifyContent: "space-between",
           }}
         >
           <span
             style={{
               fontFamily: "'DM Serif Display', serif",
-              fontSize: "1.2rem",
-              fontWeight: 600,
+              fontSize: "1.1rem",
               color: "var(--ink)",
             }}
           >
             {price}
           </span>
 
-          {/* CTA */}
           <a
             href={affiliateUrl}
             target="_blank"
             rel="noopener noreferrer sponsored"
             onClick={(e) => e.stopPropagation()}
             style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "0.4rem",
-              fontSize: "0.62rem",
+              fontSize: "0.65rem",
               letterSpacing: "0.18em",
               textTransform: "uppercase",
-              fontWeight: 500,
               color: "#fff",
-              background: "var(--black)",
+              background: "#111",
+              padding: "0.6rem 1rem",
               textDecoration: "none",
-              padding: "0.55rem 1.1rem",
-              fontFamily: "'DM Sans', sans-serif",
             }}
           >
-            View on Amazon →
+            View →
           </a>
         </div>
 
         {/* Disclaimer */}
         <p
           style={{
-            fontSize: "0.58rem",
-            color: "var(--muted)",
-            marginTop: "0.8rem",
-            opacity: 0.7,
-            fontFamily: "'DM Sans', sans-serif",
+            fontSize: "0.55rem",
+            color: "#999",
+            marginTop: "0.7rem",
           }}
         >
-          * Affiliate link — we may earn a small commission at no cost to you.
+          * Affiliate link — we may earn a small commission.
         </p>
       </div>
     </div>

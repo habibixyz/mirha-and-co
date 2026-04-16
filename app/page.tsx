@@ -360,6 +360,14 @@ function ProductModal({
 </div>
 
           {/* CTA */}
+          <p style={{
+  fontSize: "12px",
+  color: "#888",
+  marginBottom: "10px",
+  textAlign: "center"
+}}>
+  ✦ Most users buy this after using our routine guide
+</p>
           <a
             href={affLink}
             target="_blank"
@@ -750,6 +758,15 @@ export default function BeautyShopPage() {
                 Real prices, honest picks — every link takes you straight to the
                 product.
               </p>
+              
+              <p style={{
+  fontSize: "12px",
+  color: "#666",
+  marginTop: "10px",
+  fontFamily: "monospace"
+}}>
+  Personalized routine based on your skin →
+</p>
               <div
                 style={{
                   display: "flex",
@@ -774,6 +791,31 @@ export default function BeautyShopPage() {
             padding: "36px 40px 80px",
           }}
         >
+
+          <div style={{
+  border: "1px solid #2A2A2A",
+  padding: "18px 20px",
+  marginBottom: "24px",
+  background: "#141414"
+}}>
+  <p style={{
+    fontSize: "13px",
+    color: "#888",
+    marginBottom: "8px"
+  }}>
+    Not sure what works for your skin?
+  </p>
+
+  <a href="/tools/routine" style={{
+    fontSize: "11px",
+    letterSpacing: "0.15em",
+    textTransform: "uppercase",
+    color: "#E05C3A",
+    textDecoration: "none"
+  }}>
+    Get your routine →
+  </a>
+</div>
           {/* ── SEARCH ── */}
           <div
             style={{
@@ -931,7 +973,7 @@ export default function BeautyShopPage() {
     color: "#888",
     marginBottom: 12
   }}>
-    EDITOR'S PICKS
+    SMART PICKS FOR YOU
   </h3>
 
   <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 12 }}>
