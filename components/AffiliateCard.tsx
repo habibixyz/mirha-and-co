@@ -136,12 +136,26 @@ export function AffiliateCard(props: any) {
           >
             {price}
           </span>
-
+          
           <a
             href={affiliateUrl}
-            target="_blank"
-            rel="noopener noreferrer sponsored"
-            onClick={(e) => e.stopPropagation()}
+  target="_blank"
+  rel="noopener noreferrer sponsored"
+  onClick={(e) => {
+    e.stopPropagation();
+
+    // 🔥 TRACK CLICK
+    console.log("Affiliate Click:", {
+      asin,
+      title,
+    });
+
+    // OPTIONAL: trigger parent tracking if passed
+    onClick?.({
+      asin,
+      title,
+    });
+  }}
             style={{
               fontSize: "0.65rem",
               letterSpacing: "0.18em",

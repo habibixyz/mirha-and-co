@@ -4,6 +4,7 @@ import React from "react";
 import { RotateCcw, ExternalLink } from "lucide-react";
 import { RoutineRecommendation } from "@/lib/routineEngine";
 import { PRODUCTS } from "@/lib/products";
+import { useRoutineAnalytics } from "@/lib/hooks/useRoutineAnalytics";
 
 const STEPS_ORDER = [
   {
@@ -41,7 +42,15 @@ interface RoutineResultProps {
   onRestart: () => void;
 }
 
-function ProductCard({ asin, reason }: { asin: string; reason?: string }) {
+function ProductCard({
+  asin,
+  reason,
+  onClick,
+}: {
+  asin: string;
+  reason?: string;
+  onClick?: () => void;
+}) {
   const product = PRODUCTS.find((p) => p.asin === asin);
 
   if (!product) return null;
@@ -59,6 +68,7 @@ function ProductCard({ asin, reason }: { asin: string; reason?: string }) {
       href={affiliateUrl}
       target="_blank"
       rel="noopener noreferrer sponsored"
+        onClick={onClick}
       style={{
         display: "flex",
         gap: "20px",
@@ -219,6 +229,7 @@ function ProductCard({ asin, reason }: { asin: string; reason?: string }) {
 }
 
 export default function RoutineResult({ routine, onRestart }: RoutineResultProps) {
+  const { trackAffiliateClick } = useRoutineAnalytics();
   return (
     <div
       style={{
@@ -378,7 +389,17 @@ export default function RoutineResult({ routine, onRestart }: RoutineResultProps
                   >
                     Recommended Product
                   </p>
-                  <ProductCard asin={product.asin} reason={product.reason} />
+                  <ProductCard
+  asin={product.asin}
+  reason={product.reason}
+  onClick={() =>
+    trackAffiliateClick({
+      asin: product.asin,
+      product: product.name,
+      step: step.key,
+    })
+  }
+/>
                   <p
                     style={{
                       fontSize: "10px",
