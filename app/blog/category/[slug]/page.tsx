@@ -1,109 +1,344 @@
-  const allPosts = [
-    { category: "beauty",    title: "What Niacinamide Actually Does to Your Skin (India Edition)",            excerpt: "The complete, no-fluff guide — written for Indian skin, Indian weather, and Indian budgets.",  slug: "what-niacinamide-does-to-your-skin",            readTime: "10 min", date: "March 2026" },
-    { category: "beauty",    title: "Amazon Skincare Finds Under ₹1500 That Dermatologists Actually Use",      excerpt: "Budget doesn't mean compromise. These prove it.",                                          slug: "amazon-skincare-under-1500",                    readTime: "6 min",  date: "March 2026" },
-    { category: "beauty",    title: "The Right Order to Apply Your Skincare (Most People Get This Wrong)",     excerpt: "Layering matters. This is the sequence that actually works.",                              slug: "skincare-layering-order",                       readTime: "5 min",  date: "Jan 2026"   },
-    { category: "wellness",  title: "Morning Routines That Don't Require 2 Hours",                             excerpt: "Five things. Twenty minutes. A real difference.",                                         slug: "morning-routines",                              readTime: "5 min",  date: "March 2026" },
-    { category: "wellness",  title: "The Supplements Worth Taking (And the Ones That Are Just Hype)",          excerpt: "Honest breakdown. No sponsorships. Just research.",                                       slug: "supplements-worth-taking",                      readTime: "9 min",  date: "Feb 2026"   },
-    { category: "lifestyle", title: "Gift Guides for the Woman Who Has Everything",                            excerpt: "She's impossible to shop for. We figured it out.",                                        slug: "gift-guide-woman-who-has-everything",            readTime: "7 min",  date: "Feb 2026"   },
-    { category: "lifestyle", title: "The 8 Amazon Buys That Changed How I Live at Home",                      excerpt: "Small upgrades. Massive difference to daily life.",                                       slug: "amazon-home-buys",                              readTime: "6 min",  date: "Jan 2026"   },
-  ];
+import Link from "next/link";
 
-  const catMeta: Record<string, { label: string; color: string; description: string }> = {
-    beauty:        { label: "Beauty",      color: "#c8473a", description: "Skincare reviews, ingredient guides, and honest product recommendations for Indian skin." },
-    wellness:      { label: "Wellness",    color: "#4a7c6f", description: "Evidence-based wellness — routines, supplements, and habits that make a real difference." },
-    lifestyle:     { label: "Lifestyle",   color: "#7c6b4a", description: "Amazon finds, gift guides, and the small upgrades worth your money." },
-    skincare:      { label: "Skincare",    color: "#c8473a", description: "Everything skincare — ingredients, routines, and the products that actually work on Indian skin." },
-    "gift-guides": { label: "Gift Guides", color: "#7c6b4a", description: "Curated gifts for every occasion — chosen for taste, all on Amazon India." },
-  };
+/* =========================
+   POSTS DATA (SYNC WITH FOLDERS)
+========================= */
 
-  export async function generateStaticParams() {
-    return ["beauty", "wellness", "lifestyle", "skincare", "gift-guides"].map((slug) => ({ slug }));
-  }
+const allPosts = [
+  // BEAUTY
+  {
+    category: "beauty",
+    title: "What Niacinamide Actually Does to Your Skin (India Edition)",
+    excerpt: "The complete no-fluff guide for Indian skin.",
+    slug: "what-niacinamide-does-to-your-skin",
+    readTime: "10 min",
+    date: "March 2026",
+  },
+  {
+    category: "beauty",
+    title: "Amazon Skincare Under ₹1500 That Actually Works",
+    excerpt: "Budget doesn’t mean compromise.",
+    slug: "amazon-skincare-under-1500",
+    readTime: "6 min",
+    date: "March 2026",
+  },
+  {
+    category: "beauty",
+    title: "Best Sunscreens in India (2026)",
+    excerpt: "No white cast. Just results.",
+    slug: "best-sunscreens-india-2026",
+    readTime: "7 min",
+    date: "April 2026",
+  },
+  {
+    category: "beauty",
+    title: "Budget Beauty Routine Under ₹2000",
+    excerpt: "Affordable routine that works.",
+    slug: "budget-beauty-routine-2000",
+    readTime: "6 min",
+    date: "April 2026",
+  },
+  {
+    category: "beauty",
+    title: "Budget Skincare Routine Under ₹2000",
+    excerpt: "Complete skincare under budget.",
+    slug: "budget-skincare-routine-under-2000",
+    readTime: "6 min",
+    date: "April 2026",
+  },
+  {
+    category: "beauty",
+    title: "How to Fix Pigmentation",
+    excerpt: "Real solutions that work.",
+    slug: "pigmentation-guide",
+    readTime: "8 min",
+    date: "March 2026",
+  },
+  {
+    category: "beauty",
+    title: "Correct Skincare Layering Order",
+    excerpt: "Most people get this wrong.",
+    slug: "skincare-layering-order",
+    readTime: "5 min",
+    date: "Jan 2026",
+  },
+  {
+    category: "beauty",
+    title: "Skincare Products That Changed My Skin",
+    excerpt: "Tried, tested, worth it.",
+    slug: "skincare-products-that-changed-my-skin",
+    readTime: "6 min",
+    date: "Feb 2026",
+  },
+  {
+    category: "beauty",
+    title: "Complete Skincare Routine for Indian Skin",
+    excerpt: "Everything you actually need.",
+    slug: "skincare-routine-complete-india",
+    readTime: "8 min",
+    date: "Feb 2026",
+  },
 
-  export default async function CategoryPage({
-    params,
-  }: {
-    params: Promise<{ slug: string }>;
-  }) {
-    const { slug: rawSlug } = await params;
-    const slug = rawSlug.toLowerCase();
-    const meta = catMeta[slug];
+  // WELLNESS
+  {
+    category: "wellness",
+    title: "Morning Routines That Don’t Take 2 Hours",
+    excerpt: "Simple, realistic habits.",
+    slug: "morning-routines",
+    readTime: "5 min",
+    date: "March 2026",
+  },
+  {
+    category: "wellness",
+    title: "Supplements Worth Taking",
+    excerpt: "What works vs hype.",
+    slug: "supplements-worth-taking",
+    readTime: "9 min",
+    date: "Feb 2026",
+  },
 
-    const posts =
-      slug === "skincare"
-        ? allPosts.filter((p) => p.category === "beauty")
-        : slug === "gift-guides"
-        ? allPosts.filter((p) => p.category === "lifestyle")
-        : allPosts.filter((p) => p.category === slug);
+  // LIFESTYLE
+  {
+    category: "lifestyle",
+    title: "Amazon Buys That Changed My Home",
+    excerpt: "Small upgrades. Big impact.",
+    slug: "amazon-home-buys",
+    readTime: "6 min",
+    date: "Jan 2026",
+  },
+  {
+    category: "lifestyle",
+    title: "Gift Guide for the Woman Who Has Everything",
+    excerpt: "Perfect picks.",
+    slug: "gift-guide-woman-who-has-everything",
+    readTime: "7 min",
+    date: "Feb 2026",
+  },
+  {
+    category: "lifestyle",
+    title: "Hard Water is Ruining Your Hair",
+    excerpt: "Fix it like this.",
+    slug: "hard-water-hair",
+    readTime: "6 min",
+    date: "March 2026",
+  },
+];
 
-    if (!meta) {
-      return (
-        <main style={{ padding: "6rem 2.5rem", textAlign: "center" }}>
-          <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: "3rem", marginBottom: "1rem" }}>
-            Category Not Found
-          </h1>
-          <a href="/blog" style={{ color: "var(--rose)", fontFamily: "'DM Sans', sans-serif", fontSize: "0.9rem" }}>
-            ← Back to all posts
-          </a>
-        </main>
-      );
-    }
+const catMeta = {
+  beauty: {
+    label: "Beauty",
+    color: "#c8473a",
+    description:
+      "Skincare, routines, and products that actually work on Indian skin.",
+  },
+  wellness: {
+    label: "Wellness",
+    color: "#4a7c6f",
+    description:
+      "Habits, routines, and supplements that make a real difference.",
+  },
+  lifestyle: {
+    label: "Lifestyle",
+    color: "#7c6b4a",
+    description:
+      "Amazon finds, upgrades, and smart lifestyle improvements.",
+  },
+};
 
+/* =========================
+   STATIC PARAMS
+========================= */
+
+export async function generateStaticParams() {
+  return Object.keys(catMeta).map((slug) => ({ slug }));
+}
+
+/* =========================
+   PAGE COMPONENT (SERVER)
+========================= */
+
+export default async function CategoryPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug: rawSlug } = await params;
+  const slug = rawSlug?.toLowerCase?.() || "";
+
+  const meta = catMeta[slug];
+
+  if (!meta) {
     return (
-      <main>
-        <style>{`
-          .cat-hero { padding: 6rem 2.5rem 4rem; border-bottom: 2px solid var(--black); position: relative; overflow: hidden; background: var(--white); }
-          .cat-hero::before { content: attr(data-label); position: absolute; bottom: -3rem; right: -1rem; font-family: 'Bebas Neue', sans-serif; font-size: 16rem; color: rgba(0,0,0,0.04); line-height: 1; pointer-events: none; text-transform: uppercase; }
-          .cat-hero-inner { max-width: 1100px; margin: 0 auto; position: relative; z-index: 1; }
-          .cat-back { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); text-decoration: none; font-family: 'DM Sans', sans-serif; margin-bottom: 2rem; transition: color 0.2s; }
-          .cat-back:hover { color: var(--rose); }
-          .cat-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(4rem, 10vw, 9rem); line-height: 0.9; letter-spacing: 0.03em; margin-bottom: 1.5rem; }
-          .cat-desc { font-family: 'DM Serif Display', serif; font-style: italic; font-size: 1.1rem; color: var(--muted); max-width: 500px; line-height: 1.65; }
-          .cat-grid-section { max-width: 1100px; margin: 0 auto; padding: 4rem 2.5rem 6rem; }
-          .cat-bar { display: flex; justify-content: space-between; align-items: baseline; border-top: 3px solid var(--black); padding-top: 0.8rem; margin-bottom: 3rem; }
-          .cat-bar-label { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; letter-spacing: 0.05em; }
-          .cat-bar-count { font-size: 0.65rem; color: var(--muted); letter-spacing: 0.15em; text-transform: uppercase; font-family: 'DM Sans', sans-serif; }
-          .cat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.5rem; }
-          .cat-card { display: block; border-top: 2px solid var(--rule); padding-top: 1.5rem; text-decoration: none; color: var(--ink); transition: border-color 0.2s; }
-          .cat-card:hover { border-color: var(--rose); }
-          .cat-card-title { font-family: 'DM Serif Display', serif; font-size: 1.2rem; line-height: 1.3; margin-bottom: 0.7rem; }
-          .cat-card-excerpt { font-size: 0.82rem; color: var(--muted); line-height: 1.65; margin-bottom: 1rem; font-family: 'DM Sans', sans-serif; }
-          .cat-card-meta { font-size: 0.62rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; font-family: 'DM Sans', sans-serif; }
-          .cat-empty { grid-column: 1 / -1; text-align: center; padding: 4rem; }
-          .cat-empty h2 { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; margin-bottom: 0.8rem; }
-          .cat-empty p { font-size: 0.9rem; color: var(--muted); font-family: 'DM Sans', sans-serif; }
-          @media (max-width: 900px) { .cat-grid { grid-template-columns: 1fr 1fr; } }
-          @media (max-width: 600px) { .cat-hero { padding: 3rem 1.5rem; } .cat-grid { grid-template-columns: 1fr; } .cat-grid-section { padding: 2.5rem 1.5rem 4rem; } }
-        `}</style>
-
-        <section className="cat-hero" data-label={meta.label}>
-          <div className="cat-hero-inner">
-            <a href="/blog" className="cat-back">← All Posts</a>
-            <h1 className="cat-title" style={{ color: meta.color }}>{meta.label}</h1>
-            <p className="cat-desc">{meta.description}</p>
-          </div>
-        </section>
-
-        <section className="cat-grid-section">
-          <div className="cat-bar">
-            <span className="cat-bar-label">{meta.label} Posts</span>
-            <span className="cat-bar-count">{posts.length} article{posts.length !== 1 ? "s" : ""}</span>
-          </div>
-          <div className="cat-grid">
-            {posts.length > 0 ? posts.map((post) => (
-              <a key={post.slug} href={`/blog/${post.slug}`} className="cat-card">
-                <h2 className="cat-card-title">{post.title}</h2>
-                <p className="cat-card-excerpt">{post.excerpt}</p>
-                <p className="cat-card-meta">{post.date} · {post.readTime} read</p>
-              </a>
-            )) : (
-              <div className="cat-empty">
-                <h2>Coming Soon</h2>
-                <p>More {meta.label.toLowerCase()} posts are on the way.</p>
-              </div>
-            )}
-          </div>
-        </section>
+      <main style={{ padding: "6rem", textAlign: "center" }}>
+        <h1>Category Not Found</h1>
+        <Link href="/blog">← Back</Link>
       </main>
     );
   }
+
+  const posts = allPosts.filter((p) => p.category === slug);
+
+  return (
+    <main>
+  <section className="cat-hero">
+    <Link href="/blog" className="cat-back">
+      ← Blog
+    </Link>
+
+    <h1 className="cat-title" style={{ color: meta.color }}>
+      {meta.label}
+    </h1>
+
+    <p className="cat-desc">{meta.description}</p>
+  </section>
+
+  {/* FEATURED POST */}
+  {posts[0] && (
+    <section className="cat-featured">
+      <Link href={`/blog/${posts[0].slug}`} className="featured-card">
+        <h2>{posts[0].title}</h2>
+        <p>{posts[0].excerpt}</p>
+        <span>{posts[0].date} · {posts[0].readTime}</span>
+      </Link>
+    </section>
+  )}
+
+  {/* GRID */}
+  <section className="cat-grid">
+    {posts.slice(1).map((post) => (
+      <Link key={post.slug} href={`/blog/${post.slug}`} className="cat-card">
+        <h3>{post.title}</h3>
+        <p>{post.excerpt}</p>
+        <span>{post.date} · {post.readTime}</span>
+      </Link>
+    ))}
+  </section>
+
+  <style>{`
+    main {
+      background: var(--white);
+    }
+
+    /* HERO */
+    .cat-hero {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 5rem 2rem 3rem;
+      border-bottom: 1px solid #eee;
+    }
+
+    .cat-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3rem, 7vw, 6rem);
+      letter-spacing: 0.05em;
+      margin-bottom: 1rem;
+    }
+
+    .cat-desc {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.1rem;
+      color: #777;
+      max-width: 500px;
+      line-height: 1.6;
+    }
+
+    .cat-back {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #999;
+      display: inline-block;
+      margin-bottom: 2rem;
+      text-decoration: none;
+    }
+
+    /* FEATURED */
+    .cat-featured {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 3rem 2rem;
+      border-bottom: 1px solid #eee;
+    }
+
+    .featured-card {
+      text-decoration: none;
+      color: black;
+      display: block;
+    }
+
+    .featured-card h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2rem;
+      line-height: 1.3;
+      margin-bottom: 1rem;
+    }
+
+    .featured-card p {
+      color: #666;
+      margin-bottom: 1rem;
+      max-width: 600px;
+    }
+
+    .featured-card span {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #999;
+    }
+
+    /* GRID */
+    .cat-grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 3rem 2rem 5rem;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 3rem;
+    }
+
+    .cat-card {
+      text-decoration: none;
+      color: black;
+      border-top: 1px solid #eee;
+      padding-top: 1.5rem;
+      transition: 0.2s;
+    }
+
+    .cat-card:hover {
+      border-color: ${meta.color};
+    }
+
+    .cat-card h3 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+      line-height: 1.4;
+    }
+
+    .cat-card p {
+      font-size: 0.9rem;
+      color: #666;
+      margin-bottom: 0.8rem;
+    }
+
+    .cat-card span {
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #999;
+    }
+
+    /* MOBILE */
+    @media (max-width: 768px) {
+      .cat-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .featured-card h2 {
+        font-size: 1.5rem;
+      }
+    }
+  `}</style>
+</main>
+  );
+}

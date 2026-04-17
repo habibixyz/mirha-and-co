@@ -30,6 +30,7 @@ export function AffiliateCard(props: any) {
         borderRadius: "14px",
         overflow: "hidden",
         cursor: "pointer",
+        boxShadow: "0 4px 20px rgba(0,0,0,0.06)",
         transition: "all 0.2s ease",
       }}
     >
@@ -62,6 +63,19 @@ export function AffiliateCard(props: any) {
           overflow: "hidden",
         }}
       >
+        <div style={{
+  position: "absolute",
+  bottom: 10,
+  right: 10,
+  background: "#111",
+  color: "#fff",
+  fontSize: "10px",
+  padding: "4px 8px",
+  letterSpacing: "0.1em"
+}}>
+  VIEW
+</div>
+
         <img
           src={image}
           alt={title}
@@ -166,7 +180,7 @@ export function AffiliateCard(props: any) {
               textDecoration: "none",
             }}
           >
-            View →
+            View Product →
           </a>
         </div>
 
