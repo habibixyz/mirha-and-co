@@ -58,7 +58,7 @@ export default function RootLayout({
 
             {/* RIGHT */}
             <nav className="nav-right">
-              <Link href="/blog" className="nav-link">All Posts</Link>
+              <Link href="/blog" className="nav-link">blog</Link>
               <Link href="/about" className="nav-link">About</Link>
             </nav>
 
