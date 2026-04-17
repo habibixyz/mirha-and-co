@@ -163,18 +163,18 @@ export default async function CategoryPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug: rawSlug } = await params;
-  const slug = rawSlug?.toLowerCase?.() || "";
+  const slug = rawSlug?.toLowerCase?.() as keyof typeof catMeta;
 
   const meta = catMeta[slug];
 
   if (!meta) {
-    return (
-      <main style={{ padding: "6rem", textAlign: "center" }}>
-        <h1>Category Not Found</h1>
-        <Link href="/blog">← Back</Link>
-      </main>
-    );
-  }
+  return (
+    <main style={{ padding: "6rem", textAlign: "center" }}>
+      <h1>Category Not Found</h1>
+      <Link href="/blog">← Blog</Link>
+    </main>
+  );
+}
 
   const posts = allPosts.filter((p) => p.category === slug);
 
