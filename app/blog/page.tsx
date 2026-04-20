@@ -125,6 +125,43 @@ export default function BlogIndex() {
   productCount: 9,
   thumbnail: "🧴"
 },
+
+// ADD THESE 3 ENTRIES to your posts array in BlogIndex
+// Place them at the top of the posts array (after the featured post object)
+
+{
+  category: "BEAUTY" as const,
+  title: "Niacinamide 5% vs 10% — Which One Does Your Skin Actually Need?",
+  excerpt: "The honest breakdown of what each concentration does differently — and which one is right for your skin type, concern, and experience level.",
+  slug: "niacinamide-5-vs-10",
+  readTime: "8 min",
+  date: "April 2026",
+  productCount: 3,
+  thumbnail: "⚗️"
+},
+
+{
+  category: "BEAUTY" as const,
+  title: "Niacinamide vs Vitamin C — Which One Does Indian Skin Actually Need?",
+  excerpt: "What each ingredient does, which skin concerns they target, and whether you need one or both — plus how to layer them correctly in Indian weather.",
+  slug: "niacinamide-vs-vitamin-c",
+  readTime: "9 min",
+  date: "April 2026",
+  productCount: 3,
+  thumbnail: "🍊"
+},
+
+{
+  category: "BEAUTY" as const,
+  title: "Niacinamide for Oily Skin in India — How It Actually Controls Oil",
+  excerpt: "Why niacinamide works for oily skin in Indian humidity, what concentration to use, how long results take, and the full AM/PM routine for Indian conditions.",
+  slug: "niacinamide-for-oily-skin",
+  readTime: "10 min",
+  date: "April 2026",
+  productCount: 4,
+  thumbnail: "💧"
+},
+
   ];
 
   const catColors: Record<string, string> = {
@@ -698,7 +735,7 @@ export default function BlogIndex() {
       {/* === POST GRID === */}
       <section className="blog-grid-section">
         <div className="blog-section-bar">
-          <h2 className="blog-section-title">All Posts</h2>
+          <h2 className="blog-section-title">Blog</h2>
           <span className="post-count">{posts.length} articles</span>
         </div>
         

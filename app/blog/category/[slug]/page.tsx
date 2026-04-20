@@ -78,6 +78,38 @@ const allPosts = [
     readTime: "8 min",
     date: "Feb 2026",
   },
+  {
+  category: "beauty",
+  title: "Best Niacinamide Serums in India (2026)",
+  excerpt: "Ranked by ingredient quality and real results.",
+  slug: "best-niacinamide-serums-india",
+  readTime: "12 min",
+  date: "April 2026",
+},
+{
+  category: "beauty",
+  title: "Niacinamide 5% vs 10%",
+  excerpt: "Which concentration actually works better.",
+  slug: "niacinamide-5-vs-10",
+  readTime: "8 min",
+  date: "April 2026",
+},
+{
+  category: "beauty",
+  title: "Niacinamide for Oily Skin India",
+  excerpt: "How it controls oil in Indian humidity.",
+  slug: "niacinamide-for-oily-skin",
+  readTime: "10 min",
+  date: "April 2026",
+},
+{
+  category: "beauty",
+  title: "Niacinamide vs Vitamin C",
+  excerpt: "Which one your skin actually needs.",
+  slug: "niacinamide-vs-vitamin-c",
+  readTime: "9 min",
+  date: "April 2026",
+},
 
   // WELLNESS
   {

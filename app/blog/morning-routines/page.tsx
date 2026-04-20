@@ -365,6 +365,51 @@ export default function MorningRoutinesPost() {
         </div>
 
       </article>
+      <div style={{
+  marginTop: "60px",
+  padding: "20px 0",
+  borderTop: "1px solid #eee",
+  borderBottom: "1px solid #eee",
+  textAlign: "center"
+}}>
+  <p style={{
+    fontSize: "10px",
+    letterSpacing: "0.2em",
+    textTransform: "uppercase",
+    color: "#999"
+  }}>
+    About this guide
+  </p>
+
+  <h4 style={{
+    fontFamily: "'DM Serif Display', serif",
+    margin: "8px 0",
+    fontSize: "18px",
+    fontWeight: 400
+  }}>
+    Curated by Mirha & Co.
+  </h4>
+
+  <p style={{
+    fontSize: "13px",
+    color: "#666",
+    lineHeight: 1.6,
+    maxWidth: "520px",
+    margin: "0 auto"
+  }}>
+    We curate skincare products based on ingredient quality, real user reviews,
+    and suitability for Indian skin and climate conditions. No paid placements —
+    only products we genuinely believe are worth trying.
+  </p>
+
+  <p style={{
+    fontSize: "11px",
+    color: "#999",
+    marginTop: "10px"
+  }}>
+    Affiliate links may earn us a commission at no extra cost to you.
+  </p>
+</div>
     </main>
   );
 }
