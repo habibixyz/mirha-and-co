@@ -583,5 +583,146 @@ export const PRODUCTS = [
     tags: ["ashwagandha", "adaptogen", "wellness", "stress", "supplement", "ayurvedic"],
     image: "/products/Himalaya-Ashwagandha.jpg",
     link: "https://amzn.to/4td8ZPU",
-  }
+  },
+  {
+    id: 26,
+    name: "Himalaya Purifying Neem Face Wash 150ml",
+    brand: "Himalaya",
+    category: "Skincare",
+    subcat: "Face Wash",
+    mrp: 279,
+    price: 205,
+    rating: 4.4,
+    reviews: "12.6k",
+    asin: "B010Z0LH8I",
+    badge: "Budget Pick",
+    description: "Soap-free herbal neem and turmeric face wash that clears pimples and prevents acne. Natural antibacterial properties for oily and acne-prone skin.",
+    specs: {
+      "Skin Type": "All, Oily, Acne-Prone",
+      "Key Ingredient": "Neem, Turmeric",
+      "Texture": "Gel",
+      "Use": "Daily"
+    },
+    tags: ["neem", "acne", "face wash", "himalaya"],
+    image: "/products/Himalaya-Purifying.jpg",
+    link: "https://amzn.to/4sOGsz7"
+  },
+  {
+    id: 27,
+    name: "Himalaya Neem Face Wash 100ml",
+    brand: "Himalaya",
+    category: "Skincare",
+    subcat: "Face Wash",
+    mrp: 199,
+    price: 139,
+    rating: 4.3,
+    reviews: "7.8k",
+    asin: "B002Q5JE2C",
+    badge: "Value Deal",
+    description: "Compact 100ml neem face wash with turmeric. Perfect for travel and daily use. Antibacterial and anti-inflammatory formula.",
+    specs: {
+      "Skin Type": "All, Oily, Combination",
+      "Key Ingredient": "Neem, Turmeric",
+      "Texture": "Gel",
+      "Use": "Twice Daily"
+    },
+    tags: ["neem", "turmeric", "travel-size", "face wash"],
+    image: "/products/Himalaya-Purifying-Neem.jpg",
+    link: "https://amzn.to/3OOV6Z8"
+  },
+  {
+    id: 28,
+    name: "Himalaya Neem Face Wash 400ml Pack of 2",
+    brand: "Himalaya",
+    category: "Skincare",
+    subcat: "Face Wash",
+    mrp: 599,
+    price: 599,
+    rating: 4.3,
+    reviews: "7k+",
+    asin: "B0B5X5S8GY",
+    badge: "Best Value",
+    description: "Large 400ml bottle of Himalaya neem face wash with proven acne-fighting formula. Lasts months with daily use. Best for oily skin.",
+    specs: {
+      "Skin Type": "All, Oily, Acne-Prone",
+      "Key Ingredient": "Neem, Turmeric",
+      "Texture": "Gel",
+      "Size": "400ml"
+    },
+    tags: ["neem", "large-size", "value", "acne"],
+    image: "/products/Purifying-Neem-Face.jpg",
+    link: "https://amzn.to/4ezkwV4"
+  },
+
+  {
+    id: 29,
+    name: "Himalaya Purifying Neem Foaming Face Wash, 150Ml",
+    brand: "Himalaya",
+    category: "Skincare",
+    subcat: "Face Wash",
+    mrp: 299,
+    price: 190,
+    rating: 4.3,
+    reviews: "7k",
+    asin: "B003OPE57C",
+    badge: "Foaming Formula",
+    description: "Foaming face wash with turmeric and neem. Creates a luxurious lather while gently cleansing. Soap-free formula suitable for all skin types.",
+    specs: {
+      "Skin Type": "All",
+      "Key Ingredient": "Turmeric, Neem",
+      "Texture": "Foaming Gel",
+      "Use": "Daily"
+    },
+    tags: ["foaming", "turmeric", "neem", "lather"],
+    image: "/products/Himalaya-Purifying-Neem-Foaming.jpg",
+    link: "https://amzn.to/4eFqaoy"
+  },
+
+   {
+    id: 30,
+    name: "Himalaya Brightening Vitamin C Orange Face Wash 100ml",
+    brand: "Himalaya",
+    category: "Skincare",
+    subcat: "Face Wash",
+    mrp: 209,
+    price: 138,
+    rating: 4.2,
+    reviews: "700",
+    asin: "B0CNTFMSWV",
+    badge: "Brightening",
+    description: "Vitamin C enriched face wash with orange extract. Brightens dull skin and removes tanning. Gentle enough for daily use.",
+    specs: {
+      "Skin Type": "All",
+      "Key Ingredient": "Vitamin C, Orange Extract",
+      "Texture": "Gel",
+      "Use": "Daily"
+    },
+    tags: ["vitamin-c", "brightening", "orange", "tan-removal"],
+    image: "/products/Himalaya-Brightening-Vitamin-C.jpg",
+    link: "https://amzn.to/3OCB9ES"
+  },
+
+  {
+    id: 31,
+    name: "The Ordinary Glycolic Acid 7% Exfoliating Toner 240ml",
+    brand: "The Ordinary",
+    category: "Skincare",
+    subcat: "Hydrating Essence",
+    mrp: 1275,
+    price: 1275,
+    rating: 4.4,
+    reviews: "37k",
+    asin: "B071914GGL",
+    badge: "Hydrating",
+    description: "Pure glycerin with minimal water. Highly humectant ingredient that draws moisture into skin. Can be used alone or mixed with other products.",
+    specs: {
+      "Skin Type": "All, Dry, Dehydrated",
+      "Key Ingredient": "Glycerin 99%",
+      "Texture": "Liquid",
+      "Use": "Daily"
+    },
+    tags: ["glycerin", "hydration", "humectant", "moisturizing"],
+    image: "/products/Ordinary-Glycolic -Acid-7.jpg",
+    link: "https://amzn.to/41MA9Rt"
+  },
 ];
