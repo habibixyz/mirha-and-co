@@ -161,6 +161,38 @@ export default function BlogIndex() {
   productCount: 4,
   thumbnail: "💧"
 },
+{
+  category: "BEAUTY" as const,
+  title: "Sunscreen in India — Why SPF 50 Is Non-Negotiable",
+  excerpt: "Why Indian skin needs SPF 50+ and the best options available.",
+  slug: "best-sunscreen-india-spf50",
+  readTime: "11 min",
+  date: "April 2026",
+  productCount: 5,
+  thumbnail: "☀️"
+},
+
+{
+  category: "BEAUTY" as const,
+  title: "Serums vs Essences vs Moisturisers — What You Actually Need",
+  excerpt: "The honest breakdown of what each product does and what your skin actually needs.",
+  slug: "serums-essences-moisturizers-guide",
+  readTime: "10 min",
+  date: "April 2026",
+  productCount: 6,
+  thumbnail: "🧪"
+},
+
+{
+  category: "SKINCARE" as const,
+  title: "Complete Skincare Routine for Every Skin Type",
+  excerpt: "A science-backed 4-step routine for oily, dry, combination, and sensitive skin.",
+  slug: "skincare-routine-every-skin-type",
+  readTime: "14 min",
+  date: "April 2026",
+  productCount: 12,
+  thumbnail: "🧴"
+},
 
   ];
 

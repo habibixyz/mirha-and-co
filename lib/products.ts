@@ -725,4 +725,51 @@ export const PRODUCTS = [
     image: "/products/Ordinary-Glycolic -Acid-7.jpg",
     link: "https://amzn.to/41MA9Rt"
   },
+
+  {
+    id: 32,
+    name: "The Ordinary Salicylic Acid 2% Solution 30ml",
+    brand: "The Ordinary",
+    category: "Skincare",
+    subcat: "Exfoliating Essence",
+    mrp: 600,
+    price: 599,
+    rating: 4.1,
+    reviews: "8.2k",
+    asin: "B0C3PCJ6SD",
+    badge: "Exfoliating",
+    description: "Liquid exfoliant with 2% salicylic acid. Unclogs pores and reduces acne. Leave-on formula that works overnight for clear skin.",
+    specs: {
+      "Skin Type": "Oily, Acne-Prone, All",
+      "Key Ingredient": "Salicylic Acid 2%",
+      "Texture": "Liquid",
+      "Use": "PM only"
+    },
+    tags: ["salicylic-acid", "exfoliant", "acne", "pores"],
+    image: "/products/Ordinary-Salicylic- Acid.jpg",
+    link: "https://amzn.to/4sQOxDx"
+  },
+    {
+    id: 33,
+    name: "The Ordinary Hyaluronic Acid 2% + B5 30ml",
+    brand: "The Ordinary",
+    category: "Skincare",
+    subcat: "Hydrating Essence",
+    mrp: 1000,
+    price: 1000,
+    rating: 4.6,
+    reviews: "33k",
+    asin: "B01MYEZPC8",
+    badge: "Hydrating",
+    description: "Lightweight hydrating serum with hyaluronic acid and panthenol. Plumps skin and maintains moisture. Works for all skin types.",
+    specs: {
+      "Skin Type": "All, Dry, Dehydrated",
+      "Key Ingredient": "Hyaluronic Acid, B5",
+      "Texture": "Liquid",
+      "Use": "Daily"
+    },
+    tags: ["hyaluronic-acid", "panthenol", "hydration", "plumping"],
+    image: "/products/Ordinary-Hyaluronic-Acid.jpg",
+    link: "https://amzn.to/4mNmNyg"
+  },
 ];
