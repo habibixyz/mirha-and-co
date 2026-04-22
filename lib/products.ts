@@ -772,4 +772,50 @@ export const PRODUCTS = [
     image: "/products/Ordinary-Hyaluronic-Acid.jpg",
     link: "https://amzn.to/4mNmNyg"
   },
+  {
+    id: 34,
+    name: "Plum Green Tea Face Toner 200ml",
+    brand: "Plum",
+    category: "Skincare",
+    subcat: "Toner",
+    mrp: 390,
+    price: 378,
+    rating: 4.2,
+    reviews: "14k",
+    asin: "B00OCJ5M6C",
+    badge: "Green Tea",
+    description: "Plum Green Tea Face Toner For Oily, Acne-Prone Skin | With Glycolic Acid | Alcohol-Free | Fights Pimples | Tightens Pores | Controls Oil | Gently Exfoliates Dead Skin Cells | Women & Men | 200ml.",
+    specs: {
+      "Skin Type": "Oily, Combination, Acne-Prone",
+      "Key Ingredient": "Green Tea, Glycolic Acid",
+      "Texture": "Liquid",
+      "Use": "AM & PM"
+    },
+    tags: ["rice-water", "acne", "vegan", "clarifying"],
+    image: "/products/Plum-Green-Tea.jpg",
+    link: "https://amzn.to/48fE8d5"
+  },
+  {
+    id: 35,
+    name: "Plum 3% Niacinamide & Rice Water Face Toner 150ml",
+    brand: "Plum",
+    category: "Skincare",
+    subcat: "Toner",
+    mrp: 440,
+    price: 449,
+    rating: 4.2,
+    reviews: "6.5k",
+    asin: "B09PV4379W",
+    badge: "Hydrating",
+    description: "Alcohol-Free Toner for Oily Acne Prone Dry Combination Skin | Pore Tightening & Glowing Skin |Fades Blemishes, Brightens & Smoothens | Women & Men.",
+    specs: {
+      "Skin Type": "Dry, Dehydrated, All",
+      "Key Ingredient": "Rice water, Niacinamide",
+      "Texture": "Liquid",
+      "Use": "Daily"
+    },
+    tags: ["rice-water", "Alcohol-Free", "hydration", "glow"],
+    image: "/products/Plum-Niacinamide.jpg",
+    link: "https://amzn.to/4u2JmB8"
+  },
 ];
