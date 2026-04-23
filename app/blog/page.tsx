@@ -381,24 +381,30 @@ export default function BlogIndex() {
         
         /* === SIDEBAR === */
         .blog-hero-side {
-          background: linear-gradient(135deg, #c8473a 0%, #8b4a4a 100%);
+          background-image: url('/images/hero-skincare.jpg');
+          background-size: cover;
+          background-position: center;
           padding: 3.5rem 3rem;
           display: flex;
           flex-direction: column;
           justify-content: center;
           position: relative;
           overflow: hidden;
+          box-shadow: inset 0 0 80px rgba(0,0,0,0.15);
         }
         
         .blog-hero-side::before {
-          content: '';
-          position: absolute;
-          top: -50%; right: -50%;
-          width: 400px; height: 400px;
-          background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-          border-radius: 50%;
-          pointer-events: none;
-        }
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0.35) 0%,
+    rgba(0,0,0,0.25) 50%,
+    rgba(0,0,0,0.45) 100%
+  );
+  backdrop-filter: blur(2px);
+}
         
         .blog-hero-side h2 {
           font-family: 'DM Serif Display', serif;
@@ -426,7 +432,8 @@ export default function BlogIndex() {
           align-items: center;
           gap: 1rem;
           padding-top: 1.5rem;
-          border-top: 1px solid rgba(255,255,255,0.2);
+          padding: 1rem
+          border-top: 1px solid rgba(255,255,255,0.8);
           position: relative;
           z-index: 1;
         }
@@ -758,7 +765,7 @@ export default function BlogIndex() {
           <h2>Your Skincare Journey</h2>
           <p>Three guided steps to transform your routine: from choosing the perfect sunscreen to building a complete beauty regimen that fits your budget and lifestyle.</p>
           <div className="sidebar-cta">
-            <span className="sidebar-cta-icon">✨</span>
+            <span style={{ fontSize: "1.2rem", opacity: 0.7 }}></span>
             <p className="sidebar-cta-text">Start with sunscreen. Master the routine. Build your glow-up.</p>
           </div>
         </div>

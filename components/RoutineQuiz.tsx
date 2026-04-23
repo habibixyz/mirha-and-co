@@ -1,47 +1,41 @@
-// components/RoutineQuiz.tsx
-"use client";
+'use client';
 
-import React, { useState } from "react";
-import { ChevronRight, ChevronLeft } from "lucide-react";
-import { QuizAnswers, RoutineRecommendation, generateRoutine } from "@/lib/routineEngine";
-import RoutineResult from "./RoutineResult";
+import React, { useState } from 'react';
+import { ChevronRight, ChevronLeft } from 'lucide-react';
+import { QuizAnswers, RoutineRecommendation, generateRoutine } from '@/lib/routineEngine';
+import RoutineResult from './RoutineResult';
 
 const QUIZ_STEPS = [
   {
-    id: "skinType",
+    id: 'skinType',
     question: "What's your skin type?",
+    subtitle: 'This determines which actives and textures will work best for you.',
     answers: [
-      { id: "oily", label: "Oily" },
-      { id: "dry", label: "Dry" },
-      { id: "combination", label: "Combination" },
-      { id: "sensitive", label: "Sensitive" },
+      { id: 'oily', label: 'Oily', description: 'Shine by midday, visible pores, prone to breakouts' },
+      { id: 'dry', label: 'Dry', description: 'Tight feeling, flaking, dull texture' },
+      { id: 'combination', label: 'Combination', description: 'Oily T-zone, dry cheeks' },
+      { id: 'sensitive', label: 'Sensitive', description: 'Red, reactive, easily irritated' },
     ],
   },
   {
-    id: "mainConcern",
-    question: "What's your main skin concern?",
+    id: 'mainConcern',
+    question: "What's your primary skin concern?",
+    subtitle: "We'll build around this to address what matters most to you.",
     answers: [
-      { id: "acne", label: "Acne & Breakouts" },
-      { id: "pigmentation", label: "Dark Spots & Pigmentation" },
-      { id: "dullness", label: "Dullness & Uneven Tone" },
-      { id: "dehydration", label: "Dehydration & Dryness" },
+      { id: 'acne', label: 'Acne & Breakouts', description: 'Active pimples, congestion, post-acne marks' },
+      { id: 'pigmentation', label: 'Dark Spots & Pigmentation', description: 'Uneven tone, hyperpigmentation, melasma' },
+      { id: 'dullness', label: 'Dullness & Uneven Tone', description: 'Lack of glow, tired appearance' },
+      { id: 'dehydration', label: 'Dehydration & Dryness', description: 'Tight, flaky, lack of moisture' },
     ],
   },
   {
-    id: "budget",
-    question: "What's your budget for a routine?",
+    id: 'budget',
+    question: "What's your budget per product?",
+    subtitle: "We've curated options across all price points.",
     answers: [
-      { id: "under_500", label: "Under ₹500 per product" },
-      { id: "under_1000", label: "Under ₹1,000 per product" },
-      { id: "under_2000", label: "Under ₹2,000 per product" },
-    ],
-  },
-  {
-    id: "experience",
-    question: "What's your skincare experience?",
-    answers: [
-      { id: "beginner", label: "Beginner (new to skincare)" },
-      { id: "intermediate", label: "Intermediate (using actives)" },
+      { id: 'under_500', label: 'Under ₹500', description: 'Best value, proven performers' },
+      { id: 'under_1000', label: 'Under ₹1,000', description: 'Clinical-grade ingredients' },
+      { id: 'under_2000', label: 'Under ₹2,000', description: 'Premium formulations' },
     ],
   },
 ];
@@ -68,7 +62,6 @@ export default function RoutineQuiz() {
     if (!isAnswered) return;
 
     if (isLastStep) {
-      // Generate routine
       const completeAnswers = answers as QuizAnswers;
       const generatedRoutine = generateRoutine(completeAnswers);
       setRoutine(generatedRoutine);
@@ -96,100 +89,327 @@ export default function RoutineQuiz() {
   }
 
   return (
-    <div className="min-h-screen bg-white flex items-center justify-center px-4 py-8">
-      <div style={{
-  width: "100%",
-  maxWidth: "720px",
-  margin: "0 auto"
-}}>
-        {/* Progress */}
-        <div className="mb-12 text-center">
-          <p className="text-xs uppercase tracking-widest text-gray-500 mb-2">
-            Step {currentStep + 1} of {QUIZ_STEPS.length}
+    <div
+      style={{
+        minHeight: '100vh',
+        background: 'linear-gradient(135deg, #faf8f5 0%, #f5f1ed 100%)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '40px 20px',
+      }}
+    >
+      <div style={{ width: '100%', maxWidth: '640px' }}>
+        {/* Header */}
+        <div style={{ textAlign: 'center', marginBottom: '48px' }}>
+          <p
+            style={{
+              fontSize: '10px',
+              letterSpacing: '0.3em',
+              textTransform: 'uppercase',
+              color: '#9b7e6b',
+              marginBottom: '12px',
+              fontFamily: 'var(--font-mono, monospace)',
+            }}
+          >
+            Mirha & Co. / Routine Builder
           </p>
-          <div className="h-0.5 bg-gray-200 rounded-full overflow-hidden">
+          <h1
+            style={{
+              fontFamily: "'DM Serif Display', serif",
+              fontSize: 'clamp(32px, 6vw, 44px)',
+              fontWeight: 400,
+              color: '#111',
+              margin: '0 0 16px',
+              lineHeight: 1.2,
+            }}
+          >
+            Your Perfect Routine
+          </h1>
+          <p
+            style={{
+              fontSize: '14px',
+              color: '#888',
+              lineHeight: 1.7,
+              margin: '0 0 32px',
+            }}
+          >
+            Answer 3 quick questions and we'll build a personalized routine with products curated for your exact skin needs.
+          </p>
+        </div>
+
+        {/* Progress Bar */}
+        <div style={{ marginBottom: '48px' }}>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              marginBottom: '16px',
+            }}
+          >
+            <p
+              style={{
+                fontSize: '10px',
+                letterSpacing: '0.15em',
+                textTransform: 'uppercase',
+                color: '#bbb',
+                fontFamily: 'var(--font-mono, monospace)',
+              }}
+            >
+              Step {currentStep + 1} of {QUIZ_STEPS.length}
+            </p>
+            <p
+              style={{
+                fontSize: '10px',
+                letterSpacing: '0.15em',
+                textTransform: 'uppercase',
+                color: '#bbb',
+                fontFamily: 'var(--font-mono, monospace)',
+              }}
+            >
+              {Math.round(((currentStep + 1) / QUIZ_STEPS.length) * 100)}%
+            </p>
+          </div>
+          <div
+            style={{
+              height: '1px',
+              background: '#e8e2d9',
+              borderRadius: '1px',
+              overflow: 'hidden',
+            }}
+          >
             <div
               style={{
-    height: "2px",
-    background: "#000",
-    width: `${((currentStep + 1) / QUIZ_STEPS.length) * 100}%`,
-    transition: "0.3s ease"
-  }}
+                height: '1px',
+                background: '#111',
+                width: `${((currentStep + 1) / QUIZ_STEPS.length) * 100}%`,
+                transition: 'width 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+              }}
             />
           </div>
         </div>
 
-        {/* Question */}
-        <div className="mb-12">
-          <h1 style={{
-  fontFamily: "'DM Serif Display', serif",
-  fontSize: "36px",
-  textAlign: "center",
-  marginBottom: "10px",
-  fontWeight: 400,
-  color: "#111"
-}}>
-  {step.question}
-</h1>
-        </div>
+        {/* Question Card */}
+        <div
+          style={{
+            background: '#fff',
+            border: '1px solid #e8e2d9',
+            borderRadius: '16px',
+            padding: '48px 32px',
+            marginBottom: '40px',
+            minHeight: '500px',
+            display: 'flex',
+            flexDirection: 'column',
+          }}
+        >
+          {/* Question */}
+          <h2
+            style={{
+              fontFamily: "'DM Serif Display', serif",
+              fontSize: 'clamp(24px, 5vw, 32px)',
+              fontWeight: 400,
+              color: '#111',
+              margin: '0 0 12px',
+              lineHeight: 1.3,
+            }}
+          >
+            {step.question}
+          </h2>
 
-        {/* Answers */}
-        <div className="space-y-3 mb-12">
-          {step.answers.map((answer) => (
-            <button
-  key={answer.id}
-  onClick={() => handleSelectAnswer(answer.id)}
-  style={{
-    width: "100%",
-    padding: "16px 20px",
-    border: selectedAnswer === answer.id ? "1px solid #000" : "1px solid #d6d0c9",
-    background: selectedAnswer === answer.id ? "#000" : "#fff",
-    color: selectedAnswer === answer.id ? "#fff" : "#000",
-    textAlign: "left",
-    transition: "all 0.2s ease",
-    cursor: "pointer",
-    fontFamily: "'DM Sans', sans-serif",
-    fontSize: "14px",
-    letterSpacing: "0.02em"
-  }}
->
-  {answer.label}
-</button>
-          ))}
+          {step.subtitle && (
+            <p
+              style={{
+                fontSize: '14px',
+                color: '#888',
+                margin: '0 0 32px',
+                lineHeight: 1.6,
+              }}
+            >
+              {step.subtitle}
+            </p>
+          )}
+
+          {/* Answers - scrollable if needed */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', flex: 1 }}>
+            {step.answers.map((answer) => {
+              const isSelected = selectedAnswer === answer.id;
+              return (
+                <button
+                  key={answer.id}
+                  onClick={() => handleSelectAnswer(answer.id)}
+                  style={{
+                    padding: '16px 20px',
+                    border: `1px solid ${isSelected ? '#111' : '#e8e2d9'}`,
+                    background: isSelected ? '#111' : '#fff',
+                    color: isSelected ? '#fff' : '#111',
+                    textAlign: 'left',
+                    transition: 'all 0.25s cubic-bezier(0.4, 0, 0.2, 1)',
+                    cursor: 'pointer',
+                    borderRadius: '8px',
+                    boxShadow: isSelected ? '0 4px 16px rgba(0,0,0,0.08)' : 'none',
+                  }}
+                  onMouseEnter={(e) => {
+                    if (!isSelected) {
+                      const btn = e.currentTarget as HTMLButtonElement;
+                      btn.style.borderColor = '#d6d0c9';
+                      btn.style.background = '#faf8f5';
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (!isSelected) {
+                      const btn = e.currentTarget as HTMLButtonElement;
+                      btn.style.borderColor = '#e8e2d9';
+                      btn.style.background = '#fff';
+                    }
+                  }}
+                >
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'flex-start',
+                      gap: '12px',
+                    }}
+                  >
+                    <div>
+                      <p
+                        style={{
+                          fontSize: '15px',
+                          fontWeight: 500,
+                          margin: '0 0 4px',
+                          color: 'inherit',
+                        }}
+                      >
+                        {answer.label}
+                      </p>
+                      {answer.description && (
+                        <p
+                          style={{
+                            fontSize: '12px',
+                            margin: 0,
+                            opacity: 0.7,
+                            color: 'inherit',
+                          }}
+                        >
+                          {answer.description}
+                        </p>
+                      )}
+                    </div>
+                    <div
+                      style={{
+                        width: '20px',
+                        height: '20px',
+                        borderRadius: '50%',
+                        border: `2px solid ${isSelected ? '#fff' : 'currentColor'}`,
+                        background: isSelected ? '#fff' : 'transparent',
+                        flexShrink: 0,
+                        marginTop: '2px',
+                      }}
+                    />
+                  </div>
+                </button>
+              );
+            })}
+          </div>
         </div>
 
         {/* Navigation */}
-        <div className="flex gap-4 justify-between">
+        <div
+          style={{
+            display: 'flex',
+            gap: '12px',
+            justifyContent: 'space-between',
+          }}
+        >
           <button
             onClick={handleBack}
             disabled={currentStep === 0}
-            className={`flex items-center gap-2 px-6 py-3 transition-all duration-200 ${
-              currentStep === 0
-                ? "text-gray-300 cursor-not-allowed"
-                : "text-black hover:text-gray-600"
-            }`}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+              padding: '12px 24px',
+              background: 'transparent',
+              border: '1px solid #e8e2d9',
+              color: currentStep === 0 ? '#ddd' : '#111',
+              fontSize: '11px',
+              letterSpacing: '0.15em',
+              textTransform: 'uppercase',
+              cursor: currentStep === 0 ? 'not-allowed' : 'pointer',
+              borderRadius: '8px',
+              transition: 'all 0.25s',
+              fontFamily: 'var(--font-mono, monospace)',
+              opacity: currentStep === 0 ? 0.5 : 1,
+            }}
+            onMouseEnter={(e) => {
+              if (currentStep > 0) {
+                const btn = e.currentTarget as HTMLButtonElement;
+                btn.style.borderColor = '#111';
+                btn.style.color = '#111';
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (currentStep > 0) {
+                const btn = e.currentTarget as HTMLButtonElement;
+                btn.style.borderColor = '#e8e2d9';
+                btn.style.color = '#111';
+              }
+            }}
           >
-            <ChevronLeft size={18} />
-            <span className="text-sm font-medium">Back</span>
+            <ChevronLeft size={14} />
+            Back
           </button>
 
           <button
             onClick={handleNext}
             disabled={!isAnswered}
-            className={`flex items-center gap-2 px-6 py-3 bg-black text-white transition-all duration-200 ${
-              isAnswered ? "hover:bg-gray-900" : "opacity-50 cursor-not-allowed"
-            }`}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+              padding: '12px 24px',
+              background: isAnswered ? '#111' : '#ddd',
+              color: '#fff',
+              fontSize: '11px',
+              letterSpacing: '0.15em',
+              textTransform: 'uppercase',
+              cursor: isAnswered ? 'pointer' : 'not-allowed',
+              borderRadius: '8px',
+              border: '1px solid #111',
+              transition: 'all 0.25s',
+              fontFamily: 'var(--font-mono, monospace)',
+            }}
+            onMouseEnter={(e) => {
+              if (isAnswered) {
+                const btn = e.currentTarget as HTMLButtonElement;
+                btn.style.background = '#333';
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (isAnswered) {
+                const btn = e.currentTarget as HTMLButtonElement;
+                btn.style.background = '#111';
+              }
+            }}
           >
-            <span className="text-sm font-medium">
-              {isLastStep ? "Generate Routine" : "Next"}
-            </span>
-            <ChevronRight size={18} />
+            {isLastStep ? 'Generate Routine' : 'Next'}
+            <ChevronRight size={14} />
           </button>
         </div>
 
         {/* Disclaimer */}
-        <p className="text-xs text-gray-500 text-center mt-12">
-          Results are based on general skin profiles, not medical advice. Consult a dermatologist for personalized recommendations.
+        <p
+          style={{
+            fontSize: '10px',
+            color: '#bbb',
+            textAlign: 'center',
+            marginTop: '40px',
+            lineHeight: 1.6,
+            fontFamily: 'var(--font-mono, monospace)',
+          }}
+        >
+          Results based on general skin profiles. Not medical advice. Consult a dermatologist for serious concerns.
         </p>
       </div>
     </div>
