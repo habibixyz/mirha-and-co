@@ -818,4 +818,73 @@ export const PRODUCTS = [
     image: "/products/Plum-Niacinamide.jpg",
     link: "https://amzn.to/4u2JmB8"
   },
+  {
+    id: 36,
+    name: "Minimalist Multi-Peptide Night Face Serum 30ml",
+    brand: "Minimalist",
+    category: "Skincare",
+    subcat: "Essence",
+    mrp: 699,
+    price: 629,
+    rating: 4.3,
+    reviews: "3.8k",
+    asin: "B08MVD6T8V",
+    badge: "Anti-Ageing",
+    description: "Peptide-rich serum that strengthens skin barrier and reduces wrinkles. Multi-peptide blend for comprehensive anti-aging benefits.",
+    specs: {
+      "Skin Type": "Mature, All Types",
+      "Key Ingredient": "Multi-Peptide 10%",
+      "Texture": "Serum",
+      "Use": "AM & PM"
+    },
+    tags: ["peptide", "anti-aging", "barrier-repair", "wrinkles"],
+    image: "/products/Minimalist-Multi-Peptide.jpg",
+    link: "https://amzn.to/41R6Jlq"
+  },
+  {
+    id: 37,
+    name: "Dot & Key Watermelon 10% Glycolic Serum Exfoliating Essence 30ml",
+    brand: "Dot & Key",
+    category: "Skincare",
+    subcat: "Exfoliating Essence",
+    mrp: 599,
+    price: 509,
+    rating: 4.2,
+    reviews: "300",
+    asin: "B0BLRWFM22",
+    badge: "Exfoliating",
+    description: "Glycolic Serum for Face Glowing, With KojicI | Targets Pigmentation & Dark Spots | Targets Dullness, Uneven Texture, Sebum & Excess Oil | Serum For Oily & Normal Skin.",
+    specs: {
+      "Skin Type": "Normal, Oily, Combination",
+      "Key Ingredient": "Glycolic Acid 8%",
+      "Texture": "Liquid",
+      "Use": "2-3x Weekly"
+    },
+    tags: ["glycolic-acid", "exfoliant", "brightening", "watermelon", "aha"],
+    image: "/products/Dot-Key-Watermelon.jpg",
+    link: "https://amzn.to/4tuB8BV"
+  },
+   {
+    id: 38,
+    name: "Mamaearth Onion Hair Oil 50ml",
+    brand: "Mamaearth",
+    category: "Hair care",
+    subcat: "Oil",
+    mrp: 177,
+    price: 171,
+    rating: 4,
+    reviews: "56k",
+    asin: "B0CF61RF5B",
+    badge: "Natural",
+    description: "Onion Hair Oil for Hair Growth & Hair Fall Control with Redensyl .",
+    specs: {
+      "Skin Type": "All",
+      "Key Ingredient": "Onion Extract",
+      "Texture": "Liquid",
+      "Use": "Daily"
+    },
+    tags: ["onion", "brightening", "natural", "organic"],
+    image: "/products/Mamaearth-Onion-Hair-Oil.jpg",
+    link: "https://amzn.to/4cK4buo"
+  },
 ];
