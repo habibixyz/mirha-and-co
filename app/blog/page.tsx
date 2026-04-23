@@ -23,7 +23,38 @@ export default function BlogIndex() {
   productCount: 8,
   thumbnail: "✨"
 },
+{
+  category: "BEAUTY" as const,
+  title: "Why Your Skin Looks Dull Even After Skincare",
+  excerpt: "Hard water, wrong layering, and skipping SPF — the real reasons your skin isn’t glowing.",
+  slug: "why-skin-looks-dull",
+  readTime: "10 min",
+  date: "April 2026",
+  productCount: 6,
+  thumbnail: "✨"
+},
 
+{
+  category: "BEAUTY" as const,
+  title: "The ₹1000 Skincare Mistakes Costing You ₹10,000",
+  excerpt: "The habits that silently ruin your skincare results — and how to fix them.",
+  slug: "skincare-mistakes",
+  readTime: "9 min",
+  date: "April 2026",
+  productCount: 5,
+  thumbnail: "💸"
+},
+
+{
+  category: "BEAUTY" as const,
+  title: "Minimalist vs The Ordinary vs Dot & Key — What Actually Works?",
+  excerpt: "A real comparison of India’s most popular skincare brands — based on results, not hype.",
+  slug: "brand-comparison-india",
+  readTime: "11 min",
+  date: "April 2026",
+  productCount: 7,
+  thumbnail: "⚖️"
+},
    {
   category: "HAIR" as const,
   title: "Why Your Hair Won’t Stop Falling (Hard Water India Guide)",
