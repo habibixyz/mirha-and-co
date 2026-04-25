@@ -887,4 +887,28 @@ export const PRODUCTS = [
     image: "/products/Mamaearth-Onion-Hair-Oil.jpg",
     link: "https://amzn.to/4cK4buo"
   },
+  
+{
+  id: 39,
+    name: "Maybelline New York Fit Me Glow",
+    brand: "Maybelline",
+    category: "Makeup",
+    subcat: "BB Cream",
+    mrp: 429,
+    price: 343,
+    rating: 4.7,
+    reviews: "133",
+    asin: "B0GJ5N15GG",
+    badge: "Niacinamide",
+    description: "INSTANT + OVERTIME GLOW BB Cream: Unlock luminous, dewy glow, natural coverage, and all-day hydration with Maybelline Fit Me Nude Glow BB cream. Blends seamlessly without heaviness for a fresh, natural look.",
+    specs: {
+      "Skin Type": "All",
+      "Key Ingredient": "Niacinamide, Hyaluronic Acid",
+      "Texture": "Cream",
+      "Use": "On face"
+    },
+    tags: ["Niacinamide", "BB-Cream", "refreshing", "foundation"],
+    image: "/products/Maybelline-New York-Fit-Me.jpg",
+    link: "https://amzn.to/4mVn2r6r"
+  }
 ];
