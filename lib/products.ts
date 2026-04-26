@@ -887,52 +887,52 @@ export const PRODUCTS = [
     image: "/products/Mamaearth-Onion-Hair-Oil.jpg",
     link: "https://amzn.to/4cK4buo"
   },
-  
-{
-  id: 39,
-    name: "Maybelline New York Fit Me Glow",
-    brand: "Maybelline",
-    category: "Makeup",
-    subcat: "BB Cream",
-    mrp: 429,
-    price: 343,
-    rating: 4.7,
-    reviews: "133",
-    asin: "B0GJ5N15GG",
-    badge: "Niacinamide",
-    description: "INSTANT + OVERTIME GLOW BB Cream: Unlock luminous, dewy glow, natural coverage, and all-day hydration with Maybelline Fit Me Nude Glow BB cream. Blends seamlessly without heaviness for a fresh, natural look.",
-    specs: {
-      "Skin Type": "All",
-      "Key Ingredient": "Niacinamide, Hyaluronic Acid",
-      "Texture": "Cream",
-      "Use": "On face"
-    },
-    tags: ["Niacinamide", "BB-Cream", "refreshing", "foundation"],
-    image: "/products/Maybelline-NewYork.jpg",
-    link: "https://amzn.to/4mVn2r6r"
-  },
-
   {
-    id: 40,
-    name: "L'Oréal True Match Foundation",
-    brand: "L'Oréal",
-    category: "Makeup",
-    subcat: "Foundation",
-    mrp: 2887,
-    price: 1817  ,
-    rating: 4.5,
-    reviews: "620",
-    asin: "B00112HQIU",
-    badge: "17 Sun Protection Factor (SPF)",
-    description: "L'Oreal Paris True Match Super-Blendable Makeup Oil Foundation, Natural Ivory, 1 fl. oz. Natural Finish.",
-    specs: {
-      "Skin Type": "All",
-      "Key Ingredient": ["TITANIUM DIOXIDE", "GLYCERIN"],
-      "Texture": "Cream",
-      "Use": "On face"
-    },
-    tags: ["GLYCERIN", "BB-Cream", "refreshing", "foundation"],
-    image: "/products/True-Match.jpg",
-    link: "https://amzn.to/4u9B8Y0"
-  }
+  id: 39,
+  name: "Maybelline New York Fit Me Glow",
+  brand: "Maybelline",
+  category: "Makeup",
+  subcat: "BB Cream",
+  mrp: 429,
+  price: 343,
+  rating: 4.7,
+  reviews: "133",
+  asin: "B0GJ5N15GG",
+  badge: "Niacinamide",
+  description: "INSTANT + OVERTIME GLOW BB Cream: Unlock luminous, dewy glow, natural coverage, and all-day hydration with Maybelline Fit Me Nude Glow BB cream. Blends seamlessly without heaviness for a fresh, natural look.",
+  specs: {
+    "Skin Type": "All",
+    "Key Ingredient": ["Niacinamide", "Hyaluronic Acid"],
+    "Texture": "Cream",
+    "Use": "On face"
+  },
+  tags: ["niacinamide", "bb-cream", "hydrating", "glow"],
+  image: "/products/Maybelline-NewYork.jpg",
+  link: "https://amzn.to/4mVn2r6r"
+},
+
+{
+  id: 40,
+  name: "L'Oréal True Match Foundation",
+  brand: "L'Oréal",
+  category: "Makeup",
+  subcat: "Foundation",
+  mrp: 2887,
+  price: 1817,
+  rating: 4.5,
+  reviews: "620",
+  asin: "B00112HQIU",
+  badge: "SPF 17",
+  description: "L'Oreal Paris True Match Super-Blendable Foundation, Natural Ivory, 1 fl. oz. Natural finish with lightweight coverage.",
+  specs: {
+    "Skin Type": "All",
+    "Key Ingredient": ["Titanium Dioxide", "Glycerin"],
+    "Texture": "Liquid",
+    "Use": "On face"
+  },
+  tags: ["glycerin", "foundation", "natural-finish", "spf"],
+  image: "/products/True-Match.jpg",
+  link: "https://amzn.to/4u9B8Y0"
+}
+
 ];
