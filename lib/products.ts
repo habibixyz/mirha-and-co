@@ -907,7 +907,7 @@ export const PRODUCTS = [
     "Use": "On face"
   },
   tags: ["niacinamide", "bb-cream", "hydrating", "glow"],
-  image: "/products/Maybelline-NewYork.jpg",
+  image: "/products/Maybelline-Fit.jpg",
   link: "https://amzn.to/4mVn2r6r"
 },
 
