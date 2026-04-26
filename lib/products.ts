@@ -902,7 +902,7 @@ export const PRODUCTS = [
   description: "INSTANT + OVERTIME GLOW BB Cream: Unlock luminous, dewy glow, natural coverage, and all-day hydration with Maybelline Fit Me Nude Glow BB cream. Blends seamlessly without heaviness for a fresh, natural look.",
   specs: {
     "Skin Type": "All",
-    "Key Ingredient": "Niacinamide, Hyaluronic Acid"
+    "Key Ingredient": "Niacinamide, Hyaluronic Acid",
     "Texture": "Cream",
     "Use": "On face"
   },
@@ -926,7 +926,7 @@ export const PRODUCTS = [
   description: "L'Oreal Paris True Match Super-Blendable Foundation, Natural Ivory, 1 fl. oz. Natural finish with lightweight coverage.",
   specs: {
     "Skin Type": "All",
-    "Key Ingredient": "Titanium Dioxide, Glycerin"
+    "Key Ingredient": "Titanium Dioxide, Glycerin",
     "Texture": "Liquid",
     "Use": "On face"
   },
