@@ -908,7 +908,31 @@ export const PRODUCTS = [
       "Use": "On face"
     },
     tags: ["Niacinamide", "BB-Cream", "refreshing", "foundation"],
-    image: "/products/Maybelline-NewYork-Fit-Me.jpg",
+    image: "/products/Maybelline-NewYork.jpg",
     link: "https://amzn.to/4mVn2r6r"
+  },
+
+  {
+    id: 40,
+    name: "L'Oréal True Match Foundation",
+    brand: "L'Oréal",
+    category: "Makeup",
+    subcat: "Foundation",
+    mrp: 2887,
+    price: 1817  ,
+    rating: 4.5,
+    reviews: "620",
+    asin: "B00112HQIU",
+    badge: "17 Sun Protection Factor (SPF)",
+    description: "L'Oreal Paris True Match Super-Blendable Makeup Oil Foundation, Natural Ivory, 1 fl. oz. Natural Finish.",
+    specs: {
+      "Skin Type": "All",
+      "Key Ingredient": ["TITANIUM DIOXIDE", "GLYCERIN"],
+      "Texture": "Cream",
+      "Use": "On face"
+    },
+    tags: ["GLYCERIN", "BB-Cream", "refreshing", "foundation"],
+    image: "/products/True-Match.jpg",
+    link: "https://amzn.to/4u9B8Y0"
   }
 ];
