@@ -908,7 +908,7 @@ export const PRODUCTS = [
       "Use": "On face"
     },
     tags: ["Niacinamide", "BB-Cream", "refreshing", "foundation"],
-    image: "/products/Maybelline-New York-Fit-Me.jpg",
+    image: "/products/Maybelline-NewYork-Fit-Me.jpg",
     link: "https://amzn.to/4mVn2r6r"
   }
 ];
