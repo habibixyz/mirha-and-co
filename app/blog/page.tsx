@@ -1,691 +1,476 @@
 "use client";
 
-const AFFILIATE_TAG = "skinwithtanvi-21";
+const featured = {
+  category: "BEAUTY" as const,
+  title: "What Niacinamide Actually Does to Your Skin",
+  excerpt: "The no-fluff India edition: oil control, acne marks, barrier support, and how to use it without overdoing your routine.",
+  slug: "what-niacinamide-does-to-your-skin",
+  readTime: "10 min",
+  date: "March 2026",
+  tag: "START HERE",
+};
+
+const posts = [
+  { category: "SKINCARE" as const, title: "The Indian Pigmentation Playbook", excerpt: "A complete guide to treating pigmentation in Indian skin using the right actives and routines.", slug: "pigmentation-guide", readTime: "12 min", date: "April 2026", productCount: 8, initials: "PI" },
+  { category: "BEAUTY" as const, title: "Why Your Skin Looks Dull Even After Skincare", excerpt: "Hard water, wrong layering, and skipping SPF: the real reasons skin stops glowing.", slug: "why-skin-looks-dull", readTime: "10 min", date: "April 2026", productCount: 6, initials: "GL" },
+  { category: "BEAUTY" as const, title: "The Skincare Mistakes Costing You More Than Products", excerpt: "The habits that silently ruin your skincare results, and how to fix them.", slug: "skincare-mistakes", readTime: "9 min", date: "April 2026", productCount: 5, initials: "MI" },
+  { category: "BEAUTY" as const, title: "Minimalist vs The Ordinary vs Dot & Key", excerpt: "A real comparison of India's most popular skincare brands, based on use case, not hype.", slug: "brand-comparison-india", readTime: "11 min", date: "April 2026", productCount: 7, initials: "VS" },
+  { category: "HAIR" as const, title: "Why Your Hair Won't Stop Falling", excerpt: "The hard-water India guide to scalp buildup, shedding, and what actually helps.", slug: "hard-water-hair", readTime: "11 min", date: "April 2026", productCount: 8, initials: "HW" },
+  { category: "BEAUTY" as const, title: "The Products That Actually Changed My Skin", excerpt: "After years of testing everything, these are the products still worth talking about.", slug: "skincare-products-that-changed-my-skin", readTime: "8 min", date: "March 2026", productCount: 12, initials: "PR" },
+  { category: "WELLNESS" as const, title: "Morning Routines That Don't Require 2 Hours", excerpt: "Five things. Twenty minutes. A real difference.", slug: "morning-routines", readTime: "5 min", date: "March 2026", productCount: 5, initials: "AM" },
+  { category: "BEAUTY" as const, title: "Amazon Skincare Finds Under 1500", excerpt: "Budget does not mean compromise. These picks prove it.", slug: "amazon-skincare-under-1500", readTime: "6 min", date: "March 2026", productCount: 8, initials: "BU" },
+  { category: "LIFESTYLE" as const, title: "Gift Guides for the Woman Who Has Everything", excerpt: "She's impossible to shop for. We figured it out.", slug: "gift-guide-woman-who-has-everything", readTime: "7 min", date: "Feb 2026", productCount: 15, initials: "GI" },
+  { category: "WELLNESS" as const, title: "The Supplements Worth Taking", excerpt: "Honest breakdown. No sponsorships. Just research and context.", slug: "supplements-worth-taking", readTime: "9 min", date: "Feb 2026", productCount: 10, initials: "SU" },
+  { category: "BEAUTY" as const, title: "The Right Order to Apply Your Skincare", excerpt: "Layering matters. This is the sequence that actually works.", slug: "skincare-layering-order", readTime: "5 min", date: "Jan 2026", productCount: 6, initials: "OR" },
+  { category: "LIFESTYLE" as const, title: "The Amazon Buys That Changed How I Live at Home", excerpt: "Small upgrades. Massive difference to daily life.", slug: "amazon-home-buys", readTime: "6 min", date: "Jan 2026", productCount: 8, initials: "HO" },
+  { category: "BEAUTY" as const, title: "Best Sunscreens in India That Actually Work", excerpt: "No white cast. No greasy finish. Just sunscreens people actually use daily.", slug: "best-sunscreens-india-2026", readTime: "5 min", date: "March 2026", productCount: 9, initials: "SP" },
+  { category: "BEAUTY" as const, title: "4-Step Indian Skincare Routine Under 2000", excerpt: "A simple routine built for Indian skin, Indian weather, and Indian budgets.", slug: "budget-skincare-routine-under-2000", readTime: "9 min", date: "April 2026", productCount: 9, initials: "RT" },
+  { category: "BEAUTY" as const, title: "Niacinamide 5% vs 10%", excerpt: "What each concentration does differently, and which one your skin actually needs.", slug: "niacinamide-5-vs-10", readTime: "8 min", date: "April 2026", productCount: 3, initials: "N5" },
+  { category: "BEAUTY" as const, title: "Niacinamide vs Vitamin C", excerpt: "What each ingredient does, which concern it targets, and how to layer them correctly.", slug: "niacinamide-vs-vitamin-c", readTime: "9 min", date: "April 2026", productCount: 3, initials: "NC" },
+  { category: "BEAUTY" as const, title: "Niacinamide for Oily Skin in India", excerpt: "Why niacinamide works for Indian humidity, oil control, pores, and acne marks.", slug: "niacinamide-for-oily-skin", readTime: "10 min", date: "April 2026", productCount: 4, initials: "OI" },
+  { category: "BEAUTY" as const, title: "Why SPF 50 Is Non-Negotiable in India", excerpt: "Why Indian skin needs SPF 50+ and how sunscreen protects every active in your routine.", slug: "best-sunscreen-india-spf50", readTime: "11 min", date: "April 2026", productCount: 5, initials: "50" },
+  { category: "BEAUTY" as const, title: "Serums vs Essences vs Moisturisers", excerpt: "The honest breakdown of what each product does and what your skin actually needs.", slug: "serums-essences-moisturizers-guide", readTime: "10 min", date: "April 2026", productCount: 6, initials: "SE" },
+  { category: "SKINCARE" as const, title: "Complete Skincare Routine for Every Skin Type", excerpt: "A 4-step routine map for oily, dry, combination, and sensitive skin.", slug: "skincare-routine-every-skin-type", readTime: "14 min", date: "April 2026", productCount: 12, initials: "RS" },
+];
+
+const catColors: Record<string, string> = {
+  BEAUTY: "#c0392b",
+  WELLNESS: "#b7860b",
+  LIFESTYLE: "#2d7a4f",
+  SKINCARE: "#6d3fa0",
+  HAIR: "#1a6e8e",
+};
+
+const paths = [
+  { label: "Search", title: "Ask Mirha by concern", text: "Search oily skin, pigmentation, niacinamide, sunscreen, or budget.", href: "/search" },
+  { label: "Routine", title: "Build your 4-step routine", text: "Get cleanser, treatment, moisturiser, and sunscreen for your skin profile.", href: "/tools/routine" },
+  { label: "Shop", title: "Browse curated picks", text: "See products with price, use case, ingredients, and honest context.", href: "/" },
+];
 
 export default function BlogIndex() {
-  const featured = {
-    category: "BEAUTY" as const,
-    title: "What Niacinamide Actually Does to Your Skin (India Edition)",
-    excerpt:
-      "The complete, no-fluff guide — written for Indian skin, Indian weather, and Indian budgets.",
-    slug: "what-niacinamide-does-to-your-skin",
-    readTime: "10 min",
-    date: "March 2026",
-    tag: "TRENDING",
-  };
-
-  const posts = [
-    { category: "SKINCARE" as const, title: "The Indian Pigmentation Playbook (Dermat-Backed Guide)", excerpt: "A complete guide to treating pigmentation in Indian skin using the right actives and routines.", slug: "pigmentation-guide", readTime: "12 min", date: "April 2026", productCount: 8, thumbnail: "✨" },
-    { category: "BEAUTY" as const, title: "Why Your Skin Looks Dull Even After Skincare", excerpt: "Hard water, wrong layering, and skipping SPF — the real reasons your skin isn't glowing.", slug: "why-skin-looks-dull", readTime: "10 min", date: "April 2026", productCount: 6, thumbnail: "✨" },
-    { category: "BEAUTY" as const, title: "The ₹1000 Skincare Mistakes Costing You ₹10,000", excerpt: "The habits that silently ruin your skincare results — and how to fix them.", slug: "skincare-mistakes", readTime: "9 min", date: "April 2026", productCount: 5, thumbnail: "💸" },
-    { category: "BEAUTY" as const, title: "Minimalist vs The Ordinary vs Dot & Key — What Actually Works?", excerpt: "A real comparison of India's most popular skincare brands — based on results, not hype.", slug: "brand-comparison-india", readTime: "11 min", date: "April 2026", productCount: 7, thumbnail: "⚖️" },
-    { category: "HAIR" as const, title: "Why Your Hair Won't Stop Falling (Hard Water India Guide)", excerpt: "The hidden cause of hair fall in Indian cities — and the exact protocol to fix it.", slug: "hard-water-hair", readTime: "11 min", date: "April 2026", productCount: 8, thumbnail: "💧" },
-    { category: "BEAUTY" as const, title: "The 12 Skincare Products That Actually Changed My Skin", excerpt: "After years of testing everything, these are the only products still on my shelf.", slug: "skincare-products-that-changed-my-skin", readTime: "8 min", date: "March 2026", productCount: 12, thumbnail: "🧴" },
-    { category: "WELLNESS" as const, title: "Morning Routines That Don't Require 2 Hours", excerpt: "Five things. Twenty minutes. A real difference.", slug: "morning-routines", readTime: "5 min", date: "March 2026", productCount: 5, thumbnail: "☀️" },
-    { category: "BEAUTY" as const, title: "Amazon Skincare Finds Under ₹1500 That Dermatologists Actually Use", excerpt: "Budget doesn't mean compromise. These prove it.", slug: "amazon-skincare-under-1500", readTime: "6 min", date: "March 2026", productCount: 8, thumbnail: "💰" },
-    { category: "LIFESTYLE" as const, title: "Gift Guides for the Woman Who Has Everything", excerpt: "She's impossible to shop for. We figured it out.", slug: "gift-guide-woman-who-has-everything", readTime: "7 min", date: "Feb 2026", productCount: 15, thumbnail: "🎁" },
-    { category: "WELLNESS" as const, title: "The Supplements Worth Taking (And the Ones That Are Just Hype)", excerpt: "Honest breakdown. No sponsorships. Just research.", slug: "supplements-worth-taking", readTime: "9 min", date: "Feb 2026", productCount: 10, thumbnail: "💊" },
-    { category: "BEAUTY" as const, title: "The Right Order to Apply Your Skincare (Most People Get This Wrong)", excerpt: "Layering matters. This is the sequence that actually works.", slug: "skincare-layering-order", readTime: "5 min", date: "Jan 2026", productCount: 6, thumbnail: "⚗️" },
-    { category: "LIFESTYLE" as const, title: "The 8 Amazon Buys That Changed How I Live at Home", excerpt: "Small upgrades. Massive difference to daily life.", slug: "amazon-home-buys", readTime: "6 min", date: "Jan 2026", productCount: 8, thumbnail: "🏠" },
-    { category: "BEAUTY" as const, title: "Best Sunscreens in India (2026) That Actually Work", excerpt: "No white cast. No greasy finish. Just sunscreens that people actually use daily.", slug: "best-sunscreens-india-2026", readTime: "5 min", date: "March 2026", productCount: 9, thumbnail: "☀️" },
-    { category: "BEAUTY" as const, title: "4-Step Indian Skincare Routine Under ₹2000 (That Actually Works)", excerpt: "A simple, no-fluff routine built for Indian skin, weather, and budgets.", slug: "budget-skincare-routine-under-2000", readTime: "9 min", date: "April 2026", productCount: 9, thumbnail: "🧴" },
-    { category: "BEAUTY" as const, title: "Niacinamide 5% vs 10% — Which One Does Your Skin Actually Need?", excerpt: "The honest breakdown of what each concentration does differently — and which one is right for your skin type.", slug: "niacinamide-5-vs-10", readTime: "8 min", date: "April 2026", productCount: 3, thumbnail: "⚗️" },
-    { category: "BEAUTY" as const, title: "Niacinamide vs Vitamin C — Which One Does Indian Skin Actually Need?", excerpt: "What each ingredient does, which concerns they target, and how to layer them correctly in Indian weather.", slug: "niacinamide-vs-vitamin-c", readTime: "9 min", date: "April 2026", productCount: 3, thumbnail: "🍊" },
-    { category: "BEAUTY" as const, title: "Niacinamide for Oily Skin in India — How It Actually Controls Oil", excerpt: "Why niacinamide works for oily skin in Indian humidity, what concentration to use, and the full AM/PM routine.", slug: "niacinamide-for-oily-skin", readTime: "10 min", date: "April 2026", productCount: 4, thumbnail: "💧" },
-    { category: "BEAUTY" as const, title: "Sunscreen in India — Why SPF 50 Is Non-Negotiable", excerpt: "Why Indian skin needs SPF 50+ and the best options available.", slug: "best-sunscreen-india-spf50", readTime: "11 min", date: "April 2026", productCount: 5, thumbnail: "☀️" },
-    { category: "BEAUTY" as const, title: "Serums vs Essences vs Moisturisers — What You Actually Need", excerpt: "The honest breakdown of what each product does and what your skin actually needs.", slug: "serums-essences-moisturizers-guide", readTime: "10 min", date: "April 2026", productCount: 6, thumbnail: "🧪" },
-    { category: "SKINCARE" as const, title: "Complete Skincare Routine for Every Skin Type", excerpt: "A science-backed 4-step routine for oily, dry, combination, and sensitive skin.", slug: "skincare-routine-every-skin-type", readTime: "14 min", date: "April 2026", productCount: 12, thumbnail: "🧴" },
-  ];
-
-  const catColors: Record<string, string> = {
-    BEAUTY: "#c0392b",
-    WELLNESS: "#b7860b",
-    LIFESTYLE: "#2d7a4f",
-    SKINCARE: "#6d3fa0",
-    HAIR: "#1a6e8e",
-  };
-
   return (
     <main>
       <style>{`
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-        /* ─── HERO ──────────────────────────────────────────────── */
-        .blog-hero {
+        *, *::before, *::after { box-sizing: border-box; }
+        .journal-page { background: #faf8f5; color: #111; min-height: 100vh; }
+        .journal-hero {
+          min-height: 620px;
           display: grid;
-          grid-template-columns: 5fr 3fr;
-          border-bottom: 1px solid #d6d0c9;
-          background: #faf8f5;
+          grid-template-columns: minmax(0, 1.08fr) minmax(360px, 0.92fr);
+          border-bottom: 1px solid #ded7cf;
         }
-
-        /* LEFT PANEL — no decorative borders, clean */
-        .blog-hero-main {
-          padding: 5rem 4.5rem 4.5rem;
+        .journal-hero-copy {
+          padding: 5rem 4.5rem 4rem;
           display: flex;
           flex-direction: column;
           justify-content: flex-end;
-          gap: 0;
-          border-right: 1px solid #d6d0c9;
-          background: #faf8f5;
         }
-
-        .blog-eyebrow {
-          display: inline-flex;
-          align-items: center;
-          gap: 0.7rem;
+        .eyebrow {
           font-family: 'DM Sans', sans-serif;
-          font-size: 0.6rem;
-          letter-spacing: 0.35em;
+          font-size: 0.62rem;
+          letter-spacing: 0.32em;
           text-transform: uppercase;
-          font-weight: 600;
-          color: #2c2826;
-          margin-bottom: 1.4rem;
+          color: #9b7e6b;
+          margin: 0 0 1rem;
         }
-
-        .eyebrow-pill {
-          background: var(--rose, #c0392b);
-          color: #fff;
-          font-size: 0.5rem;
-          letter-spacing: 0.22em;
-          font-weight: 700;
-          padding: 0.28rem 0.65rem;
-          border-radius: 2px;
-        }
-
-        .blog-featured-title {
+        .hero-title {
           font-family: 'DM Serif Display', serif;
-          font-size: clamp(2rem, 3.5vw, 3rem);
-          line-height: 1.15;
-          color: #111;
-          margin-bottom: 1.2rem;
+          font-size: clamp(3rem, 6vw, 6.4rem);
+          line-height: 0.92;
           font-weight: 400;
-          max-width: 580px;
+          letter-spacing: 0;
+          margin: 0;
+          max-width: 760px;
         }
-
-        .blog-featured-excerpt {
-          font-family: 'DM Sans', sans-serif;
-          font-size: 0.95rem;
-          color: #6b6460;
-          line-height: 1.8;
-          margin-bottom: 2.5rem;
-          max-width: 520px;
-          font-weight: 400;
+        .hero-title span { color: #c0392b; font-style: italic; }
+        .hero-copy {
+          max-width: 610px;
+          color: #6f6963;
+          line-height: 1.75;
+          font-size: 1rem;
+          margin: 1.4rem 0 2rem;
         }
-
-        .featured-cta-row {
-          display: flex;
-          align-items: center;
-          gap: 2rem;
-          flex-wrap: wrap;
-        }
-
-        .blog-featured-cta {
+        .hero-actions { display: flex; gap: 0.8rem; flex-wrap: wrap; }
+        .primary-btn, .secondary-btn {
           display: inline-flex;
           align-items: center;
-          gap: 0.8rem;
-          background: #111;
-          color: #fff;
-          padding: 0.95rem 2rem;
+          justify-content: center;
+          min-height: 46px;
+          padding: 0.9rem 1.35rem;
+          border-radius: 4px;
           font-family: 'DM Sans', sans-serif;
           font-size: 0.68rem;
-          letter-spacing: 0.2em;
+          letter-spacing: 0.18em;
           text-transform: uppercase;
-          font-weight: 600;
+          font-weight: 700;
           text-decoration: none;
-          border: 1px solid #111;
-          transition: background 0.2s, color 0.2s;
         }
-        .blog-featured-cta:hover {
-          background: var(--rose, #c0392b);
-          border-color: var(--rose, #c0392b);
-        }
-
-        .featured-meta {
-          font-family: 'DM Sans', sans-serif;
-          font-size: 0.65rem;
-          color: #aaa;
-          letter-spacing: 0.14em;
-          text-transform: uppercase;
-        }
-
-        /* RIGHT PANEL — full bleed image, dark overlay */
-        .blog-hero-side {
+        .primary-btn { background: #111; color: #fff; border: 1px solid #111; }
+        .secondary-btn { color: #111; border: 1px solid #d8d0c7; background: #fff; }
+        .journal-hero-visual {
           position: relative;
-          background-image: url('/images/hero-skincare.jpg');
+          min-height: 620px;
+          background-image: linear-gradient(to top, rgba(0,0,0,0.78), rgba(0,0,0,0.16)), url('/images/hero-skincare.jpg');
           background-size: cover;
           background-position: center;
           display: flex;
-          flex-direction: column;
-          justify-content: flex-end;
-          padding: 3.5rem;
-          min-height: 480px;
-          overflow: hidden;
+          align-items: flex-end;
+          padding: 3rem;
         }
-
-        /* Dark gradient overlay — consistent, no blur */
-        .blog-hero-side::before {
-          content: '';
-          position: absolute;
-          inset: 0;
-          background: linear-gradient(
-            to top,
-            rgba(0,0,0,0.75) 0%,
-            rgba(0,0,0,0.35) 50%,
-            rgba(0,0,0,0.1) 100%
-          );
-          z-index: 0;
-        }
-
-        /* Fallback if image is missing */
-        .blog-hero-side-fallback {
-          position: absolute;
-          inset: 0;
-          background: #1a1410;
-          z-index: -1;
-        }
-
-        .hero-side-content {
-          position: relative;
-          z-index: 1;
-        }
-
-        .hero-side-label {
-          font-family: 'DM Sans', sans-serif;
-          font-size: 0.58rem;
-          letter-spacing: 0.3em;
-          text-transform: uppercase;
-          color: rgba(255,255,255,0.5);
-          margin-bottom: 0.8rem;
-        }
-
-        .blog-hero-side h2 {
-          font-family: 'DM Serif Display', serif;
-          font-size: clamp(1.6rem, 2.5vw, 2.2rem);
+        .visual-note {
           color: #fff;
-          font-weight: 400;
-          line-height: 1.2;
-          margin-bottom: 0.9rem;
+          max-width: 360px;
         }
-
-        .blog-hero-side p {
-          font-family: 'DM Sans', sans-serif;
-          font-size: 0.9rem;
-          color: rgba(255,255,255,0.75);
-          line-height: 1.7;
-          margin-bottom: 2rem;
-          max-width: 300px;
-        }
-
-        .hero-side-steps {
-          display: flex;
-          flex-direction: column;
-          gap: 0.5rem;
-          padding-top: 1.4rem;
-          border-top: 1px solid rgba(255,255,255,0.15);
-        }
-
-        .hero-side-step {
-          display: flex;
-          align-items: center;
-          gap: 0.8rem;
-          font-family: 'DM Sans', sans-serif;
-          font-size: 0.8rem;
-          color: rgba(255,255,255,0.7);
-          text-decoration: none;
-          transition: color 0.2s;
-        }
-
-        .hero-side-step:hover { color: #fff; }
-
-        .step-num {
+        .visual-note h2 {
           font-family: 'DM Serif Display', serif;
-          font-size: 0.75rem;
-          color: var(--rose, #c0392b);
-          width: 18px;
-          flex-shrink: 0;
+          font-size: 2rem;
+          font-weight: 400;
+          line-height: 1.1;
+          margin: 0 0 0.8rem;
         }
-
-        /* ─── DISCLOSURE STRIP ──────────────────────────────────── */
-        .disclosure-strip {
-          background: #fff;
-          border-bottom: 1px solid #e8e4de;
-          padding: 1.1rem 2.5rem;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 0.8rem;
+        .visual-note p {
+          color: rgba(255,255,255,0.72);
+          line-height: 1.65;
+          margin: 0;
+          font-size: 0.9rem;
         }
-
-        .disclosure-dot {
-          width: 5px; height: 5px;
-          border-radius: 50%;
-          background: var(--rose, #c0392b);
-          flex-shrink: 0;
+        .trust-strip {
+          background: #111;
+          color: #fff;
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          border-bottom: 1px solid #111;
         }
-
-        .disclosure-strip p {
+        .trust-item {
+          padding: 1.1rem 1.4rem;
+          border-right: 1px solid rgba(255,255,255,0.1);
           font-family: 'DM Sans', sans-serif;
-          font-size: 0.72rem;
-          color: #888;
-          line-height: 1.6;
-          max-width: 680px;
+          font-size: 0.68rem;
+          letter-spacing: 0.18em;
+          text-transform: uppercase;
+          color: rgba(255,255,255,0.62);
           text-align: center;
         }
-
-        .disclosure-strip strong {
-          color: #444;
-          font-weight: 500;
-        }
-
-        /* ─── START HERE BAND ───────────────────────────────────── */
-        .start-here-band {
-          background: #111;
-          padding: 2.8rem 2.5rem;
-        }
-
-        .start-here-inner {
+        .path-section {
           max-width: 1200px;
           margin: 0 auto;
-          display: grid;
-          grid-template-columns: 1fr 2fr;
-          align-items: center;
-          gap: 3rem;
+          padding: 4.5rem 2.5rem 2.5rem;
         }
-
-        .start-here-label {
+        .section-kicker {
           font-family: 'DM Sans', sans-serif;
-          font-size: 0.58rem;
-          letter-spacing: 0.3em;
+          font-size: 0.62rem;
+          letter-spacing: 0.28em;
           text-transform: uppercase;
-          color: rgba(255,255,255,0.35);
-          margin-bottom: 0.5rem;
+          color: #9b7e6b;
+          margin: 0 0 0.8rem;
         }
-
-        .start-here-title {
+        .section-title {
           font-family: 'DM Serif Display', serif;
-          font-size: 1.5rem;
-          color: #fff;
+          font-size: clamp(2rem, 4vw, 3.4rem);
+          line-height: 1.05;
           font-weight: 400;
-          line-height: 1.3;
+          margin: 0;
         }
-
-        .start-here-steps {
+        .path-grid {
           display: grid;
           grid-template-columns: repeat(3, 1fr);
           gap: 1px;
-          background: rgba(255,255,255,0.08);
-          border: 1px solid rgba(255,255,255,0.08);
+          background: #ded7cf;
+          border: 1px solid #ded7cf;
+          margin-top: 2rem;
         }
-
-        .start-here-step {
-          background: #111;
-          padding: 1.4rem 1.6rem;
+        .path-card {
+          background: #fff;
+          padding: 1.7rem;
           text-decoration: none;
-          transition: background 0.2s;
+          color: #111;
+          min-height: 210px;
           display: flex;
           flex-direction: column;
-          gap: 0.4rem;
+          justify-content: space-between;
+          transition: background 0.2s;
         }
-
-        .start-here-step:hover { background: #1a1a1a; }
-
-        .step-index {
+        .path-card:hover { background: #f5eee7; }
+        .path-label {
+          color: #c0392b;
           font-family: 'DM Sans', sans-serif;
-          font-size: 0.55rem;
-          letter-spacing: 0.25em;
+          font-size: 0.58rem;
+          letter-spacing: 0.28em;
           text-transform: uppercase;
-          color: var(--rose, #c0392b);
+          margin: 0 0 1.2rem;
         }
-
-        .step-title {
+        .path-card h3 {
           font-family: 'DM Serif Display', serif;
-          font-size: 0.95rem;
-          color: #fff;
+          font-size: 1.45rem;
           font-weight: 400;
-          line-height: 1.35;
+          line-height: 1.15;
+          margin: 0 0 0.7rem;
         }
-
-        .step-meta {
-          font-family: 'DM Sans', sans-serif;
-          font-size: 0.65rem;
-          color: rgba(255,255,255,0.3);
-          letter-spacing: 0.1em;
-          margin-top: 0.2rem;
+        .path-card p {
+          color: #777;
+          line-height: 1.65;
+          font-size: 0.86rem;
+          margin: 0;
         }
-
-        /* ─── GRID SECTION ──────────────────────────────────────── */
-        .blog-grid-section {
+        .featured-band {
           max-width: 1200px;
           margin: 0 auto;
-          padding: 5rem 2.5rem 6rem;
+          padding: 2rem 2.5rem 1rem;
         }
-
-        .grid-header {
-          display: flex;
-          justify-content: space-between;
-          align-items: baseline;
-          padding-bottom: 1.2rem;
-          border-bottom: 2px solid #111;
-          margin-bottom: 3.5rem;
-        }
-
-        .grid-header-title {
-          font-family: 'Bebas Neue', sans-serif;
-          font-size: 1.6rem;
-          letter-spacing: 0.1em;
-          color: #111;
-          font-weight: 400;
-        }
-
-        .grid-header-count {
-          font-family: 'DM Sans', sans-serif;
-          font-size: 0.62rem;
-          color: #aaa;
-          letter-spacing: 0.18em;
-          text-transform: uppercase;
-        }
-
-        .blog-grid {
+        .featured-card {
           display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          gap: 0;
-        }
-
-        .blog-card {
-          display: flex;
-          flex-direction: column;
-          padding: 2rem 2rem 2rem;
+          grid-template-columns: 1.3fr 0.7fr;
+          border: 1px solid #ded7cf;
+          background: #fff;
           text-decoration: none;
           color: #111;
-          border-right: 1px solid #e8e4de;
-          border-bottom: 1px solid #e8e4de;
-          transition: background 0.2s;
-          position: relative;
         }
-
-        /* Remove right border on every 3rd card */
-        .blog-card:nth-child(3n) {
-          border-right: none;
-        }
-
-        .blog-card:hover {
-          background: #faf8f5;
-        }
-
-        /* Rose top accent on hover */
-        .blog-card::before {
-          content: '';
-          position: absolute;
-          top: -1px; left: 0;
-          width: 0;
-          height: 2px;
-          background: var(--rose, #c0392b);
-          transition: width 0.3s ease;
-        }
-
-        .blog-card:hover::before { width: 100%; }
-
-        .card-icon {
-          font-size: 1.6rem;
-          margin-bottom: 1rem;
-          opacity: 0.75;
-          line-height: 1;
-        }
-
-        .card-cat {
-          font-family: 'DM Sans', sans-serif;
-          font-size: 0.56rem;
-          letter-spacing: 0.28em;
-          text-transform: uppercase;
-          font-weight: 600;
-          margin-bottom: 0.75rem;
-          display: flex;
-          align-items: center;
-          gap: 0.45rem;
-        }
-
-        .cat-dot {
-          width: 3px; height: 3px;
-          border-radius: 50%;
-          flex-shrink: 0;
-        }
-
-        .card-title {
+        .featured-main { padding: 2.4rem; }
+        .featured-main h2 {
           font-family: 'DM Serif Display', serif;
-          font-size: 1.15rem;
-          line-height: 1.35;
-          color: #111;
-          margin-bottom: 0.8rem;
+          font-size: clamp(1.8rem, 4vw, 3.2rem);
           font-weight: 400;
-          flex-grow: 1;
+          line-height: 1.08;
+          margin: 0 0 1rem;
         }
-
-        .card-excerpt {
-          font-family: 'DM Sans', sans-serif;
-          font-size: 0.8rem;
-          color: #8a8480;
+        .featured-main p {
+          color: #777;
+          line-height: 1.75;
+          max-width: 620px;
+          margin: 0 0 1.5rem;
+        }
+        .featured-side {
+          background: #111;
+          color: #fff;
+          padding: 2rem;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+        }
+        .featured-side p {
+          color: rgba(255,255,255,0.58);
           line-height: 1.7;
-          margin-bottom: 1.4rem;
+          margin: 0;
         }
-
-        .card-meta {
-          font-family: 'DM Sans', sans-serif;
-          font-size: 0.6rem;
-          color: #aaa;
-          letter-spacing: 0.12em;
-          text-transform: uppercase;
+        .article-section {
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 3.5rem 2.5rem 6rem;
+        }
+        .article-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-end;
+          gap: 1rem;
+          border-bottom: 2px solid #111;
+          padding-bottom: 1rem;
+          margin-bottom: 2rem;
+        }
+        .article-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          border-top: 1px solid #e8e1d8;
+          border-left: 1px solid #e8e1d8;
+        }
+        .article-card {
+          background: #faf8f5;
+          color: #111;
+          text-decoration: none;
+          padding: 1.6rem;
+          min-height: 300px;
+          border-right: 1px solid #e8e1d8;
+          border-bottom: 1px solid #e8e1d8;
+          display: flex;
+          flex-direction: column;
+          transition: background 0.2s;
+        }
+        .article-card:hover { background: #fff; }
+        .article-icon {
+          width: 48px;
+          height: 48px;
+          border-radius: 50%;
+          background: #111;
+          color: #fff;
           display: flex;
           align-items: center;
-          gap: 0.8rem;
-          margin-top: auto;
-          padding-top: 1rem;
-          border-top: 1px solid #f0ece6;
+          justify-content: center;
+          font-family: 'DM Sans', sans-serif;
+          font-size: 0.72rem;
+          letter-spacing: 0.14em;
+          margin-bottom: 1.2rem;
         }
-
-        .meta-sep {
-          width: 1px; height: 10px;
-          background: #e0dcd8;
-          flex-shrink: 0;
-        }
-
-        .picks-badge {
-          display: inline-flex;
-          align-items: center;
-          gap: 0.3rem;
-          background: rgba(192,57,43,0.07);
-          color: var(--rose, #c0392b);
-          padding: 0.2rem 0.55rem;
-          font-size: 0.58rem;
-          letter-spacing: 0.1em;
-          font-weight: 600;
-        }
-
-        /* ─── FOOTER STRIP ──────────────────────────────────────── */
-        .blog-footer-strip {
-          border-top: 1px solid #e8e4de;
-          padding: 3rem 2.5rem;
-          text-align: center;
-          background: #faf8f5;
-        }
-
-        .footer-eyebrow {
+        .article-cat {
           font-family: 'DM Sans', sans-serif;
           font-size: 0.58rem;
-          letter-spacing: 0.28em;
+          letter-spacing: 0.25em;
           text-transform: uppercase;
-          color: #bbb;
-          margin-bottom: 0.6rem;
+          font-weight: 700;
+          margin: 0 0 0.75rem;
         }
-
-        .footer-name {
+        .article-card h3 {
           font-family: 'DM Serif Display', serif;
           font-size: 1.2rem;
+          line-height: 1.3;
           font-weight: 400;
-          color: #111;
-          margin-bottom: 0.8rem;
+          margin: 0 0 0.8rem;
         }
-
-        .footer-desc {
-          font-family: 'DM Sans', sans-serif;
+        .article-card p {
+          color: #827b75;
           font-size: 0.82rem;
-          color: #888;
           line-height: 1.7;
-          max-width: 480px;
-          margin: 0 auto 0.6rem;
+          margin: 0;
         }
-
-        .footer-legal {
-          font-family: 'DM Sans', sans-serif;
-          font-size: 0.68rem;
-          color: #bbb;
+        .article-meta {
+          margin-top: auto;
+          padding-top: 1rem;
+          border-top: 1px solid #eee6dd;
+          display: flex;
+          gap: 0.7rem;
+          flex-wrap: wrap;
+          color: #aaa;
+          font-size: 0.62rem;
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
         }
-
-        /* ─── RESPONSIVE ────────────────────────────────────────── */
-        @media (max-width: 1024px) {
-          .blog-hero { grid-template-columns: 1fr; }
-          .blog-hero-main { border-right: none; border-bottom: 1px solid #d6d0c9; }
-          .blog-hero-side { min-height: 360px; }
-          .blog-grid { grid-template-columns: repeat(2, 1fr); }
-          .blog-card:nth-child(3n) { border-right: 1px solid #e8e4de; }
-          .blog-card:nth-child(2n) { border-right: none; }
-          .start-here-inner { grid-template-columns: 1fr; gap: 1.8rem; }
-          .start-here-steps { grid-template-columns: repeat(3, 1fr); }
+        .footer-cta {
+          background: #111;
+          color: #fff;
+          text-align: center;
+          padding: 4rem 1.5rem;
         }
-
-        @media (max-width: 768px) {
-          .blog-hero-main { padding: 3rem 1.5rem; }
-          .blog-hero-side { padding: 2.5rem 1.5rem; min-height: 300px; }
-          .blog-featured-title { font-size: clamp(1.6rem, 5vw, 2.2rem); }
-          .featured-cta-row { flex-direction: column; align-items: flex-start; gap: 1rem; }
-          .blog-featured-cta { width: 100%; justify-content: center; }
-          .start-here-steps { grid-template-columns: 1fr; }
-          .blog-grid { grid-template-columns: 1fr; }
-          .blog-card, .blog-card:nth-child(3n), .blog-card:nth-child(2n) { border-right: none; }
-          .blog-grid-section { padding: 3rem 1.5rem 4rem; }
-          .disclosure-strip { padding: 1rem 1.5rem; }
-          .start-here-band { padding: 2rem 1.5rem; }
+        .footer-cta h2 {
+          font-family: 'DM Serif Display', serif;
+          font-weight: 400;
+          font-size: clamp(2rem, 4vw, 3rem);
+          margin: 0 0 1rem;
+        }
+        .footer-cta p {
+          color: rgba(255,255,255,0.62);
+          line-height: 1.7;
+          max-width: 560px;
+          margin: 0 auto 1.6rem;
+        }
+        @media (max-width: 980px) {
+          .journal-hero, .featured-card { grid-template-columns: 1fr; }
+          .journal-hero-copy { padding: 4rem 2rem; }
+          .journal-hero-visual { min-height: 420px; }
+          .trust-strip, .path-grid, .article-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 640px) {
+          .journal-hero-copy { padding: 3rem 1.4rem; }
+          .journal-hero-visual { min-height: 360px; padding: 1.5rem; }
+          .trust-strip, .path-grid, .article-grid { grid-template-columns: 1fr; }
+          .path-section, .featured-band, .article-section { padding-left: 1.4rem; padding-right: 1.4rem; }
+          .article-header { align-items: flex-start; flex-direction: column; }
         }
       `}</style>
 
-      {/* ── HERO ── */}
-      <section className="blog-hero">
-
-        {/* LEFT */}
-        <div className="blog-hero-main">
-          <p className="blog-eyebrow">
-            <span className="eyebrow-pill">{featured.tag}</span>
-            <span style={{ color: catColors[featured.category] }}>{featured.category}</span>
-          </p>
-          <h1 className="blog-featured-title">{featured.title}</h1>
-          <p className="blog-featured-excerpt">{featured.excerpt}</p>
-          <div className="featured-cta-row">
-            <a href={`/blog/${featured.slug}`} className="blog-featured-cta">
-              Read the full guide <span>→</span>
-            </a>
-            <span className="featured-meta">{featured.date} · {featured.readTime} read</span>
-          </div>
-        </div>
-
-        {/* RIGHT */}
-        <div className="blog-hero-side">
-          <div className="blog-hero-side-fallback" />
-          <div className="hero-side-content">
-            <p className="hero-side-label">Your Skincare Journey</p>
-            <h2>Start Here. Glow There.</h2>
-            <p>Three guided steps to transform your routine — from choosing the right sunscreen to building a complete regimen for Indian skin.</p>
-            <div className="hero-side-steps">
-              <a href="/blog/best-sunscreens-india-2026" className="hero-side-step">
-                <span className="step-num">01</span>
-                Pick your sunscreen
-              </a>
-              <a href="/blog/skincare-routine-every-skin-type" className="hero-side-step">
-                <span className="step-num">02</span>
-                Learn the full routine
-              </a>
-              <a href="/blog/budget-skincare-routine-under-2000" className="hero-side-step">
-                <span className="step-num">03</span>
-                Build on a budget
-              </a>
+      <div className="journal-page">
+        <section className="journal-hero">
+          <div className="journal-hero-copy">
+            <p className="eyebrow">Mirha & Co. Journal</p>
+            <h1 className="hero-title">
+              Beauty advice with <span>receipts.</span>
+            </h1>
+            <p className="hero-copy">
+              Guides, comparisons, and routines for Indian skin: clear enough for beginners, useful enough for people who already know their actives.
+            </p>
+            <div className="hero-actions">
+              <a href="/search" className="primary-btn">Search Mirha</a>
+              <a href="/tools/routine" className="secondary-btn">Build Routine</a>
             </div>
           </div>
-        </div>
 
-      </section>
-
-      {/* ── DISCLOSURE ── */}
-      <div className="disclosure-strip">
-        <div className="disclosure-dot" />
-        <p>
-          <strong>Affiliate links ahead.</strong> Mirha &amp; Co. participates in the Amazon Associates Program. Some links earn a small commission — at no extra cost to you. Every product is chosen based on research and verified reviews.
-        </p>
-      </div>
-
-      {/* ── START HERE BAND ── */}
-      <div className="start-here-band">
-        <div className="start-here-inner">
-          <div>
-            <p className="start-here-label">New to skincare?</p>
-            <h3 className="start-here-title">Start with the basics. Get real results.</h3>
-          </div>
-          <div className="start-here-steps">
-            <a href="/blog/best-sunscreens-india-2026" className="start-here-step">
-              <span className="step-index">Step 01</span>
-              <span className="step-title">Pick your sunscreen</span>
-              <span className="step-meta">5 min read</span>
-            </a>
-            <a href="/blog/skincare-routine-every-skin-type" className="start-here-step">
-              <span className="step-index">Step 02</span>
-              <span className="step-title">Learn the full routine</span>
-              <span className="step-meta">14 min read</span>
-            </a>
-            <a href="/blog/budget-skincare-routine-under-2000" className="start-here-step">
-              <span className="step-index">Step 03</span>
-              <span className="step-title">Build on a budget</span>
-              <span className="step-meta">9 min read</span>
-            </a>
-          </div>
-        </div>
-      </div>
-
-      {/* ── GRID ── */}
-      <section className="blog-grid-section">
-        <div className="grid-header">
-          <h2 className="grid-header-title">All Articles</h2>
-          <span className="grid-header-count">{posts.length} articles</span>
-        </div>
-
-        <div className="blog-grid">
-          {posts.map((post) => (
-            <a key={post.slug} href={`/blog/${post.slug}`} className="blog-card">
-              <div className="card-icon">{post.thumbnail}</div>
-              <p className="card-cat" style={{ color: catColors[post.category] }}>
-                <span className="cat-dot" style={{ backgroundColor: catColors[post.category] }} />
-                {post.category}
+          <div className="journal-hero-visual">
+            <div className="visual-note">
+              <p className="eyebrow" style={{ color: "rgba(255,255,255,0.55)" }}>Start here</p>
+              <h2>Find what works. Skip what does not.</h2>
+              <p>
+                Every guide points back to one thing: a routine you can actually use, buy, and stay consistent with.
               </p>
-              <h3 className="card-title">{post.title}</h3>
-              <p className="card-excerpt">{post.excerpt}</p>
-              <div className="card-meta">
-                <span>{post.date}</span>
-                <div className="meta-sep" />
-                <span>{post.readTime}</span>
-                <div className="meta-sep" />
-                <span className="picks-badge">📌 {post.productCount} picks</span>
-              </div>
-            </a>
-          ))}
+            </div>
+          </div>
+        </section>
+
+        <div className="trust-strip">
+          <div className="trust-item">Indian skin + climate</div>
+          <div className="trust-item">Ingredient reasoning</div>
+          <div className="trust-item">Budget-aware picks</div>
+          <div className="trust-item">Affiliate links disclosed</div>
         </div>
-      </section>
 
-      {/* ── FOOTER STRIP ── */}
-      <div className="blog-footer-strip">
-        <p className="footer-eyebrow">About this journal</p>
-        <p className="footer-name">Mirha &amp; Co.</p>
-        <p className="footer-desc">
-          We curate skincare based on ingredient quality, real reviews, and suitability for Indian skin and climate conditions. No paid placements — only products worth your money.
-        </p>
-        <p className="footer-legal">Affiliate links may earn us a commission at no extra cost to you.</p>
+        <section className="path-section">
+          <p className="section-kicker">Choose your path</p>
+          <h2 className="section-title">Do not browse randomly. Start with the problem.</h2>
+          <div className="path-grid">
+            {paths.map((path) => (
+              <a key={path.label} href={path.href} className="path-card">
+                <div>
+                  <p className="path-label">{path.label}</p>
+                  <h3>{path.title}</h3>
+                  <p>{path.text}</p>
+                </div>
+                <span style={{ color: "#c0392b", marginTop: "1.2rem" }}>Open</span>
+              </a>
+            ))}
+          </div>
+        </section>
+
+        <section className="featured-band">
+          <a href={`/blog/${featured.slug}`} className="featured-card">
+            <div className="featured-main">
+              <p className="section-kicker">{featured.tag} / {featured.category}</p>
+              <h2>{featured.title}</h2>
+              <p>{featured.excerpt}</p>
+              <span className="primary-btn">Read guide</span>
+            </div>
+            <div className="featured-side">
+              <p>{featured.date} / {featured.readTime}</p>
+              <p>
+                Best for anyone confused by serum claims, active percentages, acne marks, and oily-skin routines.
+              </p>
+            </div>
+          </a>
+        </section>
+
+        <section className="article-section">
+          <div className="article-header">
+            <div>
+              <p className="section-kicker">All guides</p>
+              <h2 className="section-title">Read by concern.</h2>
+            </div>
+            <span style={{ color: "#aaa", fontSize: "0.72rem", letterSpacing: "0.18em", textTransform: "uppercase" }}>
+              {posts.length} articles
+            </span>
+          </div>
+
+          <div className="article-grid">
+            {posts.map((post) => (
+              <a key={post.slug} href={`/blog/${post.slug}`} className="article-card">
+                <div className="article-icon">{post.initials}</div>
+                <p className="article-cat" style={{ color: catColors[post.category] }}>{post.category}</p>
+                <h3>{post.title}</h3>
+                <p>{post.excerpt}</p>
+                <div className="article-meta">
+                  <span>{post.date}</span>
+                  <span>{post.readTime}</span>
+                  <span>{post.productCount} picks</span>
+                </div>
+              </a>
+            ))}
+          </div>
+        </section>
+
+        <section className="footer-cta">
+          <h2>Still confused? Let the routine finder do the sorting.</h2>
+          <p>
+            Answer a few questions and get a 4-step routine built around your skin type, concern, and budget.
+          </p>
+          <a href="/tools/routine" className="primary-btn" style={{ background: "#fff", color: "#111", borderColor: "#fff" }}>
+            Get your routine
+          </a>
+        </section>
       </div>
-
     </main>
   );
 }
