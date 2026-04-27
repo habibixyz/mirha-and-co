@@ -35,7 +35,7 @@ function StarRow({ rating }: { rating: number }) {
   const full = Math.floor(rating);
   const half = rating % 1 >= 0.5;
   return (
-    <span style={{ color: "#F5A623", fontSize: 13, letterSpacing: 1 }}>
+    <span style={{ color: "#F5A623", fontSize: 11, letterSpacing: 1 }}>
       {"★".repeat(full)}
       {half ? "½" : ""}
       {"☆".repeat(5 - full - (half ? 1 : 0))}
@@ -43,9 +43,9 @@ function StarRow({ rating }: { rating: number }) {
   );
 }
 
-
 // ─── CATEGORIES ──────────────────────────────────────────────────────────────
 const CATEGORIES = ["All", "Skincare", "Makeup", "Hair Care", "Body Care", "Wellness"];
+const CONCERNS = ["acne", "pigmentation", "dry skin", "oily skin", "anti-ageing", "sunscreen"];
 
 const CATEGORY_ACCENT: Record<string, string> = {
   Skincare: "#00D1FF",
@@ -56,181 +56,79 @@ const CATEGORY_ACCENT: Record<string, string> = {
   All: "#E05C3A",
 };
 
-// ─── MODAL COMPONENT ─────────────────────────────────────────────────────────
-function ProductModal({
-  product,
-  onClose,
-}: {
-  product: Product;
-  onClose: () => void;
-}) {
+// ─── MODAL ───────────────────────────────────────────────────────────────────
+function ProductModal({ product, onClose }: { product: Product; onClose: () => void }) {
   const disc = discount(product.mrp, product.price);
   const accent = CATEGORY_ACCENT[product.category] ?? "#E05C3A";
-  const affLink =
-  product.link ||
-  `https://www.amazon.in/dp/${product.asin}?tag=skinwithtanvi-21`;
+  const affLink = product.link || `https://www.amazon.in/dp/${product.asin}?tag=skinwithtanvi-21`;
 
   return (
     <div
       onClick={(e) => e.target === e.currentTarget && onClose()}
       style={{
-        position: "fixed",
-        inset: 0,
-        background: "rgba(0,0,0,0.72)",
-        zIndex: 200,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: "20px",
+        position: "fixed", inset: 0,
+        background: "rgba(0,0,0,0.8)",
+        zIndex: 200, display: "flex",
+        alignItems: "center", justifyContent: "center",
+        padding: "16px",
+        backdropFilter: "blur(4px)",
       }}
     >
-      <div
-        style={{
-          background: "#161616",
-          border: "1px solid #2D2D2D",
-          borderRadius: 6,
-          width: "100%",
-          maxWidth: 640,
-          maxHeight: "88vh",
-          overflowY: "auto",
-        }}
-      >
-        <img
-    src={product.image}
-    alt={product.name}
-    style={{
-  width: "100%",
-  maxHeight: 320,
-  objectFit: "contain", // ✅ IMPORTANT
-  background: "#fff"
-}}
-  />
-
-        {/* Modal Header */}
-        <div
-          style={{
-            padding: "24px 28px 20px",
-            borderBottom: "1px solid #222",
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "flex-start",
-            gap: 16,
-          }}
-        >
-          <div style={{ flex: 1 }}>
-            <div
-              style={{
-                display: "inline-block",
-                background: `${accent}18`,
-                border: `1px solid ${accent}33`,
-                color: accent,
-                fontFamily: "monospace",
-                fontSize: 9,
-                letterSpacing: 2,
-                padding: "3px 10px",
-                borderRadius: 2,
-                marginBottom: 10,
-              }}
-            >
-              {product.subcat.toUpperCase()}
-            </div>
-            <h2
-              style={{
-                fontFamily: "'Bebas Neue', 'Arial Narrow', Impact, sans-serif",
-                fontSize: "clamp(22px, 4vw, 30px)",
-                fontWeight: 400,
-                margin: "0 0 4px",
-                lineHeight: 1.1,
-                letterSpacing: 1,
-                color: "#F0F0F0",
-              }}
-            >
-              {product.name}
-            </h2>
-            <div
-              style={{ fontFamily: "monospace", fontSize: 11, color: "#666" }}
-            >
-              {product.brand}
-            </div>
-          </div>
-          <button
-            onClick={onClose}
-            style={{
-              background: "transparent",
-              border: "1px solid #333",
-              color: "#666",
-              borderRadius: 4,
-              width: 34,
-              height: 34,
-              cursor: "pointer",
-              fontSize: 18,
-              lineHeight: 1,
-              flexShrink: 0,
-            }}
-          >
-            ×
-          </button>
+      <div style={{
+        background: "#111",
+        border: "1px solid #222",
+        borderRadius: 12,
+        width: "100%", maxWidth: 560,
+        maxHeight: "90vh", overflowY: "auto",
+      }}>
+        {/* Image */}
+        <div style={{ background: "#fff", borderRadius: "12px 12px 0 0", padding: "24px", display: "flex", justifyContent: "center" }}>
+          <img src={product.image} alt={product.name}
+            style={{ height: 220, objectFit: "contain", maxWidth: "100%" }} />
         </div>
 
-        <div style={{ padding: "24px 28px 32px" }}>
+        {/* Header */}
+        <div style={{ padding: "20px 24px 16px", borderBottom: "1px solid #1E1E1E", display: "flex", justifyContent: "space-between", gap: 12 }}>
+          <div style={{ flex: 1 }}>
+            <span style={{
+              display: "inline-block", background: `${accent}18`, border: `1px solid ${accent}33`,
+              color: accent, fontFamily: "monospace", fontSize: 8, letterSpacing: 2,
+              padding: "2px 8px", borderRadius: 2, marginBottom: 8,
+            }}>
+              {product.subcat.toUpperCase()}
+            </span>
+            <h2 style={{
+              fontFamily: "'Bebas Neue', Impact, sans-serif",
+              fontSize: "clamp(20px, 4vw, 26px)", fontWeight: 400,
+              margin: "0 0 4px", lineHeight: 1.1, letterSpacing: 1, color: "#F0F0F0",
+            }}>
+              {product.name}
+            </h2>
+            <div style={{ fontFamily: "monospace", fontSize: 10, color: "#555" }}>{product.brand}</div>
+          </div>
+          <button onClick={onClose} style={{
+            background: "transparent", border: "1px solid #2A2A2A",
+            color: "#666", borderRadius: 6, width: 32, height: 32,
+            cursor: "pointer", fontSize: 16, flexShrink: 0,
+          }}>×</button>
+        </div>
+
+        <div style={{ padding: "20px 24px 28px" }}>
           {/* Price Row */}
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(3, 1fr)",
-              gap: 12,
-              marginBottom: 24,
-            }}
-          >
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 8, marginBottom: 16 }}>
             {[
-              {
-                label: "Price",
-                value: fmtINR(product.price),
-                color: "#F0F0F0",
-                big: true,
-              },
-              {
-                label: "MRP",
-                value: fmtINR(product.mrp),
-                color: "#555",
-                strike: true,
-              },
-              {
-                label: "You Save",
-                value: disc > 0 ? `${disc}% off` : "Best Price",
-                color: "#4ECBA8",
-              },
+              { label: "Price", value: fmtINR(product.price), color: "#F0F0F0", big: true },
+              { label: "MRP", value: fmtINR(product.mrp), color: "#444", strike: true },
+              { label: "You Save", value: disc > 0 ? `${disc}% off` : "Best Price", color: "#4ECBA8" },
             ].map((s) => (
-              <div
-                key={s.label}
-                style={{
-                  background: "#1E1E1E",
-                  border: "1px solid #2A2A2A",
-                  borderRadius: 4,
-                  padding: "14px 16px",
-                }}
-              >
-                <div
-                  style={{
-                    fontFamily: "monospace",
-                    fontSize: 9,
-                    letterSpacing: 2,
-                    color: "#555",
-                    marginBottom: 6,
-                  }}
-                >
+              <div key={s.label} style={{ background: "#1A1A1A", border: "1px solid #222", borderRadius: 8, padding: "12px" }}>
+                <div style={{ fontFamily: "monospace", fontSize: 8, letterSpacing: 2, color: "#444", marginBottom: 4 }}>
                   {s.label.toUpperCase()}
                 </div>
-                <div
-                  style={{
-                    fontFamily:
-                      "'Bebas Neue', 'Arial Narrow', sans-serif",
-                    fontSize: s.big ? 28 : 22,
-                    color: s.color,
-                    textDecoration: s.strike ? "line-through" : "none",
-                    letterSpacing: 1,
-                  }}
-                >
+                <div style={{
+                  fontFamily: "'Bebas Neue', sans-serif", fontSize: s.big ? 24 : 18,
+                  color: s.color, textDecoration: s.strike ? "line-through" : "none", letterSpacing: 1,
+                }}>
                   {s.value}
                 </div>
               </div>
@@ -238,178 +136,51 @@ function ProductModal({
           </div>
 
           {/* Rating */}
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: 10,
-              marginBottom: 20,
-              padding: "12px 16px",
-              background: "#1A1A1A",
-              border: "1px solid #2A2A2A",
-              borderRadius: 4,
-            }}
-          >
+          <div style={{
+            display: "flex", alignItems: "center", gap: 8, marginBottom: 16,
+            padding: "10px 14px", background: "#1A1A1A", border: "1px solid #222", borderRadius: 8,
+          }}>
             <StarRow rating={product.rating} />
-            <span
-  style={{
-    fontFamily: "monospace",
-    fontSize: 12,
-    color: "#888",
-  }}
->
-  {product.rating} ★ rating
-</span>
+            <span style={{ fontFamily: "monospace", fontSize: 11, color: "#777" }}>{product.rating} · {product.reviews} reviews</span>
             {product.badge && (
-              <span
-                style={{
-                  marginLeft: "auto",
-                  background: `${accent}18`,
-                  border: `1px solid ${accent}33`,
-                  color: accent,
-                  fontFamily: "monospace",
-                  fontSize: 9,
-                  letterSpacing: 1,
-                  padding: "3px 8px",
-                  borderRadius: 2,
-                }}
-              >
-                {product.badge}
-              </span>
+              <span style={{
+                marginLeft: "auto", background: `${accent}18`, border: `1px solid ${accent}33`,
+                color: accent, fontFamily: "monospace", fontSize: 8, letterSpacing: 1, padding: "2px 6px", borderRadius: 2,
+              }}>{product.badge}</span>
             )}
           </div>
 
           {/* Description */}
-          <div style={{ marginBottom: 20 }}>
-            <div
-              style={{
-                fontFamily: "monospace",
-                fontSize: 10,
-                letterSpacing: 2,
-                color: "#555",
-                marginBottom: 10,
-                paddingBottom: 8,
-                borderBottom: "1px solid #222",
-              }}
-            >
-              ABOUT THIS PRODUCT
-            </div>
-            <p
-              style={{
-                fontSize: 14,
-                color: "#AAA",
-                lineHeight: 1.75,
-                margin: 0,
-              }}
-            >
-              {product.description}
-            </p>
-          </div>
+          <p style={{ fontSize: 13, color: "#999", lineHeight: 1.75, margin: "0 0 16px" }}>
+            {product.description}
+          </p>
 
           {/* Specs */}
-          <div style={{ marginBottom: 24 }}>
-            <div
-              style={{
-                fontFamily: "monospace",
-                fontSize: 10,
-                letterSpacing: 2,
-                color: "#555",
-                marginBottom: 10,
-                paddingBottom: 8,
-                borderBottom: "1px solid #222",
-              }}
-            >
-              KEY DETAILS
-            </div>
-            {Object.entries(product.specs).map(([k, v]) =>
-  v ? (
-    <div
-      key={k}
-      style={{
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "flex-start",
-        gap: 16,
-        padding: "9px 0",
-        borderBottom: "1px solid #1E1E1E",
-      }}
-    >
-      <span
-        style={{
-          fontSize: 13,
-          color: "#666",
-          flexShrink: 0,
-        }}
-      >
-        {k}
-      </span>
-      <span
-        style={{
-          fontSize: 13,
-          color: "#CCC",
-          textAlign: "right",
-          fontWeight: 500,
-        }}
-      >
-        {v}
-      </span>
-    </div>
-  ) : null
-)}
-
-</div>
+          <div style={{ marginBottom: 20 }}>
+            {Object.entries(product.specs).map(([k, v]) => v ? (
+              <div key={k} style={{
+                display: "flex", justifyContent: "space-between", gap: 12,
+                padding: "8px 0", borderBottom: "1px solid #1A1A1A",
+              }}>
+                <span style={{ fontSize: 12, color: "#555", flexShrink: 0 }}>{k}</span>
+                <span style={{ fontSize: 12, color: "#BBB", textAlign: "right", fontWeight: 500 }}>{v}</span>
+              </div>
+            ) : null)}
+          </div>
 
           {/* CTA */}
-          <p style={{
-  fontSize: "12px",
-  color: "#888",
-  marginBottom: "10px",
-  textAlign: "center"
-}}>
-  ✦ Most users buy this after using our routine guide
-</p>
-          <a
-            href={affLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: 10,
-              background: "#FF9900",
-              border: "none",
-              borderRadius: 4,
-              color: "#111",
-              fontSize: 15,
-              fontWeight: 600,
-              padding: "16px 24px",
-              textDecoration: "none",
-              width: "100%",
-              cursor: "pointer",
-            }}
-          >
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="#111"
-              strokeWidth="2"
-            >
-              <path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+          <a href={affLink} target="_blank" rel="noopener noreferrer" style={{
+            display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
+            background: "#FF9900", borderRadius: 8, color: "#111",
+            fontSize: 13, fontWeight: 700, padding: "14px 20px",
+            textDecoration: "none", width: "100%",
+          }}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#111" strokeWidth="2.5">
+              <path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
             </svg>
             View on Amazon India
           </a>
-                    <p
-            style={{
-              textAlign: "center",
-              fontFamily: "monospace",
-              fontSize: 10,
-              color: "#444",
-              marginTop: 10,
-            }}
-          >
+          <p style={{ textAlign: "center", fontFamily: "monospace", fontSize: 9, color: "#333", marginTop: 8 }}>
             ✦ Affiliate link · Prices may vary · Prime eligible on most items
           </p>
         </div>
@@ -419,215 +190,127 @@ function ProductModal({
 }
 
 // ─── PRODUCT CARD ─────────────────────────────────────────────────────────────
-function ProductCard({
-  product,
-  onClick,
-}: {
-  product: Product;
-  onClick: () => void;
-}) {
+function ProductCard({ product, onClick }: { product: Product; onClick: () => void }) {
   const disc = discount(product.mrp, product.price);
   const accent = CATEGORY_ACCENT[product.category] ?? "#E05C3A";
-  const [hover, setHover] = useState(false);
+  const [hovered, setHovered] = useState(false);
 
   return (
     <div
       onClick={onClick}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
       style={{
-        background: "#161616",
-        border: "1px solid #2A2A2A",
-        borderRadius: 6,
+        background: "#141414",
+        border: `1px solid ${hovered ? accent : "#1E1E1E"}`,
+        borderRadius: 10,
         overflow: "hidden",
         cursor: "pointer",
-        transition: "border-color 0.15s, transform 0.15s",
-        position: "relative",
-      }}
-      onMouseEnter={(e) => {
-        setHover(true);
-        (e.currentTarget as HTMLDivElement).style.borderColor = accent;
-        (e.currentTarget as HTMLDivElement).style.transform = "translateY(-2px)";
-      }}
-      onMouseLeave={(e) => {
-        setHover(false);
-        (e.currentTarget as HTMLDivElement).style.borderColor = "#2A2A2A";
-        (e.currentTarget as HTMLDivElement).style.transform = "translateY(0)";
+        transition: "border-color 0.2s, transform 0.2s, box-shadow 0.2s",
+        transform: hovered ? "translateY(-3px)" : "translateY(0)",
+        boxShadow: hovered ? `0 8px 24px rgba(0,0,0,0.4)` : "none",
+        display: "flex",
+        flexDirection: "column",
       }}
     >
-      {hover && (
-        <div style={{ position: "absolute", inset: 0, background: "#111", zIndex: 5, display: "flex", alignItems: "center", justifyContent: "center", transition: "opacity 0.3s ease" }}>
-          <img src={product.image} />
-        </div>
-      )}
+      {/* Top accent line */}
+      <div style={{ height: 2, background: accent, opacity: hovered ? 1 : 0.3, transition: "opacity 0.2s" }} />
 
-      {/* Card top accent bar */}
-      <div style={{ height: 2, background: accent, opacity: 0.4 }} />
-      {/* PRODUCT IMAGE */}
-<div style={{ width: "100%", height: 180, overflow: "hidden", background: "#111" }}>
-  <img
-    src={product.image}
-    alt={product.name}
-    style={{
-      width: "100%",
-      height: "100%",
-      objectFit: "contain",
-      transition: "transform 0.3s ease",
-    }}
-    onMouseEnter={(e) => {
-      (e.currentTarget as HTMLImageElement).style.transform = "scale(1.05)";
-    }}
-    onMouseLeave={(e) => {
-      (e.currentTarget as HTMLImageElement).style.transform = "scale(1)";
-    }}
-  />
-</div>
-
-      <div style={{ padding: "20px 20px 18px" }}>
-        {/* Badge + Category */}
-        <div
+      {/* Image */}
+      <div style={{
+        width: "100%", aspectRatio: "1 / 1",
+        background: "#fff", overflow: "hidden",
+        display: "flex", alignItems: "center", justifyContent: "center",
+        padding: "12px",
+      }}>
+        <img
+          src={product.image}
+          alt={product.name}
           style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            marginBottom: 14,
+            width: "100%", height: "100%",
+            objectFit: "contain",
+            transform: hovered ? "scale(1.04)" : "scale(1)",
+            transition: "transform 0.3s ease",
           }}
-        >
-          <span
-            style={{
-              fontFamily: "monospace",
-              fontSize: 9,
-              letterSpacing: 2,
-              color: "#555",
-              textTransform: "uppercase",
-            }}
-          >
+        />
+      </div>
+
+      {/* Body */}
+      <div style={{ padding: "12px 14px", flex: 1, display: "flex", flexDirection: "column" }}>
+        {/* Subcat + Badge */}
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
+          <span style={{ fontFamily: "monospace", fontSize: 8, letterSpacing: 2, color: "#444", textTransform: "uppercase" }}>
             {product.subcat}
           </span>
           {product.badge && (
-            <span
-              style={{
-                background: `${accent}18`,
-                border: `1px solid ${accent}30`,
-                color: accent,
-                fontFamily: "monospace",
-                fontSize: 8,
-                letterSpacing: 1,
-                padding: "2px 7px",
-                borderRadius: 2,
-              }}
-            >
+            <span style={{
+              background: `${accent}18`, border: `1px solid ${accent}28`,
+              color: accent, fontFamily: "monospace", fontSize: 7,
+              letterSpacing: 1, padding: "2px 6px", borderRadius: 2,
+            }}>
               {product.badge}
             </span>
           )}
         </div>
 
         {/* Name */}
-        <h3
-          style={{
-            fontFamily:
-              "'Bebas Neue', 'Arial Narrow', Impact, sans-serif",
-            fontSize: "clamp(18px, 2.5vw, 22px)",
-            fontWeight: 400,
-            margin: "0 0 4px",
-            lineHeight: 1.15,
-            letterSpacing: 1,
-            color: "#F0F0F0",
-          }}
-        >
+        <h3 style={{
+          fontFamily: "'Bebas Neue', Impact, sans-serif",
+          fontSize: "clamp(15px, 2vw, 18px)",
+          fontWeight: 400, margin: "0 0 2px",
+          lineHeight: 1.15, letterSpacing: 0.5,
+          color: "#EFEFEF",
+          display: "-webkit-box",
+          WebkitLineClamp: 2,
+          WebkitBoxOrient: "vertical",
+          overflow: "hidden",
+        }}>
           {product.name}
         </h3>
-        <div
-          style={{
-            fontFamily: "monospace",
-            fontSize: 11,
-            color: "#555",
-            marginBottom: 14,
-          }}
-        >
+
+        {/* Brand */}
+        <div style={{ fontFamily: "monospace", fontSize: 9, color: "#444", marginBottom: 8 }}>
           {product.brand}
         </div>
 
-        {/* Description preview */}
-        <p
-          style={{
-            fontSize: 13,
-            color: "#666",
-            lineHeight: 1.6,
-            margin: "0 0 18px",
-            display: "-webkit-box",
-            WebkitLineClamp: 2,
-            WebkitBoxOrient: "vertical",
-            overflow: "hidden",
-          }}
-        >
-          {product.description}
-        </p>
-
         {/* Price */}
-        <div
-          style={{ display: "flex", alignItems: "baseline", gap: 10, marginBottom: 12 }}
-        >
-          <span
-            style={{
-              fontFamily: "'Bebas Neue', 'Arial Narrow', sans-serif",
-              fontSize: 28,
-              letterSpacing: 1,
-              color: "#F0F0F0",
-            }}
-          >
+        <div style={{ display: "flex", alignItems: "baseline", gap: 6, marginBottom: 6, marginTop: "auto" }}>
+          <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 22, letterSpacing: 1, color: "#F0F0F0" }}>
             {fmtINR(product.price)}
           </span>
           {disc > 0 && (
             <>
-              <span
-                style={{ fontSize: 13, color: "#555", textDecoration: "line-through" }}
-              >
+              <span style={{ fontSize: 11, color: "#3A3A3A", textDecoration: "line-through" }}>
                 {fmtINR(product.mrp)}
               </span>
-              <span
-                style={{
-                  fontSize: 12,
-                  color: "#4ECBA8",
-                  fontFamily: "monospace",
-                  fontWeight: 600,
-                }}
-              >
-                {disc}% off
+              <span style={{ fontSize: 10, color: "#4ECBA8", fontFamily: "monospace", fontWeight: 600 }}>
+                {disc}%
               </span>
             </>
           )}
         </div>
 
         {/* Rating */}
-        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
           <StarRow rating={product.rating} />
-          <span
-            style={{
-              fontSize: 12,
-              color: "#555",
-              fontFamily: "monospace",
-            }}
-          >
+          <span style={{ fontSize: 10, color: "#444", fontFamily: "monospace" }}>
             {product.rating} · {product.reviews}
           </span>
         </div>
       </div>
 
-      {/* View button */}
-      <div
-        style={{
-          borderTop: "1px solid #222",
-          padding: "12px 20px",
-          fontFamily: "monospace",
-          fontSize: 11,
-          color: "#555",
-          letterSpacing: 1,
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
-      >
+      {/* Footer */}
+      <div style={{
+        borderTop: "1px solid #1A1A1A",
+        padding: "8px 14px",
+        fontFamily: "monospace", fontSize: 9,
+        color: hovered ? accent : "#333",
+        letterSpacing: 1,
+        display: "flex", justifyContent: "space-between", alignItems: "center",
+        transition: "color 0.2s",
+      }}>
         <span>VIEW DETAILS</span>
-        <span style={{ color: accent }}>→</span>
+        <span>→</span>
       </div>
     </div>
   );
@@ -641,142 +324,129 @@ export default function BeautyShopPage() {
   const [selectedConcern, setSelectedConcern] = useState<string | null>(null);
 
   const filtered = useMemo(() => {
-  const q = query.toLowerCase().trim();
-
-  return PRODUCTS.filter((p) => {
-    const normalize = (str: string) =>
-      str.toLowerCase().replace(/\s/g, "");
-
-    const catMatch =
-      activeCategory === "All" ||
-      normalize(p.category) === normalize(activeCategory);
-
-    const concernMatch =
-      !selectedConcern ||
-      p.concerns?.includes(selectedConcern);
-
-    if (!q) return catMatch && concernMatch;
-
-    return (
-      catMatch &&
-      concernMatch &&
-      (
+    const q = query.toLowerCase().trim();
+    return (PRODUCTS as any[]).filter((p) => {
+      const normalize = (s: string) => s.toLowerCase().replace(/\s/g, "");
+      const catMatch = activeCategory === "All" || normalize(p.category) === normalize(activeCategory);
+      const concernMatch = !selectedConcern || p.concerns?.includes(selectedConcern);
+      if (!q) return catMatch && concernMatch;
+      return catMatch && concernMatch && (
         p.name.toLowerCase().includes(q) ||
         p.brand.toLowerCase().includes(q) ||
         p.subcat.toLowerCase().includes(q) ||
         p.description.toLowerCase().includes(q) ||
         p.tags.some((t: string) => t.includes(q))
-      )
-    );
-  });
-}, [query, activeCategory, selectedConcern]);
+      );
+    });
+  }, [query, activeCategory, selectedConcern]);
 
   return (
     <>
-      {/* ── Google Font ── */}
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
         * { box-sizing: border-box; }
         body { margin: 0; }
         ::-webkit-scrollbar { width: 4px; }
-        ::-webkit-scrollbar-track { background: #111; }
-        ::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; }
-        ::placeholder { color: #444; }
+        ::-webkit-scrollbar-track { background: #0A0A0A; }
+        ::-webkit-scrollbar-thumb { background: #2A2A2A; border-radius: 2px; }
+        ::placeholder { color: #333; }
         input:focus { outline: none; }
-        .product-grid-inner { 
-          display: grid; 
-          grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
-          gap: 16px; 
+
+        /* ── GRID: 4 desktop, 3 tablet, 2 mobile ── */
+        .shop-grid {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 14px;
+        }
+        @media (max-width: 900px) {
+          .shop-grid { grid-template-columns: repeat(3, 1fr); gap: 10px; }
+        }
+        @media (max-width: 540px) {
+          .shop-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+        }
+
+        /* ── SMART PICKS: 5 desktop, 5 tablet, 3 mobile ── */
+        .picks-grid {
+          display: grid;
+          grid-template-columns: repeat(5, 1fr);
+          gap: 10px;
+        }
+        @media (max-width: 540px) {
+          .picks-grid { grid-template-columns: repeat(3, 1fr); gap: 6px; }
+        }
+
+        /* ── HERO padding ── */
+        .hero-wrap { padding: 32px 40px 24px; }
+        .body-wrap { padding: 28px 40px 80px; }
+        @media (max-width: 640px) {
+          .hero-wrap { padding: 24px 16px 20px; }
+          .body-wrap { padding: 20px 16px 60px; }
+        }
+
+        /* ── CATEGORY PILLS ── */
+        .cat-scroll {
+          display: flex;
+          gap: 6px;
+          flex-wrap: wrap;
+          margin-bottom: 12px;
+        }
+        @media (max-width: 540px) {
+          .cat-scroll {
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            padding-bottom: 4px;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+          }
+          .cat-scroll::-webkit-scrollbar { display: none; }
+        }
+
+        /* ── CONCERN PILLS ── */
+        .concern-scroll {
+          display: flex;
+          gap: 6px;
+          flex-wrap: wrap;
+          margin-bottom: 20px;
+        }
+        @media (max-width: 540px) {
+          .concern-scroll {
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            padding-bottom: 4px;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+          }
+          .concern-scroll::-webkit-scrollbar { display: none; }
         }
       `}</style>
 
-      <div
-        style={{
-          background: "#0F0F0F",
-          minHeight: "100vh",
-          fontFamily: "'DM Sans', 'Helvetica Neue', sans-serif",
-          color: "#F0F0F0",
-        }}
-      >
+      <div style={{ background: "#0A0A0A", minHeight: "100vh", color: "#F0F0F0", fontFamily: "'DM Sans', 'Helvetica Neue', sans-serif" }}>
+
         {/* ── HERO ── */}
-        <div
-          style={{
-            borderBottom: "1px solid #1E1E1E",
-            padding: "32px 40px 24px",
-            maxWidth: 1200,
-            margin: "0 auto",
-          }}
-        >
-          <div
-            style={{
-              display: "flex",
-              alignItems: "flex-end",
-              justifyContent: "space-between",
-              flexWrap: "wrap",
-              gap: 24,
-            }}
-          >
+        <div style={{ borderBottom: "1px solid #161616", maxWidth: 1200, margin: "0 auto" }} className="hero-wrap">
+          <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", flexWrap: "wrap", gap: 20 }}>
             <div>
-              <div
-                style={{
-                  fontFamily: "monospace",
-                  fontSize: 11,
-                  color: "#E05C3A",
-                  letterSpacing: "3px",
-                  marginBottom: 14,
-                }}
-              >
+              <div style={{ fontFamily: "monospace", fontSize: 10, color: "#E05C3A", letterSpacing: "3px", marginBottom: 10 }}>
                 MIRHA &amp; CO. / BEAUTY SHOP
               </div>
-              <h1
-                style={{
-                  fontFamily:
-                    "'Bebas Neue', 'Arial Narrow', Impact, sans-serif",
-                  fontSize: "clamp(52px, 8vw, 88px)",
-                  fontWeight: 400,
-                  lineHeight: 0.9,
-                  margin: 0,
-                  letterSpacing: 2,
-                  color: "#F0F0F0",
-                }}
-              >
-                BEAUTY
-                <br />
+              <h1 style={{
+                fontFamily: "'Bebas Neue', Impact, sans-serif",
+                fontSize: "clamp(44px, 7vw, 80px)",
+                fontWeight: 400, lineHeight: 0.92,
+                margin: 0, letterSpacing: 2, color: "#F0F0F0",
+              }}>
+                BEAUTY<br />
                 <span style={{ color: "#E05C3A" }}>PICKS.</span>
               </h1>
             </div>
-            <div style={{ maxWidth: 400 }}>
-              <p
-                style={{
-                  color: "#777",
-                  fontSize: 15,
-                  lineHeight: 1.75,
-                  margin: "0 0 16px",
-                }}
-              >
+            <div style={{ maxWidth: 360 }}>
+              <p style={{ color: "#555", fontSize: 14, lineHeight: 1.75, margin: "0 0 12px" }}>
                 Hand-picked skincare, makeup, and hair care from Amazon India.
-                Real prices, honest picks — every link takes you straight to the
-                product.
+                Real prices, honest picks.
               </p>
               
-              <p style={{
-  fontSize: "12px",
-  color: "#666",
-  marginTop: "10px",
-  fontFamily: "monospace"
-}}>
-  Personalized routine based on your skin →
-</p>
-              <div
-                style={{
-                  display: "flex",
-                  gap: 20,
-                  fontFamily: "monospace",
-                  fontSize: 10,
-                  color: "#444",
-                }}
-              >
-                <span>✦ CURATED PICKS</span>
+              <div style={{ display: "flex", gap: 16, fontFamily: "monospace", fontSize: 9, color: "#2A2A2A" }}>
+                <span>✦ CURATED</span>
                 <span>✦ REAL PRICES</span>
                 <span>✦ INDIA ONLY</span>
               </div>
@@ -784,329 +454,204 @@ export default function BeautyShopPage() {
           </div>
         </div>
 
-        <div
-          style={{
-            maxWidth: 1200,
-            margin: "0 auto",
-            padding: "36px 40px 80px",
-          }}
-        >
+        {/* ── BODY ── */}
+        <div style={{ maxWidth: 1200, margin: "0 auto" }} className="body-wrap">
 
+          {/* Routine banner */}
           <div style={{
-  border: "1px solid #2A2A2A",
-  padding: "18px 20px",
+  border: "1px solid #1A1A1A",
+  padding: "16px 18px",
   marginBottom: "24px",
-  background: "#141414"
+  background: "#111",
+  borderRadius: 8,
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "space-between",
+  flexWrap: "wrap",
+  gap: "10px"
 }}>
-  <p style={{
-    fontSize: "13px",
-    color: "#888",
-    marginBottom: "8px"
-  }}>
-    Not sure what works for your skin?
-  </p>
+  <div>
+    <p style={{ fontSize: 12, color: "#666", margin: 0 }}>
+      Not sure what works for your skin?
+    </p>
+    <p style={{ fontSize: 10, color: "#333", marginTop: 4, fontFamily: "monospace" }}>
+      Get a personalized routine in seconds
+    </p>
+  </div>
 
   <a href="/tools/routine" style={{
-    fontSize: "11px",
+    background: "#E05C3A",
+    color: "#fff",
+    padding: "8px 14px",
+    fontSize: 10,
     letterSpacing: "0.15em",
     textTransform: "uppercase",
-    color: "#E05C3A",
-    textDecoration: "none"
+    textDecoration: "none",
+    borderRadius: 4,
+    fontFamily: "monospace",
   }}>
     Get your routine →
   </a>
 </div>
-          {/* ── SEARCH ── */}
-          <div
-            style={{
-              background: "#1A1A1A",
-              border: "1px solid #2D2D2D",
-              borderRadius: 4,
-              display: "flex",
-              alignItems: "center",
-              gap: 14,
-              padding: "0 16px",
-              marginBottom: 20,
-            }}
-          >
-            <svg
-              width="18"
-              height="18"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="#555"
-              strokeWidth="2"
-            >
-              <circle cx="11" cy="11" r="8" />
-              <path d="M21 21l-4.35-4.35" />
+
+          {/* Search */}
+          <div style={{
+            background: "#111", border: "1px solid #1E1E1E", borderRadius: 8,
+            display: "flex", alignItems: "center", gap: 12, padding: "0 14px", marginBottom: 16,
+          }}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#333" strokeWidth="2">
+              <circle cx="11" cy="11" r="8" /><path d="M21 21l-4.35-4.35" />
             </svg>
             <input
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search — serum, moisturiser, kajal, hair oil, sunscreen..."
+              placeholder="Search — serum, moisturiser, kajal, hair oil..."
               style={{
-                flex: 1,
-                background: "transparent",
-                border: "none",
-                color: "#F0F0F0",
-                fontSize: 15,
-                padding: "18px 0",
+                flex: 1, background: "transparent", border: "none",
+                color: "#F0F0F0", fontSize: 13, padding: "14px 0",
                 fontFamily: "'DM Sans', sans-serif",
               }}
             />
             {query && (
-              <button
-                onClick={() => setQuery("")}
-                style={{
-                  background: "none",
-                  border: "none",
-                  cursor: "pointer",
-                  color: "#555",
-                  fontSize: 22,
-                  lineHeight: 1,
-                }}
-              >
-                ×
-              </button>
+              <button onClick={() => setQuery("")} style={{
+                background: "none", border: "none", cursor: "pointer", color: "#333", fontSize: 20,
+              }}>×</button>
             )}
           </div>
 
-          {/* ── CATEGORY FILTERS ── */}
-          <div
-            style={{
-              display: "flex",
-              gap: 8,
-              flexWrap: "wrap",
-              marginBottom: 32,
-            }}
-          >
+          {/* Category filters */}
+          <div className="cat-scroll">
             {CATEGORIES.map((cat) => {
               const active = activeCategory === cat;
-              const accent = CATEGORY_ACCENT[cat] ?? "#E05C3A";
+              const acc = CATEGORY_ACCENT[cat] ?? "#E05C3A";
               return (
-                <button
-                  key={cat}
-                  onClick={() => setActiveCategory(cat)}
-                  style={{
-                    background: active ? `${accent}18` : "transparent",
-                    border: `1px solid ${active ? accent : "#2D2D2D"}`,
-                    borderRadius: 2,
-                    padding: "8px 18px",
-                    fontSize: 13,
-                    color: active ? accent : "#666",
-                    cursor: "pointer",
-                    fontFamily: "monospace",
-                    letterSpacing: 1,
-                    transition: "all 0.15s",
-                  }}
-                  onMouseEnter={(e) => {
-                    if (!active) {
-                      (e.currentTarget as HTMLButtonElement).style.borderColor =
-                        accent;
-                      (e.currentTarget as HTMLButtonElement).style.color =
-                        accent;
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    if (!active) {
-                      (e.currentTarget as HTMLButtonElement).style.borderColor =
-                        "#2D2D2D";
-                      (e.currentTarget as HTMLButtonElement).style.color =
-                        "#666";
-                    }
-                  }}
-                >
+                <button key={cat} onClick={() => setActiveCategory(cat)} style={{
+                  background: active ? `${acc}18` : "transparent",
+                  border: `1px solid ${active ? acc : "#1E1E1E"}`,
+                  borderRadius: 4, padding: "6px 14px",
+                  fontSize: 10, color: active ? acc : "#444",
+                  cursor: "pointer", fontFamily: "monospace",
+                  letterSpacing: 1, transition: "all 0.15s",
+                  whiteSpace: "nowrap", flexShrink: 0,
+                }}>
                   {cat.toUpperCase()}
                 </button>
               );
             })}
           </div>
-          
-          {/* ── CONCERN FILTERS ── */}
-<div
-  style={{
-    display: "flex",
-    gap: 8,
-    flexWrap: "wrap",
-    marginBottom: 24,
-  }}
->
-  {["acne","pigmentation","dry skin","oily skin","anti-ageing","sunscreen"].map((c) => {
-    const active = selectedConcern === c;
 
-    return (
-      <button
-        key={c}
-        onClick={() => setSelectedConcern(c)}
-        style={{
-          background: active ? "#7C3AED22" : "transparent",
-          border: `1px solid ${active ? "#7C3AED" : "#2D2D2D"}`,
-          borderRadius: 20,
-          padding: "6px 14px",
-          fontSize: 12,
-          color: active ? "#A78BFA" : "#666",
-          cursor: "pointer",
-        }}
-      >
-        {c}
-      </button>
-    );
-  })}
+          {/* Concern filters */}
+          <div className="concern-scroll">
+            {CONCERNS.map((c) => {
+              const active = selectedConcern === c;
+              return (
+                <button key={c} onClick={() => setSelectedConcern(active ? null : c)} style={{
+                  background: active ? "#7C3AED22" : "transparent",
+                  border: `1px solid ${active ? "#7C3AED" : "#1E1E1E"}`,
+                  borderRadius: 20, padding: "5px 12px",
+                  fontSize: 10, color: active ? "#A78BFA" : "#444",
+                  cursor: "pointer", fontFamily: "monospace",
+                  whiteSpace: "nowrap", flexShrink: 0,
+                  transition: "all 0.15s",
+                }}>
+                  {c}
+                </button>
+              );
+            })}
+            {selectedConcern && (
+              <button onClick={() => setSelectedConcern(null)} style={{
+                background: "none", border: "none", cursor: "pointer",
+                fontSize: 10, color: "#333", fontFamily: "monospace",
+                flexShrink: 0,
+              }}>
+                ✕ clear
+              </button>
+            )}
+          </div>
 
-  <button
-    onClick={() => setSelectedConcern(null)}
-    style={{
-      marginLeft: 10,
-      fontSize: 12,
-      color: "#999",
-    }}
-  >
-    Clear
-  </button>
-</div>
-          {/* ── TOP PICKS ── */}
-<div style={{ marginBottom: 28 }}>
-  <h3 style={{
-    fontFamily: "monospace",
-    fontSize: 12,
-    letterSpacing: 2,
-    color: "#888",
-    marginBottom: 12
-  }}>
-    SMART PICKS FOR YOU
-  </h3>
+          {/* Smart Picks */}
+          <div style={{ marginBottom: 24 }}>
+            <div style={{ fontFamily: "monospace", fontSize: 9, letterSpacing: 2, color: "#2A2A2A", marginBottom: 10 }}>
+              EDITOR'S PICKS
+            </div>
+            <div className="picks-grid">
+              {(PRODUCTS as any[]).slice(0, 5).map((p) => (
+                <div
+                  key={p.id}
+                  onClick={() => setSelectedProduct(p)}
+                  style={{
+                    background: "#fff", borderRadius: 8,
+                    aspectRatio: "1/1", overflow: "hidden",
+                    cursor: "pointer", border: "1px solid #1A1A1A",
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    padding: "8px",
+                    transition: "transform 0.2s",
+                  }}
+                  onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.03)")}
+                  onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
+                >
+                  <img src={p.image} alt={p.name}
+                    style={{ width: "100%", height: "100%", objectFit: "contain" }} />
+                </div>
+              ))}
+            </div>
+          </div>
 
-  <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 12 }}>
-    {PRODUCTS.slice(0, 5).map((p) => (
-      <div key={p.id} onClick={() => setSelectedProduct(p)}>
-        <img src={p.image} style={{ width: "100%", borderRadius: 4 }} />
-      </div>
-    ))}
-  </div>
-</div>
-          {/* ── RESULTS HEADER ── */}
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "baseline",
-              marginBottom: 20,
-            }}
-          >
-            <h2
-              style={{
-                fontFamily:
-                  "'Bebas Neue', 'Arial Narrow', sans-serif",
-                fontSize: 28,
-                fontWeight: 400,
-                letterSpacing: 2,
-                color: "#F0F0F0",
-                margin: 0,
-              }}
-            >
+          {/* Results header */}
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 16 }}>
+            <h2 style={{
+              fontFamily: "'Bebas Neue', sans-serif", fontSize: 24,
+              fontWeight: 400, letterSpacing: 2, color: "#F0F0F0", margin: 0,
+            }}>
               {activeCategory === "All" ? "ALL PRODUCTS" : activeCategory.toUpperCase()}
+              {selectedConcern && <span style={{ color: "#7C3AED", fontSize: 18, marginLeft: 8 }}>/ {selectedConcern.toUpperCase()}</span>}
             </h2>
-            <span
-              style={{
-                fontFamily: "monospace",
-                fontSize: 11,
-                color: "#555",
-                letterSpacing: 1,
-              }}
-            >
-              {filtered.length} PRODUCT{filtered.length !== 1 ? "S" : ""}
+            <span style={{ fontFamily: "monospace", fontSize: 10, color: "#2A2A2A", letterSpacing: 1 }}>
+              {filtered.length} ITEM{filtered.length !== 1 ? "S" : ""}
             </span>
           </div>
 
-          {/* ── PRODUCT GRID ── */}
+          {/* Product Grid */}
           {filtered.length > 0 ? (
-            <div className="product-grid-inner">
-              {filtered.map((p) => (
-                <ProductCard
-                  key={p.id}
-                  product={p}
-                  onClick={() => setSelectedProduct(p)}
-                />
+            <div className="shop-grid">
+              {filtered.map((p: any) => (
+                <ProductCard key={p.id} product={p} onClick={() => setSelectedProduct(p)} />
               ))}
             </div>
           ) : (
-            <div
-              style={{
-                background: "#141414",
-                border: "1px solid #1E1E1E",
-                borderRadius: 4,
-                padding: "60px 32px",
-                textAlign: "center",
-              }}
-            >
-              <div
-                style={{
-                  fontFamily:
-                    "'Bebas Neue', 'Arial Narrow', sans-serif",
-                  fontSize: 22,
-                  letterSpacing: 3,
-                  color: "#2A2A2A",
-                  marginBottom: 8,
-                }}
-              >
+            <div style={{
+              background: "#111", border: "1px solid #1A1A1A",
+              borderRadius: 8, padding: "48px 24px", textAlign: "center",
+            }}>
+              <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 20, letterSpacing: 3, color: "#1E1E1E", marginBottom: 8 }}>
                 NO PRODUCTS FOUND
               </div>
-              <div
-                style={{
-                  fontFamily: "monospace",
-                  fontSize: 12,
-                  color: "#444",
-                }}
-              >
-                Try a different keyword or select a different category
+              <div style={{ fontFamily: "monospace", fontSize: 11, color: "#333" }}>
+                Try a different keyword or filter
               </div>
-              <button
-                onClick={() => {
-                  setQuery("");
-                  setActiveCategory("All");
-                }}
-                style={{
-                  marginTop: 20,
-                  background: "transparent",
-                  border: "1px solid #2D2D2D",
-                  borderRadius: 2,
-                  color: "#888",
-                  fontFamily: "monospace",
-                  fontSize: 11,
-                  letterSpacing: 2,
-                  padding: "10px 20px",
-                  cursor: "pointer",
-                }}
-              >
+              <button onClick={() => { setQuery(""); setActiveCategory("All"); setSelectedConcern(null); }} style={{
+                marginTop: 16, background: "transparent", border: "1px solid #1E1E1E",
+                borderRadius: 4, color: "#555", fontFamily: "monospace",
+                fontSize: 10, letterSpacing: 2, padding: "8px 16px", cursor: "pointer",
+              }}>
                 ← CLEAR FILTERS
               </button>
             </div>
           )}
 
-          {/* ── FOOTER NOTE ── */}
-          <div
-            style={{
-              marginTop: 60,
-              paddingTop: 24,
-              borderTop: "1px solid #1E1E1E",
-              fontFamily: "monospace",
-              fontSize: 11,
-              color: "#333",
-              lineHeight: 1.8,
-            }}
-          >
-            ✦ Affiliate links disclosed. Prices shown are approximate and may
-            change on Amazon. Independent reviews — honest opinions only.
+          {/* Footer */}
+          <div style={{
+            marginTop: 48, paddingTop: 20, borderTop: "1px solid #141414",
+            fontFamily: "monospace", fontSize: 9, color: "#222", lineHeight: 1.8,
+          }}>
+            ✦ Affiliate links disclosed. Prices shown are approximate and may change on Amazon.
+            Independent reviews — honest opinions only.
           </div>
         </div>
       </div>
 
-      {/* ── PRODUCT MODAL ── */}
       {selectedProduct && (
-        <ProductModal
-          product={selectedProduct}
-          onClose={() => setSelectedProduct(null)}
-        />
+        <ProductModal product={selectedProduct as Product} onClose={() => setSelectedProduct(null)} />
       )}
     </>
   );
