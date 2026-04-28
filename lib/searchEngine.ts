@@ -1,91 +1,53 @@
 import { SEARCH_INDEX, SearchItem } from "@/lib/searchIndex";
 
-export type SearchResult = SearchItem & {
-  score: number;
-  matchedTerms: string[];
-};
-
 const SYNONYMS: Record<string, string[]> = {
-  pimple: ["acne", "breakout"],
-  pimples: ["acne", "breakouts"],
+  pimples: ["acne", "breakout", "pimple"],
+  acne: ["acne", "breakout", "pimple", "pores"],
   marks: ["pigmentation", "dark spots", "acne marks"],
-  spot: ["pigmentation", "dark spots"],
-  spots: ["pigmentation", "dark spots"],
-  glow: ["dullness", "brightening", "vitamin c"],
-  glowing: ["dullness", "brightening", "vitamin c"],
-  oily: ["oily skin", "oiliness", "pores"],
-  dry: ["dry skin", "dryness", "dehydration"],
-  sensitive: ["sensitive skin", "barrier repair"],
-  sunscreen: ["spf", "spf 50", "uv"],
-  antiaging: ["anti-ageing", "retinol", "fine lines"],
-  antiageing: ["anti-ageing", "retinol", "fine lines"],
-  cheap: ["budget", "under_500", "under 500"],
-  affordable: ["budget", "under_500", "under 500"],
+  pigmentation: ["pigmentation", "dark spots", "uneven tone", "brightening"],
+  oily: ["oily", "oil control", "sebum", "matte"],
+  dry: ["dry", "dryness", "dehydration", "hydration", "barrier"],
+  glow: ["glow", "dullness", "brightening", "vitamin c"],
+  sunscreen: ["sunscreen", "spf", "uv", "no white cast"],
 };
-
-function normalize(value: string) {
-  return value
-    .toLowerCase()
-    .replace(/₹/g, "rs ")
-    .replace(/[^a-z0-9%+ ]/g, " ")
-    .replace(/\s+/g, " ")
-    .trim();
-}
 
 function expandTerms(query: string) {
-  const rawTerms = normalize(query).split(" ").filter(Boolean);
-  const expanded = new Set(rawTerms);
+  const terms = query.toLowerCase().trim().split(/\s+/).filter(Boolean);
+  const expanded = new Set<string>(terms);
 
-  for (const term of rawTerms) {
-    for (const synonym of SYNONYMS[term] || []) {
-      normalize(synonym).split(" ").forEach((part) => expanded.add(part));
-      expanded.add(normalize(synonym));
-    }
-  }
+  terms.forEach((term) => {
+    (SYNONYMS[term] || []).forEach((synonym) => expanded.add(synonym));
+  });
 
-  if (query.includes("500")) expanded.add("under_500");
-  if (query.includes("1000")) expanded.add("under_1000");
-  if (query.includes("2000")) expanded.add("under_2000");
-
-  return [...expanded].filter((term) => term.length > 1);
+  return Array.from(expanded);
 }
 
-function scoreItem(item: SearchItem, terms: string[]) {
-  const title = normalize(item.title);
-  const description = normalize(item.description);
-  const tags = item.tags.map(normalize);
-  const haystack = [title, description, ...tags].join(" ");
-  let score = 0;
-  const matchedTerms: string[] = [];
-
-  for (const term of terms) {
-    if (title === term) score += 80;
-    if (title.includes(term)) score += 40;
-    if (tags.some((tag) => tag === term || tag.includes(term))) score += 30;
-    if (description.includes(term)) score += 12;
-    if (haystack.includes(term)) matchedTerms.push(term);
-  }
-
-  if (item.type === "routine") score += 8;
-  if (item.type === "product" && terms.some((term) => ["buy", "product", "under_500", "under_1000"].includes(term))) {
-    score += 10;
-  }
-  if (item.type === "guide" && terms.some((term) => ["why", "how", "guide", "learn"].includes(term))) {
-    score += 10;
-  }
-
-  return { score, matchedTerms: [...new Set(matchedTerms)] };
+function itemText(item: SearchItem) {
+  return [item.title, item.description, ...item.tags].join(" ").toLowerCase();
 }
 
-export function searchMirha(query: string, limit = 24): SearchResult[] {
+export function searchMirha(query: string) {
   const terms = expandTerms(query);
-  if (!terms.length) return [];
+  if (!terms.length) return SEARCH_INDEX.slice(0, 24);
 
-  return SEARCH_INDEX.map((item) => {
-    const result = scoreItem(item, terms);
-    return { ...item, ...result };
-  })
-    .filter((item) => item.score > 0)
+  return SEARCH_INDEX
+    .map((item) => {
+      const haystack = itemText(item);
+      const title = item.title.toLowerCase();
+      let score = 0;
+
+      terms.forEach((term) => {
+        if (title.includes(term)) score += 6;
+        if (haystack.includes(term)) score += 2;
+      });
+
+      if (item.type === "routine") score += 1;
+      if (item.type === "product" && query.length > 2) score += 1;
+
+      return { item, score };
+    })
+    .filter((result) => result.score > 0)
     .sort((a, b) => b.score - a.score)
-    .slice(0, limit);
+    .map((result) => result.item)
+    .slice(0, 36);
 }

@@ -5,31 +5,87 @@ import Link from "next/link";
 import { ArrowRight, Search } from "lucide-react";
 import { PRODUCTS } from "@/lib/products";
 
-type Product = (typeof PRODUCTS)[number];
+type Product = {
+  id: number;
+  name: string;
+  brand: string;
+  category: string;
+  subcat: string;
+  mrp: number;
+  price: number;
+  rating: number;
+  reviews: string;
+  asin: string;
+  badge?: string;
+  description: string;
+  specs?: Record<string, string>;
+  tags?: string[];
+  concerns?: string[];
+  skinTypes?: string[];
+  ingredients?: string[];
+  bestFor?: string[];
+  notIdealFor?: string[];
+  image: string;
+  link?: string;
+};
+
+const PRODUCT_LIST = PRODUCTS as Product[];
 
 const CATEGORIES = ["All", "Skincare", "Makeup", "Hair Care", "Body Care", "Wellness"];
-const CONCERNS = ["acne", "pigmentation", "dryness", "oily skin", "dullness", "sunscreen"];
 
-const CATEGORY_ACCENT: Record<string, string> = {
-  Skincare: "#E05C3A",
-  Makeup: "#C57BFF",
-  "Hair Care": "#4ECBA8",
-  "Body Care": "#F5A623",
-  Wellness: "#8EB7FF",
-  All: "#E05C3A",
+const CONCERNS = [
+  {
+    id: "acne",
+    label: "Acne",
+    text: "Breakouts, congestion, acne marks, pore care.",
+  },
+  {
+    id: "pigmentation",
+    label: "Pigmentation",
+    text: "Dark spots, uneven tone, brightening routines.",
+  },
+  {
+    id: "oily skin",
+    label: "Oily Skin",
+    text: "Light textures, oil control, no heavy finish.",
+  },
+  {
+    id: "dryness",
+    label: "Dry / Sensitive",
+    text: "Barrier support, hydration, gentler formulas.",
+  },
+  {
+    id: "dullness",
+    label: "Dullness",
+    text: "Glow, texture, tired-looking skin.",
+  },
+  {
+    id: "sunscreen",
+    label: "Sunscreen",
+    text: "Daily SPF picks for Indian weather.",
+  },
+];
+
+const CONCERN_ALIASES: Record<string, string[]> = {
+  acne: ["acne", "breakout", "pimple", "pores", "congestion", "blemish"],
+  pigmentation: ["pigmentation", "dark spots", "acne marks", "brightening", "uneven tone", "melasma"],
+  dryness: ["dryness", "dry skin", "dehydration", "hydration", "barrier", "sensitive", "fragrance-free"],
+  "oily skin": ["oily", "oily skin", "oiliness", "sebum", "pores", "matte", "gel"],
+  dullness: ["dullness", "glow", "brightening", "uneven tone", "vitamin c", "radiance"],
+  sunscreen: ["sunscreen", "spf", "uv", "pa++++", "no white cast", "sun"],
 };
 
-const concernAliases: Record<string, string[]> = {
-  acne: ["acne", "breakout", "pimple", "pores", "congestion"],
-  pigmentation: ["pigmentation", "dark spots", "acne marks", "brightening", "uneven tone"],
-  dryness: ["dryness", "dry skin", "dehydration", "hydration", "barrier"],
-  "oily skin": ["oily", "oily skin", "oiliness", "sebum", "pores"],
-  dullness: ["dullness", "glow", "brightening", "uneven tone"],
-  sunscreen: ["sunscreen", "spf", "uv", "no white cast"],
-};
+const EDITOR_PICK_ASINS = [
+  "B01CCGW4OE",
+  "B09VLDY46B",
+  "B0B45RB1RV",
+  "B0DH88LZ11",
+  "B095PRGHDX",
+  "B00BQFTQW6",
+];
 
-function fmtINR(n: number) {
-  return "Rs " + Math.round(n).toLocaleString("en-IN");
+function fmtINR(value: number) {
+  return "Rs " + Math.round(value).toLocaleString("en-IN");
 }
 
 function discount(mrp: number, price: number) {
@@ -40,7 +96,7 @@ function normalize(value: string) {
   return value.toLowerCase().replace(/\s+/g, "");
 }
 
-function getProductText(product: Product) {
+function productText(product: Product) {
   return [
     product.name,
     product.brand,
@@ -48,51 +104,56 @@ function getProductText(product: Product) {
     product.subcat,
     product.description,
     ...(product.tags || []),
-    ...((product as any).concerns || []),
-    ...((product as any).skinTypes || []),
-    ...((product as any).ingredients || []),
-    ...((product as any).bestFor || []),
+    ...(product.concerns || []),
+    ...(product.skinTypes || []),
+    ...(product.ingredients || []),
+    ...(product.bestFor || []),
+    ...Object.values(product.specs || {}),
   ]
     .join(" ")
     .toLowerCase();
 }
 
-function productMatchesQuery(product: Product, query: string) {
-  const q = query.toLowerCase().trim();
-  if (!q) return true;
-
-  const searchText = getProductText(product);
-  return q.split(" ").every((term) => searchText.includes(term));
+function matchesQuery(product: Product, query: string) {
+  const terms = query.toLowerCase().trim().split(/\s+/).filter(Boolean);
+  if (!terms.length) return true;
+  const haystack = productText(product);
+  return terms.every((term) => haystack.includes(term));
 }
 
-function productMatchesConcern(product: Product, selectedConcern: string | null) {
-  if (!selectedConcern) return true;
+function matchesConcern(product: Product, concern: string | null) {
+  if (!concern) return true;
+  const haystack = productText(product);
+  return (CONCERN_ALIASES[concern] || [concern]).some((term) =>
+    haystack.includes(term.toLowerCase())
+  );
+}
 
-  const productText = getProductText(product);
-  const aliases = concernAliases[selectedConcern] || [selectedConcern];
-
-  return aliases.some((term) => productText.includes(term.toLowerCase()));
+function productReason(product: Product) {
+  if (product.bestFor?.length) return product.bestFor.slice(0, 2).join(" / ");
+  if (product.concerns?.length) return product.concerns.slice(0, 2).join(" / ");
+  const skinType = product.specs?.["Skin Type"] || product.specs?.["Best For"];
+  if (skinType) return skinType;
+  return product.description;
 }
 
 function ProductCard({ product }: { product: Product }) {
-  const accent = CATEGORY_ACCENT[product.category] ?? "#E05C3A";
   const save = discount(product.mrp, product.price);
-  const bestFor = ((product as any).bestFor || []).slice(0, 2);
 
   return (
-    <Link href={`/product/${product.asin}`} className="product-card" style={{ ["--accent" as string]: accent }}>
+    <Link href={`/product/${product.asin}`} className="product-card">
       <div className="product-image">
         <img src={product.image} alt={product.name} />
       </div>
       <div className="product-body">
-        <div className="product-meta-row">
+        <div className="product-kicker">
           <span>{product.subcat}</span>
           {product.badge ? <b>{product.badge}</b> : null}
         </div>
         <h3>{product.name}</h3>
-        <p className="brand">{product.brand}</p>
-        <p className="best-for">{bestFor.length ? bestFor.join(" / ") : product.description}</p>
-        <div className="price-row">
+        <p className="product-brand">{product.brand}</p>
+        <p className="product-use">Best for: {productReason(product)}</p>
+        <div className="product-price-row">
           <span>{fmtINR(product.price)}</span>
           {save > 0 ? <em>{save}% off</em> : null}
         </div>
@@ -105,9 +166,9 @@ function ProductCard({ product }: { product: Product }) {
   );
 }
 
-function PickTile({ product }: { product: Product }) {
+function EditorPick({ product }: { product: Product }) {
   return (
-    <Link href={`/product/${product.asin}`} className="pick-tile">
+    <Link href={`/product/${product.asin}`} className="editor-pick">
       <img src={product.image} alt={product.name} />
       <span>{product.badge || product.subcat}</span>
     </Link>
@@ -117,290 +178,394 @@ function PickTile({ product }: { product: Product }) {
 export default function BeautyShopPage() {
   const [query, setQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState("All");
-  const [selectedConcern, setSelectedConcern] = useState<string | null>(null);
+  const [activeConcern, setActiveConcern] = useState<string | null>(null);
+
+  const editorPicks = useMemo(() => {
+    const picks = EDITOR_PICK_ASINS.map((asin) => PRODUCT_LIST.find((product) => product.asin === asin))
+      .filter(Boolean) as Product[];
+    return picks.length ? picks : PRODUCT_LIST.slice(0, 6);
+  }, []);
 
   const filtered = useMemo(() => {
-    return PRODUCTS.filter((product) => {
+    return PRODUCT_LIST.filter((product) => {
       const categoryMatch =
         activeCategory === "All" || normalize(product.category) === normalize(activeCategory);
 
-      return (
-        categoryMatch &&
-        productMatchesConcern(product, selectedConcern) &&
-        productMatchesQuery(product, query)
-      );
+      return categoryMatch && matchesConcern(product, activeConcern) && matchesQuery(product, query);
     });
-  }, [query, activeCategory, selectedConcern]);
-
-  const editorPicks = PRODUCTS.slice(0, 5);
+  }, [activeCategory, activeConcern, query]);
 
   return (
-    <main className="shop-page">
+    <main className="mirha-home">
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
-
-        .shop-page {
+        .mirha-home {
+          background: #fbf7f1;
+          color: #161412;
           min-height: 100vh;
-          background: #090909;
-          color: #f2f0ec;
-          font-family: 'DM Sans', 'Helvetica Neue', sans-serif;
+          font-family: 'DM Sans', sans-serif;
         }
 
-        .shop-shell {
-          max-width: 1240px;
+        .home-shell {
+          max-width: 1180px;
           margin: 0 auto;
-          padding: 0 40px 80px;
+          padding: 0 24px;
         }
 
         .hero {
-          min-height: 460px;
+          min-height: 560px;
           display: grid;
-          grid-template-columns: minmax(0, 1fr) 440px;
-          align-items: end;
-          gap: 60px;
-          padding-top: 72px;
-          padding-bottom: 44px;
-          border-bottom: 1px solid #181818;
+          grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
+          align-items: center;
+          gap: 48px;
+          padding: 74px 0 54px;
         }
 
         .eyebrow {
-          font-family: monospace;
+          color: #c8473a;
           font-size: 10px;
-          color: #e05c3a;
-          letter-spacing: 3px;
+          letter-spacing: 0.28em;
           text-transform: uppercase;
-          margin: 0 0 14px;
+          font-weight: 700;
+          margin: 0 0 18px;
         }
 
         .hero h1 {
-          font-family: 'Bebas Neue', Impact, sans-serif;
-          font-size: clamp(64px, 10vw, 122px);
-          line-height: 0.84;
-          letter-spacing: 2px;
+          font-family: 'DM Serif Display', serif;
+          font-size: clamp(48px, 7vw, 88px);
+          line-height: 0.96;
+          letter-spacing: 0;
           font-weight: 400;
+          max-width: 760px;
           margin: 0;
         }
 
-        .hero h1 span { color: #e05c3a; }
+        .hero h1 em {
+          color: #c8473a;
+          font-style: italic;
+        }
 
         .hero-copy {
-          color: #68635e;
-          font-size: 15px;
-          line-height: 1.8;
-          max-width: 390px;
-          margin: 0 0 20px;
-        }
-
-        .trust-row {
-          display: flex;
-          gap: 14px;
-          flex-wrap: wrap;
-          color: #333;
-          font-family: monospace;
-          font-size: 9px;
-          letter-spacing: 1.5px;
-          text-transform: uppercase;
-        }
-
-        .start-hub {
-          background: #101010;
-          border: 1px solid #1c1c1c;
-          border-radius: 10px;
-          padding: 22px;
-          margin: -22px 0 28px;
-          position: relative;
-          z-index: 2;
-        }
-
-        .start-head {
-          display: flex;
-          justify-content: space-between;
-          align-items: end;
-          gap: 20px;
-          flex-wrap: wrap;
-        }
-
-        .start-head h2 {
-          font-family: 'Bebas Neue', Impact, sans-serif;
-          font-size: clamp(34px, 5vw, 54px);
-          line-height: 0.9;
-          letter-spacing: 1.4px;
-          font-weight: 400;
-          margin: 0;
-        }
-
-        .start-head h2 span { color: #e05c3a; }
-
-        .start-head p {
-          color: #666;
-          font-size: 13px;
-          line-height: 1.7;
           max-width: 520px;
-          margin: 10px 0 0;
+          color: #756b63;
+          font-size: 16px;
+          line-height: 1.8;
+          margin: 22px 0 28px;
         }
 
-        .action-row {
+        .hero-actions {
           display: flex;
-          gap: 10px;
+          gap: 12px;
           flex-wrap: wrap;
-          margin-top: 18px;
         }
 
-        .primary-link,
-        .secondary-link {
-          text-decoration: none;
-          border-radius: 5px;
-          padding: 12px 16px;
-          font-family: monospace;
-          font-size: 10px;
-          letter-spacing: 1.8px;
-          text-transform: uppercase;
+        .primary-btn,
+        .secondary-btn {
+          min-height: 46px;
+          border-radius: 8px;
+          padding: 0 18px;
           display: inline-flex;
           align-items: center;
-          gap: 8px;
-          white-space: nowrap;
+          justify-content: center;
+          gap: 9px;
+          font-size: 11px;
+          letter-spacing: 0.16em;
+          text-transform: uppercase;
+          font-weight: 700;
+          text-decoration: none;
         }
 
-        .primary-link {
-          background: #e05c3a;
+        .primary-btn {
+          background: #161412;
           color: #fff;
         }
 
-        .secondary-link {
-          background: transparent;
-          color: #aaa;
-          border: 1px solid #2a2a2a;
+        .secondary-btn {
+          border: 1px solid #d8cdc3;
+          color: #161412;
+          background: rgba(255,255,255,0.42);
         }
 
-        .shop-search {
-          background: #0d0d0d;
-          border: 1px solid #222;
-          border-radius: 8px;
+        .hero-panel {
+          background: #fffaf4;
+          border: 1px solid #e3d8ce;
+          border-radius: 14px;
+          overflow: hidden;
+          box-shadow: 0 24px 70px rgba(38, 28, 20, 0.08);
+        }
+
+        .hero-image {
+          min-height: 280px;
+          background:
+            linear-gradient(180deg, rgba(22,20,18,0.1), rgba(22,20,18,0.38)),
+            url('/images/hero-skincare.jpg');
+          background-size: cover;
+          background-position: center;
+        }
+
+        .hero-panel-body {
+          padding: 24px;
+        }
+
+        .hero-panel-body h2 {
+          font-family: 'DM Serif Display', serif;
+          font-size: 28px;
+          font-weight: 400;
+          line-height: 1.1;
+          margin: 0 0 10px;
+        }
+
+        .hero-panel-body p {
+          color: #756b63;
+          font-size: 13px;
+          line-height: 1.7;
+          margin: 0 0 18px;
+        }
+
+        .trust-row {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          border-top: 1px solid #ece2d9;
+        }
+
+        .trust-row span {
+          padding: 14px 10px;
+          text-align: center;
+          color: #8d8178;
+          font-size: 9px;
+          letter-spacing: 0.15em;
+          text-transform: uppercase;
+          border-right: 1px solid #ece2d9;
+        }
+
+        .trust-row span:last-child {
+          border-right: 0;
+        }
+
+        .section {
+          padding: 46px 0;
+          border-top: 1px solid #e6dcd2;
+        }
+
+        .section-head {
+          display: flex;
+          align-items: flex-end;
+          justify-content: space-between;
+          gap: 20px;
+          margin-bottom: 22px;
+        }
+
+        .section-head h2 {
+          font-family: 'DM Serif Display', serif;
+          font-size: clamp(30px, 4vw, 44px);
+          font-weight: 400;
+          margin: 0;
+          line-height: 1.05;
+        }
+
+        .section-head p,
+        .section-head span {
+          color: #93877d;
+          font-size: 12px;
+          line-height: 1.7;
+          margin: 0;
+        }
+
+        .concern-grid {
+          display: grid;
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+          gap: 12px;
+        }
+
+        .concern-card {
+          background: #fffaf4;
+          border: 1px solid #e2d7cd;
+          border-radius: 12px;
+          padding: 20px;
+          min-height: 144px;
+          text-align: left;
+          cursor: pointer;
+          transition: transform 0.2s, border-color 0.2s, background 0.2s;
+        }
+
+        .concern-card:hover,
+        .concern-card.active {
+          transform: translateY(-2px);
+          border-color: #c8473a;
+          background: #fff4ec;
+        }
+
+        .concern-card small {
+          color: #c8473a;
+          font-size: 10px;
+          letter-spacing: 0.18em;
+          text-transform: uppercase;
+          font-weight: 700;
+        }
+
+        .concern-card h3 {
+          margin: 14px 0 8px;
+          font-size: 18px;
+          line-height: 1.25;
+        }
+
+        .concern-card p {
+          color: #776d65;
+          font-size: 13px;
+          line-height: 1.6;
+          margin: 0;
+        }
+
+        .desk {
+          background: #161412;
+          color: #fbf7f1;
+          border-radius: 14px;
+          padding: 24px;
+          display: grid;
+          grid-template-columns: minmax(0, 1fr) minmax(320px, 0.75fr);
+          gap: 28px;
+          align-items: center;
+        }
+
+        .desk h2 {
+          font-family: 'DM Serif Display', serif;
+          font-size: clamp(28px, 4vw, 44px);
+          line-height: 1.05;
+          font-weight: 400;
+          margin: 0 0 12px;
+        }
+
+        .desk p {
+          color: rgba(255,255,255,0.58);
+          font-size: 14px;
+          line-height: 1.75;
+          margin: 0;
+          max-width: 600px;
+        }
+
+        .desk-actions {
+          display: grid;
+          gap: 10px;
+        }
+
+        .desk-actions a {
+          border: 1px solid rgba(255,255,255,0.12);
+          border-radius: 9px;
+          padding: 16px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          color: #fff;
+          text-decoration: none;
+        }
+
+        .desk-actions small {
+          display: block;
+          color: #c8473a;
+          font-size: 9px;
+          letter-spacing: 0.18em;
+          text-transform: uppercase;
+          margin-bottom: 4px;
+        }
+
+        .desk-actions b {
+          font-size: 15px;
+        }
+
+        .editor-grid {
+          display: grid;
+          grid-template-columns: repeat(6, minmax(0, 1fr));
+          gap: 12px;
+        }
+
+        .editor-pick {
+          min-height: 194px;
+          border-radius: 12px;
+          background: #fff;
+          border: 1px solid #e8ded4;
+          padding: 14px;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          text-decoration: none;
+          transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .editor-pick:hover {
+          transform: translateY(-2px);
+          border-color: #c8473a;
+        }
+
+        .editor-pick img {
+          width: 100%;
+          height: 140px;
+          object-fit: contain;
+          object-position: center;
+        }
+
+        .editor-pick span {
+          color: #8c8179;
+          font-size: 9px;
+          letter-spacing: 0.16em;
+          text-transform: uppercase;
+          margin-top: 10px;
+        }
+
+        .filters {
+          display: grid;
+          gap: 14px;
+          margin-bottom: 24px;
+        }
+
+        .search-box {
+          background: #fffaf4;
+          border: 1px solid #ded3ca;
+          border-radius: 10px;
           display: flex;
           align-items: center;
           gap: 12px;
-          padding: 0 14px;
-          margin-top: 18px;
+          padding: 0 16px;
         }
 
-        .shop-search input {
+        .search-box input {
           flex: 1;
           border: 0;
           outline: 0;
           background: transparent;
-          color: #f2f0ec;
-          padding: 15px 0;
-          font-size: 13px;
+          color: #161412;
+          padding: 16px 0;
+          font-size: 14px;
+          min-width: 0;
         }
 
-        .shop-search button {
-          background: none;
+        .search-box button {
           border: 0;
-          color: #666;
+          background: transparent;
+          color: #8c8179;
           cursor: pointer;
           font-size: 18px;
         }
 
-        .filters-wrap {
-          padding: 8px 0 24px;
-        }
-
-        .filter-label {
-          font-family: monospace;
-          color: #333;
-          font-size: 9px;
-          letter-spacing: 2px;
-          margin: 0 0 10px;
-          text-transform: uppercase;
-        }
-
         .filter-row {
           display: flex;
-          gap: 7px;
           flex-wrap: wrap;
-          margin-bottom: 12px;
+          gap: 8px;
         }
 
         .filter-row button {
-          background: transparent;
-          border: 1px solid #202020;
-          color: #555;
+          border: 1px solid #ded3ca;
+          background: #fffaf4;
+          color: #756b63;
           border-radius: 999px;
-          padding: 7px 13px;
-          font-family: monospace;
-          font-size: 10px;
+          padding: 9px 14px;
+          font-size: 11px;
           cursor: pointer;
           transition: all 0.2s;
         }
 
         .filter-row button.active {
-          border-color: #e05c3a;
-          background: rgba(224,92,58,0.12);
-          color: #e05c3a;
-        }
-
-        .section-head {
-          display: flex;
-          align-items: baseline;
-          justify-content: space-between;
-          gap: 16px;
-          margin: 24px 0 14px;
-        }
-
-        .section-head h2 {
-          font-family: 'Bebas Neue', Impact, sans-serif;
-          font-size: 30px;
-          font-weight: 400;
-          letter-spacing: 2px;
-          margin: 0;
-        }
-
-        .section-head span {
-          color: #333;
-          font-family: monospace;
-          font-size: 10px;
-          letter-spacing: 1px;
-          text-transform: uppercase;
-        }
-
-        .picks-grid {
-          display: grid;
-          grid-template-columns: repeat(5, minmax(0, 1fr));
-          gap: 12px;
-          margin-bottom: 28px;
-        }
-
-        .pick-tile {
-          background: #fff;
-          border: 1px solid #1a1a1a;
-          border-radius: 9px;
-          min-height: 190px;
-          padding: 14px;
-          text-decoration: none;
-          display: flex;
-          flex-direction: column;
-          justify-content: space-between;
-          transition: transform 0.2s, border-color 0.2s;
-        }
-
-        .pick-tile:hover {
-          transform: translateY(-3px);
-          border-color: #e05c3a;
-        }
-
-        .pick-tile img {
-          width: 100%;
-          height: 150px;
-          object-fit: contain;
-        }
-
-        .pick-tile span {
-          color: #111;
-          font-family: monospace;
-          font-size: 9px;
-          letter-spacing: 1.4px;
-          text-transform: uppercase;
-          opacity: 0.62;
+          border-color: #c8473a;
+          background: #fff0e8;
+          color: #c8473a;
         }
 
         .shop-grid {
@@ -410,95 +575,71 @@ export default function BeautyShopPage() {
         }
 
         .product-card {
-          --accent: #e05c3a;
-          background: #141414;
-          border: 1px solid #1f1f1f;
-          border-radius: 10px;
+          background: #fffaf4;
+          border: 1px solid #e4d9cf;
+          border-radius: 12px;
           overflow: hidden;
-          text-decoration: none;
           color: inherit;
+          text-decoration: none;
           display: flex;
           flex-direction: column;
-          transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+          min-height: 492px;
+          transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
         }
 
         .product-card:hover {
-          border-color: var(--accent);
           transform: translateY(-3px);
-          box-shadow: 0 12px 28px rgba(0,0,0,0.35);
-        }
-
-        .product-card::before {
-          content: "";
-          display: block;
-          height: 2px;
-          background: var(--accent);
-          opacity: 0.55;
+          border-color: #c8473a;
+          box-shadow: 0 18px 48px rgba(40, 28, 20, 0.08);
         }
 
         .product-image {
-  background: #fff;
-  aspect-ratio: 1 / 1;
-  padding: 18px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-}
+          background: #fff;
+          aspect-ratio: 1 / 1;
+          padding: 18px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          overflow: hidden;
+          border-bottom: 1px solid #eee5dd;
+        }
 
-.product-image img {
-  width: 82%;
-  height: 82%;
-  max-width: 220px;
-  max-height: 220px;
-  object-fit: contain;
-  object-position: center;
-}
-
+        .product-image img {
+          width: 82%;
+          height: 82%;
+          max-width: 210px;
+          max-height: 210px;
+          object-fit: contain;
+          object-position: center;
+        }
 
         .product-body {
-          padding: 13px 14px;
+          padding: 16px;
           display: flex;
           flex-direction: column;
-          gap: 6px;
+          gap: 7px;
           flex: 1;
         }
 
-        .product-meta-row {
+        .product-kicker {
           display: flex;
-          align-items: center;
           justify-content: space-between;
-          gap: 8px;
-          font-family: monospace;
-          font-size: 8px;
-          color: #444;
-          letter-spacing: 1.8px;
+          align-items: center;
+          gap: 10px;
+          color: #9c9188;
+          font-size: 9px;
+          letter-spacing: 0.14em;
           text-transform: uppercase;
         }
 
-        .product-meta-row b {
-          color: var(--accent);
-          font-weight: 600;
+        .product-kicker b {
+          color: #c8473a;
+          font-weight: 700;
         }
 
         .product-body h3 {
           font-size: 16px;
           line-height: 1.25;
-          margin: 0;
-          color: #f2f0ec;
-        }
-
-        .brand {
-          font-family: monospace;
-          color: #444;
-          font-size: 9px;
-          margin: 0;
-        }
-
-        .best-for {
-          color: #68635e;
-          font-size: 11px;
-          line-height: 1.55;
           margin: 0;
           display: -webkit-box;
           -webkit-line-clamp: 2;
@@ -506,266 +647,483 @@ export default function BeautyShopPage() {
           overflow: hidden;
         }
 
-        .price-row {
+        .product-brand {
+          margin: 0;
+          color: #a2968c;
+          font-size: 11px;
+        }
+
+        .product-use {
+          margin: 0;
+          color: #756b63;
+          font-size: 12px;
+          line-height: 1.55;
+          display: -webkit-box;
+          -webkit-line-clamp: 3;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+        }
+
+        .product-price-row {
           margin-top: auto;
           display: flex;
           align-items: baseline;
-          gap: 8px;
+          gap: 9px;
         }
 
-        .price-row span {
-          font-family: 'Bebas Neue', Impact, sans-serif;
-          color: #f2f0ec;
-          font-size: 24px;
-          letter-spacing: 1px;
+        .product-price-row span {
+          font-family: 'Bebas Neue', sans-serif;
+          font-size: 28px;
+          letter-spacing: 0.02em;
         }
 
-        .price-row em {
-          color: #4ecba8;
-          font-size: 10px;
+        .product-price-row em {
+          color: #2d8a5c;
+          font-size: 11px;
           font-style: normal;
-          font-family: monospace;
         }
 
         .product-footer {
-          border-top: 1px solid #1f1f1f;
-          padding: 9px 14px;
+          border-top: 1px solid #eee5dd;
+          padding: 12px 16px;
           display: flex;
           align-items: center;
           justify-content: space-between;
-          color: #333;
-          font-family: monospace;
-          font-size: 9px;
-          letter-spacing: 1.2px;
+          color: #9a8f86;
+          font-size: 10px;
+          letter-spacing: 0.14em;
           text-transform: uppercase;
         }
 
-        .product-card:hover .product-footer {
-          color: var(--accent);
-        }
-
         .empty-state {
-          background: #111;
-          border: 1px solid #1f1f1f;
-          border-radius: 10px;
-          padding: 56px 24px;
+          background: #fffaf4;
+          border: 1px solid #e4d9cf;
+          border-radius: 12px;
+          padding: 46px 20px;
           text-align: center;
         }
 
         .empty-state h3 {
-          font-family: 'Bebas Neue', Impact, sans-serif;
-          color: #2a2a2a;
-          letter-spacing: 3px;
+          font-family: 'DM Serif Display', serif;
           font-size: 28px;
-          margin: 0 0 8px;
+          font-weight: 400;
+          margin: 0 0 10px;
         }
 
         .empty-state p {
-          color: #444;
+          color: #756b63;
           margin: 0 0 18px;
         }
 
         .empty-state button {
-          background: transparent;
-          border: 1px solid #2a2a2a;
-          color: #777;
-          border-radius: 5px;
+          border: 1px solid #c8473a;
+          color: #c8473a;
+          background: #fff0e8;
+          border-radius: 999px;
           padding: 10px 16px;
-          font-family: monospace;
-          font-size: 10px;
-          letter-spacing: 1.5px;
-          text-transform: uppercase;
           cursor: pointer;
         }
 
-        .footer-note {
-          margin-top: 48px;
-          padding: 22px 0 0;
-          border-top: 1px solid #151515;
-          color: #2a2a2a;
-          font-family: monospace;
-          font-size: 9px;
-          line-height: 1.8;
-          letter-spacing: 1px;
+        .method-grid {
+          display: grid;
+          grid-template-columns: repeat(4, minmax(0, 1fr));
+          border: 1px solid #e2d7cd;
+          border-radius: 12px;
+          overflow: hidden;
+          background: #fffaf4;
+        }
+
+        .method-grid div {
+          padding: 20px;
+          border-right: 1px solid #e2d7cd;
+        }
+
+        .method-grid div:last-child {
+          border-right: 0;
+        }
+
+        .method-grid small {
+          color: #c8473a;
+          font-size: 10px;
+          letter-spacing: 0.18em;
           text-transform: uppercase;
+          font-weight: 700;
+        }
+
+        .method-grid p {
+          color: #756b63;
+          font-size: 13px;
+          line-height: 1.65;
+          margin: 12px 0 0;
         }
 
         @media (max-width: 980px) {
-          .shop-shell { padding: 0 22px 64px; }
           .hero {
             grid-template-columns: 1fr;
             min-height: auto;
-            gap: 28px;
-            padding-top: 54px;
           }
-          .picks-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-          .shop-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+          .concern-grid,
+          .desk,
+          .method-grid {
+            grid-template-columns: 1fr 1fr;
+          }
+
+          .editor-grid,
+          .shop-grid {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+          }
+
+          .method-grid div:nth-child(2) {
+            border-right: 0;
+          }
+
+          .method-grid div {
+            border-bottom: 1px solid #e2d7cd;
+          }
+
+          .method-grid div:nth-child(3),
+          .method-grid div:nth-child(4) {
+            border-bottom: 0;
+          }
         }
 
-        @media (max-width: 620px) {
-          .shop-shell { padding: 0 16px 56px; }
-          .hero { padding-bottom: 36px; }
-          .start-hub { margin-top: 0; padding: 16px; }
-          .picks-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-          .shop-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
-          .product-body h3 { font-size: 14px; }
+        @media (max-width: 640px) {
+
+        .concern-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.concern-card {
+  min-height: auto;
+  padding: 13px 12px;
+  border-radius: 10px;
+}
+
+.concern-card small {
+  font-size: 8px;
+  letter-spacing: 0.14em;
+}
+
+.concern-card h3 {
+  font-size: 14px;
+  margin: 8px 0 4px;
+  line-height: 1.2;
+}
+
+.concern-card p {
+  font-size: 11px;
+  line-height: 1.35;
+}
+
+          .home-shell {
+            padding: 0 16px;
+          }
+
+          .hero {
+            padding: 44px 0 34px;
+            gap: 28px;
+          }
+
+          .hero h1 {
+            font-size: 44px;
+          }
+
+          .hero-copy {
+            font-size: 14px;
+          }
+
+          .hero-actions {
+  flex-direction: column;
+}
+
+.primary-btn,
+.secondary-btn {
+  width: 100%;
+}
+
+.filters {
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.search-box input {
+  padding: 14px 0;
+  font-size: 13px;
+}
+
+.filter-row {
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  padding-bottom: 6px;
+  margin-left: -2px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.filter-row::-webkit-scrollbar {
+  display: none;
+}
+
+.filter-row button {
+  width: auto;
+  flex: 0 0 auto;
+  white-space: nowrap;
+  padding: 8px 13px;
+}
+
+
+          .hero-image {
+            min-height: 220px;
+          }
+
+          .trust-row {
+            grid-template-columns: 1fr;
+          }
+
+          .trust-row span {
+            border-right: 0;
+            border-bottom: 1px solid #ece2d9;
+          }
+
+          .trust-row span:last-child {
+            border-bottom: 0;
+          }
+
+          .section {
+            padding: 34px 0;
+          }
+
           .section-head {
-            align-items: flex-start;
             flex-direction: column;
-            gap: 4px;
-            .product-image {
-  padding: 14px;
-}
+            align-items: flex-start;
+            gap: 8px;
+          }
 
-.product-image img {
-  width: 78%;
-  height: 78%;
-  max-width: 150px;
-  max-height: 150px;
-}
-.product-card {
-  min-height: 520px;
-}
+          .concern-grid,
+          .desk,
+          .method-grid {
+            grid-template-columns: 1fr;
+          }
 
-.product-body {
-  min-height: 210px;
-}
+          .desk {
+            padding: 20px;
+          }
 
-@media (max-width: 620px) {
-  .product-card {
-    min-height: 430px;
-  }
+          .editor-grid,
+          .shop-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px;
+          }
 
-  .product-body {
-    min-height: 190px;
-  }
-}
+          .editor-pick {
+            min-height: 164px;
+          }
 
+          .editor-pick img {
+            height: 112px;
+          }
+
+          .product-card {
+            min-height: 420px;
+          }
+
+          .product-image {
+            padding: 14px;
+          }
+
+          .product-image img {
+            width: 78%;
+            height: 78%;
+            max-width: 150px;
+            max-height: 150px;
+          }
+
+          .product-body {
+            padding: 13px;
+          }
+
+          .product-body h3 {
+            font-size: 14px;
+            -webkit-line-clamp: 3;
+          }
+
+          .product-price-row span {
+            font-size: 23px;
+          }
+
+          .method-grid div {
+            border-right: 0;
+            border-bottom: 1px solid #e2d7cd;
+          }
+
+          .method-grid div:last-child {
+            border-bottom: 0;
           }
         }
       `}</style>
 
-      <div className="shop-shell">
+      <div className="home-shell">
         <section className="hero">
           <div>
-            <p className="eyebrow">Mirha & Co. / Beauty Intelligence</p>
+            <p className="eyebrow">Mirha & Co. / Beauty Guidance</p>
             <h1>
-              Beauty
-              <br />
-              <span>without guesswork.</span>
+              Beauty picks for Indian skin, <em>made easier.</em>
             </h1>
+            <p className="hero-copy">
+              Honest skincare, makeup, hair care and wellness finds curated by concern,
+              budget and routine. Start with what your skin needs, then shop with context.
+            </p>
+            <div className="hero-actions">
+              <Link href="/tools/routine" className="primary-btn">
+                Find My Routine <ArrowRight size={14} />
+              </Link>
+              <a href="#shop" className="secondary-btn">
+                Browse Picks
+              </a>
+            </div>
           </div>
 
-          <div>
-            <p className="hero-copy">
-              Search products, build routines, and shop curated picks with ingredient context for Indian skin, Indian budgets, and Indian weather.
-            </p>
+          <div className="hero-panel">
+            <div className="hero-image" />
+            <div className="hero-panel-body">
+              <h2>Start with your skin.</h2>
+              <p>
+                Choose your concern, build a simple AM/PM routine, then see products with
+                a clear reason instead of a noisy product wall.
+              </p>
+            </div>
             <div className="trust-row">
-              <span>Curated</span>
-              <span>Ingredient-led</span>
+              <span>India focused</span>
+              <span>Budget aware</span>
               <span>Affiliate disclosed</span>
             </div>
           </div>
         </section>
 
-        <section className="start-hub">
-          <div className="start-head">
-            <div>
-              <p className="eyebrow">Start here</p>
-              <h2>
-                Find what works.
-                <br />
-                <span>Skip what doesn&apos;t.</span>
-              </h2>
-              <p>
-                Start with your concern, then let Mirha point you to the right routine, guide, or product.
-              </p>
-
-              <div className="action-row">
-                <Link href="/search" className="primary-link">
-                  Open Mirha Search <ArrowRight size={14} />
-                </Link>
-                <Link href="/tools/routine" className="secondary-link">
-                  Build Routine
-                </Link>
-                <Link href="/blog" className="secondary-link">
-                  Read Guides
-                </Link>
-              </div>
-            </div>
-          </div>
-
-          <div className="shop-search">
-            <Search size={16} color="#555" />
-            <input
-              value={query}
-              onChange={(event) => setQuery(event.target.value)}
-              placeholder="Quick shop search - sunscreen, niacinamide, moisturiser..."
-            />
-            {query ? <button onClick={() => setQuery("")}>x</button> : null}
-          </div>
-        </section>
-
-        <section>
+        <section className="section">
           <div className="section-head">
-            <h2>Editor&apos;s Picks</h2>
-            <span>Products worth starting with</span>
+            <div>
+              <p className="eyebrow">Concern Finder</p>
+              <h2>What are you solving first?</h2>
+            </div>
+            <p>Tap a concern to filter the shop below. Keep it simple.</p>
           </div>
 
-          <div className="picks-grid">
-            {editorPicks.map((product) => (
-              <PickTile key={product.id} product={product} />
+          <div className="concern-grid">
+            {CONCERNS.map((concern, index) => (
+              <button
+                key={concern.id}
+                className={`concern-card ${activeConcern === concern.id ? "active" : ""}`}
+                onClick={() => setActiveConcern(activeConcern === concern.id ? null : concern.id)}
+              >
+                <small>{String(index + 1).padStart(2, "0")}</small>
+                <h3>{concern.label}</h3>
+                <p>{concern.text}</p>
+              </button>
             ))}
           </div>
         </section>
 
-        <section className="filters-wrap" id="products">
-          <p className="filter-label">Shop by category</p>
-          <div className="filter-row">
-            {CATEGORIES.map((category) => {
-              const active = activeCategory === category;
+        <section className="section">
+          <div className="desk">
+            <div>
+              <p className="eyebrow">Mirha Skin Desk</p>
+              <h2>Do not browse randomly.</h2>
+              <p>
+                Use the routine finder for a full AM/PM structure, search when you know
+                the concern, or read a guide when you want the why behind the pick.
+              </p>
+            </div>
+            <div className="desk-actions">
+              <Link href="/tools/routine">
+                <span>
+                  <small>01 / Routine</small>
+                  <b>Build your 4-step routine</b>
+                </span>
+                <ArrowRight size={15} />
+              </Link>
+              <Link href="/search">
+                <span>
+                  <small>02 / Search</small>
+                  <b>Search by concern or ingredient</b>
+                </span>
+                <ArrowRight size={15} />
+              </Link>
+              <Link href="/blog">
+                <span>
+                  <small>03 / Learn</small>
+                  <b>Read beauty guides</b>
+                </span>
+                <ArrowRight size={15} />
+              </Link>
+            </div>
+          </div>
+        </section>
 
-              return (
+        <section className="section">
+          <div className="section-head">
+            <div>
+              <p className="eyebrow">Editor&apos;s Picks</p>
+              <h2>Products worth starting with.</h2>
+            </div>
+            <span>Only a few upfront. The rest sits below.</span>
+          </div>
+
+          <div className="editor-grid">
+            {editorPicks.map((product) => (
+              <EditorPick key={product.id} product={product} />
+            ))}
+          </div>
+        </section>
+
+        <section className="section" id="shop">
+          <div className="section-head">
+            <div>
+              <p className="eyebrow">Beauty Shop</p>
+              <h2>
+                {activeCategory === "All" ? "Curated picks" : activeCategory}
+                {activeConcern ? ` / ${CONCERNS.find((c) => c.id === activeConcern)?.label}` : ""}
+              </h2>
+            </div>
+            <span>{filtered.length} item{filtered.length === 1 ? "" : "s"}</span>
+          </div>
+
+          <div className="filters">
+            <div className="search-box">
+              <Search size={16} color="#9a8f86" />
+              <input
+                value={query}
+                onChange={(event) => setQuery(event.target.value)}
+                placeholder="Search sunscreen, niacinamide, dry skin, kajal..."
+              />
+              {query ? <button onClick={() => setQuery("")}>x</button> : null}
+            </div>
+
+            <div className="filter-row">
+              {CATEGORIES.map((category) => (
                 <button
                   key={category}
-                  className={active ? "active" : ""}
+                  className={activeCategory === category ? "active" : ""}
                   onClick={() => setActiveCategory(category)}
                 >
                   {category}
                 </button>
-              );
-            })}
-          </div>
-
-          <p className="filter-label">Shop by concern</p>
-          <div className="filter-row">
-            {CONCERNS.map((concern) => {
-              const active = selectedConcern === concern;
-
-              return (
+              ))}
+              {(activeConcern || query || activeCategory !== "All") ? (
                 <button
-                  key={concern}
-                  className={active ? "active" : ""}
-                  onClick={() => setSelectedConcern(active ? null : concern)}
+                  onClick={() => {
+                    setActiveCategory("All");
+                    setActiveConcern(null);
+                    setQuery("");
+                  }}
                 >
-                  {concern}
+                  Clear all
                 </button>
-              );
-            })}
-
-            {selectedConcern ? (
-              <button onClick={() => setSelectedConcern(null)}>clear</button>
-            ) : null}
-          </div>
-        </section>
-
-        <section>
-          <div className="section-head">
-            <h2>
-              {activeCategory === "All" ? "All Products" : activeCategory}
-              {selectedConcern ? <span style={{ color: "#E05C3A" }}> / {selectedConcern}</span> : null}
-            </h2>
-            <span>{filtered.length} item{filtered.length === 1 ? "" : "s"}</span>
+              ) : null}
+            </div>
           </div>
 
           {filtered.length ? (
@@ -777,12 +1135,12 @@ export default function BeautyShopPage() {
           ) : (
             <div className="empty-state">
               <h3>No products found</h3>
-              <p>Try a broader keyword or clear your filters.</p>
+              <p>Try a broader keyword, or clear filters and start again.</p>
               <button
                 onClick={() => {
-                  setQuery("");
                   setActiveCategory("All");
-                  setSelectedConcern(null);
+                  setActiveConcern(null);
+                  setQuery("");
                 }}
               >
                 Clear filters
@@ -791,9 +1149,32 @@ export default function BeautyShopPage() {
           )}
         </section>
 
-        <p className="footer-note">
-          Affiliate links disclosed. Prices may change on Amazon. Mirha & Co. curates products using ingredient context, suitability, and real-world usefulness.
-        </p>
+        <section className="section">
+          <div className="section-head">
+            <div>
+              <p className="eyebrow">Mirha Method</p>
+              <h2>Why a product gets picked.</h2>
+            </div>
+          </div>
+          <div className="method-grid">
+            <div>
+              <small>Ingredient context</small>
+              <p>We look at actives, texture and routine fit before the label hype.</p>
+            </div>
+            <div>
+              <small>Indian reality</small>
+              <p>Humidity, sun, hard water, budget and availability matter here.</p>
+            </div>
+            <div>
+              <small>Avoid-if notes</small>
+              <p>Good picks still have limits. Product detail pages say who should skip.</p>
+            </div>
+            <div>
+              <small>Clear disclosure</small>
+              <p>Amazon links may earn commission at no extra cost. The pick still has to make sense.</p>
+            </div>
+          </div>
+        </section>
       </div>
     </main>
   );

@@ -233,4 +233,5 @@ export const POSTS: Post[] = [
     thumbnail: "RS",
     tags: ["routine", "oily skin", "dry skin", "combination skin", "sensitive skin", "beginner"],
   },
+  
 ];
