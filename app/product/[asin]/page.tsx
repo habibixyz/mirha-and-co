@@ -29,7 +29,7 @@ type Product = {
   link?: string;
 };
 
-const PRODUCT_LIST = PRODUCTS as Product[];
+const PRODUCT_LIST = PRODUCTS as unknown as Product[];
 const AFFILIATE_TAG = "skinwithtanvi-21";
 
 function fmtINR(value: number) {
