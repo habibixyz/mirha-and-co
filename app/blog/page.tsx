@@ -31,6 +31,36 @@ const posts = [
   { category: "BEAUTY" as const, title: "Why SPF 50 Is Non-Negotiable in India", excerpt: "Why Indian skin needs SPF 50+ and how sunscreen protects every active in your routine.", slug: "best-sunscreen-india-spf50", readTime: "11 min", date: "April 2026", productCount: 5, initials: "50" },
   { category: "BEAUTY" as const, title: "Serums vs Essences vs Moisturisers", excerpt: "The honest breakdown of what each product does and what your skin actually needs.", slug: "serums-essences-moisturizers-guide", readTime: "10 min", date: "April 2026", productCount: 6, initials: "SE" },
   { category: "SKINCARE" as const, title: "Complete Skincare Routine for Every Skin Type", excerpt: "A 4-step routine map for oily, dry, combination, and sensitive skin.", slug: "skincare-routine-every-skin-type", readTime: "14 min", date: "April 2026", productCount: 12, initials: "RS" },
+  {
+  category: "BEAUTY" as const,
+  title: "Beginner Makeup Kit Under ₹2000",
+  excerpt: "A simple 5-product starter kit for Indian beginners without wasting money.",
+  slug: "beginner-makeup-kit-india-under-2000",
+  readTime: "7 min",
+  date: "April 2026",
+  productCount: 4,
+  initials: "MK",
+},
+{
+  category: "BEAUTY" as const,
+  title: "Best Concealers for Indian Skin",
+  excerpt: "Top concealers for dark circles, acne marks, and uneven tone in Indian skin.",
+  slug: "best-concealers-indian-skin-dark-circles-acne-marks",
+  readTime: "8 min",
+  date: "April 2026",
+  productCount: 5,
+  initials: "CC",
+},
+{
+  category: "BEAUTY" as const,
+  title: "Oily Skin Makeup Routine (India)",
+  excerpt: "A sweat-friendly everyday routine for oily skin in Indian humidity.",
+  slug: "oily-skin-makeup-routine-india",
+  readTime: "8 min",
+  date: "April 2026",
+  productCount: 4,
+  initials: "OS",
+}
 ];
 
 const catColors: Record<string, string> = {
@@ -46,7 +76,7 @@ const paths = [
   { label: "Routine", title: "Build your 4-step routine", text: "Get cleanser, treatment, moisturiser, and sunscreen for your skin profile.", href: "/tools/routine" },
   { label: "Shop", title: "Browse curated picks", text: "See products with price, use case, ingredients, and honest context.", href: "/" },
 ];
-
+import BlogGrid from "@/components/BlogGrid";
 export default function BlogIndex() {
   return (
     <main>

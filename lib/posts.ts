@@ -13,6 +13,7 @@ export type Post = {
 };
 
 export const POSTS: Post[] = [
+  
   {
     category: "SKINCARE",
     title: "The Indian Pigmentation Playbook (Dermat-Backed Guide)",
@@ -23,6 +24,57 @@ export const POSTS: Post[] = [
     productCount: 8,
     thumbnail: "PI",
     tags: ["pigmentation", "dark spots", "melasma", "vitamin c", "sunscreen", "indian skin"],
+  },
+   {
+    title: "Best Concealers for Indian Skin: Dark Circles, Acne Marks and Pigmentation",
+    excerpt:
+      "How to choose concealer for Indian undertones, humid weather, dark circles and acne marks without going grey.",
+    slug: "best-concealers-indian-skin-dark-circles-acne-marks",
+    category: "Makeup",
+    readTime: "8 min",
+    date: "April 2026",
+  },
+  {
+    title: "Beginner Makeup Kit in India Under Rs 2000",
+    excerpt:
+      "A simple starter kit for regular users: concealer, compact, kajal, mascara and lipstick without overbuying.",
+    slug: "beginner-makeup-kit-india-under-2000",
+    category: "Makeup",
+    readTime: "7 min",
+    date: "April 2026",
+  },
+  {
+    title: "Oily Skin Makeup Routine in India",
+    excerpt:
+      "A sweat-friendly everyday base routine for oily skin, sunscreen, concealer, compact and touch-ups.",
+    slug: "oily-skin-makeup-routine-india",
+    category: "Makeup",
+    readTime: "8 min",
+    date: "April 2026",
+  },
+  {
+    title: "Best Sunscreens in India (2026) That Actually Work",
+    excerpt: "No white cast. No greasy finish. Just sunscreens people can use daily.",
+    slug: "best-sunscreens-india-2026",
+    category: "Beauty",
+    readTime: "5 min",
+    date: "March 2026",
+  },
+  {
+    title: "The Indian Pigmentation Playbook",
+    excerpt: "How to think about pigmentation, SPF, actives and consistency.",
+    slug: "pigmentation-guide",
+    category: "Skincare",
+    readTime: "12 min",
+    date: "April 2026",
+  },
+  {
+    title: "Complete Skincare Routine for Every Skin Type",
+    excerpt: "A clear 4-step routine for oily, dry, combination and sensitive skin.",
+    slug: "skincare-routine-every-skin-type",
+    category: "Skincare",
+    readTime: "14 min",
+    date: "April 2026",
   },
   {
     category: "BEAUTY",

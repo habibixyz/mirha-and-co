@@ -29,7 +29,7 @@ const productItems: SearchItem[] = (PRODUCTS as any[]).map((product) => ({
     ...(product.skinTypes || []),
     ...(product.ingredients || []),
     ...Object.values(product.specs || {}),
-  ].filter(Boolean),
+  ].filter(Boolean) as string[],
 }));
 
 const guideItems: SearchItem[] = POSTS.map((post) => ({
@@ -41,47 +41,23 @@ const guideItems: SearchItem[] = POSTS.map((post) => ({
   tags: [post.category, post.readTime, post.title],
 }));
 
-const routineItems: SearchItem[] = [
+export const SEARCH_INDEX: SearchItem[] = [
   {
     id: "routine-builder",
     type: "routine",
     title: "Build your 4-step routine",
-    description: "Answer skin type, concern and budget to get cleanser, treatment, moisturiser and sunscreen.",
+    description: "Answer skin type, concern and budget to get a simple routine.",
     url: "/tools/routine",
-    tags: ["routine", "oily skin", "dry skin", "acne", "pigmentation", "sunscreen", "beginner"],
+    tags: ["routine", "skincare", "oily skin", "dry skin", "acne", "pigmentation"],
   },
-];
-
-const ingredientItems: SearchItem[] = [
   {
     id: "ingredient-niacinamide",
     type: "ingredient",
     title: "Niacinamide",
-    description: "Good for oil control, pores, barrier support and post-acne marks.",
+    description: "Useful for oil control, pores, barrier support and acne marks.",
     url: "/search?q=niacinamide",
     tags: ["niacinamide", "oily skin", "pores", "acne marks"],
   },
-  {
-    id: "ingredient-vitamin-c",
-    type: "ingredient",
-    title: "Vitamin C",
-    description: "Useful for dullness, glow and uneven tone when paired with daily SPF.",
-    url: "/search?q=vitamin%20c",
-    tags: ["vitamin c", "glow", "dullness", "pigmentation"],
-  },
-  {
-    id: "ingredient-salicylic",
-    type: "ingredient",
-    title: "Salicylic Acid",
-    description: "A pore-focused exfoliant often used for oily, acne-prone skin.",
-    url: "/search?q=salicylic%20acid",
-    tags: ["salicylic acid", "acne", "pores", "oily skin"],
-  },
-];
-
-export const SEARCH_INDEX: SearchItem[] = [
-  ...routineItems,
-  ...ingredientItems,
   ...guideItems,
   ...productItems,
 ];

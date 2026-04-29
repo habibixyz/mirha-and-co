@@ -4,6 +4,8 @@ import { useMemo, useState } from "react";
 import Link from "next/link";
 import { ArrowRight, Search } from "lucide-react";
 import { PRODUCTS } from "@/lib/products";
+import { formatPrice } from "@/lib/price";
+
 
 type Product = {
   id: number;
@@ -84,10 +86,6 @@ const EDITOR_PICK_ASINS = [
   "B00BQFTQW6",
 ];
 
-function fmtINR(value: number) {
-  return "Rs " + Math.round(value).toLocaleString("en-IN");
-}
-
 function discount(mrp: number, price: number) {
   return mrp > price ? Math.round(((mrp - price) / mrp) * 100) : 0;
 }
@@ -154,7 +152,7 @@ function ProductCard({ product }: { product: Product }) {
         <p className="product-brand">{product.brand}</p>
         <p className="product-use">Best for: {productReason(product)}</p>
         <div className="product-price-row">
-          <span>{fmtINR(product.price)}</span>
+          <span>{formatPrice(product.price)}</span>
           {save > 0 ? <em>{save}% off</em> : null}
         </div>
       </div>
@@ -675,6 +673,7 @@ export default function BeautyShopPage() {
           font-family: 'Bebas Neue', sans-serif;
           font-size: 28px;
           letter-spacing: 0.02em;
+          text-transform: none;
         }
 
         .product-price-row em {

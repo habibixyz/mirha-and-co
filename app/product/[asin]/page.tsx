@@ -33,7 +33,7 @@ const PRODUCT_LIST = PRODUCTS as unknown as Product[];
 const AFFILIATE_TAG = "skinwithtanvi-21";
 
 function fmtINR(value: number) {
-  return "Rs " + Math.round(value).toLocaleString("en-IN");
+  return "₹" + Math.round(value).toLocaleString("en-IN");
 }
 
 function discount(mrp: number, price: number) {
