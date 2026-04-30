@@ -64,11 +64,15 @@ export const POSTS: Post[] = [
   },
   {
     title: "Best Sunscreens in India (2026) That Actually Work",
-    excerpt: "No white cast. No greasy finish. Just sunscreens people can use daily.",
+    excerpt:
+      "No white cast. No greasy finish. Just sunscreens people can use daily.",
     slug: "best-sunscreens-india-2026",
-    category: "Beauty",
+    category: "BEAUTY",
     readTime: "5 min",
     date: "March 2026",
+    productCount: 6,
+    thumbnail: "SP",
+    tags: ["sunscreen"],
   },
   {
     title: "The Indian Pigmentation Playbook",
