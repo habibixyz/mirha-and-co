@@ -1,4 +1,4 @@
-export type PostCategory = "BEAUTY" | "SKINCARE" | "HAIR" | "WELLNESS" | "LIFESTYLE";
+export type PostCategory = "BEAUTY" | "SKINCARE" | "HAIR" | "WELLNESS" | "LIFESTYLE" | "MAKEUP";
 
 export type Post = {
   category: PostCategory;
@@ -25,32 +25,42 @@ export const POSTS: Post[] = [
     thumbnail: "PI",
     tags: ["pigmentation", "dark spots", "melasma", "vitamin c", "sunscreen", "indian skin"],
   },
-   {
-    title: "Best Concealers for Indian Skin: Dark Circles, Acne Marks and Pigmentation",
+    {
+    title:
+      "Best Concealers for Indian Skin: Dark Circles, Acne Marks and Pigmentation",
     excerpt:
       "How to choose concealer for Indian undertones, humid weather, dark circles and acne marks without going grey.",
     slug: "best-concealers-indian-skin-dark-circles-acne-marks",
-    category: "Makeup",
+    category: "MAKEUP",
     readTime: "8 min",
     date: "April 2026",
+    productCount: 5,
+    thumbnail: "CC",
+    tags: ["concealer", "dark circles", "acne marks"],
   },
   {
     title: "Beginner Makeup Kit in India Under Rs 2000",
     excerpt:
-      "A simple starter kit for regular users: concealer, compact, kajal, mascara and lipstick without overbuying.",
+      "A simple starter kit for regular users: concealer, compact, kajal, mascara and lipstick.",
     slug: "beginner-makeup-kit-india-under-2000",
-    category: "Makeup",
+    category: "MAKEUP",
     readTime: "7 min",
     date: "April 2026",
+    productCount: 4,
+    thumbnail: "MK",
+    tags: ["beginner", "makeup kit", "budget"],
   },
   {
     title: "Oily Skin Makeup Routine in India",
     excerpt:
-      "A sweat-friendly everyday base routine for oily skin, sunscreen, concealer, compact and touch-ups.",
+      "A sweat-friendly everyday base routine for oily skin with minimal layers.",
     slug: "oily-skin-makeup-routine-india",
-    category: "Makeup",
+    category: "MAKEUP",
     readTime: "8 min",
     date: "April 2026",
+    productCount: 4,
+    thumbnail: "OS",
+    tags: ["oily skin", "routine", "makeup"],
   },
   {
     title: "Best Sunscreens in India (2026) That Actually Work",
@@ -62,19 +72,27 @@ export const POSTS: Post[] = [
   },
   {
     title: "The Indian Pigmentation Playbook",
-    excerpt: "How to think about pigmentation, SPF, actives and consistency.",
+    excerpt:
+      "How to think about pigmentation, SPF, actives and consistency.",
     slug: "pigmentation-guide",
-    category: "Skincare",
+    category: "SKINCARE",
     readTime: "12 min",
     date: "April 2026",
+    productCount: 8,
+    thumbnail: "PI",
+    tags: ["pigmentation"],
   },
   {
     title: "Complete Skincare Routine for Every Skin Type",
-    excerpt: "A clear 4-step routine for oily, dry, combination and sensitive skin.",
+    excerpt:
+      "A clear 4-step routine for oily, dry, combination and sensitive skin.",
     slug: "skincare-routine-every-skin-type",
-    category: "Skincare",
+    category: "SKINCARE",
     readTime: "14 min",
     date: "April 2026",
+    productCount: 12,
+    thumbnail: "RS",
+    tags: ["routine"],
   },
   {
     category: "BEAUTY",
