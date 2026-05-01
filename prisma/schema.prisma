@@ -1,0 +1,114 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  name          String
+  passwordHash  String
+
+  // SQLite doesn't support Json → use String
+  skinProfile   String?
+  avatar        String?
+
+  routines      Routine[]
+  journal       SkinJournal[]
+  subscription  Subscription?
+
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model Routine {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  name      String   @default("My Routine")
+
+  // Json → String
+  routine   String
+  metadata  String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+}
+
+model SkinJournal {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  date      DateTime @default(now())
+  entry     String
+
+  // Arrays → String (store as comma-separated or JSON string)
+  photos    String
+  concerns  String
+
+  rating    Int?
+
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+}
+
+model Subscription {
+  id                     String   @id @default(cuid())
+  userId                 String   @unique
+  user                   User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  tier                   String   @default("free")
+  stripePriceId          String?
+  stripeSubscriptionId   String?
+  status                 String   @default("active")
+
+  trialEndsAt            DateTime?
+  endsAt                 DateTime?
+
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime @updatedAt
+}
+
+model Product {
+  id          String   @id @default(cuid())
+  asin        String   @unique
+  name        String
+  brand       String
+  price       Float
+  discount    Float?
+
+  category    String
+
+  // Arrays → String
+  ingredients String
+  concerns    String
+  skinTypes   String
+
+  reviewUrl   String?
+  imageUrl    String?
+  rating      Float?
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([brand])
+  @@index([category])
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  userId    String
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+}

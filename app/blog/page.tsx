@@ -12,6 +12,26 @@ const featured = {
 
 const posts = [
   { category: "SKINCARE" as const, title: "The Indian Pigmentation Playbook", excerpt: "A complete guide to treating pigmentation in Indian skin using the right actives and routines.", slug: "pigmentation-guide", readTime: "12 min", date: "April 2026", productCount: 8, initials: "PI" },
+  {
+  category: "SKINCARE" as const,
+  title: "Salicylic Acid for Indian Skin",
+  excerpt: "The complete guide to treating acne, blackheads, and oily skin with salicylic acid.",
+  slug: "salicylic-acid-guide-india",
+  readTime: "12 min",
+  date: "April 2026",
+  productCount: 6,
+  initials: "SA",
+},
+{
+  category: "SKINCARE" as const,
+  title: "Best Moisturisers for Oily vs Dry Skin in India",
+  excerpt: "Gel vs cream vs lotion explained with the best picks for Indian climate.",
+  slug: "best-moisturisers-india-2026",
+  readTime: "11 min",
+  date: "April 2026",
+  productCount: 4,
+  initials: "MO",
+},
   { category: "BEAUTY" as const, title: "Why Your Skin Looks Dull Even After Skincare", excerpt: "Hard water, wrong layering, and skipping SPF: the real reasons skin stops glowing.", slug: "why-skin-looks-dull", readTime: "10 min", date: "April 2026", productCount: 6, initials: "GL" },
   { category: "BEAUTY" as const, title: "The Skincare Mistakes Costing You More Than Products", excerpt: "The habits that silently ruin your skincare results, and how to fix them.", slug: "skincare-mistakes", readTime: "9 min", date: "April 2026", productCount: 5, initials: "MI" },
   { category: "BEAUTY" as const, title: "Minimalist vs The Ordinary vs Dot & Key", excerpt: "A real comparison of India's most popular skincare brands, based on use case, not hype.", slug: "brand-comparison-india", readTime: "11 min", date: "April 2026", productCount: 7, initials: "VS" },
