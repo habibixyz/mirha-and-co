@@ -7,14 +7,7 @@ import { useActionState } from "react";
 
 export default function RegisterPage() {
 
-  const [error, action, isPending] = useActionState(async (state: any, formData: FormData) => {
-    try {
-      await registerAction(formData);
-      return null;
-    } catch (e: any) {
-      return e.message;
-    }
-  }, null);
+  const [state, action, isPending] = useActionState(registerAction, {});
 
   return (
     <div style={{
@@ -47,10 +40,10 @@ export default function RegisterPage() {
         </p>
 
         <form action={action} style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-          <input 
-            type="text" 
+          <input
+            type="text"
             name="name"
-            placeholder="Full Name" 
+            placeholder="Full Name"
             required
             style={{
               padding: "0.8rem 1rem",
@@ -61,10 +54,10 @@ export default function RegisterPage() {
               fontSize: "0.9rem"
             }}
           />
-          <input 
-            type="email" 
+          <input
+            type="email"
             name="email"
-            placeholder="Email Address" 
+            placeholder="Email Address"
             required
             style={{
               padding: "0.8rem 1rem",
@@ -75,10 +68,10 @@ export default function RegisterPage() {
               fontSize: "0.9rem"
             }}
           />
-          <input 
-            type="password" 
+          <input
+            type="password"
             name="password"
-            placeholder="Password" 
+            placeholder="Password"
             required
             style={{
               padding: "0.8rem 1rem",
@@ -89,8 +82,8 @@ export default function RegisterPage() {
               fontSize: "0.9rem"
             }}
           />
-          
-          {error && <p style={{ color: "var(--rose)", fontSize: "0.85rem", margin: 0 }}>{error}</p>}
+
+          {state?.error && <p style={{ color: "var(--rose)", fontSize: "0.85rem", margin: 0 }}>{state.error}</p>}
 
           <button type="submit" disabled={isPending} style={{
             background: "var(--ink)",

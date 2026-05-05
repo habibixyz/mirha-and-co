@@ -74,6 +74,7 @@ export function SubscriptionClient({ isPro }: { isPro: boolean }) {
 
   return (
     <>
+
       <Script src="https://checkout.razorpay.com/v1/checkout.js" strategy="lazyOnload" />
       <motion.div initial="hidden" animate="show" variants={containerVariants}>
         <motion.header variants={itemVariants} style={{ marginBottom: "3rem", maxWidth: "600px" }}>

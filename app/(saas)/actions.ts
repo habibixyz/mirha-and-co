@@ -165,40 +165,178 @@ export async function analyzeSkinPhoto(photoBase64: string) {
 
 import { hashPassword, createSession } from "@/lib/auth";
 import { redirect } from "next/navigation";
+import crypto from "crypto";
+import { headers } from "next/headers";
+import { Resend } from "resend";
 
-export async function loginAction(formData: FormData) {
-  const email = formData.get("email") as string;
-  const password = formData.get("password") as string;
+type AuthState = {
+  error?: string;
+  success?: string;
+};
 
-  if (!email || !password) throw new Error("Missing fields");
+function normalizeEmail(email: FormDataEntryValue | null) {
+  return String(email || "").trim().toLowerCase();
+}
+
+function hashResetToken(token: string) {
+  return crypto.createHash("sha256").update(token).digest("hex");
+}
+
+async function getBaseUrl() {
+  if (process.env.NEXT_PUBLIC_SITE_URL) {
+    return process.env.NEXT_PUBLIC_SITE_URL.replace(/\/$/, "");
+  }
+
+  if (process.env.VERCEL_URL) {
+    return `https://${process.env.VERCEL_URL}`;
+  }
+
+  const headerStore = await headers();
+  const host = headerStore.get("host") || "localhost:3000";
+  const protocol = host.includes("localhost") ? "http" : "https";
+  return `${protocol}://${host}`;
+}
+
+export async function loginAction(_state: AuthState, formData: FormData): Promise<AuthState> {
+  const email = normalizeEmail(formData.get("email"));
+  const password = String(formData.get("password") || "");
+
+  if (!email || !password) return { error: "Please enter your email and password." };
 
   const user = await prisma.user.findUnique({ where: { email } });
   if (!user || user.passwordHash !== hashPassword(password)) {
-    throw new Error("Invalid credentials");
+    return { error: "Invalid email or password." };
   }
 
-  await createSession(user.id);
+  try {
+    await createSession(user.id);
+  } catch (error) {
+    console.error("Login session error:", error);
+    return { error: "Unable to sign in right now. Please try again." };
+  }
+
   redirect("/dashboard");
 }
 
-export async function registerAction(formData: FormData) {
-  const email = formData.get("email") as string;
-  const password = formData.get("password") as string;
-  const name = formData.get("name") as string;
+export async function registerAction(_state: AuthState, formData: FormData): Promise<AuthState> {
+  const email = normalizeEmail(formData.get("email"));
+  const password = String(formData.get("password") || "");
+  const name = String(formData.get("name") || "").trim();
 
-  if (!email || !password || !name) throw new Error("Missing fields");
+  if (!email || !password || !name) {
+    return { error: "Please fill in all fields." };
+  }
+
+  if (password.length < 8) {
+    return { error: "Password must be at least 8 characters." };
+  }
 
   const existing = await prisma.user.findUnique({ where: { email } });
-  if (existing) throw new Error("Email already in use");
+  if (existing) return { error: "Email already in use. Please sign in instead." };
 
-  const user = await prisma.user.create({
-    data: {
-      email,
-      name,
-      passwordHash: hashPassword(password),
+  let user;
+  try {
+    user = await prisma.user.create({
+      data: {
+        email,
+        name,
+        passwordHash: hashPassword(password),
+      }
+    });
+
+    await createSession(user.id);
+  } catch (error) {
+    console.error("Register error:", error);
+    return { error: "Unable to create your account right now. Please try again." };
+  }
+
+  redirect("/dashboard");
+}
+
+export async function forgotPasswordAction(_state: AuthState, formData: FormData): Promise<AuthState> {
+  const email = normalizeEmail(formData.get("email"));
+
+  if (!email) {
+    return { error: "Please enter your email address." };
+  }
+
+  const success = "If an account exists for this email, a reset link has been sent.";
+
+  try {
+    const user = await prisma.user.findUnique({ where: { email } });
+    if (!user) return { success };
+
+    const token = crypto.randomBytes(32).toString("hex");
+    const tokenHash = hashResetToken(token);
+    const expiresAt = new Date(Date.now() + 60 * 60 * 1000);
+
+    await prisma.passwordResetToken.create({
+      data: {
+        tokenHash,
+        userId: user.id,
+        expiresAt,
+      }
+    });
+
+    const resetUrl = `${await getBaseUrl()}/reset-password?token=${token}`;
+
+    if (process.env.RESEND_API_KEY && process.env.PASSWORD_RESET_FROM) {
+      const resend = new Resend(process.env.RESEND_API_KEY);
+      await resend.emails.send({
+        from: process.env.PASSWORD_RESET_FROM,
+        to: email,
+        subject: "Reset your Mirha & Co. password",
+        html: `<p>Use this link to reset your password. It expires in 1 hour.</p><p><a href="${resetUrl}">Reset password</a></p>`,
+      });
+    } else {
+      console.log("Password reset link:", resetUrl);
     }
+  } catch (error) {
+    console.error("Forgot password error:", error);
+  }
+
+  return { success };
+}
+
+export async function resetPasswordAction(_state: AuthState, formData: FormData): Promise<AuthState> {
+  const token = String(formData.get("token") || "");
+  const password = String(formData.get("password") || "");
+
+  if (!token || !password) {
+    return { error: "Please enter a new password." };
+  }
+
+  if (password.length < 8) {
+    return { error: "Password must be at least 8 characters." };
+  }
+
+  const tokenHash = hashResetToken(token);
+  const resetToken = await prisma.passwordResetToken.findUnique({
+    where: { tokenHash },
   });
 
-  await createSession(user.id);
-  redirect("/dashboard");
+  if (!resetToken || resetToken.usedAt || resetToken.expiresAt < new Date()) {
+    return { error: "This reset link is invalid or expired." };
+  }
+
+  try {
+    await prisma.$transaction([
+      prisma.user.update({
+        where: { id: resetToken.userId },
+        data: { passwordHash: hashPassword(password) },
+      }),
+      prisma.passwordResetToken.update({
+        where: { id: resetToken.id },
+        data: { usedAt: new Date() },
+      }),
+      prisma.session.deleteMany({
+        where: { userId: resetToken.userId },
+      }),
+    ]);
+  } catch (error) {
+    console.error("Reset password error:", error);
+    return { error: "Unable to reset your password right now. Please try again." };
+  }
+
+  return { success: "Password reset. You can now sign in." };
 }

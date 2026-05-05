@@ -7,14 +7,7 @@ import { useActionState } from "react";
 
 export default function LoginPage() {
 
-  const [error, action, isPending] = useActionState(async (state: any, formData: FormData) => {
-    try {
-      await loginAction(formData);
-      return null;
-    } catch (e: any) {
-      return e.message;
-    }
-  }, null);
+  const [state, action, isPending] = useActionState(loginAction, {});
 
   return (
     <div style={{
@@ -47,10 +40,10 @@ export default function LoginPage() {
         </p>
 
         <form action={action} style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-          <input 
-            type="email" 
+          <input
+            type="email"
             name="email"
-            placeholder="Email Address" 
+            placeholder="Email Address"
             required
             style={{
               padding: "0.8rem 1rem",
@@ -61,10 +54,10 @@ export default function LoginPage() {
               fontSize: "0.9rem"
             }}
           />
-          <input 
-            type="password" 
+          <input
+            type="password"
             name="password"
-            placeholder="Password" 
+            placeholder="Password"
             required
             style={{
               padding: "0.8rem 1rem",
@@ -75,8 +68,8 @@ export default function LoginPage() {
               fontSize: "0.9rem"
             }}
           />
-          
-          {error && <p style={{ color: "var(--rose)", fontSize: "0.85rem", margin: 0 }}>{error}</p>}
+
+          {state?.error && <p style={{ color: "var(--rose)", fontSize: "0.85rem", margin: 0 }}>{state.error}</p>}
 
           <button type="submit" disabled={isPending} style={{
             background: "var(--ink)",
@@ -95,6 +88,10 @@ export default function LoginPage() {
         </form>
 
         <p style={{ margin: "1.5rem 0 0", fontSize: "0.85rem", color: "var(--muted)" }}>
+          <Link href="/forgot-password" style={{ color: "var(--rose)", textDecoration: "none", fontWeight: 600 }}>Forgot password?</Link>
+        </p>
+
+        <p style={{ margin: "0.8rem 0 0", fontSize: "0.85rem", color: "var(--muted)" }}>
           Don't have an account? <Link href="/register" style={{ color: "var(--rose)", textDecoration: "none", fontWeight: 600 }}>Sign up</Link>
         </p>
       </div>
