@@ -8,8 +8,6 @@ export default function AboutPage() {
   return (
     <main>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap');
-
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
         .about-page {
@@ -22,7 +20,7 @@ export default function AboutPage() {
           --rule: #ded7cf;
           background: var(--paper);
           color: var(--ink);
-          font-family: 'DM Sans', sans-serif;
+          font-family: var(--font-dm-sans), sans-serif;
         }
 
         .hero {
@@ -50,7 +48,7 @@ export default function AboutPage() {
         }
 
         .hero h1 {
-          font-family: 'Bebas Neue', sans-serif;
+          font-family: var(--font-bebas), sans-serif;
           font-size: clamp(4rem, 9vw, 9rem);
           line-height: 0.9;
           letter-spacing: 0.03em;
@@ -63,7 +61,7 @@ export default function AboutPage() {
         }
 
         .hero-copy {
-          font-family: 'DM Serif Display', serif;
+          font-family: var(--font-dm-serif), serif;
           font-style: italic;
           font-size: 1.25rem;
           line-height: 1.75;
@@ -85,7 +83,7 @@ export default function AboutPage() {
         .truth-item:last-child { border-right: none; }
 
         .truth-value {
-          font-family: 'Bebas Neue', sans-serif;
+          font-family: var(--font-bebas), sans-serif;
           font-size: 2.6rem;
           color: var(--rose);
           line-height: 1;
@@ -132,7 +130,7 @@ export default function AboutPage() {
         }
 
         .section-title {
-          font-family: 'Bebas Neue', sans-serif;
+          font-family: var(--font-bebas), sans-serif;
           font-size: clamp(3rem, 6vw, 5.2rem);
           line-height: 0.95;
           letter-spacing: 0.03em;
@@ -191,7 +189,7 @@ export default function AboutPage() {
         .pillar:last-child { border-right: none; }
 
         .num {
-          font-family: 'Bebas Neue', sans-serif;
+          font-family: var(--font-bebas), sans-serif;
           font-size: 4rem;
           color: rgba(255,255,255,0.08);
           line-height: 1;
@@ -199,7 +197,7 @@ export default function AboutPage() {
         }
 
         .pillar h3 {
-          font-family: 'DM Serif Display', serif;
+          font-family: var(--font-dm-serif), serif;
           font-size: 1.35rem;
           font-weight: 400;
           margin-bottom: 1rem;
@@ -228,14 +226,14 @@ export default function AboutPage() {
         .method:nth-child(4) { border-bottom: none; }
 
         .method small {
-          font-family: 'Bebas Neue', sans-serif;
+          font-family: var(--font-bebas), sans-serif;
           font-size: 2.5rem;
           color: var(--rose);
           opacity: 0.55;
         }
 
         .method h3 {
-          font-family: 'DM Serif Display', serif;
+          font-family: var(--font-dm-serif), serif;
           font-size: 1.2rem;
           font-weight: 400;
           margin: 0.6rem 0;
@@ -263,7 +261,7 @@ export default function AboutPage() {
         }
 
         .honesty-row h3 {
-          font-family: 'DM Serif Display', serif;
+          font-family: var(--font-dm-serif), serif;
           font-weight: 400;
           font-size: 1.25rem;
         }
@@ -284,7 +282,7 @@ export default function AboutPage() {
         }
 
         .name-section h2 {
-          font-family: 'Bebas Neue', sans-serif;
+          font-family: var(--font-bebas), sans-serif;
           font-size: clamp(4rem, 11vw, 9rem);
           letter-spacing: 0.05em;
           line-height: 0.9;
@@ -297,7 +295,7 @@ export default function AboutPage() {
           margin: 0 auto;
           color: rgba(255,255,255,0.78);
           line-height: 1.8;
-          font-family: 'DM Serif Display', serif;
+          font-family: var(--font-dm-serif), serif;
           font-style: italic;
           font-size: 1.15rem;
         }
@@ -320,7 +318,7 @@ export default function AboutPage() {
         }
 
         .cta-box h2 {
-          font-family: 'DM Serif Display', serif;
+          font-family: var(--font-dm-serif), serif;
           font-weight: 400;
           font-size: clamp(1.8rem, 4vw, 2.7rem);
           margin-bottom: 0.6rem;
@@ -378,7 +376,7 @@ export default function AboutPage() {
           color: var(--ink);
           text-decoration: none;
           border-bottom: 1px solid var(--rule);
-          font-family: 'DM Serif Display', serif;
+          font-family: var(--font-dm-serif), serif;
           font-size: 1.1rem;
         }
 
@@ -652,7 +650,7 @@ export default function AboutPage() {
             </div>
 
             <div className="btn-row">
-              <a href="/search" className="btn primary">Search Mirha</a>
+              <a href="/dashboard/search" className="btn primary">Search Mirha</a>
               <a href="/tools/routine" className="btn secondary">Build Routine</a>
               <a href="/blog" className="btn secondary">Read Guides</a>
             </div>

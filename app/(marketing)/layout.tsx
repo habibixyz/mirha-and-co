@@ -1,11 +1,26 @@
-import "./globals.css";
+import "../globals.css";
 import Link from "next/link";
 import type { Metadata } from "next";
-import { DM_Sans } from "next/font/google";
+import { DM_Sans, DM_Serif_Display, Bebas_Neue } from "next/font/google";
 
-const bebasNeue = {
+const dmSans = DM_Sans({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-dm-sans",
+});
+
+const dmSerifDisplay = DM_Serif_Display({
+  subsets: ["latin"],
+  weight: ["400"],
+  style: ["normal", "italic"],
+  variable: "--font-dm-serif",
+});
+
+const bebasNeue = Bebas_Neue({
+  subsets: ["latin"],
+  weight: ["400"],
   variable: "--font-bebas",
-};
+});
 
 export const metadata: Metadata = {
   title: "Mirha & Co. — Beauty, Wellness & The Good Life",
@@ -19,7 +34,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${dmSans.variable} ${dmSerifDisplay.variable} ${bebasNeue.variable}`}>
       <body>
 
         {/* Top bar */}
@@ -31,7 +46,7 @@ export default function RootLayout({
           fontSize: "0.7rem",
           letterSpacing: "0.2em",
           textTransform: "uppercase",
-          fontFamily: "'DM Sans', sans-serif",
+          fontFamily: "var(--font-dm-sans), sans-serif",
           fontWeight: 500,
         }}>
           Independent reviews. Honest opinions. Affiliate links disclosed.
@@ -42,13 +57,6 @@ export default function RootLayout({
 
             {/* LEFT */}
             <nav className="nav-left">
-              <Link href="/blog/category/beauty" className="nav-link">Beauty</Link>
-              <Link href="/blog/category/wellness" className="nav-link">Wellness</Link>
-              <Link href="/blog/category/lifestyle" className="nav-link">Lifestyle</Link>
-              <link
-  href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap"
-  rel="stylesheet"
-/>
             </nav>
 
             {/* LOGO */}
@@ -60,6 +68,7 @@ export default function RootLayout({
             <nav className="nav-right">
               <Link href="/blog" className="nav-link">blog</Link>
               <Link href="/about" className="nav-link">About</Link>
+              <Link href="/dashboard" className="nav-link">Dashboard</Link>
             </nav>
 
           </div>

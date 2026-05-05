@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight, Search } from "lucide-react";
 import { PRODUCTS } from "@/lib/products";
 import { formatPrice } from "@/lib/price";
@@ -141,7 +142,7 @@ function ProductCard({ product }: { product: Product }) {
   return (
     <Link href={`/product/${product.asin}`} className="product-card">
       <div className="product-image">
-        <img src={product.image} alt={product.name} />
+        <Image src={product.image} alt={product.name} width={210} height={210} />
       </div>
       <div className="product-body">
         <div className="product-kicker">
@@ -167,7 +168,7 @@ function ProductCard({ product }: { product: Product }) {
 function EditorPick({ product }: { product: Product }) {
   return (
     <Link href={`/product/${product.asin}`} className="editor-pick">
-      <img src={product.image} alt={product.name} />
+      <Image src={product.image} alt={product.name} width={300} height={140} />
       <span>{product.badge || product.subcat}</span>
     </Link>
   );
@@ -293,11 +294,27 @@ export default function BeautyShopPage() {
 
         .hero-image {
           min-height: 280px;
-          background:
-            linear-gradient(180deg, rgba(22,20,18,0.1), rgba(22,20,18,0.38)),
-            url('/images/hero-skincare.jpg');
-          background-size: cover;
-          background-position: center;
+          position: relative;
+          z-index: 0;
+          overflow: hidden;
+        }
+        
+        .hero-image::after {
+          content: "";
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(180deg, rgba(22,20,18,0.1), rgba(22,20,18,0.38));
+          pointer-events: none;
+          z-index: 1;
+        }
+
+        .hero-image img {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          z-index: -1;
         }
 
         .hero-panel-body {
@@ -375,42 +392,50 @@ export default function BeautyShopPage() {
         }
 
         .concern-card {
-          background: #fffaf4;
-          border: 1px solid #e2d7cd;
-          border-radius: 12px;
-          padding: 20px;
-          min-height: 144px;
+          background: #ffffff;
+          border: 1px solid #e8ded4;
+          border-radius: 16px;
+          padding: 28px 24px;
+          min-height: 160px;
+          display: flex;
+          flex-direction: column;
           text-align: left;
           cursor: pointer;
-          transition: transform 0.2s, border-color 0.2s, background 0.2s;
+          transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+          box-shadow: 0 4px 14px rgba(22, 20, 18, 0.03);
         }
 
         .concern-card:hover,
         .concern-card.active {
-          transform: translateY(-2px);
+          transform: translateY(-4px);
           border-color: #c8473a;
-          background: #fff4ec;
+          background: #fffaf4;
+          box-shadow: 0 16px 32px rgba(200, 71, 58, 0.08);
         }
 
         .concern-card small {
           color: #c8473a;
-          font-size: 10px;
-          letter-spacing: 0.18em;
+          font-size: 11px;
+          letter-spacing: 0.2em;
           text-transform: uppercase;
           font-weight: 700;
+          opacity: 0.8;
         }
 
         .concern-card h3 {
-          margin: 14px 0 8px;
-          font-size: 18px;
-          line-height: 1.25;
+          margin: 16px 0 10px;
+          font-size: 20px;
+          font-weight: 600;
+          line-height: 1.2;
+          color: #161412;
         }
 
         .concern-card p {
-          color: #776d65;
-          font-size: 13px;
+          color: #756b63;
+          font-size: 14px;
           line-height: 1.6;
           margin: 0;
+          margin-top: auto;
         }
 
         .desk {
@@ -603,8 +628,8 @@ export default function BeautyShopPage() {
         }
 
         .product-image img {
-          width: 82%;
-          height: 82%;
+          width: 100%;
+          height: auto;
           max-width: 210px;
           max-height: 210px;
           object-fit: contain;
@@ -796,25 +821,25 @@ export default function BeautyShopPage() {
 }
 
 .concern-card {
-  min-height: auto;
-  padding: 13px 12px;
-  border-radius: 10px;
+  min-height: 130px;
+  padding: 18px 14px;
+  border-radius: 12px;
 }
 
 .concern-card small {
-  font-size: 8px;
-  letter-spacing: 0.14em;
+  font-size: 9px;
+  letter-spacing: 0.16em;
 }
 
 .concern-card h3 {
-  font-size: 14px;
-  margin: 8px 0 4px;
+  font-size: 15px;
+  margin: 12px 0 6px;
   line-height: 1.2;
 }
 
 .concern-card p {
-  font-size: 11px;
-  line-height: 1.35;
+  font-size: 12px;
+  line-height: 1.4;
 }
 
           .home-shell {
@@ -901,7 +926,6 @@ export default function BeautyShopPage() {
             gap: 8px;
           }
 
-          .concern-grid,
           .desk,
           .method-grid {
             grid-template-columns: 1fr;
@@ -986,7 +1010,9 @@ export default function BeautyShopPage() {
           </div>
 
           <div className="hero-panel">
-            <div className="hero-image" />
+            <div className="hero-image">
+              <Image src="/images/hero-skincare.jpg" alt="Skincare" fill priority style={{ objectFit: 'cover', zIndex: -1 }} />
+            </div>
             <div className="hero-panel-body">
               <h2>Start with your skin.</h2>
               <p>
@@ -1044,10 +1070,10 @@ export default function BeautyShopPage() {
                 </span>
                 <ArrowRight size={15} />
               </Link>
-              <Link href="/search">
+              <Link href="/dashboard/search">
                 <span>
-                  <small>02 / Search</small>
-                  <b>Search by concern or ingredient</b>
+                  <small>02 / Expert Search</small>
+                  <b>Access full expert search</b>
                 </span>
                 <ArrowRight size={15} />
               </Link>
@@ -1091,16 +1117,6 @@ export default function BeautyShopPage() {
           </div>
 
           <div className="filters">
-            <div className="search-box">
-              <Search size={16} color="#9a8f86" />
-              <input
-                value={query}
-                onChange={(event) => setQuery(event.target.value)}
-                placeholder="Search sunscreen, niacinamide, dry skin, kajal..."
-              />
-              {query ? <button onClick={() => setQuery("")}>x</button> : null}
-            </div>
-
             <div className="filter-row">
               {CATEGORIES.map((category) => (
                 <button

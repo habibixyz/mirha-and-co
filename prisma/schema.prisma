@@ -3,38 +3,41 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 model User {
-  id            String    @id @default(cuid())
-  email         String    @unique
-  name          String
-  passwordHash  String
+  id           String @id @default(cuid())
+  email        String @unique
+  name         String
+  passwordHash String
+
+  sessions Session[]
 
   // SQLite doesn't support Json → use String
-  skinProfile   String?
-  avatar        String?
+  skinProfile String?
+  avatar      String?
 
-  routines      Routine[]
-  journal       SkinJournal[]
-  subscription  Subscription?
+  routines     Routine[]
+  journal      SkinJournal[]
+  subscription Subscription?
 
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Routine {
-  id        String   @id @default(cuid())
-  userId    String
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  name      String   @default("My Routine")
+  name String @default("My Routine")
 
   // Json → String
-  routine   String
-  metadata  String?
+  routine  String
+  metadata String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -43,18 +46,19 @@ model Routine {
 }
 
 model SkinJournal {
-  id        String   @id @default(cuid())
-  userId    String
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  date      DateTime @default(now())
-  entry     String
+  date  DateTime @default(now())
+  entry String
 
   // Arrays → String (store as comma-separated or JSON string)
-  photos    String
-  concerns  String
+  photos   String
+  concerns String
+  aiAnalysis String?
 
-  rating    Int?
+  rating Int?
 
   createdAt DateTime @default(now())
 
@@ -62,52 +66,52 @@ model SkinJournal {
 }
 
 model Subscription {
-  id                     String   @id @default(cuid())
-  userId                 String   @unique
-  user                   User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id     String @id @default(cuid())
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  tier                   String   @default("free")
-  stripePriceId          String?
-  stripeSubscriptionId   String?
-  status                 String   @default("active")
+  tier                 String  @default("free")
+  stripePriceId        String?
+  stripeSubscriptionId String?
+  status               String  @default("active")
 
-  trialEndsAt            DateTime?
-  endsAt                 DateTime?
+  trialEndsAt DateTime?
+  endsAt      DateTime?
 
-  createdAt              DateTime @default(now())
-  updatedAt              DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Product {
-  id          String   @id @default(cuid())
-  asin        String   @unique
-  name        String
-  brand       String
-  price       Float
-  discount    Float?
+  id       String @id @default(cuid())
+  asin     String @unique
+  name     String
+  brand    String
+  price    Float
+  discount Float?
 
-  category    String
+  category String
 
   // Arrays → String
   ingredients String
   concerns    String
   skinTypes   String
 
-  reviewUrl   String?
-  imageUrl    String?
-  rating      Float?
+  reviewUrl String?
+  imageUrl  String?
+  rating    Float?
 
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@index([brand])
   @@index([category])
 }
 
 model Session {
-  id        String   @id @default(cuid())
-  userId    String
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   expiresAt DateTime
   createdAt DateTime @default(now())

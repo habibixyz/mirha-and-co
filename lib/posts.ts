@@ -13,6 +13,28 @@ export type Post = {
 };
 
 export const POSTS: Post[] = [
+  {
+    category: "SKINCARE",
+    title: "Dark Circles Treatment for Indian Skin — What Actually Works",
+    excerpt: "The honest guide to treating dark circles in India. Caffeine + EGCG for puffiness, what to use for pigmentation, and why most eye creams do nothing.",
+    slug: "dark-circles-treatment-india",
+    readTime: "10 min",
+    date: "May 2026",
+    productCount: 2,
+    thumbnail: "DC",
+    tags: ["dark circles", "eye cream", "caffeine", "pigmentation", "puffiness", "eye care"],
+  },
+  {
+    category: "SKINCARE",
+    title: "How to Treat Active Acne Fast — Pimple Patches + Benzoyl Peroxide",
+    excerpt: "A real protocol for active acne in India. Mighty Patch for overnight spot treatment, benzoyl peroxide for persistent breakouts.",
+    slug: "active-acne-treatment-india",
+    readTime: "9 min",
+    date: "May 2026",
+    productCount: 2,
+    thumbnail: "AA",
+    tags: ["acne", "pimple patches", "benzoyl peroxide", "spot treatment"],
+  },
   
   {
     category: "SKINCARE",
@@ -62,42 +84,7 @@ export const POSTS: Post[] = [
     thumbnail: "OS",
     tags: ["oily skin", "routine", "makeup"],
   },
-  {
-    title: "Best Sunscreens in India (2026) That Actually Work",
-    excerpt:
-      "No white cast. No greasy finish. Just sunscreens people can use daily.",
-    slug: "best-sunscreens-india-2026",
-    category: "BEAUTY",
-    readTime: "5 min",
-    date: "March 2026",
-    productCount: 6,
-    thumbnail: "SP",
-    tags: ["sunscreen"],
-  },
-  {
-    title: "The Indian Pigmentation Playbook",
-    excerpt:
-      "How to think about pigmentation, SPF, actives and consistency.",
-    slug: "pigmentation-guide",
-    category: "SKINCARE",
-    readTime: "12 min",
-    date: "April 2026",
-    productCount: 8,
-    thumbnail: "PI",
-    tags: ["pigmentation"],
-  },
-  {
-    title: "Complete Skincare Routine for Every Skin Type",
-    excerpt:
-      "A clear 4-step routine for oily, dry, combination and sensitive skin.",
-    slug: "skincare-routine-every-skin-type",
-    category: "SKINCARE",
-    readTime: "14 min",
-    date: "April 2026",
-    productCount: 12,
-    thumbnail: "RS",
-    tags: ["routine"],
-  },
+
   {
     category: "BEAUTY",
     title: "Why Your Skin Looks Dull Even After Skincare",

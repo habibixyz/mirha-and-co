@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { AffiliateCard } from "@/components/AffiliateCard";
 import ProductModal from "@/components/ProductModal";
-import AuthorBox from "../../../components/AuthorBox";
+import AuthorBox from "@/components/AuthorBox";
 
 const TAG = "skinwithtanvi-21";
 

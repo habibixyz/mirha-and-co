@@ -11,6 +11,26 @@ const featured = {
 };
 
 const posts = [
+  {
+    category: "SKINCARE" as const,
+    title: "Dark Circles Treatment for Indian Skin — What Actually Works",
+    excerpt: "The honest guide to treating dark circles in India. Caffeine + EGCG for puffiness, what to use for pigmentation, and why most eye creams do nothing.",
+    slug: "dark-circles-treatment-india",
+    readTime: "10 min",
+    date: "May 2026",
+    productCount: 2,
+    initials: "DC",
+  },
+  {
+    category: "SKINCARE" as const,
+    title: "How to Treat Active Acne Fast — Pimple Patches + Benzoyl Peroxide",
+    excerpt: "A real protocol for active acne in India. Mighty Patch for overnight spot treatment, benzoyl peroxide for persistent breakouts.",
+    slug: "active-acne-treatment-india",
+    readTime: "9 min",
+    date: "May 2026",
+    productCount: 2,
+    initials: "AA",
+  },
   { category: "SKINCARE" as const, title: "The Indian Pigmentation Playbook", excerpt: "A complete guide to treating pigmentation in Indian skin using the right actives and routines.", slug: "pigmentation-guide", readTime: "12 min", date: "April 2026", productCount: 8, initials: "PI" },
   {
   category: "SKINCARE" as const,
@@ -92,7 +112,7 @@ const catColors: Record<string, string> = {
 };
 
 const paths = [
-  { label: "Search", title: "Ask Mirha by concern", text: "Search oily skin, pigmentation, niacinamide, sunscreen, or budget.", href: "/search" },
+  { label: "Search", title: "Ask Mirha by concern", text: "Search oily skin, pigmentation, niacinamide, sunscreen, or budget.", href: "/dashboard/search" },
   { label: "Routine", title: "Build your 4-step routine", text: "Get cleanser, treatment, moisturiser, and sunscreen for your skin profile.", href: "/tools/routine" },
   { label: "Shop", title: "Browse curated picks", text: "See products with price, use case, ingredients, and honest context.", href: "/" },
 ];
@@ -426,7 +446,7 @@ export default function BlogIndex() {
               Guides, comparisons, and routines for Indian skin: clear enough for beginners, useful enough for people who already know their actives.
             </p>
             <div className="hero-actions">
-              <a href="/search" className="primary-btn">Search Mirha</a>
+              <a href="/dashboard/search" className="primary-btn">Search Mirha</a>
               <a href="/tools/routine" className="secondary-btn">Build Routine</a>
             </div>
           </div>
