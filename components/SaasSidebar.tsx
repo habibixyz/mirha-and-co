@@ -15,13 +15,18 @@ export function SaasSidebar() {
     setIsOpen(false);
   }, [pathname]);
 
-  const links = [
-    { href: "/dashboard", label: "Overview", icon: LayoutDashboard },
-    { href: "/dashboard/routines", label: "My Routines", icon: Sparkles },
-    { href: "/dashboard/journal", label: "Skin Journal", icon: BookOpen },
-    { href: "/dashboard/search", label: "Search Guide", icon: Search },
-    { href: "/dashboard/subscription", label: "Subscription", icon: Crown },
-  ];
+  const links: {
+    href: string;
+    label: string;
+    icon: any;
+    badge?: string;
+  }[] = [
+      { href: "/dashboard", label: "Overview", icon: LayoutDashboard },
+      { href: "/dashboard/routines", label: "My Routines", icon: Sparkles },
+      { href: "/dashboard/journal", label: "Skin Journal", icon: BookOpen },
+      { href: "/dashboard/search", label: "Search Guide", icon: Search },
+      { href: "/dashboard/subscription", label: "Subscription", icon: Crown },
+    ];
 
   const sidebarContent = (
     <>
@@ -35,7 +40,7 @@ export function SaasSidebar() {
         }}>
           MIRHA &amp; CO.
         </Link>
-        <button 
+        <button
           className="mobile-only"
           onClick={() => setIsOpen(false)}
           style={{ background: "transparent", border: "none", cursor: "pointer", color: "var(--ink)" }}
@@ -52,9 +57,9 @@ export function SaasSidebar() {
           const isActive = pathname === link.href;
           const Icon = link.icon;
           return (
-            <Link 
-              key={link.href} 
-              href={link.href} 
+            <Link
+              key={link.href}
+              href={link.href}
               style={{
                 textDecoration: "none",
                 color: isActive ? "var(--rose)" : "var(--muted)",
@@ -115,7 +120,7 @@ export function SaasSidebar() {
         }}>
           MIRHA &amp; CO.
         </Link>
-        <button 
+        <button
           onClick={() => setIsOpen(true)}
           style={{ background: "transparent", border: "none", cursor: "pointer", color: "var(--ink)" }}
         >
@@ -142,7 +147,7 @@ export function SaasSidebar() {
       <AnimatePresence>
         {isOpen && (
           <>
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -159,7 +164,7 @@ export function SaasSidebar() {
               initial={{ x: "-100%" }}
               animate={{ x: 0 }}
               exit={{ x: "-100%" }}
-              transition={{ type: "spring", stiffness: 300, damping: 30 }}
+              transition={{ type: "spring" as const, stiffness: 300, damping: 30 }}
               style={{
                 position: "fixed",
                 top: 0,

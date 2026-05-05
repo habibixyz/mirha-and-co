@@ -35,7 +35,7 @@ export function RoutinesClient({ initialRoutines }: { initialRoutines: any[] }) 
   const handleUpdateRoutine = async (id: string, newName: string, newSteps: string[], isNew?: boolean) => {
     const updated = routines.map(r => r.id === id ? { ...r, name: newName, steps: newSteps, isNew: false } : r);
     setRoutines(updated);
-    
+
     startTransition(async () => {
       if (isNew) {
         await saveRoutine(newName, newSteps);
@@ -57,7 +57,7 @@ export function RoutinesClient({ initialRoutines }: { initialRoutines: any[] }) 
   };
 
   const handleRemoveStep = (routineId: string, stepIdx: number) => {
-     setRoutines(routines.map(r => {
+    setRoutines(routines.map(r => {
       if (r.id === routineId) {
         return { ...r, steps: r.steps.filter((_: any, idx: number) => idx !== stepIdx) };
       }
@@ -91,7 +91,7 @@ export function RoutinesClient({ initialRoutines }: { initialRoutines: any[] }) 
 
   const itemVariants = {
     hidden: { opacity: 0, scale: 0.95 },
-    show: { opacity: 1, scale: 1, transition: { type: "spring", stiffness: 300, damping: 24 } }
+    show: { opacity: 1, scale: 1, transition: { type: "spring" as const, stiffness: 300, damping: 24 } }
   };
 
   return (
@@ -110,7 +110,7 @@ export function RoutinesClient({ initialRoutines }: { initialRoutines: any[] }) 
           </h1>
           <p style={{ color: "var(--muted)", margin: 0, fontSize: "1.05rem" }}>Design and manage your skincare regimens.</p>
         </div>
-        <motion.button 
+        <motion.button
           onClick={handleAddRoutine}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
@@ -135,8 +135,8 @@ export function RoutinesClient({ initialRoutines }: { initialRoutines: any[] }) 
 
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(350px, 1fr))", gap: "2rem" }}>
         {routines.map(routine => (
-          <motion.div 
-            key={routine.id} 
+          <motion.div
+            key={routine.id}
             variants={itemVariants}
             style={{
               background: 'var(--white)',
@@ -147,7 +147,7 @@ export function RoutinesClient({ initialRoutines }: { initialRoutines: any[] }) 
             }}
           >
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.5rem" }}>
-              <input 
+              <input
                 value={routine.name}
                 onChange={(e) => updateName(routine.id, e.target.value)}
                 style={{ fontSize: "1.3rem", margin: 0, color: "var(--ink)", fontWeight: 500, background: "transparent", border: "none", outline: "none", width: "100%" }}
@@ -173,17 +173,17 @@ export function RoutinesClient({ initialRoutines }: { initialRoutines: any[] }) 
                 }}>
                   <GripVertical size={16} color="var(--muted)" style={{ cursor: "grab" }} />
                   <span style={{ fontWeight: 500, fontSize: "0.8rem", color: "var(--muted)", width: "20px" }}>{idx + 1}</span>
-                  <input 
-                    value={step} 
-                    onChange={(e) => updateStep(routine.id, idx, e.target.value)} 
-                    style={{ background: "transparent", border: "none", outline: "none", width: "100%", color: "var(--ink)" }} 
+                  <input
+                    value={step}
+                    onChange={(e) => updateStep(routine.id, idx, e.target.value)}
+                    style={{ background: "transparent", border: "none", outline: "none", width: "100%", color: "var(--ink)" }}
                   />
-                  <button onClick={() => handleRemoveStep(routine.id, idx)} style={{ background: "transparent", border: "none", color: "var(--muted)", cursor: "pointer" }}><X size={14}/></button>
+                  <button onClick={() => handleRemoveStep(routine.id, idx)} style={{ background: "transparent", border: "none", color: "var(--muted)", cursor: "pointer" }}><X size={14} /></button>
                 </div>
               ))}
             </div>
-            
-            <motion.button 
+
+            <motion.button
               onClick={() => handleAddStep(routine.id)}
               whileHover={{ background: 'rgba(0,0,0,0.03)' }}
               style={{

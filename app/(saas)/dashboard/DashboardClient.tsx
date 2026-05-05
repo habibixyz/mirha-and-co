@@ -8,7 +8,7 @@ import { useState } from "react";
 
 export function DashboardClient({ user, routines, recentJournal }: any) {
 
-  
+
   // Dummy state for interactivity - for today's routine tracking
   const [checkedSteps, setCheckedSteps] = useState<number[]>([]);
 
@@ -32,7 +32,7 @@ export function DashboardClient({ user, routines, recentJournal }: any) {
 
   const itemVariants = {
     hidden: { opacity: 0, y: 20 },
-    show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 300, damping: 24 } }
+    show: { opacity: 1, y: 0, transition: { type: "spring" as const, stiffness: 300, damping: 24 } }
   };
 
   // Get first routine for morning checklist, or default if none
@@ -46,7 +46,7 @@ export function DashboardClient({ user, routines, recentJournal }: any) {
   const routineName = firstRoutine ? firstRoutine.name : "Morning Routine";
 
   return (
-    <motion.div 
+    <motion.div
       initial="hidden"
       animate="show"
       variants={containerVariants}
@@ -89,16 +89,16 @@ export function DashboardClient({ user, routines, recentJournal }: any) {
             {steps.map((step: string, idx: number) => {
               const isChecked = checkedSteps.includes(idx);
               return (
-                <motion.div 
+                <motion.div
                   key={idx}
                   whileHover={{ scale: 1.02, x: 4 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={() => toggleStep(idx)}
-                  style={{ 
-                    display: "flex", 
-                    alignItems: "center", 
-                    gap: "0.8rem", 
-                    color: isChecked ? "var(--muted)" : "var(--ink)", 
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "0.8rem",
+                    color: isChecked ? "var(--muted)" : "var(--ink)",
                     fontSize: "0.95rem",
                     cursor: "pointer",
                     padding: "0.5rem",
@@ -140,7 +140,7 @@ export function DashboardClient({ user, routines, recentJournal }: any) {
           flexDirection: "column"
         }}>
           <h3 style={{ fontSize: "1.2rem", margin: "0 0 1.5rem", color: "var(--ink)", fontWeight: 500 }}>Recent Journal</h3>
-          
+
           {recentJournal ? (
             <div style={{
               background: 'var(--sand)',
@@ -173,7 +173,7 @@ export function DashboardClient({ user, routines, recentJournal }: any) {
           )}
 
           <Link href="/dashboard/journal" style={{ textDecoration: "none", width: "100%" }}>
-            <motion.button 
+            <motion.button
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
               style={{

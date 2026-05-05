@@ -66,7 +66,7 @@ export function JournalClient({ initialEntries, isPro }: { initialEntries: any[]
     setIsAnalyzing(true);
     try {
       const analysis = await analyzeSkinPhoto(photoBase64);
-      setAiAnalysis(analysis);
+      setAiAnalysis(analysis ?? null);
     } finally {
       setIsAnalyzing(false);
     }
@@ -102,7 +102,7 @@ export function JournalClient({ initialEntries, isPro }: { initialEntries: any[]
 
   const itemVariants = {
     hidden: { opacity: 0, x: -20 },
-    show: { opacity: 1, x: 0, transition: { type: "spring", stiffness: 300, damping: 24 } }
+    show: { opacity: 1, x: 0, transition: { type: "spring" as const, stiffness: 300, damping: 24 } }
   };
 
   return (
@@ -122,7 +122,7 @@ export function JournalClient({ initialEntries, isPro }: { initialEntries: any[]
           <p style={{ color: "var(--muted)", margin: 0, fontSize: "1.05rem" }}>Track your skin's daily progress and reactions.</p>
         </div>
         {!showNewEntry && (
-          <motion.button 
+          <motion.button
             onClick={() => setShowNewEntry(true)}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
@@ -147,7 +147,7 @@ export function JournalClient({ initialEntries, isPro }: { initialEntries: any[]
       </motion.header>
 
       {showNewEntry && (
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           style={{
@@ -164,8 +164,8 @@ export function JournalClient({ initialEntries, isPro }: { initialEntries: any[]
             <h3 style={{ margin: 0, color: "var(--ink)" }}>How is your skin today?</h3>
             <button onClick={() => setShowNewEntry(false)} style={{ background: "transparent", border: "none", cursor: "pointer", color: "var(--muted)" }}><X size={20} /></button>
           </div>
-          
-          <textarea 
+
+          <textarea
             value={note}
             onChange={(e) => setNote(e.target.value)}
             placeholder="Skin felt a bit dry..."
@@ -195,14 +195,14 @@ export function JournalClient({ initialEntries, isPro }: { initialEntries: any[]
             </div>
 
             <div style={{ display: "flex", gap: "0.5rem" }}>
-              <input 
-                type="file" 
-                accept="image/*" 
-                ref={fileInputRef} 
-                onChange={handleFileChange} 
-                style={{ display: "none" }} 
+              <input
+                type="file"
+                accept="image/*"
+                ref={fileInputRef}
+                onChange={handleFileChange}
+                style={{ display: "none" }}
               />
-              <button 
+              <button
                 onClick={() => fileInputRef.current?.click()}
                 style={{
                   background: "transparent",
@@ -221,7 +221,7 @@ export function JournalClient({ initialEntries, isPro }: { initialEntries: any[]
               </button>
 
               {isPro && photoBase64 && !aiAnalysis && (
-                <button 
+                <button
                   onClick={handleAnalyze}
                   disabled={isAnalyzing}
                   style={{
@@ -241,7 +241,7 @@ export function JournalClient({ initialEntries, isPro }: { initialEntries: any[]
                 </button>
               )}
 
-              <button 
+              <button
                 onClick={handleSave}
                 disabled={!note}
                 style={{
@@ -296,7 +296,7 @@ export function JournalClient({ initialEntries, isPro }: { initialEntries: any[]
             const day = dateObj.getDate();
 
             return (
-              <motion.div 
+              <motion.div
                 key={entry.id}
                 layout
                 initial={{ opacity: 0, y: 20 }}
@@ -322,14 +322,14 @@ export function JournalClient({ initialEntries, isPro }: { initialEntries: any[]
                     {day}
                   </span>
                 </div>
-                
+
                 <div>
                   <p style={{ margin: "0 0 0.8rem", color: "var(--ink)", fontSize: "1rem", lineHeight: 1.6 }}>"{entry.entry}"</p>
-                  
+
                   {entry.photos && entry.photos !== "[]" && (
                     <img src={entry.photos} alt="Photo" style={{ maxHeight: "80px", borderRadius: "8px", marginBottom: "0.8rem" }} />
                   )}
-                  
+
                   {entry.aiAnalysis && (
                     <div style={{ fontSize: "0.85rem", color: "#9333ea", display: "flex", gap: "0.5rem", alignItems: "center", marginBottom: "0.8rem" }}>
                       <Sparkles size={14} /> AI Analyzed
