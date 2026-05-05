@@ -92,7 +92,7 @@ export const PRODUCTS = [
     },
     tags: ["benzoyl peroxide", "bpo", "acne", "spot treatment", "bacteria", "benzac"],
     concerns: ["acne"],
-    image: "/products/BENZAC-AC.jpg",
+    image: "/products/benzac-ac.jpg",
     link: "https://amzn.to/4d6uc76"
   },
   {
