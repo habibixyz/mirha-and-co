@@ -84,8 +84,8 @@ export async function getDashboardData() {
       orderBy: { date: "desc" }
     });
 
-    return { 
-      routines: routines.map(r => ({ id: r.id, name: r.name, steps: JSON.parse(r.routine) })), 
+    return {
+      routines: routines.map((r: any) => ({ id: r.id, name: r.name, steps: JSON.parse(r.routine) })),
       journal: recentJournal,
       user: session.user
     };
@@ -169,7 +169,7 @@ import { redirect } from "next/navigation";
 export async function loginAction(formData: FormData) {
   const email = formData.get("email") as string;
   const password = formData.get("password") as string;
-  
+
   if (!email || !password) throw new Error("Missing fields");
 
   const user = await prisma.user.findUnique({ where: { email } });
