@@ -16,13 +16,12 @@ model User {
 
   sessions Session[]
 
-  // SQLite doesn't support Json → use String
   skinProfile String?
   avatar      String?
 
-  routines     Routine[]
-  journal      SkinJournal[]
-  subscription Subscription?
+  routines            Routine[]
+  journal             SkinJournal[]
+  subscription        Subscription?
   passwordResetTokens PasswordResetToken[]
 
   createdAt DateTime @default(now())
@@ -36,7 +35,6 @@ model Routine {
 
   name String @default("My Routine")
 
-  // Json → String
   routine  String
   metadata String?
 
@@ -51,15 +49,12 @@ model SkinJournal {
   userId String
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  date  DateTime @default(now())
-  entry String
-
-  // Arrays → String (store as comma-separated or JSON string)
-  photos   String
-  concerns String
+  date       DateTime @default(now())
+  entry      String
+  photos     String
+  concerns   String
   aiAnalysis String?
-
-  rating Int?
+  rating     Int?
 
   createdAt DateTime @default(now())
 
@@ -93,7 +88,6 @@ model Product {
 
   category String
 
-  // Arrays → String
   ingredients String
   concerns    String
   skinTypes   String
