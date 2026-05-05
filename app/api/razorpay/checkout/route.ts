@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { razorpay } from "@/lib/razorpay";
+import { getRazorpay } from "@/lib/razorpay";
 import { getSession } from "@/lib/auth";
 
 export async function POST(req: Request) {
@@ -13,6 +13,8 @@ export async function POST(req: Request) {
     if (!planId) {
       throw new Error("Razorpay Plan ID is not configured");
     }
+
+    const razorpay = getRazorpay();
 
     // Create a new subscription in Razorpay
     const subscription = await razorpay.subscriptions.create({
