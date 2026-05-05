@@ -8,10 +8,16 @@ export async function getSession() {
 
   if (!sessionId) return null;
 
-  const session = await prisma.session.findUnique({
-    where: { id: sessionId },
-    include: { user: true }
-  });
+  let session;
+  try {
+    session = await prisma.session.findUnique({
+      where: { id: sessionId },
+      include: { user: true }
+    });
+  } catch (error) {
+    console.error("Session lookup error:", error);
+    return null;
+  }
 
   if (!session || session.expiresAt < new Date()) {
     return null;
@@ -22,7 +28,7 @@ export async function getSession() {
 
 export async function createSession(userId: string) {
   const expiresAt = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000); // 30 days
-  
+
   const session = await prisma.session.create({
     data: {
       userId,

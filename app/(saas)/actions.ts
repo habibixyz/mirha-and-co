@@ -70,10 +70,10 @@ export async function getJournalEntries() {
 }
 
 export async function getDashboardData() {
-  const session = await getSession();
-  if (!session) return { routines: [], journal: null, user: null, error: "Unauthorized" };
-
   try {
+    const session = await getSession();
+    if (!session) return { routines: [], journal: null, user: null, error: "Unauthorized" };
+
     const routines = await prisma.routine.findMany({
       where: { userId: session.userId },
       orderBy: { createdAt: "asc" }
@@ -95,13 +95,18 @@ export async function getDashboardData() {
 }
 
 export async function getUserProfile() {
-  const session = await getSession();
-  if (!session) return null;
+  try {
+    const session = await getSession();
+    if (!session) return null;
 
-  return prisma.user.findUnique({
-    where: { id: session.userId },
-    include: { subscription: true }
-  });
+    return prisma.user.findUnique({
+      where: { id: session.userId },
+      include: { subscription: true }
+    });
+  } catch (error) {
+    console.error("Profile lookup error:", error);
+    return null;
+  }
 }
 
 export async function upgradeToPro() {
@@ -203,15 +208,15 @@ export async function loginAction(_state: AuthState, formData: FormData): Promis
 
   if (!email || !password) return { error: "Please enter your email and password." };
 
-  const user = await prisma.user.findUnique({ where: { email } });
-  if (!user || user.passwordHash !== hashPassword(password)) {
-    return { error: "Invalid email or password." };
-  }
-
   try {
+    const user = await prisma.user.findUnique({ where: { email } });
+    if (!user || user.passwordHash !== hashPassword(password)) {
+      return { error: "Invalid email or password." };
+    }
+
     await createSession(user.id);
   } catch (error) {
-    console.error("Login session error:", error);
+    console.error("Login error:", error);
     return { error: "Unable to sign in right now. Please try again." };
   }
 
@@ -231,12 +236,11 @@ export async function registerAction(_state: AuthState, formData: FormData): Pro
     return { error: "Password must be at least 8 characters." };
   }
 
-  const existing = await prisma.user.findUnique({ where: { email } });
-  if (existing) return { error: "Email already in use. Please sign in instead." };
-
-  let user;
   try {
-    user = await prisma.user.create({
+    const existing = await prisma.user.findUnique({ where: { email } });
+    if (existing) return { error: "Email already in use. Please sign in instead." };
+
+    const user = await prisma.user.create({
       data: {
         email,
         name,
