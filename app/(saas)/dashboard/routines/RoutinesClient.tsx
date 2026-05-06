@@ -11,6 +11,7 @@ export function RoutinesClient({ initialRoutines }: { initialRoutines: any[] }) 
   // We'll manage optimistic state
   const [routines, setRoutines] = useState(initialRoutines);
   const [isPending, startTransition] = useTransition();
+  const [error, setError] = useState<string | null>(null);
 
   // Add a new empty routine
   const handleAddRoutine = () => {
@@ -23,7 +24,7 @@ export function RoutinesClient({ initialRoutines }: { initialRoutines: any[] }) 
     setRoutines([...routines, newRoutine]);
   };
 
-  const handleDeleteRoutine = async (id: string, isNew?: boolean) => {
+  const handleDeleteRoutine = (id: string, isNew?: boolean) => {
     setRoutines(routines.filter(r => r.id !== id));
     if (!isNew) {
       startTransition(async () => {
@@ -33,17 +34,27 @@ export function RoutinesClient({ initialRoutines }: { initialRoutines: any[] }) 
   };
 
   const handleUpdateRoutine = async (id: string, newName: string, newSteps: string[], isNew?: boolean) => {
-    const updated = routines.map(r => r.id === id ? { ...r, name: newName, steps: newSteps, isNew: false } : r);
-    setRoutines(updated);
+    setError(null); // Clear previous errors
 
     startTransition(async () => {
-      if (isNew) {
-        await saveRoutine(newName, newSteps);
-      } else {
-        await updateRoutine(id, newName, newSteps);
+      try {
+        if (isNew) {
+          await saveRoutine(newName, newSteps);
+        } else {
+          await updateRoutine(id, newName, newSteps);
+        }
+
+        // ✅ Only update optimistically AFTER successful save
+        const updated = routines.map(r =>
+          r.id === id ? { ...r, name: newName, steps: newSteps, isNew: false } : r
+        );
+        setRoutines(updated);
+      } catch (err: any) {
+        // ✅ SHOW FRIENDLY ERROR MESSAGE
+        const errorMsg = err?.message || "Failed to save routine. Please try again.";
+        setError(errorMsg);
+        console.error("Routine save error:", err);
       }
-      // Note: For a true production app, we would re-fetch the routine IDs after saving 
-      // but revalidatePath will handle refreshing the page data on next load.
     });
   };
 
@@ -133,6 +144,41 @@ export function RoutinesClient({ initialRoutines }: { initialRoutines: any[] }) 
         </motion.button>
       </motion.header>
 
+      {/* ✅ SHOW ERROR MESSAGE */}
+      {error && (
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          style={{
+            background: "#ffe0e0",
+            border: "1px solid #ffcccc",
+            borderRadius: "12px",
+            padding: "1rem",
+            marginBottom: "2rem",
+            color: "#c8473a",
+            fontSize: "0.95rem",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center"
+          }}
+        >
+          <span>{error}</span>
+          <button
+            onClick={() => setError(null)}
+            style={{
+              background: "transparent",
+              border: "none",
+              color: "#c8473a",
+              cursor: "pointer",
+              fontSize: "1.2rem",
+              fontWeight: "bold"
+            }}
+          >
+            ✕
+          </button>
+        </motion.div>
+      )}
+
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(350px, 1fr))", gap: "2rem" }}>
         {routines.map(routine => (
           <motion.div
@@ -153,7 +199,14 @@ export function RoutinesClient({ initialRoutines }: { initialRoutines: any[] }) 
                 style={{ fontSize: "1.3rem", margin: 0, color: "var(--ink)", fontWeight: 500, background: "transparent", border: "none", outline: "none", width: "100%" }}
               />
               <div style={{ display: "flex", gap: "0.5rem" }}>
-                <button onClick={() => handleUpdateRoutine(routine.id, routine.name, routine.steps, routine.isNew)} title="Save changes" style={{ background: "transparent", border: "none", cursor: "pointer", color: "var(--ink)", padding: "0.5rem" }}><Check size={18} /></button>
+                <button
+                  onClick={() => handleDeleteRoutine(routine.id, routine.isNew)}
+                  title="Delete routine"
+                  disabled={isPending}
+                  style={{ background: "transparent", border: "none", cursor: isPending ? "not-allowed" : "pointer", color: "var(--rose)", padding: "0.5rem", opacity: isPending ? 0.5 : 1 }}
+                >
+                  <Trash2 size={18} />
+                </button>
                 <button onClick={() => handleDeleteRoutine(routine.id, routine.isNew)} title="Delete routine" style={{ background: "transparent", border: "none", cursor: "pointer", color: "var(--rose)", padding: "0.5rem" }}><Trash2 size={18} /></button>
               </div>
             </div>
