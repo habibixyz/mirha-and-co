@@ -1,6 +1,6 @@
 "use server";
 
-import { getSession } from "@/lib/auth";
+import { getSession, logout } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 
@@ -8,6 +8,21 @@ import { revalidatePath } from "next/cache";
 export async function saveRoutine(name: string, steps: string[]) {
   const session = await getSession();
   if (!session) throw new Error("Unauthorized");
+
+  // ✅ RATE LIMITING: Max 1 routine per day
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const routineToday = await prisma.routine.findFirst({
+    where: {
+      userId: session.userId,
+      createdAt: { gte: today }
+    }
+  });
+
+  if (routineToday) {
+    throw new Error("You can create only 1 routine per day. Please try again tomorrow.");
+  }
 
   await prisma.routine.create({
     data: {
@@ -247,7 +262,30 @@ export async function registerAction(_state: AuthState, formData: FormData): Pro
         passwordHash: hashPassword(password),
       }
     });
-
+    // ✅ SEND WELCOME EMAIL
+    if (process.env.RESEND_API_KEY && process.env.PASSWORD_RESET_FROM) {
+      try {
+        const resend = new Resend(process.env.RESEND_API_KEY);
+        await resend.emails.send({
+          from: process.env.PASSWORD_RESET_FROM,
+          to: email,
+          subject: "Welcome to Mirha & Co! 🌸",
+          html: `
+        <div style="font-family: 'DM Sans', sans-serif; max-width: 600px; margin: 0 auto; padding: 40px 20px;">
+          <h1 style="font-family: 'DM Serif Display', serif; font-size: 2rem; margin: 0 0 1rem; color: #1a1a1a;">
+            Welcome to Mirha & Co, ${name.split(' ')[0]}! 🌸
+          </h1>
+          <p style="font-size: 1rem; color: #666; line-height: 1.6;">Your account is ready. Start your skincare journey now!</p>
+          <a href="${await getBaseUrl()}/dashboard" style="background: #c8473a; color: white; padding: 12px 32px; border-radius: 8px; text-decoration: none; font-weight: 600; display: inline-block; margin: 2rem 0;">
+            Go to Dashboard
+          </a>
+        </div>
+      `
+        });
+      } catch (emailError) {
+        console.error("Welcome email error:", emailError);
+      }
+    }
     await createSession(user.id);
   } catch (error) {
     console.error("Register error:", error);
@@ -343,4 +381,9 @@ export async function resetPasswordAction(_state: AuthState, formData: FormData)
   }
 
   return { success: "Password reset. You can now sign in." };
+}
+
+export async function logoutAction() {
+  await logout();
+  redirect("/login");
 }
