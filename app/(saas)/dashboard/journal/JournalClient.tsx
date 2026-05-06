@@ -1,13 +1,12 @@
 "use client";
 
 import { useState, useTransition, useRef } from "react";
-
 import { motion, AnimatePresence } from "framer-motion";
 import { Calendar, Plus, Star, MoreVertical, Upload, Sparkles, X } from "lucide-react";
 import { saveJournalEntry, analyzeSkinPhoto } from "../../actions";
 
-export function JournalClient({ initialEntries, isPro }: { initialEntries: any[], isPro: boolean }) {
 
+export function SkinJournalClient({ initialEntries, isPro }: { initialEntries: any[], isPro: boolean }) {
   const [entries, setEntries] = useState(initialEntries);
   const [showNewEntry, setShowNewEntry] = useState(false);
   const [note, setNote] = useState("");
@@ -16,6 +15,7 @@ export function JournalClient({ initialEntries, isPro }: { initialEntries: any[]
   const [aiAnalysis, setAiAnalysis] = useState<string | null>(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [isPending, startTransition] = useTransition();
+  const [error, setError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -73,22 +73,30 @@ export function JournalClient({ initialEntries, isPro }: { initialEntries: any[]
   };
 
   const handleSave = () => {
+    setError(null);
+
     startTransition(async () => {
-      await saveJournalEntry(note, rating, photoBase64 || "[]", aiAnalysis);
-      // Optimistic update
-      setEntries([{
-        id: `temp-${Date.now()}`,
-        date: new Date().toISOString(),
-        entry: note,
-        rating,
-        photos: photoBase64 || "[]",
-        aiAnalysis
-      }, ...entries]);
-      setShowNewEntry(false);
-      setNote("");
-      setRating(5);
-      setPhotoBase64(null);
-      setAiAnalysis(null);
+      try {
+        await saveJournalEntry(note, rating, photoBase64 || "[]", aiAnalysis);
+        // Optimistic update
+        setEntries([{
+          id: `temp-${Date.now()}`,
+          date: new Date().toISOString(),
+          entry: note,
+          rating,
+          photos: photoBase64 || "[]",
+          aiAnalysis
+        }, ...entries]);
+        setShowNewEntry(false);
+        setNote("");
+        setRating(5);
+        setPhotoBase64(null);
+        setAiAnalysis(null);
+      } catch (err: any) {
+        const errorMsg = err?.message || "Failed to save entry. Please try again.";
+        setError(errorMsg);
+        console.error("Journal save error:", err);
+      }
     });
   };
 

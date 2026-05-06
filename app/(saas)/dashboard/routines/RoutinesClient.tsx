@@ -144,7 +144,7 @@ export function RoutinesClient({ initialRoutines }: { initialRoutines: any[] }) 
         </motion.button>
       </motion.header>
 
-      {/* ✅ SHOW ERROR MESSAGE WITH UPGRADE LINK */}
+      {/* ✅ SHOW ERROR MESSAGE */}
       {error && (
         <motion.div
           initial={{ opacity: 0, y: -10 }}
@@ -153,16 +153,39 @@ export function RoutinesClient({ initialRoutines }: { initialRoutines: any[] }) 
             background: "#ffe0e0",
             border: "1px solid #ffcccc",
             borderRadius: "12px",
-            padding: "1rem",
+            padding: "1.2rem",
             marginBottom: "2rem",
             color: "#c8473a",
             fontSize: "0.95rem",
             display: "flex",
             justifyContent: "space-between",
-            alignItems: "flex-start"
+            alignItems: "flex-start",
+            gap: "1rem"
           }}
         >
-          <div dangerouslySetInnerHTML={{ __html: error }} style={{ flex: 1 }} />
+          <div style={{ flex: 1 }}>
+            {error === "UPGRADE_ROUTINE" ? (
+              <div>
+                <p style={{ margin: "0 0 0.5rem", fontWeight: 500 }}>Free users can create 2 routines per day (AM & PM)</p>
+                <p style={{ margin: 0, fontSize: "0.9rem" }}>Upgrade to Pro for 10 daily routines and unlock full research page</p>
+                <a
+                  href="/dashboard/subscription"
+                  style={{
+                    display: "inline-block",
+                    marginTop: "0.5rem",
+                    color: "#c8473a",
+                    fontWeight: "bold",
+                    textDecoration: "underline",
+                    cursor: "pointer"
+                  }}
+                >
+                  Upgrade to Pro →
+                </a>
+              </div>
+            ) : (
+              <span>{error}</span>
+            )}
+          </div>
           <button
             onClick={() => setError(null)}
             style={{
@@ -172,7 +195,7 @@ export function RoutinesClient({ initialRoutines }: { initialRoutines: any[] }) 
               cursor: "pointer",
               fontSize: "1.2rem",
               fontWeight: "bold",
-              marginLeft: "1rem",
+              marginTop: "-2px",
               flexShrink: 0
             }}
           >
@@ -180,7 +203,6 @@ export function RoutinesClient({ initialRoutines }: { initialRoutines: any[] }) 
           </button>
         </motion.div>
       )}
-
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(350px, 1fr))", gap: "2rem" }}>
         {routines.map(routine => (
           <motion.div
