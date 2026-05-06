@@ -9,19 +9,35 @@ export async function saveRoutine(name: string, steps: string[]) {
   const session = await getSession();
   if (!session) throw new Error("Unauthorized");
 
-  // ✅ RATE LIMITING: Max 1 routine per day
+  // ✅ CHECK SUBSCRIPTION STATUS
+  const subscription = await prisma.subscription.findUnique({
+    where: { userId: session.userId }
+  });
+
+  const isPaid = subscription?.tier === "pro" && subscription?.status === "active";
+  const maxRoutinesPerDay = isPaid ? 10 : 2;
+
+  // ✅ RATE LIMITING: Check how many routines created today
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
-  const routineToday = await prisma.routine.findFirst({
+  const routineCountToday = await prisma.routine.count({
     where: {
       userId: session.userId,
       createdAt: { gte: today }
     }
   });
 
-  if (routineToday) {
-    throw new Error("You can create only 1 routine per day. Please try again tomorrow.");
+  if (routineCountToday >= maxRoutinesPerDay) {
+    if (isPaid) {
+      throw new Error(`You've reached your daily limit of ${maxRoutinesPerDay} routines. Please try again tomorrow.`);
+    } else {
+      throw new Error(
+        `Free users can create up to ${maxRoutinesPerDay} routines per day (one for morning, one for night). ` +
+        `Upgrade to Pro to create up to 10 routines daily. ` +
+        `<a href="/dashboard/subscription" style="color: #c8473a; font-weight: bold; text-decoration: underline;">Upgrade to Pro →</a>`
+      );
+    }
   }
 
   await prisma.routine.create({
@@ -59,6 +75,37 @@ export async function deleteRoutine(id: string) {
 export async function saveJournalEntry(note: string, rating: number, photos: string = "[]", aiAnalysis: string | null = null) {
   const session = await getSession();
   if (!session) throw new Error("Unauthorized");
+
+  // ✅ CHECK SUBSCRIPTION STATUS
+  const subscription = await prisma.subscription.findUnique({
+    where: { userId: session.userId }
+  });
+
+  const isPaid = subscription?.tier === "pro" && subscription?.status === "active";
+  const maxEntriesPerDay = isPaid ? 10 : 1;
+
+  // ✅ RATE LIMITING: Check how many entries created today
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const entryCountToday = await prisma.skinJournal.count({
+    where: {
+      userId: session.userId,
+      date: { gte: today }
+    }
+  });
+
+  if (entryCountToday >= maxEntriesPerDay) {
+    if (isPaid) {
+      throw new Error(`You've reached your daily limit of ${maxEntriesPerDay} journal entries. Please try again tomorrow.`);
+    } else {
+      throw new Error(
+        `Free users can create ${maxEntriesPerDay} journal entry per day. ` +
+        `Upgrade to Pro for unlimited daily entries. ` +
+        `<a href="/dashboard/subscription" style="color: #c8473a; font-weight: bold; text-decoration: underline;">Upgrade to Pro →</a>`
+      );
+    }
+  }
 
   await prisma.skinJournal.create({
     data: {

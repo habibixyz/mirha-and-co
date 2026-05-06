@@ -144,7 +144,7 @@ export function RoutinesClient({ initialRoutines }: { initialRoutines: any[] }) 
         </motion.button>
       </motion.header>
 
-      {/* ✅ SHOW ERROR MESSAGE */}
+      {/* ✅ SHOW ERROR MESSAGE WITH UPGRADE LINK */}
       {error && (
         <motion.div
           initial={{ opacity: 0, y: -10 }}
@@ -159,10 +159,10 @@ export function RoutinesClient({ initialRoutines }: { initialRoutines: any[] }) 
             fontSize: "0.95rem",
             display: "flex",
             justifyContent: "space-between",
-            alignItems: "center"
+            alignItems: "flex-start"
           }}
         >
-          <span>{error}</span>
+          <div dangerouslySetInnerHTML={{ __html: error }} style={{ flex: 1 }} />
           <button
             onClick={() => setError(null)}
             style={{
@@ -171,7 +171,9 @@ export function RoutinesClient({ initialRoutines }: { initialRoutines: any[] }) 
               color: "#c8473a",
               cursor: "pointer",
               fontSize: "1.2rem",
-              fontWeight: "bold"
+              fontWeight: "bold",
+              marginLeft: "1rem",
+              flexShrink: 0
             }}
           >
             ✕
