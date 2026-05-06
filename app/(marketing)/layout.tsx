@@ -1,4 +1,5 @@
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "../globals.css";
 import Link from "next/link";
 import type { Metadata } from "next";
@@ -168,6 +169,7 @@ export default function RootLayout({
             <span>Beauty · Wellness · Lifestyle</span>
           </div>
         </footer>
+        <SpeedInsights />
         <Analytics />
       </body>
     </html>
