@@ -2,6 +2,7 @@ import "../globals.css";
 import type { Metadata } from "next";
 import { SaasSidebar } from "@/components/SaasSidebar";
 import { DM_Sans, DM_Serif_Display, Bebas_Neue } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
@@ -67,6 +68,7 @@ export default function SaasLayout({
               }
             `}</style>
           </div>
+        <Analytics />
       </body>
     </html>
   );
