@@ -200,6 +200,14 @@ export function RoutinesClient({ initialRoutines }: { initialRoutines: any[] }) 
               />
               <div style={{ display: "flex", gap: "0.5rem" }}>
                 <button
+                  onClick={() => handleUpdateRoutine(routine.id, routine.name, routine.steps, routine.isNew)}
+                  title="Save changes"
+                  disabled={isPending}
+                  style={{ background: "transparent", border: "none", cursor: isPending ? "not-allowed" : "pointer", color: "var(--ink)", padding: "0.5rem", opacity: isPending ? 0.5 : 1 }}
+                >
+                  <Check size={18} />
+                </button>
+                <button
                   onClick={() => handleDeleteRoutine(routine.id, routine.isNew)}
                   title="Delete routine"
                   disabled={isPending}
@@ -207,7 +215,6 @@ export function RoutinesClient({ initialRoutines }: { initialRoutines: any[] }) 
                 >
                   <Trash2 size={18} />
                 </button>
-                <button onClick={() => handleDeleteRoutine(routine.id, routine.isNew)} title="Delete routine" style={{ background: "transparent", border: "none", cursor: "pointer", color: "var(--rose)", padding: "0.5rem" }}><Trash2 size={18} /></button>
               </div>
             </div>
 
