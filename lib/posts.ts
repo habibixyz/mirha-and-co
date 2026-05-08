@@ -15,6 +15,28 @@ export type Post = {
 export const POSTS: Post[] = [
   {
     category: "SKINCARE",
+    title: "How to Repair a Damaged Skin Barrier — The 4-Week Protocol for Indian Skin",
+    excerpt: "Burning from products that never used to sting. Oily and dry at the same time. Constant breakouts. This is barrier damage — and here is how to fix it.",
+    slug: "damaged-skin-barrier-repair",
+    readTime: "10 min",
+    date: "May 2026",
+    productCount: 4,
+    thumbnail: "BR",
+    tags: ["barrier repair", "sensitive skin", "ceramides", "dry skin", "stinging"],
+  },
+  {
+    category: "SKINCARE",
+    title: "Best Sunscreen for Oily Skin in India (2026) — No Grease, No White Cast",
+    excerpt: "The honest guide to finding a sunscreen that works for oily, acne-prone Indian skin. Lightweight formulas, no white cast, no noon grease.",
+    slug: "best-sunscreen-oily-skin-india",
+    readTime: "8 min",
+    date: "May 2024",
+    productCount: 5,
+    thumbnail: "OS",
+    tags: ["sunscreen", "oily skin", "spf", "acne prone", "minimalist", "aqualogica", "neutrogena"],
+  },
+  {
+    category: "SKINCARE",
     title: "Dark Circles Treatment for Indian Skin — What Actually Works",
     excerpt: "The honest guide to treating dark circles in India. Caffeine + EGCG for puffiness, what to use for pigmentation, and why most eye creams do nothing.",
     slug: "dark-circles-treatment-india",

@@ -1011,7 +1011,7 @@ export default function BeautyShopPage() {
 
           <div className="hero-panel">
             <div className="hero-image">
-              <Image src="/images/hero-skincare.jpg" alt="Skincare" fill priority style={{ objectFit: 'cover', zIndex: -1 }} />
+              <Image src="/modern_indian_wellness_aura.png" alt="Skincare" fill priority style={{ objectFit: 'cover', zIndex: -1 }} />
             </div>
             <div className="hero-panel-body">
               <h2>Start with your skin.</h2>

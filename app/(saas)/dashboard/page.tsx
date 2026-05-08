@@ -1,4 +1,4 @@
-import { getDashboardData } from "../actions";
+import { getDashboardData, getUserProfile } from "../actions";
 import { DashboardClient } from "@/components/DashboardClient";
 import { redirect } from "next/navigation";
 
@@ -9,5 +9,13 @@ export default async function DashboardPage() {
     redirect("/login");
   }
 
-  return <DashboardClient user={data.user} routines={data.routines} recentJournal={data.journal} />;
+  // data already contains: routines, journal, user, and the new real stats
+  return (
+    <DashboardClient 
+      user={data.user} 
+      routines={data.routines} 
+      recentJournal={data.journal} 
+      stats={data.stats}
+    />
+  );
 }

@@ -2,8 +2,8 @@
 
 import { useState, useTransition, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Calendar, Plus, Star, MoreVertical, Upload, Sparkles, X } from "lucide-react";
-import { saveJournalEntry, analyzeSkinPhoto } from "../../actions";
+import { saveJournalEntry, analyzeSkinPhoto, getJournalAnalysis } from "../../actions";
+import { Calendar, Plus, Star, MoreVertical, Upload, Sparkles, X, Brain, TrendingUp, Info, Lightbulb } from "lucide-react";
 
 
 export function SkinJournalClient({ initialEntries, isPro }: { initialEntries: any[], isPro: boolean }) {
@@ -16,6 +16,8 @@ export function SkinJournalClient({ initialEntries, isPro }: { initialEntries: a
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
+  const [historyAnalysis, setHistoryAnalysis] = useState<any>(null);
+  const [isAnalyzingHistory, setIsAnalyzingHistory] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -62,13 +64,36 @@ export function SkinJournalClient({ initialEntries, isPro }: { initialEntries: a
   };
 
   const handleAnalyze = async () => {
-    if (!photoBase64) return;
+    if (!note && !photoBase64) return;
     setIsAnalyzing(true);
     try {
-      const analysis = await analyzeSkinPhoto(photoBase64);
-      setAiAnalysis(analysis ?? null);
+      const result = await analyzeSkinPhoto(note, photoBase64 || undefined);
+      if (result && typeof result === 'object' && 'error' in result) {
+        setError(result.error);
+      } else {
+        setAiAnalysis(result as string ?? null);
+      }
     } finally {
       setIsAnalyzing(false);
+    }
+  };
+
+  const handleAnalyzeHistory = async () => {
+    if (!isPro) {
+      setError("UPGRADE_PRO");
+      return;
+    }
+    setIsAnalyzingHistory(true);
+    try {
+      const result = await getJournalAnalysis();
+      if (result?.error) {
+        if (result.error === "NOT_ENOUGH_DATA") setError("Please add at least 3 entries to unlock AI Trends.");
+        else setError("Upgrade to Pro to unlock Mirha Brain analysis.");
+      } else {
+        setHistoryAnalysis(result);
+      }
+    } finally {
+      setIsAnalyzingHistory(false);
     }
   };
 
@@ -129,13 +154,14 @@ export function SkinJournalClient({ initialEntries, isPro }: { initialEntries: a
           </h1>
           <p style={{ color: "var(--muted)", margin: 0, fontSize: "1.05rem" }}>Track your skin's daily progress and reactions.</p>
         </div>
-        {!showNewEntry && (
+        <div style={{ display: "flex", gap: "1rem" }}>
           <motion.button
-            onClick={() => setShowNewEntry(true)}
+            onClick={handleAnalyzeHistory}
+            disabled={isAnalyzingHistory}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             style={{
-              background: "var(--rose)",
+              background: "var(--ink)",
               color: "var(--white)",
               border: "none",
               borderRadius: "10px",
@@ -146,13 +172,124 @@ export function SkinJournalClient({ initialEntries, isPro }: { initialEntries: a
               display: "flex",
               alignItems: "center",
               gap: "0.5rem",
-              boxShadow: "0 4px 14px rgba(200, 71, 58, 0.2)"
+              boxShadow: "0 4px 14px rgba(0, 0, 0, 0.1)"
             }}
           >
-            <Plus size={18} /> New Entry
+            <Brain size={18} color="#c8473a" /> {isAnalyzingHistory ? "Thinking..." : "Skin Trends"}
           </motion.button>
-        )}
+          {!showNewEntry && (
+            <motion.button
+              onClick={() => setShowNewEntry(true)}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              style={{
+                background: "var(--rose)",
+                color: "var(--white)",
+                border: "none",
+                borderRadius: "10px",
+                padding: "0.8rem 1.2rem",
+                fontSize: "0.95rem",
+                cursor: "pointer",
+                fontWeight: 500,
+                display: "flex",
+                alignItems: "center",
+                gap: "0.5rem",
+                boxShadow: "0 4px 14px rgba(200, 71, 58, 0.2)"
+              }}
+            >
+              <Plus size={18} /> New Entry
+            </motion.button>
+          )}
+        </div>
       </motion.header>
+
+      {/* ✅ SHOW ERROR MESSAGE */}
+      {error && (
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          style={{
+            background: "#FEF2F2",
+            border: "1px solid #FEE2E2",
+            borderRadius: "20px",
+            padding: "1.25rem 1.5rem",
+            marginBottom: "2rem",
+            color: "#991B1B",
+            fontSize: "0.95rem",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            gap: "1rem",
+            boxShadow: "0 4px 12px rgba(153, 27, 27, 0.05)",
+            maxWidth: "800px"
+          }}
+        >
+          <div style={{ flex: 1 }}>
+            {error === "UPGRADE_JOURNAL" ? (
+              <div>
+                <p style={{ margin: "0 0 0.4rem", fontWeight: 700 }}>Daily limit reached</p>
+                <p style={{ margin: "0 0 0.8rem", fontSize: "0.9rem", opacity: 0.8 }}>Free users can add 2 entries per day. Upgrade to Pro for 10 daily entries and AI skin analysis.</p>
+                <a href="/dashboard/subscription" style={{ color: "#B91C1C", fontWeight: 700, textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "0.2rem" }}>Upgrade to Pro →</a>
+              </div>
+            ) : (
+              <span>{error}</span>
+            )}
+          </div>
+          <button onClick={() => setError(null)} style={{ background: "transparent", border: "none", color: "inherit", cursor: "pointer", opacity: 0.5 }}><X size={20} /></button>
+        </motion.div>
+      )}
+
+      {/* ✅ AI BRAIN ANALYSIS RESULTS */}
+      {historyAnalysis && (
+        <motion.div
+          initial={{ opacity: 0, height: 0 }}
+          animate={{ opacity: 1, height: "auto" }}
+          style={{
+            background: "#1c1917",
+            borderRadius: "24px",
+            padding: "2rem",
+            marginBottom: "2.5rem",
+            color: "white",
+            position: "relative",
+            overflow: "hidden",
+            boxShadow: "0 20px 50px rgba(0,0,0,0.12)",
+            maxWidth: "800px"
+          }}
+        >
+          <div style={{ position: "absolute", top: "-30px", right: "-30px", opacity: 0.1 }}>
+            <Brain size={160} color="white" />
+          </div>
+          
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "1.5rem" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+              <Brain size={20} color="#c8473a" />
+              <span style={{ fontSize: "0.75rem", letterSpacing: "0.15em", textTransform: "uppercase", fontWeight: 700, color: "#c8473a" }}>Mirha Brain Analysis</span>
+            </div>
+            <button onClick={() => setHistoryAnalysis(null)} style={{ background: "transparent", border: "none", color: "white", opacity: 0.5, cursor: "pointer" }}><X size={18} /></button>
+          </div>
+
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "1.5rem" }}>
+            <div>
+              <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "0.5rem", color: "rgba(255,255,255,0.6)", fontSize: "0.85rem" }}>
+                <TrendingUp size={14} /> Skin Trend
+              </div>
+              <p style={{ margin: 0, fontSize: "1.2rem", fontWeight: 500, fontFamily: "var(--dash-font-serif)" }}>{historyAnalysis.trend}</p>
+            </div>
+            <div>
+              <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "0.5rem", color: "rgba(255,255,255,0.6)", fontSize: "0.85rem" }}>
+                <Info size={14} /> Observation
+              </div>
+              <p style={{ margin: 0, fontSize: "1rem", lineHeight: 1.5, opacity: 0.9 }}>{historyAnalysis.observation}</p>
+            </div>
+            <div>
+              <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "0.5rem", color: "rgba(255,255,255,0.6)", fontSize: "0.85rem" }}>
+                <Lightbulb size={14} /> Expert Tip
+              </div>
+              <p style={{ margin: 0, fontSize: "1rem", lineHeight: 1.5, opacity: 0.9, color: "#fbd3d0" }}>{historyAnalysis.tip}</p>
+            </div>
+          </div>
+        </motion.div>
+      )}
 
       {showNewEntry && (
         <motion.div
@@ -300,7 +437,7 @@ export function SkinJournalClient({ initialEntries, isPro }: { initialEntries: a
           )}
           {entries.map(entry => {
             const dateObj = new Date(entry.date);
-            const month = dateObj.toLocaleString('default', { month: 'short' });
+            const month = dateObj.toLocaleString('en-US', { month: 'short' });
             const day = dateObj.getDate();
 
             return (
@@ -339,8 +476,19 @@ export function SkinJournalClient({ initialEntries, isPro }: { initialEntries: a
                   )}
 
                   {entry.aiAnalysis && (
-                    <div style={{ fontSize: "0.85rem", color: "#9333ea", display: "flex", gap: "0.5rem", alignItems: "center", marginBottom: "0.8rem" }}>
-                      <Sparkles size={14} /> AI Analyzed
+                    <div style={{ 
+                      fontSize: "0.85rem", 
+                      color: "#9333ea", 
+                      display: "flex", 
+                      gap: "0.5rem", 
+                      alignItems: "flex-start", 
+                      marginBottom: "0.8rem",
+                      background: "#f9f5ff",
+                      padding: "0.6rem",
+                      borderRadius: "8px"
+                    }}>
+                      <Sparkles size={14} style={{ marginTop: "2px" }} /> 
+                      <span>{entry.aiAnalysis}</span>
                     </div>
                   )}
 

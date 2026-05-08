@@ -2,198 +2,168 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, LayoutDashboard, Sparkles, BookOpen, Crown, Search } from "lucide-react";
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { logoutAction } from "@/app/(saas)/actions";
+import { LogOut } from "lucide-react";
+
+const NAV = [
+  {
+    label: "Main",
+    items: [
+      { href: "/dashboard", label: "Overview", icon: <OverviewIcon /> },
+      { href: "/dashboard/routines", label: "My Routines", icon: <RoutinesIcon /> },
+      { href: "/dashboard/journal", label: "Skin Journal", icon: <JournalIcon /> },
+    ],
+  },
+  {
+    label: "Tools",
+    items: [
+      { href: "/dashboard/search", label: "Search Guide", icon: <SearchIcon /> },
+      { href: "/dashboard/subscription", label: "Subscription", icon: <SubIcon /> },
+    ],
+  },
+];
 
 export function SaasSidebar() {
   const pathname = usePathname();
-  const [isOpen, setIsOpen] = useState(false);
-
-  // Close sidebar on mobile when navigating
-  useEffect(() => {
-    setIsOpen(false);
-  }, [pathname]);
-
-  const links: {
-    href: string;
-    label: string;
-    icon: any;
-    badge?: string;
-  }[] = [
-      { href: "/dashboard", label: "Overview", icon: LayoutDashboard },
-      { href: "/dashboard/routines", label: "My Routines", icon: Sparkles },
-      { href: "/dashboard/journal", label: "Skin Journal", icon: BookOpen },
-      { href: "/dashboard/search", label: "Search Guide", icon: Search },
-      { href: "/dashboard/subscription", label: "Subscription", icon: Crown },
-    ];
-
-  const sidebarContent = (
-    <>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.5rem" }}>
-        <Link href="/dashboard" style={{
-          fontFamily: "'Bebas Neue', sans-serif",
-          fontSize: "2rem",
-          letterSpacing: "0.08em",
-          textDecoration: "none",
-          color: "var(--black)",
-        }}>
-          MIRHA &amp; CO.
-        </Link>
-        <button
-          className="mobile-only"
-          onClick={() => setIsOpen(false)}
-          style={{ background: "transparent", border: "none", cursor: "pointer", color: "var(--ink)" }}
-        >
-          <X size={24} />
-        </button>
-      </div>
-      <Link href="/" style={{ color: "var(--muted)", textDecoration: "none", fontSize: "0.85rem", fontWeight: 500, display: "flex", alignItems: "center", gap: "0.4rem", marginBottom: "3rem" }}>
-        &larr; Back to Shop
-      </Link>
-
-      <nav style={{ display: "flex", flexDirection: "column", gap: "0.8rem", flex: 1 }}>
-        {links.map(link => {
-          const isActive = pathname === link.href;
-          const Icon = link.icon;
-          return (
-            <Link
-              key={link.href}
-              href={link.href}
-              style={{
-                textDecoration: "none",
-                color: isActive ? "var(--rose)" : "var(--muted)",
-                background: isActive ? "var(--sand)" : "transparent",
-                fontWeight: isActive ? 600 : 500,
-                fontSize: "0.95rem",
-                padding: "0.8rem 1rem",
-                borderRadius: "10px",
-                display: "flex",
-                alignItems: "center",
-                gap: "0.8rem",
-                transition: "all 0.2s"
-              }}
-            >
-              <Icon size={18} color={isActive ? "var(--rose)" : "var(--muted)"} />
-              {link.label}
-              {link.badge && (
-                <span style={{
-                  marginLeft: "auto",
-                  background: "var(--rose)",
-                  color: "white",
-                  fontSize: "0.6rem",
-                  padding: "0.2rem 0.4rem",
-                  borderRadius: "4px",
-                  fontWeight: 700,
-                  letterSpacing: "0.05em"
-                }}>{link.badge}</span>
-              )}
-            </Link>
-          );
-        })}
-      </nav>
-
-
-    </>
-  );
 
   return (
-    <>
-      {/* Mobile Header */}
-      <div className="mobile-header" style={{
-        display: "none",
-        padding: "1rem 1.5rem",
-        borderBottom: "1px solid var(--rule)",
-        background: "var(--white)",
-        alignItems: "center",
-        justifyContent: "space-between",
-        position: "sticky",
-        top: 0,
-        zIndex: 40
-      }}>
-        <Link href="/dashboard" style={{
-          fontFamily: "'Bebas Neue', sans-serif",
-          fontSize: "1.8rem",
-          letterSpacing: "0.08em",
-          textDecoration: "none",
-          color: "var(--black)",
-        }}>
+    <aside className="dash-sidebar">
+      {/* Brand */}
+      <div className="dash-sidebar-brand">
+        <Link href="/dashboard" className="dash-sidebar-brand-name">
           MIRHA &amp; CO.
         </Link>
-        <button
-          onClick={() => setIsOpen(true)}
-          style={{ background: "transparent", border: "none", cursor: "pointer", color: "var(--ink)" }}
-        >
-          <Menu size={24} />
-        </button>
+        <Link href="/" className="dash-back-link">
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+            <path d="M6.5 1.5L3 5l3.5 3.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+          Back to Shop
+        </Link>
       </div>
 
-      {/* Desktop Sidebar */}
-      <aside className="desktop-sidebar" style={{
-        width: "260px",
-        borderRight: "1px solid var(--rule)",
-        padding: "2rem 1.5rem",
-        display: "flex",
-        flexDirection: "column",
-        background: "var(--white)",
-        height: "100vh",
-        position: "sticky",
-        top: 0
+      {/* Nav */}
+      <nav className="dash-nav">
+        {NAV.map((section) => (
+          <div key={section.label}>
+            <p className="dash-nav-label">{section.label}</p>
+            {section.items.map((item) => {
+              const isActive =
+                item.href === "/dashboard"
+                  ? pathname === "/dashboard"
+                  : pathname.startsWith(item.href);
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={`dash-nav-link${isActive ? " active" : ""}`}
+                >
+                  <span className="dash-nav-icon">{item.icon}</span>
+                  {item.label}
+                </Link>
+              );
+            })}
+          </div>
+        ))}
+      </nav>
+
+      {/* Footer upgrade nudge + Sign Out */}
+      <div className="dash-sidebar-footer" style={{ 
+          paddingBottom: '2.5rem',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '1rem'
       }}>
-        {sidebarContent}
-      </aside>
+        <Link href="/dashboard/subscription" style={{
+          display: "block",
+          background: "var(--dash-accent)",
+          color: "white",
+          padding: "1rem",
+          borderRadius: "18px",
+          textDecoration: "none",
+          fontSize: "0.85rem",
+          fontWeight: 600,
+          textAlign: "center",
+          boxShadow: "0 8px 20px rgba(200, 71, 58, 0.15)"
+        }}>
+          Upgrade to Pro
+        </Link>
 
-      {/* Mobile Sidebar Overlay */}
-      <AnimatePresence>
-        {isOpen && (
-          <>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setIsOpen(false)}
-              style={{
-                position: "fixed",
-                inset: 0,
-                background: "rgba(0,0,0,0.5)",
-                backdropFilter: "blur(4px)",
-                zIndex: 50
-              }}
-            />
-            <motion.aside
-              initial={{ x: "-100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "-100%" }}
-              transition={{ type: "spring" as const, stiffness: 300, damping: 30 }}
-              style={{
-                position: "fixed",
-                top: 0,
-                left: 0,
-                bottom: 0,
-                width: "280px",
-                background: "var(--white)",
-                zIndex: 51,
-                padding: "2rem 1.5rem",
-                display: "flex",
-                flexDirection: "column",
-                boxShadow: "20px 0 50px rgba(0,0,0,0.1)"
-              }}
-            >
-              {sidebarContent}
-            </motion.aside>
-          </>
-        )}
-      </AnimatePresence>
+        <button 
+          onClick={() => logoutAction()}
+          style={{
+            background: "transparent",
+            border: "1px solid var(--dash-border)",
+            borderRadius: "18px",
+            padding: "0.8rem",
+            color: "var(--dash-muted)",
+            fontSize: "0.85rem",
+            fontWeight: 600,
+            cursor: "pointer",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "0.5rem",
+            transition: "all 0.2s"
+          }}
+          onMouseOver={(e) => {
+            e.currentTarget.style.background = "rgba(0,0,0,0.03)";
+            e.currentTarget.style.color = "var(--dash-ink)";
+          }}
+          onMouseOut={(e) => {
+            e.currentTarget.style.background = "transparent";
+            e.currentTarget.style.color = "var(--dash-muted)";
+          }}
+        >
+          <LogOut size={16} /> Sign Out
+        </button>
+      </div>
+    </aside>
+  );
+}
 
-      <style>{`
-        @media (max-width: 768px) {
-          .desktop-sidebar { display: none !important; }
-          .mobile-header { display: flex !important; }
-        }
-        @media (min-width: 769px) {
-          .mobile-only { display: none !important; }
-        }
-      `}</style>
-    </>
+// ── ICONS ────────────────────────────────────────────────────────────────────
+function OverviewIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="1" y="1" width="6" height="6" rx="1.5" />
+      <rect x="9" y="1" width="6" height="6" rx="1.5" />
+      <rect x="1" y="9" width="6" height="6" rx="1.5" />
+      <rect x="9" y="9" width="6" height="6" rx="1.5" />
+    </svg>
+  );
+}
+
+function RoutinesIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M2 8a6 6 0 1 0 12 0A6 6 0 0 0 2 8z" />
+      <path d="M8 5v3l2 2" />
+    </svg>
+  );
+}
+
+function JournalIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M4 1h8a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z" />
+      <path d="M5.5 5h5M5.5 8h5M5.5 11h3" />
+    </svg>
+  );
+}
+
+function SearchIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="7" cy="7" r="4.5" />
+      <path d="M10.5 10.5L14 14" />
+    </svg>
+  );
+}
+
+function SubIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M8 1l1.854 4.146L14 6l-3 2.854.708 4.146L8 11l-3.708 2L5 8.854 2 6l4.146-.854L8 1z" />
+    </svg>
   );
 }

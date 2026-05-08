@@ -3,6 +3,10 @@
 import { getSession, logout } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
+import { aiSearch, analyzeSkinJournal } from "@/lib/ai";
+import { SEARCH_INDEX } from "@/lib/searchIndex";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
 
 export async function saveRoutine(name: string, steps: string[]) {
@@ -47,25 +51,87 @@ export async function saveRoutine(name: string, steps: string[]) {
   revalidatePath("/dashboard/routines");
 }
 
-export async function updateRoutine(id: string, name: string, steps: string[]) {
+export async function deleteRoutine(id: string) {
   const session = await getSession();
   if (!session) throw new Error("Unauthorized");
 
-  await prisma.routine.update({
-    where: { id },
-    data: { name, routine: JSON.stringify(steps) }
+  // ✅ CHECK IF ROUTINE BELONGS TO THIS USER
+  const existingRoutine = await prisma.routine.findFirst({
+    where: {
+      id,
+      userId: session.userId
+    }
+  });
+
+  if (!existingRoutine) {
+    throw new Error("Routine not found");
+  }
+
+  // ✅ DELETE THE ROUTINE
+  await prisma.routine.delete({
+    where: { id }
   });
 
   revalidatePath("/dashboard/routines");
 }
 
-export async function deleteRoutine(id: string) {
+export async function updateRoutine(id: string, name: string, steps: string[]) {
   const session = await getSession();
   if (!session) throw new Error("Unauthorized");
 
-  await prisma.routine.delete({ where: { id } });
+  const existingRoutine = await prisma.routine.findFirst({
+    where: { id, userId: session.userId }
+  });
+
+  if (!existingRoutine) throw new Error("Routine not found");
+
+  await prisma.routine.update({
+    where: { id },
+    data: {
+      name,
+      routine: JSON.stringify(steps)
+    }
+  });
 
   revalidatePath("/dashboard/routines");
+}
+
+export async function toggleRoutineStep(routineId: string, stepIndex: number, completed: boolean) {
+  const session = await getSession();
+  if (!session) throw new Error("Unauthorized");
+
+  const routine = await prisma.routine.findUnique({
+    where: { id: routineId }
+  });
+
+  if (!routine || routine.userId !== session.userId) {
+    throw new Error("Routine not found");
+  }
+
+  const today = new Date().toISOString().split("T")[0];
+  let metadata = routine.metadata ? JSON.parse(routine.metadata) : { logs: {} };
+  
+  if (!metadata.logs) metadata.logs = {};
+  if (!metadata.logs[today]) metadata.logs[today] = [];
+
+  let completedSteps: number[] = metadata.logs[today];
+
+  if (completed) {
+    if (!completedSteps.includes(stepIndex)) {
+      completedSteps.push(stepIndex);
+    }
+  } else {
+    completedSteps = completedSteps.filter((idx: number) => idx !== stepIndex);
+  }
+
+  metadata.logs[today] = completedSteps;
+
+  await prisma.routine.update({
+    where: { id: routineId },
+    data: { metadata: JSON.stringify(metadata) }
+  });
+
+  revalidatePath("/dashboard");
 }
 
 export async function saveJournalEntry(note: string, rating: number, photos: string = "[]", aiAnalysis: string | null = null) {
@@ -78,7 +144,7 @@ export async function saveJournalEntry(note: string, rating: number, photos: str
   });
 
   const isPaid = subscription?.tier === "pro" && subscription?.status === "active";
-  const maxEntriesPerDay = isPaid ? 10 : 1;
+  const maxEntriesPerDay = isPaid ? 10 : 2;
 
   // ✅ RATE LIMITING
   const today = new Date();
@@ -138,12 +204,79 @@ export async function getDashboardData() {
       orderBy: { date: "desc" }
     });
 
+    // ── STATS LOGIC ──────────────────────────────────────────────────────────
+    
+    // 1. Journal Count
+    const journalCount = await prisma.skinJournal.count({
+      where: { userId: session.userId }
+    });
+
+    // 2. Skin Score (Average of last 5 ratings * 20 for %)
+    const recentEntries = await prisma.skinJournal.findMany({
+      where: { userId: session.userId },
+      take: 5,
+      orderBy: { date: "desc" },
+      select: { rating: true }
+    });
+    const avgRating = recentEntries.length > 0 
+      ? recentEntries.reduce((acc, curr) => acc + (curr.rating || 0), 0) / recentEntries.length 
+      : 0;
+    const skinScore = Math.round(avgRating * 20);
+
+    // 3. Streak (Calculate from metadata logs)
+    let routineStreak = 0;
+    if (routines.length > 0) {
+      const logs = routines[0].metadata ? JSON.parse(routines[0].metadata).logs || {} : {};
+      const dates = Object.keys(logs).sort((a, b) => new Date(b).getTime() - new Date(a).getTime());
+      
+      const today = new Date().toISOString().split("T")[0];
+      const yesterday = new Date(Date.now() - 86400000).toISOString().split("T")[0];
+      
+      let current = dates.includes(today) ? today : dates.includes(yesterday) ? yesterday : null;
+      
+      if (current) {
+        routineStreak = 1;
+        let checkDate = new Date(current);
+        while (true) {
+          checkDate.setDate(checkDate.getDate() - 1);
+          const formatted = checkDate.toISOString().split("T")[0];
+          if (dates.includes(formatted)) {
+            routineStreak++;
+          } else {
+            break;
+          }
+        }
+      }
+    }
+
+    // 4. Completed Goals (Total steps completed today)
+    const todayStr = new Date().toISOString().split("T")[0];
+    let completedGoals = 0;
+    routines.forEach((r: any) => {
+      const logs = r.metadata ? JSON.parse(r.metadata).logs || {} : {};
+      if (logs[todayStr]) {
+        completedGoals += logs[todayStr].length;
+      }
+    });
+
     return {
-      routines: routines.map((r: any) => ({ id: r.id, name: r.name, steps: JSON.parse(r.routine) })),
+      routines: routines.map((r: any) => ({ 
+        id: r.id, 
+        name: r.name, 
+        steps: JSON.parse(r.routine),
+        metadata: r.metadata ? JSON.parse(r.metadata) : { logs: {} }
+      })),
       journal: recentJournal,
+      stats: {
+        routineStreak,
+        journalCount,
+        skinScore,
+        completedGoals
+      },
       user: session.user
     };
   } catch (error) {
+    console.error("Dashboard data error:", error);
     return { error: "Failed to fetch data" };
   }
 }
@@ -194,36 +327,7 @@ export async function searchProducts(query: string) {
 }
 
 
-
-import { GoogleGenAI } from "@google/genai";
-
-export async function analyzeSkinPhoto(photoBase64: string) {
-  if (!process.env.GEMINI_API_KEY) {
-    return "AI Analysis is currently disabled (Missing API Key). Please add GEMINI_API_KEY to your environment variables.";
-  }
-
-  try {
-    const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
-    // Remove the data URL prefix if present (e.g. data:image/jpeg;base64,)
-    const base64Data = photoBase64.replace(/^data:image\/\w+;base64,/, "");
-
-    const response = await ai.models.generateContent({
-      model: "gemini-2.5-flash",
-      contents: [
-        "Act as an esthetician. Analyze this skin photo. Comment briefly on skin barrier health, hydration, visible redness, and congestion. Provide 2 short, actionable skincare tips based on the image. Do not provide medical diagnoses. Keep the total response under 4 sentences.",
-        { inlineData: { data: base64Data, mimeType: "image/jpeg" } }
-      ]
-    });
-
-    return response.text;
-  } catch (error) {
-    console.error("AI Analysis Error:", error);
-    return "Failed to analyze photo. Please ensure the image is clear and try again later.";
-  }
-}
-
 import { hashPassword, createSession } from "@/lib/auth";
-import { redirect } from "next/navigation";
 import crypto from "crypto";
 import { headers } from "next/headers";
 import { Resend } from "resend";
@@ -425,4 +529,85 @@ export async function resetPasswordAction(_state: AuthState, formData: FormData)
 export async function logoutAction() {
   await logout();
   redirect("/login");
+}
+// ? BRAIN: AI SEARCH ADVICE
+export async function getAISearchAdvice(query: string) {
+  const session = await getSession();
+  if (!session) return null;
+
+  // 🔓 TEST MODE: Bypassing DB call due to connection issues
+  // const sub = await prisma.subscription.findUnique({ where: { userId: session.userId } });
+  const isPro = true;
+  
+  // 🔓 TEST MODE: Bypassing Pro check
+  // if (!isPro) return { error: 'UPGRADE_PRO' };
+
+  return await aiSearch(query, SEARCH_INDEX);
+}
+
+// ? BRAIN: JOURNAL ANALYSIS
+export async function getJournalAnalysis() {
+  const session = await getSession();
+  if (!session) return null;
+
+  const sub = await prisma.subscription.findUnique({ where: { userId: session.userId } });
+  const isPro = sub?.tier === 'pro' && sub?.status === 'active';
+
+  // 🔓 TEST MODE: Bypassing Pro check
+  // if (!isPro) return { error: 'UPGRADE_PRO' };
+
+  const entries = await prisma.skinJournal.findMany({
+    where: { userId: session.userId },
+    orderBy: { date: 'desc' },
+    take: 7
+  });
+
+  if (entries.length < 3) return { error: 'NOT_ENOUGH_DATA' };
+
+  return await analyzeSkinJournal(entries);
+}
+
+// ? BRAIN: PHOTO/NOTE SKIN ANALYSIS
+export async function analyzeSkinPhoto(note: string, photoBase64?: string) {
+  const session = await getSession();
+  if (!session) return null;
+
+  const sub = await prisma.subscription.findUnique({ where: { userId: session.userId } });
+  const isPro = sub?.tier === 'pro' && sub?.status === 'active';
+  
+  // 🔓 TEST MODE: Bypassing Pro check
+  // if (!isPro) return { error: 'UPGRADE_PRO' };
+
+  if (!process.env.GEMINI_API_KEY) {
+    return "AI Analysis is currently disabled (Missing API Key).";
+  }
+
+  try {
+    const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+
+    let contents: any[] = [];
+    const prompt = `Act as an expert esthetician. Analyze this skin journal entry. 
+    User note: "${note}"
+    ${photoBase64 ? "Analyze the attached photo as well. Comment on skin barrier health, hydration, visible redness, and congestion." : ""}
+    Provide a professional, brief analysis (2-3 sentences max) with actionable skincare advice. 
+    Do not provide medical diagnoses.`;
+
+    if (photoBase64) {
+      const base64Data = photoBase64.replace(/^data:image\/\w+;base64,/, "");
+      contents = [
+        prompt,
+        { inlineData: { data: base64Data, mimeType: "image/jpeg" } }
+      ];
+    } else {
+      contents = [prompt];
+    }
+
+    const result = await model.generateContent(contents);
+    const response = await result.response;
+    return response.text();
+  } catch (error) {
+    console.error('AI Analysis failed', error);
+    return 'Unable to analyze skin right now.';
+  }
 }

@@ -1150,6 +1150,77 @@ export const PRODUCTS = [
     watchOuts: ["Affordable concealers can oxidise or look ashy if the undertone is wrong."],
     image: "https://m.media-amazon.com/images/I/31AbjJYAMdL._SY300_SX300_QL70_ML2_.jpg",
     link: "https://www.amazon.in/dp/B07WTNH18L?tag=skinwithtanvi-21"
-  }
-
+  },
+  {
+    id: 1001,
+    name: "Dot & Key Barrier Repair Ceramides Moisturizer",
+    brand: "Dot & Key",
+    category: "Skincare",
+    subcat: "Moisturizer",
+    mrp: 595,
+    price: 395,
+    rating: 4.5,
+    reviews: "1.2k",
+    asin: "B0B7H8S7H1",
+    badge: "Barrier Rescue",
+    description: "Intense hydration for very dry or compromised skin. Fragrance-free and rice-water based with 5 essential ceramides.",
+    specs: {
+      "Skin Type": "Dry, Sensitive",
+      "Key Ingredient": "Ceramides, Rice Water, Hyaluronic Acid",
+      "Texture": "Cream",
+      "Use": "AM & PM"
+    },
+    tags: ["dot and key", "ceramides", "dry skin", "moisturizer", "barrier repair"],
+    concerns: ["dry skin", "sensitive skin"],
+    image: "/products/dot-key-barrier.jpg",
+    link: "https://amzn.to/3Qa5pau"
+  },
+  {
+    id: 1002,
+    name: "Re'equil Ultra Matte Dry Touch Sunscreen",
+    brand: "Re'equil",
+    category: "Skincare",
+    subcat: "Sunscreen",
+    mrp: 780,
+    price: 780,
+    rating: 4.6,
+    reviews: "15k",
+    asin: "B07G7N9B7N",
+    badge: "Elite Choice",
+    description: "The highest-rated sunscreen for Indian summers. No white cast, waterproof, and extremely matte finish.",
+    specs: {
+      "Skin Type": "Oily, Combination",
+      "Key Ingredient": "UV Filters",
+      "Texture": "Cream-to-Powder",
+      "SPF": "50 PA++++"
+    },
+    tags: ["reequil", "sunscreen", "matte", "oily skin", "waterproof"],
+    concerns: ["sunscreen", "oily skin"],
+    image: "/products/reequil-sunscreen.jpg",
+    link: "https://amzn.to/3OcSTGJ"
+  },
+  {
+    id: 1003,
+    name: "Minimalist 10% Niacinamide Serum",
+    brand: "Minimalist",
+    category: "Skincare",
+    subcat: "Serum",
+    mrp: 599,
+    price: 599,
+    rating: 4.3,
+    reviews: "12k",
+    asin: "B08F9M6N8L",
+    badge: "Oil Control",
+    description: "A cult-favorite for oil control and fading acne marks. Formulated with high-grade Niacinamide and Zinc.",
+    specs: {
+      "Skin Type": "Oily, Combination",
+      "Key Ingredient": "Niacinamide, Zinc PCA",
+      "Texture": "Serum",
+      "Use": "AM & PM"
+    },
+    tags: ["minimalist", "niacinamide", "oil control", "marks"],
+    concerns: ["oily skin", "acne marks"],
+    image: "/products/minimalist-niacinamide.jpg",
+    link: "https://amzn.to/4ceFxl5"
+  },
 ];

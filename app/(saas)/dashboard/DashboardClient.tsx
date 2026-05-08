@@ -4,20 +4,42 @@
 import { motion } from "framer-motion";
 import { CheckCircle2, CalendarPlus, ChevronRight } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { toggleRoutineStep } from "../actions";
 
 export function DashboardClient({ user, routines, recentJournal }: any) {
+  const [isPending, startTransition] = React.useTransition();
 
+  const firstRoutine = routines && routines.length > 0 ? routines[0] : null;
+  const today = new Date().toISOString().split("T")[0];
+  
+  const [checkedSteps, setCheckedSteps] = useState<number[]>(() => {
+    if (!firstRoutine || !firstRoutine.metadata?.logs?.[today]) return [];
+    return firstRoutine.metadata.logs[today];
+  });
 
-  // Dummy state for interactivity - for today's routine tracking
-  const [checkedSteps, setCheckedSteps] = useState<number[]>([]);
+  // Steps are now managed via routines prop and server actions
 
   const toggleStep = (index: number) => {
-    if (checkedSteps.includes(index)) {
-      setCheckedSteps(checkedSteps.filter(i => i !== index));
-    } else {
-      setCheckedSteps([...checkedSteps, index]);
-    }
+    if (!firstRoutine) return;
+    const isChecked = checkedSteps.includes(index);
+    
+    // Optimistic UI update
+    const updatedSteps = isChecked 
+      ? checkedSteps.filter(i => i !== index)
+      : [...checkedSteps, index];
+    
+    setCheckedSteps(updatedSteps);
+
+    startTransition(async () => {
+      try {
+        await toggleRoutineStep(firstRoutine.id, index, !isChecked);
+      } catch (error) {
+        console.error("Failed to toggle step:", error);
+        // Rollback on error
+        setCheckedSteps(checkedSteps);
+      }
+    });
   };
 
   const containerVariants = {
@@ -36,7 +58,6 @@ export function DashboardClient({ user, routines, recentJournal }: any) {
   };
 
   // Get first routine for morning checklist, or default if none
-  const firstRoutine = routines && routines.length > 0 ? routines[0] : null;
   const steps = firstRoutine ? firstRoutine.steps : [
     "Cleanser: CeraVe Hydrating",
     "Serum: Vitamin C",
@@ -54,7 +75,7 @@ export function DashboardClient({ user, routines, recentJournal }: any) {
       <motion.header variants={itemVariants} style={{ marginBottom: "3rem" }}>
         <h1 style={{
           fontFamily: "'DM Serif Display', serif",
-          fontSize: "2.8rem",
+          fontSize: "clamp(2rem, 6vw, 2.8rem)",
           fontWeight: 400,
           margin: "0 0 0.5rem",
           color: "var(--ink)",

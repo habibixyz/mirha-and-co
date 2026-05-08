@@ -50,11 +50,12 @@ function cleanTags(tags: any[]): string[] {
 ───────────────────────────── */
 const SYNONYMS: Record<string, string[]> = {
   // Skin concerns
-  acne: ["acne", "pimple", "breakout", "breakouts", "blackheads", "whiteheads", "zits", "spots"],
-  oily: ["oily", "oil", "sebum", "sebaceous", "greasy", "shine", "shiny"],
-  dry: ["dry", "dryness", "dehydrated", "dehydration", "flaky", "tight", "parched"],
+  acne: ["acne", "pimple", "breakout", "breakouts", "blackheads", "whiteheads", "zits", "spots", "active acne", "marks", "salicylic acid", "benzoyl peroxide", "pimple patch"],
+  product: ["product", "buy", "shop", "recommendation", "best"],
+  oily: ["oily", "oil", "sebum", "sebaceous", "greasy", "shine", "shiny", "pores", "blackheads", "salicylic acid", "niacinamide", "clay"],
+  dry: ["dry", "dryness", "dehydrated", "dehydration", "flaky", "tight", "parched", "barrier", "ceramides", "hyaluronic acid", "squalane", "moisturizer"],
   sensitive: ["sensitive", "irritated", "irritation", "reactive", "delicate"],
-  pigmentation: ["pigmentation", "dark spots", "hyperpigmentation", "acne marks", "post-acne", "tan", "discoloration"],
+  pigmentation: ["pigmentation", "dark spots", "hyperpigmentation", "acne marks", "post-acne", "tan", "discoloration", "marks", "melasma", "tanning", "vitamin c", "arbutin", "kojic", "glycolic"],
   aging: ["aging", "anti-aging", "fine lines", "wrinkles", "mature", "age spots"],
   
   // Ingredients
@@ -71,6 +72,16 @@ const SYNONYMS: Record<string, string[]> = {
   // Skin types
   combination: ["combination", "combo", "mixed"],
   normal: ["normal", "balanced"],
+};
+
+// 🎯 SMART CONCERN MAPPING: Maps user feelings to scientific ingredients
+const CONCERN_MAP: Record<string, string[]> = {
+  dry: ["ingredient-hyaluronic", "ingredient-ceramide", "ingredient-squalane"],
+  oily: ["ingredient-niacinamide", "ingredient-salicylic", "ingredient-clay"],
+  pigmentation: ["ingredient-vitamin-c", "ingredient-arbutin", "ingredient-kojic", "ingredient-glycolic"],
+  acne: ["ingredient-salicylic", "routine-acne-basic", "ingredient-benzoyl"],
+  aging: ["ingredient-retinol", "ingredient-peptides", "routine-anti-aging"],
+  glow: ["ingredient-vitamin-c", "ingredient-glycolic", "guide-why-skin-looks-dull"],
 };
 
 /* ─────────────────────────────
@@ -139,11 +150,27 @@ const staticItems: SearchItem[] = [
     ]),
   },
   {
+    id: "routine-pigmentation",
+    type: "routine",
+    title: "Pigmentation & Dark Spot Routine",
+    description: "A specialized PM routine to fade acne marks and melasma using targeted actives.",
+    url: "/dashboard/search?q=pigmentation+guide",
+    tags: cleanTags(["routine", "pigmentation", "dark spots", "marks", "fading", "brightening"]),
+  },
+  {
+    id: "routine-oily-basic",
+    type: "routine",
+    title: "Oily Skin Morning Essentials",
+    description: "A quick 3-step routine designed to control sebum and keep you matte all day.",
+    url: "/dashboard/search?q=oily+routine",
+    tags: cleanTags(["routine", "oily skin", "morning", "sebum control", "matte"]),
+  },
+  {
     id: "ingredient-niacinamide",
     type: "ingredient",
     title: "Niacinamide",
     description: "Useful for oil control, pores, barrier support and acne marks. Also known as Vitamin B3.",
-    url: "/search?q=niacinamide",
+    url: "/dashboard/search?q=niacinamide",
     tags: cleanTags([
       "niacinamide",
       "vitamin b3",
@@ -153,6 +180,113 @@ const staticItems: SearchItem[] = [
       "acne marks",
       "oil control",
     ]),
+  },
+  {
+    id: "ingredient-salicylic",
+    type: "ingredient",
+    title: "Salicylic Acid (BHA)",
+    description: "The gold standard for oily and acne-prone skin. Deeply cleanses pores and prevents breakouts.",
+    url: "/dashboard/search?q=salicylic",
+    tags: cleanTags(["ingredient", "oily skin", "acne", "bha", "pores", "blackheads"]),
+  },
+  {
+    id: "ingredient-clay",
+    type: "ingredient",
+    title: "Kaolin & Bentonite Clay",
+    description: "Natural minerals that absorb excess oil and detoxify the skin without stripping it.",
+    url: "/dashboard/search?q=clay",
+    tags: cleanTags(["ingredient", "oily skin", "clay", "sebum", "detox"]),
+  },
+  {
+    id: "ingredient-vitamin-c",
+    type: "ingredient",
+    title: "Vitamin C (L-Ascorbic Acid)",
+    description: "The gold standard for brightening skin and fading sun spots. Best used in the morning.",
+    url: "/dashboard/search?q=vitamin+c",
+    tags: cleanTags(["ingredient", "pigmentation", "brightening", "vitamin c", "glow"]),
+  },
+  {
+    id: "ingredient-arbutin",
+    type: "ingredient",
+    title: "Alpha Arbutin",
+    description: "A gentle yet effective skin brightener that specifically targets hyperpigmentation and acne marks.",
+    url: "/dashboard/search?q=arbutin",
+    tags: cleanTags(["ingredient", "pigmentation", "arbutin", "dark spots", "marks"]),
+  },
+  {
+    id: "ingredient-kojic",
+    type: "ingredient",
+    title: "Kojic Acid",
+    description: "Derived from mushrooms, this acid inhibits melanin production to fade dark spots and even skin tone.",
+    url: "/dashboard/search?q=kojic",
+    tags: cleanTags(["ingredient", "pigmentation", "kojic", "dark spots", "melasma"]),
+  },
+  {
+    id: "ingredient-retinol",
+    type: "ingredient",
+    title: "Retinol (Vitamin A)",
+    description: "The gold standard for anti-aging. Stimulates collagen and speeds up cell turnover to fade fine lines and acne marks.",
+    url: "/dashboard/search?q=retinol",
+    tags: cleanTags(["ingredient", "retinol", "anti-aging", "wrinkles", "fine lines", "vitamin a"]),
+  },
+  {
+    id: "ingredient-hyaluronic",
+    type: "ingredient",
+    title: "Hyaluronic Acid",
+    description: "A hydration powerhouse that holds 1000x its weight in water. Essential for dehydrated or dry skin.",
+    url: "/dashboard/search?q=hyaluronic",
+    tags: cleanTags(["ingredient", "dry skin", "hydration", "hyaluronic", "plumping"]),
+  },
+  {
+    id: "ingredient-ceramide",
+    type: "ingredient",
+    title: "Ceramides",
+    description: "Lipids that help form the skin's barrier and help skin retain moisture. Best for damaged barriers.",
+    url: "/dashboard/search?q=ceramide",
+    tags: cleanTags(["ingredient", "dry skin", "barrier repair", "ceramide", "sensitive"]),
+  },
+  {
+    id: "product-minimalist-niacinamide",
+    type: "product",
+    title: "Minimalist 10% Niacinamide Serum",
+    description: "A cult-favorite for oil control and fading acne marks. Best for oily to combination skin.",
+    url: "/product/B08F9M6N8L",
+    tags: cleanTags(["product", "minimalist", "niacinamide", "oil control", "marks"]),
+    price: 599,
+  },
+  {
+    id: "product-reequil-sunscreen",
+    type: "product",
+    title: "Re'equil Ultra Matte Dry Touch Sunscreen",
+    description: "The highest-rated sunscreen for Indian summers. No white cast, waterproof, and extremely matte.",
+    url: "/product/B07G7N9B7N",
+    tags: cleanTags(["product", "reequil", "sunscreen", "matte", "oily skin"]),
+    price: 780,
+  },
+  {
+    id: "product-dot-key-barrier",
+    type: "product",
+    title: "Dot & Key Barrier Repair Ceramides Moisturizer",
+    description: "Intense hydration for very dry or compromised skin. Fragrance-free and rice-water based.",
+    url: "/product/B0B7H8S7H1",
+    tags: cleanTags(["product", "dot and key", "ceramides", "dry skin", "moisturizer"]),
+    price: 395,
+  },
+  {
+    id: "routine-double-cleanse",
+    type: "routine",
+    title: "The Double Cleansing Protocol",
+    description: "How to properly remove water-resistant sunscreen and makeup without stripping your skin.",
+    url: "/dashboard/search?q=double+cleanse",
+    tags: cleanTags(["routine", "cleansing", "oil cleanser", "double cleanse", "clogged pores"]),
+  },
+  {
+    id: "guide-barrier-repair",
+    type: "guide",
+    title: "How to Repair a Damaged Skin Barrier — The 4-Week Protocol",
+    description: "Is your skin burning or red? Follow this 4-week protocol to fix your skin barrier fast.",
+    url: "/blog/damaged-skin-barrier-repair",
+    tags: cleanTags(["guide", "barrier repair", "sensitive skin", "redness", "burning"]),
   },
 ];
 
@@ -200,56 +334,53 @@ function expandTerms(query: string): string[] {
 /**
  * Calculate relevance score for an item against search terms
  */
-function scoreItem(item: SearchItem, terms: string[]): number {
+function scoreItem(item: SearchItem, terms: string[], query: string): number {
   const title = normalize(item.title);
   const desc = normalize(item.description);
   const tagsStr = item.tags.join(" ");
 
   let score = 0;
 
-  terms.forEach((term) => {
-    // Title matches (highest priority)
-    if (title === term) {
-      score += 20; // Exact match
-    } else if (title.startsWith(term)) {
-      score += 15; // Prefix match
-    } else if (title.includes(term)) {
-      score += 10; // Substring match
-    }
+  const normalizedQuery = normalize(query);
 
-    // Tag matches
-    if (item.tags.some((tag) => tag === term)) {
-      score += 8; // Exact tag
-    } else if (item.tags.some((tag) => tag.includes(term))) {
-      score += 5; // Partial tag
-    }
-
-    // Description matches (lowest priority)
-    if (desc.includes(term)) {
-      score += 3;
+  // 🧠 CONCERN MAPPING BOOST
+  Object.entries(CONCERN_MAP).forEach(([concern, relatedIds]) => {
+    if (normalizedQuery.includes(concern) && relatedIds.includes(item.id)) {
+      score += 50; // Huge boost for items that scientifically solve the user's "feeling"
     }
   });
 
-  // Type weighting (editorial content ranks higher)
+  terms.forEach((term) => {
+    const isTitleMatch = title.includes(term);
+    const isTagMatch = item.tags.some((tag) => tag.includes(term));
+    const isDescMatch = desc.includes(term);
+
+    if (isTitleMatch) score += 15;
+    if (isTagMatch) score += 10;
+    if (isDescMatch) score += 5;
+
+    // Exact matches get massive boosts
+    if (title === term) score += 30;
+    if (item.tags.includes(term)) score += 20;
+  });
+
+  // MULTI-TERM BOOST: If the query has multiple words, and we match many of them, boost exponentially
+  const matchedTermCount = terms.filter(
+    (t) => title.includes(t) || item.tags.some(tag => tag.includes(t)) || desc.includes(t)
+  ).length;
+
+  if (matchedTermCount > 1) {
+    score += Math.pow(matchedTermCount, 2) * 10;
+  }
+
+  // Type weighting (actionable items first)
   const typeWeight = {
-    guide: 3,
-    routine: 2,
-    ingredient: 1.5,
+    routine: 4,
+    ingredient: 3,
+    guide: 2,
     product: 1,
   };
   score *= typeWeight[item.type];
-
-  // Multi-term match boost (queries with multiple terms)
-  const matchedTermCount = terms.filter(
-    (t) => title.includes(t) || tagsStr.includes(t) || desc.includes(t)
-  ).length;
-
-  score += matchedTermCount * 3;
-
-  // Price relevance (if product and query contains price info)
-  if (item.price && item.price > 0) {
-    score += 0.5; // Small boost for products with valid prices
-  }
 
   return score;
 }
@@ -278,7 +409,7 @@ export function searchMirha(query: string, limit: number = 24): SearchItem[] {
   // Score all items
   const scored = SEARCH_INDEX.map((item) => ({
     item,
-    score: scoreItem(item, terms),
+    score: scoreItem(item, terms, query),
   }));
 
   // Filter (score > 0), sort, return top N

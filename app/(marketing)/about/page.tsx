@@ -4,6 +4,8 @@ export const metadata = {
     "Mirha & Co. is an independent beauty guide for Indian consumers, built around ingredient context, routine clarity, honest disclosures, and practical product recommendations.",
 };
 
+import Image from "next/image";
+
 export default function AboutPage() {
   return (
     <main>
@@ -23,10 +25,42 @@ export default function AboutPage() {
           font-family: var(--font-dm-sans), sans-serif;
         }
 
+        .img-wrap {
+          border-radius: 20px;
+          overflow: hidden;
+          box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+          background: #fff;
+          position: relative;
+        }
+
+        .hero-img {
+          height: 600px;
+          width: 100%;
+          grid-column: span 2;
+          margin-top: 4rem;
+        }
+
+        .side-img {
+          height: 400px;
+          width: 100%;
+          margin-bottom: 2rem;
+        }
+
+        .img-wrap img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .img-wrap:hover img {
+          transform: scale(1.05);
+        }
+
         .hero {
           background: var(--black);
           color: var(--white);
-          padding: 8rem 2.5rem 6rem;
+          padding: 6rem 2.5rem 4rem;
         }
 
         .hero-inner {
@@ -34,8 +68,8 @@ export default function AboutPage() {
           margin: 0 auto;
           display: grid;
           grid-template-columns: 1.1fr 0.9fr;
-          gap: 5rem;
-          align-items: end;
+          gap: 3rem;
+          align-items: start;
         }
 
         .eyebrow {
@@ -384,7 +418,8 @@ export default function AboutPage() {
           .hero-inner,
           .two-col,
           .cta-box {
-            grid-template-columns: 1fr;
+            grid-template-columns: 1fr !important;
+            gap: 2rem;
           }
 
           .hero {
@@ -395,6 +430,16 @@ export default function AboutPage() {
           .cta,
           .name-section {
             padding: 5rem 1.5rem;
+          }
+
+          .hero h1 {
+            font-size: clamp(3rem, 15vw, 5rem);
+          }
+
+          .hero-img {
+            height: 350px;
+            grid-column: span 1;
+            margin-top: 2rem;
           }
 
           .pillars,
@@ -464,6 +509,16 @@ export default function AboutPage() {
                 </div>
               </div>
             </div>
+
+            <div className="img-wrap hero-img">
+              <Image 
+                src="/images/about-skincare.png" 
+                alt="Aesthetic skincare setup" 
+                fill 
+                sizes="100vw"
+                priority
+              />
+            </div>
           </div>
         </section>
 
@@ -483,6 +538,14 @@ export default function AboutPage() {
             </div>
 
             <div className="body-copy">
+              <div className="img-wrap side-img">
+                <Image 
+                  src="/images/about-lifestyle.png" 
+                  alt="Personalized skincare routine" 
+                  fill 
+                  sizes="(max-width: 900px) 100vw, 40vw"
+                />
+              </div>
               <div className="note-box">
                 <p>
                   Mirha & Co. is not a dermatology clinic, and it does not replace medical advice. It is a practical research and shopping guide for people who want less confusion before buying.
@@ -513,6 +576,15 @@ export default function AboutPage() {
                 <br />
                 <span>before we recommend.</span>
               </h2>
+            </div>
+
+            <div className="img-wrap side-img" style={{ marginBottom: "3rem", height: "300px" }}>
+              <Image 
+                src="/images/about-hand.png" 
+                alt="Expertly curated products" 
+                fill 
+                sizes="100vw"
+              />
             </div>
 
             <div className="pillars">

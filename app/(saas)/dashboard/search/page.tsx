@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { getUserProfile } from "../../actions";
 import { SearchClient } from "./SearchClient";
 import { redirect } from "next/navigation";
@@ -9,7 +10,12 @@ export default async function SearchGuidePage() {
     redirect("/login");
   }
 
-  const isPro = user.subscription?.tier === "pro";
+  // 🔓 TEST MODE: Hardcoding Pro for testing
+  const isPro = true; // user.subscription?.tier === "pro";
 
-  return <SearchClient isPro={isPro} />;
+  return (
+    <Suspense fallback={<div>Loading search...</div>}>
+      <SearchClient isPro={isPro} />
+    </Suspense>
+  );
 }
