@@ -437,7 +437,7 @@ export function searchMirhaDebug(query: string, limit: number = 24) {
 
   const scored = SEARCH_INDEX.map((item) => ({
     item,
-    score: scoreItem(item, terms),
+    score: scoreItem(item, terms, query),
   }));
 
   const results = scored
