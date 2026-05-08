@@ -140,7 +140,14 @@ export function SkinJournalClient({ initialEntries, isPro }: { initialEntries: a
 
   return (
     <motion.div initial="hidden" animate="show" variants={containerVariants}>
-      <motion.header variants={itemVariants} style={{ marginBottom: "2.5rem", display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+      <motion.header variants={itemVariants} style={{ 
+        marginBottom: "2.5rem", 
+        display: "flex", 
+        justifyContent: "space-between", 
+        alignItems: "flex-start",
+        flexWrap: "wrap",
+        gap: "1.2rem"
+      }}>
         <div>
           <h1 style={{
             fontFamily: "'DM Serif Display', serif",
@@ -154,7 +161,7 @@ export function SkinJournalClient({ initialEntries, isPro }: { initialEntries: a
           </h1>
           <p style={{ color: "var(--muted)", margin: 0, fontSize: "1.05rem" }}>Track your skin's daily progress and reactions.</p>
         </div>
-        <div style={{ display: "flex", gap: "1rem" }}>
+        <div style={{ display: "flex", gap: "0.8rem", flexWrap: "wrap" }}>
           <motion.button
             onClick={handleAnalyzeHistory}
             disabled={isAnalyzingHistory}
