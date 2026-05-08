@@ -493,7 +493,7 @@ export function SkinJournalClient({ initialEntries, isPro }: { initialEntries: a
                   )}
 
                   <div style={{ display: "flex", gap: "2px" }}>
-                    {[...Array(5)].map((_, i) => (
+                    {[...Array(5)].map((_: any, i: number) => (
                       <Star key={i} size={14} fill={i < entry.rating ? "var(--rose)" : "transparent"} color={i < entry.rating ? "var(--rose)" : "var(--rule)"} />
                     ))}
                   </div>

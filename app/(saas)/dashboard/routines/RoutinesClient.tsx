@@ -53,7 +53,7 @@ export function RoutinesClient({ initialRoutines }: { initialRoutines: any[] }) 
   };
 
   const handleRemoveStep = (routineId: string, stepIdx: number) => {
-    setRoutines(routines.map(r => r.id === routineId ? { ...r, steps: r.steps.filter((_, idx) => idx !== stepIdx) } : r));
+    setRoutines(routines.map(r => r.id === routineId ? { ...r, steps: r.steps.filter((_: any, idx: number) => idx !== stepIdx) } : r));
   };
 
   const updateStep = (routineId: string, stepIdx: number, val: string) => {
