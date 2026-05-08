@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import { ArrowRight, Search } from "lucide-react";
-import { searchMirha } from "@/lib/searchEngine";
+import { searchMirha } from "@/lib/searchIndex";
 import { SearchItem } from "@/lib/searchIndex";
 
 const QUICK = [
