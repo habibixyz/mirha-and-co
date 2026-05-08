@@ -69,7 +69,7 @@ export function SkinJournalClient({ initialEntries, isPro }: { initialEntries: a
     try {
       const result = await analyzeSkinPhoto(note, photoBase64 || undefined);
       if (result && typeof result === 'object' && 'error' in result) {
-        setError(result.error);
+        setError((result as any).error);
       } else {
         setAiAnalysis(result as string ?? null);
       }
@@ -85,7 +85,7 @@ export function SkinJournalClient({ initialEntries, isPro }: { initialEntries: a
     }
     setIsAnalyzingHistory(true);
     try {
-      const result = await getJournalAnalysis();
+      const result: any = await getJournalAnalysis();
       if (result?.error) {
         if (result.error === "NOT_ENOUGH_DATA") setError("Please add at least 3 entries to unlock AI Trends.");
         else setError("Upgrade to Pro to unlock Mirha Brain analysis.");
