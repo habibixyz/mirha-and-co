@@ -316,5 +316,15 @@ export const POSTS: Post[] = [
     thumbnail: "RS",
     tags: ["routine", "oily skin", "dry skin", "combination skin", "sensitive skin", "beginner"],
   },
-  
+  {
+    category: "SKINCARE",
+    title: "Best Beginner Skincare Routine for India (2026) — 3 Products, Real Results",
+    excerpt: "You do not need 10 steps. You need 3 right products used consistently. The complete beginner skincare routine for Indian skin.",
+    slug: "beginner-skincare-routine-india",
+    readTime: "12 min",
+    date: "May 2026",
+    productCount: 10,
+    thumbnail: "BR",
+    tags: ["beginner", "routine", "cleanser", "moisturiser", "sunscreen", "budget", "under 1500"],
+  },
 ];

@@ -4,7 +4,7 @@ import { useState } from "react";
 import { AffiliateCard } from "@/components/AffiliateCard";
 import ProductModal from "@/components/ProductModal";
 
-const AFFILIATE_TAG = "mirhaandco-20"; // ← replace with your Amazon Associates tag
+const AFFILIATE_TAG = "skinwithtanvi-21"; // ← replace with your Amazon Associates tag
 
 
 export default function SkincarePost() {

@@ -72,6 +72,8 @@ const SYNONYMS: Record<string, string[]> = {
   // Skin types
   combination: ["combination", "combo", "mixed"],
   normal: ["normal", "balanced"],
+  beginner: ["beginner", "starter", "starting", "newbie", "basics", "simple", "minimum", "routine for beginners", "where to start"],
+  budget: ["budget", "affordable", "cheap", "under 1500", "under 2000", "low cost", "value"],
 };
 
 // 🎯 SMART CONCERN MAPPING: Maps user feelings to scientific ingredients
@@ -82,6 +84,8 @@ const CONCERN_MAP: Record<string, string[]> = {
   acne: ["ingredient-salicylic", "routine-acne-basic", "ingredient-benzoyl"],
   aging: ["ingredient-retinol", "ingredient-peptides", "routine-anti-aging"],
   glow: ["ingredient-vitamin-c", "ingredient-glycolic", "guide-why-skin-looks-dull"],
+  beginner: ["guide-beginner-skincare-routine-india", "routine-builder", "guide-skincare-routine-every-skin-type"],
+  budget: ["guide-beginner-skincare-routine-india", "guide-budget-skincare-routine-under-2000", "guide-amazon-skincare-under-1500"],
 };
 
 /* ─────────────────────────────

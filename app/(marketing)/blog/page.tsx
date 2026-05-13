@@ -13,6 +13,16 @@ const featured = {
 const posts = [
   {
     category: "SKINCARE" as const,
+    title: "The Beginner Skincare Routine for India (2026)",
+    excerpt: "3 products. Under ₹1500. Actually works. Built specifically for what Indian skin and Indian conditions actually require.",
+    slug: "beginner-skincare-routine-india",
+    readTime: "12 min",
+    date: "May 2026",
+    productCount: 10,
+    initials: "BR",
+  },
+  {
+    category: "SKINCARE" as const,
     title: "How to Repair a Damaged Skin Barrier — The 4-Week Protocol for Indian Skin",
     excerpt: "Burning from products that never used to sting. Oily and dry at the same time. Constant breakouts. This is barrier damage — and here is how to fix it.",
     slug: "damaged-skin-barrier-repair",
