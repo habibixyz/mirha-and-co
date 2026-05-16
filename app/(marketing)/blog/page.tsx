@@ -12,6 +12,16 @@ const featured = {
 
 const posts = [
   {
+    category: "WELLNESS" as const,
+    title: "The Indian Girl's Night Routine That Actually Improves Sleep",
+    excerpt: "A realistic Indian girl's night routine for better sleep — magnesium glycinate, low-light habits, shower timing, skincare that doesn't feel like a second job. No 5am alarm required.",
+    slug: "indian-night-routine-better-sleep",
+    readTime: "11 min",
+    date: "May 2026",
+    productCount: 4,
+    initials: "SL",
+  },
+  {
     category: "SKINCARE" as const,
     title: "Everything Indian Humidity Does to Your Skin (And How to Fix It)",
     excerpt: "Why Western skincare fails in Indian humidity — and what actually works. Covers sweating, clogged pores, fungal acne, hard water, sunscreen texture, and the right AM/PM routine for humid Indian weather.",

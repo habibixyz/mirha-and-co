@@ -74,6 +74,9 @@ const SYNONYMS: Record<string, string[]> = {
   normal: ["normal", "balanced"],
   beginner: ["beginner", "starter", "starting", "newbie", "basics", "simple", "minimum", "routine for beginners", "where to start"],
   budget: ["budget", "affordable", "cheap", "under 1500", "under 2000", "low cost", "value"],
+  humidity: ["humidity", "humid", "monsoon", "summer", "sweat", "sweating", "sweaty"],
+  fungal: ["fungal", "fungal acne", "malassezia", "yeast", "bumps", "itchy bumps"],
+  sleep: ["sleep", "sleeping", "night routine", "bedtime", "bed", "magnesium", "rest", "wellness"],
 };
 
 // 🎯 SMART CONCERN MAPPING: Maps user feelings to scientific ingredients
@@ -86,6 +89,11 @@ const CONCERN_MAP: Record<string, string[]> = {
   glow: ["ingredient-vitamin-c", "ingredient-glycolic", "guide-why-skin-looks-dull"],
   beginner: ["guide-beginner-skincare-routine-india", "routine-builder", "guide-skincare-routine-every-skin-type"],
   budget: ["guide-beginner-skincare-routine-india", "guide-budget-skincare-routine-under-2000", "guide-amazon-skincare-under-1500"],
+  humidity: ["guide-humidity-skincare-india", "ingredient-niacinamide", "ingredient-salicylic", "product-B0CW1N7QRT"],
+  sweat: ["guide-humidity-skincare-india", "ingredient-niacinamide", "ingredient-salicylic", "product-B0CW1N7QRT"],
+  monsoon: ["guide-humidity-skincare-india", "ingredient-niacinamide", "ingredient-salicylic", "product-B0CW1N7QRT"],
+  fungal: ["guide-humidity-skincare-india", "ingredient-niacinamide", "ingredient-salicylic"],
+  sleep: ["guide-indian-night-routine-better-sleep", "product-B01DQV8BIM", "ingredient-ceramide", "ingredient-retinol"],
 };
 
 /* ─────────────────────────────
@@ -528,6 +536,11 @@ const TIPS: Record<string, string> = {
   aging: "Retinol is the gold standard, but start slow. Combine it with Peptides and a rich moisturizer to minimize irritation.",
   beginner: "Start with the basics: Cleanser, Moisturizer, and Sunscreen. Once your habit is set, then add targeted serums like Niacinamide or Vitamin C.",
   budget: "Effective skincare doesn't have to be expensive. Brands like Minimalist, Dot & Key, and The Ordinary offer high-quality actives at great prices.",
+  humidity: "Indian humidity requires water-based gel formulas and lightweight sunscreens. Switch from heavy creams to hydrating humectants like Niacinamide or Centella, and always reapply SPF.",
+  sweat: "Indian humidity requires water-based gel formulas and lightweight sunscreens. Switch from heavy creams to hydrating humectants like Niacinamide or Centella, and always reapply SPF.",
+  monsoon: "Monsoon humidity can trigger fungal breakouts. Swap rich face oils for non-comedogenic gel formulas and use gentle salicylic acid cleansers.",
+  fungal: "For fungal acne, avoid fatty acids and rich plant oils. Use malassezia-safe hydrators like squalane or niacinamide, and try an antifungal wash.",
+  sleep: "A realistic night routine improves your sleep, cortisol levels, and skin repair. Focus on warm light, magnesium glycinate, a warm shower, and a simple 3-step skincare routine.",
 };
 
 export function getLocalSearchAdvice(query: string) {

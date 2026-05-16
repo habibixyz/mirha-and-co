@@ -338,6 +338,17 @@ export const POSTS: Post[] = [
     thumbnail: "HU",
     tags: ["skincare for Indian humidity", "humidity skin problems India", "best moisturiser humid weather", "fungal acne India", "monsoon skincare", "oily skin Mumbai", "Indian climate skincare routine", "sweaty skin routine India"],
   },
+  {
+    category: "WELLNESS",
+    title: "The Indian Girl's Night Routine That Actually Improves Sleep",
+    excerpt: "A realistic Indian girl's night routine for better sleep — magnesium glycinate, low-light habits, shower timing, skincare that doesn't feel like a second job. No 5am alarm required.",
+    slug: "indian-night-routine-better-sleep",
+    readTime: "11 min",
+    date: "May 2026",
+    productCount: 4,
+    thumbnail: "SL",
+    tags: ["sleep routine India", "night routine Indian skin", "magnesium glycinate sleep", "sleep wellness India", "bedtime routine", "silk pillowcase benefits", "calming tea before bed"],
+  },
 ];
 
 
