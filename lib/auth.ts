@@ -58,6 +58,13 @@ export async function logout() {
   cookieStore.delete("mirha_session");
 }
 
-export function hashPassword(password: string) {
-  return crypto.createHash("sha256").update(password).digest("hex");
+import bcrypt from "bcryptjs";
+
+export async function hashPassword(password: string) {
+  return bcrypt.hash(password, 10);
 }
+
+export async function verifyPassword(password: string, hash: string) {
+  return bcrypt.compare(password, hash);
+}
+

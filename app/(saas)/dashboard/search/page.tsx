@@ -10,8 +10,7 @@ export default async function SearchGuidePage() {
     redirect("/login");
   }
 
-  // 🔓 TEST MODE: Hardcoding Pro for testing
-  const isPro = true; // user.subscription?.tier === "pro";
+  const isPro = user.subscription?.tier === "pro";
 
   return (
     <Suspense fallback={<div>Loading search...</div>}>

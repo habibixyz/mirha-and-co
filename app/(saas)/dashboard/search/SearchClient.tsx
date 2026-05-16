@@ -53,7 +53,7 @@ function ResultCard({ item, isAiRecommended, isBest }: { item: SearchItem; isAiR
         
         {item.price && (
           <div style={{ marginTop: '12px' }}>
-            <span style={{ color: '#c8473a', fontWeight: 700, fontSize: '0.8rem' }}>₹${item.price.toLocaleString("en-IN")}</span>
+            <span style={{ color: '#c8473a', fontWeight: 700, fontSize: '0.8rem' }}>₹{item.price.toLocaleString("en-IN")}</span>
           </div>
         )}
       </div>
@@ -576,16 +576,6 @@ export function SearchClient({ isPro }: { isPro: boolean }) {
                   }
                 `}</style>
               </div>
-            ) : aiAdvice?.error ? (
-               <div style={{ background: 'rgba(255,255,255,0.05)', padding: '1.5rem', borderRadius: '16px', border: '1px solid rgba(255,255,255,0.1)' }}>
-                 <p style={{ margin: '0 0 1rem', fontSize: '1.1rem', lineHeight: 1.6, color: 'rgba(255,255,255,0.9)' }}>
-                   Searching for <strong>"{query}"</strong>... <br/>
-                   Unlock Mirha Brain to get expert analysis and personalized product recommendations for your skin concern.
-                 </p>
-                 <Link href="/dashboard/subscription" className="ai-reco-item" style={{ background: '#c8473a', border: 'none', justifyContent: 'center', fontWeight: 700 }}>
-                   Upgrade to Pro (₹199/mo)
-                 </Link>
-               </div>
             ) : (
               <>
                 <p style={{ margin: "0 0 1.5rem", fontSize: "1.1rem", lineHeight: 1.6, fontFamily: "var(--dash-font-serif)" }}>{aiAdvice?.advice}</p>
@@ -646,13 +636,7 @@ export function SearchClient({ isPro }: { isPro: boolean }) {
                   />
                 ))}
                 
-                {hasHiddenItems && (
-                  <Link href="/dashboard/subscription" className="pro-upsell-card">
-                    <Crown size={24} color="#c8473a" />
-                    <h3>Unlock {items.length - 2} more {labelFor(type)}</h3>
-                    <p>Upgrade to Pro (₹199/mo) for full search access</p>
-                  </Link>
-                )}
+                {/* Pro Upsell Removed - Search is now free for all users */}
               </div>
             </section>
           );

@@ -101,10 +101,10 @@ export async function toggleRoutineStep(routineId: string, stepIndex: number, co
   if (!session) throw new Error("Unauthorized");
 
   const routine = await prisma.routine.findUnique({
-    where: { id: routineId }
+    where: { id: routineId, userId: session.userId }
   });
 
-  if (!routine || routine.userId !== session.userId) {
+  if (!routine) {
     throw new Error("Routine not found");
   }
 
@@ -311,6 +311,7 @@ export async function upgradeToPro() {
   revalidatePath("/dashboard/journal");
 }
 
+
 export async function searchProducts(query: string) {
   if (!query) return [];
   return prisma.product.findMany({
@@ -327,7 +328,7 @@ export async function searchProducts(query: string) {
 }
 
 
-import { hashPassword, createSession } from "@/lib/auth";
+import { hashPassword, verifyPassword, createSession } from "@/lib/auth";
 import crypto from "crypto";
 import { headers } from "next/headers";
 import { Resend } from "resend";
@@ -368,7 +369,7 @@ export async function loginAction(_state: AuthState, formData: FormData): Promis
 
   try {
     const user = await prisma.user.findUnique({ where: { email } });
-    if (!user || user.passwordHash !== hashPassword(password)) {
+    if (!user || !(await verifyPassword(password, user.passwordHash))) {
       return { error: "Invalid email or password." };
     }
 
@@ -402,7 +403,7 @@ export async function registerAction(_state: AuthState, formData: FormData): Pro
       data: {
         email,
         name,
-        passwordHash: hashPassword(password),
+        passwordHash: await hashPassword(password),
       }
     });
     // ✅ SEND WELCOME EMAIL
@@ -508,7 +509,7 @@ export async function resetPasswordAction(_state: AuthState, formData: FormData)
     await prisma.$transaction([
       prisma.user.update({
         where: { id: resetToken.userId },
-        data: { passwordHash: hashPassword(password) },
+        data: { passwordHash: await hashPassword(password) },
       }),
       prisma.passwordResetToken.update({
         where: { id: resetToken.id },
@@ -531,18 +532,14 @@ export async function logoutAction() {
   redirect("/login");
 }
 // ? BRAIN: AI SEARCH ADVICE
+import { getLocalSearchAdvice } from "@/lib/searchIndex";
+
 export async function getAISearchAdvice(query: string) {
   const session = await getSession();
   if (!session) return null;
 
-  // 🔓 TEST MODE: Bypassing DB call due to connection issues
-  // const sub = await prisma.subscription.findUnique({ where: { userId: session.userId } });
-  const isPro = true;
-  
-  // 🔓 TEST MODE: Bypassing Pro check
-  // if (!isPro) return { error: 'UPGRADE_PRO' };
-
-  return await aiSearch(query, SEARCH_INDEX);
+  // Now using local database-driven advice instead of external Gemini AI
+  return getLocalSearchAdvice(query);
 }
 
 // ? BRAIN: JOURNAL ANALYSIS
@@ -553,8 +550,7 @@ export async function getJournalAnalysis() {
   const sub = await prisma.subscription.findUnique({ where: { userId: session.userId } });
   const isPro = sub?.tier === 'pro' && sub?.status === 'active';
 
-  // 🔓 TEST MODE: Bypassing Pro check
-  // if (!isPro) return { error: 'UPGRADE_PRO' };
+  if (!isPro) return { error: 'UPGRADE_PRO' };
 
   const entries = await prisma.skinJournal.findMany({
     where: { userId: session.userId },
@@ -575,8 +571,7 @@ export async function analyzeSkinPhoto(note: string, photoBase64?: string) {
   const sub = await prisma.subscription.findUnique({ where: { userId: session.userId } });
   const isPro = sub?.tier === 'pro' && sub?.status === 'active';
   
-  // 🔓 TEST MODE: Bypassing Pro check
-  // if (!isPro) return { error: 'UPGRADE_PRO' };
+  if (!isPro) return { error: 'UPGRADE_PRO' };
 
   if (!process.env.GEMINI_API_KEY) {
     return "AI Analysis is currently disabled (Missing API Key).";

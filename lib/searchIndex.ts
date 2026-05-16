@@ -514,5 +514,41 @@ export function getAutocompleteSuggestions(
     }
   });
 
-  return Array.from(suggestions).slice(0, limit);
-}
+/* ─────────────────────────────
+   LOCAL SMART ADVICE ENGINE
+───────────────────────────── */
+
+const TIPS: Record<string, string> = {
+  dry: "Focus on barrier repair and deep hydration. Look for Ceramides and Hyaluronic Acid. Avoid harsh foaming cleansers that strip your skin.",
+  oily: "Focus on oil control and pore management. Salicylic Acid (BHA) and Niacinamide are your best friends. Use a lightweight, non-comedogenic gel moisturizer.",
+  pigmentation: "Consistency is key. Use Vitamin C in the morning and Alpha Arbutin or Glycolic Acid at night. And most importantly—never skip sunscreen!",
+  acne: "Keep it simple. Use a gentle cleanser, a BHA for unclogging pores, and a light moisturizer. Don't pick your pimples—use patches instead.",
+  aging: "Retinol is the gold standard, but start slow. Combine it with Peptides and a rich moisturizer to minimize irritation.",
+  beginner: "Start with the basics: Cleanser, Moisturizer, and Sunscreen. Once your habit is set, then add targeted serums like Niacinamide or Vitamin C.",
+  budget: "Effective skincare doesn't have to be expensive. Brands like Minimalist, Dot & Key, and The Ordinary offer high-quality actives at great prices.",
+};
+
+export function getLocalSearchAdvice(query: string) {
+  const norm = normalize(query);
+  let advice = "I've analyzed your request. Based on the Mirha database, here are the most relevant ingredients and routines for your skin concern.";
+  let recommendedIds: string[] = [];
+
+  // Match concerns
+  Object.keys(TIPS).forEach((concern) => {
+    if (norm.includes(concern)) {
+      advice = TIPS[concern];
+      recommendedIds = CONCERN_MAP[concern] || [];
+    }
+  });
+
+  // If no specific match, find best scoring items
+  if (recommendedIds.length === 0) {
+    const results = searchMirha(query, 3);
+    recommendedIds = results.map(r => r.id);
+  }
+
+  return {
+    advice,
+    recommendedIds: recommendedIds.slice(0, 4),
+  };
+}
