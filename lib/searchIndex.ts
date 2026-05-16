@@ -545,12 +545,20 @@ export function getLocalSearchAdvice(query: string) {
 
   // If no specific match, find best scoring items
   if (recommendedIds.length === 0) {
-    const results = searchMirha(query, 3);
+    const results = searchMirha(query, 5); // Get more so we can filter
     recommendedIds = results.map(r => r.id);
   }
+
+  // 🚀 FIX: Filter out the item we are already looking at to prevent loops
+  recommendedIds = recommendedIds.filter(id => {
+    const item = SEARCH_INDEX.find(i => i.id === id);
+    if (!item) return false;
+    // Don't recommend if the title is exactly what we searched for
+    return normalize(item.title) !== norm;
+  });
 
   return {
     advice,
     recommendedIds: recommendedIds.slice(0, 4),
   };
-}
+}
