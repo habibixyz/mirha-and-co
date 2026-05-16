@@ -1,5 +1,6 @@
 import { cookies } from "next/headers";
 import { prisma } from "./prisma";
+import bcrypt from "bcryptjs";
 import crypto from "crypto";
 
 export async function getSession() {
@@ -58,9 +59,6 @@ export async function logout() {
   cookieStore.delete("mirha_session");
 }
 
-import bcrypt from "bcryptjs";
-import crypto from "crypto";
-
 export async function hashPassword(password: string) {
   return bcrypt.hash(password, 10);
 }
@@ -83,4 +81,3 @@ export function isLegacyHash(hash: string) {
   // SHA-256 hashes are exactly 64 characters of hex
   return hash.length === 64 && /^[0-9a-f]+$/.test(hash);
 }
-
