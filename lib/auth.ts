@@ -59,12 +59,28 @@ export async function logout() {
 }
 
 import bcrypt from "bcryptjs";
+import crypto from "crypto";
 
 export async function hashPassword(password: string) {
   return bcrypt.hash(password, 10);
 }
 
 export async function verifyPassword(password: string, hash: string) {
-  return bcrypt.compare(password, hash);
+  // Try bcrypt first
+  try {
+    const isBcrypt = await bcrypt.compare(password, hash);
+    if (isBcrypt) return true;
+  } catch (e) {
+    // Not a bcrypt hash, continue to legacy check
+  }
+
+  // Fallback to legacy SHA-256 check
+  const legacyHash = crypto.createHash("sha256").update(password).digest("hex");
+  return legacyHash === hash;
+}
+
+export function isLegacyHash(hash: string) {
+  // SHA-256 hashes are exactly 64 characters of hex
+  return hash.length === 64 && /^[0-9a-f]+$/.test(hash);
 }
 

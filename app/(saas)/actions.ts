@@ -328,7 +328,7 @@ export async function searchProducts(query: string) {
 }
 
 
-import { hashPassword, verifyPassword, createSession } from "@/lib/auth";
+import { hashPassword, verifyPassword, isLegacyHash, createSession } from "@/lib/auth";
 import crypto from "crypto";
 import { headers } from "next/headers";
 import { Resend } from "resend";
@@ -371,6 +371,15 @@ export async function loginAction(_state: AuthState, formData: FormData): Promis
     const user = await prisma.user.findUnique({ where: { email } });
     if (!user || !(await verifyPassword(password, user.passwordHash))) {
       return { error: "Invalid email or password." };
+    }
+
+    // 🚀 TRANSPARENT MIGRATION: Upgrade legacy SHA-256 to bcrypt
+    if (isLegacyHash(user.passwordHash)) {
+      const newHash = await hashPassword(password);
+      await prisma.user.update({
+        where: { id: user.id },
+        data: { passwordHash: newHash },
+      });
     }
 
     await createSession(user.id);
