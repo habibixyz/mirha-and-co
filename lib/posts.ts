@@ -319,7 +319,7 @@ export const POSTS: Post[] = [
   {
     category: "SKINCARE",
     title: "Best Beginner Skincare Routine for India (2026) — 3 Products, Real Results",
-    excerpt: "You do not need 10 steps. You need 3 right products used consistently. The complete beginner skincare routine for Indian skin.",
+    excerpt: "You do not need 10 steps. You need 3 right products used consistently. The complete beginner skincare routine for Indian skin — cleanser, moisturiser, sunscreen.",
     slug: "beginner-skincare-routine-india",
     readTime: "12 min",
     date: "May 2026",
@@ -327,4 +327,17 @@ export const POSTS: Post[] = [
     thumbnail: "BR",
     tags: ["beginner", "routine", "cleanser", "moisturiser", "sunscreen", "budget", "under 1500"],
   },
+  {
+    category: "SKINCARE",
+    title: "Everything Indian Humidity Does to Your Skin (And How to Fix It)",
+    excerpt: "Why Western skincare fails in Indian humidity — and what actually works. Covers sweating, clogged pores, fungal acne, hard water, sunscreen texture, and the right AM/PM routine for humid Indian weather.",
+    slug: "humidity-skincare-india",
+    readTime: "13 min",
+    date: "May 2026",
+    productCount: 6,
+    thumbnail: "HU",
+    tags: ["skincare for Indian humidity", "humidity skin problems India", "best moisturiser humid weather", "fungal acne India", "monsoon skincare", "oily skin Mumbai", "Indian climate skincare routine", "sweaty skin routine India"],
+  },
 ];
+
+
