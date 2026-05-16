@@ -13,6 +13,16 @@ const featured = {
 const posts = [
   {
     category: "SKINCARE" as const,
+    title: "Everything Indian Humidity Does to Your Skin (And How to Fix It)",
+    excerpt: "Why Western skincare fails in Indian humidity — and what actually works. Covers sweating, clogged pores, fungal acne, hard water, sunscreen texture, and the right AM/PM routine for humid Indian weather.",
+    slug: "humidity-skincare-india",
+    readTime: "13 min",
+    date: "May 2026",
+    productCount: 6,
+    initials: "HU",
+  },
+  {
+    category: "SKINCARE" as const,
     title: "The Beginner Skincare Routine for India (2026)",
     excerpt: "3 products. Under ₹1500. Actually works. Built specifically for what Indian skin and Indian conditions actually require.",
     slug: "beginner-skincare-routine-india",
