@@ -513,6 +513,8 @@ export function getAutocompleteSuggestions(
       suggestions.add(key);
     }
   });
+  return Array.from(suggestions).slice(0, limit);
+}
 
 /* ─────────────────────────────
    LOCAL SMART ADVICE ENGINE
