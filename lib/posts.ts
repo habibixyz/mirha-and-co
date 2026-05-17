@@ -14,6 +14,17 @@ export type Post = {
 
 export const POSTS: Post[] = [
   {
+    category: "BEAUTY",
+    title: "Why Your Skincare Routine Stops Working in Indian Summer",
+    excerpt: "Your routine did not change. Your environment did. A science-backed breakdown of why products behave differently in India's heat and humidity — and exactly what to switch.",
+    slug: "why-skincare-routine-stops-working-indian-summer",
+    readTime: "11 min",
+    date: "May 2026",
+    productCount: 7,
+    thumbnail: "SU",
+    tags: ["summer", "indian climate", "routine fail", "sunscreen", "moisturiser"],
+  },
+  {
     category: "SKINCARE",
     title: "How to Repair a Damaged Skin Barrier — The 4-Week Protocol for Indian Skin",
     excerpt: "Burning from products that never used to sting. Oily and dry at the same time. Constant breakouts. This is barrier damage — and here is how to fix it.",
