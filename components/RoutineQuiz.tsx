@@ -41,6 +41,11 @@ const QUIZ_STEPS = [
 ];
 
 export default function RoutineQuiz() {
+  const [climate, setClimate] = useState<{ temp: number; humidity: number; city: string } | undefined>({
+    temp: 38,
+    humidity: 82,
+    city: "Mumbai (Summer/Monsoon)"
+  });
   const [currentStep, setCurrentStep] = useState(0);
   const [answers, setAnswers] = useState<Partial<QuizAnswers>>({});
   const [showResult, setShowResult] = useState(false);
@@ -58,12 +63,20 @@ export default function RoutineQuiz() {
     });
   };
 
+  const handleClimateChange = (newClimate: { temp: number; humidity: number; city: string } | undefined) => {
+    setClimate(newClimate);
+    if (answers.skinType && answers.mainConcern && answers.budget) {
+      const generatedRoutine = generateRoutine(answers as QuizAnswers, newClimate);
+      setRoutine(generatedRoutine);
+    }
+  };
+
   const handleNext = () => {
     if (!isAnswered) return;
 
     if (isLastStep) {
       const completeAnswers = answers as QuizAnswers;
-      const generatedRoutine = generateRoutine(completeAnswers);
+      const generatedRoutine = generateRoutine(completeAnswers, climate);
       setRoutine(generatedRoutine);
       setShowResult(true);
     } else {
@@ -82,10 +95,22 @@ export default function RoutineQuiz() {
     setAnswers({});
     setShowResult(false);
     setRoutine(null);
+    setClimate({
+      temp: 38,
+      humidity: 82,
+      city: "Mumbai (Summer/Monsoon)"
+    });
   };
 
   if (showResult && routine) {
-    return <RoutineResult routine={routine} onRestart={handleRestart} />;
+    return (
+      <RoutineResult
+        routine={routine}
+        onRestart={handleRestart}
+        climate={climate}
+        onClimateChange={handleClimateChange}
+      />
+    );
   }
 
   return (

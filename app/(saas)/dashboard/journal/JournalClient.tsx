@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition, useRef } from "react";
+import { useState, useTransition, useRef, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { saveJournalEntry, analyzeSkinPhoto, getJournalAnalysis } from "../../actions";
 import { Calendar, Plus, Star, MoreVertical, Upload, Sparkles, X, Brain, TrendingUp, Info, Lightbulb } from "lucide-react";
@@ -19,6 +19,64 @@ export function SkinJournalClient({ initialEntries, isPro }: { initialEntries: a
   const [historyAnalysis, setHistoryAnalysis] = useState<any>(null);
   const [isAnalyzingHistory, setIsAnalyzingHistory] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Calculate Streaks and Compliance
+  const streakInfo = useMemo(() => {
+    if (entries.length === 0) return { streak: 0, compliance: 0, calendarGrid: [] };
+
+    // Calculate streak
+    let streak = 0;
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const entryDates = entries.map(e => {
+      const d = new Date(e.date);
+      d.setHours(0, 0, 0, 0);
+      return d.getTime();
+    });
+
+    const uniqueEntryDates = Array.from(new Set(entryDates));
+
+    const hasToday = uniqueEntryDates.includes(today.getTime());
+    
+    const yesterday = new Date(today);
+    yesterday.setDate(yesterday.getDate() - 1);
+    const hasYesterday = uniqueEntryDates.includes(yesterday.getTime());
+
+    if (hasToday || hasYesterday) {
+      let currentCheck = new Date(hasToday ? today : yesterday);
+      while (uniqueEntryDates.includes(currentCheck.getTime())) {
+        streak++;
+        currentCheck.setDate(currentCheck.getDate() - 1);
+      }
+    }
+
+    // Build past 30 days contribution calendar grid
+    const calendarGrid = [];
+    for (let i = 29; i >= 0; i--) {
+      const date = new Date();
+      date.setDate(date.getDate() - i);
+      date.setHours(0, 0, 0, 0);
+
+      const dayEntry = entries.find(e => {
+        const d = new Date(e.date);
+        d.setHours(0, 0, 0, 0);
+        return d.getTime() === date.getTime();
+      });
+
+      calendarGrid.push({
+        date: new Date(date),
+        rating: dayEntry ? dayEntry.rating : 0,
+        hasPhoto: dayEntry && dayEntry.photos && dayEntry.photos !== "[]" && dayEntry.photos.length > 5
+      });
+    }
+
+    // Compliance = percentage of days tracked out of last 30
+    const activeDays = calendarGrid.filter(d => d.rating > 0).length;
+    const compliance = Math.round((activeDays / 30) * 100);
+
+    return { streak, compliance, calendarGrid };
+  }, [entries]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -436,6 +494,167 @@ export function SkinJournalClient({ initialEntries, isPro }: { initialEntries: a
           )}
         </motion.div>
       )}
+
+      {/* Dynamic Consistency & Streak Card */}
+      <motion.div
+        variants={itemVariants}
+        style={{
+          background: 'var(--white)',
+          border: '1px solid var(--rule)',
+          borderRadius: '24px',
+          padding: '24px',
+          marginBottom: '2.5rem',
+          boxShadow: '0 8px 30px rgba(40, 28, 20, 0.03)',
+          maxWidth: '800px',
+        }}
+      >
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '20px', marginBottom: '24px' }}>
+          {/* Streak Counter */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+            <div style={{
+              width: '48px',
+              height: '48px',
+              borderRadius: '14px',
+              background: '#fff3f0',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: '1.2rem',
+              color: 'var(--rose)',
+            }}>
+              🔥
+            </div>
+            <div style={{ textAlign: 'left' }}>
+              <span style={{ display: 'block', fontSize: '11px', color: 'var(--muted)', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 600 }}>
+                Current Streak
+              </span>
+              <span style={{ fontSize: '1.8rem', fontWeight: 700, color: 'var(--ink)' }}>
+                {streakInfo.streak} {streakInfo.streak === 1 ? 'Day' : 'Days'}
+              </span>
+            </div>
+          </div>
+
+          {/* Compliance */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+            <div style={{
+              width: '48px',
+              height: '48px',
+              borderRadius: '14px',
+              background: '#edf7f0',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: '1.2rem',
+              color: '#2d7a4f',
+            }}>
+              🎯
+            </div>
+            <div style={{ textAlign: 'left' }}>
+              <span style={{ display: 'block', fontSize: '11px', color: 'var(--muted)', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 600 }}>
+                30-Day Compliance
+              </span>
+              <span style={{ fontSize: '1.8rem', fontWeight: 700, color: 'var(--ink)' }}>
+                {streakInfo.compliance}%
+              </span>
+            </div>
+          </div>
+
+          {/* Photo Entries */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+            <div style={{
+              width: '48px',
+              height: '48px',
+              borderRadius: '14px',
+              background: '#f5f0ff',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: '1.2rem',
+              color: '#7c3aed',
+            }}>
+              📷
+            </div>
+            <div style={{ textAlign: 'left' }}>
+              <span style={{ display: 'block', fontSize: '11px', color: 'var(--muted)', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 600 }}>
+                Logged Progress
+              </span>
+              <span style={{ fontSize: '1.8rem', fontWeight: 700, color: 'var(--ink)' }}>
+                {entries.filter(e => e.photos && e.photos !== "[]" && e.photos.length > 5).length} Photos
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {/* Consistency Grid */}
+        <div style={{ borderTop: '1px solid var(--rule)', paddingTop: '20px' }}>
+          <p style={{ margin: '0 0 14px', fontSize: '12px', color: 'var(--muted)', display: 'flex', alignItems: 'center', gap: '6px', textAlign: 'left' }}>
+            <Calendar size={14} /> Skin Consistency Heatmap (Last 30 Days)
+          </p>
+          <div style={{ display: 'flex', gap: '6px', overflowX: 'auto', paddingBottom: '8px' }}>
+            {streakInfo.calendarGrid.map((day, idx) => {
+              // Color based on rating
+              let bg = '#f4f0ec'; // Empty
+              let title = `No entry on ${day.date.toLocaleDateString()}`;
+              if (day.rating > 0) {
+                const ratingColors = [
+                  '#fbe9e7', // 1 star
+                  '#ffccbc', // 2 star
+                  '#ffab91', // 3 star
+                  '#ff8a65', // 4 star
+                  '#c8473a', // 5 star (glowing brand red!)
+                ];
+                bg = ratingColors[day.rating - 1];
+                title = `Rating: ${day.rating} Stars on ${day.date.toLocaleDateString()}${day.hasPhoto ? ' (Photo logged)' : ''}`;
+              }
+
+              return (
+                <div
+                  key={idx}
+                  title={title}
+                  style={{
+                    width: '18px',
+                    height: '18px',
+                    borderRadius: '4px',
+                    background: bg,
+                    flexShrink: 0,
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontSize: '9px',
+                    position: 'relative',
+                    transition: 'transform 0.2s',
+                    border: day.hasPhoto ? '1px solid #7c3aed' : 'none',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'scale(1.2)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'scale(1)';
+                  }}
+                >
+                  {day.hasPhoto && (
+                    <span style={{ fontSize: '7px', position: 'absolute', bottom: '-2px', right: '-2px' }}>📷</span>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '10px' }}>
+            <span style={{ fontSize: '10px', color: 'var(--muted)' }}>30 Days Ago</span>
+            <div style={{ display: 'flex', gap: '4px', alignItems: 'center' }}>
+              <span style={{ fontSize: '9px', color: 'var(--muted)' }}>Dull</span>
+              <div style={{ width: '10px', height: '10px', background: '#fbe9e7', borderRadius: '2px' }} />
+              <div style={{ width: '10px', height: '10px', background: '#ffccbc', borderRadius: '2px' }} />
+              <div style={{ width: '10px', height: '10px', background: '#ffab91', borderRadius: '2px' }} />
+              <div style={{ width: '10px', height: '10px', background: '#ff8a65', borderRadius: '2px' }} />
+              <div style={{ width: '10px', height: '10px', background: '#c8473a', borderRadius: '2px' }} />
+              <span style={{ fontSize: '9px', color: 'var(--muted)' }}>Glowing</span>
+            </div>
+            <span style={{ fontSize: '10px', color: 'var(--muted)' }}>Today</span>
+          </div>
+        </div>
+      </motion.div>
 
       <motion.div variants={itemVariants} style={{ display: "flex", flexDirection: "column", gap: "1.2rem", maxWidth: "800px" }}>
         <AnimatePresence>

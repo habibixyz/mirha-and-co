@@ -10,6 +10,14 @@ export interface RoutineRecommendation {
   treatment: { asin: string; name: string; reason: string };
   moisturiser: { asin: string; name: string; reason: string };
   sunscreen: { asin: string; name: string; reason: string };
+  climateAdjustment?: {
+    type: 'humid_heat' | 'cold_dry' | 'moderate';
+    city: string;
+    temp: number;
+    humidity: number;
+    alertText: string;
+    swappedFields: string[];
+  };
 }
 
 // ─── PRICE REFERENCE (verified) ───────────────────────────────────────────
@@ -338,7 +346,10 @@ const ROUTINE_MAP: Record<string, Record<string, RoutineRecommendation>> = {
 
 // ─── GENERATE ROUTINE ─────────────────────────────────────────────────────────
 
-export const generateRoutine = (answers: QuizAnswers): RoutineRecommendation => {
+export const generateRoutine = (
+  answers: QuizAnswers,
+  climate?: { temp: number; humidity: number; city: string }
+): RoutineRecommendation => {
   const { skinType, mainConcern, budget } = answers;
 
   const budgetMap: Record<string, string> = {
@@ -353,7 +364,84 @@ export const generateRoutine = (answers: QuizAnswers): RoutineRecommendation => 
     : `${skinType}_${mainConcern}`;
 
   const routineOptions = ROUTINE_MAP[routineKey] ?? ROUTINE_MAP["combination_acne"];
-  const routine = routineOptions[budgetKey] ?? routineOptions["budget_1000"];
+  const baseRoutine = routineOptions[budgetKey] ?? routineOptions["budget_1000"];
+
+  // Create a deep copy of the routine to avoid mutating the master ROUTINE_MAP object
+  const routine: RoutineRecommendation = {
+    cleanser: { ...baseRoutine.cleanser },
+    treatment: { ...baseRoutine.treatment },
+    moisturiser: { ...baseRoutine.moisturiser },
+    sunscreen: { ...baseRoutine.sunscreen },
+  };
+
+  if (climate) {
+    const { temp, humidity, city } = climate;
+    const swappedFields: string[] = [];
+
+    if (temp > 35 && humidity > 70) {
+      // Hot and sticky summer/monsoon conditions -> avoid heavy pore-clogging emollient creams
+      if (routine.moisturiser.asin === ASIN.cetaphil_cream) {
+        routine.moisturiser = {
+          asin: ASIN.neutrogena_hydro_boost,
+          name: "Neutrogena Hydro Boost Water Gel",
+          reason: `[Adaptive Climate Swap] It's currently extremely hot and humid in ${city} (${temp}°C, ${humidity}% humidity). We have swapped out the heavy Cetaphil Cream for the ultra-lightweight Neutrogena Hydro Boost Water Gel to prevent sweat-clogged pores.`
+        };
+        swappedFields.push('moisturiser');
+      }
+
+      // Swap sunscreen for lighter gel if budget permits
+      if (routine.sunscreen.asin === ASIN.lakme_spf && budgetKey !== "budget_500") {
+        routine.sunscreen = {
+          asin: ASIN.deconstruct_spf,
+          name: "Deconstruct Gel Sunscreen SPF 50 PA++++",
+          reason: `[Adaptive Climate Swap] In ${city}'s sticky ${humidity}% humidity, standard sunscreens feel heavy and melt off. We swapped to Deconstruct Gel Sunscreen for its zero-grease, photostable matte gel finish.`
+        };
+        swappedFields.push('sunscreen');
+      }
+
+      if (swappedFields.length > 0) {
+        routine.climateAdjustment = {
+          type: 'humid_heat',
+          city,
+          temp,
+          humidity,
+          alertText: `Extremely hot and humid conditions detected in ${city} (${temp}°C, ${humidity}% RH). We have adapted your routine by swapping heavy emollients and sunscreens for ultra-lightweight, non-comedogenic gel formulations.`,
+          swappedFields
+        };
+      }
+    } else if (temp < 18 && humidity < 40) {
+      // Cold and dry winter conditions -> introduce heavy barrier creams to trap moisture
+      if (routine.moisturiser.asin === ASIN.neutrogena_hydro_boost || routine.moisturiser.asin === ASIN.aqualogica_spf) {
+        routine.moisturiser = {
+          asin: ASIN.cetaphil_cream,
+          name: "Cetaphil Moisturising Cream 250g",
+          reason: `[Adaptive Climate Swap] It's currently cold and dry in ${city} (${temp}°C, ${humidity}% humidity). Gel hydration is not enough to stop peeling; we've swapped to clinical-grade Cetaphil barrier repair cream.`
+        };
+        swappedFields.push('moisturiser');
+      }
+
+      // Prevent dry stripping from strong cleansers
+      if (routine.cleanser.asin === ASIN.minimalist_ala_wash) {
+        routine.cleanser = {
+          asin: ASIN.cetaphil_facewash,
+          name: "Cetaphil Gentle Skin Hydrating Face Wash",
+          reason: `[Adaptive Climate Swap] To prevent dry skin stripping in ${city}'s cold winter breeze, we have swapped your exfoliating ALA face wash for the skin-softening, panthenol-enriched Cetaphil Hydrating Cleanser.`
+        };
+        swappedFields.push('cleanser');
+      }
+
+      if (swappedFields.length > 0) {
+        routine.climateAdjustment = {
+          type: 'cold_dry',
+          city,
+          temp,
+          humidity,
+          alertText: `Cold and dry winter conditions detected in ${city} (${temp}°C, ${humidity}% RH). We have adapted your routine by replacing exfoliating cleansers and light gels with barrier-protecting emollients.`,
+          swappedFields
+        };
+      }
+    }
+  }
 
   return routine;
 };

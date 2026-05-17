@@ -40,6 +40,8 @@ const STEPS_ORDER = [
 interface RoutineResultProps {
   routine: RoutineRecommendation;
   onRestart: () => void;
+  climate?: { temp: number; humidity: number; city: string };
+  onClimateChange: (climate: { temp: number; humidity: number; city: string } | undefined) => void;
 }
 
 function ProductCard({
@@ -226,7 +228,18 @@ function ProductCard({
   );
 }
 
-export default function RoutineResult({ routine, onRestart }: RoutineResultProps) {
+const CLIMATE_PRESETS = [
+  { city: "Mumbai (Summer/Monsoon)", temp: 38, humidity: 82, label: "💧 Mumbai Summer" },
+  { city: "Delhi (Winter)", temp: 12, humidity: 25, label: "❄️ Delhi Winter" },
+  { city: "Bangalore (Moderate)", temp: 24, humidity: 50, label: "🍃 Bangalore Spring" },
+];
+
+export default function RoutineResult({
+  routine,
+  onRestart,
+  climate,
+  onClimateChange,
+}: RoutineResultProps) {
   const { trackAffiliateClick } = useRoutineAnalytics();
   const [expandedStep, setExpandedStep] = useState<string | null>(null);
 
@@ -282,10 +295,134 @@ export default function RoutineResult({ routine, onRestart }: RoutineResultProps
           </p>
         </div>
 
+        {/* Adaptive Climate Widget */}
+        <div
+          style={{
+            background: 'rgba(255, 255, 255, 0.8)',
+            backdropFilter: 'blur(10px)',
+            border: '1px solid #e8e2d9',
+            borderRadius: '16px',
+            padding: '24px',
+            marginBottom: '32px',
+            boxShadow: '0 8px 32px rgba(155, 126, 107, 0.05)',
+          }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px', flexWrap: 'wrap', gap: '12px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <span style={{ fontSize: '18px' }}>🌍</span>
+              <div style={{ textAlign: 'left' }}>
+                <h3 style={{ margin: 0, fontFamily: "'DM Serif Display', serif", fontSize: '18px', color: '#111', fontWeight: 400 }}>
+                  Adaptive Climate Engine
+                </h3>
+                <p style={{ margin: 0, fontSize: '10px', color: '#9b7e6b', fontFamily: 'var(--font-mono, monospace)', letterSpacing: '0.05em' }}>
+                  ACTIVE WEATHER SYNC: {climate ? climate.city : "None (Moderate)"}
+                </p>
+              </div>
+            </div>
+            {climate && (
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <span style={{ fontSize: '11px', padding: '4px 8px', background: '#f5f1ed', borderRadius: '4px', color: '#666', fontFamily: 'var(--font-mono, monospace)', fontWeight: 600 }}>
+                  🌡️ {climate.temp}°C
+                </span>
+                <span style={{ fontSize: '11px', padding: '4px 8px', background: '#edf7f0', borderRadius: '4px', color: '#2d7a4f', fontFamily: 'var(--font-mono, monospace)', fontWeight: 600 }}>
+                  💧 {climate.humidity}% RH
+                </span>
+              </div>
+            )}
+          </div>
+
+          {routine.climateAdjustment ? (
+            <div
+              style={{
+                background: routine.climateAdjustment.type === 'humid_heat' ? '#fff9f0' : '#f0f5ff',
+                borderLeft: `4px solid ${routine.climateAdjustment.type === 'humid_heat' ? '#e67e22' : '#3498db'}`,
+                padding: '14px 16px',
+                borderRadius: '0 8px 8px 0',
+                fontSize: '13px',
+                color: '#444',
+                lineHeight: '1.6',
+                marginBottom: '20px',
+                textAlign: 'left',
+              }}
+            >
+              <strong style={{ color: routine.climateAdjustment.type === 'humid_heat' ? '#d35400' : '#2980b9' }}>
+                Climate Override Active:{" "}
+              </strong>
+              {routine.climateAdjustment.alertText}
+            </div>
+          ) : (
+            <div
+              style={{
+                background: '#fcfcfc',
+                borderLeft: '4px solid #bbb',
+                padding: '14px 16px',
+                borderRadius: '0 8px 8px 0',
+                fontSize: '13px',
+                color: '#777',
+                lineHeight: '1.6',
+                marginBottom: '20px',
+                textAlign: 'left',
+              }}
+            >
+              <strong>Moderate Climate Mode: </strong>
+              Ambient air is in comfortable balance. No active product adjustments required for today.
+            </div>
+          )}
+
+          {/* Presets Selectors */}
+          <div style={{ textAlign: 'left' }}>
+            <p style={{ margin: '0 0 12px', fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.1em', color: '#bbb', fontFamily: 'var(--font-mono, monospace)' }}>
+              Select a simulated city climate to watch the routine morph in real-time:
+            </p>
+            <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+              {CLIMATE_PRESETS.map((preset) => {
+                const isActive = climate?.city === preset.city;
+                return (
+                  <button
+                    key={preset.city}
+                    onClick={() => onClimateChange(preset)}
+                    style={{
+                      padding: '8px 12px',
+                      fontSize: '11px',
+                      border: `1px solid ${isActive ? '#111' : '#ede8e0'}`,
+                      background: isActive ? '#111' : '#fff',
+                      color: isActive ? '#fff' : '#444',
+                      borderRadius: '6px',
+                      cursor: 'pointer',
+                      transition: 'all 0.2s',
+                      fontFamily: 'var(--font-mono, monospace)',
+                      fontWeight: isActive ? 600 : 400,
+                    }}
+                  >
+                    {preset.label}
+                  </button>
+                );
+              })}
+              <button
+                onClick={() => onClimateChange(undefined)}
+                style={{
+                  padding: '8px 12px',
+                  fontSize: '11px',
+                  border: `1px solid ${!climate ? '#111' : '#ede8e0'}`,
+                  background: !climate ? '#111' : '#fff',
+                  color: !climate ? '#fff' : '#444',
+                  borderRadius: '6px',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s',
+                  fontFamily: 'var(--font-mono, monospace)',
+                  fontWeight: !climate ? 600 : 400,
+                }}
+              >
+                🍃 Moderate Default
+              </button>
+            </div>
+          </div>
+        </div>
+
         {/* Routine Steps */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginBottom: '48px' }}>
           {STEPS_ORDER.map((step, index) => {
-            const product = routine[step.key as keyof RoutineRecommendation];
+            const product = routine[step.key as 'cleanser' | 'treatment' | 'moisturiser' | 'sunscreen'];
             if (!product) return null;
 
             const isExpanded = expandedStep === step.key;
