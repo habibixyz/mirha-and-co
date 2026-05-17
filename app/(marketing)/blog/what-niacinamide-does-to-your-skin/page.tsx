@@ -1,8 +1,16 @@
-"use client";
-
-import { useState } from "react";
+import type { Metadata } from "next";
 import { AffiliateCard } from "@/components/AffiliateCard";
-import ProductModal from "@/components/ProductModal";
+
+export const metadata: Metadata = {
+  title: "What Niacinamide Actually Does to Your Skin (India Edition) | Mirha & Co.",
+  description:
+    "The no-fluff India-specific guide to niacinamide: oil control, open pores, acne marks, skin barrier support, and the best serums under ₹700.",
+  openGraph: {
+    title: "What Niacinamide Actually Does to Your Skin (India Edition) | Mirha & Co.",
+    description:
+      "The no-fluff India-specific guide to niacinamide: oil control, open pores, acne marks, skin barrier support, and the best serums under ₹700.",
+  },
+};
 
 const AFFILIATE_TAG = "skinwithtanvi-21";
 

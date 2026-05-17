@@ -1,4 +1,24 @@
-"use client";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Skincare Journal, Guides & Reviews | Mirha & Co.",
+  description:
+    "Honest, science-backed skincare guides, ingredient analyses, and budget-friendly beauty recommendations built specifically for Indian skin types and weather conditions.",
+  openGraph: {
+    title: "Skincare Journal, Guides & Reviews | Mirha & Co.",
+    description:
+      "Honest, science-backed skincare guides, ingredient analyses, and budget-friendly beauty recommendations built specifically for Indian skin types and weather conditions.",
+    url: "https://www.mirhaandco.com/blog",
+    siteName: "Mirha & Co.",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Skincare Journal, Guides & Reviews | Mirha & Co.",
+    description:
+      "Honest, science-backed skincare guides, ingredient analyses, and budget-friendly beauty recommendations built specifically for Indian skin types and weather conditions.",
+  },
+};
 
 const featured = {
   category: "BEAUTY" as const,

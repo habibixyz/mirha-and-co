@@ -1,7 +1,16 @@
-"use client";
-
-import { useState } from "react";
+import type { Metadata } from "next";
 import { AffiliateCard } from "@/components/AffiliateCard";
+
+export const metadata: Metadata = {
+  title: "Best Sunscreens in India That Actually Work (2026) | Mirha & Co.",
+  description:
+    "An honest guide to finding the best sunscreens in India that won't leave a white cast or get greasy by noon. Recommended picks for oily, dry, and pigmentation-prone skin.",
+  openGraph: {
+    title: "Best Sunscreens in India That Actually Work (2026) | Mirha & Co.",
+    description:
+      "An honest guide to finding the best sunscreens in India that won't leave a white cast or get greasy by noon. Recommended picks for oily, dry, and pigmentation-prone skin.",
+  },
+};
 
 const AFFILIATE_TAG = "skinwithtanvi-21";
 
