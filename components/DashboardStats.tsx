@@ -53,67 +53,96 @@ export function DashboardStats({ stats }: any) {
     ];
 
     return (
-        <motion.div
-            initial="hidden"
-            animate="show"
-            variants={containerVariants}
-            style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(4, 1fr)",
-                gap: "0.6rem",
-                marginBottom: "1.5rem"
-            }}
-        >
-            {statCards.map((stat, idx) => (
-                <motion.div
-                    key={idx}
-                    variants={itemVariants}
-                    style={{
-                        background: "var(--white)",
-                        border: "1px solid var(--dash-border)",
-                        borderRadius: "16px",
-                        padding: "0.8rem 0.5rem",
-                        boxShadow: "0 2px 8px rgba(0, 0, 0, 0.02)",
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "center",
-                        textAlign: "center",
-                        gap: "0.4rem",
-                        transition: "all 0.3s ease"
-                    }}
-                >
-                    <div style={{ 
-                        color: stat.color, 
-                        background: stat.bg, 
-                        padding: "6px", 
-                        borderRadius: "10px",
-                        display: "flex" 
-                    }}>
-                        {stat.icon}
-                    </div>
+        <>
+            <style>{`
+                .stats-grid-container {
+                    display: grid;
+                    grid-template-columns: repeat(4, minmax(0, 1fr));
+                    gap: 0.8rem;
+                    margin-bottom: 2rem;
+                }
 
-                    <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-                        <span style={{
-                            fontSize: "1.1rem",
-                            fontWeight: 700,
-                            color: "var(--dash-ink)",
-                            lineHeight: 1
+                .stat-card-item {
+                    background: var(--white);
+                    border: 1px solid var(--dash-border);
+                    border-radius: 16px;
+                    padding: 1rem 0.6rem;
+                    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.015);
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    text-align: center;
+                    gap: 0.4rem;
+                    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+                    min-width: 0;
+                }
+
+                .stat-card-item:hover {
+                    transform: translateY(-2px);
+                    box-shadow: 0 8px 24px rgba(40, 28, 20, 0.04);
+                }
+
+                @media (max-width: 768px) {
+                    .stats-grid-container {
+                        grid-template-columns: repeat(2, minmax(0, 1fr));
+                        gap: 0.6rem;
+                        margin-bottom: 1.5rem;
+                    }
+                    .stat-card-item {
+                        padding: 0.8rem 0.5rem;
+                    }
+                }
+            `}</style>
+
+            <motion.div
+                initial="hidden"
+                animate="show"
+                variants={containerVariants}
+                className="stats-grid-container"
+            >
+                {statCards.map((stat, idx) => (
+                    <motion.div
+                        key={idx}
+                        variants={itemVariants}
+                        className="stat-card-item"
+                    >
+                        <div style={{ 
+                            color: stat.color, 
+                            background: stat.bg, 
+                            padding: "6px", 
+                            borderRadius: "10px",
+                            display: "flex" 
                         }}>
-                            {stat.value}
-                        </span>
-                        <span style={{ 
-                            fontSize: "0.55rem", 
-                            color: "var(--dash-muted)", 
-                            fontWeight: 700,
-                            textTransform: "uppercase",
-                            letterSpacing: "0.03em",
-                            marginTop: "0.1rem"
-                        }}>
-                            {stat.label}
-                        </span>
-                    </div>
-                </motion.div>
-            ))}
-        </motion.div>
+                            {stat.icon}
+                        </div>
+
+                        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", minWidth: 0, width: "100%" }}>
+                            <span style={{
+                                fontSize: "1.2rem",
+                                fontWeight: 700,
+                                color: "var(--dash-ink)",
+                                lineHeight: 1
+                            }}>
+                                {stat.value}
+                            </span>
+                            <span style={{ 
+                                fontSize: "0.58rem", 
+                                color: "var(--dash-muted)", 
+                                fontWeight: 700,
+                                textTransform: "uppercase",
+                                letterSpacing: "0.03em",
+                                marginTop: "0.2rem",
+                                overflow: "hidden",
+                                textOverflow: "ellipsis",
+                                whiteSpace: "nowrap",
+                                width: "100%"
+                            }}>
+                                {stat.label}
+                            </span>
+                        </div>
+                    </motion.div>
+                ))}
+            </motion.div>
+        </>
     );
 }

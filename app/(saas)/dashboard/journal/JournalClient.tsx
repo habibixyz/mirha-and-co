@@ -198,6 +198,53 @@ export function SkinJournalClient({ initialEntries, isPro }: { initialEntries: a
 
   return (
     <motion.div initial="hidden" animate="show" variants={containerVariants}>
+      <style>{`
+        .journal-card {
+          background: var(--white);
+          border: 1px solid var(--rule);
+          border-radius: 16px;
+          padding: 1.5rem;
+          display: grid;
+          grid-template-columns: 100px 1fr auto;
+          gap: 1.5rem;
+          align-items: center;
+          box-shadow: 0 4px 20px rgba(40, 28, 20, 0.02);
+          transition: all 0.2s ease;
+        }
+
+        .journal-date-col {
+          text-align: center;
+          border-right: 1px solid var(--rule);
+          padding-right: 1.5rem;
+        }
+
+        @media (max-width: 600px) {
+          .journal-card {
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            padding: 1.2rem;
+          }
+
+          .journal-date-col {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            border-right: none !important;
+            padding-right: 0 !important;
+            border-bottom: 1px solid var(--rule);
+            padding-bottom: 0.8rem;
+            text-align: left !important;
+          }
+
+          .journal-date-month {
+            margin: 0 !important;
+          }
+
+          .journal-date-day {
+            font-size: 1.5rem !important;
+          }
+        }
+      `}</style>
       <motion.header variants={itemVariants} style={{ 
         marginBottom: "2.5rem", 
         display: "flex", 
@@ -673,23 +720,13 @@ export function SkinJournalClient({ initialEntries, isPro }: { initialEntries: a
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 whileHover={{ scale: 1.01 }}
-                style={{
-                  background: 'var(--white)',
-                  border: "1px solid var(--rule)",
-                  borderRadius: "16px",
-                  padding: "1.5rem",
-                  display: "grid",
-                  gridTemplateColumns: "100px 1fr auto",
-                  gap: "1.5rem",
-                  alignItems: "center",
-                  boxShadow: '0 4px 20px rgba(40, 28, 20, 0.02)'
-                }}
+                className="journal-card"
               >
-                <div style={{ textAlign: "center", borderRight: "1px solid var(--rule)", paddingRight: "1.5rem" }}>
-                  <span style={{ display: "block", color: "var(--rose)", fontSize: "0.8rem", textTransform: "uppercase", letterSpacing: "0.1em", fontWeight: 700 }}>
+                <div className="journal-date-col">
+                  <span className="journal-date-month" style={{ display: "block", color: "var(--rose)", fontSize: "0.8rem", textTransform: "uppercase", letterSpacing: "0.1em", fontWeight: 700 }}>
                     {month}
                   </span>
-                  <span style={{ display: "block", fontFamily: "'Bebas Neue', sans-serif", fontSize: "2rem", color: "var(--ink)", lineHeight: 1.2 }}>
+                  <span className="journal-date-day" style={{ display: "block", fontFamily: "'Bebas Neue', sans-serif", fontSize: "2rem", color: "var(--ink)", lineHeight: 1.2 }}>
                     {day}
                   </span>
                 </div>

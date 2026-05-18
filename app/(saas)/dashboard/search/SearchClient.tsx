@@ -66,22 +66,38 @@ function ResultCard({ item, isAiRecommended, isBest }: { item: SearchItem; isAiR
 export function SearchClient({ isPro }: { isPro: boolean }) {
   const router = useRouter();
   const searchParams = useSearchParams();
+  
+  // localQuery manages the input value instantly to eliminate typing lag
+  const [localQuery, setLocalQuery] = useState(searchParams.get("q") || "");
   const [query, setQuery] = useState(searchParams.get("q") || "");
+  
   const [aiAdvice, setAiAdvice] = useState<any>(null);
   const [isAiLoading, setIsAiLoading] = useState(false);
 
-  // Sync query state with URL param and update URL on change
+  // Sync state if search parameter changes from outside (e.g. browser history)
   useEffect(() => {
-    const q = searchParams.get("q");
-    if (q && q !== query) setQuery(q);
+    const q = searchParams.get("q") || "";
+    if (q !== localQuery) {
+      setLocalQuery(q);
+      setQuery(q);
+    }
   }, [searchParams]);
 
+  // Debounce the router URL replacement and search index query state updates
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setQuery(localQuery);
+      const params = new URLSearchParams(searchParams.toString());
+      if (localQuery) params.set("q", localQuery);
+      else params.delete("q");
+      router.replace(`/dashboard/search?${params.toString()}`, { scroll: false });
+    }, 250);
+
+    return () => clearTimeout(timer);
+  }, [localQuery]);
+
   const handleQueryChange = (val: string) => {
-    setQuery(val);
-    const params = new URLSearchParams(searchParams.toString());
-    if (val) params.set("q", val);
-    else params.delete("q");
-    router.replace(`/dashboard/search?${params.toString()}`);
+    setLocalQuery(val);
   };
 
   const results = useMemo(() => searchMirha(query), [query]);
@@ -546,12 +562,12 @@ export function SearchClient({ isPro }: { isPro: boolean }) {
         <div className="search-box">
           <Search size={18} color="#9a8f86" />
           <input
-            value={query}
+            value={localQuery}
             onChange={(event) => handleQueryChange(event.target.value)}
             placeholder="Try oily skin sunscreen, pigmentation, niacinamide..."
             autoFocus
           />
-          {query ? <button onClick={() => handleQueryChange("")}>x</button> : null}
+          {localQuery ? <button onClick={() => handleQueryChange("")}>x</button> : null}
         </div>
 
         <div className="quick-row">

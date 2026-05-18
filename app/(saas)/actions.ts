@@ -194,30 +194,30 @@ export async function getDashboardData() {
     const session = await getSession();
     if (!session) return { routines: [], journal: null, user: null, error: "Unauthorized" };
 
-    const routines = await prisma.routine.findMany({
-      where: { userId: session.userId },
-      orderBy: { createdAt: "asc" }
-    });
-
-    const recentJournal = await prisma.skinJournal.findFirst({
-      where: { userId: session.userId },
-      orderBy: { date: "desc" }
-    });
+    // Optimize sequential awaits into parallel execution to eliminate database query water-falling
+    const [routines, recentJournal, journalCount, recentEntries] = await Promise.all([
+      prisma.routine.findMany({
+        where: { userId: session.userId },
+        orderBy: { createdAt: "asc" }
+      }),
+      prisma.skinJournal.findFirst({
+        where: { userId: session.userId },
+        orderBy: { date: "desc" }
+      }),
+      prisma.skinJournal.count({
+        where: { userId: session.userId }
+      }),
+      prisma.skinJournal.findMany({
+        where: { userId: session.userId },
+        take: 5,
+        orderBy: { date: "desc" },
+        select: { rating: true }
+      })
+    ]);
 
     // ── STATS LOGIC ──────────────────────────────────────────────────────────
     
-    // 1. Journal Count
-    const journalCount = await prisma.skinJournal.count({
-      where: { userId: session.userId }
-    });
-
-    // 2. Skin Score (Average of last 5 ratings * 20 for %)
-    const recentEntries = await prisma.skinJournal.findMany({
-      where: { userId: session.userId },
-      take: 5,
-      orderBy: { date: "desc" },
-      select: { rating: true }
-    });
+    // Average rating for last 5 entries
     const avgRating = recentEntries.length > 0 
       ? recentEntries.reduce((acc, curr) => acc + (curr.rating || 0), 0) / recentEntries.length 
       : 0;
