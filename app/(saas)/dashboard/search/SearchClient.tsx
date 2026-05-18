@@ -74,6 +74,7 @@ export function SearchClient({ isPro }: { isPro: boolean }) {
   const [aiAdvice, setAiAdvice] = useState<any>(null);
   const [isAiLoading, setIsAiLoading] = useState(false);
   const [hasTriggeredAi, setHasTriggeredAi] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   // Sync state if search parameter changes from outside (e.g. browser history)
   useEffect(() => {
@@ -101,6 +102,7 @@ export function SearchClient({ isPro }: { isPro: boolean }) {
   useEffect(() => {
     setHasTriggeredAi(false);
     setAiAdvice(null);
+    setError(null);
   }, [query]);
 
   const handleQueryChange = (val: string) => {
@@ -143,12 +145,14 @@ export function SearchClient({ isPro }: { isPro: boolean }) {
     }
 
     setIsAiLoading(true);
+    setError(null);
     getAISearchAdvice(query)
       .then((advice) => {
         setAiAdvice(advice);
       })
       .catch((err) => {
         console.error("AI Advice failed", err);
+        setError(err instanceof Error ? err.message : String(err));
       })
       .finally(() => {
         setIsAiLoading(false);
@@ -591,7 +595,7 @@ export function SearchClient({ isPro }: { isPro: boolean }) {
           ))}
         </div>
 
-        {query.length >= 5 && !hasTriggeredAi && !aiAdvice && !isAiLoading && (
+        {query.length >= 5 && !hasTriggeredAi && !aiAdvice && !isAiLoading && !error && (
           <div className="brain-card" style={{ width: '100%', maxWidth: '100%', boxSizing: 'border-box', marginBottom: '2rem', padding: '1.5rem', textAlign: 'center', border: '1px dashed #c8473a55', background: 'rgba(200,71,58,0.03)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#c8473a', fontWeight: 700 }}>
               <Sparkles size={20} />
@@ -603,6 +607,35 @@ export function SearchClient({ isPro }: { isPro: boolean }) {
             <button onClick={() => setHasTriggeredAi(true)} style={{ background: '#c8473a', color: 'white', border: 'none', borderRadius: '12px', padding: '10px 20px', fontSize: '0.85rem', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', transition: 'all 0.2s', boxShadow: '0 4px 12px rgba(200,71,58,0.2)' }}>
               <span>✨ Ask Mirha Brain</span>
             </button>
+            {!isPro && (
+              <span style={{ fontSize: '0.7rem', color: '#9a8f86', marginTop: '4px', opacity: 0.8 }}>
+                Free tier: 3 daily AI requests. Pro tier: 20 daily.
+              </span>
+            )}
+          </div>
+        )}
+
+        {/* ✅ RATE LIMIT MET */}
+        {error === 'LIMIT_REACHED_UPGRADE' && (
+          <div className="brain-card" style={{ width: '100%', maxWidth: '100%', boxSizing: 'border-box', border: '1px solid rgba(200, 71, 58, 0.2)', background: 'rgba(20, 18, 16, 0.95)', padding: '2rem', textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px', marginBottom: '2rem' }}>
+            <div style={{ background: 'rgba(200, 71, 58, 0.1)', padding: '12px', borderRadius: '50%', color: '#c8473a' }}>
+              <Crown size={32} />
+            </div>
+            <h3 style={{ margin: '8px 0 4px', fontSize: '1.25rem', fontFamily: 'var(--dash-font-serif)', color: 'white' }}>Daily AI Search Limit Reached</h3>
+            <p style={{ margin: '0 0 1.5rem', fontSize: '0.9rem', color: '#a89f97', maxWidth: '380px', lineHeight: 1.5 }}>
+              You have used your 3 free daily consultations with Mirha Brain. <strong>Upgrade to Pro for 20 daily AI consultations</strong>, custom routines, and premium analysis!
+            </p>
+            <Link href="/dashboard/subscription" style={{ background: '#c8473a', color: 'white', border: 'none', borderRadius: '12px', padding: '12px 24px', fontSize: '0.9rem', fontWeight: 600, textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', transition: 'all 0.2s', boxShadow: '0 4px 12px rgba(200,71,58,0.3)' }}>
+              <span>✨ Upgrade to Pro</span>
+              <ArrowRight size={16} />
+            </Link>
+          </div>
+        )}
+
+        {/* ✅ OTHER ERROR */}
+        {error && error !== 'LIMIT_REACHED_UPGRADE' && (
+          <div className="brain-card" style={{ width: '100%', maxWidth: '100%', boxSizing: 'border-box', border: '1px solid rgba(255, 255, 255, 0.1)', padding: '1.5rem', textAlign: 'center', marginBottom: '2rem' }}>
+            <p style={{ margin: 0, color: '#c8473a', fontSize: '0.95rem', fontWeight: 600 }}>{error}</p>
           </div>
         )}
 
