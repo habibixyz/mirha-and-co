@@ -541,14 +541,31 @@ export async function logoutAction() {
   redirect("/login");
 }
 // ? BRAIN: AI SEARCH ADVICE
-import { getLocalSearchAdvice } from "@/lib/searchIndex";
+import { getLocalSearchAdvice, searchMirha } from "@/lib/searchIndex";
 
 export async function getAISearchAdvice(query: string) {
   const session = await getSession();
   if (!session) return null;
 
-  // Now using local database-driven advice instead of external Gemini AI
-  return getLocalSearchAdvice(query);
+  if (!process.env.GEMINI_API_KEY) {
+    return getLocalSearchAdvice(query);
+  }
+
+  try {
+    // 1. Get search context matches from our index
+    const searchContext = searchMirha(query, 10);
+
+    // 2. Call our modernized Gemini RAG Search engine
+    const response = await aiSearch(query, searchContext);
+    if (!response || !response.advice) {
+      return getLocalSearchAdvice(query);
+    }
+
+    return response;
+  } catch (error) {
+    console.error("AI Search Advice fallback trigger:", error);
+    return getLocalSearchAdvice(query);
+  }
 }
 
 // ? BRAIN: JOURNAL ANALYSIS
