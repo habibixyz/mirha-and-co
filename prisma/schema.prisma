@@ -23,6 +23,7 @@ model User {
   journal             SkinJournal[]
   subscription        Subscription?
   passwordResetTokens PasswordResetToken[]
+  aiQueryLogs         AiQueryLog[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -124,4 +125,15 @@ model PasswordResetToken {
   createdAt DateTime  @default(now())
 
   @@index([userId])
+}
+
+model AiQueryLog {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  query     String
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([userId, createdAt])
 }

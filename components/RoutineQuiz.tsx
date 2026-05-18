@@ -1,9 +1,10 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ChevronRight, ChevronLeft } from 'lucide-react';
 import { QuizAnswers, RoutineRecommendation, generateRoutine } from '@/lib/routineEngine';
 import RoutineResult from './RoutineResult';
+import { useRoutineAnalytics } from '@/lib/hooks/useRoutineAnalytics';
 
 const QUIZ_STEPS = [
   {
@@ -41,11 +42,57 @@ const QUIZ_STEPS = [
 ];
 
 export default function RoutineQuiz() {
+  const { trackQuizStart, trackQuizComplete } = useRoutineAnalytics();
+
   const [climate, setClimate] = useState<{ temp: number; humidity: number; city: string } | undefined>({
     temp: 38,
     humidity: 82,
     city: "Mumbai (Summer/Monsoon)"
   });
+  const [climateLoading, setClimateLoading] = useState(false);
+  const [climateError, setClimateError] = useState(false);
+
+  useEffect(() => {
+    trackQuizStart();
+
+    async function fetchLocalClimate() {
+      setClimateLoading(true);
+      try {
+        const geoRes = await fetch("https://ipapi.co/json/");
+        if (!geoRes.ok) throw new Error("Geo fetch failed");
+        const geoData = await geoRes.json();
+        
+        const city = geoData.city || "India";
+        const lat = geoData.latitude;
+        const lon = geoData.longitude;
+
+        if (lat && lon) {
+          const weatherRes = await fetch(
+            `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m`
+          );
+          if (!weatherRes.ok) throw new Error("Weather fetch failed");
+          const weatherData = await weatherRes.json();
+          
+          const temp = Math.round(weatherData.current.temperature_2m);
+          const humidity = Math.round(weatherData.current.relative_humidity_2m);
+
+          setClimate({
+            temp,
+            humidity,
+            city: `${city} (Synced)`
+          });
+        }
+      } catch (err) {
+        console.error("Local climate sync failed:", err);
+        setClimateError(true);
+      } finally {
+        setClimateLoading(false);
+      }
+    }
+
+    fetchLocalClimate();
+  }, []);
+
   const [currentStep, setCurrentStep] = useState(0);
   const [answers, setAnswers] = useState<Partial<QuizAnswers>>({});
   const [showResult, setShowResult] = useState(false);
@@ -78,6 +125,7 @@ export default function RoutineQuiz() {
       const completeAnswers = answers as QuizAnswers;
       const generatedRoutine = generateRoutine(completeAnswers, climate);
       setRoutine(generatedRoutine);
+      trackQuizComplete(completeAnswers);
       setShowResult(true);
     } else {
       setCurrentStep(currentStep + 1);
@@ -95,11 +143,6 @@ export default function RoutineQuiz() {
     setAnswers({});
     setShowResult(false);
     setRoutine(null);
-    setClimate({
-      temp: 38,
-      humidity: 82,
-      city: "Mumbai (Summer/Monsoon)"
-    });
   };
 
   if (showResult && routine) {
@@ -156,11 +199,73 @@ export default function RoutineQuiz() {
               fontSize: '14px',
               color: '#888',
               lineHeight: 1.7,
-              margin: '0 0 32px',
+              margin: '0 0 20px',
             }}
           >
             Answer 3 quick questions and we'll build a personalized routine with products curated for your exact skin needs.
           </p>
+
+          {/* Climate Sync Pill */}
+          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '32px' }}>
+            {climateLoading ? (
+              <div style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '8px',
+                padding: '6px 14px',
+                background: '#fff',
+                border: '1px solid #ede8e0',
+                borderRadius: '20px',
+                fontSize: '11px',
+                color: '#9b7e6b',
+                fontFamily: 'var(--font-mono, monospace)',
+                boxShadow: '0 2px 8px rgba(0,0,0,0.02)',
+              }}>
+                <span style={{
+                  display: 'inline-block',
+                  width: '6px',
+                  height: '6px',
+                  background: '#9b7e6b',
+                  borderRadius: '50%',
+                  opacity: 0.6
+                }} />
+                📡 Syncing local climate...
+              </div>
+            ) : climateError ? (
+              <div style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '8px',
+                padding: '6px 14px',
+                background: '#faf8f5',
+                border: '1px solid #ede8e0',
+                borderRadius: '20px',
+                fontSize: '11px',
+                color: '#888',
+                fontFamily: 'var(--font-mono, monospace)'
+              }}>
+                🍃 Climate: Mumbai Default (38°C, 82% RH)
+              </div>
+            ) : climate ? (
+              <div style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '8px',
+                padding: '6px 14px',
+                background: '#edf7f0',
+                border: '1px solid #ccead4',
+                borderRadius: '20px',
+                fontSize: '11px',
+                color: '#2d7a4f',
+                fontFamily: 'var(--font-mono, monospace)',
+                fontWeight: 500,
+                boxShadow: '0 2px 8px rgba(45, 122, 79, 0.05)',
+              }}>
+                <span style={{ fontSize: '12px' }}>🌍</span>
+                Climate Synced: {climate.city} ({climate.temp}°C, {climate.humidity}% RH)
+              </div>
+            ) : null}
+          </div>
         </div>
 
         {/* Progress Bar */}

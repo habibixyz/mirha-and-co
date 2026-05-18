@@ -587,8 +587,8 @@ export async function analyzeSkinPhoto(note: string, photoBase64?: string) {
   }
 
   try {
-    const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+    const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
+    const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
 
     let contents: any[] = [];
     const prompt = `Act as an expert esthetician. Analyze this skin journal entry. 
@@ -613,5 +613,116 @@ export async function analyzeSkinPhoto(note: string, photoBase64?: string) {
   } catch (error) {
     console.error('AI Analysis failed', error);
     return 'Unable to analyze skin right now.';
+  }
+}
+
+// ? BRAIN: AI RAG SKINCARE CONSULTANT (With Premium Rate Limiting)
+export async function askSkincareConsultant(userQuery: string) {
+  const session = await getSession();
+  if (!session) throw new Error("Please log in to ask the AI Skincare Consultant.");
+
+  // 1. Check user's subscription tier
+  const sub = await prisma.subscription.findUnique({ where: { userId: session.userId } });
+  const isPro = sub?.tier === 'pro' && sub?.status === 'active';
+  const maxQueriesPerDay = isPro ? 20 : 3; // 3 for free users, 20 for Pro users
+
+  // 2. Count current daily usage
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const dailyCount = await prisma.aiQueryLog.count({
+    where: {
+      userId: session.userId,
+      createdAt: { gte: today }
+    }
+  });
+
+  // 3. Enforce the rate limit
+  if (dailyCount >= maxQueriesPerDay) {
+    if (isPro) {
+      throw new Error(`You have reached your Pro daily limit of ${maxQueriesPerDay} consultations. Please try again tomorrow!`);
+    } else {
+      // Free limit hit
+      throw new Error("LIMIT_REACHED_UPGRADE");
+    }
+  }
+
+  // 4. Retrieve all products from the local database for retrieval
+  const products = await prisma.product.findMany();
+  
+  // Clean products list for parsing
+  const catalog = products.map(p => ({
+    name: p.name,
+    brand: p.brand,
+    ingredients: p.ingredients,
+    concerns: p.concerns,
+    skinTypes: p.skinTypes,
+    category: p.category
+  }));
+
+  // Simple cosine term vector search to get the single most relevant product context
+  const queryTerms = userQuery.toLowerCase().split(/\W+/).filter(t => t.length > 2);
+  let bestScore = 0;
+  let bestProduct = null;
+
+  for (const item of catalog) {
+    const text = `${item.name} ${item.brand} ${item.ingredients} ${item.concerns} ${item.skinTypes}`.toLowerCase();
+    const matches = queryTerms.filter(t => text.includes(t));
+    const score = matches.length / (Math.sqrt(queryTerms.length) * Math.sqrt(text.split(/\W+/).length || 1));
+    if (score > bestScore) {
+      bestScore = score;
+      bestProduct = item;
+    }
+  }
+
+  // 5. Synthesize prompt context
+  let contextSnippet = "No specific database product was found matching this concern. Advise based on general skin health.";
+  if (bestProduct) {
+    contextSnippet = `Recommended Product: "${bestProduct.name}" by brand "${bestProduct.brand}". 
+    Key Ingredients: ${bestProduct.ingredients}. 
+    Designed for: ${bestProduct.concerns}. 
+    Skin Types: ${bestProduct.skinTypes}. 
+    Category: ${bestProduct.category}.`;
+  }
+
+  const prompt = `
+    You are an expert clinical skincare consultant for Mirha & Co., specialized in Indian skin types and local weather patterns.
+    The user is asking: "${userQuery}"
+
+    Use the following verified product knowledge from our inventory to ground your advice:
+    [CONTEXT]
+    ${contextSnippet}
+    [/CONTEXT]
+
+    Rules:
+    1. Be brief, encouraging, and highly professional (3-4 sentences max).
+    2. Explicitly explain WHY the recommended ingredients (e.g. Panthenol, Niacinamide) suit their specific dry/sensitive or oily skin concerns.
+    3. Keep a premium, clean aesthetic in your styling.
+  `;
+
+  // 6. Gemini Inference
+  if (!process.env.GEMINI_API_KEY) {
+    throw new Error("Skincare Consultant is currently offline (API key missing).");
+  }
+
+  try {
+    const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
+    const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
+    const result = await model.generateContent(prompt);
+    const response = await result.response;
+    const answer = response.text();
+
+    // 7. Log the query ONLY upon successful generation to count towards usage
+    await prisma.aiQueryLog.create({
+      data: {
+        userId: session.userId,
+        query: userQuery
+      }
+    });
+
+    return answer;
+  } catch (err: any) {
+    console.error("AI Consultant inference failed:", err);
+    throw new Error("Unable to contact the AI Consultant right now. Please try again.");
   }
 }
