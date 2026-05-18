@@ -588,7 +588,7 @@ export function SearchClient({ isPro }: { isPro: boolean }) {
 
         {/* ✅ AI BRAIN ADVICE */}
         {(isAiLoading || aiAdvice) && (
-          <div className="brain-card">
+          <div className="brain-card" style={{ width: '100%', maxWidth: '100%', boxSizing: 'border-box' }}>
             <div className="brain-bg-icon">
               <Sparkles size={120} color="white" />
             </div>
@@ -616,14 +616,14 @@ export function SearchClient({ isPro }: { isPro: boolean }) {
                 
                 {/* Embedded Recommendations */}
                 {aiAdvice?.recommendedIds?.length > 0 && (
-                  <div className="ai-reco-box">
+                  <div className="ai-reco-box" style={{ width: '100%', maxWidth: '100%', minWidth: 0, boxSizing: 'border-box', overflow: 'hidden' }}>
                     <p style={{ fontSize: "0.7rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "1rem", opacity: 0.7 }}>Recommended for you:</p>
-                    <div className="ai-reco-grid">
+                    <div className="ai-reco-grid" style={{ width: '100%', maxWidth: '100%', minWidth: 0, boxSizing: 'border-box' }}>
                       {aiAdvice.recommendedIds.map((id: string) => {
                         const item = SEARCH_INDEX.find(i => i.id === id);
                         if (!item) return null;
                         return (
-                          <Link key={id} href={item.url} className="ai-reco-item">
+                          <Link key={id} href={item.url} className="ai-reco-item" style={{ minWidth: 0, width: '100%', maxWidth: '100%', boxSizing: 'border-box', overflow: 'hidden' }}>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '10px', minWidth: 0, flex: 1 }}>
                               {iconFor(item.type)}
                               <div style={{ minWidth: 0, flex: 1 }}>
