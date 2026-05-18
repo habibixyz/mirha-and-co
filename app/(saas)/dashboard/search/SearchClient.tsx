@@ -407,12 +407,18 @@ export function SearchClient({ isPro }: { isPro: boolean }) {
           border: 1px solid rgba(255, 255, 255, 0.1);
           border-radius: 16px;
           padding: 1.5rem;
+          width: 100%;
+          box-sizing: border-box;
+          min-width: 0;
         }
 
         .ai-reco-grid {
           display: grid;
           grid-template-columns: repeat(2, minmax(0, 1fr));
           gap: 12px;
+          width: 100%;
+          box-sizing: border-box;
+          min-width: 0;
         }
 
         @media (max-width: 600px) {
@@ -432,6 +438,8 @@ export function SearchClient({ isPro }: { isPro: boolean }) {
           color: white;
           transition: all 0.2s;
           min-width: 0;
+          width: 100%;
+          box-sizing: border-box;
         }
 
         .ai-reco-item:hover {
