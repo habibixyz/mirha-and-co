@@ -395,13 +395,13 @@ export function SearchClient({ isPro }: { isPro: boolean }) {
 
         .ai-reco-grid {
           display: grid;
-          grid-template-columns: repeat(2, 1fr);
+          grid-template-columns: repeat(2, minmax(0, 1fr));
           gap: 12px;
         }
 
         @media (max-width: 600px) {
           .ai-reco-grid {
-            grid-template-columns: 1fr;
+            grid-template-columns: minmax(0, 1fr);
           }
         }
 
@@ -415,6 +415,7 @@ export function SearchClient({ isPro }: { isPro: boolean }) {
           text-decoration: none;
           color: white;
           transition: all 0.2s;
+          min-width: 0;
         }
 
         .ai-reco-item:hover {
@@ -522,6 +523,15 @@ export function SearchClient({ isPro }: { isPro: boolean }) {
             width: 70px;
             height: 70px;
           }
+
+          .brain-card {
+            padding: 1.5rem 1.25rem;
+            border-radius: 20px;
+          }
+
+          .ai-reco-box {
+            padding: 1rem;
+          }
         }
       `}</style>
 
@@ -590,14 +600,14 @@ export function SearchClient({ isPro }: { isPro: boolean }) {
                         if (!item) return null;
                         return (
                           <Link key={id} href={item.url} className="ai-reco-item">
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', minWidth: 0, flex: 1 }}>
                               {iconFor(item.type)}
-                              <div style={{ minWidth: 0 }}>
+                              <div style={{ minWidth: 0, flex: 1 }}>
                                 <div style={{ fontSize: '0.85rem', fontWeight: 600, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{item.title}</div>
                                 <div style={{ fontSize: '0.7rem', opacity: 0.7 }}>View {labelFor(item.type)}</div>
                               </div>
                             </div>
-                            <ExternalLink size={14} style={{ opacity: 0.5 }} />
+                            <ExternalLink size={14} style={{ flexShrink: 0, opacity: 0.5, marginLeft: '8px' }} />
                           </Link>
                         );
                       })}
