@@ -73,6 +73,7 @@ export function SearchClient({ isPro }: { isPro: boolean }) {
   
   const [aiAdvice, setAiAdvice] = useState<any>(null);
   const [isAiLoading, setIsAiLoading] = useState(false);
+  const [hasTriggeredAi, setHasTriggeredAi] = useState(false);
 
   // Sync state if search parameter changes from outside (e.g. browser history)
   useEffect(() => {
@@ -95,6 +96,12 @@ export function SearchClient({ isPro }: { isPro: boolean }) {
 
     return () => clearTimeout(timer);
   }, [localQuery]);
+
+  // Reset AI state when query changes
+  useEffect(() => {
+    setHasTriggeredAi(false);
+    setAiAdvice(null);
+  }, [query]);
 
   const handleQueryChange = (val: string) => {
     setLocalQuery(val);
@@ -130,25 +137,23 @@ export function SearchClient({ isPro }: { isPro: boolean }) {
   }, [groups, aiAdvice]);
 
   useEffect(() => {
-    if (query.length < 5) {
+    if (!hasTriggeredAi || query.length < 5) {
       setAiAdvice(null);
       return;
     }
 
-    const timer = setTimeout(async () => {
-      setIsAiLoading(true);
-      try {
-        const advice = await getAISearchAdvice(query);
+    setIsAiLoading(true);
+    getAISearchAdvice(query)
+      .then((advice) => {
         setAiAdvice(advice);
-      } catch (err) {
+      })
+      .catch((err) => {
         console.error("AI Advice failed", err);
-      } finally {
+      })
+      .finally(() => {
         setIsAiLoading(false);
-      }
-    }, 1000);
-
-    return () => clearTimeout(timer);
-  }, [query, isPro]);
+      });
+  }, [query, hasTriggeredAi, isPro]);
 
   return (
     <main style={{ minHeight: '100%' }}>
@@ -585,6 +590,21 @@ export function SearchClient({ isPro }: { isPro: boolean }) {
             </button>
           ))}
         </div>
+
+        {query.length >= 5 && !hasTriggeredAi && !aiAdvice && !isAiLoading && (
+          <div className="brain-card" style={{ width: '100%', maxWidth: '100%', boxSizing: 'border-box', marginBottom: '2rem', padding: '1.5rem', textAlign: 'center', border: '1px dashed #c8473a55', background: 'rgba(200,71,58,0.03)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#c8473a', fontWeight: 700 }}>
+              <Sparkles size={20} />
+              <span style={{ fontSize: '0.85rem', letterSpacing: '0.1em', textTransform: 'uppercase' }}>Mirha Brain Mode</span>
+            </div>
+            <p style={{ margin: '4px 0 12px', fontSize: '0.95rem', color: '#756b63', fontFamily: "var(--dash-font-serif)", fontStyle: 'italic' }}>
+              Analyze your query to find custom ingredients and routines tailored for your concern.
+            </p>
+            <button onClick={() => setHasTriggeredAi(true)} style={{ background: '#c8473a', color: 'white', border: 'none', borderRadius: '12px', padding: '10px 20px', fontSize: '0.85rem', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', transition: 'all 0.2s', boxShadow: '0 4px 12px rgba(200,71,58,0.2)' }}>
+              <span>✨ Ask Mirha Brain</span>
+            </button>
+          </div>
+        )}
 
         {/* ✅ AI BRAIN ADVICE */}
         {(isAiLoading || aiAdvice) && (
