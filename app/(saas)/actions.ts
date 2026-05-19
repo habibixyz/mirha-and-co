@@ -4,7 +4,7 @@ import { getSession, logout } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { aiSearch, analyzeSkinJournal } from "@/lib/ai";
+import { aiSearch, analyzeSkinJournal, generateWithRetry } from "@/lib/ai";
 import { SEARCH_INDEX } from "@/lib/searchIndex";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
@@ -604,9 +604,6 @@ export async function analyzeSkinPhoto(note: string, photoBase64?: string) {
   }
 
   try {
-    const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
-    const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
-
     let contents: any[] = [];
     const prompt = `Act as an expert esthetician. Analyze this skin journal entry. 
     User note: "${note}"
@@ -624,9 +621,7 @@ export async function analyzeSkinPhoto(note: string, photoBase64?: string) {
       contents = [prompt];
     }
 
-    const result = await model.generateContent(contents);
-    const response = await result.response;
-    return response.text();
+    return await generateWithRetry(contents);
   } catch (error) {
     console.error('AI Analysis failed', error);
     return 'Unable to analyze skin right now.';
@@ -733,11 +728,7 @@ export async function askSkincareConsultant(userQuery: string) {
   }
 
   try {
-    const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
-    const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
-    const result = await model.generateContent(prompt);
-    const response = await result.response;
-    const answer = response.text();
+    const answer = await generateWithRetry(prompt);
 
     // 7. Log the query ONLY upon successful generation to count towards usage
     await prisma.aiQueryLog.create({

@@ -659,8 +659,8 @@ export default function BudgetRoutinePage() {
 
           <div className="product-section-label">Recommended Niacinamide Serums</div>
           <div className="cards-row">
-            <AffiliateCard asin="B08F9MF314" onClick={setSelectedProduct} tag={TAG} />
-            <AffiliateCard asin="B07VVRXFWC" onClick={setSelectedProduct} tag={TAG} />
+            <AffiliateCard asin="B0DH88LZ11" onClick={setSelectedProduct} tag={TAG} />
+            <AffiliateCard asin="B01MDTVZTZ" onClick={setSelectedProduct} tag={TAG} />
           </div>
 
           <p>
@@ -801,8 +801,8 @@ export default function BudgetRoutinePage() {
 
           <div className="product-section-label">Recommended Sunscreens</div>
           <div className="cards-row">
-            <AffiliateCard asin="B09FPS9D5T" onClick={setSelectedProduct} tag={TAG} />
-            <AffiliateCard asin="B0F2HF2PKQ" onClick={setSelectedProduct} tag={TAG} />
+            <AffiliateCard asin="B0DHY6LQTW" onClick={setSelectedProduct} tag={TAG} />
+            <AffiliateCard asin="B0C9JPWLR4" onClick={setSelectedProduct} tag={TAG} />
             <AffiliateCard asin="B0CW1N7QRT" onClick={setSelectedProduct} tag={TAG} />
           </div>
 

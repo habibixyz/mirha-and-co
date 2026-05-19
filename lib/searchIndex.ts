@@ -96,6 +96,13 @@ const CONCERN_MAP: Record<string, string[]> = {
   monsoon: ["guide-humidity-skincare-india", "ingredient-niacinamide", "ingredient-salicylic", "product-B0CW1N7QRT"],
   fungal: ["guide-humidity-skincare-india", "ingredient-niacinamide", "ingredient-salicylic"],
   sleep: ["guide-indian-night-routine-better-sleep", "product-B01DQV8BIM", "ingredient-ceramide", "ingredient-retinol"],
+  sunscreen: ["product-reequil-sunscreen", "guide-best-sunscreen-oily-skin-india", "guide-best-sunscreens-india-2026"],
+  moisturiser: ["ingredient-ceramide", "guide-best-moisturisers-india-2026"],
+  niacinamide: ["ingredient-niacinamide", "product-minimalist-niacinamide", "guide-best-niacinamide-serums-india"],
+  salicylic: ["ingredient-salicylic", "guide-salicylic-acid-guide-india"],
+  retinol: ["ingredient-retinol", "routine-anti-aging"],
+  vitamin_c: ["ingredient-vitamin-c", "guide-niacinamide-vs-vitamin-c"],
+  hyaluronic: ["ingredient-hyaluronic", "ingredient-ceramide"],
 };
 
 /* ─────────────────────────────
@@ -544,6 +551,13 @@ const TIPS: Record<string, string> = {
   monsoon: "Monsoon humidity can trigger fungal breakouts. Swap rich face oils for non-comedogenic gel formulas and use gentle salicylic acid cleansers.",
   fungal: "For fungal acne, avoid fatty acids and rich plant oils. Use malassezia-safe hydrators like squalane or niacinamide, and try an antifungal wash.",
   sleep: "A realistic night routine improves your sleep, cortisol levels, and skin repair. Focus on warm light, magnesium glycinate, a warm shower, and a simple 3-step skincare routine.",
+  sunscreen: "Never skip sunscreen. It prevents UV damage, hyperpigmentation, and premature aging. For Indian skin, look for a non-greasy, broad-spectrum SPF 50 PA++++ chemical or hybrid formula with no white cast.",
+  moisturiser: "A moisturiser is essential for all skin types. Oily skin benefits from lightweight gel-based formulas (like humectants with hyaluronic acid), while dry skin requires barrier support with cream-based ceramides.",
+  niacinamide: "Niacinamide (Vitamin B3) is a powerhouse ingredient that controls oil production, minimizes pores, fades acne marks, and strengthens the skin barrier. A concentration of 5-10% is ideal.",
+  salicylic: "Salicylic Acid (BHA) is oil-soluble, allowing it to penetrate deep inside pores to dissolve sebum and dead skin cells. It is the gold standard for unclogging pores, preventing acne, and treating blackheads.",
+  retinol: "Retinol (Vitamin A) is the gold standard for anti-aging and skin renewal. It boosts collagen production, speeds up cell turnover, and helps fade fine lines, wrinkles, and deep acne marks. Start slow and use only at night.",
+  vitamin_c: "Vitamin C is a potent antioxidant that brightens skin, fades hyperpigmentation/sun spots, and protects against environmental stressors. Use it in the morning under your sunscreen.",
+  hyaluronic: "Hyaluronic Acid is a lightweight humectant that holds up to 1000x its weight in water, drawing moisture deep into the skin. Perfect for instant hydration and plumping dehydrated skin.",
 };
 
 export function getLocalSearchAdvice(query: string) {
