@@ -15,6 +15,17 @@ export type Post = {
 export const POSTS: Post[] = [
   {
     category: "WELLNESS",
+    title: "Wellness for Builders: How Founders Quiet Their Nervous System",
+    excerpt: "Startup burnout isn't a mindset problem. It's a nervous system problem. A practical guide to sleep, cortisol, and micro habits for founders, developers, and high-output builders.",
+    slug: "wellness-for-builders",
+    readTime: "9 min",
+    date: "May 2026",
+    productCount: 0,
+    thumbnail: "WB",
+    tags: ["founder wellness", "startup burnout", "nervous system", "mental recovery", "high-output people", "cortisol", "sleep optimization", "focus rituals", "indie hacker wellness", "developer health", "building without burnout"],
+  },
+  {
+    category: "WELLNESS",
     title: "Your Brain Wasn't Built for Infinite Scroll",
     excerpt: "Dopamine loops, notification fatigue, AI overload — how modern apps are quietly hijacking your attention, and a 5-step digital reset to take it back.",
     slug: "your-brain-wasnt-built-for-infinite-scroll",
