@@ -14,6 +14,17 @@ export type Post = {
 
 export const POSTS: Post[] = [
   {
+    category: "WELLNESS",
+    title: "Your Brain Wasn't Built for Infinite Scroll",
+    excerpt: "Dopamine loops, notification fatigue, AI overload — how modern apps are quietly hijacking your attention, and a 5-step digital reset to take it back.",
+    slug: "your-brain-wasnt-built-for-infinite-scroll",
+    readTime: "8 min",
+    date: "May 2026",
+    productCount: 0,
+    thumbnail: "IS",
+    tags: ["digital wellness", "dopamine detox", "screen fatigue", "focus recovery", "AI burnout", "infinite scroll", "notification fatigue", "cognitive debt", "digital reset"],
+  },
+  {
     category: "BEAUTY",
     title: "Why Your Skincare Routine Stops Working in Indian Summer",
     excerpt: "Your routine did not change. Your environment did. A science-backed breakdown of why products behave differently in India's heat and humidity — and exactly what to switch.",
