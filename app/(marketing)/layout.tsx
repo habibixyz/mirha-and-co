@@ -123,7 +123,7 @@ export default function RootLayout({
                 marginBottom: "1rem",
               }}>Topics</p>
               <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem" }}>
-                {["Beauty", "Skincare", "Wellness", "Lifestyle", "Gift Guides"].map((t) => (
+                {["Beauty", "Skincare", "Hair", "Wellness", "Lifestyle", "Makeup"].map((t) => (
                   <Link
                     key={t}
                     href={`/blog/category/${t.toLowerCase().replace(" ", "-")}`}
@@ -166,7 +166,7 @@ export default function RootLayout({
             }}
           >
             <span>© 2026 Mirha &amp; Co. All rights reserved.</span>
-            <span>Beauty · Wellness · Lifestyle</span>
+            <span>Beauty · Skincare · Wellness · Lifestyle</span>
           </div>
         </footer>
         <SpeedInsights />

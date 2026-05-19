@@ -57,7 +57,15 @@ export default function BlogIndex() {
     <main>
       <style>{`
         *, *::before, *::after { box-sizing: border-box; }
-        .journal-page { background: #faf8f5; color: #111; min-height: 100vh; }
+        .journal-page { 
+          background-color: #faf8f5; 
+          background-image: 
+            radial-gradient(circle at 15% 5%, rgba(200,71,58,0.08) 0%, transparent 45%),
+            radial-gradient(circle at 85% 30%, rgba(155,126,107,0.06) 0%, transparent 55%),
+            radial-gradient(circle at 50% 80%, rgba(200,71,58,0.05) 0%, transparent 50%);
+          color: #111; 
+          min-height: 100vh; 
+        }
         .journal-hero {
           min-height: 620px;
           display: grid;

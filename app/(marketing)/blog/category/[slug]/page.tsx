@@ -1,160 +1,9 @@
 import Link from "next/link";
+import { POSTS } from "@/lib/posts";
 
 /* =========================
-   POSTS DATA (SYNC WITH FOLDERS)
+   CATEGORY METADATA
 ========================= */
-
-const allPosts = [
-  // BEAUTY
-  {
-    category: "beauty",
-    title: "What Niacinamide Actually Does to Your Skin (India Edition)",
-    excerpt: "The complete no-fluff guide for Indian skin.",
-    slug: "what-niacinamide-does-to-your-skin",
-    readTime: "10 min",
-    date: "March 2026",
-  },
-  {
-    category: "beauty",
-    title: "Amazon Skincare Under ₹1500 That Actually Works",
-    excerpt: "Budget doesn’t mean compromise.",
-    slug: "amazon-skincare-under-1500",
-    readTime: "6 min",
-    date: "March 2026",
-  },
-  {
-    category: "beauty",
-    title: "Best Sunscreens in India (2026)",
-    excerpt: "No white cast. Just results.",
-    slug: "best-sunscreens-india-2026",
-    readTime: "7 min",
-    date: "April 2026",
-  },
-  {
-    category: "beauty",
-    title: "Budget Beauty Routine Under ₹2000",
-    excerpt: "Affordable routine that works.",
-    slug: "budget-beauty-routine-2000",
-    readTime: "6 min",
-    date: "April 2026",
-  },
-  {
-    category: "beauty",
-    title: "Budget Skincare Routine Under ₹2000",
-    excerpt: "Complete skincare under budget.",
-    slug: "budget-skincare-routine-under-2000",
-    readTime: "6 min",
-    date: "April 2026",
-  },
-  {
-    category: "beauty",
-    title: "How to Fix Pigmentation",
-    excerpt: "Real solutions that work.",
-    slug: "pigmentation-guide",
-    readTime: "8 min",
-    date: "March 2026",
-  },
-  {
-    category: "beauty",
-    title: "Correct Skincare Layering Order",
-    excerpt: "Most people get this wrong.",
-    slug: "skincare-layering-order",
-    readTime: "5 min",
-    date: "Jan 2026",
-  },
-  {
-    category: "beauty",
-    title: "Skincare Products That Changed My Skin",
-    excerpt: "Tried, tested, worth it.",
-    slug: "skincare-products-that-changed-my-skin",
-    readTime: "6 min",
-    date: "Feb 2026",
-  },
-  {
-    category: "beauty",
-    title: "Complete Skincare Routine for Indian Skin",
-    excerpt: "Everything you actually need.",
-    slug: "skincare-routine-complete-india",
-    readTime: "8 min",
-    date: "Feb 2026",
-  },
-  {
-  category: "beauty",
-  title: "Best Niacinamide Serums in India (2026)",
-  excerpt: "Ranked by ingredient quality and real results.",
-  slug: "best-niacinamide-serums-india",
-  readTime: "12 min",
-  date: "April 2026",
-},
-{
-  category: "beauty",
-  title: "Niacinamide 5% vs 10%",
-  excerpt: "Which concentration actually works better.",
-  slug: "niacinamide-5-vs-10",
-  readTime: "8 min",
-  date: "April 2026",
-},
-{
-  category: "beauty",
-  title: "Niacinamide for Oily Skin India",
-  excerpt: "How it controls oil in Indian humidity.",
-  slug: "niacinamide-for-oily-skin",
-  readTime: "10 min",
-  date: "April 2026",
-},
-{
-  category: "beauty",
-  title: "Niacinamide vs Vitamin C",
-  excerpt: "Which one your skin actually needs.",
-  slug: "niacinamide-vs-vitamin-c",
-  readTime: "9 min",
-  date: "April 2026",
-},
-
-  // WELLNESS
-  {
-    category: "wellness",
-    title: "Morning Routines That Don’t Take 2 Hours",
-    excerpt: "Simple, realistic habits.",
-    slug: "morning-routines",
-    readTime: "5 min",
-    date: "March 2026",
-  },
-  {
-    category: "wellness",
-    title: "Supplements Worth Taking",
-    excerpt: "What works vs hype.",
-    slug: "supplements-worth-taking",
-    readTime: "9 min",
-    date: "Feb 2026",
-  },
-
-  // LIFESTYLE
-  {
-    category: "lifestyle",
-    title: "Amazon Buys That Changed My Home",
-    excerpt: "Small upgrades. Big impact.",
-    slug: "amazon-home-buys",
-    readTime: "6 min",
-    date: "Jan 2026",
-  },
-  {
-    category: "lifestyle",
-    title: "Gift Guide for the Woman Who Has Everything",
-    excerpt: "Perfect picks.",
-    slug: "gift-guide-woman-who-has-everything",
-    readTime: "7 min",
-    date: "Feb 2026",
-  },
-  {
-    category: "lifestyle",
-    title: "Hard Water is Ruining Your Hair",
-    excerpt: "Fix it like this.",
-    slug: "hard-water-hair",
-    readTime: "6 min",
-    date: "March 2026",
-  },
-];
 
 const catMeta = {
   beauty: {
@@ -162,6 +11,18 @@ const catMeta = {
     color: "#c8473a",
     description:
       "Skincare, routines, and products that actually work on Indian skin.",
+  },
+  skincare: {
+    label: "Skincare",
+    color: "#6d3fa0",
+    description:
+      "Deep dives into active ingredients, barrier repair, and proven protocols.",
+  },
+  hair: {
+    label: "Hair",
+    color: "#1a6e8e",
+    description:
+      "Guides on hard water, hair fall, and scalp care in Indian climates.",
   },
   wellness: {
     label: "Wellness",
@@ -174,6 +35,12 @@ const catMeta = {
     color: "#7c6b4a",
     description:
       "Amazon finds, upgrades, and smart lifestyle improvements.",
+  },
+  makeup: {
+    label: "Makeup",
+    color: "#b7860b",
+    description:
+      "Sweat-friendly routines, concealers, and starter kits for Indian skin.",
   },
 };
 
@@ -208,7 +75,7 @@ export default async function CategoryPage({
   );
 }
 
-  const posts = allPosts.filter((p) => p.category === slug);
+  const posts = POSTS.filter((p) => p.category.toLowerCase() === slug);
 
   return (
     <main>

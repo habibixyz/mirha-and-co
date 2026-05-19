@@ -69,9 +69,10 @@ const SYNONYMS: Record<string, string[]> = {
   hyaluronic: ["hyaluronic", "hyaluronic acid", "hydration", "humectant"],
   vitamin_c: ["vitamin c", "ascorbic acid", "brightening", "antioxidant"],
   
-  // Skin types
+  // Skin types & states
   combination: ["combination", "combo", "mixed"],
   normal: ["normal", "balanced"],
+  dull: ["dull", "tired", "sluggish", "slug", "lifeless", "glow", "brightening"],
   beginner: ["beginner", "starter", "starting", "newbie", "basics", "simple", "minimum", "routine for beginners", "where to start"],
   budget: ["budget", "affordable", "cheap", "under 1500", "under 2000", "low cost", "value"],
   humidity: ["humidity", "humid", "monsoon", "summer", "sweat", "sweating", "sweaty"],
@@ -87,6 +88,7 @@ const CONCERN_MAP: Record<string, string[]> = {
   acne: ["ingredient-salicylic", "routine-acne-basic", "ingredient-benzoyl"],
   aging: ["ingredient-retinol", "ingredient-peptides", "routine-anti-aging"],
   glow: ["ingredient-vitamin-c", "ingredient-glycolic", "guide-why-skin-looks-dull"],
+  dull: ["ingredient-vitamin-c", "ingredient-glycolic", "guide-why-skin-looks-dull"],
   beginner: ["guide-beginner-skincare-routine-india", "routine-builder", "guide-skincare-routine-every-skin-type"],
   budget: ["guide-beginner-skincare-routine-india", "guide-budget-skincare-routine-under-2000", "guide-amazon-skincare-under-1500"],
   humidity: ["guide-humidity-skincare-india", "ingredient-niacinamide", "ingredient-salicylic", "product-B0CW1N7QRT"],
@@ -357,7 +359,7 @@ function scoreItem(item: SearchItem, terms: string[], query: string): number {
 
   // 🧠 CONCERN MAPPING BOOST
   Object.entries(CONCERN_MAP).forEach(([concern, relatedIds]) => {
-    if (normalizedQuery.includes(concern) && relatedIds.includes(item.id)) {
+    if (terms.includes(concern) && relatedIds.includes(item.id)) {
       score += 50; // Huge boost for items that scientifically solve the user's "feeling"
     }
   });
@@ -534,6 +536,7 @@ const TIPS: Record<string, string> = {
   pigmentation: "Consistency is key. Use Vitamin C in the morning and Alpha Arbutin or Glycolic Acid at night. And most importantly—never skip sunscreen!",
   acne: "Keep it simple. Use a gentle cleanser, a BHA for unclogging pores, and a light moisturizer. Don't pick your pimples—use patches instead.",
   aging: "Retinol is the gold standard, but start slow. Combine it with Peptides and a rich moisturizer to minimize irritation.",
+  dull: "If your skin feels tired or sluggish, it usually needs gentle exfoliation and brightening. Try Glycolic Acid to remove dead cells and Vitamin C for that healthy glow.",
   beginner: "Start with the basics: Cleanser, Moisturizer, and Sunscreen. Once your habit is set, then add targeted serums like Niacinamide or Vitamin C.",
   budget: "Effective skincare doesn't have to be expensive. Brands like Minimalist, Dot & Key, and The Ordinary offer high-quality actives at great prices.",
   humidity: "Indian humidity requires water-based gel formulas and lightweight sunscreens. Switch from heavy creams to hydrating humectants like Niacinamide or Centella, and always reapply SPF.",
@@ -545,12 +548,13 @@ const TIPS: Record<string, string> = {
 
 export function getLocalSearchAdvice(query: string) {
   const norm = normalize(query);
+  const terms = expandTerms(query);
   let advice = "I've analyzed your request. Based on the Mirha database, here are the most relevant ingredients and routines for your skin concern.";
   let recommendedIds: string[] = [];
 
   // Match concerns
   Object.keys(TIPS).forEach((concern) => {
-    if (norm.includes(concern)) {
+    if (terms.includes(concern)) {
       advice = TIPS[concern];
       recommendedIds = CONCERN_MAP[concern] || [];
     }

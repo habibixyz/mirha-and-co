@@ -85,19 +85,6 @@ export function SearchClient({ isPro }: { isPro: boolean }) {
     }
   }, [searchParams]);
 
-  // Debounce the router URL replacement and search index query state updates
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setQuery(localQuery);
-      const params = new URLSearchParams(searchParams.toString());
-      if (localQuery) params.set("q", localQuery);
-      else params.delete("q");
-      router.replace(`/dashboard/search?${params.toString()}`, { scroll: false });
-    }, 250);
-
-    return () => clearTimeout(timer);
-  }, [localQuery]);
-
   // Reset AI state when query changes
   useEffect(() => {
     setHasTriggeredAi(false);
@@ -107,6 +94,14 @@ export function SearchClient({ isPro }: { isPro: boolean }) {
 
   const handleQueryChange = (val: string) => {
     setLocalQuery(val);
+  };
+
+  const handleSearch = () => {
+    setQuery(localQuery);
+    const params = new URLSearchParams(searchParams.toString());
+    if (localQuery) params.set("q", localQuery);
+    else params.delete("q");
+    router.replace(`/dashboard/search?${params.toString()}`, { scroll: false });
   };
 
   const results = useMemo(() => searchMirha(query), [query]);
@@ -226,12 +221,49 @@ export function SearchClient({ isPro }: { isPro: boolean }) {
           min-width: 0;
         }
 
-        .search-box button {
+        .search-box button.clear-btn {
           border: 0;
           background: transparent;
           color: #8c8179;
           cursor: pointer;
           font-size: 18px;
+        }
+
+        .search-box button.search-btn {
+          border: 0;
+          padding: 8px 16px;
+          border-radius: 8px;
+          font-size: 14px;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.2s;
+          display: flex;
+          align-items: center;
+          gap: 6px;
+        }
+        .search-box button.search-btn.primary {
+          background: #c8473a;
+          color: white;
+        }
+        .search-box button.search-btn.primary:hover {
+          background: #a6382e;
+        }
+        .search-box button.search-btn.primary:disabled {
+          background: #e8d5d3;
+          cursor: not-allowed;
+        }
+        .search-box button.search-btn.secondary {
+          background: #f4f0ec;
+          color: #756b63;
+        }
+        .search-box button.search-btn.secondary:hover {
+          background: #e6dfd8;
+        }
+
+        .search-box-buttons {
+          display: flex;
+          gap: 8px;
+          align-items: center;
         }
 
         .quick-row {
@@ -531,6 +563,24 @@ export function SearchClient({ isPro }: { isPro: boolean }) {
         }
 
         @media (max-width: 760px) {
+          .search-box {
+            flex-wrap: wrap;
+            padding: 12px 16px;
+            padding-bottom: 16px;
+          }
+          .search-box-buttons {
+            flex: 1 1 100%;
+            width: 100%;
+            justify-content: flex-end;
+          }
+          .search-box-buttons button {
+            flex: 1;
+            justify-content: center;
+          }
+          .search-box input {
+            padding: 10px 0;
+          }
+
           .search-shell {
             padding: 20px 0 60px;
           }
@@ -581,10 +631,24 @@ export function SearchClient({ isPro }: { isPro: boolean }) {
           <input
             value={localQuery}
             onChange={(event) => handleQueryChange(event.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                handleSearch();
+                setHasTriggeredAi(false);
+              }
+            }}
             placeholder="Try oily skin sunscreen, pigmentation, niacinamide..."
             autoFocus
           />
-          {localQuery ? <button onClick={() => handleQueryChange("")}>x</button> : null}
+          {localQuery ? <button className="clear-btn" onClick={() => { setLocalQuery(""); setQuery(""); router.replace('/dashboard/search', { scroll: false }); }}>x</button> : null}
+          <div className="search-box-buttons">
+            <button className="search-btn secondary" onClick={() => { handleSearch(); setHasTriggeredAi(false); }}>
+              Search
+            </button>
+            <button className="search-btn primary" onClick={() => { handleSearch(); setHasTriggeredAi(true); }} disabled={localQuery.length < 5}>
+              <Sparkles size={14} /> Brain
+            </button>
+          </div>
         </div>
 
         <div className="quick-row">
@@ -595,25 +659,7 @@ export function SearchClient({ isPro }: { isPro: boolean }) {
           ))}
         </div>
 
-        {query.length >= 5 && !hasTriggeredAi && !aiAdvice && !isAiLoading && !error && (
-          <div className="brain-card" style={{ width: '100%', maxWidth: '100%', boxSizing: 'border-box', marginBottom: '2rem', padding: '1.5rem', textAlign: 'center', border: '1px dashed #c8473a55', background: 'rgba(200,71,58,0.03)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#c8473a', fontWeight: 700 }}>
-              <Sparkles size={20} />
-              <span style={{ fontSize: '0.85rem', letterSpacing: '0.1em', textTransform: 'uppercase' }}>Mirha Brain Mode</span>
-            </div>
-            <p style={{ margin: '4px 0 12px', fontSize: '0.95rem', color: '#756b63', fontFamily: "var(--dash-font-serif)", fontStyle: 'italic' }}>
-              Analyze your query to find custom ingredients and routines tailored for your concern.
-            </p>
-            <button onClick={() => setHasTriggeredAi(true)} style={{ background: '#c8473a', color: 'white', border: 'none', borderRadius: '12px', padding: '10px 20px', fontSize: '0.85rem', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', transition: 'all 0.2s', boxShadow: '0 4px 12px rgba(200,71,58,0.2)' }}>
-              <span>✨ Ask Mirha Brain</span>
-            </button>
-            {!isPro && (
-              <span style={{ fontSize: '0.7rem', color: '#9a8f86', marginTop: '4px', opacity: 0.8 }}>
-                Free tier: 3 daily AI requests. Pro tier: 20 daily.
-              </span>
-            )}
-          </div>
-        )}
+        {/* Merged Mirha Brain Mode CTA into the Search Bar buttons */}
 
         {/* ✅ RATE LIMIT MET */}
         {error === 'LIMIT_REACHED_UPGRADE' && (
@@ -665,7 +711,7 @@ export function SearchClient({ isPro }: { isPro: boolean }) {
               </div>
             ) : (
               <>
-                <p style={{ margin: "0 0 1.5rem", fontSize: "1.1rem", lineHeight: 1.6, fontFamily: "var(--dash-font-serif)" }}>{aiAdvice?.advice}</p>
+                <div style={{ margin: "0 0 1.5rem", fontSize: "1.1rem", lineHeight: 1.6, fontFamily: "var(--dash-font-serif)", whiteSpace: "pre-wrap" }}>{aiAdvice?.advice}</div>
                 
                 {/* Embedded Recommendations */}
                 {aiAdvice?.recommendedIds?.length > 0 && (

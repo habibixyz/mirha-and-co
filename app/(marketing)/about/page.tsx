@@ -1,10 +1,12 @@
 export const metadata = {
   title: "About | Mirha & Co.",
   description:
-    "Mirha & Co. is an independent beauty guide for Indian consumers, built around ingredient context, routine clarity, honest disclosures, and practical product recommendations.",
+    "Mirha & Co. is an intelligent skincare guide for Indian consumers, blending curated ingredient context with AI-powered personalized advice.",
 };
 
 import Image from "next/image";
+import Link from "next/link";
+import { Sparkles, Brain, BookOpen, Fingerprint } from "lucide-react";
 
 export default function AboutPage() {
   return (
@@ -13,137 +15,132 @@ export default function AboutPage() {
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
         .about-page {
-          --black: #090909;
-          --white: #f4f1ed;
-          --rose: #e05c3a;
-          --paper: #faf8f5;
-          --ink: #161311;
-          --muted: #746b64;
-          --rule: #ded7cf;
+          --black: #0c0a09;
+          --white: #fafaf8;
+          --rose: #c8473a;
+          --rose-light: #fff5f4;
+          --paper: #fffcf8;
+          --ink: #1c1917;
+          --muted: #8c8179;
+          --rule: #e8ded6;
           background: var(--paper);
           color: var(--ink);
           font-family: var(--font-dm-sans), sans-serif;
+          overflow-x: hidden;
         }
 
         .img-wrap {
-          border-radius: 20px;
+          border-radius: 24px;
           overflow: hidden;
-          box-shadow: 0 20px 40px rgba(0,0,0,0.1);
           background: #fff;
           position: relative;
         }
 
         .hero-img {
-          height: 600px;
+          height: 650px;
           width: 100%;
           grid-column: span 2;
-          margin-top: 4rem;
+          margin-top: 5rem;
+          box-shadow: 0 30px 60px rgba(0,0,0,0.4);
         }
 
         .side-img {
-          height: 400px;
+          height: 480px;
           width: 100%;
           margin-bottom: 2rem;
+          box-shadow: 0 20px 40px rgba(0,0,0,0.08);
         }
 
         .img-wrap img {
           width: 100%;
           height: 100%;
           object-fit: cover;
-          transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+          transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .img-wrap:hover img {
-          transform: scale(1.05);
+          transform: scale(1.04);
         }
 
         .hero {
           background: var(--black);
           color: var(--white);
-          padding: 6rem 2.5rem 4rem;
+          padding: 8rem 2.5rem 0rem;
+          position: relative;
+        }
+
+        .hero::before {
+          content: '';
+          position: absolute;
+          top: 0; right: 0; width: 50vw; height: 50vw;
+          background: radial-gradient(circle, rgba(200,71,58,0.15) 0%, transparent 70%);
+          pointer-events: none;
         }
 
         .hero-inner {
-          max-width: 1120px;
+          max-width: 1200px;
           margin: 0 auto;
           display: grid;
-          grid-template-columns: 1.1fr 0.9fr;
-          gap: 3rem;
-          align-items: start;
+          grid-template-columns: 1.2fr 0.8fr;
+          gap: 4rem;
+          align-items: end;
+          padding-bottom: 2rem;
         }
 
         .eyebrow {
-          font-size: 0.62rem;
-          letter-spacing: 0.28em;
+          font-size: 0.7rem;
+          letter-spacing: 0.25em;
           text-transform: uppercase;
           color: var(--rose);
-          margin-bottom: 1.4rem;
-          font-weight: 600;
+          margin-bottom: 1.5rem;
+          font-weight: 700;
+          display: flex;
+          align-items: center;
+          gap: 8px;
         }
 
         .hero h1 {
           font-family: var(--font-bebas), sans-serif;
-          font-size: clamp(4rem, 9vw, 9rem);
-          line-height: 0.9;
-          letter-spacing: 0.03em;
+          font-size: clamp(3rem, 12vw, 9.5rem);
+          line-height: 0.85;
+          letter-spacing: 0.02em;
           font-weight: 400;
+          word-break: break-word;
         }
 
         .hero h1 span {
           color: var(--rose);
           display: block;
+          font-family: var(--font-dm-serif), serif;
+          font-style: italic;
+          font-size: clamp(2.2rem, 9vw, 6.5rem);
+          letter-spacing: -0.02em;
+          margin-top: 0.5rem;
         }
 
         .hero-copy {
           font-family: var(--font-dm-serif), serif;
-          font-style: italic;
-          font-size: 1.25rem;
-          line-height: 1.75;
-          color: rgba(255,255,255,0.58);
-          margin-bottom: 2rem;
-        }
-
-        .truth-grid {
-          display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          border-top: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .truth-item {
-          padding: 1.4rem 1.2rem 0 0;
-          border-right: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .truth-item:last-child { border-right: none; }
-
-        .truth-value {
-          font-family: var(--font-bebas), sans-serif;
-          font-size: 2.6rem;
-          color: var(--rose);
-          line-height: 1;
-        }
-
-        .truth-label {
-          font-size: 0.68rem;
-          color: rgba(255,255,255,0.38);
-          letter-spacing: 0.14em;
-          text-transform: uppercase;
-          line-height: 1.5;
+          font-size: 1.35rem;
+          line-height: 1.6;
+          color: rgba(255,255,255,0.7);
+          margin-bottom: 3rem;
         }
 
         .strip {
           background: var(--rose);
           color: #fff;
-          padding: 0.95rem 2rem;
+          padding: 1.2rem 2rem;
           text-align: center;
-          font-size: 0.7rem;
-          letter-spacing: 0.22em;
+          font-size: 0.75rem;
+          letter-spacing: 0.25em;
           text-transform: uppercase;
-          font-weight: 600;
+          font-weight: 700;
+          overflow: hidden;
+          line-height: 1.6;
         }
 
         .section {
-          padding: 7rem 2.5rem;
+          padding: 8rem 2.5rem;
         }
 
         .section.dark {
@@ -151,39 +148,46 @@ export default function AboutPage() {
           color: var(--white);
         }
 
+        .section.rose {
+          background: var(--rose-light);
+          color: var(--ink);
+        }
+
         .inner {
-          max-width: 1120px;
+          max-width: 1200px;
           margin: 0 auto;
         }
 
         .two-col {
           display: grid;
-          grid-template-columns: 0.75fr 1.25fr;
-          gap: 5rem;
-          align-items: start;
+          grid-template-columns: 1fr 1fr;
+          gap: 6rem;
+          align-items: center;
         }
 
         .section-title {
           font-family: var(--font-bebas), sans-serif;
-          font-size: clamp(3rem, 6vw, 5.2rem);
-          line-height: 0.95;
+          font-size: clamp(3.5rem, 7vw, 6rem);
+          line-height: 0.9;
           letter-spacing: 0.03em;
           font-weight: 400;
+          margin-bottom: 2rem;
         }
 
         .section-title span {
           color: var(--rose);
+          display: block;
         }
 
         .body-copy p {
-          font-size: 1rem;
-          line-height: 1.9;
+          font-size: 1.1rem;
+          line-height: 1.8;
           color: var(--muted);
-          margin-bottom: 1.5rem;
+          margin-bottom: 1.8rem;
         }
 
         .dark .body-copy p {
-          color: rgba(255,255,255,0.52);
+          color: rgba(255,255,255,0.6);
         }
 
         .body-copy strong {
@@ -195,319 +199,207 @@ export default function AboutPage() {
           color: var(--white);
         }
 
-        .note-box {
-          background: #fff;
-          border: 1px solid var(--rule);
-          padding: 1.4rem;
-          margin-bottom: 2rem;
-        }
-
-        .note-box p {
-          margin: 0;
-          font-size: 0.9rem;
-          line-height: 1.75;
-          color: var(--muted);
-        }
-
-        .pillars {
+        .ecosystem-grid {
           display: grid;
           grid-template-columns: repeat(3, 1fr);
-          border: 1px solid rgba(255,255,255,0.1);
+          gap: 2rem;
+          margin-top: 4rem;
         }
 
-        .pillar {
-          padding: 2.4rem;
-          border-right: 1px solid rgba(255,255,255,0.1);
+        .ecosystem-card {
+          background: #fff;
+          border: 1px solid var(--rule);
+          border-radius: 20px;
+          padding: 2.5rem;
+          transition: all 0.3s ease;
+          position: relative;
+          overflow: hidden;
         }
 
-        .pillar:last-child { border-right: none; }
-
-        .num {
-          font-family: var(--font-bebas), sans-serif;
-          font-size: 4rem;
-          color: rgba(255,255,255,0.08);
-          line-height: 1;
-          margin-bottom: -0.4rem;
+        .ecosystem-card:hover {
+          box-shadow: 0 20px 40px rgba(200,71,58,0.06);
+          border-color: rgba(200,71,58,0.3);
+          transform: translateY(-5px);
         }
 
-        .pillar h3 {
+        .eco-icon {
+          background: var(--rose-light);
+          color: var(--rose);
+          width: 60px; height: 60px;
+          border-radius: 16px;
+          display: flex; align-items: center; justify-content: center;
+          margin-bottom: 1.5rem;
+        }
+
+        .ecosystem-card h3 {
           font-family: var(--font-dm-serif), serif;
-          font-size: 1.35rem;
-          font-weight: 400;
+          font-size: 1.5rem;
           margin-bottom: 1rem;
         }
 
-        .pillar p {
-          color: rgba(255,255,255,0.48);
-          line-height: 1.75;
-          font-size: 0.88rem;
-        }
-
-        .method-grid {
-          display: grid;
-          grid-template-columns: repeat(2, 1fr);
-          border: 1px solid var(--ink);
-        }
-
-        .method {
-          padding: 2.2rem;
-          border-right: 1px solid var(--rule);
-          border-bottom: 1px solid var(--rule);
-        }
-
-        .method:nth-child(2n) { border-right: none; }
-        .method:nth-child(3),
-        .method:nth-child(4) { border-bottom: none; }
-
-        .method small {
-          font-family: var(--font-bebas), sans-serif;
-          font-size: 2.5rem;
-          color: var(--rose);
-          opacity: 0.55;
-        }
-
-        .method h3 {
-          font-family: var(--font-dm-serif), serif;
-          font-size: 1.2rem;
-          font-weight: 400;
-          margin: 0.6rem 0;
-        }
-
-        .method p {
+        .ecosystem-card p {
           color: var(--muted);
-          line-height: 1.75;
-          font-size: 0.88rem;
+          line-height: 1.7;
+          font-size: 0.95rem;
         }
 
         .honesty-list {
-          display: grid;
-          gap: 1px;
-          background: var(--rule);
-          border: 1px solid var(--rule);
+          display: flex;
+          flex-direction: column;
+          gap: 1.5rem;
         }
 
         .honesty-row {
-          background: #fff;
+          background: rgba(255,255,255,0.03);
+          border: 1px solid rgba(255,255,255,0.1);
+          border-radius: 16px;
+          padding: 2rem;
           display: grid;
-          grid-template-columns: 0.45fr 1fr;
+          grid-template-columns: 0.4fr 1fr;
           gap: 2rem;
-          padding: 1.6rem;
+          transition: background 0.3s;
+        }
+
+        .honesty-row:hover {
+          background: rgba(255,255,255,0.06);
         }
 
         .honesty-row h3 {
           font-family: var(--font-dm-serif), serif;
           font-weight: 400;
-          font-size: 1.25rem;
+          font-size: 1.4rem;
+          color: var(--white);
         }
 
         .honesty-row p {
-          color: var(--muted);
-          line-height: 1.75;
-          font-size: 0.9rem;
-        }
-
-        .name-section {
-          background: var(--rose);
-          color: #fff;
-          text-align: center;
-          padding: 7rem 2.5rem;
-          position: relative;
-          overflow: hidden;
-        }
-
-        .name-section h2 {
-          font-family: var(--font-bebas), sans-serif;
-          font-size: clamp(4rem, 11vw, 9rem);
-          letter-spacing: 0.05em;
-          line-height: 0.9;
-          font-weight: 400;
-          margin-bottom: 1.5rem;
-        }
-
-        .name-section p {
-          max-width: 620px;
-          margin: 0 auto;
-          color: rgba(255,255,255,0.78);
-          line-height: 1.8;
-          font-family: var(--font-dm-serif), serif;
-          font-style: italic;
-          font-size: 1.15rem;
+          color: rgba(255,255,255,0.6);
+          line-height: 1.7;
+          font-size: 1rem;
         }
 
         .cta {
-          padding: 6rem 2.5rem;
-          background: var(--paper);
+          padding: 8rem 2.5rem;
+          background: var(--rose);
+          color: white;
+          text-align: center;
         }
 
         .cta-box {
-          max-width: 1120px;
+          max-width: 800px;
           margin: 0 auto;
-          border: 1px solid var(--rule);
-          background: #fff;
-          padding: 2.5rem;
-          display: grid;
-          grid-template-columns: 1fr auto;
-          gap: 2rem;
-          align-items: center;
         }
 
         .cta-box h2 {
-          font-family: var(--font-dm-serif), serif;
-          font-weight: 400;
-          font-size: clamp(1.8rem, 4vw, 2.7rem);
-          margin-bottom: 0.6rem;
+          font-family: var(--font-bebas), sans-serif;
+          font-size: clamp(3.5rem, 8vw, 6rem);
+          line-height: 0.9;
+          margin-bottom: 1.5rem;
         }
 
         .cta-box p {
-          color: var(--muted);
-          line-height: 1.7;
-          max-width: 620px;
+          color: rgba(255,255,255,0.8);
+          font-size: 1.2rem;
+          line-height: 1.6;
+          margin-bottom: 3rem;
+          font-family: var(--font-dm-serif), serif;
+          font-style: italic;
         }
 
         .btn-row {
           display: flex;
-          gap: 0.8rem;
+          gap: 1rem;
+          justify-content: center;
           flex-wrap: wrap;
         }
 
         .btn {
           display: inline-flex;
           align-items: center;
-          justify-content: center;
+          gap: 8px;
           text-decoration: none;
-          padding: 0.95rem 1.4rem;
-          font-size: 0.68rem;
-          letter-spacing: 0.18em;
+          padding: 1.2rem 2.5rem;
+          border-radius: 12px;
+          font-size: 0.8rem;
+          letter-spacing: 0.15em;
           text-transform: uppercase;
           font-weight: 700;
-          white-space: nowrap;
+          transition: all 0.3s;
         }
 
         .btn.primary {
-          background: var(--black);
+          background: #111;
           color: #fff;
+          box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .btn.primary:hover {
+          background: #000;
+          transform: translateY(-2px);
         }
 
         .btn.secondary {
-          border: 1px solid var(--rule);
-          color: var(--ink);
+          background: rgba(255,255,255,0.1);
+          color: #fff;
+          border: 1px solid rgba(255,255,255,0.2);
         }
 
-        .contact {
-          background: #fff;
-          border-top: 1px solid var(--rule);
-          padding: 3rem 2.5rem;
-          text-align: center;
-        }
-
-        .contact p {
-          color: var(--muted);
-          line-height: 1.7;
-          margin-bottom: 0.6rem;
-        }
-
-        .contact a {
-          color: var(--ink);
-          text-decoration: none;
-          border-bottom: 1px solid var(--rule);
-          font-family: var(--font-dm-serif), serif;
-          font-size: 1.1rem;
+        .btn.secondary:hover {
+          background: rgba(255,255,255,0.2);
         }
 
         @media (max-width: 900px) {
           .hero-inner,
           .two-col,
-          .cta-box {
+          .honesty-row {
             grid-template-columns: 1fr !important;
             gap: 2rem;
           }
 
-          .hero {
-            padding: 5rem 1.5rem 4rem;
-          }
+          .hero { padding: 6rem 1.5rem 0rem; }
+          .section, .cta { padding: 5rem 1.5rem; }
 
-          .section,
-          .cta,
-          .name-section {
-            padding: 5rem 1.5rem;
-          }
-
-          .hero h1 {
-            font-size: clamp(3rem, 15vw, 5rem);
+          .ecosystem-grid {
+            grid-template-columns: 1fr;
+            gap: 1rem;
           }
 
           .hero-img {
-            height: 350px;
+            height: 400px;
+            margin-top: 2rem;
             grid-column: span 1;
+          }
+
+          .side-img {
+            height: 300px;
             margin-top: 2rem;
           }
 
-          .pillars,
-          .method-grid {
-            grid-template-columns: 1fr;
+          .btn-row {
+            flex-direction: column;
+            width: 100%;
           }
-
-          .pillar,
-          .method {
-            border-right: none;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-          }
-
-          .method {
-            border-bottom: 1px solid var(--rule);
-          }
-
-          .method:nth-child(3) { border-bottom: 1px solid var(--rule); }
-          .method:last-child { border-bottom: none; }
-
-          .honesty-row {
-            grid-template-columns: 1fr;
-            gap: 0.8rem;
-          }
-
-          .truth-grid {
-            grid-template-columns: 1fr;
-          }
-
-          .truth-item {
-            border-right: none;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-          }
+          .btn { width: 100%; justify-content: center; }
         }
       `}</style>
 
       <div className="about-page">
+        {/* HERO */}
         <section className="hero">
           <div className="hero-inner">
             <div>
-              <p className="eyebrow">About Mirha & Co.</p>
+              <p className="eyebrow"><Sparkles size={14}/> About Mirha & Co.</p>
               <h1>
-                No hype.
+                Intelligence
                 <br />
-                No mystery.
-                <span>Just context.</span>
+                meets skincare.
+                <span>For Indian skin.</span>
               </h1>
             </div>
 
             <div>
               <p className="hero-copy">
-                Mirha & Co. is an independent beauty guide built to help Indian consumers make better skincare, hair care, wellness, and beauty decisions.
+                The beauty industry is loud, crowded, and rarely built for our climate. We combined deep ingredient research with a personalized AI engine to bring clarity back to your routine.
               </p>
-
-              <div className="truth-grid">
-                <div className="truth-item">
-                  <div className="truth-value">Clear</div>
-                  <div className="truth-label">Ingredient context</div>
-                </div>
-                <div className="truth-item">
-                  <div className="truth-value">India</div>
-                  <div className="truth-label">Climate and budget aware</div>
-                </div>
-                <div className="truth-item">
-                  <div className="truth-value">Open</div>
-                  <div className="truth-label">Affiliate disclosure</div>
-                </div>
-              </div>
             </div>
 
             <div className="img-wrap hero-img">
@@ -523,216 +415,142 @@ export default function AboutPage() {
         </section>
 
         <div className="strip">
-          Independent guide / affiliate links disclosed / not medical advice
+          No Hype • Data-Driven • Climate Aware • AI Powered
         </div>
 
+        {/* ECOSYSTEM */}
+        <section className="section rose">
+          <div className="inner">
+            <div style={{ textAlign: 'center', maxWidth: '800px', margin: '0 auto' }}>
+              <p className="eyebrow" style={{ justifyContent: 'center' }}>The Ecosystem</p>
+              <h2 className="section-title" style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)' }}>
+                More than a guide.<br/>A complete intelligence layer.
+              </h2>
+            </div>
+
+            <div className="ecosystem-grid">
+              <div className="ecosystem-card">
+                <div className="eco-icon"><Brain size={28} /></div>
+                <h3>Mirha Brain</h3>
+                <p>
+                  Our proprietary AI RAG engine. Trained on our curated database of products and routines, Mirha acts as your warm, highly knowledgeable skincare consultant—filtering out the noise and giving you exact answers for your skin type.
+                </p>
+              </div>
+
+              <div className="ecosystem-card">
+                <div className="eco-icon"><BookOpen size={28} /></div>
+                <h3>Climate-Aware Context</h3>
+                <p>
+                  A heavy cream loved globally might wreck your skin in Mumbai's humidity. We research and categorize every product based on Indian weather realities, hard water, and local skin concerns like stubborn pigmentation.
+                </p>
+              </div>
+
+              <div className="ecosystem-card">
+                <div className="eco-icon"><Fingerprint size={28} /></div>
+                <h3>The Skin Journal</h3>
+                <p>
+                  Skincare requires consistency and observation. Our built-in digital journal lets you track daily routines, log photo updates, and receive AI-driven analysis on what's working and what's causing breakouts over time.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* WHY THIS EXISTS */}
         <section className="section">
           <div className="inner two-col">
-            <div>
-              <p className="eyebrow">Why this exists</p>
+            <div className="body-copy">
+              <p className="eyebrow">The Origin</p>
               <h2 className="section-title">
                 Beauty is noisy.
                 <br />
-                <span>Buying should not be.</span>
+                <span>Buying shouldn't be.</span>
               </h2>
-            </div>
-
-            <div className="body-copy">
-              <div className="img-wrap side-img">
-                <Image 
-                  src="/images/about-lifestyle.png" 
-                  alt="Personalized skincare routine" 
-                  fill 
-                  sizes="(max-width: 900px) 100vw, 40vw"
-                />
-              </div>
-              <div className="note-box">
-                <p>
-                  Mirha & Co. is not a dermatology clinic, and it does not replace medical advice. It is a practical research and shopping guide for people who want less confusion before buying.
-                </p>
-              </div>
-
               <p>
-                The Indian beauty market is crowded. Every week there is a new serum, sunscreen, supplement, or routine promising better skin. Some products are genuinely useful. Some are over-marketed. Many are simply wrong for the person buying them.
+                Every week there is a new serum, sunscreen, or "miracle" routine promising better skin. While some products are genuinely useful, the vast majority are over-marketed and completely wrong for the person buying them.
               </p>
-
               <p>
-                Mirha & Co. exists to slow that decision down. We look at the product type, ingredient list, use case, price, reviews, and suitability for Indian conditions before recommending anything.
+                <strong>Mirha & Co. exists to slow that decision down.</strong> 
               </p>
-
               <p>
-                We do not claim that every product has been personally tested. When something is based on research, product information, public reviews, or ingredient analysis, we treat it as exactly that. <strong>No fake testing stories. No fake authority.</strong>
+                We look at the chemical formulation, the intended use case, the price point, and the suitability for Indian conditions before adding anything to our database. When you search, Mirha Brain synthesizes all of this to give you a clear, hype-free answer.
               </p>
             </div>
-          </div>
-        </section>
-
-        <section className="section dark">
-          <div className="inner">
-            <div style={{ marginBottom: "3rem" }}>
-              <p className="eyebrow">Our filter</p>
-              <h2 className="section-title">
-                What we care about
-                <br />
-                <span>before we recommend.</span>
-              </h2>
-            </div>
-
-            <div className="img-wrap side-img" style={{ marginBottom: "3rem", height: "300px" }}>
+            <div className="img-wrap side-img">
               <Image 
-                src="/images/about-hand.png" 
-                alt="Expertly curated products" 
+                src="/images/about-lifestyle.png" 
+                alt="Personalized skincare routine" 
                 fill 
-                sizes="100vw"
+                sizes="(max-width: 900px) 100vw, 40vw"
               />
             </div>
-
-            <div className="pillars">
-              <div className="pillar">
-                <div className="num">01</div>
-                <h3>Use case first</h3>
-                <p>
-                  A good product for oily skin may be wrong for dry skin. A strong active may be wrong for beginners. We judge products by who they are actually useful for.
-                </p>
-              </div>
-
-              <div className="pillar">
-                <div className="num">02</div>
-                <h3>Ingredient context</h3>
-                <p>
-                  We look at known actives, likely benefits, irritation risk, texture, and routine compatibility. Claims matter less than what the formula is trying to do.
-                </p>
-              </div>
-
-              <div className="pillar">
-                <div className="num">03</div>
-                <h3>Indian reality</h3>
-                <p>
-                  Humidity, heat, pigmentation, sunscreen compliance, hard water, pricing, and availability matter. Advice should fit the place where it is used.
-                </p>
-              </div>
-            </div>
           </div>
         </section>
 
-        <section className="section">
-          <div className="inner">
-            <div style={{ marginBottom: "3rem" }}>
-              <p className="eyebrow">How we work</p>
-              <h2 className="section-title">
-                The method is simple.
-                <br />
-                <span>Not perfect. Honest.</span>
-              </h2>
-            </div>
-
-            <div className="method-grid">
-              <div className="method">
-                <small>01</small>
-                <h3>Product and ingredient review</h3>
-                <p>
-                  We read product claims, ingredient lists, textures, usage directions, and category fit before placing a product into a guide or routine.
-                </p>
-              </div>
-
-              <div className="method">
-                <small>02</small>
-                <h3>Suitability mapping</h3>
-                <p>
-                  Products are grouped by skin type, concern, budget, routine step, and possible watch-outs so users can make faster decisions.
-                </p>
-              </div>
-
-              <div className="method">
-                <small>03</small>
-                <h3>Review and availability checks</h3>
-                <p>
-                  Public buyer feedback, availability, pricing, and value are considered. We do not treat ratings as proof, but they help reveal patterns.
-                </p>
-              </div>
-
-              <div className="method">
-                <small>04</small>
-                <h3>Clear disclosure</h3>
-                <p>
-                  Some links are affiliate links. If you buy through them, Mirha & Co. may earn a small commission at no extra cost to you.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="section">
+        {/* HONESTY & ETHICS */}
+        <section className="section dark">
           <div className="inner two-col">
             <div>
-              <p className="eyebrow">No pretending</p>
-              <h2 className="section-title">
-                What we do
+              <p className="eyebrow" style={{ color: 'rgba(255,255,255,0.5)' }}>Our Baseline</p>
+              <h2 className="section-title" style={{ color: '#fff' }}>
+                Honest beauty.
                 <br />
-                <span>and do not claim.</span>
+                <span style={{ color: 'var(--rose)' }}>No pretending.</span>
               </h2>
+              <div className="img-wrap side-img" style={{ height: '350px', marginTop: '3rem' }}>
+                <Image 
+                  src="/images/about-hand.png" 
+                  alt="Expertly curated products" 
+                  fill 
+                  sizes="100vw"
+                />
+              </div>
             </div>
 
             <div className="honesty-list">
               <div className="honesty-row">
-                <h3>We are not dermatologists.</h3>
+                <h3>Data, Not Fake Authority</h3>
                 <p>
-                  Serious acne, sudden pigmentation, burning, peeling, infection, eczema, rosacea, or medical concerns should be handled by a qualified dermatologist.
+                  We do not fake personal testing. If a recommendation is based on ingredient analysis, scientific consensus, and aggregate public reviews, we treat it exactly as that. 
                 </p>
               </div>
 
               <div className="honesty-row">
-                <h3>We do not fake personal testing.</h3>
+                <h3>We Are Not Doctors</h3>
                 <p>
-                  If a recommendation is based on research, ingredients, product data, and public reviews, we will not pretend it came from months of personal use.
+                  Mirha Brain is highly intelligent, but it does not replace a dermatologist. Serious acne, burning, eczema, or medical concerns should always be handled by a qualified professional.
                 </p>
               </div>
 
               <div className="honesty-row">
-                <h3>We use affiliate links.</h3>
+                <h3>Transparent Affiliation</h3>
                 <p>
-                  Affiliate income helps support the site. It does not mean every product is perfect, and it does not remove the need for clear pros, cons, and watch-outs.
-                </p>
-              </div>
-
-              <div className="honesty-row">
-                <h3>We change our mind when needed.</h3>
-                <p>
-                  Product formulas, prices, availability, and user feedback change. Recommendations should improve over time.
+                  We use affiliate links to support the platform's AI infrastructure. However, affiliate status never dictates our recommendations. If a product has a terrible white cast, we will tell you.
                 </p>
               </div>
             </div>
           </div>
         </section>
 
-        <section className="name-section">
-          <h2>Mirha & Co.</h2>
-          <p>
-            Mirha is the name at the heart of this project. The standard is simple: would we feel comfortable recommending this to someone we care about?
-          </p>
-        </section>
-
+        {/* CTA */}
         <section className="cta">
           <div className="cta-box">
-            <div>
-              <h2>Start with your skin concern.</h2>
-              <p>
-                Use Mirha Search, read the guides, or build a simple routine before buying another product.
-              </p>
-            </div>
+            <h2>Your routine, decoded.</h2>
+            <p>
+              Stop guessing. Let Mirha analyze your skin concerns and build a hyper-personalized routine using our curated database.
+            </p>
 
             <div className="btn-row">
-              <a href="/dashboard/search" className="btn primary">Search Mirha</a>
-              <a href="/tools/routine" className="btn secondary">Build Routine</a>
-              <a href="/blog" className="btn secondary">Read Guides</a>
+              <Link href="/dashboard/search" className="btn primary">
+                <Sparkles size={16} /> Ask Mirha Brain
+              </Link>
+              <Link href="/tools/routine" className="btn secondary">
+                Build a Routine
+              </Link>
             </div>
           </div>
         </section>
 
-        <section className="contact">
-          <p>For partnerships, corrections, product data updates, or business enquiries:</p>
-          <a href="mailto:mirhcobiz@gmail.com">mirhcobiz@gmail.com</a>
-        </section>
       </div>
     </main>
   );
