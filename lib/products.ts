@@ -1172,8 +1172,13 @@ export function getProductAffiliateUrl(product: any, countryCode?: string): stri
   }
 
   if (isGlobal && product.cultBeautyLink) {
-    const awinPublisherId = process.env.NEXT_PUBLIC_AWIN_PUBLISHER_ID || 'YOUR_AWIN_ID';
-    return `https://www.awin1.com/cread.php?awinmid=29063&awinaffid=${awinPublisherId}&ued=${encodeURIComponent(product.cultBeautyLink)}`;
+    const awinPublisherId = process.env.NEXT_PUBLIC_AWIN_PUBLISHER_ID;
+    // Only wrap in Awin redirect if a valid Publisher ID is provided.
+    // If not set, route directly to the Cult Beauty product page to prevent any 404 or tracking errors.
+    if (awinPublisherId && awinPublisherId !== 'YOUR_AWIN_ID' && awinPublisherId.trim() !== '') {
+      return `https://www.awin1.com/cread.php?awinmid=29063&awinaffid=${awinPublisherId}&ued=${encodeURIComponent(product.cultBeautyLink)}`;
+    }
+    return product.cultBeautyLink;
   }
 
   return product.link || `https://www.amazon.in/dp/${product.asin}?tag=skinwithtanvi-21`;
