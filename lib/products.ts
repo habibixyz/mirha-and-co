@@ -21,7 +21,8 @@ export const PRODUCTS = [
     tags: ["caffeine", "eye serum", "dark circles", "puffiness", "the ordinary"],
     concerns: ["dark circles", "pigmentation"],
     image: "/products/ordinary-caffeine.jpg",
-    link: "https://amzn.to/4n69skw"
+    link: "https://amzn.to/4n69skw",
+    cultBeautyLink: "https://www.cultbeauty.com/the-ordinary-caffeine-solution-5-egcg-30ml/11494541.html"
   },
   {
     id: 104,
@@ -69,7 +70,8 @@ export const PRODUCTS = [
     tags: ["pimple patch", "acne", "spot treatment", "mighty patch", "hero cosmetics", "hydrocolloid"],
     concerns: ["acne"],
     image: "/products/mighty-patch.jpg",
-    link: "https://amzn.to/4cQOt1O"
+    link: "https://amzn.to/4cQOt1O",
+    cultBeautyLink: "https://www.cultbeauty.com/hero-cosmetics-mighty-patch-original-36-patches/14299948.html"
   },
   {
     id: 102,
@@ -116,6 +118,7 @@ export const PRODUCTS = [
     },
     tags: ["cleanser", "gentle", "face wash", "cetaphil"],
     image: "/products/cetaphil-facewash.jpg",
+    cultBeautyLink: "https://www.cultbeauty.com/cetaphil-gentle-skin-cleanser-236ml/13735073.html"
   },
   {
     id: 2,
@@ -351,6 +354,7 @@ export const PRODUCTS = [
     concerns: ["acne", "oily skin", "pigmentation"],
     image: "/products/Ordinary-Niacinamide.jpg",
     link: "https://amzn.to/4tFRRBV",
+    cultBeautyLink: "https://www.cultbeauty.com/the-ordinary-niacinamide-10-zinc-1-30ml/11364731.html"
   },
   {
     id: 12,
@@ -494,6 +498,7 @@ export const PRODUCTS = [
     concerns: ["dry skin"],
     image: "/products/Neutrogena-Hydro.jpg",
     link: "https://amzn.to/3Qa5pau",
+    cultBeautyLink: "https://www.cultbeauty.com/neutrogena-hydro-boost-water-gel-moisturiser-50ml/13768469.html"
   },
   {
     id: 18,
@@ -1152,3 +1157,24 @@ export const PRODUCTS = [
     link: "https://www.amazon.in/dp/B07WTNH18L?tag=skinwithtanvi-21",
   }
 ];
+
+export function getProductAffiliateUrl(product: any, countryCode?: string): string {
+  let isGlobal = false;
+  if (countryCode) {
+    isGlobal = countryCode.toUpperCase() !== 'IN';
+  } else if (typeof window !== 'undefined') {
+    try {
+      const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+      isGlobal = tz !== 'Asia/Kolkata' && tz !== 'Asia/Calcutta';
+    } catch (e) {
+      isGlobal = false;
+    }
+  }
+
+  if (isGlobal && product.cultBeautyLink) {
+    const awinPublisherId = process.env.NEXT_PUBLIC_AWIN_PUBLISHER_ID || 'YOUR_AWIN_ID';
+    return `https://www.awin1.com/cread.php?awinmid=29063&awinaffid=${awinPublisherId}&ued=${encodeURIComponent(product.cultBeautyLink)}`;
+  }
+
+  return product.link || `https://www.amazon.in/dp/${product.asin}?tag=skinwithtanvi-21`;
+}

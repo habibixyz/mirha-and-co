@@ -1,5 +1,7 @@
 "use client";
 
+import { getProductAffiliateUrl } from "@/lib/products";
+
 type ProductModalProps = {
   product: any;
   onClose: () => void;
@@ -8,9 +10,7 @@ type ProductModalProps = {
 export default function ProductModal({ product, onClose }: ProductModalProps) {
   if (!product) return null;
 
-  const affiliateUrl =
-    product.link ||
-    `https://www.amazon.in/dp/${product.asin}?tag=skinwithtanvi-21`;
+  const affiliateUrl = getProductAffiliateUrl(product);
 
   return (
     <div
@@ -60,7 +60,7 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
             textDecoration: "none",
           }}
         >
-          View on Amazon →
+          {affiliateUrl.includes('cultbeauty') ? 'Buy on Cult Beauty →' : 'View on Amazon →'}
         </a>
       </div>
     </div>

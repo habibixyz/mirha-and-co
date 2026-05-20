@@ -50,10 +50,11 @@ const CLIMATE_PRESETS = [
 export default function RoutineQuiz() {
   const { trackQuizStart, trackQuizComplete } = useRoutineAnalytics();
 
-  const [climate, setClimate] = useState<{ temp: number; humidity: number; city: string } | undefined>({
+  const [climate, setClimate] = useState<{ temp: number; humidity: number; city: string; countryCode?: string } | undefined>({
     temp: 38,
     humidity: 82,
-    city: "Mumbai (Summer/Monsoon)"
+    city: "Mumbai (Summer/Monsoon)",
+    countryCode: "IN"
   });
   const [climateLoading, setClimateLoading] = useState(false);
   const [climateError, setClimateError] = useState(false);
@@ -77,9 +78,10 @@ export default function RoutineQuiz() {
         const city = geoData.city || "India";
         const lat = geoData.latitude;
         const lon = geoData.longitude;
+        const countryCode = geoData.country_code;
 
         if (lat && lon) {
-          await fetchWeather(lat, lon, `${city} (Synced)`);
+          await fetchWeather(lat, lon, `${city} (Synced)`, countryCode);
         } else {
           throw new Error("No lat/lon from IP");
         }
@@ -90,7 +92,7 @@ export default function RoutineQuiz() {
       }
     };
 
-    const fetchWeather = async (lat: number, lon: number, cityName: string) => {
+    const fetchWeather = async (lat: number, lon: number, cityName: string, countryCode?: string) => {
       try {
         const weatherRes = await fetch(
           `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m`
@@ -104,7 +106,8 @@ export default function RoutineQuiz() {
         setClimate({
           temp,
           humidity,
-          city: cityName
+          city: cityName,
+          countryCode
         });
       } catch (err) {
         console.error("Weather fetch failed:", err);
@@ -127,7 +130,8 @@ export default function RoutineQuiz() {
             if (!revRes.ok) throw new Error("Reverse geocode failed");
             const revData = await revRes.json();
             const city = revData.city || revData.locality || revData.principalSubdivision || "Your Location";
-            await fetchWeather(lat, lon, `${city} (GPS)`);
+            const countryCode = revData.countryCode;
+            await fetchWeather(lat, lon, `${city} (GPS)`, countryCode);
           } catch (err) {
             console.warn("Reverse geocode failed, using default coordinate tag:", err);
             await fetchWeather(lat, lon, "Your Location (GPS)");
@@ -199,8 +203,9 @@ export default function RoutineQuiz() {
     setSearchQuery('');
     setSearchResults([]);
     try {
-      const { latitude, longitude, name, admin1, country } = result;
+      const { latitude, longitude, name, admin1, country, country_code } = result;
       const cityName = `${name}${admin1 ? `, ${admin1}` : ''}${country ? `, ${country}` : ''}`;
+      const countryCode = country_code || (country === 'India' ? 'IN' : undefined);
       
       const weatherRes = await fetch(
         `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m`
@@ -214,7 +219,8 @@ export default function RoutineQuiz() {
       const newClimate = {
         temp,
         humidity,
-        city: cityName
+        city: cityName,
+        countryCode
       };
       setClimate(newClimate);
       if (answers.skinType && answers.mainConcern && answers.budget) {

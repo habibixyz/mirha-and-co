@@ -1,12 +1,12 @@
 "use client";
 
-import { PRODUCTS } from "@/lib/products";
+import { PRODUCTS, getProductAffiliateUrl } from "@/lib/products";
 
 export default function BlogProductCard({ asin }: { asin: string }) {
   const product = PRODUCTS.find((p) => p.asin === asin);
   if (!product) return null;
 
-  const affiliateUrl = product.link || `https://www.amazon.in/dp/${asin}?tag=skinwithtanvi-21`;
+  const affiliateUrl = getProductAffiliateUrl(product);
   const disc = product.mrp > product.price
     ? Math.round(((product.mrp - product.price) / product.mrp) * 100)
     : 0;
@@ -84,26 +84,34 @@ export default function BlogProductCard({ asin }: { asin: string }) {
         <p style={{ fontSize: "11px", color: "#999", margin: "0 0 8px" }}>
           {product.brand}
         </p>
-        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-          <span style={{ fontSize: "17px", color: "#111" }}>
-            ₹{product.price.toLocaleString("en-IN")}
-          </span>
-          {disc > 0 && (
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          {affiliateUrl.includes('cultbeauty') ? (
+            <span style={{ fontSize: "14px", color: "#9b7e6b" }}>
+              Shop on Cult Beauty
+            </span>
+          ) : (
             <>
-              <span style={{ fontSize: "12px", color: "#bbb", textDecoration: "line-through" }}>
-                ₹{product.mrp.toLocaleString("en-IN")}
+              <span style={{ fontSize: "17px", color: "#111" }}>
+                ₹{product.price.toLocaleString("en-IN")}
               </span>
-              <span
-                style={{
-                  fontSize: "10px",
-                  color: "#5a9e6f",
-                  background: "#edf7f0",
-                  padding: "2px 6px",
-                  borderRadius: "3px",
-                }}
-              >
-                {disc}% off
-              </span>
+              {disc > 0 && (
+                <>
+                  <span style={{ fontSize: "12px", color: "#bbb", textDecoration: "line-through" }}>
+                    ₹{product.mrp.toLocaleString("en-IN")}
+                  </span>
+                  <span
+                    style={{
+                      fontSize: "10px",
+                      color: "#5a9e6f",
+                      background: "#edf7f0",
+                      padding: "2px 6px",
+                      borderRadius: "3px",
+                    }}
+                  >
+                    {disc}% off
+                  </span>
+                </>
+              )}
             </>
           )}
         </div>
@@ -120,7 +128,7 @@ export default function BlogProductCard({ asin }: { asin: string }) {
           whiteSpace: "nowrap",
         }}
       >
-        View →
+        {affiliateUrl.includes('cultbeauty') ? 'Shop Global →' : 'View →'}
       </div>
     </a>
   );

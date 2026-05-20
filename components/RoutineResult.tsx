@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { RotateCcw, ExternalLink, Check, ArrowRight } from 'lucide-react';
 import { RoutineRecommendation } from '@/lib/routineEngine';
-import { PRODUCTS } from '@/lib/products';
+import { PRODUCTS, getProductAffiliateUrl } from '@/lib/products';
 import { useRoutineAnalytics } from '@/lib/hooks/useRoutineAnalytics';
 
 const STEPS_ORDER = [
@@ -40,25 +40,26 @@ const STEPS_ORDER = [
 interface RoutineResultProps {
   routine: RoutineRecommendation;
   onRestart: () => void;
-  climate?: { temp: number; humidity: number; city: string };
-  onClimateChange: (climate: { temp: number; humidity: number; city: string } | undefined) => void;
+  climate?: { temp: number; humidity: number; city: string; countryCode?: string };
+  onClimateChange: (climate: { temp: number; humidity: number; city: string; countryCode?: string } | undefined) => void;
 }
 
 function ProductCard({
   asin,
   reason,
+  countryCode,
   onClick,
 }: {
   asin: string;
   reason?: string;
+  countryCode?: string;
   onClick?: () => void;
 }) {
   const product = PRODUCTS.find((p) => p.asin === asin);
 
   if (!product) return null;
 
-  const affiliateUrl =
-    product.link || `https://www.amazon.in/dp/${asin}?tag=skinwithtanvi-21`;
+  const affiliateUrl = getProductAffiliateUrl(product, countryCode);
 
   const disc =
     product.mrp > product.price
@@ -168,41 +169,55 @@ function ProductCard({
         >
           {product.brand}
         </p>
-
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <span
-            style={{
-              fontFamily: "'DM Serif Display', serif",
-              fontSize: '16px',
-              color: '#111',
-              fontWeight: 400,
-            }}
-          >
-            ₹{product.price.toLocaleString('en-IN')}
-          </span>
-          {disc > 0 && (
+          {affiliateUrl.includes('cultbeauty') ? (
+            <span
+              style={{
+                fontFamily: "'DM Serif Display', serif",
+                fontSize: '14px',
+                color: '#9b7e6b',
+                fontWeight: 400,
+              }}
+            >
+              Shop on Cult Beauty
+            </span>
+          ) : (
             <>
               <span
                 style={{
-                  fontSize: '11px',
-                  color: '#bbb',
-                  textDecoration: 'line-through',
+                  fontFamily: "'DM Serif Display', serif",
+                  fontSize: '16px',
+                  color: '#111',
+                  fontWeight: 400,
                 }}
               >
-                ₹{product.mrp.toLocaleString('en-IN')}
+                ₹{product.price.toLocaleString('en-IN')}
               </span>
-              <span
-                style={{
-                  fontSize: '9px',
-                  color: '#5a9e6f',
-                  background: '#edf7f0',
-                  padding: '2px 6px',
-                  borderRadius: '3px',
-                  fontWeight: 600,
-                }}
-              >
-                {disc}% off
-              </span>
+              {disc > 0 && (
+                <>
+                  <span
+                    style={{
+                      fontSize: '11px',
+                      color: '#bbb',
+                      textDecoration: 'line-through',
+                    }}
+                  >
+                    ₹{product.mrp.toLocaleString('en-IN')}
+                  </span>
+                  <span
+                    style={{
+                      fontSize: '9px',
+                      color: '#5a9e6f',
+                      background: '#edf7f0',
+                      padding: '2px 6px',
+                      borderRadius: '3px',
+                      fontWeight: 600,
+                    }}
+                  >
+                    {disc}% off
+                  </span>
+                </>
+              )}
             </>
           )}
         </div>
@@ -229,9 +244,9 @@ function ProductCard({
 }
 
 const CLIMATE_PRESETS = [
-  { city: "Mumbai (Summer/Monsoon)", temp: 38, humidity: 82, label: "💧 Mumbai Summer" },
-  { city: "Delhi (Winter)", temp: 12, humidity: 25, label: "❄️ Delhi Winter" },
-  { city: "Bangalore (Moderate)", temp: 24, humidity: 50, label: "🍃 Bangalore Spring" },
+  { city: "Mumbai (Summer/Monsoon)", temp: 38, humidity: 82, label: "💧 Mumbai Summer", countryCode: "IN" },
+  { city: "Delhi (Winter)", temp: 12, humidity: 25, label: "❄️ Delhi Winter", countryCode: "IN" },
+  { city: "Bangalore (Moderate)", temp: 24, humidity: 50, label: "🍃 Bangalore Spring", countryCode: "IN" },
 ];
 
 export default function RoutineResult({
@@ -259,9 +274,10 @@ export default function RoutineResult({
         const city = geoData.city || "India";
         const lat = geoData.latitude;
         const lon = geoData.longitude;
+        const countryCode = geoData.country_code;
 
         if (lat && lon) {
-          await fetchWeather(lat, lon, `${city} (Synced)`);
+          await fetchWeather(lat, lon, `${city} (Synced)`, countryCode);
         } else {
           throw new Error("No lat/lon from IP");
         }
@@ -270,7 +286,7 @@ export default function RoutineResult({
       }
     };
 
-    const fetchWeather = async (lat: number, lon: number, cityName: string) => {
+    const fetchWeather = async (lat: number, lon: number, cityName: string, countryCode?: string) => {
       try {
         const weatherRes = await fetch(
           `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m`
@@ -284,7 +300,8 @@ export default function RoutineResult({
         onClimateChange({
           temp,
           humidity,
-          city: cityName
+          city: cityName,
+          countryCode
         });
       } catch (err) {
         console.error("Weather fetch failed:", err);
@@ -303,7 +320,8 @@ export default function RoutineResult({
             if (!revRes.ok) throw new Error("Reverse geocode failed");
             const revData = await revRes.json();
             const city = revData.city || revData.locality || revData.principalSubdivision || "Your Location";
-            await fetchWeather(lat, lon, `${city} (GPS)`);
+            const countryCode = revData.countryCode;
+            await fetchWeather(lat, lon, `${city} (GPS)`, countryCode);
           } catch (err) {
             console.warn("Reverse geocode failed:", err);
             await fetchWeather(lat, lon, "Your Location (GPS)");
@@ -344,8 +362,9 @@ export default function RoutineResult({
     setSearchQuery('');
     setSearchResults([]);
     try {
-      const { latitude, longitude, name, admin1, country } = result;
+      const { latitude, longitude, name, admin1, country, country_code } = result;
       const cityName = `${name}${admin1 ? `, ${admin1}` : ''}${country ? `, ${country}` : ''}`;
+      const countryCode = country_code || (country === 'India' ? 'IN' : undefined);
       
       const weatherRes = await fetch(
         `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m`
@@ -359,7 +378,8 @@ export default function RoutineResult({
       onClimateChange({
         temp,
         humidity,
-        city: cityName
+        city: cityName,
+        countryCode
       });
     } catch (err) {
       console.error("Select city failed:", err);
@@ -733,6 +753,7 @@ export default function RoutineResult({
 
                     <ProductCard
                       asin={product.asin}
+                      countryCode={climate?.countryCode}
                       onClick={() =>
                         trackAffiliateClick({
                           asin: product.asin,
