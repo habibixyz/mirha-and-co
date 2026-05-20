@@ -59,6 +59,7 @@ export default function RootLayout({
 
             {/* LEFT */}
             <nav className="nav-left">
+              <Link href="/tools/ingredients" className="nav-link">Ingredient Checker</Link>
             </nav>
 
             {/* LOGO */}
