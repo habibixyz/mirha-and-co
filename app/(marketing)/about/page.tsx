@@ -83,8 +83,8 @@ export default function AboutPage() {
           display: grid;
           grid-template-columns: 1.2fr 0.8fr;
           gap: 4rem;
-          align-items: end;
-          padding-bottom: 2rem;
+          align-items: start;
+          padding-bottom: 4rem;
         }
 
         .eyebrow {
@@ -101,11 +101,12 @@ export default function AboutPage() {
 
         .hero h1 {
           font-family: var(--font-bebas), sans-serif;
-          font-size: clamp(3rem, 12vw, 9.5rem);
-          line-height: 0.85;
+          font-size: clamp(2.8rem, 8vw, 6.2rem);
+          line-height: 0.95;
           letter-spacing: 0.02em;
           font-weight: 400;
-          word-break: break-word;
+          word-break: normal;
+          overflow-wrap: break-word;
         }
 
         .hero h1 span {
@@ -113,9 +114,10 @@ export default function AboutPage() {
           display: block;
           font-family: var(--font-dm-serif), serif;
           font-style: italic;
-          font-size: clamp(2.2rem, 9vw, 6.5rem);
+          font-size: clamp(2rem, 5.5vw, 4.2rem);
           letter-spacing: -0.02em;
-          margin-top: 0.5rem;
+          margin-top: 0.75rem;
+          line-height: 1.1;
         }
 
         .hero-copy {

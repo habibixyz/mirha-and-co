@@ -243,6 +243,129 @@ export default function RoutineResult({
   const { trackAffiliateClick } = useRoutineAnalytics();
   const [expandedStep, setExpandedStep] = useState<string | null>(null);
 
+  // Climate Customization States
+  const [showClimateModal, setShowClimateModal] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState<any[]>([]);
+  const [searching, setSearching] = useState(false);
+
+  const detectClimate = () => {
+    const fetchByIP = async () => {
+      try {
+        const geoRes = await fetch("https://ipapi.co/json/");
+        if (!geoRes.ok) throw new Error("IP Geo fetch failed");
+        const geoData = await geoRes.json();
+        
+        const city = geoData.city || "India";
+        const lat = geoData.latitude;
+        const lon = geoData.longitude;
+
+        if (lat && lon) {
+          await fetchWeather(lat, lon, `${city} (Synced)`);
+        } else {
+          throw new Error("No lat/lon from IP");
+        }
+      } catch (err) {
+        console.error("IP climate sync failed:", err);
+      }
+    };
+
+    const fetchWeather = async (lat: number, lon: number, cityName: string) => {
+      try {
+        const weatherRes = await fetch(
+          `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m`
+        );
+        if (!weatherRes.ok) throw new Error("Weather fetch failed");
+        const weatherData = await weatherRes.json();
+        
+        const temp = Math.round(weatherData.current.temperature_2m);
+        const humidity = Math.round(weatherData.current.relative_humidity_2m);
+
+        onClimateChange({
+          temp,
+          humidity,
+          city: cityName
+        });
+      } catch (err) {
+        console.error("Weather fetch failed:", err);
+      }
+    };
+
+    if (typeof window !== "undefined" && navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        async (position) => {
+          const lat = position.coords.latitude;
+          const lon = position.coords.longitude;
+          try {
+            const revRes = await fetch(
+              `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=en`
+            );
+            if (!revRes.ok) throw new Error("Reverse geocode failed");
+            const revData = await revRes.json();
+            const city = revData.city || revData.locality || revData.principalSubdivision || "Your Location";
+            await fetchWeather(lat, lon, `${city} (GPS)`);
+          } catch (err) {
+            console.warn("Reverse geocode failed:", err);
+            await fetchWeather(lat, lon, "Your Location (GPS)");
+          }
+        },
+        (error) => {
+          console.log("GPS failed, falling back to IP:", error.message);
+          fetchByIP();
+        },
+        { timeout: 5000 }
+      );
+    } else {
+      fetchByIP();
+    }
+  };
+
+  const handleSearchCity = async (query: string) => {
+    setSearchQuery(query);
+    if (query.trim().length < 2) {
+      setSearchResults([]);
+      return;
+    }
+    setSearching(true);
+    try {
+      const res = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(query)}&count=5&language=en&format=json`);
+      if (!res.ok) throw new Error("Geocoding search failed");
+      const data = await res.json();
+      setSearchResults(data.results || []);
+    } catch (err) {
+      console.error("City search failed:", err);
+    } finally {
+      setSearching(false);
+    }
+  };
+
+  const handleSelectSearchResult = async (result: any) => {
+    setShowClimateModal(false);
+    setSearchQuery('');
+    setSearchResults([]);
+    try {
+      const { latitude, longitude, name, admin1, country } = result;
+      const cityName = `${name}${admin1 ? `, ${admin1}` : ''}${country ? `, ${country}` : ''}`;
+      
+      const weatherRes = await fetch(
+        `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m`
+      );
+      if (!weatherRes.ok) throw new Error("Weather fetch failed");
+      const weatherData = await weatherRes.json();
+      
+      const temp = Math.round(weatherData.current.temperature_2m);
+      const humidity = Math.round(weatherData.current.relative_humidity_2m);
+
+      onClimateChange({
+        temp,
+        humidity,
+        city: cityName
+      });
+    } catch (err) {
+      console.error("Select city failed:", err);
+    }
+  };
+
   return (
     <div
       style={{
@@ -314,13 +437,33 @@ export default function RoutineResult({
                 <h3 style={{ margin: 0, fontFamily: "'DM Serif Display', serif", fontSize: '18px', color: '#111', fontWeight: 400 }}>
                   Adaptive Climate Engine
                 </h3>
-                <p style={{ margin: 0, fontSize: '10px', color: '#9b7e6b', fontFamily: 'var(--font-mono, monospace)', letterSpacing: '0.05em' }}>
-                  ACTIVE WEATHER SYNC: {climate ? climate.city : "None (Moderate)"}
+                <p
+                  onClick={() => setShowClimateModal(true)}
+                  style={{
+                    margin: 0,
+                    fontSize: '10px',
+                    color: '#9b7e6b',
+                    fontFamily: 'var(--font-mono, monospace)',
+                    letterSpacing: '0.05em',
+                    cursor: 'pointer',
+                    transition: 'color 0.2s',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.color = '#111';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.color = '#9b7e6b';
+                  }}
+                >
+                  ACTIVE WEATHER SYNC: {climate ? climate.city : "None (Moderate)"} <span style={{ fontSize: '9px', opacity: 0.8 }}>✎</span>
                 </p>
               </div>
             </div>
             {climate && (
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <div
+                onClick={() => setShowClimateModal(true)}
+                style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}
+              >
                 <span style={{ fontSize: '11px', padding: '4px 8px', background: '#f5f1ed', borderRadius: '4px', color: '#666', fontFamily: 'var(--font-mono, monospace)', fontWeight: 600 }}>
                   🌡️ {climate.temp}°C
                 </span>
@@ -414,6 +557,29 @@ export default function RoutineResult({
                 }}
               >
                 🍃 Moderate Default
+              </button>
+              <button
+                onClick={() => setShowClimateModal(true)}
+                style={{
+                  padding: '8px 12px',
+                  fontSize: '11px',
+                  border: '1px dashed #9b7e6b',
+                  background: '#faf8f5',
+                  color: '#9b7e6b',
+                  borderRadius: '6px',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s',
+                  fontFamily: 'var(--font-mono, monospace)',
+                  fontWeight: 600,
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = '#f5ebe6';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = '#faf8f5';
+                }}
+              >
+                🔍 Search City...
               </button>
             </div>
           </div>
@@ -798,6 +964,188 @@ export default function RoutineResult({
           Not medical advice. Consult a dermatologist for serious skin concerns. Results may vary based on consistency and individual skin factors.
         </p>
       </div>
+
+      {showClimateModal && (
+        <div
+          onClick={() => setShowClimateModal(false)}
+          style={{
+            position: 'fixed',
+            inset: 0,
+            background: 'rgba(0,0,0,0.4)',
+            backdropFilter: 'blur(4px)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 1000,
+            padding: '20px',
+          }}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              width: '100%',
+              maxWidth: '440px',
+              background: '#fff',
+              border: '1px solid #e8e2d9',
+              borderRadius: '16px',
+              padding: '24px',
+              boxShadow: '0 20px 40px rgba(0,0,0,0.1)',
+            }}
+          >
+            <h3 style={{ fontFamily: "'DM Serif Display', serif", fontSize: '20px', margin: '0 0 8px', color: '#111' }}>
+              Select Your Location
+            </h3>
+            <p style={{ fontSize: '12px', color: '#888', margin: '0 0 20px', lineHeight: 1.5 }}>
+              Skincare needs depend heavily on local humidity and temperature. Select a city to sync real-time weather and optimize your routine.
+            </p>
+
+            {/* Quick Presets */}
+            <p style={{ fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.15em', color: '#bbb', margin: '0 0 10px', fontFamily: 'var(--font-mono, monospace)' }}>
+              Quick Presets
+            </p>
+            <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '20px' }}>
+              {CLIMATE_PRESETS.map((preset) => (
+                <button
+                  key={preset.city}
+                  onClick={() => {
+                    onClimateChange(preset);
+                    setShowClimateModal(false);
+                  }}
+                  style={{
+                    padding: '8px 12px',
+                    fontSize: '11px',
+                    border: '1px solid #ede8e0',
+                    background: '#faf8f5',
+                    borderRadius: '6px',
+                    cursor: 'pointer',
+                    fontFamily: 'var(--font-mono, monospace)',
+                    color: '#444',
+                    transition: 'all 0.2s',
+                  }}
+                  onMouseEnter={(e) => {
+                    const btn = e.currentTarget as HTMLButtonElement;
+                    btn.style.borderColor = '#111';
+                    btn.style.background = '#fff';
+                  }}
+                  onMouseLeave={(e) => {
+                    const btn = e.currentTarget as HTMLButtonElement;
+                    btn.style.borderColor = '#ede8e0';
+                    btn.style.background = '#faf8f5';
+                  }}
+                >
+                  {preset.label}
+                </button>
+              ))}
+            </div>
+
+            {/* Custom Search */}
+            <p style={{ fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.15em', color: '#bbb', margin: '0 0 10px', fontFamily: 'var(--font-mono, monospace)' }}>
+              Search Any City
+            </p>
+            <div style={{ position: 'relative', marginBottom: '20px' }}>
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => handleSearchCity(e.target.value)}
+                placeholder="Type city name (e.g. Mumbai, London)..."
+                style={{
+                  width: '100%',
+                  padding: '12px 16px',
+                  border: '1px solid #ede8e0',
+                  borderRadius: '8px',
+                  fontSize: '13px',
+                  outline: 'none',
+                  fontFamily: 'inherit',
+                  transition: 'border-color 0.2s',
+                }}
+                onFocus={(e) => e.target.style.borderColor = '#111'}
+                onBlur={(e) => e.target.style.borderColor = '#ede8e0'}
+              />
+              {searching && (
+                <div style={{ position: 'absolute', right: '12px', top: '12px', fontSize: '12px', color: '#999' }}>
+                  Searching...
+                </div>
+              )}
+            </div>
+
+            {/* Search Results */}
+            {searchResults.length > 0 && (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', maxHeight: '180px', overflowY: 'auto', marginBottom: '20px', border: '1px solid #ede8e0', borderRadius: '8px', padding: '6px' }}>
+                {searchResults.map((result) => (
+                  <button
+                    key={result.id}
+                    onClick={() => handleSelectSearchResult(result)}
+                    style={{
+                      padding: '10px 12px',
+                      background: 'none',
+                      border: 'none',
+                      borderRadius: '6px',
+                      textAlign: 'left',
+                      fontSize: '13px',
+                      color: '#333',
+                      cursor: 'pointer',
+                      width: '100%',
+                      transition: 'background 0.2s',
+                    }}
+                    onMouseEnter={(e) => (e.currentTarget.style.background = '#faf8f5')}
+                    onMouseLeave={(e) => (e.currentTarget.style.background = 'none')}
+                  >
+                    <span style={{ fontWeight: 500 }}>{result.name}</span>
+                    {result.admin1 && <span style={{ color: '#888', fontSize: '11px' }}>, {result.admin1}</span>}
+                    {result.country && <span style={{ color: '#aaa', fontSize: '11px' }}> ({result.country})</span>}
+                  </button>
+                ))}
+              </div>
+            )}
+
+            {/* Auto-detect button */}
+            <div style={{ display: 'flex', gap: '8px', borderTop: '1px solid #ede8e0', paddingTop: '16px' }}>
+              <button
+                onClick={() => {
+                  detectClimate();
+                  setShowClimateModal(false);
+                }}
+                style={{
+                  flex: 1,
+                  padding: '10px',
+                  background: '#111',
+                  color: '#fff',
+                  border: 'none',
+                  borderRadius: '8px',
+                  fontSize: '11px',
+                  fontWeight: 500,
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.1em',
+                  cursor: 'pointer',
+                  fontFamily: 'var(--font-mono, monospace)',
+                  transition: 'background 0.2s',
+                }}
+                onMouseEnter={(e) => (e.currentTarget.style.background = '#333')}
+                onMouseLeave={(e) => (e.currentTarget.style.background = '#111')}
+              >
+                📡 Auto-Detect Location
+              </button>
+              <button
+                onClick={() => setShowClimateModal(false)}
+                style={{
+                  padding: '10px 16px',
+                  background: 'none',
+                  border: '1px solid #ddd',
+                  borderRadius: '8px',
+                  fontSize: '11px',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.1em',
+                  cursor: 'pointer',
+                  color: '#666',
+                  fontFamily: 'var(--font-mono, monospace)',
+                }}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
