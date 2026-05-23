@@ -1,7 +1,17 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ExternalLink } from "lucide-react";
+import { cookies } from "next/headers";
 import { PRODUCTS } from "@/lib/products";
+import {
+  Locale,
+  Currency,
+  convertAndFormatPrice,
+  getLocalAffiliateUrl,
+  DICTIONARY,
+  RTL_LOCALES,
+} from "@/lib/globalization";
+import AiProductTranslator from "@/components/AiProductTranslator";
 
 type Product = {
   id: number;
@@ -30,11 +40,6 @@ type Product = {
 };
 
 const PRODUCT_LIST = PRODUCTS as unknown as Product[];
-const AFFILIATE_TAG = "skinwithtanvi-21";
-
-function fmtINR(value: number) {
-  return "₹" + Math.round(value).toLocaleString("en-IN");
-}
 
 function discount(mrp: number, price: number) {
   return mrp > price ? Math.round(((mrp - price) / mrp) * 100) : 0;
@@ -47,6 +52,17 @@ function toList(value?: string[] | string) {
 
 function findProduct(asin: string) {
   return PRODUCT_LIST.find((product) => product.asin === asin);
+}
+
+function getAmazonStoreName(currency: Currency) {
+  switch (currency) {
+    case "USD": return "Amazon US";
+    case "EUR": return "Amazon Europe";
+    case "GBP": return "Amazon UK";
+    case "AED": return "Amazon UAE";
+    case "SAR": return "Amazon Saudi";
+    default: return "Amazon India";
+  }
 }
 
 export function generateStaticParams() {
@@ -90,21 +106,38 @@ export default async function ProductPage({ params }: { params: Promise<{ asin: 
 
   if (!product) notFound();
 
-  const affiliateUrl =
-    product.link || `https://www.amazon.in/dp/${product.asin}?tag=${AFFILIATE_TAG}`;
+  const cookieStore = await cookies();
+  const locale = (cookieStore.get("mirha_locale")?.value || "en") as Locale;
+  const currency = (cookieStore.get("mirha_currency")?.value || "INR") as Currency;
+  const isRtl = RTL_LOCALES.includes(locale);
+
+  const t = (key: string) => DICTIONARY[locale]?.[key] || DICTIONARY.en[key] || key;
+
+  const affiliateUrl = getLocalAffiliateUrl(
+    product.asin,
+    currency,
+    product.name,
+    product.brand,
+    product.link
+  );
   const save = discount(product.mrp, product.price);
+  
   const bestFor = [
     ...toList(product.bestFor),
     ...toList(product.concerns),
     product.specs?.["Skin Type"],
     product.specs?.["Best For"],
   ].filter(Boolean).slice(0, 4) as string[];
+  
   const avoidIf = toList(product.notIdealFor);
+  
   const ingredients = [
     ...toList(product.ingredients),
     product.specs?.["Key Ingredient"],
   ].filter(Boolean) as string[];
+  
   const watchOuts = toList(product.watchOuts);
+  
   const alternatives = PRODUCT_LIST.filter(
     (item) => item.asin !== product.asin && item.category === product.category
   ).slice(0, 4);
@@ -407,106 +440,129 @@ export default async function ProductPage({ params }: { params: Promise<{ asin: 
         }
       `}</style>
 
-      <div className="product-shell">
-        <Link href="/#shop" className="back-link">
-          <ArrowLeft size={14} /> Back to picks
+      <div
+        className="product-shell"
+        style={{
+          direction: isRtl ? "rtl" : "ltr",
+          textAlign: isRtl ? "right" : "left",
+        }}
+      >
+        <Link
+          href="/#shop"
+          className="back-link"
+          style={{
+            flexDirection: isRtl ? "row-reverse" : "row",
+          }}
+        >
+          <ArrowLeft
+            size={14}
+            style={{
+              transform: isRtl ? "rotate(180deg)" : "none",
+            }}
+          />{" "}
+          {t("product.back")}
         </Link>
 
-        <section className="product-hero">
-          <div className="image-panel">
+        <section
+          className="product-hero"
+          style={{
+            gridTemplateColumns: isRtl ? "minmax(0, 1.1fr) minmax(300px, 0.9fr)" : undefined,
+          }}
+        >
+          <div className="image-panel" style={{ order: isRtl ? 2 : 1 }}>
             <img src={product.image} alt={product.name} />
           </div>
 
-          <div className="detail-panel">
+          <div className="detail-panel" style={{ order: isRtl ? 1 : 2 }}>
             <p className="kicker">{product.category} / {product.subcat}</p>
             <h1>{product.name}</h1>
             <p className="brand">{product.brand} {product.badge ? `/ ${product.badge}` : ""}</p>
 
             <div className="price-box">
               <div>
-                <small>Price</small>
-                <b>{fmtINR(product.price)}</b>
+                <small>{t("product.price")}</small>
+                <b>{convertAndFormatPrice(product.price, currency)}</b>
               </div>
               <div>
-                <small>Rating</small>
+                <small>{t("product.rating")}</small>
                 <b>{product.rating}</b>
               </div>
               <div>
-                <small>Saving</small>
-                <em>{save > 0 ? `${save}% off` : "Check price"}</em>
+                <small>{t("product.saving")}</small>
+                <em>{save > 0 ? `${save}% ${t("product.off")}` : "Check price"}</em>
               </div>
             </div>
 
-            <p className="description">{product.description}</p>
+            <AiProductTranslator
+              description={product.description}
+              bestFor={bestFor}
+              avoidIf={avoidIf}
+              usage={product.usage || product.specs?.["Use"] || "Use as directed on the product label. Introduce one new product at a time and patch test first."}
+              ingredients={ingredients}
+              locale={locale}
+            />
 
-            <a href={affiliateUrl} className="cta" target="_blank" rel="noopener noreferrer sponsored">
-              View on Amazon India <ExternalLink size={14} />
+            <a
+              href={affiliateUrl}
+              className="cta"
+              target="_blank"
+              rel="noopener noreferrer sponsored"
+              style={{
+                display: "inline-flex",
+                flexDirection: isRtl ? "row-reverse" : "row",
+                marginTop: "24px",
+              }}
+            >
+              {t("product.amazon_btn")} ({getAmazonStoreName(currency)}){" "}
+              <ExternalLink
+                size={14}
+                style={{
+                  marginLeft: isRtl ? 0 : "6px",
+                  marginRight: isRtl ? "6px" : 0,
+                }}
+              />
             </a>
             <p className="disclosure">
-              Affiliate link. Mirha & Co. may earn commission at no extra cost to you. Prices may change on Amazon.
+              {t("product.disclosure")}
             </p>
           </div>
         </section>
 
         <section className="info-grid">
-          <InfoBlock title="Best For">
-            {bestFor.length ? (
-              <ul>{bestFor.map((item) => <li key={item}>{item}</li>)}</ul>
-            ) : (
-              <p>Use this when the product category and texture match your routine need.</p>
-            )}
-          </InfoBlock>
-
-          <InfoBlock title="Avoid If">
-            {avoidIf.length ? (
-              <ul>{avoidIf.map((item) => <li key={item}>{item}</li>)}</ul>
-            ) : (
-              <p>Skip or patch test if your skin is irritated, compromised, or you react easily to new formulas.</p>
-            )}
-          </InfoBlock>
-
-          <InfoBlock title="How To Use">
-            <p>{product.usage || product.specs?.["Use"] || "Use as directed on the product label. Introduce one new product at a time and patch test first."}</p>
-          </InfoBlock>
-
-          <InfoBlock title="Mirha Notes">
-            <p>
-              This pick is shown for its category fit, price context, ingredient relevance and review signal. It is not medical advice.
-            </p>
-            {watchOuts.length ? <ul>{watchOuts.map((item) => <li key={item}>{item}</li>)}</ul> : null}
-          </InfoBlock>
-        </section>
-
-        <section className="info-grid">
-          <InfoBlock title="Key Details">
+          <InfoBlock title={t("product.key_details")}>
             <div className="spec-list">
               {Object.entries(product.specs || {}).map(([key, value]) => (
-                <div className="spec-row" key={key}>
+                <div
+                  className="spec-row"
+                  key={key}
+                  style={{
+                    flexDirection: isRtl ? "row-reverse" : "row",
+                  }}
+                >
                   <span>{key}</span>
                   <span>{value}</span>
                 </div>
               ))}
             </div>
           </InfoBlock>
-
-          <InfoBlock title="Ingredients To Notice">
-            {ingredients.length ? (
-              <ul>{ingredients.map((item) => <li key={item}>{item}</li>)}</ul>
-            ) : (
-              <p>Check the product label and patch test if you are sensitive to fragrance, acids or actives.</p>
-            )}
-          </InfoBlock>
         </section>
 
         {alternatives.length ? (
           <section className="related">
-            <h2>Related picks</h2>
+            <h2>{t("product.related")}</h2>
             <div className="related-grid">
               {alternatives.map((item) => (
-                <Link href={`/product/${item.asin}`} className="related-card" key={item.asin}>
+                <Link
+                  href={`/product/${item.asin}`}
+                  className="related-card"
+                  key={item.asin}
+                  style={{
+                    textAlign: isRtl ? "right" : "left",
+                  }}
+                >
                   <img src={item.image} alt={item.name} />
                   <b>{item.name}</b>
-                  <span>{fmtINR(item.price)}</span>
+                  <span>{convertAndFormatPrice(item.price, currency)}</span>
                 </Link>
               ))}
             </div>

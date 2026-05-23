@@ -1,21 +1,29 @@
 "use client";
 
 import { PRODUCTS } from "@/lib/products";
+import { useGlobalization } from "./GlobalizationContext";
 
 export function AffiliateCard(props: any) {
   const { asin, onClick } = props;
+  const global = useGlobalization();
 
   const product = PRODUCTS.find((p) => p.asin === asin);
 
   const title = product?.name || props.title;
   const description = product?.description || props.description;
-  const price = product?.price ? `₹${product.price}` : props.price;
   const image = product?.image || props.imageUrl;
   const badge = product?.badge || props.badge;
 
-  const affiliateUrl =
-    product?.link ||
-    `https://www.amazon.in/dp/${asin}?tag=skinwithtanvi-21`;
+  // Use localized formatted price
+  const price = product?.price ? global.formatPrice(product.price) : props.price;
+
+  // Localized affiliate search URL
+  const affiliateUrl = global.getAffiliateUrl(
+    asin,
+    title,
+    product?.brand || props.brand || "",
+    product?.link
+  );
 
   return (
     <div

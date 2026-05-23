@@ -1159,6 +1159,9 @@ export const PRODUCTS = [
 ];
 
 export function getProductAffiliateUrl(product: any, countryCode?: string): string {
+  // [TEMPORARILY DISABLED] International Awin links are on hold pending Payoneer setup.
+  // Defaulting all worldwide traffic to local Amazon IN links for now.
+  /*
   let isGlobal = false;
   if (countryCode) {
     isGlobal = countryCode.toUpperCase() !== 'IN';
@@ -1180,6 +1183,7 @@ export function getProductAffiliateUrl(product: any, countryCode?: string): stri
     }
     return product.cultBeautyLink;
   }
+  */
 
   return product.link || `https://www.amazon.in/dp/${product.asin}?tag=skinwithtanvi-21`;
 }

@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { POSTS } from "@/lib/posts";
+import MoleculeWrapper from "@/components/MoleculeWrapper";
 
 export const metadata: Metadata = {
   title: "Skincare Journal, Guides & Reviews | Mirha & Co.",
@@ -30,20 +32,18 @@ const featured = {
   tag: "START HERE",
 };
 
-import { POSTS } from "@/lib/posts";
-
 const posts = POSTS.map((p) => ({
   ...p,
   initials: p.thumbnail,
 }));
 
 const catColors: Record<string, string> = {
-  BEAUTY: "#c0392b",
-  WELLNESS: "#b7860b",
-  LIFESTYLE: "#2d7a4f",
-  SKINCARE: "#6d3fa0",
-  HAIR: "#1a6e8e",
-  MAKEUP: "#c0392b",
+  BEAUTY: "#a27b5c",
+  WELLNESS: "#8c8179",
+  LIFESTYLE: "#5f7161",
+  SKINCARE: "#6d8b74",
+  HAIR: "#7d8f99",
+  MAKEUP: "#a27b5c",
 };
 
 const paths = [
@@ -51,7 +51,7 @@ const paths = [
   { label: "Routine", title: "Build your 4-step routine", text: "Get cleanser, treatment, moisturiser, and sunscreen for your skin profile.", href: "/tools/routine" },
   { label: "Shop", title: "Browse curated picks", text: "See products with price, use case, ingredients, and honest context.", href: "/" },
 ];
-import BlogGrid from "@/components/BlogGrid";
+
 export default function BlogIndex() {
   return (
     <main>
@@ -60,10 +60,9 @@ export default function BlogIndex() {
         .journal-page { 
           background-color: #faf8f5; 
           background-image: 
-            radial-gradient(circle at 15% 5%, rgba(200,71,58,0.08) 0%, transparent 45%),
-            radial-gradient(circle at 85% 30%, rgba(155,126,107,0.06) 0%, transparent 55%),
-            radial-gradient(circle at 50% 80%, rgba(200,71,58,0.05) 0%, transparent 50%);
-          color: #111; 
+            radial-gradient(circle at 15% 5%, rgba(200,71,58,0.04) 0%, transparent 45%),
+            radial-gradient(circle at 85% 30%, rgba(162,123,92,0.03) 0%, transparent 55%);
+          color: #2b2826; 
           min-height: 100vh; 
         }
         .journal-hero {
@@ -73,79 +72,125 @@ export default function BlogIndex() {
           border-bottom: 1px solid #ded7cf;
         }
         .journal-hero-copy {
-          padding: 5rem 4.5rem 4rem;
+          padding: 6rem 4.5rem 5rem;
           display: flex;
           flex-direction: column;
-          justify-content: flex-end;
+          justify-content: center;
         }
         .eyebrow {
-          font-family: 'DM Sans', sans-serif;
-          font-size: 0.62rem;
-          letter-spacing: 0.32em;
+          font-family: var(--font-dm-sans), sans-serif;
+          font-size: 0.65rem;
+          letter-spacing: 0.3em;
           text-transform: uppercase;
-          color: #9b7e6b;
-          margin: 0 0 1rem;
+          color: #a27b5c;
+          margin: 0 0 1.2rem;
+          font-weight: 700;
         }
         .hero-title {
-          font-family: 'DM Serif Display', serif;
-          font-size: clamp(3rem, 6vw, 6.4rem);
-          line-height: 0.92;
-          font-weight: 400;
-          letter-spacing: 0;
+          font-family: var(--font-playfair), serif;
+          font-size: clamp(2.8rem, 6vw, 5.2rem);
+          line-height: 1.05;
+          font-weight: 700;
+          letter-spacing: -0.02em;
           margin: 0;
           max-width: 760px;
+          background: linear-gradient(135deg, #111111 0%, #a27b5c 50%, #c8473a 100%);
+          background-size: 200% auto;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          animation: shine 6s linear infinite;
         }
-        .hero-title span { color: #c0392b; font-style: italic; }
+        .hero-title span {
+          display: inline;
+          font-family: var(--font-playfair), serif;
+          font-style: italic;
+          font-weight: 600;
+        }
+        @keyframes shine {
+          0% { background-position: 0% center; }
+          50% { background-position: 100% center; }
+          100% { background-position: 0% center; }
+        }
         .hero-copy {
-          max-width: 610px;
+          max-width: 580px;
           color: #6f6963;
-          line-height: 1.75;
-          font-size: 1rem;
-          margin: 1.4rem 0 2rem;
+          line-height: 1.8;
+          font-size: 1.05rem;
+          margin: 1.5rem 0 2.5rem;
         }
-        .hero-actions { display: flex; gap: 0.8rem; flex-wrap: wrap; }
+        .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+        
         .primary-btn, .secondary-btn {
           display: inline-flex;
           align-items: center;
           justify-content: center;
-          min-height: 46px;
-          padding: 0.9rem 1.35rem;
-          border-radius: 4px;
-          font-family: 'DM Sans', sans-serif;
-          font-size: 0.68rem;
-          letter-spacing: 0.18em;
+          min-height: 48px;
+          padding: 0 2rem;
+          border-radius: 12px;
+          font-family: var(--font-dm-sans), sans-serif;
+          font-size: 0.72rem;
+          letter-spacing: 0.15em;
           text-transform: uppercase;
           font-weight: 700;
           text-decoration: none;
+          transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .primary-btn { background: #111; color: #fff; border: 1px solid #111; }
-        .secondary-btn { color: #111; border: 1px solid #d8d0c7; background: #fff; }
+        .primary-btn {
+          background: #111;
+          color: #fff;
+          border: 1px solid #111;
+          box-shadow: 0 10px 20px rgba(0,0,0,0.06);
+        }
+        .primary-btn:hover {
+          background: #000;
+          transform: translateY(-2px);
+          box-shadow: 0 15px 25px rgba(0,0,0,0.12);
+        }
+        .secondary-btn {
+          color: #2b2826;
+          border: 1px solid #e8ded6;
+          background: #fff;
+        }
+        .secondary-btn:hover {
+          background: #faf8f5;
+          transform: translateY(-2px);
+        }
+        
         .journal-hero-visual {
           position: relative;
           min-height: 620px;
-          background-image: linear-gradient(to top, rgba(0,0,0,0.78), rgba(0,0,0,0.16)), url('/images/hero-skincare.jpg');
-          background-size: cover;
-          background-position: center;
+          background: radial-gradient(circle at 50% 50%, #fffbf8 0%, #f6f1ea 100%);
+          border-left: 1px solid #ded7cf;
           display: flex;
           align-items: flex-end;
-          padding: 3rem;
+          padding: 3.5rem;
+          overflow: hidden;
         }
         .visual-note {
-          color: #fff;
-          max-width: 360px;
+          color: #2b2826;
+          max-width: 380px;
+          background: rgba(255, 255, 255, 0.5);
+          backdrop-filter: blur(16px);
+          -webkit-backdrop-filter: blur(16px);
+          border: 1px solid rgba(255, 255, 255, 0.7);
+          padding: 2.2rem;
+          border-radius: 20px;
+          box-shadow: 0 15px 35px rgba(162, 123, 92, 0.04);
+          z-index: 10;
         }
         .visual-note h2 {
-          font-family: 'DM Serif Display', serif;
-          font-size: 2rem;
-          font-weight: 400;
-          line-height: 1.1;
+          font-family: var(--font-playfair), serif;
+          font-size: 1.8rem;
+          font-weight: 700;
+          line-height: 1.25;
           margin: 0 0 0.8rem;
+          color: #111;
         }
         .visual-note p {
-          color: rgba(255,255,255,0.72);
-          line-height: 1.65;
+          color: #6f6963;
+          line-height: 1.7;
           margin: 0;
-          font-size: 0.9rem;
+          font-size: 0.92rem;
         }
         .trust-strip {
           background: #111;
@@ -155,74 +200,84 @@ export default function BlogIndex() {
           border-bottom: 1px solid #111;
         }
         .trust-item {
-          padding: 1.1rem 1.4rem;
-          border-right: 1px solid rgba(255,255,255,0.1);
-          font-family: 'DM Sans', sans-serif;
+          padding: 1.2rem 1.4rem;
+          border-right: 1px solid rgba(255,255,255,0.08);
+          font-family: var(--font-dm-sans), sans-serif;
           font-size: 0.68rem;
           letter-spacing: 0.18em;
           text-transform: uppercase;
-          color: rgba(255,255,255,0.62);
+          color: rgba(255,255,255,0.6);
           text-align: center;
         }
         .path-section {
           max-width: 1200px;
           margin: 0 auto;
-          padding: 4.5rem 2.5rem 2.5rem;
+          padding: 5rem 2.5rem 3rem;
         }
         .section-kicker {
-          font-family: 'DM Sans', sans-serif;
-          font-size: 0.62rem;
-          letter-spacing: 0.28em;
+          font-family: var(--font-dm-sans), sans-serif;
+          font-size: 0.65rem;
+          letter-spacing: 0.25em;
           text-transform: uppercase;
-          color: #9b7e6b;
+          color: #a27b5c;
           margin: 0 0 0.8rem;
+          font-weight: 700;
         }
         .section-title {
-          font-family: 'DM Serif Display', serif;
-          font-size: clamp(2rem, 4vw, 3.4rem);
-          line-height: 1.05;
-          font-weight: 400;
+          font-family: var(--font-playfair), serif;
+          font-size: clamp(2rem, 4vw, 3.2rem);
+          line-height: 1.15;
+          font-weight: 700;
           margin: 0;
+          color: #111;
         }
         .path-grid {
           display: grid;
           grid-template-columns: repeat(3, 1fr);
-          gap: 1px;
-          background: #ded7cf;
-          border: 1px solid #ded7cf;
-          margin-top: 2rem;
+          gap: 2rem;
+          background: transparent;
+          border: none;
+          margin-top: 2.5rem;
         }
         .path-card {
           background: #fff;
-          padding: 1.7rem;
+          padding: 2.2rem;
           text-decoration: none;
           color: #111;
-          min-height: 210px;
+          min-height: 230px;
           display: flex;
           flex-direction: column;
           justify-content: space-between;
-          transition: background 0.2s;
+          transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+          border-radius: 16px;
+          border: 1px solid #e8ded6;
         }
-        .path-card:hover { background: #f5eee7; }
+        .path-card:hover { 
+          background: #fffdfb;
+          transform: translateY(-4px);
+          box-shadow: 0 15px 30px rgba(162, 123, 92, 0.05);
+          border-color: rgba(162, 123, 92, 0.3);
+        }
         .path-label {
-          color: #c0392b;
-          font-family: 'DM Sans', sans-serif;
-          font-size: 0.58rem;
+          color: #a27b5c;
+          font-family: var(--font-dm-sans), sans-serif;
+          font-size: 0.6rem;
           letter-spacing: 0.28em;
           text-transform: uppercase;
           margin: 0 0 1.2rem;
+          font-weight: 700;
         }
         .path-card h3 {
-          font-family: 'DM Serif Display', serif;
+          font-family: var(--font-playfair), serif;
           font-size: 1.45rem;
-          font-weight: 400;
-          line-height: 1.15;
+          font-weight: 700;
+          line-height: 1.2;
           margin: 0 0 0.7rem;
         }
         .path-card p {
-          color: #777;
+          color: #6f6963;
           line-height: 1.65;
-          font-size: 0.86rem;
+          font-size: 0.88rem;
           margin: 0;
         }
         .featured-band {
@@ -233,42 +288,52 @@ export default function BlogIndex() {
         .featured-card {
           display: grid;
           grid-template-columns: 1.3fr 0.7fr;
-          border: 1px solid #ded7cf;
+          border: 1px solid #e8ded6;
           background: #fff;
           text-decoration: none;
           color: #111;
+          border-radius: 24px;
+          overflow: hidden;
+          transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+          box-shadow: 0 10px 30px rgba(0,0,0,0.01);
         }
-        .featured-main { padding: 2.4rem; }
+        .featured-card:hover {
+          transform: translateY(-4px);
+          box-shadow: 0 25px 50px rgba(162, 123, 92, 0.06);
+          border-color: rgba(162, 123, 92, 0.3);
+        }
+        .featured-main { padding: 3rem; }
         .featured-main h2 {
-          font-family: 'DM Serif Display', serif;
-          font-size: clamp(1.8rem, 4vw, 3.2rem);
-          font-weight: 400;
-          line-height: 1.08;
+          font-family: var(--font-playfair), serif;
+          font-size: clamp(1.8rem, 4vw, 3rem);
+          font-weight: 700;
+          line-height: 1.15;
           margin: 0 0 1rem;
         }
         .featured-main p {
-          color: #777;
+          color: #6f6963;
           line-height: 1.75;
           max-width: 620px;
-          margin: 0 0 1.5rem;
+          margin: 0 0 2rem;
         }
         .featured-side {
-          background: #111;
-          color: #fff;
-          padding: 2rem;
+          background: #1c1917;
+          color: #fafaf9;
+          padding: 3rem;
           display: flex;
           flex-direction: column;
           justify-content: space-between;
         }
         .featured-side p {
-          color: rgba(255,255,255,0.58);
+          color: rgba(255,255,255,0.6);
           line-height: 1.7;
           margin: 0;
+          font-size: 0.9rem;
         }
         .article-section {
           max-width: 1200px;
           margin: 0 auto;
-          padding: 3.5rem 2.5rem 6rem;
+          padding: 4rem 2.5rem 6rem;
         }
         .article-header {
           display: flex;
@@ -276,103 +341,115 @@ export default function BlogIndex() {
           align-items: flex-end;
           gap: 1rem;
           border-bottom: 2px solid #111;
-          padding-bottom: 1rem;
-          margin-bottom: 2rem;
+          padding-bottom: 1.5rem;
+          margin-bottom: 2.5rem;
         }
         .article-grid {
           display: grid;
           grid-template-columns: repeat(3, 1fr);
-          border-top: 1px solid #e8e1d8;
-          border-left: 1px solid #e8e1d8;
+          gap: 2rem;
+          background: transparent;
+          border: none;
         }
         .article-card {
-          background: #faf8f5;
+          background: #fff;
           color: #111;
           text-decoration: none;
-          padding: 1.6rem;
-          min-height: 300px;
-          border-right: 1px solid #e8e1d8;
-          border-bottom: 1px solid #e8e1d8;
+          padding: 2.2rem;
+          min-height: 320px;
+          border: 1px solid #e8ded6;
+          border-radius: 20px;
           display: flex;
           flex-direction: column;
-          transition: background 0.2s;
+          transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+          box-shadow: 0 5px 15px rgba(0,0,0,0.01);
         }
-        .article-card:hover { background: #fff; }
+        .article-card:hover { 
+          background: #fff; 
+          transform: translateY(-4px);
+          border-color: rgba(162, 123, 92, 0.3);
+          box-shadow: 0 20px 40px rgba(162, 123, 92, 0.05);
+        }
         .article-icon {
           width: 48px;
           height: 48px;
-          border-radius: 50%;
-          background: #111;
-          color: #fff;
+          border-radius: 12px;
+          background: linear-gradient(135deg, #fbf7f1 0%, #f3eee6 100%);
+          color: #a27b5c;
           display: flex;
           align-items: center;
           justify-content: center;
-          font-family: 'DM Sans', sans-serif;
+          font-family: var(--font-dm-sans), sans-serif;
           font-size: 0.72rem;
+          font-weight: 700;
           letter-spacing: 0.14em;
           margin-bottom: 1.2rem;
+          border: 1px solid #e8ded6;
         }
         .article-cat {
-          font-family: 'DM Sans', sans-serif;
-          font-size: 0.58rem;
+          font-family: var(--font-dm-sans), sans-serif;
+          font-size: 0.6rem;
           letter-spacing: 0.25em;
           text-transform: uppercase;
           font-weight: 700;
           margin: 0 0 0.75rem;
         }
         .article-card h3 {
-          font-family: 'DM Serif Display', serif;
-          font-size: 1.2rem;
+          font-family: var(--font-playfair), serif;
+          font-size: 1.3rem;
           line-height: 1.3;
-          font-weight: 400;
+          font-weight: 700;
           margin: 0 0 0.8rem;
+          color: #111;
         }
         .article-card p {
-          color: #827b75;
-          font-size: 0.82rem;
+          color: #6f6963;
+          font-size: 0.88rem;
           line-height: 1.7;
           margin: 0;
         }
         .article-meta {
           margin-top: auto;
-          padding-top: 1rem;
-          border-top: 1px solid #eee6dd;
+          padding-top: 1.2rem;
+          border-top: 1px solid #f2ebe4;
           display: flex;
-          gap: 0.7rem;
+          gap: 0.8rem;
           flex-wrap: wrap;
-          color: #aaa;
-          font-size: 0.62rem;
-          letter-spacing: 0.12em;
+          color: #9b8e83;
+          font-size: 0.65rem;
+          letter-spacing: 0.1em;
           text-transform: uppercase;
+          font-weight: 500;
         }
         .footer-cta {
           background: #111;
           color: #fff;
           text-align: center;
-          padding: 4rem 1.5rem;
+          padding: 5rem 1.5rem;
         }
         .footer-cta h2 {
-          font-family: 'DM Serif Display', serif;
-          font-weight: 400;
+          font-family: var(--font-playfair), serif;
+          font-weight: 700;
           font-size: clamp(2rem, 4vw, 3rem);
-          margin: 0 0 1rem;
+          margin: 0 0 1.2rem;
         }
         .footer-cta p {
-          color: rgba(255,255,255,0.62);
-          line-height: 1.7;
+          color: rgba(255,255,255,0.65);
+          line-height: 1.75;
           max-width: 560px;
-          margin: 0 auto 1.6rem;
+          margin: 0 auto 2rem;
+          font-size: 1.05rem;
         }
         @media (max-width: 980px) {
           .journal-hero, .featured-card { grid-template-columns: 1fr; }
           .journal-hero-copy { padding: 4rem 2rem; }
-          .journal-hero-visual { min-height: 420px; }
+          .journal-hero-visual { min-height: 420px; border-left: none; border-bottom: 1px solid #ded7cf; }
           .trust-strip, .path-grid, .article-grid { grid-template-columns: repeat(2, 1fr); }
         }
         @media (max-width: 640px) {
           .journal-hero-copy { padding: 3rem 1.4rem; }
-          .journal-hero-visual { min-height: 360px; padding: 1.5rem; }
-          .trust-strip, .path-grid, .article-grid { grid-template-columns: 1fr; }
+          .journal-hero-visual { min-height: 380px; padding: 1.5rem; }
+          .trust-strip, .path-grid, .article-grid { grid-template-columns: 1fr; gap: 1rem; }
           .path-section, .featured-band, .article-section { padding-left: 1.4rem; padding-right: 1.4rem; }
           .article-header { align-items: flex-start; flex-direction: column; }
         }
@@ -395,8 +472,9 @@ export default function BlogIndex() {
           </div>
 
           <div className="journal-hero-visual">
+            <MoleculeWrapper />
             <div className="visual-note">
-              <p className="eyebrow" style={{ color: "rgba(255,255,255,0.55)" }}>Start here</p>
+              <p className="eyebrow" style={{ color: "#a27b5c" }}>Start here</p>
               <h2>Find what works. Skip what does not.</h2>
               <p>
                 Every guide points back to one thing: a routine you can actually use, buy, and stay consistent with.
@@ -423,7 +501,7 @@ export default function BlogIndex() {
                   <h3>{path.title}</h3>
                   <p>{path.text}</p>
                 </div>
-                <span style={{ color: "#c0392b", marginTop: "1.2rem" }}>Open</span>
+                <span style={{ color: "#a27b5c", marginTop: "1.2rem", fontSize: "0.7rem", letterSpacing: "0.15em", textTransform: "uppercase", fontWeight: 700 }}>Open</span>
               </a>
             ))}
           </div>
@@ -439,7 +517,7 @@ export default function BlogIndex() {
             </div>
             <div className="featured-side">
               <p>{featured.date} / {featured.readTime}</p>
-              <p>
+              <p style={{ marginTop: "1rem" }}>
                 Best for anyone confused by serum claims, active percentages, acne marks, and oily-skin routines.
               </p>
             </div>
@@ -452,7 +530,7 @@ export default function BlogIndex() {
               <p className="section-kicker">All guides</p>
               <h2 className="section-title">Read by concern.</h2>
             </div>
-            <span style={{ color: "#aaa", fontSize: "0.72rem", letterSpacing: "0.18em", textTransform: "uppercase" }}>
+            <span style={{ color: "#9b8e83", fontSize: "0.72rem", letterSpacing: "0.18em", textTransform: "uppercase", fontWeight: 600 }}>
               {posts.length} articles
             </span>
           </div>

@@ -5,7 +5,12 @@ import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, Search } from "lucide-react";
 import { PRODUCTS } from "@/lib/products";
-import { formatPrice } from "@/lib/price";
+import { useGlobalization } from "@/components/GlobalizationContext";
+import dynamic from "next/dynamic";
+
+const WellnessAuraCanvas = dynamic(() => import("@/components/WellnessAuraCanvas"), {
+  ssr: false,
+});
 
 
 type Product = {
@@ -137,29 +142,60 @@ function productReason(product: Product) {
 }
 
 function ProductCard({ product }: { product: Product }) {
+  const { formatPrice, t, isRtl } = useGlobalization();
   const save = discount(product.mrp, product.price);
 
   return (
-    <Link href={`/product/${product.asin}`} className="product-card">
+    <Link
+      href={`/product/${product.asin}`}
+      className="product-card"
+      style={{
+        direction: isRtl ? "rtl" : "ltr",
+        textAlign: isRtl ? "right" : "left",
+      }}
+    >
       <div className="product-image">
         <Image src={product.image} alt={product.name} width={210} height={210} />
       </div>
       <div className="product-body">
-        <div className="product-kicker">
+        <div
+          className="product-kicker"
+          style={{
+            flexDirection: isRtl ? "row-reverse" : "row",
+          }}
+        >
           <span>{product.subcat}</span>
           {product.badge ? <b>{product.badge}</b> : null}
         </div>
         <h3>{product.name}</h3>
         <p className="product-brand">{product.brand}</p>
-        <p className="product-use">Best for: {productReason(product)}</p>
-        <div className="product-price-row">
+        <p className="product-use">
+          {t("product.bestfor")}: {productReason(product)}
+        </p>
+        <div
+          className="product-price-row"
+          style={{
+            flexDirection: isRtl ? "row-reverse" : "row",
+            justifyContent: isRtl ? "flex-end" : "flex-start",
+          }}
+        >
           <span>{formatPrice(product.price)}</span>
-          {save > 0 ? <em>{save}% off</em> : null}
+          {save > 0 ? <em>{save}% {t("product.off")}</em> : null}
         </div>
       </div>
-      <div className="product-footer">
-        <span>View details</span>
-        <ArrowRight size={13} />
+      <div
+        className="product-footer"
+        style={{
+          flexDirection: isRtl ? "row-reverse" : "row",
+        }}
+      >
+        <span>{t("product.viewdetails")}</span>
+        <ArrowRight
+          size={13}
+          style={{
+            transform: isRtl ? "rotate(180deg)" : "none",
+          }}
+        />
       </div>
     </Link>
   );
@@ -175,9 +211,19 @@ function EditorPick({ product }: { product: Product }) {
 }
 
 export default function BeautyShopPage() {
+  const { t, formatPrice, isRtl } = useGlobalization();
   const [query, setQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState("All");
   const [activeConcern, setActiveConcern] = useState<string | null>(null);
+
+  const CATEGORY_KEYS: Record<string, string> = {
+    "All": "filter.category.all",
+    "Skincare": "filter.category.skincare",
+    "Makeup": "filter.category.makeup",
+    "Hair Care": "filter.category.haircare",
+    "Body Care": "filter.category.bodycare",
+    "Wellness": "filter.category.wellness"
+  };
 
   const editorPicks = useMemo(() => {
     const picks = EDITOR_PICK_ASINS.map((asin) => PRODUCT_LIST.find((product) => product.asin === asin))
@@ -229,18 +275,27 @@ export default function BeautyShopPage() {
         }
 
         .hero h1 {
-          font-family: 'DM Serif Display', serif;
-          font-size: clamp(48px, 7vw, 88px);
-          line-height: 0.96;
-          letter-spacing: 0;
-          font-weight: 400;
+          font-family: var(--font-playfair), serif;
+          font-size: clamp(46px, 6.5vw, 84px);
+          line-height: 0.98;
+          letter-spacing: -0.02em;
+          font-weight: 600;
           max-width: 760px;
           margin: 0;
+          background: linear-gradient(135deg, #161412 0%, #7d5e4b 25%, #bf857b 50%, #7d5e4b 75%, #161412 100%);
+          background-size: 200% auto;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          animation: textShine 4.5s linear infinite;
         }
 
-        .hero h1 em {
-          color: #c8473a;
-          font-style: italic;
+        @keyframes textShine {
+          0% {
+            background-position: 0% center;
+          }
+          100% {
+            background-position: -200% center;
+          }
         }
 
         .hero-copy {
@@ -303,7 +358,7 @@ export default function BeautyShopPage() {
           content: "";
           position: absolute;
           inset: 0;
-          background: linear-gradient(180deg, rgba(22,20,18,0.1), rgba(22,20,18,0.38));
+          background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0) 40%, rgba(251, 247, 241, 0.45) 100%);
           pointer-events: none;
           z-index: 1;
         }
@@ -988,51 +1043,83 @@ export default function BeautyShopPage() {
         }
       `}</style>
 
-      <div className="home-shell">
-        <section className="hero">
-          <div>
-            <p className="eyebrow">Mirha & Co. / Beauty Guidance</p>
+      <div
+        className="home-shell"
+        style={{
+          direction: isRtl ? "rtl" : "ltr",
+          textAlign: isRtl ? "right" : "left",
+        }}
+      >
+        <section
+          className="hero"
+          style={{
+            gridTemplateColumns: isRtl ? "minmax(320px, 0.95fr) minmax(0, 1.05fr)" : undefined,
+          }}
+        >
+          <div style={{ order: isRtl ? 2 : 1 }}>
+            <p className="eyebrow">{t("hero.eyebrow")}</p>
             <h1>
-              Beauty picks for Indian skin, <em>made easier.</em>
+              {t("hero.title1")} {t("hero.title2")}
             </h1>
-            <p className="hero-copy">
-              Honest skincare, makeup, hair care and wellness finds curated by concern,
-              budget and routine. Start with what your skin needs, then shop with context.
-            </p>
-            <div className="hero-actions">
+            <p className="hero-copy">{t("hero.copy")}</p>
+            <div
+              className="hero-actions"
+              style={{
+                flexDirection: isRtl ? "row-reverse" : "row",
+              }}
+            >
               <Link href="/tools/routine" className="primary-btn">
-                Find My Routine <ArrowRight size={14} />
+                Find My Routine{" "}
+                <ArrowRight
+                  size={14}
+                  style={{
+                    transform: isRtl ? "rotate(180deg)" : "none",
+                  }}
+                />
               </Link>
               <a href="#shop" className="secondary-btn">
-                Browse Picks
+                {t("hero.btn.primary")}
               </a>
             </div>
           </div>
 
-          <div className="hero-panel">
-            <div className="hero-image">
-              <Image src="/modern_indian_wellness_aura.png" alt="Skincare" fill priority style={{ objectFit: 'cover', zIndex: -1 }} />
+          <div className="hero-panel" style={{ order: isRtl ? 1 : 2 }}>
+            <div className="hero-image" style={{ background: "#fffaf4" }}>
+              <WellnessAuraCanvas />
             </div>
             <div className="hero-panel-body">
-              <h2>Start with your skin.</h2>
-              <p>
-                Choose your concern, build a simple AM/PM routine, then see products with
-                a clear reason instead of a noisy product wall.
-              </p>
+              <h2>{t("hero.panel.title")}</h2>
+              <p>{t("hero.panel.desc")}</p>
             </div>
-            <div className="trust-row">
-              <span>India focused</span>
-              <span>Budget aware</span>
-              <span>Affiliate disclosed</span>
+            <div
+              className="trust-row"
+              style={{
+                gridTemplateColumns: "repeat(3, 1fr)",
+              }}
+            >
+              <span style={{ borderLeft: isRtl ? "1px solid #ece2d9" : undefined, borderRight: isRtl ? 0 : undefined }}>
+                {t("trust.independent")}
+              </span>
+              <span style={{ borderLeft: isRtl ? "1px solid #ece2d9" : undefined, borderRight: isRtl ? 0 : undefined }}>
+                {t("trust.backed")}
+              </span>
+              <span style={{ borderRight: 0 }}>
+                {t("trust.zero")}
+              </span>
             </div>
           </div>
         </section>
 
         <section className="section">
-          <div className="section-head">
+          <div
+            className="section-head"
+            style={{
+              flexDirection: isRtl ? "row-reverse" : "row",
+            }}
+          >
             <div>
-              <p className="eyebrow">Concern Finder</p>
-              <h2>What are you solving first?</h2>
+              <p className="eyebrow">{t("section.concerns.title")}</p>
+              <h2>{t("section.concerns.desc")}</h2>
             </div>
             <p>Tap a concern to filter the shop below. Keep it simple.</p>
           </div>
@@ -1043,6 +1130,9 @@ export default function BeautyShopPage() {
                 key={concern.id}
                 className={`concern-card ${activeConcern === concern.id ? "active" : ""}`}
                 onClick={() => setActiveConcern(activeConcern === concern.id ? null : concern.id)}
+                style={{
+                  textAlign: isRtl ? "right" : "left",
+                }}
               >
                 <small>{String(index + 1).padStart(2, "0")}</small>
                 <h3>{concern.label}</h3>
@@ -1053,8 +1143,13 @@ export default function BeautyShopPage() {
         </section>
 
         <section className="section">
-          <div className="desk">
-            <div>
+          <div
+            className="desk"
+            style={{
+              gridTemplateColumns: isRtl ? "minmax(320px, 0.75fr) minmax(0, 1fr)" : undefined,
+            }}
+          >
+            <div style={{ order: isRtl ? 2 : 1 }}>
               <p className="eyebrow">Mirha Skin Desk</p>
               <h2>Do not browse randomly.</h2>
               <p>
@@ -1062,37 +1157,72 @@ export default function BeautyShopPage() {
                 the concern, or read a guide when you want the why behind the pick.
               </p>
             </div>
-            <div className="desk-actions">
-              <Link href="/tools/routine">
-                <span>
+            <div className="desk-actions" style={{ order: isRtl ? 1 : 2 }}>
+              <Link
+                href="/tools/routine"
+                style={{
+                  flexDirection: isRtl ? "row-reverse" : "row",
+                }}
+              >
+                <span style={{ textAlign: isRtl ? "right" : "left" }}>
                   <small>01 / Routine</small>
                   <b>Build your 4-step routine</b>
                 </span>
-                <ArrowRight size={15} />
+                <ArrowRight
+                  size={15}
+                  style={{
+                    transform: isRtl ? "rotate(180deg)" : "none",
+                  }}
+                />
               </Link>
-              <Link href="/dashboard/search">
-                <span>
+              <Link
+                href="/dashboard/search"
+                style={{
+                  flexDirection: isRtl ? "row-reverse" : "row",
+                }}
+              >
+                <span style={{ textAlign: isRtl ? "right" : "left" }}>
                   <small>02 / Expert Search</small>
                   <b>Access full expert search</b>
                 </span>
-                <ArrowRight size={15} />
+                <ArrowRight
+                  size={15}
+                  style={{
+                    transform: isRtl ? "rotate(180deg)" : "none",
+                  }}
+                />
               </Link>
-              <Link href="/blog">
-                <span>
+              <Link
+                href="/blog"
+                style={{
+                  flexDirection: isRtl ? "row-reverse" : "row",
+                }}
+              >
+                <span style={{ textAlign: isRtl ? "right" : "left" }}>
                   <small>03 / Learn</small>
                   <b>Read beauty guides</b>
                 </span>
-                <ArrowRight size={15} />
+                <ArrowRight
+                  size={15}
+                  style={{
+                    transform: isRtl ? "rotate(180deg)" : "none",
+                  }}
+                />
               </Link>
             </div>
           </div>
         </section>
 
         <section className="section">
-          <div className="section-head">
+          <div
+            className="section-head"
+            style={{
+              flexDirection: isRtl ? "row-reverse" : "row",
+            }}
+          >
             <div>
-              <p className="eyebrow">Editor&apos;s Picks</p>
-              <h2>Products worth starting with.</h2>
+              <p className="eyebrow">{t("section.editor.title")}</p>
+              <h2>{t("section.editor.desc")}</h2>
             </div>
             <span>Only a few upfront. The rest sits below.</span>
           </div>
@@ -1105,29 +1235,36 @@ export default function BeautyShopPage() {
         </section>
 
         <section className="section" id="shop">
-          <div className="section-head">
+          <div
+            className="section-head"
+            style={{
+              flexDirection: isRtl ? "row-reverse" : "row",
+            }}
+          >
             <div>
-              <p className="eyebrow">Beauty Shop</p>
+              <p className="eyebrow">{t("section.shop.title")}</p>
               <h2>
-                {activeCategory === "All" ? "Curated picks" : activeCategory}
+                {activeCategory === "All" ? t("filter.category.all") : t(CATEGORY_KEYS[activeCategory] || activeCategory)}
                 {activeConcern ? ` / ${CONCERNS.find((c) => c.id === activeConcern)?.label}` : ""}
               </h2>
             </div>
-            <span>{filtered.length} item{filtered.length === 1 ? "" : "s"}</span>
+            <span>
+              {filtered.length} item{filtered.length === 1 ? "" : "s"}
+            </span>
           </div>
 
           <div className="filters">
-            <div className="filter-row">
+            <div className="filter-row" style={{ flexDirection: isRtl ? "row-reverse" : "row" }}>
               {CATEGORIES.map((category) => (
                 <button
                   key={category}
                   className={activeCategory === category ? "active" : ""}
                   onClick={() => setActiveCategory(category)}
                 >
-                  {category}
+                  {t(CATEGORY_KEYS[category] || category)}
                 </button>
               ))}
-              {(activeConcern || query || activeCategory !== "All") ? (
+              {activeConcern || query || activeCategory !== "All" ? (
                 <button
                   onClick={() => {
                     setActiveCategory("All");

@@ -1,9 +1,10 @@
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import Script from "next/script";
 import "../globals.css";
 import Link from "next/link";
 import type { Metadata } from "next";
-import { DM_Sans, DM_Serif_Display, Bebas_Neue } from "next/font/google";
+import { DM_Sans, DM_Serif_Display, Playfair_Display, Bebas_Neue } from "next/font/google";
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
@@ -18,66 +19,67 @@ const dmSerifDisplay = DM_Serif_Display({
   variable: "--font-dm-serif",
 });
 
+const playfairDisplay = Playfair_Display({
+  subsets: ["latin"],
+  weight: ["400", "600", "700"],
+  style: ["normal", "italic"],
+  variable: "--font-playfair",
+});
+
 const bebasNeue = Bebas_Neue({
   subsets: ["latin"],
   weight: ["400"],
   variable: "--font-bebas",
 });
 
-export const metadata: Metadata = {
-  title: "Mirha & Co. — Beauty, Wellness & The Good Life",
-  description:
-    "Honest reviews, curated finds, and the products worth your money. Beauty and wellness for women who know what they want.",
-};
+import { cookies } from "next/headers";
+import { Locale, Currency } from "@/lib/globalization";
+import { GlobalizationProvider } from "@/components/GlobalizationContext";
+import SiteHeader from "@/components/SiteHeader";
 
-export default function RootLayout({
+export async function generateMetadata() {
+  return {
+    title: "Mirha & Co. — Beauty, Wellness & The Good Life",
+    description:
+      "Honest reviews, curated finds, and the products worth your money. Beauty and wellness for women who know what they want.",
+  };
+}
+
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const cookieStore = await cookies();
+  const locale = (cookieStore.get("mirha_locale")?.value || "en") as Locale;
+  const currency = (cookieStore.get("mirha_currency")?.value || "INR") as Currency;
+  const isRtl = locale === "ar";
+
   return (
-    <html lang="en" className={`${dmSans.variable} ${dmSerifDisplay.variable} ${bebasNeue.variable}`}>
+    <html lang={locale} dir={isRtl ? "rtl" : "ltr"} className={`${dmSans.variable} ${dmSerifDisplay.variable} ${playfairDisplay.variable} ${bebasNeue.variable}`}>
       <body>
+        <Script strategy="afterInteractive" src="https://www.dwin1.com/2904237.js" />
 
-        {/* Top bar */}
-        <div style={{
-          background: "var(--black)",
-          color: "var(--white)",
-          textAlign: "center",
-          padding: "0.5rem 1rem",
-          fontSize: "0.7rem",
-          letterSpacing: "0.2em",
-          textTransform: "uppercase",
-          fontFamily: "var(--font-dm-sans), sans-serif",
-          fontWeight: 500,
-        }}>
-          Independent reviews. Honest opinions. Affiliate links disclosed.
-        </div>
-
-        <header className="site-header">
-          <div className="nav-container">
-
-            {/* LEFT */}
-            <nav className="nav-left">
-              <Link href="/tools/ingredients" className="nav-link">Ingredient Checker</Link>
-            </nav>
-
-            {/* LOGO */}
-            <Link href="/" className="logo">
-              MIRHA &amp; CO.
-            </Link>
-
-            {/* RIGHT */}
-            <nav className="nav-right">
-              <Link href="/blog" className="nav-link">blog</Link>
-              <Link href="/about" className="nav-link">About</Link>
-              <Link href="/dashboard" className="nav-link">Dashboard</Link>
-            </nav>
-
+        <GlobalizationProvider initialLocale={locale} initialCurrency={currency}>
+          {/* Top bar */}
+          <div style={{
+            background: "var(--black)",
+            color: "var(--white)",
+            textAlign: "center",
+            padding: "0.5rem 1rem",
+            fontSize: "0.7rem",
+            letterSpacing: "0.2em",
+            textTransform: "uppercase",
+            fontFamily: "var(--font-dm-sans), sans-serif",
+            fontWeight: 500,
+          }}>
+            Independent reviews. Honest opinions. Affiliate links disclosed.
           </div>
-        </header>
 
-        {children}
+          <SiteHeader />
+
+          {children}
+        </GlobalizationProvider>
 
         {/* Footer */}
         <footer style={{

@@ -1,4 +1,5 @@
 import "../globals.css";
+import Script from "next/script";
 import type { Metadata } from "next";
 import { SaasSidebar } from "@/components/SaasSidebar";
 import { DM_Sans, DM_Serif_Display, Bebas_Neue } from "next/font/google";
@@ -40,6 +41,7 @@ export default function SaasLayout({
       className={`${dmSans.variable} ${dmSerifDisplay.variable} ${bebasNeue.variable}`}
     >
       <body suppressHydrationWarning>
+        <Script strategy="afterInteractive" src="https://www.dwin1.com/2904237.js" />
         <style>{`
   *, *::before, *::after { 
     box-sizing: border-box; 

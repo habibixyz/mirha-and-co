@@ -1,12 +1,23 @@
 "use client";
 
-import { PRODUCTS, getProductAffiliateUrl } from "@/lib/products";
+import { PRODUCTS } from "@/lib/products";
+import { useGlobalization } from "./GlobalizationContext";
 
 export default function BlogProductCard({ asin }: { asin: string }) {
+  const global = useGlobalization();
   const product = PRODUCTS.find((p) => p.asin === asin);
   if (!product) return null;
 
-  const affiliateUrl = getProductAffiliateUrl(product);
+  const isRtl = global.isRtl;
+
+  // Localized affiliate search URL
+  const affiliateUrl = global.getAffiliateUrl(
+    asin,
+    product.name,
+    product.brand,
+    product.link
+  );
+
   const disc = product.mrp > product.price
     ? Math.round(((product.mrp - product.price) / product.mrp) * 100)
     : 0;
@@ -28,6 +39,8 @@ export default function BlogProductCard({ asin }: { asin: string }) {
         color: "inherit",
         margin: "24px 0",
         cursor: "pointer",
+        direction: isRtl ? "rtl" : "ltr",
+        textAlign: isRtl ? "right" : "left",
       }}
     >
       <div
@@ -84,7 +97,7 @@ export default function BlogProductCard({ asin }: { asin: string }) {
         <p style={{ fontSize: "11px", color: "#999", margin: "0 0 8px" }}>
           {product.brand}
         </p>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexDirection: isRtl ? 'row-reverse' : 'row', justifyContent: isRtl ? 'flex-end' : 'flex-start' }}>
           {affiliateUrl.includes('cultbeauty') ? (
             <span style={{ fontSize: "14px", color: "#9b7e6b" }}>
               Shop on Cult Beauty
@@ -92,12 +105,12 @@ export default function BlogProductCard({ asin }: { asin: string }) {
           ) : (
             <>
               <span style={{ fontSize: "17px", color: "#111" }}>
-                ₹{product.price.toLocaleString("en-IN")}
+                {global.formatPrice(product.price)}
               </span>
               {disc > 0 && (
                 <>
                   <span style={{ fontSize: "12px", color: "#bbb", textDecoration: "line-through" }}>
-                    ₹{product.mrp.toLocaleString("en-IN")}
+                    {global.formatPrice(product.mrp)}
                   </span>
                   <span
                     style={{
@@ -108,7 +121,7 @@ export default function BlogProductCard({ asin }: { asin: string }) {
                       borderRadius: "3px",
                     }}
                   >
-                    {disc}% off
+                    {disc}% {global.t("product.off")}
                   </span>
                 </>
               )}
@@ -128,7 +141,7 @@ export default function BlogProductCard({ asin }: { asin: string }) {
           whiteSpace: "nowrap",
         }}
       >
-        {affiliateUrl.includes('cultbeauty') ? 'Shop Global →' : 'View →'}
+        {affiliateUrl.includes('cultbeauty') ? 'Shop Global →' : `${global.t("product.viewdetails")} →`}
       </div>
     </a>
   );
