@@ -184,6 +184,9 @@ export default async function ProductPage({ params }: { params: Promise<{ asin: 
           align-items: center;
           justify-content: center;
           min-height: 480px;
+          position: sticky;
+          top: 88px;
+          align-self: start;
         }
 
         .image-panel img {
@@ -409,6 +412,8 @@ export default async function ProductPage({ params }: { params: Promise<{ asin: 
 
           .image-panel {
             min-height: 360px;
+            position: static;
+            align-self: auto;
           }
 
           .related-grid {
@@ -424,6 +429,8 @@ export default async function ProductPage({ params }: { params: Promise<{ asin: 
           .image-panel {
             min-height: 300px;
             padding: 24px;
+            position: static;
+            align-self: auto;
           }
 
           .detail-panel {
