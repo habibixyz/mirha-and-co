@@ -643,27 +643,7 @@ export default function DullSkinPage() {
           cost to you. Product recommendations are based on ingredient quality and
           verified customer reviews — not commission rates.
         </p>
-        {/* ── FAQ ── */}
-<section style={{ marginTop: "3rem" }}>
-  <h2 style={{
-    fontFamily: "'DM Serif Display', serif",
-    fontSize: "1.6rem",
-    marginBottom: "1rem"
-  }}>
-    Frequently Asked Questions
-  </h2>
 
-  <div style={{ lineHeight: 1.8, color: "var(--muted)" }}>
-    <p><strong>Why does my skin look dull even after skincare?</strong><br />
-    Usually due to hard water, incorrect layering, lack of SPF, or over-exfoliation.</p>
-
-    <p><strong>How long does it take to fix dull skin?</strong><br />
-    With the right routine, results appear in 3–6 weeks.</p>
-
-    <p><strong>Is Vitamin C enough?</strong><br />
-    No. Without sunscreen, results will not last.</p>
-  </div>
-</section>
       </article>
     </main>
   );
