@@ -19,15 +19,15 @@ export const metadata: Metadata = {
 
 export default function BestNiacinamideSerumsPage() {
   return (
-    <main>
+    <main className="best-niacinamide-serums-page">
       <style>{`
-        .post-hero {
+        .best-niacinamide-serums-page .post-hero {
           background: var(--black);
           padding: 6rem 2rem 5rem;
           position: relative;
           overflow: hidden;
         }
-        .post-hero::after {
+        .best-niacinamide-serums-page .post-hero::after {
           content: 'SERUMS';
           position: absolute;
           right: -2rem;
@@ -40,13 +40,13 @@ export default function BestNiacinamideSerumsPage() {
           user-select: none;
           white-space: nowrap;
         }
-        .post-hero-inner {
+        .best-niacinamide-serums-page .post-hero-inner {
           max-width: 780px;
           margin: 0 auto;
           position: relative;
           z-index: 1;
         }
-        .post-eyebrow {
+        .best-niacinamide-serums-page .post-eyebrow {
           display: inline-flex;
           align-items: center;
           gap: 0.6rem;
@@ -57,14 +57,14 @@ export default function BestNiacinamideSerumsPage() {
           color: var(--rose);
           margin-bottom: 1.6rem;
         }
-        .post-eyebrow::before {
+        .best-niacinamide-serums-page .post-eyebrow::before {
           content: '';
           display: inline-block;
           width: 20px;
           height: 1px;
           background: var(--rose);
         }
-        .post-hero h1 {
+        .best-niacinamide-serums-page .post-hero h1 {
           font-family: 'Bebas Neue', sans-serif;
           font-size: clamp(3rem, 7vw, 6rem);
           color: #fff;
@@ -72,12 +72,12 @@ export default function BestNiacinamideSerumsPage() {
           letter-spacing: 0.02em;
           margin: 0 0 2rem;
         }
-        .post-hero h1 em {
+        .best-niacinamide-serums-page .post-hero h1 em {
           color: var(--rose);
           font-style: normal;
           display: block;
         }
-        .post-meta {
+        .best-niacinamide-serums-page .post-meta {
           display: flex;
           align-items: center;
           gap: 1.5rem;
@@ -85,15 +85,15 @@ export default function BestNiacinamideSerumsPage() {
           padding-top: 2rem;
           border-top: 1px solid rgba(255,255,255,0.08);
         }
-        .post-meta span {
+        .best-niacinamide-serums-page .post-meta span {
           font-family: 'DM Sans', sans-serif;
           font-size: 0.72rem;
           color: rgba(255,255,255,0.3);
           letter-spacing: 0.1em;
           text-transform: uppercase;
         }
-        .post-meta strong { color: rgba(255,255,255,0.55); font-weight: 500; }
-        .post-tag {
+        .best-niacinamide-serums-page .post-meta strong { color: rgba(255,255,255,0.55); font-weight: 500; }
+        .best-niacinamide-serums-page .post-tag {
           background: rgba(192,57,43,0.15);
           border: 1px solid rgba(192,57,43,0.3);
           color: var(--rose);
@@ -106,22 +106,22 @@ export default function BestNiacinamideSerumsPage() {
         }
 
         /* BODY */
-        .post-body {
+        .best-niacinamide-serums-page .post-body {
           max-width: 780px;
           margin: 0 auto;
           padding: 5rem 2rem 6rem;
         }
-        .post-body p {
+        .best-niacinamide-serums-page .post-body p {
           font-family: 'DM Sans', sans-serif;
           font-size: 1.05rem;
           line-height: 1.9;
           color: #2c2826;
           margin-bottom: 1.6rem;
         }
-        .post-body p strong { font-weight: 500; color: #111; }
-        .post-body em { font-style: italic; }
+        .best-niacinamide-serums-page .post-body p strong { font-weight: 500; color: #111; }
+        .best-niacinamide-serums-page .post-body em { font-style: italic; }
 
-        .post-body h2 {
+        .best-niacinamide-serums-page .post-body h2 {
           font-family: 'Bebas Neue', sans-serif;
           font-size: clamp(1.8rem, 4vw, 2.6rem);
           color: var(--black);
@@ -131,17 +131,17 @@ export default function BestNiacinamideSerumsPage() {
           padding-top: 3rem;
           border-top: 2px solid var(--black);
         }
-        .post-body h3 {
+        .best-niacinamide-serums-page .post-body h3 {
           font-family: 'DM Serif Display', serif;
           font-size: 1.25rem;
           color: var(--black);
           margin: 2.5rem 0 0.8rem;
         }
 
-        .post-rule { border: none; border-top: 1px solid #e8e4de; margin: 3.5rem 0; }
+        .best-niacinamide-serums-page .post-rule { border: none; border-top: 1px solid #e8e4de; margin: 3.5rem 0; }
 
         /* ORDERED / UNORDERED LISTS */
-        .post-body ol, .post-body ul {
+        .best-niacinamide-serums-page .post-body ol, .best-niacinamide-serums-page .post-body ul {
           font-family: 'DM Sans', sans-serif;
           font-size: 1rem;
           line-height: 1.8;
@@ -149,18 +149,18 @@ export default function BestNiacinamideSerumsPage() {
           padding-left: 1.6rem;
           margin-bottom: 1.6rem;
         }
-        .post-body li { margin-bottom: 0.5rem; }
-        .post-body li strong { font-weight: 500; color: #111; }
+        .best-niacinamide-serums-page .post-body li { margin-bottom: 0.5rem; }
+        .best-niacinamide-serums-page .post-body li strong { font-weight: 500; color: #111; }
 
         /* ROUTINE BOX */
-        .routine-box {
+        .best-niacinamide-serums-page .routine-box {
           background: #faf8f5;
           border-left: 3px solid var(--black);
           padding: 1.6rem 2rem;
           margin: 2rem 0;
           border-radius: 0 4px 4px 0;
         }
-        .routine-box-label {
+        .best-niacinamide-serums-page .routine-box-label {
           font-family: 'DM Sans', sans-serif;
           font-size: 0.62rem;
           letter-spacing: 0.28em;
@@ -168,29 +168,29 @@ export default function BestNiacinamideSerumsPage() {
           color: var(--rose);
           margin-bottom: 0.8rem;
         }
-        .routine-box ol {
+        .best-niacinamide-serums-page .routine-box ol {
           margin: 0;
           padding-left: 1.4rem;
         }
-        .routine-box li {
+        .best-niacinamide-serums-page .routine-box li {
           font-family: 'DM Sans', sans-serif;
           font-size: 0.9rem;
           color: #2c2826;
           line-height: 1.7;
           margin-bottom: 0.4rem;
         }
-        .routine-box li strong { font-weight: 500; }
+        .best-niacinamide-serums-page .routine-box li strong { font-weight: 500; }
 
         /* PRODUCT SECTION */
-        .product-section {
+        .best-niacinamide-serums-page .product-section {
           margin: 3rem 0;
           padding: 2rem 0;
           border-bottom: 1px solid #e8e4de;
         }
-        .product-section:last-of-type {
+        .best-niacinamide-serums-page .product-section:last-of-type {
           border-bottom: none;
         }
-        .product-number {
+        .best-niacinamide-serums-page .product-number {
           font-family: 'Bebas Neue', sans-serif;
           font-size: 2.2rem;
           color: #ddd;
@@ -198,14 +198,14 @@ export default function BestNiacinamideSerumsPage() {
           line-height: 1;
           margin-bottom: 0.5rem;
         }
-        .product-title {
+        .best-niacinamide-serums-page .product-title {
           font-family: 'DM Serif Display', serif;
           font-size: 1.6rem;
           color: var(--black);
           margin-bottom: 0.3rem;
           line-height: 1.2;
         }
-        .product-subtitle {
+        .best-niacinamide-serums-page .product-subtitle {
           font-family: 'DM Sans', sans-serif;
           font-size: 0.85rem;
           color: var(--rose);
@@ -213,21 +213,21 @@ export default function BestNiacinamideSerumsPage() {
           text-transform: uppercase;
           margin-bottom: 1.5rem;
         }
-        .product-grid {
+        .best-niacinamide-serums-page .product-grid {
           display: grid;
           grid-template-columns: 1fr 1fr;
           gap: 2rem;
           margin: 2rem 0;
         }
-        .product-specs {
+        .best-niacinamide-serums-page .product-specs {
           display: flex;
           flex-direction: column;
           gap: 1rem;
         }
-        .product-spec {
+        .best-niacinamide-serums-page .product-spec {
           padding-bottom: 0.8rem;
         }
-        .product-spec-label {
+        .best-niacinamide-serums-page .product-spec-label {
           font-family: 'DM Sans', sans-serif;
           font-size: 0.65rem;
           color: #999;
@@ -235,7 +235,7 @@ export default function BestNiacinamideSerumsPage() {
           text-transform: uppercase;
           margin-bottom: 0.3rem;
         }
-        .product-spec-value {
+        .best-niacinamide-serums-page .product-spec-value {
           font-family: 'DM Serif Display', serif;
           font-size: 1rem;
           color: var(--black);
@@ -243,17 +243,17 @@ export default function BestNiacinamideSerumsPage() {
         }
 
         /* COMPARISON TABLE */
-        .comparison-table {
+        .best-niacinamide-serums-page .comparison-table {
           width: 100%;
           border-collapse: collapse;
           margin: 2rem 0;
           font-family: 'DM Sans', sans-serif;
         }
-        .comparison-table thead {
+        .best-niacinamide-serums-page .comparison-table thead {
           background: #faf8f5;
           border-bottom: 2px solid var(--black);
         }
-        .comparison-table th {
+        .best-niacinamide-serums-page .comparison-table th {
           padding: 1rem;
           text-align: left;
           font-size: 0.75rem;
@@ -262,26 +262,26 @@ export default function BestNiacinamideSerumsPage() {
           color: #999;
           font-weight: 500;
         }
-        .comparison-table td {
+        .best-niacinamide-serums-page .comparison-table td {
           padding: 1rem;
           border-bottom: 1px solid #e8e4de;
           color: #2c2826;
           font-size: 0.95rem;
         }
-        .comparison-table tr:hover {
+        .best-niacinamide-serums-page .comparison-table tr:hover {
           background: #faf8f5;
         }
-        .comparison-table tr:last-child td {
+        .best-niacinamide-serums-page .comparison-table tr:last-child td {
           border-bottom: none;
         }
 
         /* SOURCES */
-        .sources-section {
+        .best-niacinamide-serums-page .sources-section {
           border-top: 1px solid #e8e4de;
           margin-top: 4rem;
           padding-top: 2rem;
         }
-        .sources-label {
+        .best-niacinamide-serums-page .sources-label {
           font-family: 'DM Sans', sans-serif;
           font-size: 0.6rem;
           letter-spacing: 0.28em;
@@ -289,12 +289,12 @@ export default function BestNiacinamideSerumsPage() {
           color: #aaa;
           margin-bottom: 1rem;
         }
-        .sources-list {
+        .best-niacinamide-serums-page .sources-list {
           list-style: none;
           padding: 0;
           margin: 0;
         }
-        .sources-list li {
+        .best-niacinamide-serums-page .sources-list li {
           font-family: 'DM Sans', sans-serif;
           font-size: 0.8rem;
           color: #aaa;
@@ -302,22 +302,22 @@ export default function BestNiacinamideSerumsPage() {
           padding: 0.6rem 0;
           border-bottom: 1px solid #f0ece6;
         }
-        .sources-list li:last-child { border-bottom: none; }
-        .sources-list a {
+        .best-niacinamide-serums-page .sources-list li:last-child { border-bottom: none; }
+        .best-niacinamide-serums-page .sources-list a {
           color: var(--rose);
           text-decoration: underline;
           text-underline-offset: 2px;
         }
-        .sources-list em { font-style: italic; color: #888; }
+        .best-niacinamide-serums-page .sources-list em { font-style: italic; color: #888; }
 
         /* FURTHER READING */
-        .further-reading {
+        .best-niacinamide-serums-page .further-reading {
           background: var(--black);
           padding: 2.5rem 2.5rem;
           margin: 3.5rem 0 0;
           border-radius: 4px;
         }
-        .further-reading-label {
+        .best-niacinamide-serums-page .further-reading-label {
           font-family: 'DM Sans', sans-serif;
           font-size: 0.6rem;
           letter-spacing: 0.28em;
@@ -325,17 +325,17 @@ export default function BestNiacinamideSerumsPage() {
           color: rgba(255,255,255,0.35);
           margin-bottom: 1.2rem;
         }
-        .further-reading ul {
+        .best-niacinamide-serums-page .further-reading ul {
           list-style: none;
           padding: 0;
           margin: 0;
         }
-        .further-reading li {
+        .best-niacinamide-serums-page .further-reading li {
           border-bottom: 1px solid rgba(255,255,255,0.06);
           padding: 0.8rem 0;
         }
-        .further-reading li:last-child { border-bottom: none; }
-        .further-reading a {
+        .best-niacinamide-serums-page .further-reading li:last-child { border-bottom: none; }
+        .best-niacinamide-serums-page .further-reading a {
           font-family: 'DM Serif Display', serif;
           font-size: 0.95rem;
           color: #fff;
@@ -346,8 +346,8 @@ export default function BestNiacinamideSerumsPage() {
           gap: 1rem;
           line-height: 1.4;
         }
-        .further-reading a:hover { color: var(--rose); }
-        .further-reading a span {
+        .best-niacinamide-serums-page .further-reading a:hover { color: var(--rose); }
+        .best-niacinamide-serums-page .further-reading a span {
           font-family: 'DM Sans', sans-serif;
           font-size: 0.75rem;
           color: rgba(255,255,255,0.3);
@@ -356,13 +356,13 @@ export default function BestNiacinamideSerumsPage() {
         }
 
         /* DISCLOSURE */
-        .disclosure {
+        .best-niacinamide-serums-page .disclosure {
           margin-top: 3rem;
           padding: 1.2rem 1.5rem;
           border: 1px solid #e8e4de;
           border-radius: 4px;
         }
-        .disclosure-label {
+        .best-niacinamide-serums-page .disclosure-label {
           font-family: 'DM Sans', sans-serif;
           font-size: 0.58rem;
           letter-spacing: 0.25em;
@@ -370,7 +370,7 @@ export default function BestNiacinamideSerumsPage() {
           color: #ccc;
           margin-bottom: 0.4rem;
         }
-        .disclosure p {
+        .best-niacinamide-serums-page .disclosure p {
           font-size: 0.78rem !important;
           color: #bbb !important;
           margin: 0 !important;
@@ -378,10 +378,10 @@ export default function BestNiacinamideSerumsPage() {
         }
 
         @media (max-width: 640px) {
-          .post-hero { padding: 4rem 1.5rem 3rem; }
-          .post-body { padding: 3rem 1.5rem 4rem; }
-          .further-reading { padding: 2rem 1.5rem; }
-          .product-grid { grid-template-columns: 1fr; }
+          .best-niacinamide-serums-page .post-hero { padding: 4rem 1.5rem 3rem; }
+          .best-niacinamide-serums-page .post-body { padding: 3rem 1.5rem 4rem; }
+          .best-niacinamide-serums-page .further-reading { padding: 2rem 1.5rem; }
+          .best-niacinamide-serums-page .product-grid { grid-template-columns: 1fr; }
         }
       `}</style>
 
