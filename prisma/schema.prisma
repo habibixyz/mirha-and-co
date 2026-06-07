@@ -137,3 +137,12 @@ model AiQueryLog {
   @@index([userId])
   @@index([userId, createdAt])
 }
+
+model Lead {
+  id        String   @id @default(cuid())
+  email     String
+  type      String   // "newsletter", "hardwater", "dupe"
+  data      String?  // JSON string containing details like city, score, savings
+  createdAt DateTime @default(now())
+}
+

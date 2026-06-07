@@ -36,6 +36,7 @@ import { cookies } from "next/headers";
 import { Locale, Currency } from "@/lib/globalization";
 import { GlobalizationProvider } from "@/components/GlobalizationContext";
 import SiteHeader from "@/components/SiteHeader";
+import NewsletterForm from "@/components/NewsletterForm";
 
 export async function generateMetadata() {
   return {
@@ -62,17 +63,7 @@ export default async function RootLayout({
 
         <GlobalizationProvider initialLocale={locale} initialCurrency={currency}>
           {/* Top bar */}
-          <div style={{
-            background: "var(--black)",
-            color: "var(--white)",
-            textAlign: "center",
-            padding: "0.5rem 1rem",
-            fontSize: "0.7rem",
-            letterSpacing: "0.2em",
-            textTransform: "uppercase",
-            fontFamily: "var(--font-dm-sans), sans-serif",
-            fontWeight: 500,
-          }}>
+          <div className="top-disclosure-bar">
             Independent reviews. Honest opinions. Affiliate links disclosed.
           </div>
 
@@ -87,6 +78,40 @@ export default async function RootLayout({
           color: "var(--white)",
           padding: "4rem 2.5rem 2.5rem",
         }}>
+          <div
+            className="footer-newsletter-row"
+            style={{
+              maxWidth: "1100px",
+              margin: "0 auto 3rem",
+              paddingBottom: "3rem",
+              borderBottom: "1px solid rgba(255,255,255,0.1)",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              flexWrap: "wrap",
+              gap: "2rem",
+            }}
+          >
+            <div style={{ flex: "1 1 450px" }}>
+              <h3 style={{
+                fontFamily: "var(--font-playfair), serif",
+                fontSize: "1.6rem",
+                marginBottom: "0.5rem",
+                color: "var(--white)",
+                fontWeight: 400,
+              }}>Subscribe to the Mirha Skin Desk</h3>
+              <p style={{
+                fontSize: "0.82rem",
+                color: "rgba(255,255,255,0.5)",
+                margin: 0,
+                lineHeight: 1.6,
+              }}>Weekly science-backed skincare breakdowns. No marketing fluff, no sponsored bias.</p>
+            </div>
+            <div style={{ flex: "1 1 350px", maxWidth: "420px" }}>
+              <NewsletterForm />
+            </div>
+          </div>
+
           <div
             className="footer-grid"
             style={{

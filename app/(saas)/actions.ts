@@ -744,3 +744,85 @@ export async function askSkincareConsultant(userQuery: string) {
     throw new Error("Unable to contact the AI Consultant right now. Please try again.");
   }
 }
+
+export async function submitLeadAction(email: string, type: string, data?: string) {
+  try {
+    const lead = await prisma.lead.create({
+      data: {
+        email: email.trim().toLowerCase(),
+        type,
+        data,
+      }
+    });
+
+    if (process.env.RESEND_API_KEY && process.env.PASSWORD_RESET_FROM) {
+      try {
+        const resend = new Resend(process.env.RESEND_API_KEY);
+        let subject = "Welcome to Mirha & Co! 🌸";
+        let htmlContent = `<p>Thank you for subscribing to our newsletter!</p>`;
+
+        if (type === "hardwater") {
+          const parsedData = data ? JSON.parse(data) : {};
+          subject = "Your Hard Water Recovery Guide — Mirha & Co. 💧";
+          htmlContent = `
+            <div style="font-family: 'DM Sans', sans-serif; max-width: 600px; margin: 0 auto; padding: 40px 20px; color: #161412;">
+              <h2 style="font-family: 'DM Serif Display', serif; font-size: 1.8rem; color: #161412; margin-bottom: 1rem; font-weight: normal;">Your Hard Water Analysis is Ready!</h2>
+              <p style="font-size: 1rem; line-height: 1.6;">Hi there,</p>
+              <p style="font-size: 1rem; line-height: 1.6;">Here is a summary of your hair and skin damage index:</p>
+              <div style="background: #fff0e8; border: 1px dashed #c8473a; padding: 20px; border-radius: 12px; margin: 20px 0; text-align: center;">
+                <span style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; color: #756b63; font-weight: 700;">Your Damage Index</span>
+                <div style="font-size: 3rem; font-weight: bold; color: #c8473a; margin: 5px 0;">${parsedData.score || 0}%</div>
+                <div style="font-size: 0.95rem; color: #161412; font-weight: 600;">Risk Level: ${parsedData.level || "Moderate"}</div>
+              </div>
+              <p style="font-size: 1rem; line-height: 1.6;">To restore your skin and hair barrier from calcium and magnesium mineral buildup, we recommend starting a chelating wash and using barrier repair creams. You can review your customized recommendations and products anytime on our website.</p>
+              <p style="font-size: 0.9rem; color: #756b63; margin-top: 30px;">Best wishes,<br/>The Mirha & Co. Team</p>
+            </div>
+          `;
+        } else if (type === "dupe") {
+          const parsedData = data ? JSON.parse(data) : {};
+          subject = "Your Skincare Dupes Catalog & Savings Sheet 🏷️";
+          htmlContent = `
+            <div style="font-family: 'DM Sans', sans-serif; max-width: 600px; margin: 0 auto; padding: 40px 20px; color: #161412;">
+              <h2 style="font-family: 'DM Serif Display', serif; font-size: 1.8rem; color: #161412; margin-bottom: 1rem; font-weight: normal;">Your Skincare Savings Breakdown!</h2>
+              <p style="font-size: 1rem; line-height: 1.6;">Hi there,</p>
+              <p style="font-size: 1rem; line-height: 1.6;">By switching luxury beauty items for science-backed active-equivalent Indian drugstore dupes, you are on track to save:</p>
+              <div style="background: #eef7f2; border: 1px dashed #2d8a5c; padding: 20px; border-radius: 12px; margin: 20px 0; text-align: center;">
+                <span style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; color: #756b63; font-weight: 700;">Estimated Annual Savings</span>
+                <div style="font-size: 3rem; font-weight: bold; color: #2d8a5c; margin: 5px 0;">₹${(parsedData.savings || 0).toLocaleString("en-IN")}</div>
+              </div>
+              <p style="font-size: 1rem; line-height: 1.6;">We've attached your requested dupes catalog with over 50+ luxury swaps. Stop paying the premium for marketing and start saving on your routine today!</p>
+              <p style="font-size: 0.9rem; color: #756b63; margin-top: 30px;">Best wishes,<br/>The Mirha & Co. Team</p>
+            </div>
+          `;
+        } else {
+          // Newsletter
+          subject = "Welcome to the Mirha Skin Desk! 🌸";
+          htmlContent = `
+            <div style="font-family: 'DM Sans', sans-serif; max-width: 600px; margin: 0 auto; padding: 40px 20px; color: #161412;">
+              <h2 style="font-family: 'DM Serif Display', serif; font-size: 1.8rem; color: #161412; margin-bottom: 1rem; font-weight: normal;">Welcome to the Mirha Skin Desk!</h2>
+              <p style="font-size: 1rem; line-height: 1.6;">Hi there,</p>
+              <p style="font-size: 1rem; line-height: 1.6;">Thanks for subscribing! You are now joined to receive our weekly, science-backed skincare breakdowns.</p>
+              <p style="font-size: 1rem; line-height: 1.6;">We cover ingredient analysis, hard water issues, skincare science, and value comparisons without the marketing fluff or sponsored bias.</p>
+              <p style="font-size: 0.9rem; color: #756b63; margin-top: 30px;">Best wishes,<br/>The Mirha & Co. Team</p>
+            </div>
+          `;
+        }
+
+        await resend.emails.send({
+          from: process.env.PASSWORD_RESET_FROM,
+          to: email.trim().toLowerCase(),
+          subject,
+          html: htmlContent,
+        });
+      } catch (emailError) {
+        console.error("Resend lead email failed:", emailError);
+      }
+    }
+
+    return { success: true, id: lead.id };
+  } catch (error) {
+    console.error("Failed to save lead:", error);
+    return { error: "Failed to submit. Please try again." };
+  }
+}
+

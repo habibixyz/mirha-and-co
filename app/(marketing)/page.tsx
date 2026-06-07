@@ -1176,13 +1176,47 @@ export default function BeautyShopPage() {
                 />
               </Link>
               <Link
+                href="/tools/hard-water"
+                style={{
+                  flexDirection: isRtl ? "row-reverse" : "row",
+                }}
+              >
+                <span style={{ textAlign: isRtl ? "right" : "left" }}>
+                  <small>02 / Diagnostics</small>
+                  <b>Hard Water Damage Risk Test</b>
+                </span>
+                <ArrowRight
+                  size={15}
+                  style={{
+                    transform: isRtl ? "rotate(180deg)" : "none",
+                  }}
+                />
+              </Link>
+              <Link
+                href="/tools/dupes"
+                style={{
+                  flexDirection: isRtl ? "row-reverse" : "row",
+                }}
+              >
+                <span style={{ textAlign: isRtl ? "right" : "left" }}>
+                  <small>03 / Savings</small>
+                  <b>Skincare Dupe & Savings Finder</b>
+                </span>
+                <ArrowRight
+                  size={15}
+                  style={{
+                    transform: isRtl ? "rotate(180deg)" : "none",
+                  }}
+                />
+              </Link>
+              <Link
                 href="/dashboard/search"
                 style={{
                   flexDirection: isRtl ? "row-reverse" : "row",
                 }}
               >
                 <span style={{ textAlign: isRtl ? "right" : "left" }}>
-                  <small>02 / Expert Search</small>
+                  <small>04 / Expert Search</small>
                   <b>Access full expert search</b>
                 </span>
                 <ArrowRight
@@ -1199,7 +1233,7 @@ export default function BeautyShopPage() {
                 }}
               >
                 <span style={{ textAlign: isRtl ? "right" : "left" }}>
-                  <small>03 / Learn</small>
+                  <small>05 / Learn</small>
                   <b>Read beauty guides</b>
                 </span>
                 <ArrowRight
