@@ -149,7 +149,7 @@ export default function TermsPage() {
 
             <h2>7. Contact Us</h2>
             <p>
-              If you have any questions or clarifications regarding these Terms, please contact us at: <strong>support@mirhaandco.com</strong>.
+              If you have any questions or clarifications regarding these Terms, please contact us at: <strong>tanizcoldz@gmail.com</strong>.
             </p>
           </article>
         </div>

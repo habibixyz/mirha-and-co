@@ -24,6 +24,8 @@ model User {
   subscription        Subscription?
   passwordResetTokens PasswordResetToken[]
   aiQueryLogs         AiQueryLog[]
+  faceAnalyses        FaceAnalysis[]
+  credits             Int                  @default(0)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -144,5 +146,21 @@ model Lead {
   type      String   // "newsletter", "hardwater", "dupe"
   data      String?  // JSON string containing details like city, score, savings
   createdAt DateTime @default(now())
+}
+
+model FaceAnalysis {
+  id            String   @id @default(cuid())
+  userId        String
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  imageUrl      String
+  barrierScore  Int      // 0-100
+  acneScore     Int      // 0-100
+  rednessScore  Int      // 0-100
+  oilinessScore Int      // 0-100
+  detailedJson  Json     // Full parsed analysis output
+  createdAt     DateTime @default(now())
+
+  @@index([userId])
+  @@index([userId, createdAt])
 }
 

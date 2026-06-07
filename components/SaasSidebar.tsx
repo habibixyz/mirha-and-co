@@ -12,6 +12,7 @@ const NAV = [
       { href: "/dashboard", label: "Overview", icon: <OverviewIcon /> },
       { href: "/dashboard/routines", label: "My Routines", icon: <RoutinesIcon /> },
       { href: "/dashboard/journal", label: "Skin Journal", icon: <JournalIcon /> },
+      { href: "/dashboard/analysis", label: "AI Skin Analyst", icon: <FaceIcon /> },
     ],
   },
   {
@@ -164,6 +165,17 @@ function SubIcon() {
   return (
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
       <path d="M8 1l1.854 4.146L14 6l-3 2.854.708 4.146L8 11l-3.708 2L5 8.854 2 6l4.146-.854L8 1z" />
+    </svg>
+  );
+}
+
+function FaceIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z" />
+      <path d="M8 14s1.5 2 4 2 4-2 4-2" />
+      <line x1="9" y1="9" x2="9.01" y2="9" />
+      <line x1="15" y1="9" x2="15.01" y2="9" />
     </svg>
   );
 }

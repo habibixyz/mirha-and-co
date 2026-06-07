@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Refund Policy | Mirha & Co.",
-  description: "Learn about subscription cancellations, renewals, and our 14-day refund policy for Mirha & Co. Pro plans.",
+  title: "Cancellation Policy | Mirha & Co.",
+  description: "Learn about subscription cancellations, renewals, and our refund-free policy for Mirha & Co. Pro plans.",
 };
 
 export default function RefundsPage() {
@@ -88,49 +88,35 @@ export default function RefundsPage() {
         <div className="policy-container">
           <header className="policy-header">
             <span className="last-updated">Last Updated: June 7, 2026</span>
-            <h1>Refund Policy</h1>
+            <h1>Cancellation &amp; Refund Policy</h1>
           </header>
 
           <article className="policy-content">
             <p>
-              We want you to be completely satisfied with your experience on <strong>Mirha & Co.</strong> Our products are digital goods delivered instantly via subscription. This Refund Policy describes the terms under which refunds may be granted for our SaaS subscription services.
+              Please read this policy carefully before purchasing a Pro subscription or unlocking digital features on <strong>Mirha &amp; Co.</strong> (the "Site", "we", "us", or "our").
             </p>
 
-            <h2>1. 14-Day Refund Guarantee</h2>
+            <h2>1. Strict No-Refunds Policy</h2>
             <p>
-              If you are not satisfied with your purchase of our Pro Plan subscription, you are eligible to request a full refund within <strong>14 days</strong> of your initial purchase date.
+              Due to the digital nature of our services—including immediate database access, cosmetic product lists, active compatibility checks, and instant AI-generated skin analysis—<strong>we do not offer refunds or credits for any purchases, micro-payments, or subscription renewals under any circumstances</strong>. 
             </p>
             <p>
-              To request a refund within this period, please email us at <strong>support@mirhaandco.com</strong> with your account email address and transaction ID. We process all valid refund requests within 3 to 5 business days, and the funds will return to your original payment method.
+              Once a transaction is processed, the sale is final. By completing your checkout, you agree to these terms.
             </p>
 
-            <h2>2. Renewals and Subsequent Billing</h2>
+            <h2>2. Subscription Cancellations</h2>
             <p>
-              Our subscription plans are set to automatically renew at the end of each billing period (monthly or annual). 
+              You may cancel your recurring subscription at any time.
             </p>
             <ul>
-              <li><strong>Cancellation</strong>: You can cancel your subscription renewal at any time through your dashboard setting at <code>/dashboard/subscription</code>. Your premium features will remain active until the end of your current paid period.</li>
-              <li><strong>Renewals</strong>: We do not offer refunds for automatic renewals once they are processed. It is your responsibility to cancel your subscription before the next billing date if you no longer wish to use the service.</li>
+              <li><strong>How to Cancel</strong>: You can cancel your subscription renewal directly inside your account dashboard by navigating to the <code>/dashboard/subscription</code> tab, or by emailing our support team at <strong>tanizcoldz@gmail.com</strong>.</li>
+              <li><strong>Access Post-Cancellation</strong>: After cancelling, your premium access features will remain active until the end of your current paid billing cycle. No further automatic renewal charges will be made to your payment method.</li>
+              <li><strong>No Prorated Credits</strong>: We do not provide prorated credits or refunds for any unused days remaining in your active billing period after cancellation.</li>
             </ul>
 
-            <h2>3. Refund Policy Exclusions</h2>
+            <h2>3. Contact Us</h2>
             <p>
-              Refunds will not be issued in the following scenarios:
-            </p>
-            <ul>
-              <li>Requests made more than 14 days after the initial transaction.</li>
-              <li>Accounts that have been suspended or terminated due to violations of our Terms of Service (e.g., scraping, database abuse, or account sharing).</li>
-              <li>Excessive usage of the AI Consultant or Photo Analysis APIs prior to requesting a refund (monitored to prevent trial abuse).</li>
-            </ul>
-
-            <h2>4. Processing Partner Refunds</h2>
-            <p>
-              If your payment was processed through <strong>Paddle</strong>, you may also request refunds or manage billing issues directly via the Paddle support portal or the receipt link sent to your email.
-            </p>
-
-            <h2>5. Contact Us</h2>
-            <p>
-              If you have any questions, concerns, or wish to submit a refund request, please contact us at: <strong>support@mirhaandco.com</strong>.
+              If you have any questions or require assistance managing your subscription cancellation, please reach out to us at: <strong>tanizcoldz@gmail.com</strong>.
             </p>
           </article>
         </div>

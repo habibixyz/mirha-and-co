@@ -141,7 +141,7 @@ export default function PrivacyPage() {
               <li>The right to request the complete deletion of your account and personal records ("Right to be Forgotten").</li>
             </ul>
             <p>
-              To exercise any of these rights, please reach out to us at <strong>support@mirhaandco.com</strong>.
+              To exercise any of these rights, please reach out to us at <strong>tanizcoldz@gmail.com</strong>.
             </p>
 
             <h2>6. Changes to this Policy</h2>
