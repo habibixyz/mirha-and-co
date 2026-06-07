@@ -62,8 +62,21 @@ export default async function RootLayout({
         <Script strategy="afterInteractive" src="https://www.dwin1.com/2904237.js" />
 
         <GlobalizationProvider initialLocale={locale} initialCurrency={currency}>
-          {/* Top bar */}
-          <div className="top-disclosure-bar">
+          {/* Top disclosure bar */}
+          <div 
+            style={{
+              background: "#f6f4f2", // Warm premium sand
+              color: "#8d8178", // Muted editorial taupe
+              textAlign: "center",
+              padding: "0.55rem 1rem",
+              fontSize: "0.62rem",
+              letterSpacing: "0.22em",
+              textTransform: "uppercase",
+              fontWeight: 600,
+              fontFamily: "var(--font-dm-sans), sans-serif",
+              borderBottom: "1px solid #ded7cf",
+            }}
+          >
             Independent reviews. Honest opinions. Affiliate links disclosed.
           </div>
 
@@ -191,9 +204,15 @@ export default async function RootLayout({
               gap: "1rem",
               fontSize: "0.7rem",
               color: "rgba(255,255,255,0.3)",
+              flexWrap: "wrap",
             }}
           >
             <span>© 2026 Mirha &amp; Co. All rights reserved.</span>
+            <div style={{ display: "flex", gap: "1.5rem" }}>
+              <Link href="/terms" className="footer-link" style={{ color: "inherit", textDecoration: "none" }}>Terms of Service</Link>
+              <Link href="/privacy" className="footer-link" style={{ color: "inherit", textDecoration: "none" }}>Privacy Policy</Link>
+              <Link href="/refunds" className="footer-link" style={{ color: "inherit", textDecoration: "none" }}>Refund Policy</Link>
+            </div>
             <span>Beauty · Skincare · Wellness · Lifestyle</span>
           </div>
         </footer>

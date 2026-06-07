@@ -392,23 +392,34 @@ export default function BeautyShopPage() {
         }
 
         .trust-row {
-          display: grid;
-          grid-template-columns: repeat(3, 1fr);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 24px;
+          padding: 18px 12px;
           border-top: 1px solid #ece2d9;
+          flex-wrap: wrap;
         }
 
-        .trust-row span {
-          padding: 14px 10px;
-          text-align: center;
+        .trust-item {
+          display: flex;
+          align-items: center;
+          gap: 8px;
           color: #8d8178;
-          font-size: 9px;
+          font-size: 10px;
           letter-spacing: 0.15em;
           text-transform: uppercase;
-          border-right: 1px solid #ece2d9;
+          font-weight: 600;
+          font-family: var(--font-dm-sans), sans-serif;
         }
 
-        .trust-row span:last-child {
-          border-right: 0;
+        .trust-bullet {
+          width: 5px;
+          height: 5px;
+          border-radius: 50%;
+          background: #c8473a;
+          flex-shrink: 0;
+          display: inline-block;
         }
 
         .section {
@@ -959,16 +970,10 @@ export default function BeautyShopPage() {
           }
 
           .trust-row {
-            grid-template-columns: 1fr;
-          }
-
-          .trust-row span {
-            border-right: 0;
-            border-bottom: 1px solid #ece2d9;
-          }
-
-          .trust-row span:last-child {
-            border-bottom: 0;
+            flex-direction: column;
+            gap: 12px;
+            padding: 16px;
+            align-items: center;
           }
 
           .section {
@@ -1091,21 +1096,19 @@ export default function BeautyShopPage() {
               <h2>{t("hero.panel.title")}</h2>
               <p>{t("hero.panel.desc")}</p>
             </div>
-            <div
-              className="trust-row"
-              style={{
-                gridTemplateColumns: "repeat(3, 1fr)",
-              }}
-            >
-              <span style={{ borderLeft: isRtl ? "1px solid #ece2d9" : undefined, borderRight: isRtl ? 0 : undefined }}>
-                {t("trust.independent")}
-              </span>
-              <span style={{ borderLeft: isRtl ? "1px solid #ece2d9" : undefined, borderRight: isRtl ? 0 : undefined }}>
-                {t("trust.backed")}
-              </span>
-              <span style={{ borderRight: 0 }}>
-                {t("trust.zero")}
-              </span>
+            <div className="trust-row">
+              <div className="trust-item">
+                <span className="trust-bullet" />
+                <span>{t("trust.independent")}</span>
+              </div>
+              <div className="trust-item">
+                <span className="trust-bullet" />
+                <span>{t("trust.backed")}</span>
+              </div>
+              <div className="trust-item">
+                <span className="trust-bullet" />
+                <span>{t("trust.zero")}</span>
+              </div>
             </div>
           </div>
         </section>

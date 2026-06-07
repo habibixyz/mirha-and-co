@@ -112,6 +112,48 @@ const DUPES_DATABASE = [
       image: "/products/Maybelline-New.jpg",
       link: "https://amzn.to/4tCP38S",
     }
+  },
+  {
+    id: "drunk-elephant-protini",
+    luxury: {
+      name: "Protini Polypeptide Cream",
+      brand: "Drunk Elephant",
+      price: 6500,
+      size: "50ml",
+      actives: "Signal Peptides, Growth Factors, Pygmy Waterlily",
+      rating: 4.6,
+    },
+    dupe: {
+      name: "Minimalist Multi-Peptide Night Face Serum 30ml",
+      brand: "Minimalist",
+      price: 629,
+      asin: "B08MVD6T8V",
+      actives: "Matrixyl 3000, Argireline, Peptides",
+      description: "While one is a cream and one is a serum, both deliver a massive dose of signal peptides to boost collagen production, firm the skin, and repair the barrier for anti-aging without the premium markup.",
+      image: "/products/minimalist-peptide.jpg",
+      link: "https://amzn.to/3OExEO6",
+    }
+  },
+  {
+    id: "kiehls-midnight-recovery",
+    luxury: {
+      name: "Midnight Recovery Concentrate",
+      brand: "Kiehl's",
+      price: 4500,
+      size: "30ml",
+      actives: "Squalane, Evening Primrose Oil, Lavender Essential Oil",
+      rating: 4.7,
+    },
+    dupe: {
+      name: "Plum 15% Vitamin C Face Serum",
+      brand: "Plum",
+      price: 445,
+      asin: "B095PRGHDX",
+      actives: "Vitamin C, Squalane, Rosehip",
+      description: "Achieves that exact same 'morning glow' and overnight repair. Instead of relying purely on botanical oils, this dupe provides active brightening with a hydrating base that works perfectly for Indian climates.",
+      image: "/products/plum-vitc.jpg",
+      link: "https://amzn.to/3Qa5pau",
+    }
   }
 ];
 
@@ -180,30 +222,32 @@ export default function DupeFinderPage() {
     e.preventDefault();
     if (!email) return;
     setEmailStatus("submitting");
+    const leadData = {
+      savings: math.savings,
+      percentage: math.percentage,
+      luxuryTotal: math.luxuryTotal,
+      dupeTotal: math.dupeTotal,
+    };
+    
+    // Store lead locally first
     try {
-      const leadData = {
-        savings: math.savings,
-        percentage: math.percentage,
-        luxuryTotal: math.luxuryTotal,
-        dupeTotal: math.dupeTotal,
-      };
-      await submitLeadAction(email, "dupe", JSON.stringify(leadData));
-      setEmailStatus("success");
-      
-      // Store lead locally as fallback
-      try {
-        const leads = JSON.parse(localStorage.getItem("dupe_leads") || "[]");
-        if (!leads.includes(email)) {
-          leads.push({ email, ...leadData, date: new Date().toISOString() });
-          localStorage.setItem("dupe_leads", JSON.stringify(leads));
-        }
-      } catch (err) {
-        console.error(err);
+      const leads = JSON.parse(localStorage.getItem("dupe_leads") || "[]");
+      if (!leads.includes(email)) {
+        leads.push({ email, ...leadData, date: new Date().toISOString() });
+        localStorage.setItem("dupe_leads", JSON.stringify(leads));
       }
     } catch (err) {
       console.error(err);
-      setEmailStatus("idle");
     }
+
+    try {
+      await submitLeadAction(email, "dupe", JSON.stringify(leadData));
+    } catch (err) {
+      console.error("Non-blocking server-side lead submit failed:", err);
+    }
+    
+    // Always grant access to the Google Sheet link on submit
+    setEmailStatus("success");
   };
 
   return (
@@ -720,13 +764,40 @@ export default function DupeFinderPage() {
           </div>
         )}
 
-        {/* Lead Capture */}
-        <div className="lead-panel">
+        {/* Lead Capture - Hidden from front end but kept in stack */}
+        {/* <div className="lead-panel">
           <h3>Get the Complete Skincare Dupes Catalog (50+ Products)</h3>
           <p>We've researched 50+ premium products (Estée Lauder, Clinique, Kiehl's, Laneige, Tatcha) and found their exact active-ingredient equivalent drugstore dupes under ₹800. Sign up to get the free Google Sheets list.</p>
           {emailStatus === "success" ? (
-            <div style={{ display: "inline-flex", alignItems: "center", gap: "8px", background: "rgba(45, 138, 92, 0.15)", color: "#2d8a5c", padding: "12px 24px", borderRadius: "8px", fontSize: "0.95rem" }}>
-              <Check size={18} /> Dispatched! Check your email for your access link.
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "12px", background: "rgba(45, 138, 92, 0.12)", border: "1px solid #2d8a5c", color: "#2d8a5c", padding: "24px", borderRadius: "12px", fontSize: "0.95rem", maxWidth: "520px", margin: "0 auto" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "8px", fontWeight: "600", fontSize: "1.1rem" }}>
+                <Check size={20} /> Access Approved!
+              </div>
+              <p style={{ margin: "0 0 10px", fontSize: "0.85rem", color: "#756b63", lineHeight: 1.5 }}>
+                Click below to instantly open the master Google Sheets catalog containing 50+ luxury skincare swaps.
+              </p>
+              <a 
+                href="https://docs.google.com/spreadsheets/d/1X5-t4q3fD-n_T_BvM8GvQz_Nf8_V64VpW-R_bX4yU3w/edit?usp=sharing" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                style={{ 
+                  background: "#2d8a5c", 
+                  color: "#fff", 
+                  padding: "12px 24px", 
+                  borderRadius: "8px", 
+                  textDecoration: "none", 
+                  fontWeight: "600", 
+                  fontSize: "0.9rem",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "8px",
+                  transition: "background 0.2s" 
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.background = "#246e49"}
+                onMouseLeave={(e) => e.currentTarget.style.background = "#2d8a5c"}
+              >
+                Open Google Sheets Catalog <ArrowRight size={16} />
+              </a>
             </div>
           ) : (
             <form onSubmit={handleEmailSubmit} className="lead-form">
@@ -742,7 +813,7 @@ export default function DupeFinderPage() {
               </button>
             </form>
           )}
-        </div>
+        </div> */}
       </div>
     </main>
   );

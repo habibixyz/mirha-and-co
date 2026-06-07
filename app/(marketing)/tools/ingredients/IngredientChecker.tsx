@@ -452,17 +452,14 @@ export default function ActiveIngredientChecker() {
             gap: 30px !important;
           }
           .sticky-report {
-            position: sticky !important;
-            bottom: 20px !important;
-            top: auto !important;
-            z-index: 50 !important;
+            position: static !important;
+            z-index: 10 !important;
             width: 100% !important;
             box-sizing: border-box !important;
-            max-height: 50vh !important;
-            overflow-y: auto !important;
-            box-shadow: 0 -4px 30px rgba(0,0,0,0.08) !important;
-            border-bottom: none !important;
-            border-radius: 16px 16px 0 0 !important;
+            max-height: none !important;
+            overflow-y: visible !important;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03) !important;
+            border-radius: 16px !important;
           }
           .hero-title {
             font-size: 2.2rem !important;

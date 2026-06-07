@@ -742,7 +742,7 @@ export function SearchClient({ isPro }: { isPro: boolean }) {
           </div>
         )}
 
-        {(["routine", "ingredient", "guide", "product"] as const).map((type) => {
+        {(["product", "routine", "ingredient", "guide"] as const).map((type) => {
           const items = sortedGroups[type] || [];
           if (!items.length) return null;
 

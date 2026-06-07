@@ -747,7 +747,7 @@ export async function askSkincareConsultant(userQuery: string) {
 
 export async function submitLeadAction(email: string, type: string, data?: string) {
   try {
-    const lead = await prisma.lead.create({
+    const lead = await (prisma as any).lead.create({
       data: {
         email: email.trim().toLowerCase(),
         type,

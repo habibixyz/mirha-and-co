@@ -47,6 +47,7 @@ export default function GlobalizationSwitcher() {
           cursor: "pointer",
           transition: "all 0.25s cubic-bezier(0.16, 1, 0.3, 1)",
           boxShadow: "0 2px 8px rgba(0,0,0,0.02)",
+          fontFamily: "var(--font-dm-sans), sans-serif",
         }}
       >
         <Globe size={13} style={{ opacity: 0.7 }} />
@@ -104,6 +105,7 @@ export default function GlobalizationSwitcher() {
                 color: "var(--muted)",
                 marginBottom: "8px",
                 textAlign: isRtl ? "right" : "left",
+                fontFamily: "var(--font-dm-sans), sans-serif",
               }}
             >
               Language / भाषा / اللغة
@@ -132,6 +134,7 @@ export default function GlobalizationSwitcher() {
                     textAlign: isRtl ? "right" : "left",
                     flexDirection: isRtl ? "row-reverse" : "row",
                     transition: "all 0.15s ease",
+                    fontFamily: "var(--font-dm-sans), sans-serif",
                   }}
                 >
                   <span>{LANGUAGE_NAMES[langKey]}</span>
@@ -157,6 +160,7 @@ export default function GlobalizationSwitcher() {
                 color: "var(--muted)",
                 marginBottom: "8px",
                 textAlign: isRtl ? "right" : "left",
+                fontFamily: "var(--font-dm-sans), sans-serif",
               }}
             >
               Currency
@@ -183,6 +187,7 @@ export default function GlobalizationSwitcher() {
                     cursor: "pointer",
                     transition: "all 0.15s ease",
                     justifyContent: "flex-start",
+                    fontFamily: "var(--font-dm-sans), sans-serif",
                   }}
                 >
                   <span

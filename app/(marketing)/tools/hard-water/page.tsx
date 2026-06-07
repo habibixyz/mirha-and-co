@@ -15,6 +15,12 @@ const INDIAN_CITIES = [
   { name: "Hyderabad", tds: 720, hardness: "Very Hard", description: "Groundwater mixing leads to hard saline deposits, causing frizzy hair." },
   { name: "Chennai", tds: 840, hardness: "Extremely Hard / Saline", description: "Very high mineral and salt content. Speeds up hair color fading and hair breakage." },
   { name: "Pune", tds: 380, hardness: "Moderately Hard", description: "Mixed sources. Requires mild chelating or softeners to prevent scalp scaling." },
+  { name: "Gurugram", tds: 950, hardness: "Extremely Hard", description: "High salinity and heavy calcium/magnesium salts causing immediate scalp buildup and hair fall." },
+  { name: "Noida", tds: 1050, hardness: "Extremely Hard", description: "High sulfate and chloride salts leading to skin barrier degradation and scalp itchiness." },
+  { name: "Kolkata", tds: 150, hardness: "Soft", description: "Generally soft water, but high iron content can stain hair and leave it feeling stiff." },
+  { name: "Jaipur", tds: 980, hardness: "Extremely Hard", description: "Highly alkaline ground water leading to dry hair shaft damage and skin flaking." },
+  { name: "Ahmedabad", tds: 750, hardness: "Very Hard", description: "Moderate to high mineral levels that leave salt deposits on hair, leading to frizz and tangles." },
+  { name: "Kochi", tds: 110, hardness: "Soft", description: "Very soft water. Hair and skin issues are usually due to high humidity and sweat build-up, not hard water minerals." },
 ];
 
 export default function HardWaterCalculator() {
@@ -865,8 +871,8 @@ export default function HardWaterCalculator() {
                 </div>
               </div>
 
-              {/* Lead Capture */}
-              <div className="lead-panel">
+              {/* Lead Capture - Hidden from front end but kept in stack */}
+              {/* <div className="lead-panel">
                 <h3>Get Your Custom 12-Page Hard Water Guide</h3>
                 <p>We'll email you a customized routine guide, mineral breakdowns for your city, and a list of chelating ingredients to look for in drugstore products.</p>
                 {emailStatus === "success" ? (
@@ -887,7 +893,7 @@ export default function HardWaterCalculator() {
                     </button>
                   </form>
                 )}
-              </div>
+              </div> */}
             </div>
           )}
         </div>
