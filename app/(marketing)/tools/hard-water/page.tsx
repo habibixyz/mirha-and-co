@@ -208,6 +208,36 @@ export default function HardWaterCalculator() {
           padding: 40px;
           box-shadow: 0 12px 36px rgba(38, 28, 20, 0.04);
         }
+        @media (max-width: 640px) {
+          .hard-water-page {
+            padding: 24px 16px 80px;
+          }
+          .quiz-card {
+            padding: 24px 20px;
+            border-radius: 16px;
+          }
+          .quiz-title {
+            font-size: 1.6rem !important;
+          }
+          .score-circle {
+            width: 130px;
+            height: 130px;
+            border-radius: 65px;
+          }
+          .score-num {
+            font-size: 50px;
+          }
+          .results-summary-text {
+            font-size: 0.95rem;
+          }
+          .action-row {
+            flex-direction: column;
+            align-items: stretch;
+          }
+          .share-btn {
+            justify-content: center;
+          }
+        }
         .quiz-title {
           font-family: 'DM Serif Display', serif;
           font-size: clamp(28px, 4.5vw, 40px);
@@ -728,26 +758,7 @@ export default function HardWaterCalculator() {
                 ))}
               </div>
 
-              <div className="concern-section-title" style={{ marginTop: "24px" }}>Skin & Face Symptoms</div>
-              <div className="symptom-grid">
-                {[
-                  { id: "dryskin", label: "Skin feels tight right after washing" },
-                  { id: "acne", label: "Frequent breakouts or clogged pores" },
-                  { id: "redness", label: "Redness, irritation, or eczema flare-ups" },
-                  { id: "dullskin", label: "Dull, chalky skin tone" },
-                ].map(item => (
-                  <div
-                    key={item.id}
-                    className={`symptom-card ${skinConcerns.includes(item.id) ? "selected" : ""}`}
-                    onClick={() => toggleSkinConcern(item.id)}
-                  >
-                    <div className="symptom-checkbox">
-                      {skinConcerns.includes(item.id) && <Check size={12} />}
-                    </div>
-                    <span>{item.label}</span>
-                  </div>
-                ))}
-              </div>
+
 
               <div style={{ display: "flex", gap: "12px", marginTop: "30px" }}>
                 <button
