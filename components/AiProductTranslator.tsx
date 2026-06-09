@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Locale, LANGUAGE_NAMES } from "@/lib/globalization";
-import { Sparkles, Check, Loader2 } from "lucide-react";
+import { Check, Loader2, Star } from "lucide-react";
 
 interface AiProductTranslatorProps {
   description: string;
@@ -189,8 +189,8 @@ export default function AiProductTranslator({
                 </>
               ) : (
                 <>
-                  <Sparkles size={12} />
-                  Translate with Gemini AI ✨
+                  <Star size={12} />
+                  Translate with Gemini AI ⭐
                 </>
               )}
             </button>

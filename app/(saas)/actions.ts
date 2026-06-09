@@ -561,6 +561,21 @@ export async function getAISearchAdvice(query: string) {
       return getLocalSearchAdvice(query);
     }
 
+    // Log the search
+    try {
+      await prisma.aiQueryLog.create({
+        data: {
+          userId: session.userId,
+          query: query,
+          response: response.advice,
+          type: "search",
+          metadata: { productsRecommended: response.products.map((p: any) => p.name) }
+        }
+      });
+    } catch (e) {
+      console.error("Failed to log search query:", e);
+    }
+
     return response;
   } catch (error) {
     console.error("AI Search Advice fallback trigger:", error);
@@ -734,7 +749,10 @@ export async function askSkincareConsultant(userQuery: string) {
     await prisma.aiQueryLog.create({
       data: {
         userId: session.userId,
-        query: userQuery
+        query: userQuery,
+        response: answer,
+        type: "consultant",
+        metadata: { contextSnippet }
       }
     });
 

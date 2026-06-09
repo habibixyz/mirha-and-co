@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getSession } from "@/lib/auth";
 import { generateWithRetry } from "@/lib/ai";
+import { prisma } from "@/lib/prisma";
 
 export async function POST(req: Request) {
   try {
@@ -34,6 +35,22 @@ export async function POST(req: Request) {
 
     const reply = await generateWithRetry(prompt);
     
+    // Log the interaction
+    try {
+      const lastUserMessage = messages.filter((m: any) => m.role === "user").pop()?.content || "";
+      await prisma.aiQueryLog.create({
+        data: {
+          userId: session.userId,
+          query: lastUserMessage,
+          response: reply,
+          type: "chat",
+          metadata: { chatHistory }
+        }
+      });
+    } catch (dbError) {
+      console.error("Failed to log chat interaction:", dbError);
+    }
+
     return NextResponse.json({ response: reply });
   } catch (error: any) {
     console.error("Chat API Error:", error);

@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from "react";
 import Link from "next/link";
-import { ArrowRight, Sparkles, Share2, Check, ArrowLeft, TrendingDown, RefreshCw } from "lucide-react";
+import { ArrowRight, Share2, Check, ArrowLeft, TrendingDown, RefreshCw, Star } from "lucide-react";
 import { PRODUCTS } from "@/lib/products";
 import { submitLeadAction } from "@/app/(saas)/actions";
 
@@ -258,10 +258,10 @@ export default function DupeFinderPage() {
           color: #161412;
           min-height: 100vh;
           font-family: 'DM Sans', sans-serif;
-          padding: 60px 24px 100px;
+          padding: 48px 20px 120px;
         }
         .shell {
-          max-width: 1000px;
+          max-width: 1160px;
           margin: 0 auto;
         }
         .back-link {
@@ -278,116 +278,186 @@ export default function DupeFinderPage() {
           color: #c8473a;
         }
         .header {
-          margin-bottom: 40px;
+          margin-bottom: 48px;
           text-align: center;
         }
         .header h1 {
           font-family: 'DM Serif Display', serif;
-          font-size: clamp(32px, 5vw, 48px);
+          font-size: clamp(36px, 5vw, 56px);
           font-weight: 400;
-          line-height: 1.15;
-          margin-bottom: 12px;
+          line-height: 1.1;
+          margin-bottom: 14px;
+          letter-spacing: -0.02em;
         }
         .header p {
           color: #756b63;
           font-size: 1.05rem;
-          max-width: 600px;
+          max-width: 540px;
           margin: 0 auto;
-          line-height: 1.6;
+          line-height: 1.65;
+        }
+        .header-badge {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          background: rgba(200,71,58,0.08);
+          color: #c8473a;
+          font-size: 0.7rem;
+          font-weight: 700;
+          letter-spacing: 0.15em;
+          text-transform: uppercase;
+          padding: 6px 14px;
+          border-radius: 99px;
+          margin-bottom: 20px;
         }
         .grid-layout {
           display: grid;
-          grid-template-columns: 1.2fr 0.8fr;
-          gap: 32px;
+          grid-template-columns: 1fr 380px;
+          gap: 28px;
           align-items: start;
         }
-        @media (max-width: 900px) {
+        @media (max-width: 960px) {
           .grid-layout {
             grid-template-columns: 1fr;
+          }
+          .calculator-sidebar {
+            display: none !important;
+          }
+          .mobile-savings-bar {
+            display: flex !important;
           }
         }
         .luxury-list {
           display: flex;
           flex-direction: column;
-          gap: 16px;
+          gap: 12px;
+        }
+        .list-label {
+          font-size: 0.75rem;
+          font-weight: 700;
+          letter-spacing: 0.15em;
+          text-transform: uppercase;
+          color: #8c8179;
+          margin-bottom: 4px;
+          padding-bottom: 12px;
+          border-bottom: 1px solid #ede5dc;
         }
         .luxury-card {
           background: #fff;
-          border: 1px solid #e8ded4;
-          border-radius: 16px;
-          padding: 24px;
+          border: 1.5px solid #ede5dc;
+          border-radius: 18px;
+          padding: 18px 20px;
           cursor: pointer;
-          transition: all 0.2s ease;
-          display: flex;
-          justify-content: space-between;
+          transition: all 0.18s ease;
+          display: grid;
+          grid-template-columns: 24px 1fr auto;
           align-items: center;
-          gap: 16px;
-          position: relative;
+          gap: 14px;
         }
         .luxury-card:hover {
           border-color: #c8473a;
-          box-shadow: 0 8px 24px rgba(38, 28, 20, 0.04);
+          box-shadow: 0 6px 20px rgba(200,71,58,0.06);
+          transform: translateY(-1px);
         }
         .luxury-card.selected {
           border-color: #c8473a;
-          background: #fffbf8;
+          background: #fffaf8;
+          box-shadow: 0 6px 20px rgba(200,71,58,0.08);
         }
         .luxury-details {
-          flex: 1;
+          min-width: 0;
         }
         .luxury-brand {
-          font-size: 0.75rem;
+          font-size: 0.68rem;
           color: #c8473a;
-          letter-spacing: 0.15em;
+          letter-spacing: 0.18em;
           text-transform: uppercase;
           font-weight: 700;
-          margin-bottom: 6px;
+          margin-bottom: 4px;
         }
         .luxury-name {
           font-weight: 600;
-          font-size: 1.1rem;
-          margin-bottom: 6px;
-          line-height: 1.3;
+          font-size: 1rem;
+          margin-bottom: 5px;
+          line-height: 1.35;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+        @media (max-width: 640px) {
+          .luxury-name { font-size: 0.95rem; white-space: normal; }
         }
         .luxury-meta {
-          font-size: 0.8rem;
-          color: #8c8179;
+          font-size: 0.75rem;
+          color: #a89c92;
           display: flex;
-          gap: 12px;
+          gap: 8px;
+          flex-wrap: wrap;
         }
         .luxury-price {
           font-family: 'DM Serif Display', serif;
-          font-size: 1.4rem;
+          font-size: 1.25rem;
           color: #161412;
-          text-align: right;
+          white-space: nowrap;
           flex-shrink: 0;
         }
         .checkbox {
           width: 22px;
           height: 22px;
+          min-width: 22px;
           border: 2px solid #d8cdc3;
-          border-radius: 6px;
+          border-radius: 7px;
           display: flex;
           align-items: center;
           justify-content: center;
-          flex-shrink: 0;
           background: #fff;
-          transition: all 0.2s;
+          transition: all 0.18s;
         }
         .luxury-card.selected .checkbox {
           background: #c8473a;
           border-color: #c8473a;
           color: #fff;
         }
-        /* Sticky Calculator Sidebar */
+        /* Sticky Calculator Sidebar - Desktop only */
         .calculator-sidebar {
           background: #fff;
-          border: 1px solid #e8ded4;
-          border-radius: 20px;
-          padding: 30px;
-          box-shadow: 0 12px 36px rgba(38, 28, 20, 0.04);
+          border: 1.5px solid #ede5dc;
+          border-radius: 24px;
+          padding: 28px;
+          box-shadow: 0 16px 48px rgba(38, 28, 20, 0.06);
           position: sticky;
-          top: 94px;
+          top: 100px;
+        }
+        /* Mobile savings bar - hidden on desktop */
+        .mobile-savings-bar {
+          display: none;
+          position: fixed;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          background: #fff;
+          border-top: 1px solid #ede5dc;
+          padding: 14px 20px;
+          z-index: 50;
+          align-items: center;
+          justify-content: space-between;
+          box-shadow: 0 -8px 24px rgba(0,0,0,0.08);
+        }
+        .mobile-savings-label {
+          font-size: 0.75rem;
+          color: #8c8179;
+          font-weight: 600;
+        }
+        .mobile-savings-amount {
+          font-family: 'DM Serif Display', serif;
+          font-size: 1.6rem;
+          color: #c8473a;
+          line-height: 1;
+        }
+        .mobile-savings-pct {
+          font-size: 0.75rem;
+          color: #2d8a5c;
+          font-weight: 700;
         }
         .calc-header {
           border-bottom: 1px solid #f6f4f2;
@@ -533,79 +603,91 @@ export default function DupeFinderPage() {
           line-height: 1.4;
           margin-top: 2px;
         }
-        /* Lead capture panel */
-        .lead-panel {
-          background: #161412;
-          color: #fff;
-          border-radius: 16px;
-          padding: 32px;
-          margin-top: 48px;
-          text-align: center;
-        }
-        .lead-panel h3 {
-          font-family: 'DM Serif Display', serif;
-          font-size: 24px;
-          margin: 0 0 8px;
-        }
-        .lead-panel p {
-          color: rgba(255,255,255,0.6);
-          font-size: 0.9rem;
-          line-height: 1.6;
-          margin: 0 0 24px;
-        }
-        .lead-form {
-          display: flex;
-          gap: 8px;
-          max-width: 480px;
-          margin: 0 auto;
-        }
-        @media (max-width: 640px) {
-          .lead-form {
-            flex-direction: column;
-          }
-        }
-        .lead-form input {
-          flex: 1;
-          border: 1px solid rgba(255,255,255,0.15);
-          background: rgba(255,255,255,0.06);
-          border-radius: 8px;
-          padding: 12px 16px;
-          color: #fff;
-          font-size: 0.9rem;
-          outline: none;
-        }
-        .lead-form input:focus {
-          border-color: #c8473a;
-        }
-        .lead-form button {
-          background: #c8473a;
-          color: #fff;
-          border: none;
-          border-radius: 8px;
-          padding: 12px 24px;
-          font-size: 0.9rem;
-          font-weight: 600;
-          cursor: pointer;
-        }
-        .lead-form button:hover {
-          background: #b23b2f;
-        }
         .shop-dupe-btn {
           background: #161412;
           color: #fff;
-          border-radius: 6px;
-          padding: 10px 16px;
-          font-size: 0.8rem;
+          border-radius: 10px;
+          padding: 11px 18px;
+          font-size: 0.82rem;
           font-weight: 700;
           text-decoration: none;
           display: inline-flex;
           align-items: center;
           gap: 6px;
           align-self: flex-start;
-          margin-top: 14px;
+          margin-top: 16px;
+          transition: background 0.15s;
         }
         .shop-dupe-btn:hover {
           background: #2b2826;
+        }
+        .dupe-comparison-card {
+          background: #fff;
+          border: 1.5px solid #ede5dc;
+          border-radius: 20px;
+          padding: 28px;
+          margin-bottom: 16px;
+          box-shadow: 0 4px 18px rgba(38, 28, 20, 0.03);
+        }
+        .comparison-title {
+          font-family: 'DM Serif Display', serif;
+          font-size: clamp(22px, 4vw, 30px);
+          font-weight: 400;
+          margin-bottom: 20px;
+          margin-top: 52px;
+        }
+        .comparison-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 20px;
+          padding-bottom: 14px;
+          border-bottom: 1px solid #f6f4f2;
+          flex-wrap: wrap;
+          gap: 10px;
+        }
+        .comparison-label {
+          font-size: 0.72rem;
+          letter-spacing: 0.15em;
+          text-transform: uppercase;
+          font-weight: 700;
+          color: #c8473a;
+        }
+        .purchases-selector {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          font-size: 0.85rem;
+          color: #756b63;
+        }
+        .purchases-selector input {
+          width: 52px;
+          border: 1px solid #d8cdc3;
+          border-radius: 6px;
+          padding: 5px 8px;
+          text-align: center;
+          outline: none;
+          font-size: 0.9rem;
+        }
+        .split-row {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 28px;
+        }
+        @media (max-width: 600px) {
+          .split-row { grid-template-columns: 1fr; gap: 0; }
+          .split-col.luxury-side { border-right: 0; border-bottom: 1px solid #f0ebe4; padding-right: 0; padding-bottom: 20px; margin-bottom: 20px; }
+        }
+        .split-col { display: flex; flex-direction: column; }
+        .split-col.luxury-side { opacity: 0.7; border-right: 1px solid #f0ebe4; padding-right: 24px; }
+        .col-header { font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: #8c8179; margin-bottom: 8px; font-weight: 700; }
+        .split-price { font-family: 'DM Serif Display', serif; font-size: 1.6rem; margin-top: 10px; }
+        .actives-label { font-size: 0.75rem; font-weight: 700; margin-top: 12px; color: #161412; }
+        .actives-list { font-size: 0.8rem; color: #756b63; line-height: 1.5; margin-top: 3px; }
+        @media (max-width: 480px) {
+          .dupe-finder-page { padding: 36px 16px 140px; }
+          .calculator-sidebar { display: none; }
+          .mobile-savings-bar { display: flex; }
         }
       `}</style>
 
@@ -615,6 +697,9 @@ export default function DupeFinderPage() {
         </Link>
 
         <div className="header">
+          <div className="header-badge">
+            <Star size={12} /> Free Tool — No Sign Up Required
+          </div>
           <h1>Skincare Dupe Finder &amp; Savings Calculator</h1>
           <p>
             Stop overpaying for marketing. Pair highly coveted luxury beauty products with science-backed, active-equivalent Indian drugstore dupes and calculate your yearly savings.
@@ -623,7 +708,7 @@ export default function DupeFinderPage() {
 
         <div className="grid-layout">
           <div>
-            <h2 className="comparison-title" style={{ fontSize: "20px", marginBottom: "16px" }}>Select Luxury Products You Use</h2>
+            <p className="list-label">Select the luxury products you use</p>
             <div className="luxury-list">
               {DUPES_DATABASE.map(item => {
                 const isSelected = selectedItems.includes(item.id);
@@ -634,20 +719,18 @@ export default function DupeFinderPage() {
                     onClick={() => toggleSelect(item.id)}
                   >
                     <div className="checkbox">
-                      {isSelected && <Check size={14} />}
+                      {isSelected && <Check size={13} />}
                     </div>
                     <div className="luxury-details">
                       <div className="luxury-brand">{item.luxury.brand}</div>
                       <h3 className="luxury-name">{item.luxury.name}</h3>
                       <div className="luxury-meta">
                         <span>{item.luxury.size}</span>
-                        <span>•</span>
-                        <span style={{ fontStyle: "italic", fontSize: "0.78rem" }}>Actives: {item.luxury.actives.split(",")[0]}...</span>
+                        <span>·</span>
+                        <span style={{ fontStyle: "italic" }}>Actives: {item.luxury.actives.split(",")[0]}…</span>
                       </div>
                     </div>
-                    <div className="luxury-price">
-                      ₹{item.luxury.price.toLocaleString("en-IN")}
-                    </div>
+                    <div className="luxury-price">₹{item.luxury.price.toLocaleString("en-IN")}</div>
                   </div>
                 );
               })}
@@ -698,6 +781,23 @@ export default function DupeFinderPage() {
               )}
             </div>
           </div>
+        </div>
+
+        {/* Mobile sticky savings bar */}
+        <div className="mobile-savings-bar">
+          <div>
+            <div className="mobile-savings-label">Annual Savings</div>
+            <div className="mobile-savings-amount">₹{math.savings.toLocaleString("en-IN")}</div>
+            {math.percentage > 0 && <div className="mobile-savings-pct">Save {math.percentage}%</div>}
+          </div>
+          {math.savings > 0 && (
+            <button
+              onClick={handleShareWhatsApp}
+              style={{ background: "#25d366", color: "#fff", border: "none", borderRadius: "12px", padding: "12px 20px", fontWeight: 700, fontSize: "0.85rem", cursor: "pointer", display: "flex", alignItems: "center", gap: "6px" }}
+            >
+              <Share2 size={15} /> Share
+            </button>
+          )}
         </div>
 
         {selectedItems.length > 0 && (

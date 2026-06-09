@@ -133,11 +133,15 @@ model AiQueryLog {
   id        String   @id @default(cuid())
   userId    String
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  query     String
+  type      String   @default("search") // e.g., "search", "routine", "chat", "journal"
+  query     String   @db.Text
+  response  String?  @db.Text
+  metadata  Json?
   createdAt DateTime @default(now())
 
   @@index([userId])
   @@index([userId, createdAt])
+  @@index([type])
 }
 
 model Lead {

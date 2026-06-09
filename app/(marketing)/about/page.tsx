@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Sparkles, Brain, BookOpen, Fingerprint } from "lucide-react";
-import WellnessAuraWrapper from "@/components/WellnessAuraWrapper";
+import { Brain, BookOpen, Fingerprint, Star } from "lucide-react";
+import FaceScannerUI from "@/components/FaceScannerUI";
 
 export const metadata = {
   title: "About | Mirha & Co.",
@@ -408,7 +408,7 @@ export default function AboutPage() {
         <section className="hero">
           <div className="hero-inner">
             <div>
-              <p className="eyebrow"><Sparkles size={14}/> About Mirha & Co.</p>
+              <p className="eyebrow"><Star size={14}/> About Mirha & Co.</p>
               <h1>
                 Intelligence
                 <br />
@@ -424,7 +424,7 @@ export default function AboutPage() {
             </div>
 
             <div className="img-wrap hero-img" style={{ position: "relative", overflow: "hidden", background: "radial-gradient(circle, #1a1615 0%, #080707 100%)", border: "1px solid rgba(255,255,255,0.06)" }}>
-              <WellnessAuraWrapper />
+              <FaceScannerUI />
             </div>
           </div>
         </section>

@@ -3,7 +3,7 @@
 import { useState, useTransition, useRef, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { saveJournalEntry, analyzeSkinPhoto, getJournalAnalysis } from "../../actions";
-import { Calendar, Plus, Star, MoreVertical, Upload, Sparkles, X, Brain, TrendingUp, Info, Lightbulb } from "lucide-react";
+import { Calendar, Plus, Star, MoreVertical, Upload, X, Brain, TrendingUp, Info, Lightbulb } from "lucide-react";
 
 
 export function SkinJournalClient({ initialEntries, isPro }: { initialEntries: any[], isPro: boolean }) {
@@ -494,7 +494,7 @@ export function SkinJournalClient({ initialEntries, isPro }: { initialEntries: a
                     fontSize: "0.9rem"
                   }}
                 >
-                  <Sparkles size={16} /> {isAnalyzing ? "Analyzing..." : "AI Analysis"}
+                  <Star size={16} /> {isAnalyzing ? "Analyzing..." : "AI Analysis"}
                 </button>
               )}
 
@@ -535,7 +535,7 @@ export function SkinJournalClient({ initialEntries, isPro }: { initialEntries: a
               gap: "0.8rem",
               alignItems: "flex-start"
             }}>
-              <Sparkles size={20} color="#9333ea" style={{ flexShrink: 0 }} />
+              <Star size={20} color="#9333ea" style={{ flexShrink: 0 }} />
               <p style={{ margin: 0, lineHeight: 1.6 }}>{aiAnalysis}</p>
             </div>
           )}
@@ -750,7 +750,7 @@ export function SkinJournalClient({ initialEntries, isPro }: { initialEntries: a
                       padding: "0.6rem",
                       borderRadius: "8px"
                     }}>
-                      <Sparkles size={14} style={{ marginTop: "2px" }} /> 
+                      <Star size={14} style={{ marginTop: "2px" }} /> 
                       <span>{entry.aiAnalysis}</span>
                     </div>
                   )}

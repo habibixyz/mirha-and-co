@@ -44,6 +44,9 @@ export default function SiteHeader() {
             <Link href="/blog" className="site-header-nav-link">
               {t("nav.blog")}
             </Link>
+            <Link href="/pricing" className="site-header-nav-link">
+              {t("nav.pricing")}
+            </Link>
             <Link href="/about" className="site-header-nav-link">
               {t("nav.about")}
             </Link>
@@ -171,6 +174,14 @@ export default function SiteHeader() {
               onClick={() => setMenuOpen(false)}
             >
               {t("nav.blog")}
+            </Link>
+            <Link
+              href="/pricing"
+              className="hover:text-[#c8473a] transition-colors"
+              style={{ fontSize: "0.75rem", letterSpacing: "0.18em", textTransform: "uppercase", fontWeight: "600", color: "#2b2826", padding: "0.2rem 0", fontFamily: "var(--font-dm-sans), sans-serif" }}
+              onClick={() => setMenuOpen(false)}
+            >
+              {t("nav.pricing")}
             </Link>
             <Link
               href="/about"

@@ -65,6 +65,7 @@ export const DICTIONARY: Record<Locale, Record<string, string>> = {
   en: {
     "nav.ingredients": "Ingredient Checker",
     "nav.blog": "Blog",
+    "nav.pricing": "Pricing",
     "nav.about": "About",
     "nav.dashboard": "Dashboard",
     "hero.eyebrow": "Mirha & Co. / Curated Beauty Intelligence",
@@ -74,11 +75,11 @@ export const DICTIONARY: Record<Locale, Record<string, string>> = {
     "hero.btn.primary": "Explore Picks",
     "hero.btn.secondary": "Check Ingredients",
     "hero.panel.tag": "Editor's Choice",
-    "hero.panel.title": "Curated data, zero noise.",
-    "hero.panel.desc": "We sift through active concentrations, molecular sizing, and expert clinical studies. Select a skin concern to see the actual database facts and build your routine.",
-    "trust.independent": "Deep Ingredient Research",
-    "trust.backed": "Personalized Dashboard",
-    "trust.zero": "Unbiased Curation",
+    "hero.panel.title": "AI Skin Analysis.",
+    "hero.panel.desc": "Our advanced vision model analyzes your unique facial structure, skin type, and specific concerns to instantly map out your optimal, science-backed routine.",
+    "trust.independent": "Advanced Vision AI",
+    "trust.backed": "Instant Analysis",
+    "trust.zero": "Personalized Routine",
     "section.concerns.title": "Target your skin concern",
     "section.concerns.desc": "We specialize in finding options tailored for real-world issues.",
     "section.editor.title": "Editor's Top Picks",
@@ -111,6 +112,7 @@ export const DICTIONARY: Record<Locale, Record<string, string>> = {
   hi: {
     "nav.ingredients": "सामग्री चेकर",
     "nav.blog": "ब्लॉग",
+    "nav.pricing": "मूल्य निर्धारण",
     "nav.about": "हमारे बारे में",
     "nav.dashboard": "डैशबोर्ड",
     "hero.eyebrow": "मिर्हा एंड कंपनी / क्यूरेटेड ब्यूटी इंटेलिजेंस",
@@ -157,6 +159,7 @@ export const DICTIONARY: Record<Locale, Record<string, string>> = {
   ar: {
     "nav.ingredients": "فاحص المكونات",
     "nav.blog": "المدونة",
+    "nav.pricing": "الأسعار",
     "nav.about": "من نحن",
     "nav.dashboard": "لوحة التحكم",
     "hero.eyebrow": "ميرها وشركاؤها / تنظيم ذكي لمنتجات التجميل",
@@ -203,6 +206,7 @@ export const DICTIONARY: Record<Locale, Record<string, string>> = {
   es: {
     "nav.ingredients": "Analizador de Ingredientes",
     "nav.blog": "Blog",
+    "nav.pricing": "Precios",
     "nav.about": "Sobre Nosotros",
     "nav.dashboard": "Panel de Control",
     "hero.eyebrow": "Mirha & Co. / Inteligencia de Belleza Curada",
@@ -249,6 +253,7 @@ export const DICTIONARY: Record<Locale, Record<string, string>> = {
   fr: {
     "nav.ingredients": "Analyseur d'Ingrédients",
     "nav.blog": "Blog",
+    "nav.pricing": "Tarifs",
     "nav.about": "À Propos",
     "nav.dashboard": "Tableau de Bord",
     "hero.eyebrow": "Mirha & Co. / Intelligence Beauté Curatée",

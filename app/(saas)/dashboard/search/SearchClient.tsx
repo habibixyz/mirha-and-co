@@ -4,7 +4,7 @@ import { useMemo, useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 import Link from "next/link";
-import { ArrowRight, Search, Crown, Sparkles, BookOpen, ShoppingBag, Droplets, ExternalLink } from "lucide-react";
+import { ArrowRight, Search, Crown, BookOpen, ShoppingBag, Droplets, ExternalLink, Star } from "lucide-react";
 import { searchMirha } from "@/lib/searchIndex";
 import { SEARCH_INDEX, SearchItem } from "@/lib/searchIndex";
 import { getAISearchAdvice } from "@/app/(saas)/actions";
@@ -28,7 +28,7 @@ function labelFor(type: SearchItem["type"]) {
 function iconFor(type: SearchItem["type"]) {
   if (type === "product") return <ShoppingBag size={24} color="var(--rose)" />;
   if (type === "guide") return <BookOpen size={24} color="var(--rose)" />;
-  if (type === "routine") return <Sparkles size={24} color="var(--rose)" />;
+  if (type === "routine") return <Star size={24} color="var(--rose)" />;
   return <Droplets size={24} color="var(--rose)" />;
 }
 
@@ -43,7 +43,7 @@ function ResultCard({ item, isAiRecommended, isBest }: { item: SearchItem; isAiR
       
       <div className="card-content">
         <div style={{ display: 'flex', gap: '8px', marginBottom: '4px', flexWrap: 'wrap' }}>
-          {isBest && <span className="mirha-choice-badge">✨ Mirha Choice</span>}
+          {isBest && <span className="mirha-choice-badge">⭐ Mirha Choice</span>}
           <span className="type-badge">{labelFor(item.type)}</span>
           {isAiRecommended && <span className="ai-badge">AI Recommended</span>}
         </div>
@@ -646,7 +646,7 @@ export function SearchClient({ isPro }: { isPro: boolean }) {
               Search
             </button>
             <button className="search-btn primary" onClick={() => { handleSearch(); setHasTriggeredAi(true); }} disabled={localQuery.length < 5}>
-              <Sparkles size={14} /> Brain
+              <Star size={14} /> Brain
             </button>
           </div>
         </div>
@@ -672,7 +672,7 @@ export function SearchClient({ isPro }: { isPro: boolean }) {
               You have used your 3 free daily consultations with Mirha Brain. <strong>Upgrade to Pro for 20 daily AI consultations</strong>, custom routines, and premium analysis!
             </p>
             <Link href="/dashboard/subscription" style={{ background: '#c8473a', color: 'white', border: 'none', borderRadius: '12px', padding: '12px 24px', fontSize: '0.9rem', fontWeight: 600, textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', transition: 'all 0.2s', boxShadow: '0 4px 12px rgba(200,71,58,0.3)' }}>
-              <span>✨ Upgrade to Pro</span>
+              <span>⭐ Upgrade to Pro</span>
               <ArrowRight size={16} />
             </Link>
           </div>
@@ -689,10 +689,10 @@ export function SearchClient({ isPro }: { isPro: boolean }) {
         {(isAiLoading || aiAdvice) && (
           <div className="brain-card" style={{ width: '100%', maxWidth: '100%', boxSizing: 'border-box' }}>
             <div className="brain-bg-icon">
-              <Sparkles size={120} color="white" />
+              <Star size={120} color="white" />
             </div>
             <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "1rem" }}>
-              <Sparkles size={20} color="#c8473a" />
+              <Star size={20} color="#c8473a" />
               <span style={{ fontSize: "0.75rem", letterSpacing: "0.15em", textTransform: "uppercase", fontWeight: 700, color: "#c8473a" }}>Mirha Brain Mode</span>
             </div>
             

@@ -2,11 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { 
-  Camera, Upload, Sparkles, Check, 
-  MessageSquare, History, Calendar, CreditCard, 
-  User, Shield, ShieldCheck, Heart, Loader2
-} from "lucide-react";
+import { Camera, Upload, Check, MessageSquare, History, Calendar, CreditCard, User, Shield, ShieldCheck, Heart, Loader2, Star } from "lucide-react";
 import Script from "next/script";
 
 interface UserProfile {
@@ -332,7 +328,7 @@ export function AnalysisClient({
             }}
           >
             <div style={{ display: "inline-flex", padding: "1rem", background: "rgba(200,71,58,0.1)", borderRadius: "50%", marginBottom: "1.5rem" }}>
-              <Sparkles size={32} color="var(--rose)" />
+              <Star size={32} color="var(--rose)" />
             </div>
             
             <h2 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "2rem", margin: "0 0 1rem", color: "var(--ink)" }}>
@@ -567,7 +563,7 @@ export function AnalysisClient({
                           gap: "0.5rem"
                         }}
                       >
-                        <Sparkles size={16} />
+                        <Star size={16} />
                         Scan Face
                       </button>
                     )}

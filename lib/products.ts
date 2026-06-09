@@ -567,7 +567,7 @@ export const PRODUCTS = [
       "Longevity": "12 hours"
     },
     tags: ["kajal", "eyeliner", "smudge-proof", "waterproof", "eyes"],
-    image: "/products/L'Oréal-Paris.jpg",
+    image: "/products/product-20.jpg",
     link: "https://amzn.to/4c9CAUn",
   },
   {
@@ -1038,7 +1038,7 @@ export const PRODUCTS = [
     ingredients: ["Glycerin", "Titanium Dioxide", "Silica"],
     usage: "Dot a small amount on dark circles or marks, then tap with fingers, sponge or brush. Prep dry areas first.",
     watchOuts: ["Shade match matters more than hype. Check undertone before buying."],
-    image: "https://m.media-amazon.com/images/I/31qiRFSiMPL._SY300_SX300_QL70_ML2_.jpg",
+    image: "/products/product-40.jpg",
     link: "https://www.amazon.in/dp/B0046VGJJA?tag=skinwithtanvi-21"
   },
   {
@@ -1067,7 +1067,7 @@ export const PRODUCTS = [
     ingredients: ["Clay", "UV Filters"],
     usage: "Press lightly on oily areas after sunscreen or base makeup. Avoid over-layering on dry patches.",
     watchOuts: ["Shade 115 is light. Pick a deeper shade if your skin tone needs it."],
-    image: "https://m.media-amazon.com/images/I/41u92-iRa6L._SY300_SX300_QL70_ML2_.jpg",
+    image: "/products/product-41.jpg",
     link: "https://www.amazon.in/dp/B08QSQ8T7B?tag=skinwithtanvi-21"
   },
   {
@@ -1096,7 +1096,7 @@ export const PRODUCTS = [
     ingredients: ["Bamboo Extract", "Fibres"],
     usage: "Wiggle from lash root to tip. Remove with cleansing balm or micellar remover, not harsh rubbing.",
     watchOuts: ["Waterproof mascara needs proper removal to avoid lash breakage."],
-    image: "https://m.media-amazon.com/images/I/31CD8jfD8GL._SY300_SX300_QL70_ML2_.jpg",
+    image: "/products/product-42.jpg",
     link: "https://www.amazon.in/dp/B08H46YXYH?tag=skinwithtanvi-21"
   },
   {
@@ -1124,7 +1124,7 @@ export const PRODUCTS = [
     notIdealFor: ["Very dry lips without lip balm", "Medium-deep skin tones if this shade washes you out"],
     usage: "Prep with lip balm, blot excess, then apply. Use a brown/nude liner if the shade looks too pale.",
     watchOuts: ["Customer feedback is mixed for medium to dusky tones, so shade suitability matters."],
-    image: "https://m.media-amazon.com/images/I/31b6F-bQk6L._SY300_SX300_QL70_ML2_.jpg",
+    image: "/products/product-43.jpg",
     link: "https://www.amazon.in/dp/B076PV1SQM?tag=skinwithtanvi-21"
   },
   {
@@ -1153,7 +1153,7 @@ export const PRODUCTS = [
     ingredients: ["Jojoba Seed Oil", "Hydrolyzed Collagen", "Iron Oxides"],
     usage: "Use a tiny amount and build coverage slowly. Blend fast with sponge, brush or fingers.",
     watchOuts: ["Affordable concealers can oxidise or look ashy if the undertone is wrong."],
-    image: "https://m.media-amazon.com/images/I/31AbjJYAMdL._SY300_SX300_QL70_ML2_.jpg",
+    image: "/products/product-44.jpg",
     link: "https://www.amazon.in/dp/B07WTNH18L?tag=skinwithtanvi-21",
   },
   {
@@ -1275,8 +1275,394 @@ export const PRODUCTS = [
     concerns: ["oily skin", "pigmentation"],
     image: "/products/deconstruct_niacinamide.jpg",
     link: "https://www.amazon.in/dp/B08GG9M863?tag=skinwithtanvi-21"
+  },
+
+  // ── Hard Water Shampoos ────────────────────────────────────────────────────
+  {
+    id: 50,
+    name: "Detoxie Hard Water Repair Combo | Shampoo (200ml) + Conditioner (200ml)",
+    brand: "Detoxie",
+    category: "Hair Care",
+    subcat: "Shampoo",
+    mrp: 599,
+    price: 499,
+    rating: 4.2,
+    reviews: "3.4k",
+    asin: "B0CLP4RRPC",
+    badge: "Hard Water Combo",
+    description: "India's most targeted hard water hair solution. Chelating shampoo + conditioner duo that removes calcium and magnesium mineral deposits from city tap water. Reduces hairfall, softens brittle strands, and repairs damage. Sulphate-free and safe for all hair types including children.",
+    specs: {
+      "Key Ingredient": "Chelating Agents, Amla, Bhringraj",
+      "Sulphate-Free": "Yes",
+      "Best For": "Hard water buildup, hairfall, brittle hair",
+      "Pack": "Shampoo 200ml + Conditioner 200ml"
+    },
+    tags: ["hard water", "chelating shampoo", "hair fall", "mineral buildup", "detoxie", "combo"],
+    concerns: ["hair fall", "hard water damage", "scalp health"],
+    image: "/products/product-50.jpg",
+    link: "https://amzn.to/3SfrSE5"
+  },
+  {
+    id: 51,
+    name: "Detoxie Power Cleanse Shampoo 150ml | Anti-Hairfall | Fights Hard Water",
+    brand: "Detoxie",
+    category: "Hair Care",
+    subcat: "Shampoo",
+    mrp: 299,
+    price: 249,
+    rating: 4.1,
+    reviews: "2.1k",
+    asin: "B0H11ZXLMZ",
+    badge: "Daily Use",
+    description: "Daily-use detox shampoo for men and women. Fights sweat, pollution, and hard water buildup in one wash. Powered by Amla, Bhringraj, and Shikakai — classic Ayurvedic hair strengtheners paired with modern chelating actives. Reduces hairfall with consistent use.",
+    specs: {
+      "Key Ingredient": "Amla, Bhringraj, Shikakai",
+      "Hair Type": "All Hair Types",
+      "Size": "150ml",
+      "Best For": "Daily cleanse, pollution + hard water defence"
+    },
+    tags: ["hard water", "daily shampoo", "detoxie", "amla", "bhringraj", "anti-hairfall", "men women"],
+    concerns: ["hair fall", "hard water damage", "scalp health"],
+    image: "/products/product-51.jpg",
+    link: "https://amzn.to/4dZVe1K"
+  },
+  {
+    id: 52,
+    name: "L'Oréal Professionnel Serie Expert Metal DX Anti-Metal Cleansing Cream Shampoo",
+    brand: "L'Oréal Professionnel",
+    category: "Hair Care",
+    subcat: "Shampoo",
+    mrp: 1490,
+    price: 1320,
+    rating: 4.3,
+    reviews: "5.2k",
+    asin: "B09B1FXGR3",
+    badge: "Salon Grade",
+    description: "Professional-grade chelating shampoo that neutralises metal particles — copper, iron, calcium — that hard water and pollution embed into hair. Leaves hair noticeably smoother after the first wash. Preferred by colour-treated hair users in hard water cities like Delhi and Mumbai.",
+    specs: {
+      "Key Ingredient": "Glicoamine (chelating), Citric Acid",
+      "Hair Type": "All, especially colour-treated and damaged",
+      "Best For": "Metal + mineral buildup, dull brittle hair"
+    },
+    tags: ["hard water", "metal detox", "chelating shampoo", "loreal professional", "salon", "colour-safe"],
+    concerns: ["hard water damage", "dull hair", "chemical damage"],
+    image: "/products/product-52.jpg",
+    link: "https://amzn.to/4odVqOk"
+  },
+  {
+    id: 53,
+    name: "L'Oreal Paris Moisture Filling Shampoo with Hyaluronic Acid 650ml",
+    brand: "L'Oréal Paris",
+    category: "Hair Care",
+    subcat: "Shampoo",
+    mrp: 599,
+    price: 504,
+    rating: 4.2,
+    reviews: "8.6k",
+    asin: "B0B6XTD8WW",
+    badge: "Deep Hydration",
+    description: "Hyaluronic acid shampoo that fills and seals dehydrated hair fibres — a direct result of hard water stripping moisture. Adds bounce, shine, and 72-hour hydration. Great follow-up to a weekly chelating shampoo for hard water users wanting soft, manageable hair.",
+    specs: {
+      "Key Ingredient": "Hyaluronic Acid",
+      "Hair Type": "Dry, Dehydrated",
+      "Size": "650ml",
+      "Best For": "Moisture restoration after hard water damage"
+    },
+    tags: ["hard water", "hyaluronic acid", "loreal paris", "moisture", "dry hair", "bounce"],
+    concerns: ["hard water damage", "dry hair", "dull hair"],
+    image: "/products/product-53.jpg",
+    link: "https://amzn.to/3RWb7xG"
+  },
+  {
+    id: 54,
+    name: "L'Oreal Paris Total Repair 5 Shampoo with Pro-Keratin + Ceramide 340ml",
+    brand: "L'Oréal Paris",
+    category: "Hair Care",
+    subcat: "Shampoo",
+    mrp: 399,
+    price: 283,
+    rating: 4.3,
+    reviews: "62.4k",
+    asin: "B008KH31QU",
+    badge: "Top Rated",
+    description: "Targets 5 signs of hair damage: breakage, roughness, dullness, split ends, and dehydration — all of which are made worse by hard water. Pro-Keratin + Ceramide formula strengthens and smooths from root to tip. One of the best-reviewed shampoos on Amazon India.",
+    specs: {
+      "Key Ingredient": "Pro-Keratin, Ceramide",
+      "Hair Type": "Damaged, Weak, Dry",
+      "Size": "340ml",
+      "Best For": "5-damage repair, hard water brittle hair"
+    },
+    tags: ["hard water", "keratin", "ceramide", "loreal paris", "repair", "damaged hair", "bestseller"],
+    concerns: ["hard water damage", "brittle hair", "dull hair"],
+    image: "/products/product-54.jpg",
+    link: "https://amzn.to/43XM6os"
+  },
+  {
+    id: 55,
+    name: "Biotique Bio Soya Protein Fresh Nourishing Shampoo 340ml",
+    brand: "Biotique",
+    category: "Hair Care",
+    subcat: "Shampoo",
+    mrp: 379,
+    price: 319,
+    rating: 4.1,
+    reviews: "14.8k",
+    asin: "B07YWM9WLX",
+    badge: "pH Balanced",
+    description: "Biotique's soya protein shampoo maintains scalp pH balance — important for countering the alkalinity of hard water. Repairs dry and damaged hair, adds shine, and prevents colour fading. Gentle enough for daily use with protein-infused cleansing.",
+    specs: {
+      "Key Ingredient": "Soya Protein, Dandelion Extract",
+      "Hair Type": "All Hair Types",
+      "Size": "340ml",
+      "Best For": "pH balance, dry/damaged hair, colour protection"
+    },
+    tags: ["hard water", "ph balance", "biotique", "soya protein", "daily shampoo", "colour-safe"],
+    concerns: ["hard water damage", "dry hair", "dull hair"],
+    image: "/products/product-55.jpg",
+    link: "https://amzn.to/4eejufm"
+  },
+  {
+    id: 56,
+    name: "Dove Intense Repair Shampoo 340ml",
+    brand: "Dove",
+    category: "Hair Care",
+    subcat: "Shampoo",
+    mrp: 389,
+    price: 324,
+    rating: 4.3,
+    reviews: "41.2k",
+    asin: "B07HB2L7QD",
+    badge: "Bestseller",
+    description: "Dove's Keratin Repair Actives penetrate deep into hair fibres to reconstruct damage from hard water, heat, and chemical treatment. Strengthens and smooths dry, brittle hair. One of the most consistently reviewed repair shampoos on Amazon India at this price.",
+    specs: {
+      "Key Ingredient": "Keratin Repair Actives",
+      "Hair Type": "Dry, Damaged",
+      "Size": "340ml",
+      "Best For": "Brittle, rough, hard-water-damaged hair"
+    },
+    tags: ["hard water", "dove", "damaged hair", "keratin", "repair", "strengthening"],
+    concerns: ["hard water damage", "brittle hair", "dull hair"],
+    image: "/products/product-56.jpg",
+    link: "https://amzn.to/4fAlrVP"
+  },
+  {
+    id: 57,
+    name: "Dove Intense Repair Shampoo 1L",
+    brand: "Dove",
+    category: "Hair Care",
+    subcat: "Shampoo",
+    mrp: 799,
+    price: 685,
+    rating: 4.3,
+    reviews: "38.6k",
+    asin: "B07H9SV624",
+    badge: "Best Value",
+    description: "Same Keratin Repair Actives formula as the 340ml but in a large 1L bottle — the smart buy for Indian households dealing with hard water daily. Repairs dry, damaged, and breakage-prone hair. Mild enough for men and women with frequent wash routines.",
+    specs: {
+      "Key Ingredient": "Keratin Repair Actives",
+      "Hair Type": "Dry, Damaged",
+      "Size": "1 Litre",
+      "Best For": "Daily hard water use, value pack"
+    },
+    tags: ["hard water", "dove", "1 litre", "value", "damaged hair", "keratin", "repair"],
+    concerns: ["hard water damage", "brittle hair", "dull hair"],
+    image: "/products/product-57.jpg",
+    link: "https://amzn.to/4orFvft"
+  },
+  {
+    id: 58,
+    name: "Schwarzkopf Professional Bonacure pH 4.5 Color Freeze Shampoo 250ml",
+    brand: "Schwarzkopf Professional",
+    category: "Hair Care",
+    subcat: "Shampoo",
+    mrp: 1050,
+    price: 900,
+    rating: 4.2,
+    reviews: "3.8k",
+    asin: "B07CH18R7Y",
+    badge: "pH Correcting",
+    description: "Hard water is alkaline — it raises hair's pH and lifts cuticles, causing dryness and colour bleed. This Schwarzkopf pH 4.5 formula directly counteracts that by sealing the cuticle at its ideal acidic range. Best for colour-treated hair in high-TDS cities like Delhi, Gurugram, and Bengaluru.",
+    specs: {
+      "Key Ingredient": "pH 4.5 Active Repair, Citric Acid",
+      "Hair Type": "Colour-treated, highlighted, grey",
+      "Size": "250ml",
+      "Best For": "pH correction, hard water brassiness, colour protection"
+    },
+    tags: ["hard water", "ph balancing", "schwarzkopf", "colour-treated", "brassiness", "salon"],
+    concerns: ["hard water damage", "chemical damage", "dull hair"],
+    image: "/products/product-58.jpg",
+    link: "https://amzn.to/4e0q9v2"
+  },
+  {
+    id: 59,
+    name: "Schwarzkopf Professional Bonacure pH 4.5 Color Freeze Shampoo 1000ml",
+    brand: "Schwarzkopf Professional",
+    category: "Hair Care",
+    subcat: "Shampoo",
+    mrp: 2100,
+    price: 1700,
+    rating: 4.3,
+    reviews: "1.2k",
+    asin: "B07C8Q99LM",
+    badge: "Salon Size",
+    description: "The professional 1000ml salon-size version of the Bonacure pH 4.5 Color Freeze shampoo. Ideal for salons and power users who wash frequently in hard water. Same cuticle-sealing, colour-preserving formula at better per-ml value.",
+    specs: {
+      "Key Ingredient": "pH 4.5 Active Repair, Citric Acid",
+      "Hair Type": "Colour-treated, highlighted",
+      "Size": "1000ml",
+      "Best For": "Salon use, frequent washers in hard water areas"
+    },
+    tags: ["hard water", "ph balancing", "schwarzkopf", "colour-treated", "salon size", "1 litre"],
+    concerns: ["hard water damage", "chemical damage", "dull hair"],
+    image: "/products/product-59.jpg",
+    link: "https://amzn.to/4ea3X07"
+  },
+  {
+    id: 60,
+    name: "Beauty of Joseon Relief Sun Rice + Probiotics 50 ml SPF 50+ PA++++",
+    brand: "Beauty of Joseon",
+    category: "Skincare",
+    subcat: "Sunscreen",
+    mrp: 1550,
+    price: 1350,
+    rating: 4.6,
+    reviews: "15.2k",
+    asin: "B09JVNZVH3",
+    badge: "Korean SPF",
+    description: "Lightweight Korean Sunscreen for Oily Skin. Uses organic chemical filters that leave zero white cast, perfect for brown skin. Enriched with rice extract and probiotics for a gentle, hydrating finish without feeling heavy in humidity.",
+    specs: {
+      "Skin Type": "Oily, Combination, Normal",
+      "Key Ingredient": "Rice Extract 30%, Probiotics",
+      "Use": "AM",
+      "Finish": "Natural, No White Cast"
+    },
+    tags: ["sunscreen", "korean skincare", "spf 50", "no white cast", "beauty of joseon", "oily skin"],
+    concerns: ["pigmentation", "sun protection"],
+    image: "/products/product-60.jpg",
+    link: "https://amzn.to/4oi7A92"
+  },
+  {
+    id: 61,
+    name: "The Face Shop Rice Water Bright Foaming Face Wash 100ml",
+    brand: "The Face Shop",
+    category: "Skincare",
+    subcat: "Cleanser",
+    mrp: 650,
+    price: 600,
+    rating: 4.4,
+    reviews: "22.1k",
+    asin: "B09P51T9FK",
+    badge: "Brightening Wash",
+    description: "Face Wash for Glowing Skin and uneven skin tone. A cult-favourite Korean cleanser that foams luxuriously to remove impurities without stripping the barrier. Ideal for oily and combination Indian skin.",
+    specs: {
+      "Skin Type": "Oily, Combination",
+      "Key Ingredient": "Rice Water Extract, Soapwort",
+      "Use": "AM & PM",
+      "Format": "Foaming"
+    },
+    tags: ["cleanser", "face wash", "korean skincare", "the face shop", "rice water", "oily skin"],
+    concerns: ["dullness", "uneven skin tone", "oiliness"],
+    image: "/products/product-61.jpg",
+    link: "https://amzn.to/4vDJ8RW"
+  },
+  {
+    id: 62,
+    name: "[Beauty of Joseon] Glow Deep Serum Rice + Arbutin (30ml)",
+    brand: "Beauty of Joseon",
+    category: "Skincare",
+    subcat: "Serum",
+    mrp: 1450,
+    price: 1260,
+    rating: 4.5,
+    reviews: "8.3k",
+    asin: "B09DLFCB69",
+    badge: "For Pigmentation",
+    description: "Korean Face Serum for Brightening, Even Skin Tone & Dark Spot Care. Features 68.6% Rice Bran Water and 2% Alpha Arbutin. A gentle but effective alternative to Vitamin C for fading pigmentation in the Indian summer.",
+    specs: {
+      "Skin Type": "All Skin Types",
+      "Key Ingredient": "Rice Bran Water, Alpha Arbutin 2%",
+      "Use": "AM & PM",
+      "Focus": "Brightening"
+    },
+    tags: ["serum", "pigmentation", "alpha arbutin", "beauty of joseon", "korean skincare", "brightening"],
+    concerns: ["pigmentation", "dark spots", "dullness"],
+    image: "/products/product-62.jpg",
+    link: "https://amzn.to/4vBYjLi"
+  },
+  {
+    id: 63,
+    name: "The Face Shop Rice & Ceramide Face Cream 150ml",
+    brand: "The Face Shop",
+    category: "Skincare",
+    subcat: "Moisturiser",
+    mrp: 1100,
+    price: 941,
+    rating: 4.3,
+    reviews: "12.4k",
+    asin: "B07DSC6CWP",
+    badge: "Barrier Repair",
+    description: "Barrier Repair Moisturizer for Dry Skin, Intense Hydration & Strengthening. A rich, ceramide-packed K-beauty cream that provides a 12Hr Moisture Lock. Best used as a night cream or for dry skin types.",
+    specs: {
+      "Skin Type": "Dry, Normal",
+      "Key Ingredient": "Ceramides, Rice Extract",
+      "Use": "PM (or AM for Dry Skin)",
+      "Texture": "Rich Cream"
+    },
+    tags: ["moisturiser", "ceramides", "barrier repair", "the face shop", "korean skincare", "dry skin"],
+    concerns: ["dryness", "barrier damage"],
+    image: "/products/product-63.jpg",
+    link: "https://amzn.to/4v22eBn"
+  },
+  {
+    id: 64,
+    name: "Beauty of Joseon Glow Replenishing Rice Toner (150 Ml)",
+    brand: "Beauty of Joseon",
+    category: "Skincare",
+    subcat: "Toner",
+    mrp: 1500,
+    price: 1350,
+    rating: 4.7,
+    reviews: "4.2k",
+    asin: "B0D44T7RW9",
+    badge: "Watery Hydration",
+    description: "Hydrating & Balancing Facial Toner for Oily and Combination Skin. A watery, lightweight toner that absorbs instantly without stickiness. The perfect first step in an Indian summer K-beauty routine to control sebum and hydrate.",
+    specs: {
+      "Skin Type": "Oily, Combination",
+      "Key Ingredient": "Rice Extract, Niacinamide",
+      "Use": "AM & PM",
+      "Texture": "Watery"
+    },
+    tags: ["toner", "hydration", "beauty of joseon", "korean skincare", "rice toner", "oily skin"],
+    concerns: ["dehydration", "oiliness"],
+    image: "/products/product-64.jpg",
+    link: "https://amzn.to/4fvJzJe"
+  },
+  {
+    id: 65,
+    name: "SeoulCeuticals Korean Snail Mucin Serum – 97.5% Snail Serum",
+    brand: "SeoulCeuticals",
+    category: "Skincare",
+    subcat: "Serum",
+    mrp: 2800,
+    price: 2450,
+    rating: 4.5,
+    reviews: "35k",
+    asin: "B08XV3KZ84",
+    badge: "Snail Mucin",
+    description: "97.5% Snail Serum with Hyaluronic Acid & Centella. Anti Wrinkle & Anti Aging Serum for Face. A highly concentrated mucin formulation that deeply hydrates and repairs the skin barrier without feeling occlusive.",
+    specs: {
+      "Skin Type": "All Skin Types",
+      "Key Ingredient": "Snail Mucin 97.5%, Centella, HA",
+      "Use": "AM or PM",
+      "Focus": "Repair & Hydration"
+    },
+    tags: ["serum", "snail mucin", "seoulceuticals", "korean skincare", "centella", "anti-aging"],
+    concerns: ["barrier damage", "dehydration", "fine lines"],
+    image: "/products/product-65.jpg",
+    link: "https://amzn.to/3Q6C1T0"
   }
 ];
+
 
 export function getProductAffiliateUrl(product: any, countryCode?: string): string {
   // [TEMPORARILY DISABLED] International Awin links are on hold pending Payoneer setup.

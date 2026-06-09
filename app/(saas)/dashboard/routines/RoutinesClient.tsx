@@ -2,13 +2,14 @@
 
 import { useState, useTransition } from "react";
 import { motion, Reorder } from "framer-motion";
-import { Plus, GripVertical, Trash2, Check, X, Save } from "lucide-react";
+import { Plus, GripVertical, Trash2, Check, X, Save, Share2 } from "lucide-react";
 import { saveRoutine, updateRoutine, getDashboardData, deleteRoutine } from "../../actions";
 
 export function RoutinesClient({ initialRoutines }: { initialRoutines: any[] }) {
   const [routines, setRoutines] = useState(initialRoutines);
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
+  const [sharedId, setSharedId] = useState<string | null>(null);
 
   const handleAddRoutine = () => {
     const newRoutine = {
@@ -26,6 +27,17 @@ export function RoutinesClient({ initialRoutines }: { initialRoutines: any[] }) 
       startTransition(async () => {
         await deleteRoutine(id);
       });
+    }
+  };
+
+  const handleShareRoutine = async (routine: any) => {
+    const url = `${window.location.origin}/routine/share?name=${encodeURIComponent(routine.name)}&steps=${encodeURIComponent(JSON.stringify(routine.steps))}`;
+    try {
+      await navigator.clipboard.writeText(url);
+      setSharedId(routine.id);
+      setTimeout(() => setSharedId(null), 2000);
+    } catch (err) {
+      console.error("Failed to copy share link:", err);
     }
   };
 
@@ -210,8 +222,29 @@ export function RoutinesClient({ initialRoutines }: { initialRoutines: any[] }) 
                     display: "flex",
                     transition: "all 0.2s"
                   }}
+                  title="Save Routine"
                 >
                   <Save size={18} />
+                </motion.button>
+                <motion.button
+                  whileHover={{ scale: 1.1, background: "rgba(79, 70, 229, 0.1)", color: "#4f46e5" }}
+                  whileTap={{ scale: 0.9 }}
+                  onClick={() => handleShareRoutine(routine)}
+                  disabled={routine.isNew}
+                  style={{ 
+                    background: "rgba(0,0,0,0.03)", 
+                    border: "none", 
+                    cursor: "pointer", 
+                    color: "var(--dash-muted)", 
+                    padding: "10px", 
+                    borderRadius: "14px",
+                    display: "flex",
+                    transition: "all 0.2s",
+                    opacity: routine.isNew ? 0.4 : 1
+                  }}
+                  title="Share Routine Link"
+                >
+                  {sharedId === routine.id ? <Check size={18} style={{ color: "#059669" }} /> : <Share2 size={18} />}
                 </motion.button>
                 <motion.button
                   whileHover={{ scale: 1.1, background: "rgba(200, 71, 58, 0.1)", color: "var(--dash-accent)" }}
@@ -228,6 +261,7 @@ export function RoutinesClient({ initialRoutines }: { initialRoutines: any[] }) 
                     display: "flex",
                     transition: "all 0.2s"
                   }}
+                  title="Delete Routine"
                 >
                   <Trash2 size={18} />
                 </motion.button>

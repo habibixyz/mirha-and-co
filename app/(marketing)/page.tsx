@@ -8,7 +8,7 @@ import { PRODUCTS } from "@/lib/products";
 import { useGlobalization } from "@/components/GlobalizationContext";
 import dynamic from "next/dynamic";
 
-const WellnessAuraCanvas = dynamic(() => import("@/components/WellnessAuraCanvas"), {
+const FaceScannerUI = dynamic(() => import("@/components/FaceScannerUI"), {
   ssr: false,
 });
 
@@ -1090,7 +1090,7 @@ export default function BeautyShopPage() {
 
           <div className="hero-panel" style={{ order: isRtl ? 1 : 2 }}>
             <div className="hero-image" style={{ background: "#fffaf4" }}>
-              <WellnessAuraCanvas />
+              <FaceScannerUI />
             </div>
             <div className="hero-panel-body">
               <h2>{t("hero.panel.title")}</h2>

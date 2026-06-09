@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ArrowRight, Droplet, MapPin, Sparkles, Share2, Check, Mail, ArrowLeft } from "lucide-react";
+import { ArrowRight, Droplet, MapPin, Share2, Check, Mail, ArrowLeft, Star } from "lucide-react";
 import { PRODUCTS } from "@/lib/products";
 import Image from "next/image";
 import { submitLeadAction } from "@/app/(saas)/actions";
@@ -95,45 +95,49 @@ export default function HardWaterCalculator() {
 
   // Recommendations matching with our actual products database
   const getHardWaterRecommendations = () => {
-    // 1. WOW Apple Cider Vinegar Shampoo (WOW ACV Shampoo, ASIN B09M8NN8DQ) - Chelating wash
-    const shampoo = PRODUCTS.find(p => p.asin === "B09M8NN8DQ");
-    // 2. Cetaphil Moisturising Cream (ASIN B099MJH88B) - Skin barrier repair
-    const cream = PRODUCTS.find(p => p.asin === "B099MJH88B");
-    
+    const detoxieCombo  = PRODUCTS.find(p => p.asin === "B0CLP4RRPC");  // Detoxie Hard Water Combo
+    const detoxiePower  = PRODUCTS.find(p => p.asin === "B0H11ZXLMZ");  // Detoxie Power Cleanse
+    const lorealMetal   = PRODUCTS.find(p => p.asin === "B09B1FXGR3");  // L'Oréal Metal DX
+    const cream         = PRODUCTS.find(p => p.asin === "B099MJH88B");  // Cetaphil barrier cream
+
     return {
-      shampoo: shampoo || {
-        name: "WOW Skin Science Apple Cider Vinegar Shampoo",
-        brand: "WOW Skin Science",
-        description: "Balances scalp pH, removes calcium deposits and stubborn mineral build-up. Sulphate & silicone free.",
-        price: 319,
-        mrp: 374,
-        asin: "B09M8NN8DQ",
-        image: "/products/Wow-Skin.jpg",
-        link: "https://amzn.to/4tCPAaS"
+      chelatingCombo: detoxieCombo || {
+        name: "Detoxie Hard Water Repair Combo",
+        brand: "Detoxie",
+        description: "Chelating shampoo + conditioner that removes calcium & magnesium deposits. Reduces hairfall and softens brittle strands. Safe for daily use.",
+        price: 499, mrp: 599,
+        image: "https://m.media-amazon.com/images/I/71vrYex5sYL._SL300_.jpg",
+        link: "https://amzn.to/3SfrSE5"
+      },
+      chelatingPro: lorealMetal || {
+        name: "L'Oréal Professionnel Metal DX Shampoo",
+        brand: "L'Oréal Professionnel",
+        description: "Professional-grade chelating shampoo. Neutralises copper, iron, and calcium embedded in hair by hard water. Ideal for colour-treated hair.",
+        price: 1320, mrp: 1490,
+        image: "https://m.media-amazon.com/images/I/61WbDYJgnpL._SL300_.jpg",
+        link: "https://amzn.to/4odVqOk"
+      },
+      dailyMaintain: detoxiePower || {
+        name: "Detoxie Power Cleanse Shampoo",
+        brand: "Detoxie",
+        description: "Daily-use detox shampoo with Amla, Bhringraj & Shikakai. Fights sweat, pollution, and hard water buildup every wash.",
+        price: 249, mrp: 299,
+        image: "https://m.media-amazon.com/images/I/61uVXRviVgL._SL300_.jpg",
+        link: "https://amzn.to/4dZVe1K"
       },
       barrierCream: cream || {
-        name: "Cetaphil Moisturising Cream",
+        name: "Cetaphil Moisturising Cream 250g",
         brand: "Cetaphil",
-        description: "Intense moisture barrier support. Hydrates and repairs skin irritated and dried out by hard water salts.",
-        price: 1317,
-        mrp: 1349,
-        asin: "B099MJH88B",
+        description: "Intense moisture barrier support. Hydrates and repairs skin dried out by hard water mineral salts.",
+        price: 1317, mrp: 1349,
         image: "/products/Cetaphil-Moisturisingz.jpg",
         link: "https://amzn.to/3NYBSQA"
       },
-      filter: {
-        name: "WaterScience CLEO Shower & Tap Filter",
-        brand: "WaterScience",
-        description: "Reduces chlorine and filters hardness minerals. Heavy-duty KDF media for Indian municipal & groundwater conditions.",
-        price: 2495,
-        mrp: 2995,
-        image: "/products/waterscience-filter.jpg", // Fallback placeholder
-        link: "https://amzn.to/3eCleoSF"
-      }
     };
   };
 
   const recs = getHardWaterRecommendations();
+
 
   // Share result to WhatsApp
   const handleShareWhatsApp = () => {
@@ -773,7 +777,7 @@ export default function HardWaterCalculator() {
                   style={{ flex: 2, marginTop: 0 }}
                   onClick={() => setStep(3)}
                 >
-                  Analyze My Water Risk <Sparkles size={16} />
+                  Analyze My Water Risk <Star size={16} />
                 </button>
               </div>
             </div>
@@ -812,53 +816,85 @@ export default function HardWaterCalculator() {
                 <div className="recs-section">
                   <h3>Your Hard Water Rescue Routine</h3>
                   <div className="recs-grid">
-                    {/* Chelating Shampoo */}
+
+                    {/* Step 1: Weekly Chelating Combo */}
                     <div className="rec-card">
+                      <img
+                        src={recs.chelatingCombo.image}
+                        alt={recs.chelatingCombo.name}
+                        style={{ width: "100%", height: "140px", objectFit: "contain", borderRadius: "8px", marginBottom: "12px", background: "#f9f5f0" }}
+                      />
                       <div>
-                        <div className="rec-badge">Step 1: Chelating Wash</div>
-                        <h4 className="rec-name">{recs.shampoo.name}</h4>
-                        <div className="rec-brand">By {recs.shampoo.brand}</div>
-                        <p className="rec-desc">{recs.shampoo.description}</p>
+                        <div className="rec-badge">Step 1 · Weekly Chelate</div>
+                        <h4 className="rec-name">{recs.chelatingCombo.name}</h4>
+                        <div className="rec-brand">By {recs.chelatingCombo.brand}</div>
+                        <p className="rec-desc">{recs.chelatingCombo.description}</p>
                       </div>
                       <div className="rec-price-row">
-                        <span className="rec-price">₹{recs.shampoo.price}</span>
-                        <a href={recs.shampoo.link} target="_blank" rel="noopener noreferrer" className="rec-link">
-                          Shop on Amazon
-                        </a>
+                        <span className="rec-price">₹{recs.chelatingCombo.price}</span>
+                        <a href={recs.chelatingCombo.link} target="_blank" rel="noopener noreferrer" className="rec-link">Shop →</a>
                       </div>
                     </div>
 
-                    {/* Barrier Cream */}
+                    {/* Step 2: Daily Maintain */}
                     <div className="rec-card">
+                      <img
+                        src={recs.dailyMaintain.image}
+                        alt={recs.dailyMaintain.name}
+                        style={{ width: "100%", height: "140px", objectFit: "contain", borderRadius: "8px", marginBottom: "12px", background: "#f9f5f0" }}
+                      />
                       <div>
-                        <div className="rec-badge">Step 2: Barrier Restore</div>
+                        <div className="rec-badge">Step 2 · Daily Wash</div>
+                        <h4 className="rec-name">{recs.dailyMaintain.name}</h4>
+                        <div className="rec-brand">By {recs.dailyMaintain.brand}</div>
+                        <p className="rec-desc">{recs.dailyMaintain.description}</p>
+                      </div>
+                      <div className="rec-price-row">
+                        <span className="rec-price">₹{recs.dailyMaintain.price}</span>
+                        <a href={recs.dailyMaintain.link} target="_blank" rel="noopener noreferrer" className="rec-link">Shop →</a>
+                      </div>
+                    </div>
+
+                    {/* Step 3: Barrier Cream */}
+                    <div className="rec-card">
+                      <img
+                        src={recs.barrierCream.image}
+                        alt={recs.barrierCream.name}
+                        style={{ width: "100%", height: "140px", objectFit: "contain", borderRadius: "8px", marginBottom: "12px", background: "#f9f5f0" }}
+                      />
+                      <div>
+                        <div className="rec-badge">Step 3 · Skin Barrier</div>
                         <h4 className="rec-name">{recs.barrierCream.name}</h4>
                         <div className="rec-brand">By {recs.barrierCream.brand}</div>
                         <p className="rec-desc">{recs.barrierCream.description}</p>
                       </div>
                       <div className="rec-price-row">
                         <span className="rec-price">₹{recs.barrierCream.price}</span>
-                        <a href={recs.barrierCream.link} target="_blank" rel="noopener noreferrer" className="rec-link">
-                          Shop on Amazon
-                        </a>
+                        <a href={recs.barrierCream.link} target="_blank" rel="noopener noreferrer" className="rec-link">Shop →</a>
                       </div>
                     </div>
 
-                    {/* Physical Defense */}
-                    <div className="rec-card">
-                      <div>
-                        <div className="rec-badge">Step 3: Source Filter</div>
-                        <h4 className="rec-name">{recs.filter.name}</h4>
-                        <div className="rec-brand">By {recs.filter.brand}</div>
-                        <p className="rec-desc">{recs.filter.description}</p>
+                    {/* Upgrade rec: Pro salon shampoo, only for extreme risk */}
+                    {results.score >= 75 && (
+                      <div className="rec-card" style={{ borderColor: "rgba(200,71,58,0.3)", background: "#fffaf8" }}>
+                        <img
+                          src={recs.chelatingPro.image}
+                          alt={recs.chelatingPro.name}
+                          style={{ width: "100%", height: "140px", objectFit: "contain", borderRadius: "8px", marginBottom: "12px", background: "#f9f5f0" }}
+                        />
+                        <div>
+                          <div className="rec-badge" style={{ background: "#c8473a", color: "#fff" }}>Extreme Risk Upgrade</div>
+                          <h4 className="rec-name">{recs.chelatingPro.name}</h4>
+                          <div className="rec-brand">By {recs.chelatingPro.brand}</div>
+                          <p className="rec-desc">{recs.chelatingPro.description}</p>
+                        </div>
+                        <div className="rec-price-row">
+                          <span className="rec-price">₹{recs.chelatingPro.price}</span>
+                          <a href={recs.chelatingPro.link} target="_blank" rel="noopener noreferrer" className="rec-link">Shop →</a>
+                        </div>
                       </div>
-                      <div className="rec-price-row">
-                        <span className="rec-price">₹{recs.filter.price}</span>
-                        <a href={recs.filter.link} target="_blank" rel="noopener noreferrer" className="rec-link">
-                          Shop on Amazon
-                        </a>
-                      </div>
-                    </div>
+                    )}
+
                   </div>
                 </div>
               )}

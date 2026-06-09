@@ -14,6 +14,17 @@ export type Post = {
 
 export const POSTS: Post[] = [
   {
+    category: "BEAUTY",
+    title: "Why Your Korean Skincare Routine Is Breaking You Out in India",
+    excerpt: "The climate mismatch between Seoul and Mumbai, and why the viral 10-step glass skin routine requires a different approach for Indian skin types.",
+    slug: "why-korean-skincare-fails-indian-skin",
+    readTime: "8 min",
+    date: "June 2026",
+    productCount: 3,
+    thumbnail: "KS",
+    tags: ["korean skincare", "glass skin", "oily skin", "indian climate", "closed comedones", "kbeauty"],
+  },
+  {
     category: "WELLNESS",
     title: "Wellness for Builders: How Founders Quiet Their Nervous System",
     excerpt: "Startup burnout isn't a mindset problem. It's a nervous system problem. A practical guide to sleep, cortisol, and micro habits for founders, developers, and high-output builders.",
