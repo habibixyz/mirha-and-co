@@ -67,177 +67,321 @@ export default async function CategoryPage({
   const meta = catMeta[slug];
 
   if (!meta) {
+    return (
+      <main style={{ padding: "6rem", textAlign: "center", background: "#faf8f5", minHeight: "100vh" }}>
+        <h1 style={{ fontFamily: "var(--font-playfair), serif" }}>Category Not Found</h1>
+        <Link href="/blog" style={{ color: "#a27b5c", letterSpacing: "0.15em", textTransform: "uppercase", fontSize: "0.75rem", fontFamily: "monospace", textDecoration: "none" }}>← Back to Journal</Link>
+      </main>
+    );
+  }
+
+  const hashString = (str: string) => {
+    let hash = 0;
+    for (let i = 0; i < str.length; i++) {
+      hash = (hash << 5) - hash + str.charCodeAt(i);
+      hash |= 0;
+    }
+    return Math.abs(hash);
+  };
+
+  const getRelevantImage = (postSlug: string, title: string, category: string): string => {
+    const text = `${postSlug} ${title}`.toLowerCase();
+    if (text.includes('amazon') || text.includes('budget') || text.includes('buy')) return "/blog-thumbs/photo_amazon.png";
+    if (text.includes('makeup') || text.includes('concealer') || text.includes('kit')) return "/blog-thumbs/photo_makeup.png";
+    if (text.includes('hair') || text.includes('shampoo') || text.includes('water')) {
+      if (hashString(postSlug) % 2 === 0) return "/blog-thumbs/photo_hair.png";
+      return "/blog-thumbs/photo_shampoo.png";
+    }
+    if (text.includes('korean') || text.includes('glass')) return "/blog-thumbs/photo_korean.png";
+    if (text.includes('routine') || text.includes('beginner') || text.includes('girl')) return "/blog-thumbs/photo_girl.png";
+    if (text.includes('wellness') || text.includes('sleep') || text.includes('brain')) return "/blog-thumbs/wellness_2.png";
+    
+    const pools = {
+      BEAUTY: ["/blog-thumbs/photo_beauty.png", "/blog-thumbs/beauty.png", "/blog-thumbs/beauty_2.png"],
+      WELLNESS: ["/blog-thumbs/wellness.png", "/blog-thumbs/wellness_2.png"],
+      LIFESTYLE: ["/blog-thumbs/photo_amazon.png", "/blog-thumbs/lifestyle.png"],
+      SKINCARE: ["/blog-thumbs/photo_girl.png", "/blog-thumbs/photo_korean.png", "/blog-thumbs/skincare.png", "/blog-thumbs/skincare_2.png", "/blog-thumbs/skincare_3.png"],
+      HAIR: ["/blog-thumbs/photo_hair.png", "/blog-thumbs/hair.png", "/blog-thumbs/hair_2.png"],
+      MAKEUP: ["/blog-thumbs/photo_makeup.png", "/blog-thumbs/beauty.png"]
+    };
+    
+    const pool = pools[category as keyof typeof pools] || pools.SKINCARE;
+    return pool[hashString(postSlug) % pool.length];
+  };
+
+  const posts = POSTS.filter((p) => p.category.toLowerCase() === slug).map((p) => ({
+    ...p,
+    imageSrc: getRelevantImage(p.slug, p.title, p.category)
+  }));
+
+  const featured = posts[0];
+  const gridPosts = posts.slice(1);
+
   return (
-    <main style={{ padding: "6rem", textAlign: "center" }}>
-      <h1>Category Not Found</h1>
-      <Link href="/blog">← Blog</Link>
+    <main className="journal-page">
+      <style>{`
+        *, *::before, *::after { box-sizing: border-box; }
+        .journal-page { 
+          background-color: #faf8f5; 
+          background-image: 
+            radial-gradient(circle at 15% 5%, rgba(200,71,58,0.04) 0%, transparent 45%),
+            radial-gradient(circle at 85% 30%, rgba(162,123,92,0.03) 0%, transparent 55%);
+          color: #2b2826; 
+          min-height: 100vh; 
+        }
+        
+        .cat-hero {
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 6rem 2.5rem 3rem;
+          border-bottom: 1px solid #ded7cf;
+        }
+
+        .cat-title {
+          font-family: var(--font-playfair), serif;
+          font-size: clamp(3rem, 6vw, 5.2rem);
+          line-height: 1.05;
+          font-weight: 700;
+          letter-spacing: -0.02em;
+          margin: 0 0 1.2rem;
+        }
+
+        .cat-desc {
+          max-width: 580px;
+          color: #6f6963;
+          line-height: 1.8;
+          font-size: 1.05rem;
+          margin: 0;
+        }
+
+        .cat-back {
+          font-family: var(--font-dm-sans), sans-serif;
+          font-size: 0.65rem;
+          letter-spacing: 0.3em;
+          text-transform: uppercase;
+          color: #a27b5c;
+          margin-bottom: 2rem;
+          font-weight: 700;
+          display: inline-block;
+          text-decoration: none;
+        }
+
+        .featured-band {
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 4rem 2.5rem 1rem;
+        }
+
+        .featured-card {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          border: 1px solid #e8ded6;
+          background: #fff;
+          text-decoration: none;
+          color: #111;
+          border-radius: 24px;
+          overflow: hidden;
+          transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+          box-shadow: 0 10px 30px rgba(0,0,0,0.01);
+          min-height: 400px;
+        }
+
+        .featured-card:hover {
+          transform: translateY(-4px);
+          box-shadow: 0 25px 50px rgba(162, 123, 92, 0.06);
+          border-color: rgba(162, 123, 92, 0.3);
+        }
+
+        .featured-image {
+          width: 100%;
+          height: 100%;
+          background: #fbf7f1;
+        }
+        
+        .featured-image img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+
+        .featured-main { padding: 3.5rem; display: flex; flex-direction: column; justify-content: center; }
+        
+        .featured-main h2 {
+          font-family: var(--font-playfair), serif;
+          font-size: clamp(1.8rem, 4vw, 2.5rem);
+          font-weight: 700;
+          line-height: 1.15;
+          margin: 0 0 1rem;
+        }
+
+        .featured-main p {
+          color: #6f6963;
+          line-height: 1.75;
+          margin: 0 0 2rem;
+          font-size: 0.95rem;
+        }
+        
+        .featured-meta {
+          color: #9b8e83;
+          font-size: 0.7rem;
+          letter-spacing: 0.15em;
+          text-transform: uppercase;
+          font-weight: 600;
+        }
+
+        .article-section {
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 3rem 2.5rem 6rem;
+        }
+
+        .article-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 2rem;
+        }
+
+        .article-card {
+          background: #fff;
+          color: #111;
+          text-decoration: none;
+          padding: 1.5rem;
+          min-height: 320px;
+          border: 1px solid #e8ded6;
+          border-radius: 20px;
+          display: flex;
+          flex-direction: column;
+          transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+          box-shadow: 0 5px 15px rgba(0,0,0,0.01);
+          overflow: hidden;
+        }
+
+        .article-card:hover { 
+          background: #fff; 
+          transform: translateY(-4px);
+          border-color: rgba(162, 123, 92, 0.3);
+          box-shadow: 0 20px 40px rgba(162, 123, 92, 0.05);
+        }
+
+        .article-icon {
+          width: 100%;
+          height: 180px;
+          border-radius: 12px;
+          background: #fbf7f1;
+          overflow: hidden;
+          margin-bottom: 1.2rem;
+        }
+
+        .article-icon img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          transition: transform 0.5s ease;
+        }
+
+        .article-card:hover .article-icon img {
+          transform: scale(1.05);
+        }
+
+        .article-cat {
+          font-family: var(--font-dm-sans), sans-serif;
+          font-size: 0.6rem;
+          letter-spacing: 0.25em;
+          text-transform: uppercase;
+          font-weight: 700;
+          margin: 0 0 0.75rem;
+        }
+
+        .article-card h3 {
+          font-family: var(--font-playfair), serif;
+          font-size: 1.3rem;
+          line-height: 1.3;
+          font-weight: 700;
+          margin: 0 0 0.8rem;
+          color: #111;
+        }
+
+        .article-card p {
+          color: #6f6963;
+          font-size: 0.88rem;
+          line-height: 1.7;
+          margin: 0;
+        }
+
+        .article-meta {
+          margin-top: auto;
+          padding-top: 1.2rem;
+          border-top: 1px solid #f2ebe4;
+          display: flex;
+          gap: 0.8rem;
+          flex-wrap: wrap;
+          color: #9b8e83;
+          font-size: 0.65rem;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          font-weight: 500;
+        }
+
+        @media (max-width: 980px) {
+          .featured-card { grid-template-columns: 1fr; }
+          .featured-image { height: 250px; }
+          .article-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 640px) {
+          .article-grid { grid-template-columns: 1fr; gap: 1rem; }
+          .cat-hero, .featured-band, .article-section { padding-left: 1.4rem; padding-right: 1.4rem; }
+          .featured-main { padding: 2rem 1.5rem; }
+        }
+      `}</style>
+
+      <section className="cat-hero">
+        <Link href="/blog" className="cat-back">
+          ← Back to Journal
+        </Link>
+        <h1 className="cat-title" style={{ color: meta.color }}>
+          {meta.label}
+        </h1>
+        <p className="cat-desc">{meta.description}</p>
+      </section>
+
+      {featured && (
+        <section className="featured-band">
+          <Link href={`/blog/${featured.slug}`} className="featured-card">
+            <div className="featured-image">
+              <img src={featured.imageSrc} alt={featured.title} />
+            </div>
+            <div className="featured-main">
+              <h2>{featured.title}</h2>
+              <p>{featured.excerpt}</p>
+              <div className="featured-meta">
+                <span>{featured.date}</span> · <span>{featured.readTime}</span>
+              </div>
+            </div>
+          </Link>
+        </section>
+      )}
+
+      {gridPosts.length > 0 && (
+        <section className="article-section">
+          <div className="article-grid">
+            {gridPosts.map((post) => (
+              <Link key={post.slug} href={`/blog/${post.slug}`} className="article-card">
+                <div className="article-icon">
+                  <img src={post.imageSrc} alt={post.category} />
+                </div>
+                <p className="article-cat" style={{ color: meta.color }}>{meta.label}</p>
+                <h3>{post.title}</h3>
+                <p>{post.excerpt}</p>
+                <div className="article-meta">
+                  <span>{post.date}</span>
+                  <span>{post.readTime}</span>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
     </main>
-  );
-}
-
-  const posts = POSTS.filter((p) => p.category.toLowerCase() === slug);
-
-  return (
-    <main>
-  <section className="cat-hero">
-    <Link href="/blog" className="cat-back">
-      ← Blog
-    </Link>
-
-    <h1 className="cat-title" style={{ color: meta.color }}>
-      {meta.label}
-    </h1>
-
-    <p className="cat-desc">{meta.description}</p>
-  </section>
-
-  {/* FEATURED POST */}
-  {posts[0] && (
-    <section className="cat-featured">
-      <Link href={`/blog/${posts[0].slug}`} className="featured-card">
-        <h2>{posts[0].title}</h2>
-        <p>{posts[0].excerpt}</p>
-        <span>{posts[0].date} · {posts[0].readTime}</span>
-      </Link>
-    </section>
-  )}
-
-  {/* GRID */}
-  <section className="cat-grid">
-    {posts.slice(1).map((post) => (
-      <Link key={post.slug} href={`/blog/${post.slug}`} className="cat-card">
-        <h3>{post.title}</h3>
-        <p>{post.excerpt}</p>
-        <span>{post.date} · {post.readTime}</span>
-      </Link>
-    ))}
-  </section>
-
-  <style>{`
-    main {
-      background: var(--white);
-    }
-
-    /* HERO */
-    .cat-hero {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 5rem 2rem 3rem;
-      border-bottom: 1px solid #eee;
-    }
-
-    .cat-title {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(3rem, 7vw, 6rem);
-      letter-spacing: 0.05em;
-      margin-bottom: 1rem;
-    }
-
-    .cat-desc {
-      font-family: 'DM Serif Display', serif;
-      font-size: 1.1rem;
-      color: #777;
-      max-width: 500px;
-      line-height: 1.6;
-    }
-
-    .cat-back {
-      font-size: 0.7rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: #999;
-      display: inline-block;
-      margin-bottom: 2rem;
-      text-decoration: none;
-    }
-
-    /* FEATURED */
-    .cat-featured {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 3rem 2rem;
-      border-bottom: 1px solid #eee;
-    }
-
-    .featured-card {
-      text-decoration: none;
-      color: black;
-      display: block;
-    }
-
-    .featured-card h2 {
-      font-family: 'DM Serif Display', serif;
-      font-size: 2rem;
-      line-height: 1.3;
-      margin-bottom: 1rem;
-    }
-
-    .featured-card p {
-      color: #666;
-      margin-bottom: 1rem;
-      max-width: 600px;
-    }
-
-    .featured-card span {
-      font-size: 0.7rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: #999;
-    }
-
-    /* GRID */
-    .cat-grid {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 3rem 2rem 5rem;
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 3rem;
-    }
-
-    .cat-card {
-      text-decoration: none;
-      color: black;
-      border-top: 1px solid #eee;
-      padding-top: 1.5rem;
-      transition: 0.2s;
-    }
-
-    .cat-card:hover {
-      border-color: ${meta.color};
-    }
-
-    .cat-card h3 {
-      font-family: 'DM Serif Display', serif;
-      font-size: 1.2rem;
-      margin-bottom: 0.5rem;
-      line-height: 1.4;
-    }
-
-    .cat-card p {
-      font-size: 0.9rem;
-      color: #666;
-      margin-bottom: 0.8rem;
-    }
-
-    .cat-card span {
-      font-size: 0.65rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: #999;
-    }
-
-    /* MOBILE */
-    @media (max-width: 768px) {
-      .cat-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .featured-card h2 {
-        font-size: 1.5rem;
-      }
-    }
-  `}</style>
-</main>
   );
 }

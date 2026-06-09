@@ -57,6 +57,7 @@ const SYNONYMS: Record<string, string[]> = {
   sensitive: ["sensitive", "irritated", "irritation", "reactive", "delicate"],
   pigmentation: ["pigmentation", "dark spots", "hyperpigmentation", "acne marks", "post-acne", "tan", "discoloration", "marks", "melasma", "tanning", "vitamin c", "arbutin", "kojic", "glycolic"],
   aging: ["aging", "anti-aging", "fine lines", "wrinkles", "mature", "age spots"],
+  pregnancy: ["pregnancy", "pregnant", "maternity", "expecting", "baby"],
   
   // Ingredients
   sunscreen: ["sunscreen", "spf", "sun protection", "uv", "uva", "uvb", "spf 30", "spf 50"],
@@ -95,7 +96,8 @@ const CONCERN_MAP: Record<string, string[]> = {
   sweat: ["guide-humidity-skincare-india", "ingredient-niacinamide", "ingredient-salicylic", "product-B0CW1N7QRT"],
   monsoon: ["guide-humidity-skincare-india", "ingredient-niacinamide", "ingredient-salicylic", "product-B0CW1N7QRT"],
   fungal: ["guide-humidity-skincare-india", "ingredient-niacinamide", "ingredient-salicylic"],
-  sleep: ["guide-indian-night-routine-better-sleep", "product-B01DQV8BIM", "ingredient-ceramide", "ingredient-retinol"],
+  sleep: ["guide-indian-night-routine-better-sleep", "guide-evening-wind-down-routine", "product-B01DQV8BIM", "ingredient-ceramide", "ingredient-retinol"],
+  pregnancy: ["guide-pregnancy-safe-skincare-guide", "ingredient-niacinamide", "product-B01CCGW4OE", "product-B0DH88LZ11"],
   sunscreen: ["product-reequil-sunscreen", "guide-best-sunscreen-oily-skin-india", "guide-best-sunscreens-india-2026"],
   moisturiser: ["ingredient-ceramide", "guide-best-moisturisers-india-2026"],
   niacinamide: ["ingredient-niacinamide", "product-minimalist-niacinamide", "guide-best-niacinamide-serums-india"],
@@ -551,6 +553,7 @@ const TIPS: Record<string, string> = {
   monsoon: "Monsoon humidity can trigger fungal breakouts. Swap rich face oils for non-comedogenic gel formulas and use gentle salicylic acid cleansers.",
   fungal: "For fungal acne, avoid fatty acids and rich plant oils. Use malassezia-safe hydrators like squalane or niacinamide, and try an antifungal wash.",
   sleep: "A realistic night routine improves your sleep, cortisol levels, and skin repair. Focus on warm light, magnesium glycinate, a warm shower, and a simple 3-step skincare routine.",
+  pregnancy: "During pregnancy, strictly avoid all retinoids, hydroquinone, and high-dose salicylic acid. Stick to pregnancy-safe actives like Azelaic Acid, Vitamin C, and 100% mineral sunscreen to manage hormonal acne and melasma safely.",
   sunscreen: "Never skip sunscreen. It prevents UV damage, hyperpigmentation, and premature aging. For Indian skin, look for a non-greasy, broad-spectrum SPF 50 PA++++ chemical or hybrid formula with no white cast.",
   moisturiser: "A moisturiser is essential for all skin types. Oily skin benefits from lightweight gel-based formulas (like humectants with hyaluronic acid), while dry skin requires barrier support with cream-based ceramides.",
   niacinamide: "Niacinamide (Vitamin B3) is a powerhouse ingredient that controls oil production, minimizes pores, fades acne marks, and strengthens the skin barrier. A concentration of 5-10% is ideal.",
