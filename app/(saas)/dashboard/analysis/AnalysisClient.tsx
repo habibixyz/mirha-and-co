@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -407,7 +407,7 @@ export function AnalysisClient({
               }}>
                 <span style={{ fontSize: "0.75rem", fontWeight: 700, textTransform: "uppercase", color: "var(--muted)" }}>One-Time Scan</span>
                 <span style={{ fontSize: "2rem", fontWeight: 700, margin: "0.5rem 0", fontFamily: "'Bebas Neue', sans-serif" }}>
-                  {paymentRegion === "USD" ? "$1.99" : "â‚¹149"}
+                  {paymentRegion === "USD" ? "$1.99" : "₹149"}
                 </span>
                 <p style={{ fontSize: "0.8rem", color: "var(--muted)", margin: "0 0 1.5rem", textAlign: "center" }}>
                   {paymentRegion === "USD" ? "International payments are temporarily unavailable. Use INR checkout or contact support." : "Unlock a single scan report and chat session instantly."}
@@ -443,7 +443,7 @@ export function AnalysisClient({
               }}>
                 <span style={{ fontSize: "0.75rem", fontWeight: 700, textTransform: "uppercase", color: "var(--rose)" }}>Pro Monthly</span>
                 <span style={{ fontSize: "2rem", fontWeight: 700, margin: "0.5rem 0", fontFamily: "'Bebas Neue', sans-serif" }}>
-                  {paymentRegion === "USD" ? "$4.99" : "â‚¹199"}
+                  {paymentRegion === "USD" ? "$4.99" : "₹199"}
                 </span>
                 <p style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.7)", margin: "0 0 1.5rem", textAlign: "center" }}>
                   {paymentRegion === "USD" ? "International subscriptions are temporarily unavailable. Use INR checkout or contact support." : "1 Scan / Day, unlimited routines, and full chat access."}
