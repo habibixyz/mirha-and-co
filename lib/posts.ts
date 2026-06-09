@@ -14,6 +14,17 @@ export type Post = {
 
 export const POSTS: Post[] = [
   {
+    category: "SKINCARE",
+    title: "Why Is My Face Darker Than My Body? Causes & Treatment",
+    excerpt: "Wondering why your face appears darker than your neck or body? Discover the real reasons behind facial hyperpigmentation in Indian skin and how to fix it.",
+    slug: "why-is-my-face-darker-than-my-body",
+    readTime: "7 min",
+    date: "June 2026",
+    productCount: 2,
+    thumbnail: "DK",
+    tags: ["hyperpigmentation", "tanning", "indian skin", "sunscreen", "niacinamide", "melasma", "uneven skin tone"],
+  },
+  {
     category: "BEAUTY",
     title: "Why Your Korean Skincare Routine Is Breaking You Out in India",
     excerpt: "The climate mismatch between Seoul and Mumbai, and why the viral 10-step glass skin routine requires a different approach for Indian skin types.",

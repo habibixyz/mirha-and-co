@@ -32,11 +32,6 @@ const featured = {
   tag: "START HERE",
 };
 
-const posts = POSTS.map((p) => ({
-  ...p,
-  initials: p.thumbnail,
-}));
-
 const catColors: Record<string, string> = {
   BEAUTY: "#a27b5c",
   WELLNESS: "#8c8179",
@@ -45,6 +40,52 @@ const catColors: Record<string, string> = {
   HAIR: "#7d8f99",
   MAKEUP: "#a27b5c",
 };
+
+const hashString = (str: string) => {
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    hash = (hash << 5) - hash + str.charCodeAt(i);
+    hash |= 0;
+  }
+  return Math.abs(hash);
+};
+
+
+const getRelevantImage = (slug: string, title: string, category: string): string => {
+  const text = `${slug} ${title}`.toLowerCase();
+  
+  // 1. Keyword Matching
+  if (text.includes('amazon') || text.includes('budget') || text.includes('buy')) return "/blog-thumbs/photo_amazon.png";
+  if (text.includes('makeup') || text.includes('concealer') || text.includes('kit')) return "/blog-thumbs/photo_makeup.png";
+  if (text.includes('hair') || text.includes('shampoo') || text.includes('water')) {
+    if (hashString(slug) % 2 === 0) return "/blog-thumbs/photo_hair.png";
+    return "/blog-thumbs/photo_shampoo.png";
+  }
+  if (text.includes('korean') || text.includes('glass')) return "/blog-thumbs/photo_korean.png";
+  if (text.includes('routine') || text.includes('beginner') || text.includes('girl')) return "/blog-thumbs/photo_girl.png";
+  if (text.includes('wellness') || text.includes('sleep') || text.includes('brain')) return "/blog-thumbs/wellness_2.png";
+  
+  // 2. Fallback to Category Pools with Deterministic Hashing
+  const pools = {
+    BEAUTY: ["/blog-thumbs/photo_beauty.png", "/blog-thumbs/beauty.png", "/blog-thumbs/beauty_2.png"],
+    WELLNESS: ["/blog-thumbs/wellness.png", "/blog-thumbs/wellness_2.png"],
+    LIFESTYLE: ["/blog-thumbs/photo_amazon.png", "/blog-thumbs/lifestyle.png"],
+    SKINCARE: ["/blog-thumbs/photo_girl.png", "/blog-thumbs/photo_korean.png", "/blog-thumbs/skincare.png", "/blog-thumbs/skincare_2.png", "/blog-thumbs/skincare_3.png"],
+    HAIR: ["/blog-thumbs/photo_hair.png", "/blog-thumbs/hair.png", "/blog-thumbs/hair_2.png"],
+    MAKEUP: ["/blog-thumbs/photo_makeup.png", "/blog-thumbs/beauty.png"]
+  };
+  
+  const pool = pools[category as keyof typeof pools] || pools.SKINCARE;
+  return pool[hashString(slug) % pool.length];
+};
+
+const posts = POSTS.map((p) => {
+  return {
+    ...p,
+    initials: p.thumbnail,
+    imageSrc: getRelevantImage(p.slug, p.title, p.category)
+  };
+});
 
 const paths = [
   { label: "Search", title: "Ask Mirha by concern", text: "Search oily skin, pigmentation, niacinamide, sunscreen, or budget.", href: "/dashboard/search" },
@@ -355,7 +396,7 @@ export default function BlogIndex() {
           background: #fff;
           color: #111;
           text-decoration: none;
-          padding: 2.2rem;
+          padding: 1.5rem;
           min-height: 320px;
           border: 1px solid #e8ded6;
           border-radius: 20px;
@@ -363,6 +404,7 @@ export default function BlogIndex() {
           flex-direction: column;
           transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
           box-shadow: 0 5px 15px rgba(0,0,0,0.01);
+          overflow: hidden;
         }
         .article-card:hover { 
           background: #fff; 
@@ -371,20 +413,21 @@ export default function BlogIndex() {
           box-shadow: 0 20px 40px rgba(162, 123, 92, 0.05);
         }
         .article-icon {
-          width: 48px;
-          height: 48px;
+          width: 100%;
+          height: 180px;
           border-radius: 12px;
-          background: linear-gradient(135deg, #fbf7f1 0%, #f3eee6 100%);
-          color: #a27b5c;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-family: var(--font-dm-sans), sans-serif;
-          font-size: 0.72rem;
-          font-weight: 700;
-          letter-spacing: 0.14em;
+          background: #fbf7f1;
+          overflow: hidden;
           margin-bottom: 1.2rem;
-          border: 1px solid #e8ded6;
+        }
+        .article-icon img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          transition: transform 0.5s ease;
+        }
+        .article-card:hover .article-icon img {
+          transform: scale(1.05);
         }
         .article-cat {
           font-family: var(--font-dm-sans), sans-serif;
@@ -538,7 +581,9 @@ export default function BlogIndex() {
           <div className="article-grid">
             {posts.map((post) => (
               <a key={post.slug} href={`/blog/${post.slug}`} className="article-card">
-                <div className="article-icon">{post.initials}</div>
+                <div className="article-icon">
+                  <img src={post.imageSrc} alt={post.category} />
+                </div>
                 <p className="article-cat" style={{ color: catColors[post.category] }}>{post.category}</p>
                 <h3>{post.title}</h3>
                 <p>{post.excerpt}</p>
