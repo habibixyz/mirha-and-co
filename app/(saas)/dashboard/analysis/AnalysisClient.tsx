@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -56,7 +56,7 @@ export function AnalysisClient({
   const [errorMsg, setErrorMsg] = useState("");
   
   // Payment States
-  const [paymentRegion, setPaymentRegion] = useState<"INR" | "USD">("USD");
+  const [paymentRegion, setPaymentRegion] = useState<"INR" | "USD">("INR");
   const [paymentPending, setPaymentPending] = useState(false);
 
   // Chat States
@@ -84,6 +84,10 @@ export function AnalysisClient({
       }
     }
   }, []);
+
+  const handleGlobalPaymentUnavailable = () => {
+    alert("International card payments are temporarily unavailable. Please use India (INR) checkout for now or contact support@mirhaandco.com for manual access.");
+  };
 
   const handlePaddleCheckout = (priceId: string, isSubscription: boolean) => {
     if (!(window as any).Paddle) {
@@ -308,7 +312,7 @@ export function AnalysisClient({
       </header>
 
       {/* Main Grid */}
-      <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: "2rem" }}>
+      <div style={{ display: "grid", gridTemplateColumns: "minmax(0, 1fr)", gap: "2rem", width: "100%", maxWidth: "100%", overflow: "hidden" }}>
         
         {/* Paywall Container */}
         {!canScan && !report && (
@@ -394,7 +398,7 @@ export function AnalysisClient({
             </div>
 
             {/* Pricing Options */}
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1.5rem", maxWidth: "600px", margin: "0 auto" }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 240px), 1fr))", gap: "1.5rem", maxWidth: "600px", width: "100%", margin: "0 auto" }}>
               {/* Option A: One-Time Pass */}
               <div style={{
                 background: "var(--sand)",
@@ -407,14 +411,14 @@ export function AnalysisClient({
               }}>
                 <span style={{ fontSize: "0.75rem", fontWeight: 700, textTransform: "uppercase", color: "var(--muted)" }}>One-Time Scan</span>
                 <span style={{ fontSize: "2rem", fontWeight: 700, margin: "0.5rem 0", fontFamily: "'Bebas Neue', sans-serif" }}>
-                  {paymentRegion === "USD" ? "$1.99" : "₹149"}
+                  {paymentRegion === "USD" ? "$1.99" : "â‚¹149"}
                 </span>
                 <p style={{ fontSize: "0.8rem", color: "var(--muted)", margin: "0 0 1.5rem", textAlign: "center" }}>
-                  Unlock a single scan report and chat session instantly.
+                  {paymentRegion === "USD" ? "International payments are temporarily unavailable. Use INR checkout or contact support." : "Unlock a single scan report and chat session instantly."}
                 </p>
                 <button
                   disabled={paymentPending}
-                  onClick={() => handlePaddleCheckout("pri_01kthj45wtyzfw99a3xxvxvc47", false)}
+                  onClick={paymentRegion === "USD" ? handleGlobalPaymentUnavailable : handleRazorpayCheckout}
                   style={{
                     background: "var(--ink)",
                     color: "var(--white)",
@@ -427,7 +431,7 @@ export function AnalysisClient({
                     cursor: "pointer"
                   }}
                 >
-                  Buy Pass
+                  {paymentRegion === "USD" ? "Unavailable" : "Buy Pass"}
                 </button>
               </div>
 
@@ -443,17 +447,14 @@ export function AnalysisClient({
               }}>
                 <span style={{ fontSize: "0.75rem", fontWeight: 700, textTransform: "uppercase", color: "var(--rose)" }}>Pro Monthly</span>
                 <span style={{ fontSize: "2rem", fontWeight: 700, margin: "0.5rem 0", fontFamily: "'Bebas Neue', sans-serif" }}>
-                  {paymentRegion === "USD" ? "$4.99" : "₹199"}
+                  {paymentRegion === "USD" ? "$4.99" : "â‚¹199"}
                 </span>
                 <p style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.7)", margin: "0 0 1.5rem", textAlign: "center" }}>
-                  1 Scan / Day, unlimited routines, and full chat access.
+                  {paymentRegion === "USD" ? "International subscriptions are temporarily unavailable. Use INR checkout or contact support." : "1 Scan / Day, unlimited routines, and full chat access."}
                 </p>
                 <button
                   disabled={paymentPending}
-                  onClick={paymentRegion === "USD" 
-                    ? () => handlePaddleCheckout("pri_01kthj7gw79384nnahqz4edq68", true)
-                    : handleRazorpayCheckout
-                  }
+                  onClick={paymentRegion === "USD" ? handleGlobalPaymentUnavailable : handleRazorpayCheckout}
                   style={{
                     background: "var(--rose)",
                     color: "var(--white)",
@@ -467,7 +468,7 @@ export function AnalysisClient({
                     boxShadow: "0 4px 12px rgba(200, 71, 58, 0.2)"
                   }}
                 >
-                  {paymentPending ? <Loader2 size={16} style={{ animation: "spin 1s linear infinite" }} /> : "Subscribe"}
+                  {paymentPending ? <Loader2 size={16} style={{ animation: "spin 1s linear infinite" }} /> : (paymentRegion === "USD" ? "Unavailable" : "Subscribe")}
                 </button>
               </div>
             </div>
@@ -476,7 +477,7 @@ export function AnalysisClient({
 
         {/* Scanner Panel */}
         {(canScan || report) && (
-          <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: "2rem" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "minmax(0, 1fr)", gap: "2rem", width: "100%", maxWidth: "100%", overflow: "hidden" }}>
             
             {/* Input Dropzone & Visual scanner */}
             {!report && (
@@ -661,9 +662,12 @@ export function AnalysisClient({
                   background: "rgba(255,255,255,0.8)",
                   border: "1px solid var(--rule)",
                   borderRadius: "16px",
-                  padding: "2rem",
+                  padding: "clamp(1.1rem, 4vw, 2rem)",
                   display: "grid",
-                  gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
+                  gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 280px), 1fr))",
+                  width: "100%",
+                  maxWidth: "100%",
+                  overflowWrap: "anywhere",
                   gap: "2rem"
                 }}>
                   {/* Left Column: Summary */}
@@ -962,3 +966,5 @@ export function AnalysisClient({
     </div>
   );
 }
+
+

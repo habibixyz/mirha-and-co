@@ -1,4 +1,4 @@
--- CreateTable
+﻿-- CreateTable
 CREATE TABLE "User" (
     "id" TEXT NOT NULL,
     "email" TEXT NOT NULL,
@@ -6,6 +6,7 @@ CREATE TABLE "User" (
     "passwordHash" TEXT NOT NULL,
     "skinProfile" TEXT,
     "avatar" TEXT,
+    "credits" INTEGER NOT NULL DEFAULT 0,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -99,6 +100,42 @@ CREATE TABLE "PasswordResetToken" (
     CONSTRAINT "PasswordResetToken_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "AiQueryLog" (
+    "id" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
+    "query" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "AiQueryLog_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Lead" (
+    "id" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
+    "type" TEXT NOT NULL,
+    "data" TEXT,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "Lead_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "FaceAnalysis" (
+    "id" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
+    "imageUrl" TEXT NOT NULL,
+    "barrierScore" INTEGER NOT NULL,
+    "acneScore" INTEGER NOT NULL,
+    "rednessScore" INTEGER NOT NULL,
+    "oilinessScore" INTEGER NOT NULL,
+    "detailedJson" JSONB NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "FaceAnalysis_pkey" PRIMARY KEY ("id")
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
@@ -129,6 +166,18 @@ CREATE UNIQUE INDEX "PasswordResetToken_tokenHash_key" ON "PasswordResetToken"("
 -- CreateIndex
 CREATE INDEX "PasswordResetToken_userId_idx" ON "PasswordResetToken"("userId");
 
+-- CreateIndex
+CREATE INDEX "AiQueryLog_userId_idx" ON "AiQueryLog"("userId");
+
+-- CreateIndex
+CREATE INDEX "AiQueryLog_userId_createdAt_idx" ON "AiQueryLog"("userId", "createdAt");
+
+-- CreateIndex
+CREATE INDEX "FaceAnalysis_userId_idx" ON "FaceAnalysis"("userId");
+
+-- CreateIndex
+CREATE INDEX "FaceAnalysis_userId_createdAt_idx" ON "FaceAnalysis"("userId", "createdAt");
+
 -- AddForeignKey
 ALTER TABLE "Routine" ADD CONSTRAINT "Routine_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
@@ -143,3 +192,10 @@ ALTER TABLE "Session" ADD CONSTRAINT "Session_userId_fkey" FOREIGN KEY ("userId"
 
 -- AddForeignKey
 ALTER TABLE "PasswordResetToken" ADD CONSTRAINT "PasswordResetToken_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "AiQueryLog" ADD CONSTRAINT "AiQueryLog_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "FaceAnalysis" ADD CONSTRAINT "FaceAnalysis_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
