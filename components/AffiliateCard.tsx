@@ -27,19 +27,17 @@ export function AffiliateCard(props: any) {
 
   return (
     <div
-      onClick={() => onClick?.(product)}
       style={{
         position: "relative",
         display: "flex",
         flexDirection: "column",
-        border: "1px solid var(--rule)",
+        border: "1px solid var(--rule, #e8e2d9)",
         background: "#fff",
         margin: "1.5rem auto",
-        maxWidth: "360px",
+        maxWidth: "380px",
         borderRadius: "14px",
         overflow: "hidden",
-        cursor: "pointer",
-        boxShadow: "0 4px 20px rgba(0,0,0,0.06)",
+        boxShadow: "0 4px 20px rgba(0,0,0,0.04)",
         transition: "all 0.2s ease",
       }}
     >
@@ -48,15 +46,17 @@ export function AffiliateCard(props: any) {
         <div
           style={{
             position: "absolute",
-            top: 10,
-            left: 10,
-            background: "var(--rose)",
+            top: 12,
+            left: 12,
+            background: "#c8473a",
             color: "#fff",
             fontSize: "0.55rem",
             letterSpacing: "0.2em",
             textTransform: "uppercase",
             padding: "0.3rem 0.6rem",
             zIndex: 2,
+            fontWeight: 700,
+            borderRadius: "4px",
           }}
         >
           {badge}
@@ -66,32 +66,25 @@ export function AffiliateCard(props: any) {
       {/* Image */}
       <div
         style={{
-          background: "var(--sand)",
+          background: "#faf8f5",
           width: "100%",
-          height: "200px",
+          height: "220px",
           overflow: "hidden",
+          position: "relative",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          borderBottom: "1px solid #f0ebe4",
         }}
       >
-        <div style={{
-  position: "absolute",
-  bottom: 10,
-  right: 10,
-  background: "#111",
-  color: "#fff",
-  fontSize: "10px",
-  padding: "4px 8px",
-  letterSpacing: "0.1em"
-}}>
-  VIEW
-</div>
-
         <img
           src={image}
           alt={title}
           style={{
-            width: "100%",
-            height: "100%",
-            objectFit: "cover",
+            maxWidth: "90%",
+            maxHeight: "90%",
+            objectFit: "contain",
+            padding: "12px",
           }}
         />
       </div>
@@ -102,29 +95,32 @@ export function AffiliateCard(props: any) {
           padding: "1.2rem",
           display: "flex",
           flexDirection: "column",
+          flex: 1,
         }}
       >
         {/* Label */}
         <p
           style={{
-            fontSize: "0.55rem",
+            fontSize: "0.58rem",
             letterSpacing: "0.25em",
             textTransform: "uppercase",
-            color: "var(--rose)",
+            color: "#c8473a",
+            fontWeight: 700,
             marginBottom: "0.4rem",
           }}
         >
-          Found on Amazon
+          {product?.brand ? `${product.brand} · Verification Verified` : "Found on Amazon"}
         </p>
 
         {/* Title */}
         <h3
           style={{
             fontFamily: "'DM Serif Display', serif",
-            fontSize: "1.05rem",
-            lineHeight: 1.3,
-            color: "var(--ink)",
-            marginBottom: "0.5rem",
+            fontSize: "1.1rem",
+            lineHeight: 1.35,
+            color: "var(--ink, #1a1714)",
+            marginBottom: "0.6rem",
+            fontWeight: 400,
           }}
         >
           {title}
@@ -134,75 +130,125 @@ export function AffiliateCard(props: any) {
         <p
           style={{
             fontSize: "0.78rem",
-            color: "var(--muted)",
+            color: "var(--muted, #6a635d)",
             lineHeight: 1.6,
-            marginBottom: "1rem",
+            marginBottom: "1.2rem",
           }}
         >
-          {description ? description.slice(0, 100) + "..." : ""}
+          {description ? description.slice(0, 120) + "..." : ""}
         </p>
 
-        {/* Price + CTA */}
+        {/* Specs Table (SEO Featured Snippet Target) */}
+        {product?.specs && (
+          <div
+            style={{
+              background: "#faf8f5",
+              padding: "10px 12px",
+              borderRadius: "8px",
+              marginBottom: "1.2rem",
+              border: "1px solid #f0ebe4",
+            }}
+          >
+            <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "11px", color: "#5c544e" }}>
+              <tbody>
+                {Object.entries(product.specs).slice(0, 3).map(([key, value]) => (
+                  <tr key={key} style={{ borderBottom: "1px solid #f4efe9" }}>
+                    <td style={{ padding: "5px 0", fontWeight: 700, color: "#1a1714", width: "45%" }}>{key}</td>
+                    <td style={{ padding: "5px 0", color: "#6a635d" }}>{value}</td>
+                  </tr>
+                ))}
+                <tr>
+                  <td style={{ padding: "5px 0", fontWeight: 700, color: "#1a1714" }}>Authenticity</td>
+                  <td style={{ padding: "5px 0", color: "#5a9e6f", fontWeight: 700, display: "flex", alignItems: "center", gap: "3px" }}>
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                    100% Genuine
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        )}
+
+        {/* Price + CTA Area */}
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "10px",
+            marginTop: "auto",
+          }}
+        >
+          <div style={{ display: "flex", alignItems: "baseline", gap: "6px" }}>
+            <span
+              style={{
+                fontFamily: "'DM Serif Display', serif",
+                fontSize: "1.25rem",
+                color: "var(--ink, #1a1714)",
+                fontWeight: 400,
+              }}
+            >
+              {price}
+            </span>
+            {product?.mrp && product.mrp > product.price && (
+              <span style={{ fontSize: "11px", color: "#bbb", textDecoration: "line-through" }}>
+                {global.formatPrice(product.mrp)}
+              </span>
+            )}
+          </div>
+
+          <a
+            href={affiliateUrl}
+            target="_blank"
+            rel="noopener noreferrer sponsored"
+            onClick={(e) => {
+              e.stopPropagation();
+              console.log("Affiliate Click:", { asin, title });
+              onClick?.(product || { asin, title });
+            }}
+            style={{
+              fontSize: "0.7rem",
+              letterSpacing: "0.15em",
+              textTransform: "uppercase",
+              color: "#fff",
+              background: "#c8473a",
+              padding: "10px 14px",
+              textDecoration: "none",
+              textAlign: "center",
+              fontWeight: 700,
+              borderRadius: "6px",
+              boxShadow: "0 4px 10px rgba(200, 71, 58, 0.12)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "6px",
+            }}
+          >
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+              <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+            </svg>
+            Compare Prices & Buy
+          </a>
+        </div>
+
+        {/* Disclaimer / Authenticity Guarantee */}
         <div
           style={{
             display: "flex",
             alignItems: "center",
-            justifyContent: "space-between",
-          }}
-        >
-          <span
-            style={{
-              fontFamily: "'DM Serif Display', serif",
-              fontSize: "1.1rem",
-              color: "var(--ink)",
-            }}
-          >
-            {price}
-          </span>
-          
-          <a
-            href={affiliateUrl}
-  target="_blank"
-  rel="noopener noreferrer sponsored"
-  onClick={(e) => {
-    e.stopPropagation();
-
-    // 🔥 TRACK CLICK
-    console.log("Affiliate Click:", {
-      asin,
-      title,
-    });
-
-    // OPTIONAL: trigger parent tracking if passed
-    onClick?.({
-      asin,
-      title,
-    });
-  }}
-            style={{
-              fontSize: "0.65rem",
-              letterSpacing: "0.18em",
-              textTransform: "uppercase",
-              color: "#fff",
-              background: "#111",
-              padding: "0.6rem 1rem",
-              textDecoration: "none",
-            }}
-          >
-            View Product →
-          </a>
-        </div>
-
-        {/* Disclaimer */}
-        <p
-          style={{
+            gap: "4px",
             fontSize: "0.55rem",
-            color: "#999",
-            marginTop: "0.7rem",
+            color: "#8b8580",
+            marginTop: "10px",
+            justifyContent: "center",
           }}
         >
-          * Affiliate link — we may earn a small commission.
-        </p>
+          <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#5a9e6f" strokeWidth="3">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+          <span>Official Storefront · Verified Dispatch</span>
+        </div>
       </div>
     </div>
   );

@@ -225,7 +225,7 @@ export const POSTS: Post[] = [
   },
   {
     category: "SKINCARE",
-    title: "Best Sunscreen for Oily Skin in India (2026) — No Grease, No White Cast",
+    title: "Non-Comedogenic Sunscreen That Doesn't Sweat Off in Mumbai Humidity",
     excerpt: "The honest guide to finding a sunscreen that works for oily, acne-prone Indian skin. Lightweight formulas, no white cast, no noon grease.",
     slug: "best-sunscreen-oily-skin-india",
     readTime: "8 min",
@@ -305,7 +305,7 @@ export const POSTS: Post[] = [
     thumbnail: "OS",
     tags: ["oily skin", "routine", "makeup"],
   },
-
+ 
   {
     category: "BEAUTY",
     title: "Why Your Skin Looks Dull Even After Skincare",
@@ -330,7 +330,7 @@ export const POSTS: Post[] = [
   },
   {
     category: "BEAUTY",
-    title: "Minimalist vs The Ordinary vs Dot & Key - What Actually Works?",
+    title: "Minimalist Alpha Arbutin vs Re'equil Ultra Matte Gel vs Dot & Key: Skincare Brand Face-Off",
     excerpt: "A real comparison of India's most popular skincare brands - based on results, not hype.",
     slug: "brand-comparison-india",
     readTime: "11 min",
@@ -341,7 +341,7 @@ export const POSTS: Post[] = [
   },
   {
     category: "HAIR",
-    title: "Why Your Hair Won't Stop Falling (Hard Water India Guide)",
+    title: "How to Repair Skin Barrier and Hair Fall from Hard Water in Bangalore",
     excerpt: "The hidden cause of hair fall in Indian cities - and the exact protocol to fix it.",
     slug: "hard-water-hair",
     readTime: "11 min",
