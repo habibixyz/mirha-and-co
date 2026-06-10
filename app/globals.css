@@ -528,4 +528,19 @@ html, body {
 .image-panel > div,
 .related-card > div {
   display: none !important;
-}
+}
+
+/* Cards Row Layout for Affiliate Comparison Cards */
+.cards-row {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)) !important;
+  gap: 1.5rem !important;
+  margin: 1.5rem 0 2rem !important;
+}
+@media (max-width: 640px) {
+  .cards-row {
+    grid-template-columns: 1fr !important;
+    gap: 1.2rem !important;
+  }
+}
+

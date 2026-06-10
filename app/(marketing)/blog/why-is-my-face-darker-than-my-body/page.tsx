@@ -81,7 +81,7 @@ export default function WhyIsMyFaceDarkerBlog() {
           <div style={{ marginBottom: "2rem" }}>
              <h3 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "1.1rem", fontWeight: 400, color: "var(--ink)", margin: "0 0 0.6rem" }}>Wear a High-Quality Sunscreen Every Single Day</h3>
              <p style={{ fontSize: "0.9rem", color: "var(--muted)", lineHeight: 1.8, marginBottom: "1rem" }}>We can't stress this enough: Sunscreen is your best friend. This is the single most effective step in preventing and treating a darkened face. Look for a broad-spectrum sunscreen with SPF 50+ and a PA++++ rating.</p>
-             <BlogProductCard asin="B08YY51T2T" />
+             <BlogProductCard asin="B0DHY6LQTW" />
           </div>
 
           <div style={{ marginBottom: "2rem" }}>
@@ -116,7 +116,7 @@ export default function WhyIsMyFaceDarkerBlog() {
           <div style={{ marginBottom: "2rem" }}>
              <h3 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "1.1rem", fontWeight: 400, color: "var(--ink)", margin: "0 0 0.6rem" }}>The Niacinamide Powerhouse</h3>
              <p style={{ fontSize: "0.9rem", color: "var(--muted)", lineHeight: 1.8, marginBottom: "1rem" }}>Formulated with rice water and 10% niacinamide, this serum is incredible for fading blemishes, evening out skin tone, and soothing irritation.</p>
-             <BlogProductCard asin="B09C8HTQ68" />
+             <BlogProductCard asin="B097R8B7J7" />
           </div>
         </section>
 

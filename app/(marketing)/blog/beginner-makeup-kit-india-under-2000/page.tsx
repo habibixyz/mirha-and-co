@@ -48,10 +48,12 @@ export default function BeginnerMakeupKitGuide() {
           your first routine easy enough to repeat.
         </p>
 
-        <AffiliateCard asin="B07WTNH18L" />
-        <AffiliateCard asin="B08QSQ8T7B" />
-        <AffiliateCard asin="B01BY5KDEC" />
-        <AffiliateCard asin="B076PV1SQM" />
+        <div className="cards-row">
+          <AffiliateCard asin="B07WTNH18L" />
+          <AffiliateCard asin="B08QSQ8T7B" />
+          <AffiliateCard asin="B01BY5KDEC" />
+          <AffiliateCard asin="B076PV1SQM" />
+        </div>
 
         <p>
           If you prefer mascara over kajal, swap the kajal step for mascara. The

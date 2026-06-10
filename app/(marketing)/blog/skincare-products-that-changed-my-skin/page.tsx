@@ -179,7 +179,7 @@ export default function SkincarePost() {
         <div className="post-header-inner">
           <span className="post-cat">Beauty</span>
           <h1 className="post-headline">
-            The 12 Skincare Products<br />
+            The Skincare Products<br />
             That Actually Changed My Skin
           </h1>
           <p className="post-standfirst">
@@ -233,7 +233,7 @@ export default function SkincarePost() {
           title="Banila Co Clean It Zero Cleansing Balm"
           description="A cult Korean cleansing balm that melts into an oil on contact. Removes even waterproof SPF without tugging. Rinses clean with water. Fragrance-free version available. I've repurchased this four times."
           price="₹1,299"
-          asin="B00QDCVWUU"
+          asin="B07DSBKXZ1"
           affiliateTag={AFFILIATE_TAG}
           badge="Editor's Pick"
         />
@@ -251,34 +251,6 @@ export default function SkincarePost() {
         <h2>Serums</h2>
 
         <div className="product-number">02</div>
-        <h3>The Vitamin C That Actually Works</h3>
-
-        <p>
-          Vitamin C is the one serum category where price genuinely correlates with efficacy.
-          Cheap vitamin C oxidises fast, stings, and can cause more inflammation than it solves.
-          The formulation matters enormously — the percentage, the form of vitamin C, and the pH.
-          This one gets all three right.
-        </p>
-
-        <AffiliateCard
-          title="TruSkin Vitamin C Serum"
-          description="15% Vitamin C with hyaluronic acid and vitamin E. Stable formulation that doesn't oxidise quickly. Brightens in 3–4 weeks of consistent use. Apply in the morning before SPF. Widely available on Amazon India."
-          price="₹2,100"
-          asin="B01M0XNEKZ"
-          affiliateTag={AFFILIATE_TAG}
-          badge="Best Value"
-        />
-
-        <div className="verdict-box">
-          <span className="verdict-icon">✓</span>
-          <p className="verdict-text">
-            <strong>Verdict:</strong> Morning only. SPF after. Store in a cool, dark place.
-            If it turns orange, it's oxidised — replace it. A bottle lasts me about 3 months.
-          </p>
-        </div>
-
-        {/* ── PRODUCT 3 ── */}
-        <div className="product-number">03</div>
         <h3>The Niacinamide That Fixed My Pores</h3>
 
         <p>
@@ -292,7 +264,7 @@ export default function SkincarePost() {
           title="The Ordinary Niacinamide 10% + Zinc 1%"
           description="The gold-standard niacinamide serum. 10% concentration with zinc to control sebum. Fragrance-free, suitable for all skin types. Apply after cleansing, before heavier serums. One of the best value skincare products ever made."
           price="₹699"
-          asin="B06WZJKJSW"
+          asin="B01MDTVZTZ"
           affiliateTag={AFFILIATE_TAG}
           badge="Most Affordable"
         />

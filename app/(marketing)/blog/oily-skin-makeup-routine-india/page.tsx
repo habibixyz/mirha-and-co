@@ -48,10 +48,12 @@ export default function OilySkinMakeupRoutineGuide() {
           picks work because they solve specific oily-skin makeup problems.
         </p>
 
-        <AffiliateCard asin="B0B45RB1RV" />
-        <AffiliateCard asin="B0046VGJJA" />
-        <AffiliateCard asin="B08QSQ8T7B" />
-        <AffiliateCard asin="B08H46YXYH" />
+        <div className="cards-row">
+          <AffiliateCard asin="B0B45RB1RV" />
+          <AffiliateCard asin="B0046VGJJA" />
+          <AffiliateCard asin="B08QSQ8T7B" />
+          <AffiliateCard asin="B08H46YXYH" />
+        </div>
 
         <p>
           For oily skin, the best makeup routine starts before makeup: a sunscreen
