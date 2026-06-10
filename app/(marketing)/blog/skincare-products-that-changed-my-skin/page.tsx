@@ -143,7 +143,7 @@ export default function SkincarePost() {
           font-size: 1.2rem;
           flex-shrink: 0;
         }
-        .verdict-text {
+        .post-body .verdict-box p.verdict-text, .verdict-text {
           font-size: 0.85rem;
           color: var(--ink);
           line-height: 1.6;

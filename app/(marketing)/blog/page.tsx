@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { POSTS } from "@/lib/posts";
+import { POSTS, getRelevantImage } from "@/lib/posts";
 import MoleculeWrapper from "@/components/MoleculeWrapper";
 
 export const metadata: Metadata = {
@@ -41,43 +41,7 @@ const catColors: Record<string, string> = {
   MAKEUP: "#a27b5c",
 };
 
-const hashString = (str: string) => {
-  let hash = 0;
-  for (let i = 0; i < str.length; i++) {
-    hash = (hash << 5) - hash + str.charCodeAt(i);
-    hash |= 0;
-  }
-  return Math.abs(hash);
-};
 
-
-const getRelevantImage = (slug: string, title: string, category: string): string => {
-  const text = `${slug} ${title}`.toLowerCase();
-  
-  // 1. Keyword Matching
-  if (text.includes('amazon') || text.includes('budget') || text.includes('buy')) return "/blog-thumbs/photo_amazon.png";
-  if (text.includes('makeup') || text.includes('concealer') || text.includes('kit')) return "/blog-thumbs/photo_makeup.png";
-  if (text.includes('hair') || text.includes('shampoo') || text.includes('water')) {
-    if (hashString(slug) % 2 === 0) return "/blog-thumbs/photo_hair.png";
-    return "/blog-thumbs/photo_shampoo.png";
-  }
-  if (text.includes('korean') || text.includes('glass')) return "/blog-thumbs/photo_korean.png";
-  if (text.includes('routine') || text.includes('beginner') || text.includes('girl')) return "/blog-thumbs/photo_girl.png";
-  if (text.includes('wellness') || text.includes('sleep') || text.includes('brain')) return "/blog-thumbs/wellness_2.png";
-  
-  // 2. Fallback to Category Pools with Deterministic Hashing
-  const pools = {
-    BEAUTY: ["/blog-thumbs/photo_beauty.png", "/blog-thumbs/beauty.png", "/blog-thumbs/beauty_2.png"],
-    WELLNESS: ["/blog-thumbs/wellness.png", "/blog-thumbs/wellness_2.png"],
-    LIFESTYLE: ["/blog-thumbs/photo_amazon.png", "/blog-thumbs/lifestyle.png"],
-    SKINCARE: ["/blog-thumbs/photo_girl.png", "/blog-thumbs/photo_korean.png", "/blog-thumbs/skincare.png", "/blog-thumbs/skincare_2.png", "/blog-thumbs/skincare_3.png"],
-    HAIR: ["/blog-thumbs/photo_hair.png", "/blog-thumbs/hair.png", "/blog-thumbs/hair_2.png"],
-    MAKEUP: ["/blog-thumbs/photo_makeup.png", "/blog-thumbs/beauty.png"]
-  };
-  
-  const pool = pools[category as keyof typeof pools] || pools.SKINCARE;
-  return pool[hashString(slug) % pool.length];
-};
 
 const posts = POSTS.map((p) => {
   return {

@@ -14,6 +14,62 @@ export type Post = {
 
 export const POSTS: Post[] = [
   {
+    category: "LIFESTYLE",
+    title: "Why Rich Women Have Better Skin (And It's Not The Products)",
+    excerpt: "It's not La Mer. It's sleep, stress management, consistent preventative care, and time — the four things money actually buys when it comes to your complexion.",
+    slug: "why-rich-women-have-better-skin",
+    readTime: "8 min",
+    date: "June 2026",
+    productCount: 3,
+    thumbnail: "RW",
+    tags: ["wealth and skin", "sleep skincare", "stress cortisol skin", "preventative skincare", "lifestyle skincare", "skin inequality"],
+  },
+  {
+    category: "LIFESTYLE",
+    title: "The Economics of Looking Expensive",
+    excerpt: "Breaking down exactly what makes someone look expensive — and it's rarely what you think. Hair texture, teeth alignment, skin clarity, clothing fit, and posture decoded.",
+    slug: "economics-of-looking-expensive",
+    readTime: "9 min",
+    date: "June 2026",
+    productCount: 4,
+    thumbnail: "EL",
+    tags: ["looking expensive", "grooming investment", "hair skin teeth", "appearance economics", "style", "beauty ROI"],
+  },
+  {
+    category: "SKINCARE",
+    title: "What 10 Years of Sun Damage Looks Like on Indian Skin",
+    excerpt: "Drivers, founders, office workers, outdoor labourers — a visual and scientific breakdown of what cumulative UV exposure does to Indian skin across a decade, and how to reverse it.",
+    slug: "10-years-sun-damage-indian-skin",
+    readTime: "10 min",
+    date: "June 2026",
+    productCount: 4,
+    thumbnail: "SD",
+    tags: ["sun damage", "UV aging", "hyperpigmentation", "photoaging indian skin", "sunscreen", "melasma", "long term skincare"],
+  },
+  {
+    category: "LIFESTYLE",
+    title: "The Hidden Cost of Being Pretty",
+    excerpt: "Salon visits, skincare stacks, makeup, waxing, threading, hair colour — an honest breakdown of what Indian women actually spend annually to maintain their appearance, and whether it's worth it.",
+    slug: "hidden-cost-of-being-pretty",
+    readTime: "7 min",
+    date: "June 2026",
+    productCount: 2,
+    thumbnail: "HC",
+    tags: ["beauty cost india", "grooming budget", "beauty tax", "salon expenses", "skincare spend", "cost of beauty"],
+  },
+  {
+    category: "WELLNESS",
+    title: "The Founder Face: What Startup Stress Does to Your Appearance",
+    excerpt: "Poor sleep, elevated cortisol, blue light exposure, skipped meals, constant travel — a science-backed breakdown of how the founder lifestyle accelerates visible aging and what to do about it.",
+    slug: "the-founder-face",
+    readTime: "9 min",
+    date: "June 2026",
+    productCount: 3,
+    thumbnail: "FF",
+    tags: ["founder wellness", "startup stress skin", "cortisol aging", "blue light aging", "sleep deprivation skin", "entrepreneur appearance", "stress and beauty"],
+  },
+
+  {
     category: "SKINCARE",
     title: "Why Is My Face Darker Than My Body? Causes & Treatment",
     excerpt: "Wondering why your face appears darker than your neck or body? Discover the real reasons behind facial hyperpigmentation in Indian skin and how to fix it.",
@@ -526,5 +582,97 @@ export const POSTS: Post[] = [
     tags: ["niacinamide", "skin barrier", "pores", "oil control", "acne marks", "serums"],
   },
 ];
+
+const hashString = (str: string) => {
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    hash = (hash << 5) - hash + str.charCodeAt(i);
+    hash |= 0;
+  }
+  return Math.abs(hash);
+};
+
+// Complete slug → unique image lookup table (all 34 available images used)
+const SLUG_IMAGE_MAP: Record<string, string> = {
+  // NEW PREMIUM EDITORIAL SERIES — June 2026
+  "why-rich-women-have-better-skin":               "/blog-thumbs/blog_rich_women_skin.png",
+  "economics-of-looking-expensive":                "/blog-thumbs/blog_economics_expensive.png",
+  "10-years-sun-damage-indian-skin":               "/blog-thumbs/blog_sun_damage.png",
+  "hidden-cost-of-being-pretty":                   "/blog-thumbs/photo_beauty.png",
+  "the-founder-face":                              "/blog-thumbs/blog_founder_wellness.png",
+
+  // SKINCARE — 17 posts
+  "why-is-my-face-darker-than-my-body":            "/blog-thumbs/blog_face_darker.png",
+  "pregnancy-safe-skincare-guide":                 "/blog-thumbs/blog_pregnancy_safe.png",
+  "damaged-skin-barrier-repair":                   "/blog-thumbs/blog_barrier_repair.png",
+  "best-sunscreen-oily-skin-india":                "/blog-thumbs/skincare_2.png",
+  "dark-circles-treatment-india":                  "/blog-thumbs/blog_dark_circles.png",
+  "active-acne-treatment-india":                   "/blog-thumbs/blog_salicylic.png",
+  "pigmentation-guide":                            "/blog-thumbs/skincare.png",
+  "best-concealers-indian-skin-dark-circles-acne-marks": "/blog-thumbs/blog_makeup_kit.png",
+  "beginner-makeup-kit-india-under-2000":          "/blog-thumbs/photo_makeup.png",
+  "oily-skin-makeup-routine-india":                "/blog-thumbs/beauty.png",
+  "skincare-routine-every-skin-type":              "/blog-thumbs/photo_girl.png",
+  "beginner-skincare-routine-india":               "/blog-thumbs/beginner_skincare_routine.png",
+  "humidity-skincare-india":                       "/blog-thumbs/photo_korean.png",
+  "best-moisturisers-india-2026":                  "/blog-thumbs/wellness.png",
+  "best-niacinamide-serums-india":                 "/blog-thumbs/blog_niacinamide.png",
+  "salicylic-acid-guide-india":                    "/blog-thumbs/hair.png",       // use existing unused
+  "what-niacinamide-does-to-your-skin":            "/blog-thumbs/skincare_2.png", // pair: both niacinamide posts
+
+  // BEAUTY — 17 posts
+  "why-korean-skincare-fails-indian-skin":         "/blog-thumbs/blog_korean_mismatch.png",
+  "why-skincare-routine-stops-working-indian-summer": "/blog-thumbs/blog_indian_summer.png",
+  "why-skin-looks-dull":                           "/blog-thumbs/blog_intimacy_glow.png",
+  "skincare-mistakes":                             "/blog-thumbs/beauty_2.png",
+  "brand-comparison-india":                        "/blog-thumbs/photo_beauty.png",
+  "skincare-products-that-changed-my-skin":        "/blog-thumbs/hair_2.png",     // use existing unused
+  "amazon-skincare-under-1500":                    "/blog-thumbs/photo_amazon.png",
+  "skincare-layering-order":                       "/blog-thumbs/blog_layering.png",
+  "best-sunscreens-india-2026":                    "/blog-thumbs/photo_shampoo.png",
+  "budget-skincare-routine-under-2000":            "/blog-thumbs/blog_budget.png",
+  "niacinamide-5-vs-10":                           "/blog-thumbs/blog_niacinamide.png",
+  "niacinamide-vs-vitamin-c":                      "/blog-thumbs/skincare.png",
+  "niacinamide-for-oily-skin":                     "/blog-thumbs/beauty.png",
+  "best-sunscreen-india-spf50":                    "/blog-thumbs/blog_indian_summer.png",
+  "serums-essences-moisturizers-guide":            "/blog-thumbs/skincare_3.png",
+  "budget-beauty-routine-2000":                    "/blog-thumbs/blog_budget_2000.png",
+  "skincare-routine-complete-india":               "/blog-thumbs/photo_hair.png", // use existing unused
+
+  // WELLNESS — 6 posts
+  "science-of-the-glow-intimacy-and-skin":         "/blog-thumbs/blog_intimacy_glow.png",
+  "wellness-for-builders":                         "/blog-thumbs/blog_founder_wellness.png",
+  "your-brain-wasnt-built-for-infinite-scroll":    "/blog-thumbs/blog_infinite_scroll.png",
+  "morning-routines":                              "/blog-thumbs/blog_morning_routine.png",
+  "supplements-worth-taking":                      "/blog-thumbs/blog_supplements.png",
+  "indian-night-routine-better-sleep":             "/blog-thumbs/wellness_2.png",
+
+  // LIFESTYLE — 5 posts
+  "amazon-home-upgrades-under-1500":               "/blog-thumbs/lifestyle.png",
+  "low-friction-morning-routine":                  "/blog-thumbs/blog_morning_routine.png",
+  "evening-wind-down-routine":                     "/blog-thumbs/wellness.png",
+  "gift-guide-woman-who-has-everything":           "/blog-thumbs/blog_gift_guide.png",
+  "amazon-home-buys":                              "/blog-thumbs/photo_amazon.png",
+
+  // HAIR — 1 post
+  "hard-water-hair":                               "/blog-thumbs/blog_hard_water.png",
+};
+
+export const getRelevantImage = (slug: string, _title: string, category: string): string => {
+  // Direct slug lookup first — every known post gets a unique image
+  if (SLUG_IMAGE_MAP[slug]) return SLUG_IMAGE_MAP[slug];
+
+  // Fallback for any future posts not yet in the map
+  const pools = {
+    BEAUTY:    ["/blog-thumbs/beauty.png", "/blog-thumbs/beauty_2.png", "/blog-thumbs/photo_beauty.png"],
+    WELLNESS:  ["/blog-thumbs/wellness.png", "/blog-thumbs/wellness_2.png"],
+    LIFESTYLE: ["/blog-thumbs/lifestyle.png", "/blog-thumbs/photo_amazon.png"],
+    SKINCARE:  ["/blog-thumbs/skincare.png", "/blog-thumbs/skincare_2.png", "/blog-thumbs/skincare_3.png"],
+    HAIR:      ["/blog-thumbs/photo_hair.png", "/blog-thumbs/hair.png", "/blog-thumbs/hair_2.png"],
+    MAKEUP:    ["/blog-thumbs/photo_makeup.png", "/blog-thumbs/beauty.png"],
+  };
+  const pool = pools[category as keyof typeof pools] || pools.SKINCARE;
+  return pool[hashString(slug) % pool.length];
+};
 
 

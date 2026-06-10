@@ -155,14 +155,14 @@ export default function MorningRoutinesPost() {
           padding: 2.5rem;
           margin: 2.5rem 0;
         }
-        .verdict-label {
+        .post-body .verdict-box p.verdict-label, .verdict-label {
           font-family: 'Bebas Neue', sans-serif;
           font-size: 1.2rem;
           letter-spacing: 0.1em;
           color: #4a7c6f;
           margin-bottom: 1rem;
         }
-        .verdict-text {
+        .post-body .verdict-box p.verdict-text, .verdict-text {
           font-size: 0.95rem;
           color: rgba(255,255,255,0.75);
           line-height: 1.8;

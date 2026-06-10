@@ -1660,6 +1660,144 @@ export const PRODUCTS = [
     concerns: ["barrier damage", "dehydration", "fine lines"],
     image: "/products/product-65.jpg",
     link: "https://amzn.to/3Q6C1T0"
+  },
+  {
+    id: 1001,
+    name: "Mulberry Silk Pillowcase — Both Sides 19 Momme Pure Silk",
+    brand: "Pure Silk",
+    category: "Lifestyle",
+    subcat: "Bedding",
+    mrp: 1499,
+    price: 1299,
+    rating: 4.4,
+    reviews: "1.2k",
+    asin: "B0F2T5FS7Q",
+    badge: "Top Pick",
+    description: "100% pure mulberry silk pillowcase on both sides. Reduces hair frizz, tangles, and breakage while sleeping. Extremely gentle on skin, preventing sleep lines and preserving skin hydration. Standard size.",
+    specs: {
+      "Material": "100% Mulberry Silk",
+      "Momme": "19 Momme",
+      "Size": "Standard",
+      "Benefits": "Anti-frizz, anti-aging, hair & skin friendly"
+    },
+    tags: ["silk pillowcase", "pillowcase", "bedding", "hair care", "anti-aging"],
+    image: "/products/silk_pillowcase.jpg",
+    link: "https://www.amazon.in/dp/B0F2T5FS7Q?tag=skinwithtanvi-21"
+  },
+  {
+    id: 1002,
+    name: "Rose Quartz Gua Sha Facial Massage Tool",
+    brand: "Pure Gems",
+    category: "Skincare",
+    subcat: "Facial Tool",
+    mrp: 899,
+    price: 599,
+    rating: 4.3,
+    reviews: "850",
+    asin: "B0CPSK868C",
+    badge: "Best Under ₹600",
+    description: "100% natural rose quartz gua sha tool. Contoured edges designed for facial massage to promote lymphatic drainage, reduce under-eye puffiness, and relieve facial muscle tension.",
+    specs: {
+      "Material": "Natural Rose Quartz Stone",
+      "Type": "Gua Sha Stone",
+      "Usage": "Facial massage with oil/serum",
+      "Benefits": "Depuffing, sculpting, tension relief"
+    },
+    tags: ["gua sha", "rose quartz", "facial tool", "massage", "depuffing"],
+    image: "/products/gua_sha_set.jpg",
+    link: "https://www.amazon.in/dp/B0CPSK868C?tag=skinwithtanvi-21"
+  },
+  {
+    id: 1003,
+    name: "L'Occitane Shea Butter Hand Cream — 30ml",
+    brand: "L'Occitane",
+    category: "Body Care",
+    subcat: "Hand Cream",
+    mrp: 1450,
+    price: 1450,
+    rating: 4.6,
+    reviews: "15k",
+    asin: "B002U0KUTE",
+    badge: "Timeless Gift",
+    description: "Award-winning hand cream formulated with 20% shea butter. Penetrates quickly to protect, nourish, and moisturize hands. Features a signature light, clean fragrance.",
+    specs: {
+      "Key Ingredient": "20% Shea Butter",
+      "Size": "30ml",
+      "Skin Type": "Dry to Very Dry",
+      "Origin": "France"
+    },
+    tags: ["hand cream", "shea butter", "loccitane", "moisturiser", "luxury"],
+    image: "/products/locitane_hand_cream.jpg",
+    link: "https://www.amazon.in/dp/B002U0KUTE?tag=skinwithtanvi-21"
+  },
+  {
+    id: 1004,
+    name: "Bamboo Desk & Bedside Organiser Tray",
+    brand: "EcoHome",
+    category: "Lifestyle",
+    subcat: "Organiser",
+    mrp: 899,
+    price: 649,
+    rating: 4.4,
+    reviews: "420",
+    asin: "B0CG6CVRXR",
+    badge: "Most Underrated",
+    description: "Durable, moisture-resistant bamboo tray. Perfect for organizing daily essentials like keys, phone, watch, glasses, and daily skincare on your bedside table or office desk.",
+    specs: {
+      "Material": "Natural Bamboo",
+      "Type": "Valet Tray",
+      "Dimensions": "Standard Bedside Size",
+      "Benefits": "Clutter-free desk, elegant storage"
+    },
+    tags: ["organiser", "bamboo tray", "desk organiser", "valet tray", "home decor"],
+    image: "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=600&q=80",
+    link: "https://www.amazon.in/dp/B0CG6CVRXR?tag=skinwithtanvi-21"
+  },
+  {
+    id: 1005,
+    name: "Handheld Electric Milk Frother — Rechargeable",
+    brand: "FrothMix",
+    category: "Lifestyle",
+    subcat: "Kitchen Tool",
+    mrp: 799,
+    price: 599,
+    rating: 4.2,
+    reviews: "2.1k",
+    asin: "B0C8JC595G",
+    badge: "Daily Use",
+    description: "High-speed rechargeable electric milk frother. Creates rich, creamy foam for coffee, lattes, matcha, and protein shakes in under 20 seconds. Built-in rechargeable battery.",
+    specs: {
+      "Power Source": "USB Rechargeable",
+      "Material": "Stainless Steel Wand",
+      "Speed": "High speed motor",
+      "Benefits": "Quick froth, café-quality drinks"
+    },
+    tags: ["milk frother", "frother", "kitchen tool", "coffee", "latte"],
+    image: "https://images.unsplash.com/photo-1578314675249-a6910f80cc4e?auto=format&fit=crop&w=600&q=80",
+    link: "https://www.amazon.in/dp/B0C8JC595G?tag=skinwithtanvi-21"
+  },
+  {
+    id: 1006,
+    name: "Chalkboard Labels with White Chalk Marker — 45 Pack",
+    brand: "LabelIt",
+    category: "Lifestyle",
+    subcat: "Organiser",
+    mrp: 499,
+    price: 349,
+    rating: 4.5,
+    reviews: "5.4k",
+    asin: "B07Z3S4D58",
+    badge: "Pantry Upgrade",
+    description: "Waterproof, reusable chalkboard stickers for jar and container labeling. Easy to peel and restick. Comes with a white chalk marker that wipes clean with a damp cloth.",
+    specs: {
+      "Pack Count": "45 Labels",
+      "Marker Included": "Yes (White Chalk)",
+      "Reusable": "Yes (Wipe clean with damp cloth)",
+      "Benefits": "Pantry organization, chalkboard look"
+    },
+    tags: ["labels", "chalkboard stickers", "pantry organiser", "kitchen labels"],
+    image: "https://images.unsplash.com/photo-1589365278144-c9e705f843ba?auto=format&fit=crop&w=600&q=80",
+    link: "https://www.amazon.in/dp/B07Z3S4D58?tag=skinwithtanvi-21"
   }
 ];
 

@@ -29,6 +29,7 @@ export function AffiliateCard(props: any) {
     <div
       onClick={() => onClick?.(product)}
       style={{
+        position: "relative",
         display: "flex",
         flexDirection: "column",
         border: "1px solid var(--rule)",
