@@ -7,1166 +7,1166 @@ import { PRODUCTS, getProductAffiliateUrl } from '@/lib/products';
 import { useRoutineAnalytics } from '@/lib/hooks/useRoutineAnalytics';
 
 const STEPS_ORDER = [
-  {
-    key: 'cleanser',
-    label: 'Cleanse',
-    step: 'Step 1',
-    icon: '○',
-    description: 'Remove oil, pollution, and product buildup while protecting your skin barrier.',
-  },
-  {
-    key: 'treatment',
-    label: 'Treat',
-    step: 'Step 2',
-    icon: '◇',
-    description: 'Target your specific concern with clinically-backed active ingredients.',
-  },
-  {
-    key: 'moisturiser',
-    label: 'Hydrate',
-    step: 'Step 3',
-    icon: '△',
-    description: 'Lock in moisture and strengthen your barrier. Yes, even oily skin needs this.',
-  },
-  {
-    key: 'sunscreen',
-    label: 'Protect',
-    step: 'Step 4 (AM only)',
-    icon: '□',
-    description: 'Your most important anti-aging product. Non-negotiable, every morning.',
-  },
+ {
+ key: 'cleanser',
+ label: 'Cleanse',
+ step: 'Step 1',
+ icon: '○',
+ description: 'Remove oil, pollution, and product buildup while protecting your skin barrier.',
+ },
+ {
+ key: 'treatment',
+ label: 'Treat',
+ step: 'Step 2',
+ icon: '◇',
+ description: 'Target your specific concern with clinically-backed active ingredients.',
+ },
+ {
+ key: 'moisturiser',
+ label: 'Hydrate',
+ step: 'Step 3',
+ icon: '△',
+ description: 'Lock in moisture and strengthen your barrier. Yes, even oily skin needs this.',
+ },
+ {
+ key: 'sunscreen',
+ label: 'Protect',
+ step: 'Step 4 (AM only)',
+ icon: '□',
+ description: 'Your most important anti-aging product. Non-negotiable, every morning.',
+ },
 ];
 
 interface RoutineResultProps {
-  routine: RoutineRecommendation;
-  onRestart: () => void;
-  climate?: { temp: number; humidity: number; city: string; countryCode?: string };
-  onClimateChange: (climate: { temp: number; humidity: number; city: string; countryCode?: string } | undefined) => void;
+ routine: RoutineRecommendation;
+ onRestart: () => void;
+ climate?: { temp: number; humidity: number; city: string; countryCode?: string };
+ onClimateChange: (climate: { temp: number; humidity: number; city: string; countryCode?: string } | undefined) => void;
 }
 
 function ProductCard({
-  asin,
-  reason,
-  countryCode,
-  onClick,
+ asin,
+ reason,
+ countryCode,
+ onClick,
 }: {
-  asin: string;
-  reason?: string;
-  countryCode?: string;
-  onClick?: () => void;
+ asin: string;
+ reason?: string;
+ countryCode?: string;
+ onClick?: () => void;
 }) {
-  const product = PRODUCTS.find((p) => p.asin === asin);
+ const product = PRODUCTS.find((p) => p.asin === asin);
 
-  if (!product) return null;
+ if (!product) return null;
 
-  const affiliateUrl = getProductAffiliateUrl(product, countryCode);
+ const affiliateUrl = getProductAffiliateUrl(product, countryCode);
 
-  const disc =
-    product.mrp > product.price
-      ? Math.round(((product.mrp - product.price) / product.mrp) * 100)
-      : 0;
+ const disc =
+ product.mrp > product.price
+ ? Math.round(((product.mrp - product.price) / product.mrp) * 100)
+ : 0;
 
-  return (
-    <a
-      href={affiliateUrl}
-      target="_blank"
-      rel="noopener noreferrer sponsored"
-      onClick={onClick}
-      style={{
-        display: 'flex',
-        gap: '16px',
-        alignItems: 'flex-start',
-        background: '#faf8f5',
-        border: '1px solid #ede8e0',
-        borderRadius: '12px',
-        padding: '16px',
-        textDecoration: 'none',
-        color: 'inherit',
-        transition: 'all 0.25s cubic-bezier(0.4, 0, 0.2, 1)',
-        cursor: 'pointer',
-      }}
-      onMouseEnter={(e) => {
-        const el = e.currentTarget as HTMLAnchorElement;
-        el.style.borderColor = '#d6d0c9';
-        el.style.boxShadow = '0 8px 24px rgba(0,0,0,0.06)';
-        el.style.transform = 'translateY(-2px)';
-      }}
-      onMouseLeave={(e) => {
-        const el = e.currentTarget as HTMLAnchorElement;
-        el.style.borderColor = '#ede8e0';
-        el.style.boxShadow = 'none';
-        el.style.transform = 'translateY(0)';
-      }}
-    >
-      {/* Product Image */}
-      <div
-        style={{
-          width: '80px',
-          height: '80px',
-          flexShrink: 0,
-          background: '#fff',
-          borderRadius: '8px',
-          overflow: 'hidden',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          border: '1px solid #f0ebe3',
-        }}
-      >
-        <img
-          src={product.image}
-          alt={product.name}
-          style={{
-            width: '100%',
-            height: '100%',
-            objectFit: 'contain',
-            padding: '4px',
-          }}
-        />
-      </div>
+ return (
+ <a
+ href={affiliateUrl}
+ target="_blank"
+ rel="noopener noreferrer sponsored"
+ onClick={onClick}
+ style={{
+ display: 'flex',
+ gap: '16px',
+ alignItems: 'flex-start',
+ background: '#faf8f5',
+ border: '1px solid #ede8e0',
+ borderRadius: '12px',
+ padding: '16px',
+ textDecoration: 'none',
+ color: 'inherit',
+ transition: 'all 0.25s cubic-bezier(0.4, 0, 0.2, 1)',
+ cursor: 'pointer',
+ }}
+ onMouseEnter={(e) => {
+ const el = e.currentTarget as HTMLAnchorElement;
+ el.style.borderColor = '#d6d0c9';
+ el.style.boxShadow = '0 8px 24px rgba(0,0,0,0.06)';
+ el.style.transform = 'translateY(-2px)';
+ }}
+ onMouseLeave={(e) => {
+ const el = e.currentTarget as HTMLAnchorElement;
+ el.style.borderColor = '#ede8e0';
+ el.style.boxShadow = 'none';
+ el.style.transform = 'translateY(0)';
+ }}
+ >
+ {/* Product Image */}
+ <div
+ style={{
+ width: '80px',
+ height: '80px',
+ flexShrink: 0,
+ background: '#fff',
+ borderRadius: '8px',
+ overflow: 'hidden',
+ display: 'flex',
+ alignItems: 'center',
+ justifyContent: 'center',
+ border: '1px solid #f0ebe3',
+ }}
+ >
+ <img
+ src={product.image}
+ alt={product.name}
+ style={{
+ width: '100%',
+ height: '100%',
+ objectFit: 'contain',
+ padding: '4px',
+ }}
+ />
+ </div>
 
-      {/* Info */}
-      <div style={{ flex: 1, minWidth: 0 }}>
-        {product.badge && (
-          <p
-            style={{
-              fontSize: '9px',
-              letterSpacing: '0.15em',
-              textTransform: 'uppercase',
-              color: '#9b7e6b',
-              margin: '0 0 6px',
-              fontFamily: 'var(--font-mono, monospace)',
-            }}
-          >
-            {product.badge}
-          </p>
-        )}
+ {/* Info */}
+ <div style={{ flex: 1, minWidth: 0 }}>
+ {product.badge && (
+ <p
+ style={{
+ fontSize: '9px',
+ letterSpacing: '0.15em',
+ textTransform: 'uppercase',
+ color: '#9b7e6b',
+ margin: '0 0 6px',
+ fontFamily: 'var(--font-mono, monospace)',
+ }}
+ >
+ {product.badge}
+ </p>
+ )}
 
-        <p
-          style={{
-            fontFamily: "'DM Serif Display', serif",
-            fontSize: '14px',
-            color: '#111',
-            lineHeight: 1.3,
-            margin: '0 0 4px',
-            fontWeight: 400,
-            overflow: 'hidden',
-            display: '-webkit-box',
-            WebkitLineClamp: 2,
-            WebkitBoxOrient: 'vertical' as const,
-          }}
-        >
-          {product.name}
-        </p>
+ <p
+ style={{
+ fontFamily: "'DM Serif Display', serif",
+ fontSize: '14px',
+ color: '#111',
+ lineHeight: 1.3,
+ margin: '0 0 4px',
+ fontWeight: 400,
+ overflow: 'hidden',
+ display: '-webkit-box',
+ WebkitLineClamp: 2,
+ WebkitBoxOrient: 'vertical' as const,
+ }}
+ >
+ {product.name}
+ </p>
 
-        <p
-          style={{
-            fontSize: '11px',
-            color: '#999',
-            margin: '0 0 6px',
-            letterSpacing: '0.05em',
-          }}
-        >
-          {product.brand}
-        </p>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          {affiliateUrl.includes('cultbeauty') ? (
-            <span
-              style={{
-                fontFamily: "'DM Serif Display', serif",
-                fontSize: '14px',
-                color: '#9b7e6b',
-                fontWeight: 400,
-              }}
-            >
-              Shop on Cult Beauty
-            </span>
-          ) : (
-            <>
-              <span
-                style={{
-                  fontFamily: "'DM Serif Display', serif",
-                  fontSize: '16px',
-                  color: '#111',
-                  fontWeight: 400,
-                }}
-              >
-                ₹{product.price.toLocaleString('en-IN')}
-              </span>
-              {disc > 0 && (
-                <>
-                  <span
-                    style={{
-                      fontSize: '11px',
-                      color: '#bbb',
-                      textDecoration: 'line-through',
-                    }}
-                  >
-                    ₹{product.mrp.toLocaleString('en-IN')}
-                  </span>
-                  <span
-                    style={{
-                      fontSize: '9px',
-                      color: '#5a9e6f',
-                      background: '#edf7f0',
-                      padding: '2px 6px',
-                      borderRadius: '3px',
-                      fontWeight: 600,
-                    }}
-                  >
-                    {disc}% off
-                  </span>
-                </>
-              )}
-            </>
-          )}
-        </div>
-      </div>
+ <p
+ style={{
+ fontSize: '11px',
+ color: '#999',
+ margin: '0 0 6px',
+ letterSpacing: '0.05em',
+ }}
+ >
+ {product.brand}
+ </p>
+ <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+ {affiliateUrl.includes('cultbeauty') ? (
+ <span
+ style={{
+ fontFamily: "'DM Serif Display', serif",
+ fontSize: '14px',
+ color: '#9b7e6b',
+ fontWeight: 400,
+ }}
+ >
+ Shop on Cult Beauty
+ </span>
+ ) : (
+ <>
+ <span
+ style={{
+ fontFamily: "'DM Serif Display', serif",
+ fontSize: '16px',
+ color: '#111',
+ fontWeight: 400,
+ }}
+ >
+ ₹{product.price.toLocaleString('en-IN')}
+ </span>
+ {disc > 0 && (
+ <>
+ <span
+ style={{
+ fontSize: '11px',
+ color: '#bbb',
+ textDecoration: 'line-through',
+ }}
+ >
+ ₹{product.mrp.toLocaleString('en-IN')}
+ </span>
+ <span
+ style={{
+ fontSize: '9px',
+ color: '#5a9e6f',
+ background: '#edf7f0',
+ padding: '2px 6px',
+ borderRadius: '3px',
+ fontWeight: 600,
+ }}
+ >
+ {disc}% off
+ </span>
+ </>
+ )}
+ </>
+ )}
+ </div>
+ </div>
 
-      {/* Arrow */}
-      <div
-        style={{
-          flexShrink: 0,
-          width: '32px',
-          height: '32px',
-          background: '#111',
-          borderRadius: '50%',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          marginTop: '8px',
-        }}
-      >
-        <ExternalLink size={12} color="#fff" />
-      </div>
-    </a>
-  );
+ {/* Arrow */}
+ <div
+ style={{
+ flexShrink: 0,
+ width: '32px',
+ height: '32px',
+ background: '#111',
+ borderRadius: '50%',
+ display: 'flex',
+ alignItems: 'center',
+ justifyContent: 'center',
+ marginTop: '8px',
+ }}
+ >
+ <ExternalLink size={12} color="#fff" />
+ </div>
+ </a>
+ );
 }
 
 const CLIMATE_PRESETS = [
-  { city: "Mumbai (Summer/Monsoon)", temp: 38, humidity: 82, label: "💧 Mumbai Summer", countryCode: "IN" },
-  { city: "Delhi (Winter)", temp: 12, humidity: 25, label: "❄️ Delhi Winter", countryCode: "IN" },
-  { city: "Bangalore (Moderate)", temp: 24, humidity: 50, label: "🍃 Bangalore Spring", countryCode: "IN" },
+ { city: "Mumbai (Summer/Monsoon)", temp: 38, humidity: 82, label: "💧 Mumbai Summer", countryCode: "IN" },
+ { city: "Delhi (Winter)", temp: 12, humidity: 25, label: "❄️ Delhi Winter", countryCode: "IN" },
+ { city: "Bangalore (Moderate)", temp: 24, humidity: 50, label: "🍃 Bangalore Spring", countryCode: "IN" },
 ];
 
 export default function RoutineResult({
-  routine,
-  onRestart,
-  climate,
-  onClimateChange,
+ routine,
+ onRestart,
+ climate,
+ onClimateChange,
 }: RoutineResultProps) {
-  const { trackAffiliateClick } = useRoutineAnalytics();
-  const [expandedStep, setExpandedStep] = useState<string | null>(null);
+ const { trackAffiliateClick } = useRoutineAnalytics();
+ const [expandedStep, setExpandedStep] = useState<string | null>(null);
 
-  // Climate Customization States
-  const [showClimateModal, setShowClimateModal] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [searchResults, setSearchResults] = useState<any[]>([]);
-  const [searching, setSearching] = useState(false);
+ // Climate Customization States
+ const [showClimateModal, setShowClimateModal] = useState(false);
+ const [searchQuery, setSearchQuery] = useState('');
+ const [searchResults, setSearchResults] = useState<any[]>([]);
+ const [searching, setSearching] = useState(false);
 
-  const detectClimate = () => {
-    const fetchByIP = async () => {
-      try {
-        const geoRes = await fetch("https://ipapi.co/json/");
-        if (!geoRes.ok) throw new Error("IP Geo fetch failed");
-        const geoData = await geoRes.json();
-        
-        const city = geoData.city || "India";
-        const lat = geoData.latitude;
-        const lon = geoData.longitude;
-        const countryCode = geoData.country_code;
+ const detectClimate = () => {
+ const fetchByIP = async () => {
+ try {
+ const geoRes = await fetch("https://ipapi.co/json/");
+ if (!geoRes.ok) throw new Error("IP Geo fetch failed");
+ const geoData = await geoRes.json();
+ 
+ const city = geoData.city || "India";
+ const lat = geoData.latitude;
+ const lon = geoData.longitude;
+ const countryCode = geoData.country_code;
 
-        if (lat && lon) {
-          await fetchWeather(lat, lon, `${city} (Synced)`, countryCode);
-        } else {
-          throw new Error("No lat/lon from IP");
-        }
-      } catch (err) {
-        console.error("IP climate sync failed:", err);
-      }
-    };
+ if (lat && lon) {
+ await fetchWeather(lat, lon, `${city} (Synced)`, countryCode);
+ } else {
+ throw new Error("No lat/lon from IP");
+ }
+ } catch (err) {
+ console.error("IP climate sync failed:", err);
+ }
+ };
 
-    const fetchWeather = async (lat: number, lon: number, cityName: string, countryCode?: string) => {
-      try {
-        const weatherRes = await fetch(
-          `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m`
-        );
-        if (!weatherRes.ok) throw new Error("Weather fetch failed");
-        const weatherData = await weatherRes.json();
-        
-        const temp = Math.round(weatherData.current.temperature_2m);
-        const humidity = Math.round(weatherData.current.relative_humidity_2m);
+ const fetchWeather = async (lat: number, lon: number, cityName: string, countryCode?: string) => {
+ try {
+ const weatherRes = await fetch(
+ `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m`
+ );
+ if (!weatherRes.ok) throw new Error("Weather fetch failed");
+ const weatherData = await weatherRes.json();
+ 
+ const temp = Math.round(weatherData.current.temperature_2m);
+ const humidity = Math.round(weatherData.current.relative_humidity_2m);
 
-        onClimateChange({
-          temp,
-          humidity,
-          city: cityName,
-          countryCode
-        });
-      } catch (err) {
-        console.error("Weather fetch failed:", err);
-      }
-    };
+ onClimateChange({
+ temp,
+ humidity,
+ city: cityName,
+ countryCode
+ });
+ } catch (err) {
+ console.error("Weather fetch failed:", err);
+ }
+ };
 
-    if (typeof window !== "undefined" && navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        async (position) => {
-          const lat = position.coords.latitude;
-          const lon = position.coords.longitude;
-          try {
-            const revRes = await fetch(
-              `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=en`
-            );
-            if (!revRes.ok) throw new Error("Reverse geocode failed");
-            const revData = await revRes.json();
-            const city = revData.city || revData.locality || revData.principalSubdivision || "Your Location";
-            const countryCode = revData.countryCode;
-            await fetchWeather(lat, lon, `${city} (GPS)`, countryCode);
-          } catch (err) {
-            console.warn("Reverse geocode failed:", err);
-            await fetchWeather(lat, lon, "Your Location (GPS)");
-          }
-        },
-        (error) => {
-          console.log("GPS failed, falling back to IP:", error.message);
-          fetchByIP();
-        },
-        { timeout: 5000 }
-      );
-    } else {
-      fetchByIP();
-    }
-  };
+ if (typeof window !== "undefined" && navigator.geolocation) {
+ navigator.geolocation.getCurrentPosition(
+ async (position) => {
+ const lat = position.coords.latitude;
+ const lon = position.coords.longitude;
+ try {
+ const revRes = await fetch(
+ `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=en`
+ );
+ if (!revRes.ok) throw new Error("Reverse geocode failed");
+ const revData = await revRes.json();
+ const city = revData.city || revData.locality || revData.principalSubdivision || "Your Location";
+ const countryCode = revData.countryCode;
+ await fetchWeather(lat, lon, `${city} (GPS)`, countryCode);
+ } catch (err) {
+ console.warn("Reverse geocode failed:", err);
+ await fetchWeather(lat, lon, "Your Location (GPS)");
+ }
+ },
+ (error) => {
+ console.log("GPS failed, falling back to IP:", error.message);
+ fetchByIP();
+ },
+ { timeout: 5000 }
+ );
+ } else {
+ fetchByIP();
+ }
+ };
 
-  const handleSearchCity = async (query: string) => {
-    setSearchQuery(query);
-    if (query.trim().length < 2) {
-      setSearchResults([]);
-      return;
-    }
-    setSearching(true);
-    try {
-      const res = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(query)}&count=5&language=en&format=json`);
-      if (!res.ok) throw new Error("Geocoding search failed");
-      const data = await res.json();
-      setSearchResults(data.results || []);
-    } catch (err) {
-      console.error("City search failed:", err);
-    } finally {
-      setSearching(false);
-    }
-  };
+ const handleSearchCity = async (query: string) => {
+ setSearchQuery(query);
+ if (query.trim().length < 2) {
+ setSearchResults([]);
+ return;
+ }
+ setSearching(true);
+ try {
+ const res = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(query)}&count=5&language=en&format=json`);
+ if (!res.ok) throw new Error("Geocoding search failed");
+ const data = await res.json();
+ setSearchResults(data.results || []);
+ } catch (err) {
+ console.error("City search failed:", err);
+ } finally {
+ setSearching(false);
+ }
+ };
 
-  const handleSelectSearchResult = async (result: any) => {
-    setShowClimateModal(false);
-    setSearchQuery('');
-    setSearchResults([]);
-    try {
-      const { latitude, longitude, name, admin1, country, country_code } = result;
-      const cityName = `${name}${admin1 ? `, ${admin1}` : ''}${country ? `, ${country}` : ''}`;
-      const countryCode = country_code || (country === 'India' ? 'IN' : undefined);
-      
-      const weatherRes = await fetch(
-        `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m`
-      );
-      if (!weatherRes.ok) throw new Error("Weather fetch failed");
-      const weatherData = await weatherRes.json();
-      
-      const temp = Math.round(weatherData.current.temperature_2m);
-      const humidity = Math.round(weatherData.current.relative_humidity_2m);
+ const handleSelectSearchResult = async (result: any) => {
+ setShowClimateModal(false);
+ setSearchQuery('');
+ setSearchResults([]);
+ try {
+ const { latitude, longitude, name, admin1, country, country_code } = result;
+ const cityName = `${name}${admin1 ? `, ${admin1}` : ''}${country ? `, ${country}` : ''}`;
+ const countryCode = country_code || (country === 'India' ? 'IN' : undefined);
+ 
+ const weatherRes = await fetch(
+ `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m`
+ );
+ if (!weatherRes.ok) throw new Error("Weather fetch failed");
+ const weatherData = await weatherRes.json();
+ 
+ const temp = Math.round(weatherData.current.temperature_2m);
+ const humidity = Math.round(weatherData.current.relative_humidity_2m);
 
-      onClimateChange({
-        temp,
-        humidity,
-        city: cityName,
-        countryCode
-      });
-    } catch (err) {
-      console.error("Select city failed:", err);
-    }
-  };
+ onClimateChange({
+ temp,
+ humidity,
+ city: cityName,
+ countryCode
+ });
+ } catch (err) {
+ console.error("Select city failed:", err);
+ }
+ };
 
-  return (
-    <div
-      style={{
-        minHeight: '100vh',
-        background: 'linear-gradient(135deg, #faf8f5 0%, #f5f1ed 100%)',
-        paddingTop: '80px',
-        paddingBottom: '120px',
-        paddingLeft: '20px',
-        paddingRight: '20px',
-      }}
-    >
-      <div style={{ width: '100%', maxWidth: '680px', margin: '0 auto' }}>
-        {/* Header */}
-        <div style={{ textAlign: 'center', marginBottom: '64px' }}>
-          <p
-            style={{
-              fontSize: '10px',
-              letterSpacing: '0.3em',
-              textTransform: 'uppercase',
-              color: '#9b7e6b',
-              marginBottom: '16px',
-              fontFamily: 'var(--font-mono, monospace)',
-            }}
-          >
-            ✓ Routine Generated
-          </p>
-          <h1
-            style={{
-              fontFamily: "'DM Serif Display', serif",
-              fontSize: 'clamp(32px, 6vw, 48px)',
-              fontWeight: 400,
-              color: '#111',
-              margin: '0 0 12px',
-              lineHeight: 1.1,
-            }}
-          >
-            Your Personalized<br />
-            <em style={{ fontStyle: 'italic', color: '#9b7e6b' }}>4-Step Routine</em>
-          </h1>
-          <p
-            style={{
-              fontSize: '14px',
-              color: '#888',
-              lineHeight: 1.7,
-              maxWidth: '480px',
-              margin: '0 auto',
-            }}
-          >
-            Curated specifically for your skin. All products available on Amazon India with verified reviews and fastest delivery.
-          </p>
-        </div>
+ return (
+ <div
+ style={{
+ minHeight: '100vh',
+ background: 'linear-gradient(135deg, #faf8f5 0%, #f5f1ed 100%)',
+ paddingTop: '80px',
+ paddingBottom: '120px',
+ paddingLeft: '20px',
+ paddingRight: '20px',
+ }}
+ >
+ <div style={{ width: '100%', maxWidth: '680px', margin: '0 auto' }}>
+ {/* Header */}
+ <div style={{ textAlign: 'center', marginBottom: '64px' }}>
+ <p
+ style={{
+ fontSize: '10px',
+ letterSpacing: '0.3em',
+ textTransform: 'uppercase',
+ color: '#9b7e6b',
+ marginBottom: '16px',
+ fontFamily: 'var(--font-mono, monospace)',
+ }}
+ >
+ ✓ Routine Generated
+ </p>
+ <h1
+ style={{
+ fontFamily: "'DM Serif Display', serif",
+ fontSize: 'clamp(32px, 6vw, 48px)',
+ fontWeight: 400,
+ color: '#111',
+ margin: '0 0 12px',
+ lineHeight: 1.1,
+ }}
+ >
+ Your Personalized<br />
+ <em style={{ fontStyle: 'italic', color: '#9b7e6b' }}>4-Step Routine</em>
+ </h1>
+ <p
+ style={{
+ fontSize: '14px',
+ color: '#888',
+ lineHeight: 1.7,
+ maxWidth: '480px',
+ margin: '0 auto',
+ }}
+ >
+ Curated specifically for your skin. All products available on Amazon India with verified reviews and fastest delivery.
+ </p>
+ </div>
 
-        {/* Adaptive Climate Widget */}
-        <div
-          style={{
-            background: 'rgba(255, 255, 255, 0.8)',
-            backdropFilter: 'blur(10px)',
-            border: '1px solid #e8e2d9',
-            borderRadius: '16px',
-            padding: '24px',
-            marginBottom: '32px',
-            boxShadow: '0 8px 32px rgba(155, 126, 107, 0.05)',
-          }}
-        >
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px', flexWrap: 'wrap', gap: '12px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <span style={{ fontSize: '18px' }}>🌍</span>
-              <div style={{ textAlign: 'left' }}>
-                <h3 style={{ margin: 0, fontFamily: "'DM Serif Display', serif", fontSize: '18px', color: '#111', fontWeight: 400 }}>
-                  Adaptive Climate Engine
-                </h3>
-                <p
-                  onClick={() => setShowClimateModal(true)}
-                  style={{
-                    margin: 0,
-                    fontSize: '10px',
-                    color: '#9b7e6b',
-                    fontFamily: 'var(--font-mono, monospace)',
-                    letterSpacing: '0.05em',
-                    cursor: 'pointer',
-                    transition: 'color 0.2s',
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.color = '#111';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.color = '#9b7e6b';
-                  }}
-                >
-                  ACTIVE WEATHER SYNC: {climate ? climate.city : "None (Moderate)"} <span style={{ fontSize: '9px', opacity: 0.8 }}>✎</span>
-                </p>
-              </div>
-            </div>
-            {climate && (
-              <div
-                onClick={() => setShowClimateModal(true)}
-                style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}
-              >
-                <span style={{ fontSize: '11px', padding: '4px 8px', background: '#f5f1ed', borderRadius: '4px', color: '#666', fontFamily: 'var(--font-mono, monospace)', fontWeight: 600 }}>
-                  🌡️ {climate.temp}°C
-                </span>
-                <span style={{ fontSize: '11px', padding: '4px 8px', background: '#edf7f0', borderRadius: '4px', color: '#2d7a4f', fontFamily: 'var(--font-mono, monospace)', fontWeight: 600 }}>
-                  💧 {climate.humidity}% RH
-                </span>
-              </div>
-            )}
-          </div>
+ {/* Adaptive Climate Widget */}
+ <div
+ style={{
+ background: 'rgba(255, 255, 255, 0.8)',
+ backdropFilter: 'blur(10px)',
+ border: '1px solid #e8e2d9',
+ borderRadius: '16px',
+ padding: '24px',
+ marginBottom: '32px',
+ boxShadow: '0 8px 32px rgba(155, 126, 107, 0.05)',
+ }}
+ >
+ <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px', flexWrap: 'wrap', gap: '12px' }}>
+ <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+ <span style={{ fontSize: '18px' }}>🌍</span>
+ <div style={{ textAlign: 'left' }}>
+ <h3 style={{ margin: 0, fontFamily: "'DM Serif Display', serif", fontSize: '18px', color: '#111', fontWeight: 400 }}>
+ Adaptive Climate Engine
+ </h3>
+ <p
+ onClick={() => setShowClimateModal(true)}
+ style={{
+ margin: 0,
+ fontSize: '10px',
+ color: '#9b7e6b',
+ fontFamily: 'var(--font-mono, monospace)',
+ letterSpacing: '0.05em',
+ cursor: 'pointer',
+ transition: 'color 0.2s',
+ }}
+ onMouseEnter={(e) => {
+ e.currentTarget.style.color = '#111';
+ }}
+ onMouseLeave={(e) => {
+ e.currentTarget.style.color = '#9b7e6b';
+ }}
+ >
+ ACTIVE WEATHER SYNC: {climate ? climate.city : "None (Moderate)"} <span style={{ fontSize: '9px', opacity: 0.8 }}>✎</span>
+ </p>
+ </div>
+ </div>
+ {climate && (
+ <div
+ onClick={() => setShowClimateModal(true)}
+ style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}
+ >
+ <span style={{ fontSize: '11px', padding: '4px 8px', background: '#f5f1ed', borderRadius: '4px', color: '#666', fontFamily: 'var(--font-mono, monospace)', fontWeight: 600 }}>
+ 🌡️ {climate.temp}°C
+ </span>
+ <span style={{ fontSize: '11px', padding: '4px 8px', background: '#edf7f0', borderRadius: '4px', color: '#2d7a4f', fontFamily: 'var(--font-mono, monospace)', fontWeight: 600 }}>
+ 💧 {climate.humidity}% RH
+ </span>
+ </div>
+ )}
+ </div>
 
-          {routine.climateAdjustment ? (
-            <div
-              style={{
-                background: routine.climateAdjustment.type === 'humid_heat' ? '#fff9f0' : '#f0f5ff',
-                borderLeft: `4px solid ${routine.climateAdjustment.type === 'humid_heat' ? '#e67e22' : '#3498db'}`,
-                padding: '14px 16px',
-                borderRadius: '0 8px 8px 0',
-                fontSize: '13px',
-                color: '#444',
-                lineHeight: '1.6',
-                marginBottom: '20px',
-                textAlign: 'left',
-              }}
-            >
-              <strong style={{ color: routine.climateAdjustment.type === 'humid_heat' ? '#d35400' : '#2980b9' }}>
-                Climate Override Active:{" "}
-              </strong>
-              {routine.climateAdjustment.alertText}
-            </div>
-          ) : (
-            <div
-              style={{
-                background: '#fcfcfc',
-                borderLeft: '4px solid #bbb',
-                padding: '14px 16px',
-                borderRadius: '0 8px 8px 0',
-                fontSize: '13px',
-                color: '#777',
-                lineHeight: '1.6',
-                marginBottom: '20px',
-                textAlign: 'left',
-              }}
-            >
-              <strong>Moderate Climate Mode: </strong>
-              Ambient air is in comfortable balance. No active product adjustments required for today.
-            </div>
-          )}
+ {routine.climateAdjustment ? (
+ <div
+ style={{
+ background: routine.climateAdjustment.type === 'humid_heat' ? '#fff9f0' : '#f0f5ff',
+ borderLeft: `4px solid ${routine.climateAdjustment.type === 'humid_heat' ? '#e67e22' : '#3498db'}`,
+ padding: '14px 16px',
+ borderRadius: '0 8px 8px 0',
+ fontSize: '13px',
+ color: '#444',
+ lineHeight: '1.6',
+ marginBottom: '20px',
+ textAlign: 'left',
+ }}
+ >
+ <strong style={{ color: routine.climateAdjustment.type === 'humid_heat' ? '#d35400' : '#2980b9' }}>
+ Climate Override Active:{" "}
+ </strong>
+ {routine.climateAdjustment.alertText}
+ </div>
+ ) : (
+ <div
+ style={{
+ background: '#fcfcfc',
+ borderLeft: '4px solid #bbb',
+ padding: '14px 16px',
+ borderRadius: '0 8px 8px 0',
+ fontSize: '13px',
+ color: '#777',
+ lineHeight: '1.6',
+ marginBottom: '20px',
+ textAlign: 'left',
+ }}
+ >
+ <strong>Moderate Climate Mode: </strong>
+ Ambient air is in comfortable balance. No active product adjustments required for today.
+ </div>
+ )}
 
-          {/* Presets Selectors */}
-          <div style={{ textAlign: 'left' }}>
-            <p style={{ margin: '0 0 12px', fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.1em', color: '#bbb', fontFamily: 'var(--font-mono, monospace)' }}>
-              Select a simulated city climate to watch the routine morph in real-time:
-            </p>
-            <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-              {CLIMATE_PRESETS.map((preset) => {
-                const isActive = climate?.city === preset.city;
-                return (
-                  <button
-                    key={preset.city}
-                    onClick={() => onClimateChange(preset)}
-                    style={{
-                      padding: '8px 12px',
-                      fontSize: '11px',
-                      border: `1px solid ${isActive ? '#111' : '#ede8e0'}`,
-                      background: isActive ? '#111' : '#fff',
-                      color: isActive ? '#fff' : '#444',
-                      borderRadius: '6px',
-                      cursor: 'pointer',
-                      transition: 'all 0.2s',
-                      fontFamily: 'var(--font-mono, monospace)',
-                      fontWeight: isActive ? 600 : 400,
-                    }}
-                  >
-                    {preset.label}
-                  </button>
-                );
-              })}
-              <button
-                onClick={() => onClimateChange(undefined)}
-                style={{
-                  padding: '8px 12px',
-                  fontSize: '11px',
-                  border: `1px solid ${!climate ? '#111' : '#ede8e0'}`,
-                  background: !climate ? '#111' : '#fff',
-                  color: !climate ? '#fff' : '#444',
-                  borderRadius: '6px',
-                  cursor: 'pointer',
-                  transition: 'all 0.2s',
-                  fontFamily: 'var(--font-mono, monospace)',
-                  fontWeight: !climate ? 600 : 400,
-                }}
-              >
-                🍃 Moderate Default
-              </button>
-              <button
-                onClick={() => setShowClimateModal(true)}
-                style={{
-                  padding: '8px 12px',
-                  fontSize: '11px',
-                  border: '1px dashed #9b7e6b',
-                  background: '#faf8f5',
-                  color: '#9b7e6b',
-                  borderRadius: '6px',
-                  cursor: 'pointer',
-                  transition: 'all 0.2s',
-                  fontFamily: 'var(--font-mono, monospace)',
-                  fontWeight: 600,
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.background = '#f5ebe6';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.background = '#faf8f5';
-                }}
-              >
-                🔍 Search City...
-              </button>
-            </div>
-          </div>
-        </div>
+ {/* Presets Selectors */}
+ <div style={{ textAlign: 'left' }}>
+ <p style={{ margin: '0 0 12px', fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.1em', color: '#bbb', fontFamily: 'var(--font-mono, monospace)' }}>
+ Select a simulated city climate to watch the routine morph in real-time:
+ </p>
+ <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+ {CLIMATE_PRESETS.map((preset) => {
+ const isActive = climate?.city === preset.city;
+ return (
+ <button
+ key={preset.city}
+ onClick={() => onClimateChange(preset)}
+ style={{
+ padding: '8px 12px',
+ fontSize: '11px',
+ border: `1px solid ${isActive ? '#111' : '#ede8e0'}`,
+ background: isActive ? '#111' : '#fff',
+ color: isActive ? '#fff' : '#444',
+ borderRadius: '6px',
+ cursor: 'pointer',
+ transition: 'all 0.2s',
+ fontFamily: 'var(--font-mono, monospace)',
+ fontWeight: isActive ? 600 : 400,
+ }}
+ >
+ {preset.label}
+ </button>
+ );
+ })}
+ <button
+ onClick={() => onClimateChange(undefined)}
+ style={{
+ padding: '8px 12px',
+ fontSize: '11px',
+ border: `1px solid ${!climate ? '#111' : '#ede8e0'}`,
+ background: !climate ? '#111' : '#fff',
+ color: !climate ? '#fff' : '#444',
+ borderRadius: '6px',
+ cursor: 'pointer',
+ transition: 'all 0.2s',
+ fontFamily: 'var(--font-mono, monospace)',
+ fontWeight: !climate ? 600 : 400,
+ }}
+ >
+ 🍃 Moderate Default
+ </button>
+ <button
+ onClick={() => setShowClimateModal(true)}
+ style={{
+ padding: '8px 12px',
+ fontSize: '11px',
+ border: '1px dashed #9b7e6b',
+ background: '#faf8f5',
+ color: '#9b7e6b',
+ borderRadius: '6px',
+ cursor: 'pointer',
+ transition: 'all 0.2s',
+ fontFamily: 'var(--font-mono, monospace)',
+ fontWeight: 600,
+ }}
+ onMouseEnter={(e) => {
+ e.currentTarget.style.background = '#f5ebe6';
+ }}
+ onMouseLeave={(e) => {
+ e.currentTarget.style.background = '#faf8f5';
+ }}
+ >
+ 🔍 Search City...
+ </button>
+ </div>
+ </div>
+ </div>
 
-        {/* Routine Steps */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginBottom: '48px' }}>
-          {STEPS_ORDER.map((step, index) => {
-            const product = routine[step.key as 'cleanser' | 'treatment' | 'moisturiser' | 'sunscreen'];
-            if (!product) return null;
+ {/* Routine Steps */}
+ <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginBottom: '48px' }}>
+ {STEPS_ORDER.map((step, index) => {
+ const product = routine[step.key as 'cleanser' | 'treatment' | 'moisturiser' | 'sunscreen'];
+ if (!product) return null;
 
-            const isExpanded = expandedStep === step.key;
+ const isExpanded = expandedStep === step.key;
 
-            return (
-              <div
-                key={step.key}
-                style={{
-                  background: '#fff',
-                  border: '1px solid #ede8e0',
-                  borderRadius: '12px',
-                  overflow: 'hidden',
-                  transition: 'all 0.25s',
-                }}
-              >
-                {/* Step Header */}
-                <div
-                  onClick={() => setExpandedStep(isExpanded ? null : step.key)}
-                  style={{
-                    padding: '20px 24px',
-                    borderBottom: isExpanded ? '1px solid #f0ebe3' : 'none',
-                    display: 'flex',
-                    alignItems: 'flex-start',
-                    gap: '16px',
-                    cursor: 'pointer',
-                    transition: 'all 0.25s',
-                  }}
-                  onMouseEnter={(e) => {
-                    (e.currentTarget as HTMLDivElement).style.background = '#faf8f5';
-                  }}
-                  onMouseLeave={(e) => {
-                    (e.currentTarget as HTMLDivElement).style.background = 'transparent';
-                  }}
-                >
-                  {/* Step Number */}
-                  <div
-                    style={{
-                      width: '36px',
-                      height: '36px',
-                      flexShrink: 0,
-                      border: '1px solid #ddd',
-                      borderRadius: '50%',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      fontFamily: "monospace",
-                      fontSize: '12px',
-                      color: '#999',
-                      fontWeight: 600,
-                    }}
-                  >
-                    {String(index + 1).padStart(2, '0')}
-                  </div>
+ return (
+ <div
+ key={step.key}
+ style={{
+ background: '#fff',
+ border: '1px solid #ede8e0',
+ borderRadius: '12px',
+ overflow: 'hidden',
+ transition: 'all 0.25s',
+ }}
+ >
+ {/* Step Header */}
+ <div
+ onClick={() => setExpandedStep(isExpanded ? null : step.key)}
+ style={{
+ padding: '20px 24px',
+ borderBottom: isExpanded ? '1px solid #f0ebe3' : 'none',
+ display: 'flex',
+ alignItems: 'flex-start',
+ gap: '16px',
+ cursor: 'pointer',
+ transition: 'all 0.25s',
+ }}
+ onMouseEnter={(e) => {
+ (e.currentTarget as HTMLDivElement).style.background = '#faf8f5';
+ }}
+ onMouseLeave={(e) => {
+ (e.currentTarget as HTMLDivElement).style.background = 'transparent';
+ }}
+ >
+ {/* Step Number */}
+ <div
+ style={{
+ width: '36px',
+ height: '36px',
+ flexShrink: 0,
+ border: '1px solid #ddd',
+ borderRadius: '50%',
+ display: 'flex',
+ alignItems: 'center',
+ justifyContent: 'center',
+ fontFamily: "monospace",
+ fontSize: '12px',
+ color: '#999',
+ fontWeight: 600,
+ }}
+ >
+ {String(index + 1).padStart(2, '0')}
+ </div>
 
-                  <div style={{ flex: 1 }}>
-                    <p
-                      style={{
-                        fontSize: '10px',
-                        letterSpacing: '0.2em',
-                        textTransform: 'uppercase',
-                        color: '#bbb',
-                        margin: '0 0 4px',
-                        fontFamily: 'var(--font-mono, monospace)',
-                      }}
-                    >
-                      {step.step}
-                    </p>
-                    <h2
-                      style={{
-                        fontFamily: "'DM Serif Display', serif",
-                        fontSize: '20px',
-                        fontWeight: 400,
-                        color: '#111',
-                        margin: '0 0 6px',
-                        lineHeight: 1.2,
-                      }}
-                    >
-                      {step.label}
-                    </h2>
-                    <p
-                      style={{
-                        fontSize: '12px',
-                        color: '#888',
-                        lineHeight: 1.5,
-                        margin: 0,
-                      }}
-                    >
-                      {step.description}
-                    </p>
-                  </div>
+ <div style={{ flex: 1 }}>
+ <p
+ style={{
+ fontSize: '10px',
+ letterSpacing: '0.2em',
+ textTransform: 'uppercase',
+ color: '#bbb',
+ margin: '0 0 4px',
+ fontFamily: 'var(--font-mono, monospace)',
+ }}
+ >
+ {step.step}
+ </p>
+ <h2
+ style={{
+ fontFamily: "'DM Serif Display', serif",
+ fontSize: '20px',
+ fontWeight: 400,
+ color: '#111',
+ margin: '0 0 6px',
+ lineHeight: 1.2,
+ }}
+ >
+ {step.label}
+ </h2>
+ <p
+ style={{
+ fontSize: '12px',
+ color: '#888',
+ lineHeight: 1.5,
+ margin: 0,
+ }}
+ >
+ {step.description}
+ </p>
+ </div>
 
-                  <ArrowRight
-                    size={16}
-                    style={{
-                      color: '#bbb',
-                      flexShrink: 0,
-                      marginTop: '4px',
-                      transition: 'transform 0.25s',
-                      transform: isExpanded ? 'rotate(90deg)' : 'rotate(0deg)',
-                    }}
-                  />
-                </div>
+ <ArrowRight
+ size={16}
+ style={{
+ color: '#bbb',
+ flexShrink: 0,
+ marginTop: '4px',
+ transition: 'transform 0.25s',
+ transform: isExpanded ? 'rotate(90deg)' : 'rotate(0deg)',
+ }}
+ />
+ </div>
 
-                {/* Expanded Content */}
-                {isExpanded && (
-                  <div style={{ padding: '20px 24px' }}>
-                    <p
-                      style={{
-                        fontSize: '10px',
-                        letterSpacing: '0.2em',
-                        textTransform: 'uppercase',
-                        color: '#ccc',
-                        margin: '0 0 12px',
-                        fontFamily: 'var(--font-mono, monospace)',
-                      }}
-                    >
-                      Why This Product
-                    </p>
-                    <p
-                      style={{
-                        fontSize: '13px',
-                        color: '#666',
-                        lineHeight: 1.6,
-                        margin: '0 0 16px',
-                      }}
-                    >
-                      {product.reason}
-                    </p>
+ {/* Expanded Content */}
+ {isExpanded && (
+ <div style={{ padding: '20px 24px' }}>
+ <p
+ style={{
+ fontSize: '10px',
+ letterSpacing: '0.2em',
+ textTransform: 'uppercase',
+ color: '#ccc',
+ margin: '0 0 12px',
+ fontFamily: 'var(--font-mono, monospace)',
+ }}
+ >
+ Why This Product
+ </p>
+ <p
+ style={{
+ fontSize: '13px',
+ color: '#666',
+ lineHeight: 1.6,
+ margin: '0 0 16px',
+ }}
+ >
+ {product.reason}
+ </p>
 
-                    <p
-                      style={{
-                        fontSize: '10px',
-                        letterSpacing: '0.2em',
-                        textTransform: 'uppercase',
-                        color: '#ccc',
-                        margin: '0 0 12px',
-                        fontFamily: 'var(--font-mono, monospace)',
-                      }}
-                    >
-                      Recommended Product
-                    </p>
+ <p
+ style={{
+ fontSize: '10px',
+ letterSpacing: '0.2em',
+ textTransform: 'uppercase',
+ color: '#ccc',
+ margin: '0 0 12px',
+ fontFamily: 'var(--font-mono, monospace)',
+ }}
+ >
+ Recommended Product
+ </p>
 
-                    <ProductCard
-                      asin={product.asin}
-                      countryCode={climate?.countryCode}
-                      onClick={() =>
-                        trackAffiliateClick({
-                          asin: product.asin,
-                          product: product.name,
-                          step: step.key,
-                        })
-                      }
-                    />
+ <ProductCard
+ asin={product.asin}
+ countryCode={climate?.countryCode}
+ onClick={() =>
+ trackAffiliateClick({
+ asin: product.asin,
+ product: product.name,
+ step: step.key,
+ })
+ }
+ />
 
-                    <p
-                      style={{
-                        fontSize: '9px',
-                        color: '#ccc',
-                        margin: '12px 0 0',
-                        textAlign: 'center',
-                        fontFamily: 'var(--font-mono, monospace)',
-                      }}
-                    >
-                      Affiliate link · Commission at no extra cost
-                    </p>
-                  </div>
-                )}
-              </div>
-            );
-          })}
-        </div>
+ <p
+ style={{
+ fontSize: '9px',
+ color: '#ccc',
+ margin: '12px 0 0',
+ textAlign: 'center',
+ fontFamily: 'var(--font-mono, monospace)',
+ }}
+ >
+ Affiliate link · Commission at no extra cost
+ </p>
+ </div>
+ )}
+ </div>
+ );
+ })}
+ </div>
 
-        {/* Usage Guide */}
-        <div
-          style={{
-            background: '#111',
-            borderRadius: '12px',
-            padding: '32px',
-            marginBottom: '32px',
-            color: '#fff',
-          }}
-        >
-          <h3
-            style={{
-              fontFamily: "'DM Serif Display', serif",
-              fontSize: '18px',
-              fontWeight: 400,
-              margin: '0 0 24px',
-              color: '#fff',
-            }}
-          >
-            How to Use
-          </h3>
+ {/* Usage Guide */}
+ <div
+ style={{
+ background: '#111',
+ borderRadius: '12px',
+ padding: '32px',
+ marginBottom: '32px',
+ color: '#fff',
+ }}
+ >
+ <h3
+ style={{
+ fontFamily: "'DM Serif Display', serif",
+ fontSize: '18px',
+ fontWeight: 400,
+ margin: '0 0 24px',
+ color: '#fff',
+ }}
+ >
+ How to Use
+ </h3>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '32px' }}>
-            {/* AM */}
-            <div>
-              <p
-                style={{
-                  fontSize: '9px',
-                  letterSpacing: '0.25em',
-                  textTransform: 'uppercase',
-                  color: '#9b7e6b',
-                  margin: '0 0 16px',
-                  fontFamily: 'var(--font-mono, monospace)',
-                }}
-              >
-                Morning (5 min)
-              </p>
-              {['Cleanse', 'Treat', 'Hydrate', 'Protect'].map((label, i) => (
-                <div
-                  key={label}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '10px',
-                    marginBottom: '12px',
-                    fontSize: '13px',
-                    color: '#ddd',
-                  }}
-                >
-                  <Check size={14} color="#9b7e6b" />
-                  {label}
-                </div>
-              ))}
-            </div>
+ <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '32px' }}>
+ {/* AM */}
+ <div>
+ <p
+ style={{
+ fontSize: '9px',
+ letterSpacing: '0.25em',
+ textTransform: 'uppercase',
+ color: '#9b7e6b',
+ margin: '0 0 16px',
+ fontFamily: 'var(--font-mono, monospace)',
+ }}
+ >
+ Morning (5 min)
+ </p>
+ {['Cleanse', 'Treat', 'Hydrate', 'Protect'].map((label, i) => (
+ <div
+ key={label}
+ style={{
+ display: 'flex',
+ alignItems: 'center',
+ gap: '10px',
+ marginBottom: '12px',
+ fontSize: '13px',
+ color: '#ddd',
+ }}
+ >
+ <Check size={14} color="#9b7e6b" />
+ {label}
+ </div>
+ ))}
+ </div>
 
-            {/* PM */}
-            <div>
-              <p
-                style={{
-                  fontSize: '9px',
-                  letterSpacing: '0.25em',
-                  textTransform: 'uppercase',
-                  color: '#9b7e6b',
-                  margin: '0 0 16px',
-                  fontFamily: 'var(--font-mono, monospace)',
-                }}
-              >
-                Evening (5 min)
-              </p>
-              {['Cleanse', 'Treat', 'Hydrate'].map((label, i) => (
-                <div
-                  key={label}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '10px',
-                    marginBottom: '12px',
-                    fontSize: '13px',
-                    color: '#ddd',
-                  }}
-                >
-                  <Check size={14} color="#9b7e6b" />
-                  {label}
-                </div>
-              ))}
-              <div
-                style={{
-                  marginTop: '12px',
-                  paddingTop: '12px',
-                  borderTop: '1px solid #222',
-                }}
-              >
-                <p style={{ fontSize: '11px', color: '#666', margin: 0 }}>
-                  Skip sunscreen at night
-                </p>
-              </div>
-            </div>
-          </div>
+ {/* PM */}
+ <div>
+ <p
+ style={{
+ fontSize: '9px',
+ letterSpacing: '0.25em',
+ textTransform: 'uppercase',
+ color: '#9b7e6b',
+ margin: '0 0 16px',
+ fontFamily: 'var(--font-mono, monospace)',
+ }}
+ >
+ Evening (5 min)
+ </p>
+ {['Cleanse', 'Treat', 'Hydrate'].map((label, i) => (
+ <div
+ key={label}
+ style={{
+ display: 'flex',
+ alignItems: 'center',
+ gap: '10px',
+ marginBottom: '12px',
+ fontSize: '13px',
+ color: '#ddd',
+ }}
+ >
+ <Check size={14} color="#9b7e6b" />
+ {label}
+ </div>
+ ))}
+ <div
+ style={{
+ marginTop: '12px',
+ paddingTop: '12px',
+ borderTop: '1px solid #222',
+ }}
+ >
+ <p style={{ fontSize: '11px', color: '#666', margin: 0 }}>
+ Skip sunscreen at night
+ </p>
+ </div>
+ </div>
+ </div>
 
-          <div
-            style={{
-              marginTop: '24px',
-              paddingTop: '24px',
-              borderTop: '1px solid #222',
-              fontSize: '12px',
-              color: '#999',
-              lineHeight: 1.6,
-            }}
-          >
-            Visible results appear in 4–8 weeks with consistent daily use. Start new actives 2–3x per week, then gradually increase.
-          </div>
-        </div>
+ <div
+ style={{
+ marginTop: '24px',
+ paddingTop: '24px',
+ borderTop: '1px solid #222',
+ fontSize: '12px',
+ color: '#999',
+ lineHeight: 1.6,
+ }}
+ >
+ Visible results appear in 4–8 weeks with consistent daily use. Start new actives 2–3x per week, then gradually increase.
+ </div>
+ </div>
 
-        {/* Actions */}
-        <div
-          style={{
-            display: 'flex',
-            gap: '12px',
-            marginBottom: '32px',
-          }}
-        >
-          <button
-            onClick={onRestart}
-            style={{
-              flex: 1,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '8px',
-              padding: '13px 24px',
-              background: 'transparent',
-              border: '1px solid #ddd',
-              color: '#666',
-              fontSize: '10px',
-              letterSpacing: '0.15em',
-              textTransform: 'uppercase',
-              cursor: 'pointer',
-              borderRadius: '8px',
-              transition: 'all 0.25s',
-              fontFamily: 'var(--font-mono, monospace)',
-            }}
-            onMouseEnter={(e) => {
-              const btn = e.currentTarget as HTMLButtonElement;
-              btn.style.borderColor = '#111';
-              btn.style.color = '#111';
-              btn.style.background = '#faf8f5';
-            }}
-            onMouseLeave={(e) => {
-              const btn = e.currentTarget as HTMLButtonElement;
-              btn.style.borderColor = '#ddd';
-              btn.style.color = '#666';
-              btn.style.background = 'transparent';
-            }}
-          >
-            <RotateCcw size={12} />
-            Retake Quiz
-          </button>
+ {/* Actions */}
+ <div
+ style={{
+ display: 'flex',
+ gap: '12px',
+ marginBottom: '32px',
+ }}
+ >
+ <button
+ onClick={onRestart}
+ style={{
+ flex: 1,
+ display: 'flex',
+ alignItems: 'center',
+ justifyContent: 'center',
+ gap: '8px',
+ padding: '13px 24px',
+ background: 'transparent',
+ border: '1px solid #ddd',
+ color: '#666',
+ fontSize: '10px',
+ letterSpacing: '0.15em',
+ textTransform: 'uppercase',
+ cursor: 'pointer',
+ borderRadius: '8px',
+ transition: 'all 0.25s',
+ fontFamily: 'var(--font-mono, monospace)',
+ }}
+ onMouseEnter={(e) => {
+ const btn = e.currentTarget as HTMLButtonElement;
+ btn.style.borderColor = '#111';
+ btn.style.color = '#111';
+ btn.style.background = '#faf8f5';
+ }}
+ onMouseLeave={(e) => {
+ const btn = e.currentTarget as HTMLButtonElement;
+ btn.style.borderColor = '#ddd';
+ btn.style.color = '#666';
+ btn.style.background = 'transparent';
+ }}
+ >
+ <RotateCcw size={12} />
+ Retake Quiz
+ </button>
 
-          <a
-            href="/"
-            style={{
-              flex: 1,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              padding: '13px 24px',
-              background: '#111',
-              color: '#fff',
-              fontSize: '10px',
-              letterSpacing: '0.15em',
-              textTransform: 'uppercase',
-              textDecoration: 'none',
-              borderRadius: '8px',
-              border: '1px solid #111',
-              transition: 'all 0.25s',
-              fontFamily: 'var(--font-mono, monospace)',
-              gap: '8px',
-              cursor: 'pointer',
-            }}
-            onMouseEnter={(e) => {
-              (e.currentTarget as HTMLAnchorElement).style.background = '#333';
-            }}
-            onMouseLeave={(e) => {
-              (e.currentTarget as HTMLAnchorElement).style.background = '#111';
-            }}
-          >
-            All Products
-            <ArrowRight size={12} />
-          </a>
-        </div>
+ <a
+ href="/"
+ style={{
+ flex: 1,
+ display: 'flex',
+ alignItems: 'center',
+ justifyContent: 'center',
+ padding: '13px 24px',
+ background: '#111',
+ color: '#fff',
+ fontSize: '10px',
+ letterSpacing: '0.15em',
+ textTransform: 'uppercase',
+ textDecoration: 'none',
+ borderRadius: '8px',
+ border: '1px solid #111',
+ transition: 'all 0.25s',
+ fontFamily: 'var(--font-mono, monospace)',
+ gap: '8px',
+ cursor: 'pointer',
+ }}
+ onMouseEnter={(e) => {
+ (e.currentTarget as HTMLAnchorElement).style.background = '#333';
+ }}
+ onMouseLeave={(e) => {
+ (e.currentTarget as HTMLAnchorElement).style.background = '#111';
+ }}
+ >
+ All Products
+ <ArrowRight size={12} />
+ </a>
+ </div>
 
-        {/* Disclaimer */}
-        <p
-          style={{
-            fontSize: '10px',
-            color: '#bbb',
-            textAlign: 'center',
-            lineHeight: 1.6,
-            fontFamily: 'var(--font-mono, monospace)',
-          }}
-        >
-          Not medical advice. Consult a dermatologist for serious skin concerns. Results may vary based on consistency and individual skin factors.
-        </p>
-      </div>
+ {/* Disclaimer */}
+ <p
+ style={{
+ fontSize: '10px',
+ color: '#bbb',
+ textAlign: 'center',
+ lineHeight: 1.6,
+ fontFamily: 'var(--font-mono, monospace)',
+ }}
+ >
+ Not medical advice. Consult a dermatologist for serious skin concerns. Results may vary based on consistency and individual skin factors.
+ </p>
+ </div>
 
-      {showClimateModal && (
-        <div
-          onClick={() => setShowClimateModal(false)}
-          style={{
-            position: 'fixed',
-            inset: 0,
-            background: 'rgba(0,0,0,0.4)',
-            backdropFilter: 'blur(4px)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            zIndex: 1000,
-            padding: '20px',
-          }}
-        >
-          <div
-            onClick={(e) => e.stopPropagation()}
-            style={{
-              width: '100%',
-              maxWidth: '440px',
-              background: '#fff',
-              border: '1px solid #e8e2d9',
-              borderRadius: '16px',
-              padding: '24px',
-              boxShadow: '0 20px 40px rgba(0,0,0,0.1)',
-            }}
-          >
-            <h3 style={{ fontFamily: "'DM Serif Display', serif", fontSize: '20px', margin: '0 0 8px', color: '#111' }}>
-              Select Your Location
-            </h3>
-            <p style={{ fontSize: '12px', color: '#888', margin: '0 0 20px', lineHeight: 1.5 }}>
-              Skincare needs depend heavily on local humidity and temperature. Select a city to sync real-time weather and optimize your routine.
-            </p>
+ {showClimateModal && (
+ <div
+ onClick={() => setShowClimateModal(false)}
+ style={{
+ position: 'fixed',
+ inset: 0,
+ background: 'rgba(0,0,0,0.4)',
+ backdropFilter: 'blur(4px)',
+ display: 'flex',
+ alignItems: 'center',
+ justifyContent: 'center',
+ zIndex: 1000,
+ padding: '20px',
+ }}
+ >
+ <div
+ onClick={(e) => e.stopPropagation()}
+ style={{
+ width: '100%',
+ maxWidth: '440px',
+ background: '#fff',
+ border: '1px solid #e8e2d9',
+ borderRadius: '16px',
+ padding: '24px',
+ boxShadow: '0 20px 40px rgba(0,0,0,0.1)',
+ }}
+ >
+ <h3 style={{ fontFamily: "'DM Serif Display', serif", fontSize: '20px', margin: '0 0 8px', color: '#111' }}>
+ Select Your Location
+ </h3>
+ <p style={{ fontSize: '12px', color: '#888', margin: '0 0 20px', lineHeight: 1.5 }}>
+ Skincare needs depend heavily on local humidity and temperature. Select a city to sync real-time weather and optimize your routine.
+ </p>
 
-            {/* Quick Presets */}
-            <p style={{ fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.15em', color: '#bbb', margin: '0 0 10px', fontFamily: 'var(--font-mono, monospace)' }}>
-              Quick Presets
-            </p>
-            <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '20px' }}>
-              {CLIMATE_PRESETS.map((preset) => (
-                <button
-                  key={preset.city}
-                  onClick={() => {
-                    onClimateChange(preset);
-                    setShowClimateModal(false);
-                  }}
-                  style={{
-                    padding: '8px 12px',
-                    fontSize: '11px',
-                    border: '1px solid #ede8e0',
-                    background: '#faf8f5',
-                    borderRadius: '6px',
-                    cursor: 'pointer',
-                    fontFamily: 'var(--font-mono, monospace)',
-                    color: '#444',
-                    transition: 'all 0.2s',
-                  }}
-                  onMouseEnter={(e) => {
-                    const btn = e.currentTarget as HTMLButtonElement;
-                    btn.style.borderColor = '#111';
-                    btn.style.background = '#fff';
-                  }}
-                  onMouseLeave={(e) => {
-                    const btn = e.currentTarget as HTMLButtonElement;
-                    btn.style.borderColor = '#ede8e0';
-                    btn.style.background = '#faf8f5';
-                  }}
-                >
-                  {preset.label}
-                </button>
-              ))}
-            </div>
+ {/* Quick Presets */}
+ <p style={{ fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.15em', color: '#bbb', margin: '0 0 10px', fontFamily: 'var(--font-mono, monospace)' }}>
+ Quick Presets
+ </p>
+ <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '20px' }}>
+ {CLIMATE_PRESETS.map((preset) => (
+ <button
+ key={preset.city}
+ onClick={() => {
+ onClimateChange(preset);
+ setShowClimateModal(false);
+ }}
+ style={{
+ padding: '8px 12px',
+ fontSize: '11px',
+ border: '1px solid #ede8e0',
+ background: '#faf8f5',
+ borderRadius: '6px',
+ cursor: 'pointer',
+ fontFamily: 'var(--font-mono, monospace)',
+ color: '#444',
+ transition: 'all 0.2s',
+ }}
+ onMouseEnter={(e) => {
+ const btn = e.currentTarget as HTMLButtonElement;
+ btn.style.borderColor = '#111';
+ btn.style.background = '#fff';
+ }}
+ onMouseLeave={(e) => {
+ const btn = e.currentTarget as HTMLButtonElement;
+ btn.style.borderColor = '#ede8e0';
+ btn.style.background = '#faf8f5';
+ }}
+ >
+ {preset.label}
+ </button>
+ ))}
+ </div>
 
-            {/* Custom Search */}
-            <p style={{ fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.15em', color: '#bbb', margin: '0 0 10px', fontFamily: 'var(--font-mono, monospace)' }}>
-              Search Any City
-            </p>
-            <div style={{ position: 'relative', marginBottom: '20px' }}>
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => handleSearchCity(e.target.value)}
-                placeholder="Type city name (e.g. Mumbai, London)..."
-                style={{
-                  width: '100%',
-                  padding: '12px 16px',
-                  border: '1px solid #ede8e0',
-                  borderRadius: '8px',
-                  fontSize: '13px',
-                  outline: 'none',
-                  fontFamily: 'inherit',
-                  transition: 'border-color 0.2s',
-                }}
-                onFocus={(e) => e.target.style.borderColor = '#111'}
-                onBlur={(e) => e.target.style.borderColor = '#ede8e0'}
-              />
-              {searching && (
-                <div style={{ position: 'absolute', right: '12px', top: '12px', fontSize: '12px', color: '#999' }}>
-                  Searching...
-                </div>
-              )}
-            </div>
+ {/* Custom Search */}
+ <p style={{ fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.15em', color: '#bbb', margin: '0 0 10px', fontFamily: 'var(--font-mono, monospace)' }}>
+ Search Any City
+ </p>
+ <div style={{ position: 'relative', marginBottom: '20px' }}>
+ <input
+ type="text"
+ value={searchQuery}
+ onChange={(e) => handleSearchCity(e.target.value)}
+ placeholder="Type city name (e.g. Mumbai, London)..."
+ style={{
+ width: '100%',
+ padding: '12px 16px',
+ border: '1px solid #ede8e0',
+ borderRadius: '8px',
+ fontSize: '13px',
+ outline: 'none',
+ fontFamily: 'inherit',
+ transition: 'border-color 0.2s',
+ }}
+ onFocus={(e) => e.target.style.borderColor = '#111'}
+ onBlur={(e) => e.target.style.borderColor = '#ede8e0'}
+ />
+ {searching && (
+ <div style={{ position: 'absolute', right: '12px', top: '12px', fontSize: '12px', color: '#999' }}>
+ Searching...
+ </div>
+ )}
+ </div>
 
-            {/* Search Results */}
-            {searchResults.length > 0 && (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', maxHeight: '180px', overflowY: 'auto', marginBottom: '20px', border: '1px solid #ede8e0', borderRadius: '8px', padding: '6px' }}>
-                {searchResults.map((result) => (
-                  <button
-                    key={result.id}
-                    onClick={() => handleSelectSearchResult(result)}
-                    style={{
-                      padding: '10px 12px',
-                      background: 'none',
-                      border: 'none',
-                      borderRadius: '6px',
-                      textAlign: 'left',
-                      fontSize: '13px',
-                      color: '#333',
-                      cursor: 'pointer',
-                      width: '100%',
-                      transition: 'background 0.2s',
-                    }}
-                    onMouseEnter={(e) => (e.currentTarget.style.background = '#faf8f5')}
-                    onMouseLeave={(e) => (e.currentTarget.style.background = 'none')}
-                  >
-                    <span style={{ fontWeight: 500 }}>{result.name}</span>
-                    {result.admin1 && <span style={{ color: '#888', fontSize: '11px' }}>, {result.admin1}</span>}
-                    {result.country && <span style={{ color: '#aaa', fontSize: '11px' }}> ({result.country})</span>}
-                  </button>
-                ))}
-              </div>
-            )}
+ {/* Search Results */}
+ {searchResults.length > 0 && (
+ <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', maxHeight: '180px', overflowY: 'auto', marginBottom: '20px', border: '1px solid #ede8e0', borderRadius: '8px', padding: '6px' }}>
+ {searchResults.map((result) => (
+ <button
+ key={result.id}
+ onClick={() => handleSelectSearchResult(result)}
+ style={{
+ padding: '10px 12px',
+ background: 'none',
+ border: 'none',
+ borderRadius: '6px',
+ textAlign: 'left',
+ fontSize: '13px',
+ color: '#333',
+ cursor: 'pointer',
+ width: '100%',
+ transition: 'background 0.2s',
+ }}
+ onMouseEnter={(e) => (e.currentTarget.style.background = '#faf8f5')}
+ onMouseLeave={(e) => (e.currentTarget.style.background = 'none')}
+ >
+ <span style={{ fontWeight: 500 }}>{result.name}</span>
+ {result.admin1 && <span style={{ color: '#888', fontSize: '11px' }}>, {result.admin1}</span>}
+ {result.country && <span style={{ color: '#aaa', fontSize: '11px' }}> ({result.country})</span>}
+ </button>
+ ))}
+ </div>
+ )}
 
-            {/* Auto-detect button */}
-            <div style={{ display: 'flex', gap: '8px', borderTop: '1px solid #ede8e0', paddingTop: '16px' }}>
-              <button
-                onClick={() => {
-                  detectClimate();
-                  setShowClimateModal(false);
-                }}
-                style={{
-                  flex: 1,
-                  padding: '10px',
-                  background: '#111',
-                  color: '#fff',
-                  border: 'none',
-                  borderRadius: '8px',
-                  fontSize: '11px',
-                  fontWeight: 500,
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.1em',
-                  cursor: 'pointer',
-                  fontFamily: 'var(--font-mono, monospace)',
-                  transition: 'background 0.2s',
-                }}
-                onMouseEnter={(e) => (e.currentTarget.style.background = '#333')}
-                onMouseLeave={(e) => (e.currentTarget.style.background = '#111')}
-              >
-                📡 Auto-Detect Location
-              </button>
-              <button
-                onClick={() => setShowClimateModal(false)}
-                style={{
-                  padding: '10px 16px',
-                  background: 'none',
-                  border: '1px solid #ddd',
-                  borderRadius: '8px',
-                  fontSize: '11px',
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.1em',
-                  cursor: 'pointer',
-                  color: '#666',
-                  fontFamily: 'var(--font-mono, monospace)',
-                }}
-              >
-                Cancel
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-    </div>
-  );
+ {/* Auto-detect button */}
+ <div style={{ display: 'flex', gap: '8px', borderTop: '1px solid #ede8e0', paddingTop: '16px' }}>
+ <button
+ onClick={() => {
+ detectClimate();
+ setShowClimateModal(false);
+ }}
+ style={{
+ flex: 1,
+ padding: '10px',
+ background: '#111',
+ color: '#fff',
+ border: 'none',
+ borderRadius: '8px',
+ fontSize: '11px',
+ fontWeight: 500,
+ textTransform: 'uppercase',
+ letterSpacing: '0.1em',
+ cursor: 'pointer',
+ fontFamily: 'var(--font-mono, monospace)',
+ transition: 'background 0.2s',
+ }}
+ onMouseEnter={(e) => (e.currentTarget.style.background = '#333')}
+ onMouseLeave={(e) => (e.currentTarget.style.background = '#111')}
+ >
+ 📡 Auto-Detect Location
+ </button>
+ <button
+ onClick={() => setShowClimateModal(false)}
+ style={{
+ padding: '10px 16px',
+ background: 'none',
+ border: '1px solid #ddd',
+ borderRadius: '8px',
+ fontSize: '11px',
+ textTransform: 'uppercase',
+ letterSpacing: '0.1em',
+ cursor: 'pointer',
+ color: '#666',
+ fontFamily: 'var(--font-mono, monospace)',
+ }}
+ >
+ Cancel
+ </button>
+ </div>
+ </div>
+ </div>
+ )}
+ </div>
+ );
 }

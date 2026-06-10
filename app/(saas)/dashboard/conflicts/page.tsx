@@ -3,13 +3,13 @@ import { ConflictsClient } from "./ConflictsClient";
 import { redirect } from "next/navigation";
 
 export default async function ConflictsPage() {
-  const user = await getUserProfile();
+ const user = await getUserProfile();
 
-  if (!user) {
-    redirect("/login");
-  }
+ if (!user) {
+ redirect("/login");
+ }
 
-  const isPro = user.subscription?.tier === "pro" && user.subscription?.status === "active";
+ const isPro = user.subscription?.tier === "pro" && user.subscription?.status === "active";
 
-  return <ConflictsClient isPro={isPro} />;
+ return <ConflictsClient isPro={isPro} />;
 }

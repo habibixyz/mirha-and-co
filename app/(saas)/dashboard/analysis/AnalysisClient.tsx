@@ -6,913 +6,913 @@ import { Camera, Upload, Check, MessageSquare, History, Calendar, CreditCard, Us
 import Script from "next/script";
 
 interface UserProfile {
-  id: string;
-  email: string;
-  name: string;
-  credits: number;
-  isPro: boolean;
+ id: string;
+ email: string;
+ name: string;
+ credits: number;
+ isPro: boolean;
 }
 
 interface AnalysisReport {
-  barrierScore: number;
-  acneScore: number;
-  rednessScore: number;
-  oilinessScore: number;
-  summary: string;
-  concerns: string[];
-  routineAdjustments: string[];
-  agentWelcomeMessage: string;
+ barrierScore: number;
+ acneScore: number;
+ rednessScore: number;
+ oilinessScore: number;
+ summary: string;
+ concerns: string[];
+ routineAdjustments: string[];
+ agentWelcomeMessage: string;
 }
 
 interface PastAnalysis {
-  id: string;
-  imageUrl: string;
-  barrierScore: number;
-  acneScore: number;
-  rednessScore: number;
-  oilinessScore: number;
-  detailedJson: AnalysisReport;
-  createdAt: string;
+ id: string;
+ imageUrl: string;
+ barrierScore: number;
+ acneScore: number;
+ rednessScore: number;
+ oilinessScore: number;
+ detailedJson: AnalysisReport;
+ createdAt: string;
 }
 
 export function AnalysisClient({
-  user,
-  pastAnalyses,
-  nextAvailableAt,
+ user,
+ pastAnalyses,
+ nextAvailableAt,
 }: {
-  user: UserProfile;
-  pastAnalyses: PastAnalysis[];
-  nextAvailableAt: string | null;
+ user: UserProfile;
+ pastAnalyses: PastAnalysis[];
+ nextAvailableAt: string | null;
 }) {
-  const [selectedFile, setSelectedFile] = useState<string | null>(null);
-  const [scanning, setScanning] = useState(false);
-  const [scanStep, setScanStep] = useState("");
-  const [report, setReport] = useState<AnalysisReport | null>(null);
-  const [isPending, setIsPending] = useState(false);
-  const [errorMsg, setErrorMsg] = useState("");
-  
-  // Payment States
-  const [paymentRegion, setPaymentRegion] = useState<"INR" | "USD">("INR");
-  const [paymentPending, setPaymentPending] = useState(false);
+ const [selectedFile, setSelectedFile] = useState<string | null>(null);
+ const [scanning, setScanning] = useState(false);
+ const [scanStep, setScanStep] = useState("");
+ const [report, setReport] = useState<AnalysisReport | null>(null);
+ const [isPending, setIsPending] = useState(false);
+ const [errorMsg, setErrorMsg] = useState("");
+ 
+ // Payment States
+ const [paymentRegion, setPaymentRegion] = useState<"INR" | "USD">("INR");
+ const [paymentPending, setPaymentPending] = useState(false);
 
-  // Chat States
-  const [chatOpen, setChatOpen] = useState(false);
-  const [messages, setMessages] = useState<{ sender: "user" | "bot"; text: string }[]>([]);
-  const [inputMessage, setInputMessage] = useState("");
-  const [chatLoading, setChatLoading] = useState(false);
+ // Chat States
+ const [chatOpen, setChatOpen] = useState(false);
+ const [messages, setMessages] = useState<{ sender: "user" | "bot"; text: string }[]>([]);
+ const [inputMessage, setInputMessage] = useState("");
+ const [chatLoading, setChatLoading] = useState(false);
 
-  // Initialize Paddle on client
-  useEffect(() => {
-    if ((window as any).Paddle) {
-      try {
-        (window as any).Paddle.Initialize({
-          token: process.env.NEXT_PUBLIC_PADDLE_CLIENT_TOKEN || "live_4847fa72f94757482f02c950a29",
-          environment: "production",
-          eventCallback: function (data: any) {
-            if (data.name === "checkout.completed" || data.name === "transaction.completed") {
-              alert("Payment successful! Access granted.");
-              window.location.reload();
-            }
-          },
-        });
-      } catch (err) {
-        console.error("Paddle initialization error:", err);
-      }
-    }
-  }, []);
+ // Initialize Paddle on client
+ useEffect(() => {
+ if ((window as any).Paddle) {
+ try {
+ (window as any).Paddle.Initialize({
+ token: process.env.NEXT_PUBLIC_PADDLE_CLIENT_TOKEN || "live_4847fa72f94757482f02c950a29",
+ environment: "production",
+ eventCallback: function (data: any) {
+ if (data.name === "checkout.completed" || data.name === "transaction.completed") {
+ alert("Payment successful! Access granted.");
+ window.location.reload();
+ }
+ },
+ });
+ } catch (err) {
+ console.error("Paddle initialization error:", err);
+ }
+ }
+ }, []);
 
-  const handleGlobalPaymentUnavailable = () => {
-    alert("International card payments are temporarily unavailable. Please use India (INR) checkout for now or contact support@mirhaandco.com for manual access.");
-  };
+ const handleGlobalPaymentUnavailable = () => {
+ alert("International card payments are temporarily unavailable. Please use India (INR) checkout for now or contact support@mirhaandco.com for manual access.");
+ };
 
-  const handlePaddleCheckout = (priceId: string, isSubscription: boolean) => {
-    if (!(window as any).Paddle) {
-      alert("Paddle SDK is still loading. Please wait a moment.");
-      return;
-    }
-    setPaymentPending(true);
-    try {
-      (window as any).Paddle.Checkout.open({
-        items: [{ priceId: priceId, quantity: 1 }],
-        customData: {
-          userId: user.id,
-          type: isSubscription ? "subscription" : "onetime_scan",
-        },
-      });
-    } catch (error: any) {
-      alert(`Checkout failed: ${error.message}`);
-    } finally {
-      setPaymentPending(false);
-    }
-  };
+ const handlePaddleCheckout = (priceId: string, isSubscription: boolean) => {
+ if (!(window as any).Paddle) {
+ alert("Paddle SDK is still loading. Please wait a moment.");
+ return;
+ }
+ setPaymentPending(true);
+ try {
+ (window as any).Paddle.Checkout.open({
+ items: [{ priceId: priceId, quantity: 1 }],
+ customData: {
+ userId: user.id,
+ type: isSubscription ? "subscription" : "onetime_scan",
+ },
+ });
+ } catch (error: any) {
+ alert(`Checkout failed: ${error.message}`);
+ } finally {
+ setPaymentPending(false);
+ }
+ };
 
-  const handleRazorpayCheckout = async () => {
-    setPaymentPending(true);
-    try {
-      // Load script if not available
-      if (!(window as any).Razorpay) {
-        const script = document.createElement("script");
-        script.src = "https://checkout.razorpay.com/v1/checkout.js";
-        const scriptLoaded = new Promise((res) => {
-          script.onload = () => res(true);
-          script.onerror = () => res(false);
-        });
-        document.body.appendChild(script);
-        const ok = await scriptLoaded;
-        if (!ok) throw new Error("Failed to load Razorpay checkout script");
-      }
+ const handleRazorpayCheckout = async () => {
+ setPaymentPending(true);
+ try {
+ // Load script if not available
+ if (!(window as any).Razorpay) {
+ const script = document.createElement("script");
+ script.src = "https://checkout.razorpay.com/v1/checkout.js";
+ const scriptLoaded = new Promise((res) => {
+ script.onload = () => res(true);
+ script.onerror = () => res(false);
+ });
+ document.body.appendChild(script);
+ const ok = await scriptLoaded;
+ if (!ok) throw new Error("Failed to load Razorpay checkout script");
+ }
 
-      const res = await fetch("/api/razorpay/checkout", { method: "POST" });
-      const data = await res.json();
-      if (data.error) throw new Error(data.error);
+ const res = await fetch("/api/razorpay/checkout", { method: "POST" });
+ const data = await res.json();
+ if (data.error) throw new Error(data.error);
 
-      const options = {
-        key: data.keyId,
-        subscription_id: data.subscriptionId,
-        name: "Mirha & Co.",
-        description: "Pro Subscription",
-        handler: function (response: any) {
-          alert("Payment successful! Welcome to Pro.");
-          window.location.reload();
-        },
-        theme: { color: "#c8473a" },
-      };
+ const options = {
+ key: data.keyId,
+ subscription_id: data.subscriptionId,
+ name: "Mirha & Co.",
+ description: "Pro Subscription",
+ handler: function (response: any) {
+ alert("Payment successful! Welcome to Pro.");
+ window.location.reload();
+ },
+ theme: { color: "#c8473a" },
+ };
 
-      const rzp = new (window as any).Razorpay(options);
-      rzp.open();
-    } catch (error: any) {
-      console.error("Razorpay error:", error);
-      alert(`Checkout Error: ${error.message || "Failed to initialize"}`);
-    } finally {
-      setPaymentPending(false);
-    }
-  };
+ const rzp = new (window as any).Razorpay(options);
+ rzp.open();
+ } catch (error: any) {
+ console.error("Razorpay error:", error);
+ alert(`Checkout Error: ${error.message || "Failed to initialize"}`);
+ } finally {
+ setPaymentPending(false);
+ }
+ };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setSelectedFile(reader.result as string);
-        setErrorMsg("");
-      };
-      reader.readAsDataURL(file);
-    }
-  };
+ const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+ const file = e.target.files?.[0];
+ if (file) {
+ const reader = new FileReader();
+ reader.onloadend = () => {
+ setSelectedFile(reader.result as string);
+ setErrorMsg("");
+ };
+ reader.readAsDataURL(file);
+ }
+ };
 
-  const runAnalysis = async () => {
-    if (!selectedFile) return;
-    setScanning(true);
-    setErrorMsg("");
+ const runAnalysis = async () => {
+ if (!selectedFile) return;
+ setScanning(true);
+ setErrorMsg("");
 
-    // Simulate futuristic steps
-    const steps = [
-      "Initializing multispectral neural scanner...",
-      "Running landmark face alignment...",
-      "Mapping epidermal grid quadrants...",
-      "Measuring barrier lipid density...",
-      "Analyzing hyperpigmentation & redness...",
-      "Finalizing dermatologist analysis...",
-    ];
+ // Simulate futuristic steps
+ const steps = [
+ "Initializing multispectral neural scanner...",
+ "Running landmark face alignment...",
+ "Mapping epidermal grid quadrants...",
+ "Measuring barrier lipid density...",
+ "Analyzing hyperpigmentation & redness...",
+ "Finalizing dermatologist analysis...",
+ ];
 
-    let currentStep = 0;
-    const interval = setInterval(() => {
-      if (currentStep < steps.length) {
-        setScanStep(steps[currentStep]);
-        currentStep++;
-      } else {
-        clearInterval(interval);
-      }
-    }, 1200);
+ let currentStep = 0;
+ const interval = setInterval(() => {
+ if (currentStep < steps.length) {
+ setScanStep(steps[currentStep]);
+ currentStep++;
+ } else {
+ clearInterval(interval);
+ }
+ }, 1200);
 
-    try {
-      const res = await fetch("/api/analysis", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ image: selectedFile }),
-      });
+ try {
+ const res = await fetch("/api/analysis", {
+ method: "POST",
+ headers: { "Content-Type": "application/json" },
+ body: JSON.stringify({ image: selectedFile }),
+ });
 
-      const data = await res.json();
-      clearInterval(interval);
+ const data = await res.json();
+ clearInterval(interval);
 
-      if (!res.ok) {
-        throw new Error(data.message || data.error || "Analysis failed");
-      }
+ if (!res.ok) {
+ throw new Error(data.message || data.error || "Analysis failed");
+ }
 
-      setReport(data.analysis.detailedJson);
-      
-      // Initialize Chat Welcome Message
-      setMessages([
-        {
-          sender: "bot",
-          text: data.analysis.detailedJson.agentWelcomeMessage || 
-                `Hello ${user.name}! I have finished scanning your face. Let me know if you want to customize your routine!`,
-        },
-      ]);
-    } catch (err: any) {
-      setErrorMsg(err.message || "An unexpected error occurred.");
-    } finally {
-      setScanning(false);
-    }
-  };
+ setReport(data.analysis.detailedJson);
+ 
+ // Initialize Chat Welcome Message
+ setMessages([
+ {
+ sender: "bot",
+ text: data.analysis.detailedJson.agentWelcomeMessage || 
+ `Hello ${user.name}! I have finished scanning your face. Let me know if you want to customize your routine!`,
+ },
+ ]);
+ } catch (err: any) {
+ setErrorMsg(err.message || "An unexpected error occurred.");
+ } finally {
+ setScanning(false);
+ }
+ };
 
-  const handleSendMessage = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!inputMessage.trim() || !report) return;
+ const handleSendMessage = async (e: React.FormEvent) => {
+ e.preventDefault();
+ if (!inputMessage.trim() || !report) return;
 
-    const userText = inputMessage;
-    setMessages((prev) => [...prev, { sender: "user", text: userText }]);
-    setInputMessage("");
-    setChatLoading(true);
+ const userText = inputMessage;
+ setMessages((prev) => [...prev, { sender: "user", text: userText }]);
+ setInputMessage("");
+ setChatLoading(true);
 
-    try {
-      // Connect to the existing chat consultant / search actions if available, 
-      // otherwise run a fallback API or generateWithRetry route.
-      const res = await fetch("/api/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          messages: [
-            { role: "system", content: `You are Mirha, a warm skincare consultant at Mirha & Co. You are discussing the user's recent face scan report: ${JSON.stringify(report)}` },
-            ...messages.map(m => ({ role: m.sender === "user" ? "user" : "assistant", content: m.text })),
-            { role: "user", content: userText }
-          ]
-        })
-      });
+ try {
+ // Connect to the existing chat consultant / search actions if available, 
+ // otherwise run a fallback API or generateWithRetry route.
+ const res = await fetch("/api/chat", {
+ method: "POST",
+ headers: { "Content-Type": "application/json" },
+ body: JSON.stringify({
+ messages: [
+ { role: "system", content: `You are Mirha, a warm skincare consultant at Mirha & Co. You are discussing the user's recent face scan report: ${JSON.stringify(report)}` },
+ ...messages.map(m => ({ role: m.sender === "user" ? "user" : "assistant", content: m.text })),
+ { role: "user", content: userText }
+ ]
+ })
+ });
 
-      const data = await res.json();
-      // If the chat route uses standard Next.js AI SDK stream or json
-      const botResponse = data.choices?.[0]?.message?.content || data.response || "I am analyzing your report. How can I help you adjust your routine?";
-      setMessages((prev) => [...prev, { sender: "bot", text: botResponse }]);
-    } catch (err) {
-      setMessages((prev) => [
-        ...prev,
-        { sender: "bot", text: "I'm having trouble connecting to the network right now. Try rinsing your routine and asking again in a bit!" },
-      ]);
-    } finally {
-      setChatLoading(false);
-    }
-  };
+ const data = await res.json();
+ // If the chat route uses standard Next.js AI SDK stream or json
+ const botResponse = data.choices?.[0]?.message?.content || data.response || "I am analyzing your report. How can I help you adjust your routine?";
+ setMessages((prev) => [...prev, { sender: "bot", text: botResponse }]);
+ } catch (err) {
+ setMessages((prev) => [
+ ...prev,
+ { sender: "bot", text: "I'm having trouble connecting to the network right now. Try rinsing your routine and asking again in a bit!" },
+ ]);
+ } finally {
+ setChatLoading(false);
+ }
+ };
 
-  // Helper score color
-  const getScoreColor = (score: number) => {
-    if (score >= 80) return "#22c55e"; // Green
-    if (score >= 50) return "#eab308"; // Orange/Yellow
-    return "#ef4444"; // Red
-  };
+ // Helper score color
+ const getScoreColor = (score: number) => {
+ if (score >= 80) return "#22c55e"; // Green
+ if (score >= 50) return "#eab308"; // Orange/Yellow
+ return "#ef4444"; // Red
+ };
 
-  const canScan = user.isPro && !nextAvailableAt || user.credits > 0;
+ const canScan = user.isPro && !nextAvailableAt || user.credits > 0;
 
-  return (
-    <div className="analysis-container">
-      {/* Paddle JS Script */}
-      <Script src="https://cdn.paddle.com/paddle/v2/paddle.js" strategy="afterInteractive" />
+ return (
+ <div className="analysis-container">
+ {/* Paddle JS Script */}
+ <Script src="https://cdn.paddle.com/paddle/v2/paddle.js" strategy="afterInteractive" />
 
-      {/* Header */}
-      <header style={{ marginBottom: "2rem" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.5rem" }}>
-          <span style={{
-            background: "rgba(200, 71, 58, 0.1)",
-            color: "var(--rose)",
-            padding: "0.2rem 0.6rem",
-            borderRadius: "6px",
-            fontSize: "0.75rem",
-            fontWeight: 600,
-            letterSpacing: "0.05em",
-            textTransform: "uppercase"
-          }}>
-            Prime AI Product
-          </span>
-          {user.isPro ? (
-            <span style={{ display: "inline-flex", alignItems: "center", gap: "0.3rem", fontSize: "0.75rem", color: "#16a34a" }}>
-              <ShieldCheck size={14} /> Active Pro Member
-            </span>
-          ) : (
-            <span style={{ display: "inline-flex", alignItems: "center", gap: "0.3rem", fontSize: "0.75rem", color: "var(--muted)" }}>
-              <Shield size={14} /> Free Tier
-            </span>
-          )}
-        </div>
-        <h1 className="analysis-title">
-          AI Face Detection & Skin Analyst
-        </h1>
-        <p style={{ color: "var(--muted)", margin: "0.5rem 0 0", fontSize: "1.05rem" }}>
-          Upload a selfie for clinical-grade barrier monitoring, acne detection, redness mapping, and personalized routines.
-        </p>
-      </header>
+ {/* Header */}
+ <header style={{ marginBottom: "2rem" }}>
+ <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.5rem" }}>
+ <span style={{
+ background: "rgba(200, 71, 58, 0.1)",
+ color: "var(--rose)",
+ padding: "0.2rem 0.6rem",
+ borderRadius: "6px",
+ fontSize: "0.75rem",
+ fontWeight: 600,
+ letterSpacing: "0.05em",
+ textTransform: "uppercase"
+ }}>
+ Prime AI Product
+ </span>
+ {user.isPro ? (
+ <span style={{ display: "inline-flex", alignItems: "center", gap: "0.3rem", fontSize: "0.75rem", color: "#16a34a" }}>
+ <ShieldCheck size={14} /> Active Pro Member
+ </span>
+ ) : (
+ <span style={{ display: "inline-flex", alignItems: "center", gap: "0.3rem", fontSize: "0.75rem", color: "var(--muted)" }}>
+ <Shield size={14} /> Free Tier
+ </span>
+ )}
+ </div>
+ <h1 className="analysis-title">
+ AI Face Detection & Skin Analyst
+ </h1>
+ <p style={{ color: "var(--muted)", margin: "0.5rem 0 0", fontSize: "1.05rem" }}>
+ Upload a selfie for clinical-grade barrier monitoring, acne detection, redness mapping, and personalized routines.
+ </p>
+ </header>
 
-      {/* Main Grid */}
-      <div style={{ display: "grid", gridTemplateColumns: "minmax(0, 1fr)", gap: "2rem", width: "100%", maxWidth: "100%", overflow: "hidden" }}>
-        
-        {/* Paywall Container */}
-        {!canScan && !report && (
-          <motion.div 
-            initial={{ opacity: 0, y: 15 }} 
-            animate={{ opacity: 1, y: 0 }}
-            className="paywall-card"
-          >
-            <div style={{ display: "inline-flex", padding: "1rem", background: "rgba(200,71,58,0.1)", borderRadius: "50%", marginBottom: "1.5rem" }}>
-              <Star size={32} color="var(--rose)" />
-            </div>
-            
-            <h2 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "2rem", margin: "0 0 1rem", color: "var(--ink)" }}>
-              Unlock Your AI Skin Report
-            </h2>
+ {/* Main Grid */}
+ <div style={{ display: "grid", gridTemplateColumns: "minmax(0, 1fr)", gap: "2rem", width: "100%", maxWidth: "100%", overflow: "hidden" }}>
+ 
+ {/* Paywall Container */}
+ {!canScan && !report && (
+ <motion.div 
+ initial={{ opacity: 0, y: 15 }} 
+ animate={{ opacity: 1, y: 0 }}
+ className="paywall-card"
+ >
+ <div style={{ display: "inline-flex", padding: "1rem", background: "rgba(200,71,58,0.1)", borderRadius: "50%", marginBottom: "1.5rem" }}>
+ <Star size={32} color="var(--rose)" />
+ </div>
+ 
+ <h2 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "2rem", margin: "0 0 1rem", color: "var(--ink)" }}>
+ Unlock Your AI Skin Report
+ </h2>
 
-            {nextAvailableAt && (
-              <div style={{
-                background: "rgba(239, 68, 68, 0.05)",
-                border: "1px solid rgba(239, 68, 68, 0.1)",
-                color: "#dc2626",
-                padding: "1rem",
-                borderRadius: "12px",
-                fontSize: "0.95rem",
-                marginBottom: "1.5rem",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                gap: "0.25rem"
-              }}>
-                <strong>Daily Limit Reached</strong>
-                <span>Your next free daily scan becomes available after:</span>
-                <span className="font-mono font-semibold" suppressHydrationWarning>{new Date(nextAvailableAt).toLocaleString()}</span>
-              </div>
-            )}
+ {nextAvailableAt && (
+ <div style={{
+ background: "rgba(239, 68, 68, 0.05)",
+ border: "1px solid rgba(239, 68, 68, 0.1)",
+ color: "#dc2626",
+ padding: "1rem",
+ borderRadius: "12px",
+ fontSize: "0.95rem",
+ marginBottom: "1.5rem",
+ display: "flex",
+ flexDirection: "column",
+ alignItems: "center",
+ gap: "0.25rem"
+ }}>
+ <strong>Daily Limit Reached</strong>
+ <span>Your next free daily scan becomes available after:</span>
+ <span className="font-mono font-semibold" suppressHydrationWarning>{new Date(nextAvailableAt).toLocaleString()}</span>
+ </div>
+ )}
 
-            <p style={{ color: "var(--muted)", maxWidth: "500px", margin: "0 auto 2rem", lineHeight: 1.6 }}>
-              Get detailed scores for moisture barriers, acne severity, irritation redness, and sebum metrics, plus an exclusive chat session with our AI specialist.
-            </p>
+ <p style={{ color: "var(--muted)", maxWidth: "500px", margin: "0 auto 2rem", lineHeight: 1.6 }}>
+ Get detailed scores for moisture barriers, acne severity, irritation redness, and sebum metrics, plus an exclusive chat session with our AI specialist.
+ </p>
 
-            {/* Currency Region Selector */}
-            <div style={{ display: "flex", justifyContent: "center", gap: "0.5rem", marginBottom: "2rem" }}>
-              <button
-                onClick={() => setPaymentRegion("USD")}
-                style={{
-                  padding: "0.5rem 1rem",
-                  borderRadius: "8px",
-                  border: "1px solid " + (paymentRegion === "USD" ? "var(--ink)" : "var(--rule)"),
-                  background: paymentRegion === "USD" ? "var(--ink)" : "transparent",
-                  color: paymentRegion === "USD" ? "var(--white)" : "var(--ink)",
-                  cursor: "pointer",
-                  fontSize: "0.85rem",
-                  fontWeight: 600
-                }}
-              >
-                Global (USD)
-              </button>
-              <button
-                onClick={() => setPaymentRegion("INR")}
-                style={{
-                  padding: "0.5rem 1rem",
-                  borderRadius: "8px",
-                  border: "1px solid " + (paymentRegion === "INR" ? "var(--ink)" : "var(--rule)"),
-                  background: paymentRegion === "INR" ? "var(--ink)" : "transparent",
-                  color: paymentRegion === "INR" ? "var(--white)" : "var(--ink)",
-                  cursor: "pointer",
-                  fontSize: "0.85rem",
-                  fontWeight: 600
-                }}
-              >
-                India (INR)
-              </button>
-            </div>
+ {/* Currency Region Selector */}
+ <div style={{ display: "flex", justifyContent: "center", gap: "0.5rem", marginBottom: "2rem" }}>
+ <button
+ onClick={() => setPaymentRegion("USD")}
+ style={{
+ padding: "0.5rem 1rem",
+ borderRadius: "8px",
+ border: "1px solid " + (paymentRegion === "USD" ? "var(--ink)" : "var(--rule)"),
+ background: paymentRegion === "USD" ? "var(--ink)" : "transparent",
+ color: paymentRegion === "USD" ? "var(--white)" : "var(--ink)",
+ cursor: "pointer",
+ fontSize: "0.85rem",
+ fontWeight: 600
+ }}
+ >
+ Global (USD)
+ </button>
+ <button
+ onClick={() => setPaymentRegion("INR")}
+ style={{
+ padding: "0.5rem 1rem",
+ borderRadius: "8px",
+ border: "1px solid " + (paymentRegion === "INR" ? "var(--ink)" : "var(--rule)"),
+ background: paymentRegion === "INR" ? "var(--ink)" : "transparent",
+ color: paymentRegion === "INR" ? "var(--white)" : "var(--ink)",
+ cursor: "pointer",
+ fontSize: "0.85rem",
+ fontWeight: 600
+ }}
+ >
+ India (INR)
+ </button>
+ </div>
 
-            {/* Pricing Options */}
-            <div className="pricing-grid">
-              {/* Option A: One-Time Pass */}
-              <div className="pricing-card" style={{ background: "var(--sand)", border: "1px solid var(--rule)" }}>
-                <span style={{ fontSize: "0.75rem", fontWeight: 700, textTransform: "uppercase", color: "var(--muted)" }}>One-Time Scan</span>
-                <span style={{ fontSize: "2rem", fontWeight: 700, margin: "0.5rem 0", fontFamily: "'Bebas Neue', sans-serif" }}>
-                  {paymentRegion === "USD" ? "$1.99" : "₹149"}
-                </span>
-                <p style={{ fontSize: "0.8rem", color: "var(--muted)", margin: "0 0 1.5rem", textAlign: "center" }}>
-                  {paymentRegion === "USD" ? "International payments are temporarily unavailable. Use INR checkout or contact support." : "Unlock a single scan report and chat session instantly."}
-                </p>
-                <button
-                  disabled={paymentPending}
-                  onClick={paymentRegion === "USD" ? handleGlobalPaymentUnavailable : handleRazorpayCheckout}
-                  style={{
-                    background: "var(--ink)",
-                    color: "var(--white)",
-                    border: "none",
-                    borderRadius: "8px",
-                    padding: "0.8rem",
-                    width: "100%",
-                    fontSize: "0.85rem",
-                    fontWeight: 600,
-                    cursor: "pointer"
-                  }}
-                >
-                  {paymentRegion === "USD" ? "Unavailable" : "Buy Pass"}
-                </button>
-              </div>
+ {/* Pricing Options */}
+ <div className="pricing-grid">
+ {/* Option A: One-Time Pass */}
+ <div className="pricing-card" style={{ background: "var(--sand)", border: "1px solid var(--rule)" }}>
+ <span style={{ fontSize: "0.75rem", fontWeight: 700, textTransform: "uppercase", color: "var(--muted)" }}>One-Time Scan</span>
+ <span style={{ fontSize: "2rem", fontWeight: 700, margin: "0.5rem 0", fontFamily: "'Bebas Neue', sans-serif" }}>
+ {paymentRegion === "USD" ? "₹1.99" : "₹149"}
+ </span>
+ <p style={{ fontSize: "0.8rem", color: "var(--muted)", margin: "0 0 1.5rem", textAlign: "center" }}>
+ {paymentRegion === "USD" ? "International payments are temporarily unavailable. Use INR checkout or contact support." : "Unlock a single scan report and chat session instantly."}
+ </p>
+ <button
+ disabled={paymentPending}
+ onClick={paymentRegion === "USD" ? handleGlobalPaymentUnavailable : handleRazorpayCheckout}
+ style={{
+ background: "var(--ink)",
+ color: "var(--white)",
+ border: "none",
+ borderRadius: "8px",
+ padding: "0.8rem",
+ width: "100%",
+ fontSize: "0.85rem",
+ fontWeight: 600,
+ cursor: "pointer"
+ }}
+ >
+ {paymentRegion === "USD" ? "Unavailable" : "Buy Pass"}
+ </button>
+ </div>
 
-              {/* Option B: Pro Subscription */}
-              <div className="pricing-card" style={{ background: "var(--ink)", color: "var(--white)" }}>
-                <span style={{ fontSize: "0.75rem", fontWeight: 700, textTransform: "uppercase", color: "var(--rose)" }}>Pro Monthly</span>
-                <span style={{ fontSize: "2rem", fontWeight: 700, margin: "0.5rem 0", fontFamily: "'Bebas Neue', sans-serif" }}>
-                  {paymentRegion === "USD" ? "$4.99" : "₹199"}
-                </span>
-                <p style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.7)", margin: "0 0 1.5rem", textAlign: "center" }}>
-                  {paymentRegion === "USD" ? "International subscriptions are temporarily unavailable. Use INR checkout or contact support." : "1 Scan / Day, unlimited routines, and full chat access."}
-                </p>
-                <button
-                  disabled={paymentPending}
-                  onClick={paymentRegion === "USD" ? handleGlobalPaymentUnavailable : handleRazorpayCheckout}
-                  style={{
-                    background: "var(--rose)",
-                    color: "var(--white)",
-                    border: "none",
-                    borderRadius: "8px",
-                    padding: "0.8rem",
-                    width: "100%",
-                    fontSize: "0.85rem",
-                    fontWeight: 600,
-                    cursor: "pointer",
-                    boxShadow: "0 4px 12px rgba(200, 71, 58, 0.2)"
-                  }}
-                >
-                  {paymentPending ? <Loader2 size={16} style={{ animation: "spin 1s linear infinite" }} /> : (paymentRegion === "USD" ? "Unavailable" : "Subscribe")}
-                </button>
-              </div>
-            </div>
-          </motion.div>
-        )}
+ {/* Option B: Pro Subscription */}
+ <div className="pricing-card" style={{ background: "var(--ink)", color: "var(--white)" }}>
+ <span style={{ fontSize: "0.75rem", fontWeight: 700, textTransform: "uppercase", color: "var(--rose)" }}>Pro Monthly</span>
+ <span style={{ fontSize: "2rem", fontWeight: 700, margin: "0.5rem 0", fontFamily: "'Bebas Neue', sans-serif" }}>
+ {paymentRegion === "USD" ? "₹4.99" : "₹199"}
+ </span>
+ <p style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.7)", margin: "0 0 1.5rem", textAlign: "center" }}>
+ {paymentRegion === "USD" ? "International subscriptions are temporarily unavailable. Use INR checkout or contact support." : "1 Scan / Day, unlimited routines, and full chat access."}
+ </p>
+ <button
+ disabled={paymentPending}
+ onClick={paymentRegion === "USD" ? handleGlobalPaymentUnavailable : handleRazorpayCheckout}
+ style={{
+ background: "var(--rose)",
+ color: "var(--white)",
+ border: "none",
+ borderRadius: "8px",
+ padding: "0.8rem",
+ width: "100%",
+ fontSize: "0.85rem",
+ fontWeight: 600,
+ cursor: "pointer",
+ boxShadow: "0 4px 12px rgba(200, 71, 58, 0.2)"
+ }}
+ >
+ {paymentPending ? <Loader2 size={16} style={{ animation: "spin 1s linear infinite" }} /> : (paymentRegion === "USD" ? "Unavailable" : "Subscribe")}
+ </button>
+ </div>
+ </div>
+ </motion.div>
+ )}
 
-        {/* Scanner Panel */}
-        {(canScan || report) && (
-          <div style={{ display: "grid", gridTemplateColumns: "minmax(0, 1fr)", gap: "2rem", width: "100%", maxWidth: "100%", overflow: "hidden" }}>
-            
-            {/* Input Dropzone & Visual scanner */}
-            {!report && (
-              <div style={{
-                background: "rgba(255,255,255,0.7)",
-                backdropFilter: "blur(8px)",
-                border: "1px dashed var(--rule)",
-                borderRadius: "16px",
-                padding: "3rem 2rem",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                position: "relative",
-                overflow: "hidden",
-                minHeight: "350px"
-              }}>
-                {selectedFile ? (
-                  <div style={{ position: "relative", maxWidth: "320px", width: "100%", borderRadius: "12px", overflow: "hidden" }}>
-                    <img src={selectedFile} alt="Selfie preview" style={{ width: "100%", display: "block" }} />
-                    
-                    {/* Glowing Laser Scan Line Overlay */}
-                    {scanning && (
-                      <motion.div 
-                        initial={{ top: "0%" }}
-                        animate={{ top: ["0%", "100%", "0%"] }}
-                        transition={{ repeat: Infinity, duration: 2.5, ease: "easeInOut" }}
-                        style={{
-                          position: "absolute",
-                          left: 0,
-                          right: 0,
-                          height: "4px",
-                          background: "linear-gradient(90deg, transparent, var(--rose), transparent)",
-                          boxShadow: "0 0 15px var(--rose)",
-                          zIndex: 10
-                        }}
-                      />
-                    )}
-                  </div>
-                ) : (
-                  <div style={{ textAlign: "center" }}>
-                    <div style={{ padding: "1.2rem", background: "var(--sand)", borderRadius: "50%", display: "inline-flex", marginBottom: "1rem", color: "var(--muted)" }}>
-                      <Camera size={36} />
-                    </div>
-                    <h3 style={{ fontSize: "1.25rem", margin: "0 0 0.5rem", fontWeight: 500 }}>Upload a Clear Front-Facing Selfie</h3>
-                    <p style={{ color: "var(--muted)", fontSize: "0.9rem", maxWidth: "320px", margin: "0 auto 1.5rem" }}>
-                      Make sure your face is well-lit, free of heavy makeup, and facing the camera directly.
-                    </p>
-                  </div>
-                )}
+ {/* Scanner Panel */}
+ {(canScan || report) && (
+ <div style={{ display: "grid", gridTemplateColumns: "minmax(0, 1fr)", gap: "2rem", width: "100%", maxWidth: "100%", overflow: "hidden" }}>
+ 
+ {/* Input Dropzone & Visual scanner */}
+ {!report && (
+ <div style={{
+ background: "rgba(255,255,255,0.7)",
+ backdropFilter: "blur(8px)",
+ border: "1px dashed var(--rule)",
+ borderRadius: "16px",
+ padding: "3rem 2rem",
+ display: "flex",
+ flexDirection: "column",
+ alignItems: "center",
+ justifyContent: "center",
+ position: "relative",
+ overflow: "hidden",
+ minHeight: "350px"
+ }}>
+ {selectedFile ? (
+ <div style={{ position: "relative", maxWidth: "320px", width: "100%", borderRadius: "12px", overflow: "hidden" }}>
+ <img src={selectedFile} alt="Selfie preview" style={{ width: "100%", display: "block" }} />
+ 
+ {/* Glowing Laser Scan Line Overlay */}
+ {scanning && (
+ <motion.div 
+ initial={{ top: "0%" }}
+ animate={{ top: ["0%", "100%", "0%"] }}
+ transition={{ repeat: Infinity, duration: 2.5, ease: "easeInOut" }}
+ style={{
+ position: "absolute",
+ left: 0,
+ right: 0,
+ height: "4px",
+ background: "linear-gradient(90deg, transparent, var(--rose), transparent)",
+ boxShadow: "0 0 15px var(--rose)",
+ zIndex: 10
+ }}
+ />
+ )}
+ </div>
+ ) : (
+ <div style={{ textAlign: "center" }}>
+ <div style={{ padding: "1.2rem", background: "var(--sand)", borderRadius: "50%", display: "inline-flex", marginBottom: "1rem", color: "var(--muted)" }}>
+ <Camera size={36} />
+ </div>
+ <h3 style={{ fontSize: "1.25rem", margin: "0 0 0.5rem", fontWeight: 500 }}>Upload a Clear Front-Facing Selfie</h3>
+ <p style={{ color: "var(--muted)", fontSize: "0.9rem", maxWidth: "320px", margin: "0 auto 1.5rem" }}>
+ Make sure your face is well-lit, free of heavy makeup, and facing the camera directly.
+ </p>
+ </div>
+ )}
 
-                {/* Upload Action */}
-                {!scanning && (
-                  <div style={{ marginTop: "1.5rem", display: "flex", gap: "1rem" }}>
-                    <label style={{
-                      background: "var(--ink)",
-                      color: "var(--white)",
-                      padding: "0.8rem 1.5rem",
-                      borderRadius: "10px",
-                      fontSize: "0.9rem",
-                      fontWeight: 600,
-                      cursor: "pointer",
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "0.5rem"
-                    }}>
-                      <Upload size={16} />
-                      {selectedFile ? "Change Photo" : "Select Photo"}
-                      <input type="file" accept="image/*" onChange={handleFileChange} style={{ display: "none" }} />
-                    </label>
+ {/* Upload Action */}
+ {!scanning && (
+ <div style={{ marginTop: "1.5rem", display: "flex", gap: "1rem" }}>
+ <label style={{
+ background: "var(--ink)",
+ color: "var(--white)",
+ padding: "0.8rem 1.5rem",
+ borderRadius: "10px",
+ fontSize: "0.9rem",
+ fontWeight: 600,
+ cursor: "pointer",
+ display: "flex",
+ alignItems: "center",
+ gap: "0.5rem"
+ }}>
+ <Upload size={16} />
+ {selectedFile ? "Change Photo" : "Select Photo"}
+ <input type="file" accept="image/*" onChange={handleFileChange} style={{ display: "none" }} />
+ </label>
 
-                    {selectedFile && (
-                      <button
-                        onClick={runAnalysis}
-                        style={{
-                          background: "var(--rose)",
-                          color: "var(--white)",
-                          border: "none",
-                          padding: "0.8rem 2rem",
-                          borderRadius: "10px",
-                          fontSize: "0.9rem",
-                          fontWeight: 600,
-                          cursor: "pointer",
-                          boxShadow: "0 8px 20px rgba(200, 71, 58, 0.2)",
-                          display: "flex",
-                          alignItems: "center",
-                          gap: "0.5rem"
-                        }}
-                      >
-                        <Star size={16} />
-                        Scan Face
-                      </button>
-                    )}
-                  </div>
-                )}
+ {selectedFile && (
+ <button
+ onClick={runAnalysis}
+ style={{
+ background: "var(--rose)",
+ color: "var(--white)",
+ border: "none",
+ padding: "0.8rem 2rem",
+ borderRadius: "10px",
+ fontSize: "0.9rem",
+ fontWeight: 600,
+ cursor: "pointer",
+ boxShadow: "0 8px 20px rgba(200, 71, 58, 0.2)",
+ display: "flex",
+ alignItems: "center",
+ gap: "0.5rem"
+ }}
+ >
+ <Star size={16} />
+ Scan Face
+ </button>
+ )}
+ </div>
+ )}
 
-                {/* Progress overlays */}
-                {scanning && (
-                  <div style={{
-                    position: "absolute",
-                    inset: 0,
-                    background: "rgba(28, 25, 23, 0.95)",
-                    color: "var(--white)",
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    padding: "2rem",
-                    zIndex: 20
-                  }}>
-                    <Loader2 size={48} style={{ animation: "spin 1.5s linear infinite", color: "var(--rose)", marginBottom: "1.5rem" }} />
-                    <h4 style={{ fontSize: "1.1rem", margin: "0 0 0.5rem", fontWeight: 500, color: "var(--white)" }}>Scanning Epidermis...</h4>
-                    <p style={{ color: "rgba(255,255,255,0.7)", fontSize: "0.9rem", fontFamily: "monospace" }}>{scanStep}</p>
-                  </div>
-                )}
+ {/* Progress overlays */}
+ {scanning && (
+ <div style={{
+ position: "absolute",
+ inset: 0,
+ background: "rgba(28, 25, 23, 0.95)",
+ color: "var(--white)",
+ display: "flex",
+ flexDirection: "column",
+ alignItems: "center",
+ justifyContent: "center",
+ padding: "2rem",
+ zIndex: 20
+ }}>
+ <Loader2 size={48} style={{ animation: "spin 1.5s linear infinite", color: "var(--rose)", marginBottom: "1.5rem" }} />
+ <h4 style={{ fontSize: "1.1rem", margin: "0 0 0.5rem", fontWeight: 500, color: "var(--white)" }}>Scanning Epidermis...</h4>
+ <p style={{ color: "rgba(255,255,255,0.7)", fontSize: "0.9rem", fontFamily: "monospace" }}>{scanStep}</p>
+ </div>
+ )}
 
-                {errorMsg && (
-                  <div style={{ color: "#dc2626", marginTop: "1rem", fontSize: "0.9rem" }}>
-                    {errorMsg}
-                  </div>
-                )}
-              </div>
-            )}
+ {errorMsg && (
+ <div style={{ color: "#dc2626", marginTop: "1rem", fontSize: "0.9rem" }}>
+ {errorMsg}
+ </div>
+ )}
+ </div>
+ )}
 
-            {/* Results Report Display */}
-            {report && (
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                style={{ display: "grid", gridTemplateColumns: "1fr", gap: "2rem" }}
-              >
-                {/* Score Dial Grids */}
-                <div className="score-dials-grid">
-                  {[
-                    { label: "Moisture Barrier", score: report.barrierScore, desc: "Hydration retention strength" },
-                    { label: "Acne/Congestion", score: report.acneScore, desc: "Pore clarity & breakout presence" },
-                    { label: "Redness/Sensitivity", score: report.rednessScore, desc: "Vascular irritation profile" },
-                    { label: "Oil/Sebum Control", score: report.oilinessScore, desc: "Glandular sebum balancing" }
-                  ].map((dial, idx) => (
-                    <div key={idx} className="score-dial-card">
-                      <span style={{ fontSize: "0.9rem", fontWeight: 500, color: "var(--ink)", marginBottom: "1rem" }}>{dial.label}</span>
-                      
-                      {/* Circular Gauge visual representation */}
-                      <div style={{ position: "relative", width: "100px", height: "100px", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                        <svg width="100" height="100" style={{ transform: "rotate(-90deg)" }}>
-                          <circle cx="50" cy="50" r="40" fill="transparent" stroke="var(--rule)" strokeWidth="6" />
-                          <circle 
-                            cx="50" 
-                            cy="50" 
-                            r="40" 
-                            fill="transparent" 
-                            stroke={getScoreColor(dial.score)} 
-                            strokeWidth="6" 
-                            strokeDasharray={2 * Math.PI * 40}
-                            strokeDashoffset={2 * Math.PI * 40 * (1 - dial.score / 100)}
-                            strokeLinecap="round"
-                          />
-                        </svg>
-                        <span style={{ position: "absolute", fontSize: "1.6rem", fontWeight: 700, color: "var(--ink)" }}>{dial.score}</span>
-                      </div>
+ {/* Results Report Display */}
+ {report && (
+ <motion.div
+ initial={{ opacity: 0, y: 20 }}
+ animate={{ opacity: 1, y: 0 }}
+ style={{ display: "grid", gridTemplateColumns: "1fr", gap: "2rem" }}
+ >
+ {/* Score Dial Grids */}
+ <div className="score-dials-grid">
+ {[
+ { label: "Moisture Barrier", score: report.barrierScore, desc: "Hydration retention strength" },
+ { label: "Acne/Congestion", score: report.acneScore, desc: "Pore clarity & breakout presence" },
+ { label: "Redness/Sensitivity", score: report.rednessScore, desc: "Vascular irritation profile" },
+ { label: "Oil/Sebum Control", score: report.oilinessScore, desc: "Glandular sebum balancing" }
+ ].map((dial, idx) => (
+ <div key={idx} className="score-dial-card">
+ <span style={{ fontSize: "0.9rem", fontWeight: 500, color: "var(--ink)", marginBottom: "1rem" }}>{dial.label}</span>
+ 
+ {/* Circular Gauge visual representation */}
+ <div style={{ position: "relative", width: "100px", height: "100px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+ <svg width="100" height="100" style={{ transform: "rotate(-90deg)" }}>
+ <circle cx="50" cy="50" r="40" fill="transparent" stroke="var(--rule)" strokeWidth="6" />
+ <circle 
+ cx="50" 
+ cy="50" 
+ r="40" 
+ fill="transparent" 
+ stroke={getScoreColor(dial.score)} 
+ strokeWidth="6" 
+ strokeDasharray={2 * Math.PI * 40}
+ strokeDashoffset={2 * Math.PI * 40 * (1 - dial.score / 100)}
+ strokeLinecap="round"
+ />
+ </svg>
+ <span style={{ position: "absolute", fontSize: "1.6rem", fontWeight: 700, color: "var(--ink)" }}>{dial.score}</span>
+ </div>
 
-                      <span style={{ fontSize: "0.75rem", color: "var(--muted)", marginTop: "1rem" }}>{dial.desc}</span>
-                    </div>
-                  ))}
-                </div>
+ <span style={{ fontSize: "0.75rem", color: "var(--muted)", marginTop: "1rem" }}>{dial.desc}</span>
+ </div>
+ ))}
+ </div>
 
-                {/* Detailed Report Text */}
-                <div className="detailed-report-grid" style={{
-                  background: "rgba(255,255,255,0.8)",
-                  border: "1px solid var(--rule)",
-                  borderRadius: "16px",
-                  padding: "clamp(1.1rem, 4vw, 2rem)",
-                  width: "100%",
-                  maxWidth: "100%",
-                  overflowWrap: "anywhere"
-                }}>
-                  {/* Left Column: Summary */}
-                  <div>
-                    <h3 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "1.5rem", color: "var(--ink)", margin: "0 0 1rem" }}>
-                      AI Clinical Synthesis
-                    </h3>
-                    <p style={{ color: "var(--muted)", fontSize: "0.95rem", lineHeight: 1.6, margin: 0 }}>
-                      {report.summary}
-                    </p>
+ {/* Detailed Report Text */}
+ <div className="detailed-report-grid" style={{
+ background: "rgba(255,255,255,0.8)",
+ border: "1px solid var(--rule)",
+ borderRadius: "16px",
+ padding: "clamp(1.1rem, 4vw, 2rem)",
+ width: "100%",
+ maxWidth: "100%",
+ overflowWrap: "anywhere"
+ }}>
+ {/* Left Column: Summary */}
+ <div>
+ <h3 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "1.5rem", color: "var(--ink)", margin: "0 0 1rem" }}>
+ AI Clinical Synthesis
+ </h3>
+ <p style={{ color: "var(--muted)", fontSize: "0.95rem", lineHeight: 1.6, margin: 0 }}>
+ {report.summary}
+ </p>
 
-                    <h4 style={{ fontSize: "1rem", fontWeight: 600, color: "var(--ink)", margin: "1.5rem 0 0.5rem" }}>Identified Concerns</h4>
-                    <ul style={{ paddingLeft: "1.2rem", margin: 0, color: "var(--muted)", fontSize: "0.9rem" }}>
-                      {report.concerns.map((c, i) => (
-                        <li key={i} style={{ marginBottom: "0.4rem" }}>{c}</li>
-                      ))}
-                    </ul>
-                  </div>
+ <h4 style={{ fontSize: "1rem", fontWeight: 600, color: "var(--ink)", margin: "1.5rem 0 0.5rem" }}>Identified Concerns</h4>
+ <ul style={{ paddingLeft: "1.2rem", margin: 0, color: "var(--muted)", fontSize: "0.9rem" }}>
+ {report.concerns.map((c, i) => (
+ <li key={i} style={{ marginBottom: "0.4rem" }}>{c}</li>
+ ))}
+ </ul>
+ </div>
 
-                  {/* Right Column: Adjustments & Consultation Actions */}
-                  <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
-                    <div>
-                      <h3 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "1.5rem", color: "var(--ink)", margin: "0 0 1rem" }}>
-                        Recommended Adjustments
-                      </h3>
-                      <div style={{ display: "flex", flexDirection: "column", gap: "0.8rem" }}>
-                        {report.routineAdjustments.map((a, i) => (
-                          <div key={i} style={{ display: "flex", gap: "0.5rem", alignItems: "flex-start" }}>
-                            <Check size={16} color="var(--rose)" style={{ marginTop: "0.15rem", flexShrink: 0 }} />
-                            <span style={{ fontSize: "0.9rem", color: "var(--muted)", lineHeight: 1.4 }}>{a}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
+ {/* Right Column: Adjustments & Consultation Actions */}
+ <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+ <div>
+ <h3 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "1.5rem", color: "var(--ink)", margin: "0 0 1rem" }}>
+ Recommended Adjustments
+ </h3>
+ <div style={{ display: "flex", flexDirection: "column", gap: "0.8rem" }}>
+ {report.routineAdjustments.map((a, i) => (
+ <div key={i} style={{ display: "flex", gap: "0.5rem", alignItems: "flex-start" }}>
+ <Check size={16} color="var(--rose)" style={{ marginTop: "0.15rem", flexShrink: 0 }} />
+ <span style={{ fontSize: "0.9rem", color: "var(--muted)", lineHeight: 1.4 }}>{a}</span>
+ </div>
+ ))}
+ </div>
+ </div>
 
-                    <div style={{ marginTop: "2rem" }}>
-                      <button
-                        onClick={() => setChatOpen(true)}
-                        style={{
-                          background: "var(--rose)",
-                          color: "var(--white)",
-                          border: "none",
-                          borderRadius: "10px",
-                          padding: "1rem 2rem",
-                          fontSize: "0.95rem",
-                          fontWeight: 600,
-                          cursor: "pointer",
-                          display: "flex",
-                          alignItems: "center",
-                          gap: "0.5rem",
-                          width: "100%",
-                          justifyContent: "center",
-                          boxShadow: "0 6px 15px rgba(200, 71, 58, 0.2)"
-                        }}
-                      >
-                        <MessageSquare size={18} />
-                        Consult with AI Skin Specialist
-                      </button>
+ <div style={{ marginTop: "2rem" }}>
+ <button
+ onClick={() => setChatOpen(true)}
+ style={{
+ background: "var(--rose)",
+ color: "var(--white)",
+ border: "none",
+ borderRadius: "10px",
+ padding: "1rem 2rem",
+ fontSize: "0.95rem",
+ fontWeight: 600,
+ cursor: "pointer",
+ display: "flex",
+ alignItems: "center",
+ gap: "0.5rem",
+ width: "100%",
+ justifyContent: "center",
+ boxShadow: "0 6px 15px rgba(200, 71, 58, 0.2)"
+ }}
+ >
+ <MessageSquare size={18} />
+ Consult with AI Skin Specialist
+ </button>
 
-                      <button
-                        onClick={() => {
-                          setReport(null);
-                          setSelectedFile(null);
-                        }}
-                        style={{
-                          background: "transparent",
-                          border: "1px solid var(--rule)",
-                          color: "var(--muted)",
-                          borderRadius: "10px",
-                          padding: "0.8rem",
-                          width: "100%",
-                          marginTop: "0.8rem",
-                          fontSize: "0.85rem",
-                          fontWeight: 500,
-                          cursor: "pointer"
-                        }}
-                      >
-                        Scan New Photo
-                      </button>
-                    </div>
-                  </div>
-                </div>
+ <button
+ onClick={() => {
+ setReport(null);
+ setSelectedFile(null);
+ }}
+ style={{
+ background: "transparent",
+ border: "1px solid var(--rule)",
+ color: "var(--muted)",
+ borderRadius: "10px",
+ padding: "0.8rem",
+ width: "100%",
+ marginTop: "0.8rem",
+ fontSize: "0.85rem",
+ fontWeight: 500,
+ cursor: "pointer"
+ }}
+ >
+ Scan New Photo
+ </button>
+ </div>
+ </div>
+ </div>
 
-                {/* Consultation Chat Widget Modal */}
-                <AnimatePresence>
-                  {chatOpen && (
-                    <motion.div 
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      style={{
-                        position: "fixed",
-                        inset: 0,
-                        background: "rgba(0,0,0,0.5)",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        zIndex: 100,
-                        padding: "1rem"
-                      }}
-                    >
-                      <motion.div 
-                        initial={{ scale: 0.95, y: 15 }}
-                        animate={{ scale: 1, y: 0 }}
-                        exit={{ scale: 0.95, y: 15 }}
-                        style={{
-                          background: "var(--white)",
-                          border: "1px solid var(--rule)",
-                          borderRadius: "16px",
-                          width: "100%",
-                          maxWidth: "540px",
-                          height: "550px",
-                          display: "flex",
-                          flexDirection: "column",
-                          boxShadow: "0 25px 50px rgba(0,0,0,0.15)"
-                        }}
-                      >
-                        {/* Chat Header */}
-                        <div style={{
-                          padding: "1rem 1.5rem",
-                          borderBottom: "1px solid var(--rule)",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "space-between"
-                        }}>
-                          <div style={{ display: "flex", alignItems: "center", gap: "0.8rem" }}>
-                            <div style={{ width: "10px", height: "10px", borderRadius: "50%", background: "#22c55e" }} />
-                            <div>
-                              <h4 style={{ margin: 0, fontSize: "1rem", fontWeight: 600 }}>Mirha</h4>
-                              <span style={{ fontSize: "0.75rem", color: "var(--muted)" }}>AI Specialist</span>
-                            </div>
-                          </div>
-                          <button 
-                            onClick={() => setChatOpen(false)}
-                            style={{ background: "transparent", border: "none", fontSize: "1.2rem", cursor: "pointer", color: "var(--muted)" }}
-                          >
-                            &times;
-                          </button>
-                        </div>
+ {/* Consultation Chat Widget Modal */}
+ <AnimatePresence>
+ {chatOpen && (
+ <motion.div 
+ initial={{ opacity: 0 }}
+ animate={{ opacity: 1 }}
+ exit={{ opacity: 0 }}
+ style={{
+ position: "fixed",
+ inset: 0,
+ background: "rgba(0,0,0,0.5)",
+ display: "flex",
+ alignItems: "center",
+ justifyContent: "center",
+ zIndex: 100,
+ padding: "1rem"
+ }}
+ >
+ <motion.div 
+ initial={{ scale: 0.95, y: 15 }}
+ animate={{ scale: 1, y: 0 }}
+ exit={{ scale: 0.95, y: 15 }}
+ style={{
+ background: "var(--white)",
+ border: "1px solid var(--rule)",
+ borderRadius: "16px",
+ width: "100%",
+ maxWidth: "540px",
+ height: "550px",
+ display: "flex",
+ flexDirection: "column",
+ boxShadow: "0 25px 50px rgba(0,0,0,0.15)"
+ }}
+ >
+ {/* Chat Header */}
+ <div style={{
+ padding: "1rem 1.5rem",
+ borderBottom: "1px solid var(--rule)",
+ display: "flex",
+ alignItems: "center",
+ justifyContent: "space-between"
+ }}>
+ <div style={{ display: "flex", alignItems: "center", gap: "0.8rem" }}>
+ <div style={{ width: "10px", height: "10px", borderRadius: "50%", background: "#22c55e" }} />
+ <div>
+ <h4 style={{ margin: 0, fontSize: "1rem", fontWeight: 600 }}>Mirha</h4>
+ <span style={{ fontSize: "0.75rem", color: "var(--muted)" }}>AI Specialist</span>
+ </div>
+ </div>
+ <button 
+ onClick={() => setChatOpen(false)}
+ style={{ background: "transparent", border: "none", fontSize: "1.2rem", cursor: "pointer", color: "var(--muted)" }}
+ >
+ &times;
+ </button>
+ </div>
 
-                        {/* Chat Messages */}
-                        <div style={{
-                          flex: 1,
-                          overflowY: "auto",
-                          padding: "1.5rem",
-                          display: "flex",
-                          flexDirection: "column",
-                          gap: "1rem"
-                        }}>
-                          {messages.map((m, i) => (
-                            <div 
-                              key={i} 
-                              style={{
-                                display: "flex",
-                                justifyContent: m.sender === "user" ? "flex-end" : "flex-start"
-                              }}
-                            >
-                              <div style={{
-                                maxWidth: "80%",
-                                padding: "0.8rem 1rem",
-                                borderRadius: m.sender === "user" ? "12px 12px 0 12px" : "12px 12px 12px 0",
-                                background: m.sender === "user" ? "var(--ink)" : "var(--sand)",
-                                color: m.sender === "user" ? "var(--white)" : "var(--ink)",
-                                fontSize: "0.9rem",
-                                lineHeight: 1.45
-                              }}>
-                                {m.text}
-                              </div>
-                            </div>
-                          ))}
-                          
-                          {chatLoading && (
-                            <div style={{ display: "flex", justifyContent: "flex-start" }}>
-                              <div style={{ background: "var(--sand)", padding: "0.8rem 1rem", borderRadius: "12px", display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                                <Loader2 size={16} style={{ animation: "spin 1s linear infinite" }} />
-                                <span style={{ fontSize: "0.85rem", color: "var(--muted)" }}>typing...</span>
-                              </div>
-                            </div>
-                          )}
-                        </div>
+ {/* Chat Messages */}
+ <div style={{
+ flex: 1,
+ overflowY: "auto",
+ padding: "1.5rem",
+ display: "flex",
+ flexDirection: "column",
+ gap: "1rem"
+ }}>
+ {messages.map((m, i) => (
+ <div 
+ key={i} 
+ style={{
+ display: "flex",
+ justifyContent: m.sender === "user" ? "flex-end" : "flex-start"
+ }}
+ >
+ <div style={{
+ maxWidth: "80%",
+ padding: "0.8rem 1rem",
+ borderRadius: m.sender === "user" ? "12px 12px 0 12px" : "12px 12px 12px 0",
+ background: m.sender === "user" ? "var(--ink)" : "var(--sand)",
+ color: m.sender === "user" ? "var(--white)" : "var(--ink)",
+ fontSize: "0.9rem",
+ lineHeight: 1.45
+ }}>
+ {m.text}
+ </div>
+ </div>
+ ))}
+ 
+ {chatLoading && (
+ <div style={{ display: "flex", justifyContent: "flex-start" }}>
+ <div style={{ background: "var(--sand)", padding: "0.8rem 1rem", borderRadius: "12px", display: "flex", alignItems: "center", gap: "0.5rem" }}>
+ <Loader2 size={16} style={{ animation: "spin 1s linear infinite" }} />
+ <span style={{ fontSize: "0.85rem", color: "var(--muted)" }}>typing...</span>
+ </div>
+ </div>
+ )}
+ </div>
 
-                        {/* Chat Input */}
-                        <form 
-                          onSubmit={handleSendMessage}
-                          style={{
-                            padding: "1rem",
-                            borderTop: "1px solid var(--rule)",
-                            display: "flex",
-                            gap: "0.5rem"
-                          }}
-                        >
-                          <input 
-                            type="text"
-                            placeholder="Ask about your routine recommendations..."
-                            value={inputMessage}
-                            onChange={(e) => setInputMessage(e.target.value)}
-                            style={{
-                              flex: 1,
-                              border: "1px solid var(--rule)",
-                              borderRadius: "8px",
-                              padding: "0.8rem",
-                              fontSize: "0.9rem",
-                              outline: "none"
-                            }}
-                          />
-                          <button
-                            type="submit"
-                            style={{
-                              background: "var(--ink)",
-                              color: "var(--white)",
-                              border: "none",
-                              borderRadius: "8px",
-                              padding: "0.8rem 1.2rem",
-                              fontSize: "0.9rem",
-                              fontWeight: 600,
-                              cursor: "pointer"
-                            }}
-                          >
-                            Send
-                          </button>
-                        </form>
-                      </motion.div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+ {/* Chat Input */}
+ <form 
+ onSubmit={handleSendMessage}
+ style={{
+ padding: "1rem",
+ borderTop: "1px solid var(--rule)",
+ display: "flex",
+ gap: "0.5rem"
+ }}
+ >
+ <input 
+ type="text"
+ placeholder="Ask about your routine recommendations..."
+ value={inputMessage}
+ onChange={(e) => setInputMessage(e.target.value)}
+ style={{
+ flex: 1,
+ border: "1px solid var(--rule)",
+ borderRadius: "8px",
+ padding: "0.8rem",
+ fontSize: "0.9rem",
+ outline: "none"
+ }}
+ />
+ <button
+ type="submit"
+ style={{
+ background: "var(--ink)",
+ color: "var(--white)",
+ border: "none",
+ borderRadius: "8px",
+ padding: "0.8rem 1.2rem",
+ fontSize: "0.9rem",
+ fontWeight: 600,
+ cursor: "pointer"
+ }}
+ >
+ Send
+ </button>
+ </form>
+ </motion.div>
+ </motion.div>
+ )}
+ </AnimatePresence>
 
-              </motion.div>
-            )}
+ </motion.div>
+ )}
 
-          </div>
-        )}
+ </div>
+ )}
 
-        {/* Scan History list */}
-        {pastAnalyses.length > 0 && (
-          <div style={{ marginTop: "3rem" }}>
-            <h3 style={{
-              fontFamily: "'DM Serif Display', serif",
-              fontSize: "1.8rem",
-              color: "var(--ink)",
-              marginBottom: "1rem",
-              display: "flex",
-              alignItems: "center",
-              gap: "0.5rem"
-            }}>
-              <History size={22} color="var(--rose)" />
-              Scan History
-            </h3>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: "1rem" }}>
-              {pastAnalyses.map((item) => (
-                <div 
-                  key={item.id}
-                  onClick={() => {
-                    setReport(item.detailedJson);
-                    // Pre-fill chat
-                    setMessages([
-                      {
-                        sender: "bot",
-                        text: item.detailedJson.agentWelcomeMessage || "Consultation for this past report is active."
-                      }
-                    ]);
-                  }}
-                  style={{
-                    background: "rgba(255,255,255,0.6)",
-                    border: "1px solid var(--rule)",
-                    borderRadius: "12px",
-                    padding: "1rem 1.5rem",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    cursor: "pointer",
-                    transition: "all 0.2s ease"
-                  }}
-                >
-                  <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-                    <div style={{ display: "flex", gap: "0.5rem", fontSize: "0.85rem", fontWeight: 600 }}>
-                      <span style={{ color: getScoreColor(item.barrierScore) }}>Barrier: {item.barrierScore}</span>
-                      <span style={{ color: "var(--rule)" }}>|</span>
-                      <span style={{ color: getScoreColor(item.acneScore) }}>Acne: {item.acneScore}</span>
-                    </div>
-                    <span style={{ fontSize: "0.8rem", color: "var(--muted)", display: "flex", alignItems: "center", gap: "0.3rem" }} suppressHydrationWarning>
-                      <Calendar size={12} />
-                      {new Date(item.createdAt).toLocaleDateString()}
-                    </span>
-                  </div>
-                  
-                  <span style={{ fontSize: "0.8rem", color: "var(--rose)", fontWeight: 600 }}>
-                    View Report &rarr;
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
+ {/* Scan History list */}
+ {pastAnalyses.length > 0 && (
+ <div style={{ marginTop: "3rem" }}>
+ <h3 style={{
+ fontFamily: "'DM Serif Display', serif",
+ fontSize: "1.8rem",
+ color: "var(--ink)",
+ marginBottom: "1rem",
+ display: "flex",
+ alignItems: "center",
+ gap: "0.5rem"
+ }}>
+ <History size={22} color="var(--rose)" />
+ Scan History
+ </h3>
+ <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: "1rem" }}>
+ {pastAnalyses.map((item) => (
+ <div 
+ key={item.id}
+ onClick={() => {
+ setReport(item.detailedJson);
+ // Pre-fill chat
+ setMessages([
+ {
+ sender: "bot",
+ text: item.detailedJson.agentWelcomeMessage || "Consultation for this past report is active."
+ }
+ ]);
+ }}
+ style={{
+ background: "rgba(255,255,255,0.6)",
+ border: "1px solid var(--rule)",
+ borderRadius: "12px",
+ padding: "1rem 1.5rem",
+ display: "flex",
+ alignItems: "center",
+ justifyContent: "space-between",
+ cursor: "pointer",
+ transition: "all 0.2s ease"
+ }}
+ >
+ <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+ <div style={{ display: "flex", gap: "0.5rem", fontSize: "0.85rem", fontWeight: 600 }}>
+ <span style={{ color: getScoreColor(item.barrierScore) }}>Barrier: {item.barrierScore}</span>
+ <span style={{ color: "var(--rule)" }}>|</span>
+ <span style={{ color: getScoreColor(item.acneScore) }}>Acne: {item.acneScore}</span>
+ </div>
+ <span style={{ fontSize: "0.8rem", color: "var(--muted)", display: "flex", alignItems: "center", gap: "0.3rem" }} suppressHydrationWarning>
+ <Calendar size={12} />
+ {new Date(item.createdAt).toLocaleDateString()}
+ </span>
+ </div>
+ 
+ <span style={{ fontSize: "0.8rem", color: "var(--rose)", fontWeight: 600 }}>
+ View Report &rarr;
+ </span>
+ </div>
+ ))}
+ </div>
+ </div>
+ )}
 
-      </div>
-    </div>
-  );
+ </div>
+ </div>
+ );
 }
 
 
