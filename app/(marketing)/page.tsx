@@ -35,9 +35,10 @@ type Product = {
   notIdealFor?: string[];
   image: string;
   link?: string;
+  hideFromShop?: boolean;
 };
 
-const PRODUCT_LIST = PRODUCTS as unknown as Product[];
+const PRODUCT_LIST = (PRODUCTS as unknown as Product[]).filter((p) => !p.hideFromShop);
 
 const CATEGORIES = ["All", "Skincare", "Makeup", "Hair Care", "Body Care", "Wellness"];
 

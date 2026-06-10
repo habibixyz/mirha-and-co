@@ -42,7 +42,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   });
 
   // Dynamic product pages
-  const productRoutes = PRODUCTS.map((product) => ({
+  const productRoutes = PRODUCTS.filter((product: any) => !product.hideFromShop).map((product) => ({
     url: `${baseUrl}/product/${product.asin}`,
     lastModified: new Date(),
     changeFrequency: "weekly" as const,

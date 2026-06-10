@@ -1750,8 +1750,9 @@ export const PRODUCTS = [
       "Benefits": "Clutter-free desk, elegant storage"
     },
     tags: ["organiser", "bamboo tray", "desk organiser", "valet tray", "home decor"],
-    image: "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=600&q=80",
-    link: "https://www.amazon.in/dp/B0CG6CVRXR?tag=skinwithtanvi-21"
+    image: "/products/bamboo_tray.jpg",
+    link: "https://www.amazon.in/dp/B0CG6CVRXR?tag=skinwithtanvi-21",
+    hideFromShop: true
   },
   {
     id: 1005,
@@ -1773,8 +1774,9 @@ export const PRODUCTS = [
       "Benefits": "Quick froth, café-quality drinks"
     },
     tags: ["milk frother", "frother", "kitchen tool", "coffee", "latte"],
-    image: "https://images.unsplash.com/photo-1578314675249-a6910f80cc4e?auto=format&fit=crop&w=600&q=80",
-    link: "https://www.amazon.in/dp/B0C8JC595G?tag=skinwithtanvi-21"
+    image: "/products/frother.jpg",
+    link: "https://www.amazon.in/dp/B0C8JC595G?tag=skinwithtanvi-21",
+    hideFromShop: true
   },
   {
     id: 1006,
@@ -1796,8 +1798,9 @@ export const PRODUCTS = [
       "Benefits": "Pantry organization, chalkboard look"
     },
     tags: ["labels", "chalkboard stickers", "pantry organiser", "kitchen labels"],
-    image: "https://images.unsplash.com/photo-1589365278144-c9e705f843ba?auto=format&fit=crop&w=600&q=80",
-    link: "https://www.amazon.in/dp/B07Z3S4D58?tag=skinwithtanvi-21"
+    image: "/products/chalkboard_labels.jpg",
+    link: "https://www.amazon.in/dp/B07Z3S4D58?tag=skinwithtanvi-21",
+    hideFromShop: true
   }
 ];
 
