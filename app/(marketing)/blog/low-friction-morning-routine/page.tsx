@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import Link from "next/link";
+import BlogFooterTools from "@/components/BlogFooterTools";
 
 export const metadata: Metadata = {
   title: "The Lazy Girl's Low-Friction Morning Routine | Mirha & Co.",
@@ -54,6 +55,8 @@ export default function BlogPost() {
             Don't try to build a new routine from scratch. Attach a new habit to an existing one. "While my coffee is brewing, I will apply my sunscreen." "While I brush my teeth, I will do calf raises." This anchors the new behavior to an automatic action.
           </p>
         </section>
+      
+        <BlogFooterTools />
       </article>
     </main>
   );

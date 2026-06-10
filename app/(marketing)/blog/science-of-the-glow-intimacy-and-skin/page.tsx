@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import Link from "next/link";
+import BlogFooterTools from "@/components/BlogFooterTools";
 
 export const metadata: Metadata = {
   title: "The Science of the 'Glow': How Intimacy Affects Skin | Mirha & Co.",
@@ -76,6 +77,8 @@ export default function BlogPost() {
             <strong>The Takeaway:</strong> Wellness isn't just about green juice and a 10-step skincare routine. Your body is an interconnected ecosystem. Embracing sexual wellness as a legitimate pillar of your health is one of the smartest things you can do for your skin, your stress levels, and your mind.
           </p>
         </section>
+      
+        <BlogFooterTools />
       </article>
     </main>
   );

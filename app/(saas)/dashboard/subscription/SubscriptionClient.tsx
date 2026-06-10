@@ -1,14 +1,13 @@
 "use client";
 
-
 import { motion } from "framer-motion";
-import { Check, Loader2, Star } from "lucide-react";
+import { Check, Loader2, Star, Sparkles, ShieldCheck, Zap } from "lucide-react";
 import { useState } from "react";
 import Script from "next/script";
 
 export function SubscriptionClient({ isPro }: { isPro: boolean }) {
-
   const [activePendingType, setActivePendingType] = useState<"monthly" | "yearly" | null>(null);
+  const [billingPeriod, setBillingPeriod] = useState<"monthly" | "yearly">("yearly");
 
   const loadRazorpayScript = () => {
     return new Promise((resolve) => {
@@ -67,266 +66,531 @@ export function SubscriptionClient({ isPro }: { isPro: boolean }) {
     hidden: { opacity: 0 },
     show: {
       opacity: 1,
-      transition: { staggerChildren: 0.1 }
+      transition: { staggerChildren: 0.08 }
     }
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    show: { opacity: 1, y: 0, transition: { type: "spring" as const, stiffness: 300, damping: 24 } }
+    hidden: { opacity: 0, y: 16 },
+    show: { opacity: 1, y: 0, transition: { type: "spring" as const, stiffness: 300, damping: 26 } }
   };
 
   return (
     <>
       <Script src="https://checkout.razorpay.com/v1/checkout.js" strategy="lazyOnload" />
-      <motion.div initial="hidden" animate="show" variants={containerVariants}>
-        <motion.header variants={itemVariants} style={{ marginBottom: "3rem", maxWidth: "600px" }}>
-          <h1 style={{
-            fontFamily: "var(--dash-font-serif)",
-            fontSize: "2.8rem",
-            fontWeight: 400,
-            margin: "0 0 0.5rem",
-            color: "var(--dash-ink)",
-            lineHeight: 1.1
-          }}>
-            Subscription
-          </h1>
-          <p style={{ color: "var(--dash-muted)", margin: 0, fontSize: "1.05rem", lineHeight: 1.6 }}>
-            Manage your Mirha & Co. plan. Upgrade to unlock premium features and AI insights.
-          </p>
-        </motion.header>
+      <motion.div initial="hidden" animate="show" variants={containerVariants} className="subscription-container">
+        <style>{`
+          .subscription-container {
+            max-width: 960px;
+            margin: 0 auto;
+          }
+          
+          .sub-header {
+            text-align: center;
+            margin-bottom: 2.25rem;
+          }
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(290px, 1fr))", gap: "2rem", maxWidth: "1140px" }}>
+          .premium-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+            background: var(--dash-accent-soft);
+            color: var(--dash-accent);
+            padding: 0.45rem 0.9rem;
+            border-radius: 99px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: 1rem;
+            border: 1px solid rgba(200, 71, 58, 0.15);
+            line-height: 1;
+          }
 
-          {/* Free Plan */}
-          <motion.div variants={itemVariants} style={{
-            background: 'var(--white)',
-            border: "1px solid var(--dash-border)",
-            borderRadius: "24px",
-            padding: "2.5rem 2rem",
-            display: "flex",
-            flexDirection: "column",
-            position: "relative"
-          }}>
-            {!isPro && (
-              <div style={{ position: "absolute", top: "1rem", right: "1rem" }}>
-                <span style={{
-                  background: "var(--dash-bg)",
-                  color: "var(--dash-ink)",
-                  padding: "0.4rem 0.8rem",
-                  borderRadius: "8px",
-                  fontSize: "0.8rem",
-                  fontWeight: 600,
-                  textTransform: "uppercase",
-                  letterSpacing: "0.1em"
-                }}>
-                  Current
-                </span>
-              </div>
-            )}
+          .premium-badge svg {
+            display: block;
+            flex-shrink: 0;
+            transform: translateY(-0.5px);
+          }
 
-            <h3 style={{ fontSize: "1.5rem", margin: "0 0 0.5rem", color: "var(--dash-ink)", fontWeight: 500 }}>Free Tier</h3>
-            <div style={{ display: "flex", alignItems: "baseline", gap: "0.2rem", marginBottom: "2rem" }}>
-              <span style={{ fontSize: "2.5rem", fontWeight: 700, fontFamily: "'Bebas Neue', sans-serif" }}>₹0</span>
-              <span style={{ color: "var(--dash-muted)", fontSize: "0.9rem" }}>/month</span>
+          .sub-title {
+            font-family: var(--dash-font-serif);
+            font-size: clamp(2.2rem, 4.5vw, 2.8rem);
+            font-weight: 400;
+            color: var(--dash-ink);
+            line-height: 1.1;
+            margin-bottom: 0.5rem;
+          }
+
+          .sub-subtitle {
+            color: var(--dash-muted);
+            font-size: 0.98rem;
+            max-width: 520px;
+            margin: 0 auto 1.5rem;
+            line-height: 1.5;
+          }
+
+          /* --- BILLING TOGGLE --- */
+          .toggle-wrapper {
+            display: inline-flex;
+            background: rgba(0, 0, 0, 0.04);
+            padding: 4px;
+            border-radius: 99px;
+            margin-top: 0.5rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            border: 1px solid rgba(0, 0, 0, 0.02);
+            --btn-width: 88px;
+          }
+
+          .toggle-btn {
+            background: transparent;
+            border: none;
+            color: var(--dash-muted);
+            padding: 0.6rem 0;
+            width: var(--btn-width);
+            text-align: center;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border-radius: 99px;
+            cursor: pointer;
+            position: relative;
+            z-index: 2;
+            transition: color 0.2s ease;
+          }
+
+          .toggle-btn.active {
+            color: var(--dash-ink);
+          }
+
+          .toggle-bg {
+            position: absolute;
+            top: 4px;
+            bottom: 4px;
+            left: 4px;
+            width: var(--btn-width);
+            background: var(--dash-surface);
+            border-radius: 99px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+            transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 1;
+          }
+
+          .discount-pill {
+            position: absolute;
+            top: -14px;
+            right: -10px;
+            background: var(--dash-accent);
+            color: white;
+            font-size: 0.62rem;
+            font-weight: 800;
+            padding: 2px 8px;
+            border-radius: 99px;
+            letter-spacing: 0.05em;
+            box-shadow: 0 4px 10px rgba(200, 71, 58, 0.25);
+            white-space: nowrap;
+          }
+
+          /* --- CARDS GRID --- */
+          .pricing-grid-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.75rem;
+            margin-top: 0.5rem;
+          }
+
+          .plan-card {
+            background: var(--dash-surface);
+            border: 1px solid var(--dash-border);
+            border-radius: 28px;
+            padding: 2.25rem 2.25rem;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 10px 30px -10px rgba(26,23,20,0.04);
+          }
+
+          .plan-card.highlighted {
+            background: var(--dash-ink);
+            color: var(--dash-surface);
+            border: none;
+            box-shadow: 0 25px 60px -15px rgba(26,23,20,0.22);
+          }
+
+          .card-header-label {
+            font-size: 0.65rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: var(--dash-muted);
+            margin-bottom: 0.5rem;
+          }
+
+          .plan-card.highlighted .card-header-label {
+            color: rgba(255,255,255,0.45);
+          }
+
+          .plan-name {
+            font-size: 1.8rem;
+            font-family: var(--dash-font-serif);
+            font-weight: 400;
+            margin: 0 0 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+          }
+
+          .price-block {
+            display: flex;
+            align-items: baseline;
+            gap: 0.3rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--dash-border);
+            padding-bottom: 1.5rem;
+          }
+
+          .plan-card.highlighted .price-block {
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+          }
+
+          .price-number {
+            font-size: 3.5rem;
+            font-weight: 400;
+            font-family: var(--font-bebas), sans-serif;
+            line-height: 1;
+            letter-spacing: -0.01em;
+          }
+
+          .price-period {
+            color: var(--dash-muted);
+            font-size: 0.95rem;
+          }
+
+          .plan-card.highlighted .price-period {
+            color: rgba(255,255,255,0.55);
+          }
+
+          .feature-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.9rem;
+            margin-bottom: 2rem;
+            flex-grow: 1;
+          }
+
+          .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.8rem;
+            font-size: 0.95rem;
+            line-height: 1.4;
+            color: #4A4540;
+          }
+
+          .plan-card.highlighted .feature-item {
+            color: rgba(255,255,255,0.85);
+          }
+
+          .icon-wrap {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--dash-accent-soft);
+            color: var(--dash-accent);
+            flex-shrink: 0;
+            margin-top: 1px;
+          }
+
+          .plan-card.highlighted .icon-wrap {
+            background: rgba(200, 71, 58, 0.18);
+            color: var(--dash-accent);
+          }
+
+          /* --- BUTTONS --- */
+          .action-btn {
+            width: 100%;
+            border: none;
+            border-radius: 16px;
+            padding: 1.1rem;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            transition: all 0.2s ease;
+          }
+
+          .btn-secondary {
+            background: rgba(0,0,0,0.04);
+            color: var(--dash-ink);
+          }
+
+          .btn-secondary:hover {
+            background: rgba(0,0,0,0.07);
+          }
+
+          .btn-primary {
+            background: var(--dash-accent);
+            color: white;
+            box-shadow: 0 8px 25px rgba(200, 71, 58, 0.25);
+          }
+
+          .btn-primary:hover {
+            background: #b5382b;
+            box-shadow: 0 10px 30px rgba(200, 71, 58, 0.35);
+          }
+
+          .btn-active {
+            background: transparent;
+            color: var(--dash-muted);
+            border: 1px dashed var(--dash-border);
+            cursor: default;
+          }
+
+          .plan-card.highlighted .btn-active {
+            border: 1px dashed rgba(255,255,255,0.15);
+            color: rgba(255,255,255,0.45);
+          }
+
+          /* Glow effect on hover */
+          .plan-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 45px -10px rgba(26,23,20,0.08);
+          }
+
+          .plan-card.highlighted:hover {
+            box-shadow: 0 30px 70px -15px rgba(26,23,20,0.35);
+          }
+
+          @media (max-width: 768px) {
+            .pricing-grid-container {
+              grid-template-columns: 1fr;
+              gap: 1.75rem;
+            }
+            .plan-card {
+              padding: 2.25rem 1.75rem;
+            }
+          }
+
+          @media (max-width: 480px) {
+            .sub-header {
+              margin-bottom: 2rem;
+            }
+            .sub-title {
+              font-size: 1.85rem;
+            }
+            .sub-subtitle {
+              font-size: 0.9rem;
+              margin-bottom: 1.5rem;
+            }
+            .toggle-wrapper {
+              --btn-width: 74px;
+              margin-top: 0.5rem;
+              margin-bottom: 1.5rem;
+            }
+            .toggle-btn {
+              font-size: 0.8rem;
+            }
+            .discount-pill {
+              font-size: 0.55rem;
+              top: -12px;
+              right: -8px;
+              padding: 1px 6px;
+            }
+            .plan-card {
+              padding: 1.75rem 1.25rem;
+              border-radius: 20px;
+            }
+            .plan-name {
+              font-size: 1.4rem;
+              margin-bottom: 1rem;
+            }
+            .price-block {
+              margin-bottom: 1.5rem;
+              padding-bottom: 1.5rem;
+            }
+            .price-number {
+              font-size: 2.8rem;
+            }
+            .feature-list {
+              gap: 0.9rem;
+              margin-bottom: 2rem;
+            }
+            .feature-item {
+              font-size: 0.88rem;
+            }
+            .action-btn {
+              padding: 0.9rem;
+              font-size: 0.9rem;
+              border-radius: 12px;
+            }
+          }
+
+          @keyframes spin { 100% { transform: rotate(360deg); } }
+        `}</style>
+
+        <div className="sub-header">
+          <motion.div variants={itemVariants} className="premium-badge">
+            <Sparkles size={13} />
+            Mirha Membership
+          </motion.div>
+          <motion.h1 variants={itemVariants} className="sub-title">
+            Skincare Intelligence
+          </motion.h1>
+          <motion.p variants={itemVariants} className="sub-subtitle">
+            Upgrade your routine from guessing to diagnostic precision. Unlock professional AI tools and formulation analysis.
+          </motion.p>
+
+          <motion.div variants={itemVariants} className="toggle-wrapper">
+            <button 
+              className={`toggle-btn ${billingPeriod === "monthly" ? "active" : ""}`}
+              onClick={() => setBillingPeriod("monthly")}
+            >
+              Monthly
+            </button>
+            <button 
+              className={`toggle-btn ${billingPeriod === "yearly" ? "active" : ""}`}
+              onClick={() => setBillingPeriod("yearly")}
+            >
+              Annual
+              <span className="discount-pill">Save 37%</span>
+            </button>
+            <div 
+              className="toggle-bg" 
+              style={{
+                transform: billingPeriod === "monthly" ? "translateX(0)" : "translateX(var(--btn-width))"
+              }}
+            />
+          </motion.div>
+        </div>
+
+        <div className="pricing-grid-container">
+          {/* FREE PLAN CARD */}
+          <motion.div variants={itemVariants} className="plan-card">
+            <span className="card-header-label">Basic Access</span>
+            <h3 className="plan-name">Free Tier</h3>
+            
+            <div className="price-block">
+              <span className="price-number">₹0</span>
+              <span className="price-period">/ forever</span>
             </div>
 
-            <div style={{ display: "flex", flexDirection: "column", gap: "1rem", marginBottom: "2.5rem", flex: 1 }}>
-              <div style={{ display: "flex", gap: "0.8rem", color: "var(--dash-muted)", fontSize: "0.95rem" }}>
-                <Check size={18} color="var(--dash-ink)" /> Up to 2 Routines
+            <div className="feature-list">
+              <div className="feature-item">
+                <span className="icon-wrap"><Check size={12} /></span>
+                <span>Track up to 2 active skincare routines</span>
               </div>
-              <div style={{ display: "flex", gap: "0.8rem", color: "var(--dash-muted)", fontSize: "0.95rem" }}>
-                <Check size={18} color="var(--dash-ink)" /> Basic Skin Journal
+              <div className="feature-item">
+                <span className="icon-wrap"><Check size={12} /></span>
+                <span>Basic digital skin journal & history</span>
               </div>
-              <div style={{ display: "flex", gap: "0.8rem", color: "var(--dash-muted)", fontSize: "0.95rem" }}>
-                <Check size={18} color="var(--dash-ink)" /> Product Database Access
+              <div className="feature-item">
+                <span className="icon-wrap"><Check size={12} /></span>
+                <span>Read-only access to skincare product database</span>
               </div>
             </div>
 
-            <button style={{
-              background: 'rgba(0,0,0,0.05)',
-              color: "var(--dash-ink)",
-              border: "none",
-              borderRadius: "12px",
-              padding: "1rem",
-              fontSize: "0.95rem",
-              cursor: "not-allowed",
-              fontWeight: 500,
-              width: "100%"
-            }} disabled>
-              {!isPro ? "Active Plan" : "Free Tier"}
+            <button className="action-btn btn-active" disabled>
+              {!isPro ? "Current Active Plan" : "Included in Membership"}
             </button>
           </motion.div>
 
-          {/* Pro Monthly Plan */}
-          <motion.div variants={itemVariants} style={{
-            background: 'var(--white)',
-            border: "1px solid var(--dash-border)",
-            borderRadius: "24px",
-            padding: "2.5rem 2rem",
-            display: "flex",
-            flexDirection: "column",
-            position: "relative"
-          }}>
-            <div style={{ display: "flex", alignItems: "center", gap: "0.8rem", marginBottom: "0.5rem" }}>
-              <h3 style={{ fontSize: "1.5rem", margin: 0, fontWeight: 500, color: "var(--dash-ink)" }}>Pro Monthly</h3>
-              <Star size={18} color="var(--dash-accent)" />
-            </div>
-
-            <div style={{ display: "flex", alignItems: "baseline", gap: "0.2rem", marginBottom: "2rem" }}>
-              <span style={{ fontSize: "2.5rem", fontWeight: 700, fontFamily: "'Bebas Neue', sans-serif", color: "var(--dash-ink)" }}>₹199</span>
-              <span style={{ color: "var(--dash-muted)", fontSize: "0.9rem" }}>/month</span>
-            </div>
-
-            <div style={{ display: "flex", flexDirection: "column", gap: "1rem", marginBottom: "2.5rem", flex: 1 }}>
-              <div style={{ display: "flex", gap: "0.8rem", color: "var(--dash-muted)", fontSize: "0.95rem" }}>
-                <Check size={18} color="var(--dash-accent)" /> Unlimited Routines & Logs
-              </div>
-              <div style={{ display: "flex", gap: "0.8rem", color: "var(--dash-muted)", fontSize: "0.95rem" }}>
-                <Check size={18} color="var(--dash-accent)" /> Cross-product Conflict Checker
-              </div>
-              <div style={{ display: "flex", gap: "0.8rem", color: "var(--dash-muted)", fontSize: "0.95rem" }}>
-                <Check size={18} color="var(--dash-accent)" /> AI Face Scan — Barrier, Acne & Redness Scores
-              </div>
-              <div style={{ display: "flex", gap: "0.8rem", color: "var(--dash-muted)", fontSize: "0.95rem" }}>
-                <Check size={18} color="var(--dash-accent)" /> Journal Photo Uploads & AI Photo Analysis
-              </div>
-              <div style={{ display: "flex", gap: "0.8rem", color: "var(--dash-muted)", fontSize: "0.95rem" }}>
-                <Check size={18} color="var(--dash-accent)" /> Mirha Brain Mode — 20 AI Searches/Day
-              </div>
-            </div>
-
-            <motion.button
-              onClick={() => handleUpgrade("monthly")}
-              disabled={isPro || activePendingType !== null}
-              whileHover={!isPro ? { scale: 1.02 } : {}}
-              whileTap={!isPro ? { scale: 0.98 } : {}}
-              style={{
-                background: isPro ? "rgba(0,0,0,0.05)" : "var(--dash-ink)",
-                color: isPro ? "var(--dash-muted)" : "white",
-                border: "none",
-                borderRadius: "12px",
-                padding: "1rem",
-                fontSize: "0.95rem",
-                cursor: isPro ? "not-allowed" : "pointer",
-                fontWeight: 600,
-                width: "100%",
-                boxShadow: isPro ? "none" : "0 8px 20px rgba(0,0,0,0.08)",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "0.5rem"
-              }}
-            >
-              {activePendingType === "monthly" ? (
-                <Loader2 size={18} style={{ animation: "spin 1s linear infinite" }} />
-              ) : (
-                isPro ? "Active Plan" : "Upgrade to Monthly"
-              )}
-            </motion.button>
-          </motion.div>
-
-          {/* Pro Annual Plan */}
-          <motion.div variants={itemVariants} style={{
-            background: 'var(--dash-ink)',
-            color: "var(--white)",
-            border: "none",
-            borderRadius: "24px",
-            padding: "2.5rem 2rem",
-            display: "flex",
-            flexDirection: "column",
-            boxShadow: '0 20px 50px rgba(28, 25, 23, 0.25)',
-            position: "relative",
-            overflow: "hidden"
-          }}>
-            {/* Decorative blur */}
+          {/* PRO PLAN CARD (DYNAMICS BASED ON TOGGLE) */}
+          <motion.div variants={itemVariants} className="plan-card highlighted">
             <div style={{
               position: "absolute",
               top: "-50%",
               right: "-20%",
               width: "300px",
               height: "300px",
-              background: "radial-gradient(circle, rgba(200,71,58,0.2) 0%, rgba(0,0,0,0) 70%)",
-              filter: "blur(40px)",
+              background: "radial-gradient(circle, rgba(200,71,58,0.18) 0%, rgba(0,0,0,0) 70%)",
+              filter: "blur(45px)",
               pointerEvents: "none"
             }} />
 
-            <div style={{ position: "absolute", top: "1rem", right: "1rem", zIndex: 10 }}>
-              <span style={{
-                background: "var(--dash-accent)",
-                color: "white",
-                padding: "0.4rem 0.8rem",
-                borderRadius: "8px",
-                fontSize: "0.75rem",
-                fontWeight: 700,
-                textTransform: "uppercase",
-                letterSpacing: "0.1em"
-              }}>
-                Save 37%
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", position: "relative", zIndex: 2 }}>
+              <div>
+                <span className="card-header-label" style={{ color: "var(--dash-accent)" }}>Recommended</span>
+                <h3 className="plan-name">
+                  Mirha Pro
+                  <Star size={16} fill="var(--dash-accent)" color="var(--dash-accent)" />
+                </h3>
+              </div>
+            </div>
+
+            <div className="price-block" style={{ position: "relative", zIndex: 2 }}>
+              <span className="price-number">
+                {billingPeriod === "monthly" ? "₹199" : "₹1,499"}
+              </span>
+              <span className="price-period">
+                {billingPeriod === "monthly" ? "/ month" : "/ year (save 37%)"}
               </span>
             </div>
 
-            <div style={{ display: "flex", alignItems: "center", gap: "0.8rem", marginBottom: "0.5rem", position: "relative" }}>
-              <h3 style={{ fontSize: "1.5rem", margin: 0, fontWeight: 500 }}>Pro Annual</h3>
-              <Star size={18} color="var(--dash-accent)" />
-            </div>
-
-            <div style={{ display: "flex", alignItems: "baseline", gap: "0.2rem", marginBottom: "2rem", position: "relative" }}>
-              <span style={{ fontSize: "2.5rem", fontWeight: 700, fontFamily: "'Bebas Neue', sans-serif" }}>₹1,499</span>
-              <span style={{ color: "rgba(255,255,255,0.6)", fontSize: "0.9rem" }}>/year</span>
-            </div>
-
-            <div style={{ display: "flex", flexDirection: "column", gap: "1rem", marginBottom: "2.5rem", flex: 1, position: "relative" }}>
-              <div style={{ display: "flex", gap: "0.8rem", color: "rgba(255,255,255,0.8)", fontSize: "0.95rem" }}>
-                <Check size={18} color="var(--dash-accent)" /> Everything in Pro Monthly
+            <div className="feature-list" style={{ position: "relative", zIndex: 2 }}>
+              <div className="feature-item">
+                <span className="icon-wrap"><Check size={12} /></span>
+                <span><strong>Unlimited</strong> routines, log entries & progress journals</span>
               </div>
-              <div style={{ display: "flex", gap: "0.8rem", color: "rgba(255,255,255,0.8)", fontSize: "0.95rem" }}>
-                <Check size={18} color="var(--dash-accent)" /> 2 Months Free Equivalent
+              <div className="feature-item">
+                <span className="icon-wrap"><Check size={12} /></span>
+                <span><strong>Routine Conflict Checker</strong> - auto-detect active compound clashes</span>
               </div>
-              <div style={{ display: "flex", gap: "0.8rem", color: "rgba(255,255,255,0.8)", fontSize: "0.95rem" }}>
-                <Check size={18} color="var(--dash-accent)" /> Shareable Routine Card Links
+              <div className="feature-item">
+                <span className="icon-wrap"><Check size={12} /></span>
+                <span><strong>AI Skin Analyst</strong> - instant face scan with hydration & barrier scores</span>
               </div>
-              <div style={{ display: "flex", gap: "0.8rem", color: "rgba(255,255,255,0.8)", fontSize: "0.95rem" }}>
-                <Check size={18} color="var(--dash-accent)" /> Priority Support via Email
+              <div className="feature-item">
+                <span className="icon-wrap"><Check size={12} /></span>
+                <span><strong>Advanced Search</strong> - 20 daily ingredient & profile lookups</span>
               </div>
-            </div>
-
-            <motion.button
-              onClick={() => handleUpgrade("yearly")}
-              disabled={isPro || activePendingType !== null}
-              whileHover={!isPro ? { scale: 1.02 } : {}}
-              whileTap={!isPro ? { scale: 0.98 } : {}}
-              style={{
-                background: isPro ? "rgba(255,255,255,0.1)" : "var(--dash-accent)",
-                color: isPro ? "rgba(255,255,255,0.5)" : "var(--white)",
-                border: "none",
-                borderRadius: "12px",
-                padding: "1rem",
-                fontSize: "0.95rem",
-                cursor: isPro ? "not-allowed" : "pointer",
-                fontWeight: 600,
-                width: "100%",
-                boxShadow: isPro ? "none" : "0 8px 20px rgba(200, 71, 58, 0.3)",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "0.5rem",
-                position: "relative"
-              }}
-            >
-              {activePendingType === "yearly" ? (
-                <Loader2 size={18} style={{ animation: "spin 1s linear infinite" }} />
-              ) : (
-                isPro ? "Active Plan" : "Upgrade to Annual"
+              {billingPeriod === "yearly" && (
+                <>
+                  <div className="feature-item">
+                    <span className="icon-wrap"><Check size={12} /></span>
+                    <span><strong>Shareable Routines</strong> - generate web-links for your doctor/friends</span>
+                  </div>
+                  <div className="feature-item">
+                    <span className="icon-wrap"><Check size={12} /></span>
+                    <span><strong>Priority consult support</strong> - email access to our formulation desk</span>
+                  </div>
+                </>
               )}
-            </motion.button>
-          </motion.div>
+            </div>
 
+            {isPro ? (
+              <button className="action-btn btn-active" disabled style={{ position: "relative", zIndex: 2 }}>
+                Active Plan
+              </button>
+            ) : (
+              <motion.button
+                onClick={() => handleUpgrade(billingPeriod)}
+                disabled={activePendingType !== null}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="action-btn btn-primary"
+                style={{ position: "relative", zIndex: 2 }}
+              >
+                {activePendingType === billingPeriod ? (
+                  <Loader2 size={18} style={{ animation: "spin 1s linear infinite" }} />
+                ) : (
+                  <>
+                    <Zap size={14} fill="currentColor" />
+                    {billingPeriod === "monthly" ? "Upgrade for ₹199" : "Upgrade for ₹1,499"}
+                  </>
+                )}
+              </motion.button>
+            )}
+          </motion.div>
         </div>
       </motion.div>
-      <style>{`
-        @keyframes spin { 100% { transform: rotate(360deg); } }
-      `}</style>
     </>
   );
 }

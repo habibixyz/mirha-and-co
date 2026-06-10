@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import BlogFooterTools from "@/components/BlogFooterTools";
 
 export const metadata: Metadata = {
   title: "Wellness for Builders: How Founders Quiet Their Nervous System | Mirha & Co.",
@@ -538,6 +539,8 @@ export default function WellnessForBuildersPage() {
         </div>
 
         <p>If you take one thing from this: recovery is not the reward at the end. It is a daily practice, woven into the work itself. And it is worth the same level of design thinking you'd give to any other critical system in your stack.</p>
+      
+        <BlogFooterTools />
       </article>
 
       <div className="ornament">

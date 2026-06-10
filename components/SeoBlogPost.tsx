@@ -1,4 +1,5 @@
 import Link from "next/link";
+import BlogFooterTools from "@/components/BlogFooterTools";
 
 type Section = {
   title: string;
@@ -227,6 +228,8 @@ export function SeoBlogPost({
         ))}
 
         {children}
+
+        <BlogFooterTools />
 
         <div className="post-footer">
           <p>

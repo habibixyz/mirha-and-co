@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { AffiliateCard } from "@/components/AffiliateCard";
 import ProductModal from "@/components/ProductModal";
+import BlogFooterTools from "@/components/BlogFooterTools";
 
 const TAG = "skinwithtanvi-21";
 
@@ -825,7 +826,9 @@ export default function HardWaterHairPage() {
   </p>
 </div>
 
-        </main>
+        
+      <BlogFooterTools />
+      </main>
       </div>
 
       {selectedProduct && (

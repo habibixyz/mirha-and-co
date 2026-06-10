@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { AffiliateCard } from "@/components/AffiliateCard";
+import BlogFooterTools from "@/components/BlogFooterTools";
 
 const AFFILIATE_TAG = "skinwithtanvi-21";
 
@@ -97,6 +98,8 @@ export default function PostureWealthBlog() {
             Postural alignment is a daily habit, not a quick fix. Dedicating five minutes to passive back stretches on a foam roller will decompress your spine, pull your shoulders back naturally, and elevate your entire aesthetic presence.
           </p>
         </div>
+      
+        <BlogFooterTools />
       </article>
     </main>
   );

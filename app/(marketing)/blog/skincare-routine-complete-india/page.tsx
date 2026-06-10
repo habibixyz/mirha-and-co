@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import BlogProductCard from "@/components/BlogProductCard";
 import Link from "next/link";
+import BlogFooterTools from "@/components/BlogFooterTools";
 
 export const metadata: Metadata = {
   title: "The Complete Skincare Routine for Indian Climate (2026) | Mirha & Co.",
@@ -336,47 +337,7 @@ export default function SkincareRoutineGuide() {
         </section>
 
         {/* ── CTA ── */}
-        <section
-          style={{
-            background: "var(--ink)",
-            borderRadius: "12px",
-            padding: "2.5rem",
-            textAlign: "center",
-          }}
-        >
-          <h2
-            style={{
-              fontFamily: "'DM Serif Display', serif",
-              fontSize: "1.6rem",
-              fontWeight: 400,
-              color: "#fff",
-              margin: "0 0 0.8rem",
-            }}
-          >
-            Fix the Fundamentals First
-          </h2>
-          <p style={{ fontSize: "0.9rem", color: "rgba(255,255,255,0.7)", lineHeight: 1.7, margin: "0 0 1.5rem" }}>
-            Correct layering, SPF every morning, and a gentler cleanser will do more for
-            your skin in 30 days than any new serum purchase.
-          </p>
-          <a
-            href="/"
-            style={{
-              display: "inline-block",
-              background: "#fff",
-              color: "var(--ink)",
-              fontSize: "0.7rem",
-              letterSpacing: "0.15em",
-              textTransform: "uppercase",
-              padding: "0.9rem 2rem",
-              textDecoration: "none",
-              borderRadius: "4px",
-              fontFamily: "var(--font-mono, monospace)",
-            }}
-          >
-            Browse Curated Products →
-          </a>
-        </section>
+        <BlogFooterTools />
 
         {/* ── DISCLAIMER ── */}
         <p

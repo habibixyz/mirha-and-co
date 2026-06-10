@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import Link from "next/link";
+import BlogFooterTools from "@/components/BlogFooterTools";
 
 export const metadata: Metadata = {
   title: "Aesthetic Amazon Finds Under ₹1500 for a Pinterest Room | Mirha & Co.",
@@ -57,6 +58,8 @@ export default function BlogPost() {
             If your entryway console or bedside table is a mess of keys, lip balms, and receipts, a heavy ceramic catch-all tray is the solution. It gives your clutter a designated, intentional "home" and makes the mess look curated.
           </p>
         </section>
+      
+        <BlogFooterTools />
       </article>
     </main>
   );

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import BlogProductCard from "@/components/BlogProductCard";
 import Link from "next/link";
+import BlogFooterTools from "@/components/BlogFooterTools";
 
 export const dynamic = "force-static";
 
@@ -581,6 +582,8 @@ export default function SkincareRoutineEveryTypePage() {
           <p>This post contains affiliate links to Amazon India (Store ID: skinwithtanvi-21). Purchases through these links earn Mirha &amp; Co. a small commission at no extra cost to you. Product selection is based on ingredient research, dermatologist guidance, and verified customer reviews. No products are gifted or sponsored.</p>
         </div>
 
+      
+        <BlogFooterTools />
       </article>
     </main>
   );

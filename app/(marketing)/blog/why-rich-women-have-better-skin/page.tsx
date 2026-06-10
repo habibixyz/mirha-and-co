@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import BlogFooterTools from "@/components/BlogFooterTools";
 
 export const metadata: Metadata = {
   title: "Why Rich Women Have Better Skin (And It's Not The Products) | Mirha & Co.",
@@ -118,11 +119,7 @@ export default function WhyRichWomenBlog() {
           </ul>
         </section>
 
-        <section style={{ background: "var(--ink)", borderRadius: 12, padding: "2.5rem", textAlign: "center" }}>
-          <h2 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "1.5rem", fontWeight: 400, color: "#fff", margin: "0 0 0.8rem" }}>Build Your Routine the Right Way</h2>
-          <p style={{ fontSize: "0.9rem", color: "rgba(255,255,255,0.7)", lineHeight: 1.7, margin: "0 0 1.5rem" }}>Answer five questions and get a personalised 4-step routine built around your skin type, concerns, and budget. Science-backed, India-specific.</p>
-          <a href="/tools/routine" style={{ display: "inline-block", background: "#fff", color: "var(--ink)", fontSize: "0.7rem", letterSpacing: "0.15em", textTransform: "uppercase", padding: "0.9rem 2rem", textDecoration: "none", borderRadius: 4, fontFamily: "monospace" }}>Build My Routine →</a>
-        </section>
+        <BlogFooterTools />
 
       </article>
     </main>

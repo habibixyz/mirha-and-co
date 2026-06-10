@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import BlogFooterTools from "@/components/BlogFooterTools";
 
 export const metadata: Metadata = {
   title: "The Founder Face: What Startup Stress Does to Your Appearance | Mirha & Co.",
@@ -79,11 +80,7 @@ export default function TheFounderFaceBlog() {
           </div>
         </section>
 
-        <section style={{ background: "var(--ink)", borderRadius: 12, padding: "2.5rem", textAlign: "center" }}>
-          <h2 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "1.5rem", fontWeight: 400, color: "#fff", margin: "0 0 0.8rem" }}>Build the Founder Routine</h2>
-          <p style={{ fontSize: "0.9rem", color: "rgba(255,255,255,0.7)", lineHeight: 1.7, margin: "0 0 1.5rem" }}>A 4-step skincare protocol built for chaotic schedules — morning ready in 90 seconds. Personalised for your skin type and concerns.</p>
-          <a href="/tools/routine" style={{ display: "inline-block", background: "#fff", color: "var(--ink)", fontSize: "0.7rem", letterSpacing: "0.15em", textTransform: "uppercase", padding: "0.9rem 2rem", textDecoration: "none", borderRadius: 4, fontFamily: "monospace" }}>Build My Routine →</a>
-        </section>
+        <BlogFooterTools />
       </article>
     </main>
   );

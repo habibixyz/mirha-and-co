@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { AffiliateCard } from "@/components/AffiliateCard";
+import BlogFooterTools from "@/components/BlogFooterTools";
 
 const AFFILIATE_TAG = "skinwithtanvi-21";
 
@@ -112,6 +113,8 @@ export default function CortisolWorkoutBlog() {
             Fitness shouldn't cost you your skin's glow. By replacing 1-2 high-intensity workouts with Pilates or power walking, and using recovery tools like transdermal magnesium, you can keep your body toned, lower your cortisol levels, and reclaim a sharp, depuffed face.
           </p>
         </div>
+      
+        <BlogFooterTools />
       </article>
     </main>
   );

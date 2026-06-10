@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { AffiliateCard } from "@/components/AffiliateCard";
 import ProductModal from "@/components/ProductModal";
+import BlogFooterTools from "@/components/BlogFooterTools";
 
 const AFFILIATE_TAG = "skinwithtanvi-21"; // ← replace with your Amazon Associates tag
 
@@ -307,6 +308,8 @@ export default function SkincarePost() {
           That's a complete routine that will do more than most 10-step systems.
         </p>
 
+      
+        <BlogFooterTools />
       </article>
 
       <div style={{

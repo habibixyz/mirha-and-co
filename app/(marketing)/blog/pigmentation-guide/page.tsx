@@ -4,6 +4,7 @@ import { useState } from "react";
 import { AffiliateCard } from "@/components/AffiliateCard";
 import ProductModal from "@/components/ProductModal";
 import AuthorBox from "@/components/AuthorBox";
+import BlogFooterTools from "@/components/BlogFooterTools";
 
 const TAG = "skinwithtanvi-21";
 
@@ -832,7 +833,9 @@ export default function PigmentationGuidePage() {
   </p>
 </div>
 
-        </main>
+        
+      <BlogFooterTools />
+      </main>
       </div>
 
 {selectedProduct && (

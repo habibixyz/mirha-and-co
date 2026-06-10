@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import BlogProductCard from "@/components/BlogProductCard";
 import Link from "next/link";
+import BlogFooterTools from "@/components/BlogFooterTools";
 
 export const revalidate = 60;
 
@@ -433,6 +434,8 @@ export default function NiacinamideOilySkinPage() {
           <p>This post contains affiliate links to Amazon India (Store ID: skinwithtanvi-21). Purchases made through these links earn Mirha &amp; Co. a small commission at no extra cost to you. Product selection is based on ingredient research, dermatologist guidance, and verified customer reviews. No products are gifted or sponsored.</p>
         </div>
 
+      
+        <BlogFooterTools />
       </article>
     </main>
   );

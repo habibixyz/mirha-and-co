@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import BlogProductCard from "@/components/BlogProductCard";
+import BlogFooterTools from "@/components/BlogFooterTools";
 
 export const metadata: Metadata = {
   title: "Pregnancy-Safe Skincare Guide: What to Use & Avoid | Mirha & Co.",
@@ -110,6 +111,8 @@ export default function BlogPost() {
             <strong>Final Note:</strong> If your skin is acting out during pregnancy, give yourself grace. You are growing an entire human being from scratch. The hormonal acne and pigmentation will often drastically improve or completely resolve on their own once your hormones regulate postpartum. Keep it safe, keep it simple, and always trust your doctor's advice over the internet.
           </p>
         </section>
+      
+        <BlogFooterTools />
       </article>
     </main>
   );

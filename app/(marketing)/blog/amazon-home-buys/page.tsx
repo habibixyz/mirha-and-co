@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { AffiliateCard } from "@/components/AffiliateCard";
 import ProductModal from "@/components/ProductModal";
+import BlogFooterTools from "@/components/BlogFooterTools";
 
 const AFFILIATE_TAG = "skinwithtanvi-21";
 
@@ -170,6 +171,8 @@ export default function AmazonHomeBuysPost() {
           </p>
         </div>
 
+      
+        <BlogFooterTools />
       </article>
 
       <div style={{

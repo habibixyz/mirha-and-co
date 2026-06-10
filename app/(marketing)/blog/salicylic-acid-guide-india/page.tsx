@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import BlogProductCard from "@/components/BlogProductCard";
 import Link from "next/link";
+import BlogFooterTools from "@/components/BlogFooterTools";
 
 export const metadata: Metadata = {
   title: "Salicylic Acid Guide for Indian Skin — Acne, Blackheads, Oily Skin (2026) | Mirha & Co.",
@@ -381,20 +382,7 @@ export default function SalicylicAcidPage() {
         </section>
 
         {/* CTA */}
-        <section style={{ background: "var(--ink)", borderRadius: 12, padding: "2.5rem", textAlign: "center" }}>
-          <h2 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "1.6rem", fontWeight: 400, color: "#fff", margin: "0 0 0.8rem" }}>
-            Build Your Acne Routine
-          </h2>
-          <p style={{ fontSize: "0.9rem", color: "rgba(255,255,255,0.7)", lineHeight: 1.7, margin: "0 0 1.5rem" }}>
-            Browse our full curated product list — filtered by skin concern, type, and budget.
-          </p>
-          <a href="/" style={{
-            display: "inline-block", background: "#fff", color: "var(--ink)",
-            fontSize: "0.7rem", letterSpacing: "0.15em", textTransform: "uppercase",
-            padding: "0.9rem 2rem", textDecoration: "none", borderRadius: 4,
-            fontFamily: "var(--font-mono, monospace)",
-          }}>Browse All Products →</a>
-        </section>
+        <BlogFooterTools />
 
         <p style={{ fontSize: "0.75rem", color: "var(--muted)", lineHeight: 1.6, marginTop: "2rem", paddingTop: "1.5rem", borderTop: "1px solid var(--rule)" }}>
           Affiliate links disclosed. Mirha & Co. participates in the Amazon Associates Program.

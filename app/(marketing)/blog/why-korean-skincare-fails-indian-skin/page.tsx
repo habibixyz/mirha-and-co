@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import BlogProductCard from "@/components/BlogProductCard";
 import Link from "next/link";
+import BlogFooterTools from "@/components/BlogFooterTools";
 
 export const metadata: Metadata = {
   title: "Why Korean Skincare Fails for Some Indian Skin Types | Mirha & Co.",
@@ -141,11 +142,7 @@ export default function KoreanSkincareIndiaPage() {
 
         </section>
 
-        <section style={{ background: "var(--ink)", borderRadius: 12, padding: "2.5rem", textAlign: "center" }}>
-          <h2 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "1.5rem", fontWeight: 400, color: "#fff", margin: "0 0 0.8rem" }}>Stop Guessing Your Routine</h2>
-          <p style={{ fontSize: "0.9rem", color: "rgba(255,255,255,0.7)", lineHeight: 1.7, margin: "0 0 1.5rem" }}>Curious if your Korean skincare is actually suited for your Indian skin type? Use our AI Skin Analysis tool to scan your skin and get science-backed routine mapping instantly.</p>
-          <a href="/dashboard/analysis" style={{ display: "inline-block", background: "#fff", color: "var(--ink)", fontSize: "0.7rem", letterSpacing: "0.15em", textTransform: "uppercase", padding: "0.9rem 2rem", textDecoration: "none", borderRadius: 4, fontFamily: "monospace" }}>Launch AI Scanner →</a>
-        </section>
+        <BlogFooterTools />
 
       </article>
     </main>

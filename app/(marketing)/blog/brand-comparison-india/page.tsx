@@ -2,6 +2,7 @@
 
 import BlogProductCard from "@/components/BlogProductCard";
 import Link from "next/link";
+import BlogFooterTools from "@/components/BlogFooterTools";
 
 export default function BrandComparisonPage() {
   return (
@@ -518,46 +519,7 @@ export default function BrandComparisonPage() {
         </section>
 
         {/* CTA */}
-        <section
-          style={{
-            background: "var(--ink)",
-            borderRadius: "12px",
-            padding: "2.5rem",
-            textAlign: "center",
-          }}
-        >
-          <h2
-            style={{
-              fontFamily: "'DM Serif Display', serif",
-              fontSize: "1.6rem",
-              fontWeight: 400,
-              color: "#fff",
-              margin: "0 0 0.8rem",
-            }}
-          >
-            All Three Brands. All in One Place.
-          </h2>
-          <p style={{ fontSize: "0.9rem", color: "rgba(255,255,255,0.7)", lineHeight: 1.7, margin: "0 0 1.5rem" }}>
-            Browse the full curated selection with direct Amazon India affiliate links.
-          </p>
-          <a
-            href="/"
-            style={{
-              display: "inline-block",
-              background: "#fff",
-              color: "var(--ink)",
-              fontSize: "0.7rem",
-              letterSpacing: "0.15em",
-              textTransform: "uppercase",
-              padding: "0.9rem 2rem",
-              textDecoration: "none",
-              borderRadius: "4px",
-              fontFamily: "var(--font-mono, monospace)",
-            }}
-          >
-            Browse All Products →
-          </a>
-        </section>
+        <BlogFooterTools />
 
         <p
           style={{

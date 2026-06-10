@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import BlogProductCard from "@/components/BlogProductCard";
 import Link from "next/link";
+import BlogFooterTools from "@/components/BlogFooterTools";
 
 export const metadata: Metadata = {
   title: "Best Moisturisers for Oily vs Dry Skin in India (2026 Guide) | Mirha & Co.",
@@ -279,19 +280,7 @@ export default function MoisturiserPage() {
           </div>
         </section>
 
-        <section style={{ background: "var(--ink)", borderRadius: 12, padding: "2.5rem", textAlign: "center" }}>
-          <h2 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "1.6rem", fontWeight: 400, color: "#fff", margin: "0 0 0.8rem" }}>
-            Not Sure Which Routine Fits Your Skin?
-          </h2>
-          <p style={{ fontSize: "0.9rem", color: "rgba(255,255,255,0.7)", lineHeight: 1.7, margin: "0 0 1.5rem" }}>
-            Take our 4-question skin quiz and get a personalised routine with curated product picks.
-          </p>
-          <a href="/tools/routine" style={{
-            display: "inline-block", background: "#fff", color: "var(--ink)",
-            fontSize: "0.7rem", letterSpacing: "0.15em", textTransform: "uppercase",
-            padding: "0.9rem 2rem", textDecoration: "none", borderRadius: 4, fontFamily: "var(--font-mono, monospace)",
-          }}>Get My Routine →</a>
-        </section>
+        <BlogFooterTools />
 
         <p style={{ fontSize: "0.75rem", color: "var(--muted)", lineHeight: 1.6, marginTop: "2rem", paddingTop: "1.5rem", borderTop: "1px solid var(--rule)" }}>
           Affiliate links disclosed. Mirha & Co. participates in the Amazon Associates Program.

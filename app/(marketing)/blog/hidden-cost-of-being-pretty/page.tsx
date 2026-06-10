@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import BlogFooterTools from "@/components/BlogFooterTools";
 
 export const metadata: Metadata = {
   title: "The Hidden Cost of Being Pretty | Mirha & Co.",
@@ -108,11 +109,7 @@ export default function HiddenCostOfBeingPrettyBlog() {
           <p style={{ fontSize: "0.95rem", color: "var(--muted)", lineHeight: 1.8, marginBottom: "1rem" }}>The beauty tax is real, it is large, and it falls disproportionately on women. The goal isn't to eliminate it — it's to spend it where it genuinely moves the needle on your appearance and confidence, and cut the rest. The highest-ROI categories are consistently: skin health, basic grooming, hair condition, and clothing fit. The lowest-ROI categories tend to be: frequent salon visits, trend skincare, and makeup that covers rather than improves.</p>
         </section>
 
-        <section style={{ background: "var(--ink)", borderRadius: 12, padding: "2.5rem", textAlign: "center" }}>
-          <h2 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "1.5rem", fontWeight: 400, color: "#fff", margin: "0 0 0.8rem" }}>Spend Smarter on Skincare</h2>
-          <p style={{ fontSize: "0.9rem", color: "rgba(255,255,255,0.7)", lineHeight: 1.7, margin: "0 0 1.5rem" }}>Build a 4-step routine that actually works — personalised for your skin type, concerns, and budget. No unnecessary products.</p>
-          <a href="/tools/routine" style={{ display: "inline-block", background: "#fff", color: "var(--ink)", fontSize: "0.7rem", letterSpacing: "0.15em", textTransform: "uppercase", padding: "0.9rem 2rem", textDecoration: "none", borderRadius: 4, fontFamily: "monospace" }}>Build My Routine →</a>
-        </section>
+        <BlogFooterTools />
       </article>
     </main>
   );

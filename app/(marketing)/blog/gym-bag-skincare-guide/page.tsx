@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { AffiliateCard } from "@/components/AffiliateCard";
+import BlogFooterTools from "@/components/BlogFooterTools";
 
 const AFFILIATE_TAG = "skinwithtanvi-21";
 
@@ -97,6 +98,8 @@ export default function GymBagSkincareBlog() {
             Keep your pre-workout skin completely bare and clean, tie your hair back, and spray hypochlorous acid on your face and body immediately after your final set. These simple steps will allow you to get all the longevity benefits of exercise without sacrificing your skin's clarity.
           </p>
         </div>
+      
+        <BlogFooterTools />
       </article>
     </main>
   );

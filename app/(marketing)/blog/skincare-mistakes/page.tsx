@@ -3,6 +3,7 @@
 import type { Metadata } from "next";
 import BlogProductCard from "@/components/BlogProductCard";
 import Link from "next/link";
+import BlogFooterTools from "@/components/BlogFooterTools";
 
 export default function SkincaresMistakesPage() {
   return (
@@ -419,46 +420,7 @@ export default function SkincaresMistakesPage() {
         </section>
 
         {/* CTA */}
-        <section
-          style={{
-            background: "var(--ink)",
-            borderRadius: "12px",
-            padding: "2.5rem",
-            textAlign: "center",
-          }}
-        >
-          <h2
-            style={{
-              fontFamily: "'DM Serif Display', serif",
-              fontSize: "1.6rem",
-              fontWeight: 400,
-              color: "#fff",
-              margin: "0 0 0.8rem",
-            }}
-          >
-            Better Habits. Same Products.
-          </h2>
-          <p style={{ fontSize: "0.9rem", color: "rgba(255,255,255,0.7)", lineHeight: 1.7, margin: "0 0 1.5rem" }}>
-            The products on your shelf are probably fine. Fix how you use them first.
-          </p>
-          <a
-            href="/"
-            style={{
-              display: "inline-block",
-              background: "#fff",
-              color: "var(--ink)",
-              fontSize: "0.7rem",
-              letterSpacing: "0.15em",
-              textTransform: "uppercase",
-              padding: "0.9rem 2rem",
-              textDecoration: "none",
-              borderRadius: "4px",
-              fontFamily: "var(--font-mono, monospace)",
-            }}
-          >
-            Browse Curated Products →
-          </a>
-        </section>
+        <BlogFooterTools />
 
         <p
           style={{

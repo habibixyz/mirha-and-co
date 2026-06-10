@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { AffiliateCard } from "@/components/AffiliateCard";
+import BlogFooterTools from "@/components/BlogFooterTools";
 
 export const metadata: Metadata = {
   title: "Best Sunscreens in India That Actually Work (2026) | Mirha & Co.",
@@ -215,6 +216,8 @@ export default function SunscreenPost() {
           It's about finding one you won't skip.
         </div>
 
+      
+        <BlogFooterTools />
       </article>
       <div style={{
   marginTop: "60px",

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import BlogFooterTools from "@/components/BlogFooterTools";
 
 export const metadata: Metadata = {
   title: "What 10 Years of Sun Damage Looks Like on Indian Skin | Mirha & Co.",
@@ -74,11 +75,7 @@ export default function SunDamageIndianSkinBlog() {
           <p style={{ fontSize: "0.95rem", color: "var(--muted)", lineHeight: 1.8, marginBottom: "1rem" }}>The non-negotiable foundation: broad-spectrum SPF 50+ applied every morning, reapplied every 2 hours during high-UV periods. This is not optional. This is the baseline from which every other skincare intervention derives its value.</p>
         </section>
 
-        <section style={{ background: "var(--ink)", borderRadius: 12, padding: "2.5rem", textAlign: "center" }}>
-          <h2 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "1.5rem", fontWeight: 400, color: "#fff", margin: "0 0 0.8rem" }}>Start Protecting Your Skin Today</h2>
-          <p style={{ fontSize: "0.9rem", color: "rgba(255,255,255,0.7)", lineHeight: 1.7, margin: "0 0 1.5rem" }}>Get a personalised skincare routine built around your skin type, concerns, and the Indian climate — with SPF integrated from the ground up.</p>
-          <a href="/tools/routine" style={{ display: "inline-block", background: "#fff", color: "var(--ink)", fontSize: "0.7rem", letterSpacing: "0.15em", textTransform: "uppercase", padding: "0.9rem 2rem", textDecoration: "none", borderRadius: 4, fontFamily: "monospace" }}>Build My Routine →</a>
-        </section>
+        <BlogFooterTools />
       </article>
     </main>
   );

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import BlogProductCard from "@/components/BlogProductCard";
 import Link from "next/link";
+import BlogFooterTools from "@/components/BlogFooterTools";
 
 export const dynamic = "force-static";
 
@@ -345,6 +346,8 @@ export default function BestSunscreenIndiaSPF50Page() {
           <p>This post contains affiliate links to Amazon India (Store ID: skinwithtanvi-21). Purchases through these links earn Mirha &amp; Co. a small commission at no extra cost to you. Product selection is based on ingredient research, clinical testing standards, and verified customer reviews. No products are gifted or sponsored.</p>
         </div>
 
+      
+        <BlogFooterTools />
       </article>
     </main>
   );

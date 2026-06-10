@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { AffiliateCard } from "@/components/AffiliateCard";
 import ProductModal from "@/components/ProductModal";
+import BlogFooterTools from "@/components/BlogFooterTools";
 
 // ─── AFFILIATE TAG ───────────────────────────────────────────────────────────
 const TAG = "skinwithtanvi-21";
@@ -998,7 +999,9 @@ export default function BudgetRoutinePage() {
   </p>
 </div>
          
-        </main>
+        
+      <BlogFooterTools />
+      </main>
       </div>
 
       {/* ── MODAL ── */}

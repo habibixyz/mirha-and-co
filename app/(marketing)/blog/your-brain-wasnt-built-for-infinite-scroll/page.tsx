@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import BlogFooterTools from "@/components/BlogFooterTools";
 
 export const metadata: Metadata = {
   title: "Your Brain Wasn't Built for Infinite Scroll | Mirha & Co.",
@@ -460,6 +461,8 @@ export default function InfiniteScrollPage() {
         </div>
 
         <p>The internet is not going anywhere. Neither are the algorithms. But the relationship you have with them is yours to define — and it is worth the effort of defining it deliberately, rather than letting the defaults decide for you.</p>
+      
+        <BlogFooterTools />
       </article>
 
       <div className="ornament">

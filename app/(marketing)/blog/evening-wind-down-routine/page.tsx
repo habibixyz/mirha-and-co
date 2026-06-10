@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import Link from "next/link";
+import BlogFooterTools from "@/components/BlogFooterTools";
 
 export const metadata: Metadata = {
   title: "The Ultimate Aesthetic Evening Wind-Down Routine | Mirha & Co.",
@@ -57,6 +58,8 @@ export default function BlogPost() {
             Magnesium Glycinate is the ultimate evening supplement. It relaxes the nervous system, eases muscle tension, and significantly improves deep sleep architecture.
           </p>
         </section>
+      
+        <BlogFooterTools />
       </article>
     </main>
   );
