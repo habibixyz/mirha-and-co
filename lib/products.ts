@@ -1801,6 +1801,102 @@ export const PRODUCTS = [
     image: "/products/chalkboard_labels.jpg",
     link: "https://www.amazon.in/dp/B07Z3S4D58?tag=skinwithtanvi-21",
     hideFromShop: true
+  },
+  {
+    id: 1007,
+    name: "Bala Bangles — 1 Lb Wearable Wrist & Ankle Weights (Set of 2)",
+    brand: "Bala",
+    category: "Wellness",
+    subcat: "Fitness",
+    mrp: 4999,
+    price: 3999,
+    rating: 4.6,
+    reviews: "3.2k",
+    asin: "B084Z1B84N",
+    badge: "Aesthetic Toning",
+    description: "Chic, premium wearable weights. Perfect for adding gentle resistance to pilates, walking, yoga, and home workouts. Made of steel wrapped in super-soft silicone.",
+    specs: {
+      "Weight": "1 Lb each (2 Lbs total)",
+      "Material": "Steel wrapped in silicone",
+      "Colors": "Various aesthetic shades",
+      "Benefits": "Hands-free resistance, easy to clean"
+    },
+    tags: ["bala bangles", "ankle weights", "wrist weights", "pilates", "fitness", "wellness"],
+    image: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=600&q=80",
+    link: "https://www.amazon.in/dp/B084Z1B84N?tag=skinwithtanvi-21",
+    hideFromShop: true
+  },
+  {
+    id: 1008,
+    name: "PureCure Magnesium Oil Spray for Muscle Recovery & Sleep",
+    brand: "PureCure",
+    category: "Wellness",
+    subcat: "Recovery",
+    mrp: 799,
+    price: 599,
+    rating: 4.4,
+    reviews: "950",
+    asin: "B0CSYNV47P",
+    badge: "Recovery Essential",
+    description: "Pure transdermal magnesium oil. Promotes deep muscle relaxation, reduces soreness, and supports restful sleep after low-impact exercise. Spray 4-5 times post-workout.",
+    specs: {
+      "Volume": "100ml",
+      "Type": "Transdermal spray",
+      "Ingredients": "Pure magnesium chloride",
+      "Benefits": "Muscle recovery, cortisol regulation"
+    },
+    tags: ["magnesium spray", "magnesium oil", "muscle recovery", "sleep aid", "cortisol management"],
+    image: "https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?auto=format&fit=crop&w=600&q=80",
+    link: "https://www.amazon.in/dp/B0CSYNV47P?tag=skinwithtanvi-21",
+    hideFromShop: true
+  },
+  {
+    id: 1009,
+    name: "Sirona Hypochlorous Acid Daily Skin Spray",
+    brand: "Sirona",
+    category: "Skincare",
+    subcat: "Face Mist",
+    mrp: 599,
+    price: 399,
+    rating: 4.3,
+    reviews: "450",
+    asin: "B0C9QW91K5",
+    badge: "Gym Bag Essential",
+    description: "Soothing, antibacterial facial mist. Formulated with hypochlorous acid to cleanse skin, reduce redness, and prevent gym sweat breakouts (acne mechanica) immediately after workouts.",
+    specs: {
+      "Volume": "80ml",
+      "Active Ingredient": "Hypochlorous Acid",
+      "Skin Type": "Acne-prone, sensitive",
+      "Benefits": "Neutralizes bacteria, prevents gym acne"
+    },
+    tags: ["hypochlorous acid", "face spray", "gym skincare", "acne spray", "antibacterial mist"],
+    image: "https://images.unsplash.com/photo-1601049541289-9b1b7bbbfe19?auto=format&fit=crop&w=600&q=80",
+    link: "https://www.amazon.in/dp/B0C9QW91K5?tag=skinwithtanvi-21",
+    hideFromShop: true
+  },
+  {
+    id: 1010,
+    name: "Boldfit High-Density Foam Roller for Posture & Back Stretch",
+    brand: "Boldfit",
+    category: "Wellness",
+    subcat: "Posture",
+    mrp: 999,
+    price: 699,
+    rating: 4.5,
+    reviews: "6.2k",
+    asin: "B07W5238PT",
+    badge: "Posture Realign",
+    description: "High-density EVA foam roller. Designed to release upper back tension, stretch tight chest muscles, and correct desk slouching posture. Includes online guides.",
+    specs: {
+      "Material": "High-density EVA foam",
+      "Length": "18 inches",
+      "Benefits": "Spinal decompression, chest opening",
+      "Type": "Full round roller"
+    },
+    tags: ["foam roller", "posture correction", "back stretch", "thoracic mobility", "desk neck"],
+    image: "https://images.unsplash.com/photo-1600880292089-90a7e086f0e0?auto=format&fit=crop&w=600&q=80",
+    link: "https://www.amazon.in/dp/B07W5238PT?tag=skinwithtanvi-21",
+    hideFromShop: true
   }
 ];
 

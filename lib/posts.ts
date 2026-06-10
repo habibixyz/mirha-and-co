@@ -14,6 +14,39 @@ export type Post = {
 
 export const POSTS: Post[] = [
   {
+    category: "WELLNESS",
+    title: "Is Your Workout Causing 'Cortisol Face'? The Low-Impact Shift",
+    excerpt: "High-intensity cardio raises cortisol, causing puffiness, water retention, and hormonal acne. Explore why low-impact pilates is the secret to aesthetic and cellular longevity.",
+    slug: "workout-causing-cortisol-face",
+    readTime: "8 min",
+    date: "June 2026",
+    productCount: 2,
+    thumbnail: "CF",
+    tags: ["cortisol face", "workout swelling", "low impact fitness", "pilates benefits", "stress hormones", "skincare wellness"],
+  },
+  {
+    category: "SKINCARE",
+    title: "The Gym Bag Skincare Guide: How to Sweat Without Clogged Pores",
+    excerpt: "Working out is great for circulation, but sweat combined with public gym equipment can trigger painful acne mechanica. Here is your dermatologist-backed pre- and post-workout skin defense routine.",
+    slug: "gym-bag-skincare-guide",
+    readTime: "6 min",
+    date: "June 2026",
+    productCount: 1,
+    thumbnail: "GB",
+    tags: ["gym acne", "workout skincare", "acne mechanica", "hypochlorous acid", "post workout routine", "clear skin tips"],
+  },
+  {
+    category: "LIFESTYLE",
+    title: "Why Posture is the Ultimate Wealth Signifier (And How to Fix the Desk Slouch)",
+    excerpt: "You can have a premium skincare routine, but a slouched posture instantly ruins the silhouette of looking put-together. Discover the postural biomechanics of elegance and the tools to fix desk-neck.",
+    slug: "posture-ultimate-wealth-signifier",
+    readTime: "7 min",
+    date: "June 2026",
+    productCount: 1,
+    thumbnail: "PE",
+    tags: ["postural elegance", "desk neck fix", "thoracic spine", "back alignment", "ergonomics", "quiet luxury style"],
+  },
+  {
     category: "LIFESTYLE",
     title: "Why Rich Women Have Better Skin (And It's Not The Products)",
     excerpt: "It's not La Mer. It's sleep, stress management, consistent preventative care, and time — the four things money actually buys when it comes to your complexion.",
@@ -595,6 +628,9 @@ const hashString = (str: string) => {
 // Complete slug → unique image lookup table (all 34 available images used)
 const SLUG_IMAGE_MAP: Record<string, string> = {
   // NEW PREMIUM EDITORIAL SERIES — June 2026
+  "workout-causing-cortisol-face":                 "/blog-thumbs/wellness.png",
+  "gym-bag-skincare-guide":                        "/blog-thumbs/skincare_2.png",
+  "posture-ultimate-wealth-signifier":             "/blog-thumbs/lifestyle.png",
   "why-rich-women-have-better-skin":               "/blog-thumbs/blog_rich_women_skin.png",
   "economics-of-looking-expensive":                "/blog-thumbs/blog_economics_expensive.png",
   "10-years-sun-damage-indian-skin":               "/blog-thumbs/blog_sun_damage.png",
