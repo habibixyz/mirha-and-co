@@ -264,7 +264,7 @@ export function AnalysisClient({
   const canScan = user.isPro && !nextAvailableAt || user.credits > 0;
 
   return (
-    <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "1rem" }}>
+    <div className="analysis-container">
       {/* Paddle JS Script */}
       <Script src="https://cdn.paddle.com/paddle/v2/paddle.js" strategy="afterInteractive" />
 
@@ -293,13 +293,7 @@ export function AnalysisClient({
             </span>
           )}
         </div>
-        <h1 style={{
-          fontFamily: "'DM Serif Display', serif",
-          fontSize: "2.8rem",
-          fontWeight: 400,
-          margin: 0,
-          color: "var(--ink)",
-        }}>
+        <h1 className="analysis-title">
           AI Face Detection & Skin Analyst
         </h1>
         <p style={{ color: "var(--muted)", margin: "0.5rem 0 0", fontSize: "1.05rem" }}>
@@ -315,17 +309,7 @@ export function AnalysisClient({
           <motion.div 
             initial={{ opacity: 0, y: 15 }} 
             animate={{ opacity: 1, y: 0 }}
-            style={{
-              background: "rgba(255, 255, 255, 0.75)",
-              backdropFilter: "blur(12px)",
-              border: "1px solid var(--rule)",
-              borderRadius: "16px",
-              padding: "2.5rem 2rem",
-              textAlign: "center",
-              maxWidth: "680px",
-              margin: "0 auto 2rem",
-              boxShadow: "0 10px 30px rgba(0,0,0,0.02)"
-            }}
+            className="paywall-card"
           >
             <div style={{ display: "inline-flex", padding: "1rem", background: "rgba(200,71,58,0.1)", borderRadius: "50%", marginBottom: "1.5rem" }}>
               <Star size={32} color="var(--rose)" />
@@ -351,7 +335,7 @@ export function AnalysisClient({
               }}>
                 <strong>Daily Limit Reached</strong>
                 <span>Your next free daily scan becomes available after:</span>
-                <span className="font-mono font-semibold">{new Date(nextAvailableAt).toLocaleString()}</span>
+                <span className="font-mono font-semibold" suppressHydrationWarning>{new Date(nextAvailableAt).toLocaleString()}</span>
               </div>
             )}
 
@@ -394,17 +378,9 @@ export function AnalysisClient({
             </div>
 
             {/* Pricing Options */}
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 240px), 1fr))", gap: "1.5rem", maxWidth: "600px", width: "100%", margin: "0 auto" }}>
+            <div className="pricing-grid">
               {/* Option A: One-Time Pass */}
-              <div style={{
-                background: "var(--sand)",
-                border: "1px solid var(--rule)",
-                borderRadius: "12px",
-                padding: "1.5rem",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center"
-              }}>
+              <div className="pricing-card" style={{ background: "var(--sand)", border: "1px solid var(--rule)" }}>
                 <span style={{ fontSize: "0.75rem", fontWeight: 700, textTransform: "uppercase", color: "var(--muted)" }}>One-Time Scan</span>
                 <span style={{ fontSize: "2rem", fontWeight: 700, margin: "0.5rem 0", fontFamily: "'Bebas Neue', sans-serif" }}>
                   {paymentRegion === "USD" ? "$1.99" : "₹149"}
@@ -432,15 +408,7 @@ export function AnalysisClient({
               </div>
 
               {/* Option B: Pro Subscription */}
-              <div style={{
-                background: "var(--ink)",
-                color: "var(--white)",
-                borderRadius: "12px",
-                padding: "1.5rem",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center"
-              }}>
+              <div className="pricing-card" style={{ background: "var(--ink)", color: "var(--white)" }}>
                 <span style={{ fontSize: "0.75rem", fontWeight: 700, textTransform: "uppercase", color: "var(--rose)" }}>Pro Monthly</span>
                 <span style={{ fontSize: "2rem", fontWeight: 700, margin: "0.5rem 0", fontFamily: "'Bebas Neue', sans-serif" }}>
                   {paymentRegion === "USD" ? "$4.99" : "₹199"}
@@ -606,27 +574,14 @@ export function AnalysisClient({
                 style={{ display: "grid", gridTemplateColumns: "1fr", gap: "2rem" }}
               >
                 {/* Score Dial Grids */}
-                <div style={{
-                  display: "grid",
-                  gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-                  gap: "1.5rem"
-                }}>
+                <div className="score-dials-grid">
                   {[
                     { label: "Moisture Barrier", score: report.barrierScore, desc: "Hydration retention strength" },
                     { label: "Acne/Congestion", score: report.acneScore, desc: "Pore clarity & breakout presence" },
                     { label: "Redness/Sensitivity", score: report.rednessScore, desc: "Vascular irritation profile" },
                     { label: "Oil/Sebum Control", score: report.oilinessScore, desc: "Glandular sebum balancing" }
                   ].map((dial, idx) => (
-                    <div key={idx} style={{
-                      background: "rgba(255,255,255,0.8)",
-                      border: "1px solid var(--rule)",
-                      borderRadius: "16px",
-                      padding: "1.5rem",
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                      textAlign: "center"
-                    }}>
+                    <div key={idx} className="score-dial-card">
                       <span style={{ fontSize: "0.9rem", fontWeight: 500, color: "var(--ink)", marginBottom: "1rem" }}>{dial.label}</span>
                       
                       {/* Circular Gauge visual representation */}
@@ -654,17 +609,14 @@ export function AnalysisClient({
                 </div>
 
                 {/* Detailed Report Text */}
-                <div style={{
+                <div className="detailed-report-grid" style={{
                   background: "rgba(255,255,255,0.8)",
                   border: "1px solid var(--rule)",
                   borderRadius: "16px",
                   padding: "clamp(1.1rem, 4vw, 2rem)",
-                  display: "grid",
-                  gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 280px), 1fr))",
                   width: "100%",
                   maxWidth: "100%",
-                  overflowWrap: "anywhere",
-                  gap: "2rem"
+                  overflowWrap: "anywhere"
                 }}>
                   {/* Left Column: Summary */}
                   <div>
@@ -943,7 +895,7 @@ export function AnalysisClient({
                       <span style={{ color: "var(--rule)" }}>|</span>
                       <span style={{ color: getScoreColor(item.acneScore) }}>Acne: {item.acneScore}</span>
                     </div>
-                    <span style={{ fontSize: "0.8rem", color: "var(--muted)", display: "flex", alignItems: "center", gap: "0.3rem" }}>
+                    <span style={{ fontSize: "0.8rem", color: "var(--muted)", display: "flex", alignItems: "center", gap: "0.3rem" }} suppressHydrationWarning>
                       <Calendar size={12} />
                       {new Date(item.createdAt).toLocaleDateString()}
                     </span>

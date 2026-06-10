@@ -131,71 +131,129 @@ export default function PricingPage() {
         }
 
         .plan-card {
-          background: #fff;
-          border: 1px solid var(--rule);
-          border-radius: 28px;
-          padding: 3rem 2.25rem;
+          background: linear-gradient(135deg, rgba(255, 255, 255, 0.96) 0%, rgba(254, 251, 246, 0.95) 50%, rgba(255, 255, 255, 0.98) 100%);
+          border: 1px solid rgba(162, 123, 92, 0.12);
+          border-radius: 20px;
+          padding: 2.5rem 1.75rem;
           position: relative;
           display: flex;
           flex-direction: column;
-          box-shadow: 0 10px 30px rgba(40, 28, 20, 0.02);
+          box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.8), 0 8px 30px rgba(40, 28, 20, 0.02);
           transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
+        .plan-card > *:not(.gloss-sheen):not(.popular-badge) {
+          position: relative;
+          z-index: 2;
+        }
+
+        .gloss-sheen {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+          pointer-events: none;
+          border-radius: inherit;
+          z-index: 1;
+        }
+
+        .gloss-sheen::after {
+          content: '';
+          position: absolute;
+          top: -50%;
+          left: -60%;
+          width: 130%;
+          height: 200%;
+          background: linear-gradient(
+            to right,
+            rgba(255, 255, 255, 0) 0%,
+            rgba(255, 255, 255, 0.04) 35%,
+            rgba(255, 255, 255, 0.22) 45%,
+            rgba(255, 255, 255, 0.3) 48%,
+            rgba(255, 255, 255, 0.22) 51%,
+            rgba(255, 255, 255, 0.04) 65%,
+            rgba(255, 255, 255, 0) 100%
+          );
+          transform: rotate(25deg);
+          transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
         .plan-card:hover {
-          transform: translateY(-4px);
-          box-shadow: 0 30px 60px rgba(40, 28, 20, 0.06);
-          border-color: rgba(200, 71, 58, 0.2);
+          transform: translateY(-2px);
+          box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.8), 0 20px 40px rgba(162, 123, 92, 0.05);
+          border-color: rgba(162, 123, 92, 0.25);
+        }
+
+        .plan-card:hover .gloss-sheen::after {
+          transform: translate(110%, 40%) rotate(25deg);
         }
 
         .plan-card.highlighted {
-          background: var(--black);
+          background: linear-gradient(135deg, #161413 0%, #0c0a09 100%);
           color: var(--white);
-          border: 1px solid rgba(255,255,255,0.06);
-          box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15);
+          border: 1px solid rgba(255, 255, 255, 0.08);
+          box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1), 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .plan-card.highlighted .gloss-sheen::after {
+          background: linear-gradient(
+            to right,
+            rgba(255, 255, 255, 0) 0%,
+            rgba(255, 255, 255, 0.02) 35%,
+            rgba(255, 255, 255, 0.12) 45%,
+            rgba(255, 255, 255, 0.2) 48%,
+            rgba(255, 255, 255, 0.12) 51%,
+            rgba(255, 255, 255, 0.02) 65%,
+            rgba(255, 255, 255, 0) 100%
+          );
+        }
+
+        .plan-card.highlighted:hover {
+          border-color: rgba(200, 71, 58, 0.35);
+          box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.12), 0 25px 50px rgba(0, 0, 0, 0.2);
         }
 
         .popular-badge {
           position: absolute;
-          top: -14px;
+          top: -11px;
           left: 50%;
           transform: translateX(-50%);
           background: var(--rose);
           color: #fff;
-          font-size: 0.65rem;
+          font-size: 0.6rem;
           font-weight: 700;
-          letter-spacing: 0.15em;
+          letter-spacing: 0.2em;
           text-transform: uppercase;
-          padding: 6px 16px;
+          padding: 4px 14px;
           border-radius: 99px;
-          box-shadow: 0 4px 12px rgba(200, 71, 58, 0.2);
+          box-shadow: 0 4px 12px rgba(200, 71, 58, 0.15);
+          border: 1px solid rgba(255, 255, 255, 0.15);
         }
 
         .plan-name {
-          font-size: 0.8rem;
+          font-size: 0.72rem;
           font-weight: 700;
           letter-spacing: 0.15em;
           text-transform: uppercase;
           color: var(--rose);
-          margin-bottom: 1rem;
+          margin-bottom: 0.75rem;
         }
 
         .plan-price-row {
           display: flex;
           align-items: baseline;
-          gap: 6px;
-          margin-bottom: 0.75rem;
+          gap: 4px;
+          margin-bottom: 0.5rem;
         }
 
         .plan-price {
           font-family: var(--font-playfair), serif;
-          font-size: 3rem;
+          font-size: 2.6rem;
           font-weight: 700;
           line-height: 1;
         }
 
         .plan-period {
-          font-size: 0.95rem;
+          font-size: 0.88rem;
           color: var(--muted);
         }
 
@@ -204,10 +262,10 @@ export default function PricingPage() {
         }
 
         .plan-desc {
-          font-size: 0.95rem;
+          font-size: 0.88rem;
           color: var(--muted);
-          margin-bottom: 2.5rem;
-          line-height: 1.5;
+          margin-bottom: 1.75rem;
+          line-height: 1.45;
         }
 
         .highlighted .plan-desc {
@@ -217,15 +275,15 @@ export default function PricingPage() {
         .plan-cta {
           display: block;
           text-align: center;
-          padding: 1.1rem;
-          border-radius: 14px;
-          font-size: 0.75rem;
+          padding: 0.8rem 1.5rem;
+          border-radius: 10px;
+          font-size: 0.72rem;
           font-weight: 700;
           letter-spacing: 0.15em;
           text-transform: uppercase;
           text-decoration: none;
           transition: all 0.3s ease;
-          margin-bottom: 2.5rem;
+          margin-bottom: 2rem;
           cursor: pointer;
         }
 
@@ -253,14 +311,14 @@ export default function PricingPage() {
           margin: 0;
           display: flex;
           flex-direction: column;
-          gap: 1rem;
+          gap: 0.75rem;
         }
 
         .feature-item {
           display: flex;
-          gap: 12px;
-          font-size: 0.95rem;
-          line-height: 1.4;
+          gap: 10px;
+          font-size: 0.88rem;
+          line-height: 1.45;
           align-items: flex-start;
           color: var(--ink);
         }
@@ -355,6 +413,7 @@ export default function PricingPage() {
             key={plan.name}
             className={`plan-card ${plan.highlight ? "highlighted" : ""}`}
           >
+            <div className="gloss-sheen" />
             {plan.highlight && <span className="popular-badge">Most Popular</span>}
 
             <p className="plan-name">{plan.name}</p>
@@ -377,7 +436,7 @@ export default function PricingPage() {
               {plan.features.map((feature) => (
                 <li key={feature} className="feature-item">
                   <span className="feature-icon-wrap">
-                    <Check size={16} color="var(--rose)" strokeWidth={3} />
+                    <Check size={14} color="var(--rose)" strokeWidth={2.5} />
                   </span>
                   <span>{feature}</span>
                 </li>

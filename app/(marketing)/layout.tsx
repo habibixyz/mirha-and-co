@@ -131,7 +131,7 @@ export default async function RootLayout({
               maxWidth: "1100px",
               margin: "0 auto",
               display: "grid",
-              gridTemplateColumns: "1fr 1fr 1fr",
+              gridTemplateColumns: "1.2fr 1fr 1fr 1.2fr",
               gap: "3rem",
               paddingBottom: "3rem",
               borderBottom: "1px solid rgba(255,255,255,0.1)",
@@ -153,6 +153,24 @@ export default async function RootLayout({
               }}>
                 Honest reviews, curated Amazon finds, and the products actually worth your money.
               </p>
+            </div>
+
+            <div>
+              <p style={{
+                fontSize: "0.65rem",
+                letterSpacing: "0.2em",
+                textTransform: "uppercase",
+                color: "rgba(255,255,255,0.4)",
+                marginBottom: "1rem",
+              }}>Company</p>
+              <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem" }}>
+                <Link href="/about" className="footer-link">About Us</Link>
+                <Link href="/pricing" className="footer-link">Pricing Plans</Link>
+                <Link href="/blog" className="footer-link">Our Blog</Link>
+                <Link href="/tools/ingredients" className="footer-link">Ingredient Checker</Link>
+                <Link href="/tools/hard-water" className="footer-link">Hard Water Test</Link>
+                <Link href="/tools/dupes" className="footer-link">Dupe Finder</Link>
+              </div>
             </div>
 
             <div>

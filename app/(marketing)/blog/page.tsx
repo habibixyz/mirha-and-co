@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { POSTS, getRelevantImage } from "@/lib/posts";
 import MoleculeWrapper from "@/components/MoleculeWrapper";
+import BlogSearchClient from "./BlogSearchClient";
 
 export const metadata: Metadata = {
   title: "Skincare Journal, Guides & Reviews | Mirha & Co.",
@@ -239,50 +240,77 @@ export default function BlogIndex() {
         .path-grid {
           display: grid;
           grid-template-columns: repeat(3, 1fr);
-          gap: 2rem;
-          background: transparent;
-          border: none;
+          gap: 1.5rem;
           margin-top: 2.5rem;
         }
         .path-card {
           background: #fff;
-          padding: 2.2rem;
+          padding: 1.5rem;
           text-decoration: none;
           color: #111;
-          min-height: 230px;
           display: flex;
           flex-direction: column;
           justify-content: space-between;
+          border-radius: 12px;
+          border: 1px solid rgba(162, 123, 92, 0.12);
           transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-          border-radius: 16px;
-          border: 1px solid #e8ded6;
+          position: relative;
+          overflow: hidden;
+        }
+        .path-card::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 3px;
+          background: linear-gradient(90deg, #a27b5c, #c8473a);
+          opacity: 0;
+          transition: opacity 0.3s ease;
         }
         .path-card:hover { 
-          background: #fffdfb;
-          transform: translateY(-4px);
-          box-shadow: 0 15px 30px rgba(162, 123, 92, 0.05);
-          border-color: rgba(162, 123, 92, 0.3);
+          transform: translateY(-2px);
+          box-shadow: 0 12px 24px rgba(162, 123, 92, 0.04);
+          border-color: rgba(162, 123, 92, 0.25);
+        }
+        .path-card:hover::before {
+          opacity: 1;
+        }
+        .path-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 0.75rem;
         }
         .path-label {
           color: #a27b5c;
           font-family: var(--font-dm-sans), sans-serif;
           font-size: 0.6rem;
-          letter-spacing: 0.28em;
+          letter-spacing: 0.2em;
           text-transform: uppercase;
-          margin: 0 0 1.2rem;
           font-weight: 700;
+          margin: 0;
+        }
+        .path-arrow {
+          font-size: 0.95rem;
+          color: #a27b5c;
+          transition: transform 0.3s ease;
+        }
+        .path-card:hover .path-arrow {
+          transform: translateX(3px);
         }
         .path-card h3 {
           font-family: var(--font-playfair), serif;
-          font-size: 1.45rem;
+          font-size: 1.2rem;
           font-weight: 700;
-          line-height: 1.2;
-          margin: 0 0 0.7rem;
+          line-height: 1.25;
+          margin: 0 0 0.5rem;
+          color: #111;
         }
         .path-card p {
           color: #6f6963;
-          line-height: 1.65;
-          font-size: 0.88rem;
+          line-height: 1.5;
+          font-size: 0.85rem;
           margin: 0;
         }
         .featured-band {
@@ -297,43 +325,66 @@ export default function BlogIndex() {
           background: #fff;
           text-decoration: none;
           color: #111;
-          border-radius: 24px;
+          border-radius: 16px;
           overflow: hidden;
           transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
           box-shadow: 0 10px 30px rgba(0,0,0,0.01);
         }
         .featured-card:hover {
-          transform: translateY(-4px);
-          box-shadow: 0 25px 50px rgba(162, 123, 92, 0.06);
-          border-color: rgba(162, 123, 92, 0.3);
+          transform: translateY(-2px);
+          box-shadow: 0 15px 35px rgba(162, 123, 92, 0.04);
+          border-color: rgba(162, 123, 92, 0.25);
         }
-        .featured-main { padding: 3rem; }
+        .featured-main { 
+          padding: 2.2rem 2.5rem; 
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+        }
         .featured-main h2 {
           font-family: var(--font-playfair), serif;
-          font-size: clamp(1.8rem, 4vw, 3rem);
+          font-size: clamp(1.4rem, 3vw, 2.2rem);
           font-weight: 700;
-          line-height: 1.15;
-          margin: 0 0 1rem;
+          line-height: 1.2;
+          margin: 0 0 0.8rem;
+          color: #111;
         }
         .featured-main p {
           color: #6f6963;
-          line-height: 1.75;
+          line-height: 1.6;
+          font-size: 0.92rem;
           max-width: 620px;
-          margin: 0 0 2rem;
+          margin: 0 0 1.5rem;
+        }
+        .featured-btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.4rem;
+          font-family: var(--font-dm-sans), sans-serif;
+          font-size: 0.7rem;
+          font-weight: 700;
+          letter-spacing: 0.15em;
+          text-transform: uppercase;
+          color: #111;
+          transition: all 0.3s ease;
+        }
+        .featured-card:hover .featured-btn {
+          color: #a27b5c;
         }
         .featured-side {
           background: #1c1917;
           color: #fafaf9;
-          padding: 3rem;
+          padding: 2.2rem 2.5rem;
           display: flex;
           flex-direction: column;
-          justify-content: space-between;
+          justify-content: center;
+          border-left: 1px solid rgba(255,255,255,0.05);
         }
         .featured-side p {
-          color: rgba(255,255,255,0.6);
-          line-height: 1.7;
+          color: rgba(255,255,255,0.65);
+          line-height: 1.6;
           margin: 0;
-          font-size: 0.9rem;
+          font-size: 0.85rem;
         }
         .article-section {
           max-width: 1200px;
@@ -459,6 +510,33 @@ export default function BlogIndex() {
           .trust-strip, .path-grid, .article-grid { grid-template-columns: 1fr; gap: 1rem; }
           .path-section, .featured-band, .article-section { padding-left: 1.4rem; padding-right: 1.4rem; }
           .article-header { align-items: flex-start; flex-direction: column; }
+          .path-card {
+            padding: 1.25rem !important;
+          }
+          .path-card h3 {
+            font-size: 1.1rem !important;
+          }
+          .path-card p {
+            font-size: 0.8rem !important;
+          }
+          .featured-main {
+            padding: 1.5rem !important;
+          }
+          .featured-main h2 {
+            font-size: 1.35rem !important;
+          }
+          .featured-main p {
+            font-size: 0.88rem !important;
+            margin-bottom: 1.25rem !important;
+          }
+          .featured-side {
+            padding: 1.25rem 1.5rem !important;
+            border-left: none !important;
+            border-top: 1px solid rgba(255,255,255,0.05) !important;
+          }
+          .featured-side p {
+            font-size: 0.8rem !important;
+          }
         }
       `}</style>
 
@@ -503,12 +581,14 @@ export default function BlogIndex() {
           <div className="path-grid">
             {paths.map((path) => (
               <a key={path.label} href={path.href} className="path-card">
+                <div className="path-header">
+                  <span className="path-label">{path.label}</span>
+                  <span className="path-arrow">→</span>
+                </div>
                 <div>
-                  <p className="path-label">{path.label}</p>
                   <h3>{path.title}</h3>
                   <p>{path.text}</p>
                 </div>
-                <span style={{ color: "#a27b5c", marginTop: "1.2rem", fontSize: "0.7rem", letterSpacing: "0.15em", textTransform: "uppercase", fontWeight: 700 }}>Open</span>
               </a>
             ))}
           </div>
@@ -520,7 +600,7 @@ export default function BlogIndex() {
               <p className="section-kicker">{featured.tag} / {featured.category}</p>
               <h2>{featured.title}</h2>
               <p>{featured.excerpt}</p>
-              <span className="primary-btn">Read guide</span>
+              <span className="featured-btn">Read guide &rarr;</span>
             </div>
             <div className="featured-side">
               <p>{featured.date} / {featured.readTime}</p>
@@ -532,33 +612,7 @@ export default function BlogIndex() {
         </section>
 
         <section className="article-section">
-          <div className="article-header">
-            <div>
-              <p className="section-kicker">All guides</p>
-              <h2 className="section-title">Read by concern.</h2>
-            </div>
-            <span style={{ color: "#9b8e83", fontSize: "0.72rem", letterSpacing: "0.18em", textTransform: "uppercase", fontWeight: 600 }}>
-              {posts.length} articles
-            </span>
-          </div>
-
-          <div className="article-grid">
-            {posts.map((post) => (
-              <a key={post.slug} href={`/blog/${post.slug}`} className="article-card">
-                <div className="article-icon">
-                  <img src={post.imageSrc} alt={post.category} />
-                </div>
-                <p className="article-cat" style={{ color: catColors[post.category] }}>{post.category}</p>
-                <h3>{post.title}</h3>
-                <p>{post.excerpt}</p>
-                <div className="article-meta">
-                  <span>{post.date}</span>
-                  <span>{post.readTime}</span>
-                  <span>{post.productCount} picks</span>
-                </div>
-              </a>
-            ))}
-          </div>
+          <BlogSearchClient initialPosts={posts} catColors={catColors} />
         </section>
 
         <section className="footer-cta">

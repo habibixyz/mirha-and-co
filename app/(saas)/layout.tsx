@@ -334,11 +334,118 @@ export default function SaasLayout({
 
   @media (max-width: 480px) {
     .dash-main-inner {
-      padding: 4.5rem 1.2rem 2.5rem;
+      padding: 4.5rem 1.2rem 5.5rem;
     }
     
     .dash-shell {
       height: 100vh;
+    }
+  }
+
+  /* ── ANALYSIS CLIENT RESPONSIVENESS ── */
+  .analysis-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 1rem;
+  }
+
+  .analysis-title {
+    font-family: var(--font-dm-serif), serif;
+    font-size: 2.8rem;
+    font-weight: 400;
+    margin: 0;
+    color: var(--dash-ink);
+  }
+
+  .paywall-card {
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--rule);
+    border-radius: 16px;
+    padding: 2.5rem 2rem;
+    text-align: center;
+    max-width: 680px;
+    margin: 0 auto 2rem;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.02);
+  }
+
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+    max-width: 600px;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  .pricing-card {
+    border-radius: 12px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .score-dials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .score-dial-card {
+    background: rgba(255,255,255,0.8);
+    border: 1px solid var(--rule);
+    border-radius: 16px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .detailed-report-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+  }
+
+  @media (max-width: 768px) {
+    .analysis-title {
+      font-size: 2.2rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .analysis-container {
+      padding: 0.25rem !important;
+    }
+    .analysis-title {
+      font-size: 1.85rem;
+    }
+    .paywall-card {
+      padding: 1.5rem 1rem !important;
+      border-radius: 12px !important;
+    }
+    .pricing-grid {
+      grid-template-columns: 1fr !important;
+      gap: 1rem !important;
+    }
+    .pricing-card {
+      padding: 1.25rem 1rem !important;
+    }
+    .score-dials-grid {
+      grid-template-columns: repeat(2, 1fr) !important;
+      gap: 0.75rem !important;
+    }
+    .score-dial-card {
+      padding: 1rem 0.5rem !important;
+      border-radius: 12px !important;
+    }
+    .detailed-report-grid {
+      grid-template-columns: 1fr !important;
+      gap: 1.5rem !important;
     }
   }
 `}</style>

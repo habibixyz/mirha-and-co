@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Brain, BookOpen, Fingerprint, Star } from "lucide-react";
 import FaceScannerUI from "@/components/FaceScannerUI";
+import CollabForm from "@/components/CollabForm";
 
 export const metadata = {
   title: "About | Mirha & Co.",
@@ -387,7 +388,9 @@ export default function AboutPage() {
           }
 
           .hero-img {
-            display: none;
+            grid-column: span 1 !important;
+            height: 400px;
+            margin-top: 2rem;
           }
 
           .side-img {
@@ -542,6 +545,21 @@ export default function AboutPage() {
                 </p>
               </div>
             </div>
+          </div>
+        </section>
+
+        {/* COLLABORATIONS / BRAND REGISTRATION */}
+        <section className="section rose" style={{ borderTop: "1px solid var(--rule)" }}>
+          <div className="inner" style={{ maxWidth: "800px", margin: "0 auto", textAlign: "center" }}>
+            <p className="eyebrow" style={{ justifyContent: "center" }}>Brand Partnerships</p>
+            <h2 className="section-title">
+              Introduce Your Product
+              <span>Submit formulations for clinical audit.</span>
+            </h2>
+            <p style={{ color: "var(--muted)", marginBottom: "3rem", fontSize: "1.05rem", lineHeight: "1.7" }}>
+              Are you a laboratory, skincare brand, or formulator? We accept direct product audits to see if your formulations meet our ingredient-safety, climate-performance, and pricing transparency metrics.
+            </p>
+            <CollabForm />
           </div>
         </section>
 

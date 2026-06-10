@@ -812,6 +812,25 @@ export async function submitLeadAction(email: string, type: string, data?: strin
               <p style="font-size: 0.9rem; color: #756b63; margin-top: 30px;">Best wishes,<br/>The Mirha & Co. Team</p>
             </div>
           `;
+        } else if (type === "collab") {
+          const parsedData = data ? JSON.parse(data) : {};
+          subject = "Product Submission Received — Mirha & Co. 🌸";
+          htmlContent = `
+            <div style="font-family: 'DM Sans', sans-serif; max-width: 600px; margin: 0 auto; padding: 40px 20px; color: #161412;">
+              <h2 style="font-family: 'DM Serif Display', serif; font-size: 1.8rem; color: #161412; margin-bottom: 1rem; font-weight: normal;">We've received your brand submission!</h2>
+              <p style="font-size: 1rem; line-height: 1.6;">Hi ${parsedData.contactName || "there"},</p>
+              <p style="font-size: 1rem; line-height: 1.6;">Thank you for submitting <strong>${parsedData.brandName || "your brand"}</strong> for review on Mirha & Co.</p>
+              <p style="font-size: 1rem; line-height: 1.6;">Our Curation Board audits all submissions based on active ingredient concentrations, clinical evidence, and climate suitability. We will be in touch within 5-7 business days if your products match our editorial parameters.</p>
+              <div style="background: #f6f4f2; border: 1px dashed #a27b5c; padding: 15px 20px; border-radius: 8px; margin: 20px 0; font-size: 0.9rem;">
+                <strong>Submission Details:</strong><br/>
+                • Brand: ${parsedData.brandName || "N/A"}<br/>
+                • Product Link: ${parsedData.productUrl || "N/A"}<br/>
+                • Key Actives: ${parsedData.actives || "N/A"}
+              </div>
+              <p style="font-size: 0.95rem; line-height: 1.6;">Please note: Mirha & Co. does not accept paid sponsorship for placements. Curation is entirely merit-based.</p>
+              <p style="font-size: 0.9rem; color: #756b63; margin-top: 30px;">Best regards,<br/>The Mirha & Co. Curation Board</p>
+            </div>
+          `;
         } else {
           // Newsletter
           subject = "Welcome to the Mirha Skin Desk! 🌸";
