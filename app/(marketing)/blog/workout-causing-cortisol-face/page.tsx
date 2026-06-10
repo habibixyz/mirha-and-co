@@ -83,9 +83,9 @@ export default function CortisolWorkoutBlog() {
         </p>
 
         <AffiliateCard
-          title="Bala Bangles — 1 Lb Wearable Wrist & Ankle Weights"
+          title="Bala Bangles - Set of 2 (1lb Each) | Monochromatic Sea"
           description="Chic, premium wearable weights. Perfect for adding gentle resistance to pilates, walking, yoga, and home workouts. Made of steel wrapped in super-soft silicone."
-          price="₹3,999"
+          price="₹11,125"
           asin="B084Z1B84N"
           affiliateTag={AFFILIATE_TAG}
           badge="Aesthetic Toning"
@@ -98,10 +98,10 @@ export default function CortisolWorkoutBlog() {
         </p>
 
         <AffiliateCard
-          title="Magnesium Oil Spray for Muscle Recovery & Sleep"
-          description="Pure transdermal magnesium oil. Promotes deep muscle relaxation, reduces soreness, and supports restful sleep after low-impact exercise. Spray 4-5 times post-workout."
-          price="₹599"
-          asin="B0CSYNV47P"
+          title="TYC - Trust Your Choice Natural Magnesium Oil Mist Spray"
+          description="Pure transdermal magnesium oil spray. Helps relieve muscle soreness, fatigue, and stress while promoting peaceful sleep after your low-impact workout."
+          price="₹302"
+          asin="B0D9M63K54"
           affiliateTag={AFFILIATE_TAG}
           badge="Recovery Essential"
         />

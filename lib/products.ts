@@ -1804,12 +1804,12 @@ export const PRODUCTS = [
   },
   {
     id: 1007,
-    name: "Bala Bangles — 1 Lb Wearable Wrist & Ankle Weights (Set of 2)",
+    name: "Bala Bangles - Set of 2 (1lb Each) | Monochromatic Sea",
     brand: "Bala",
     category: "Wellness",
     subcat: "Fitness",
-    mrp: 4999,
-    price: 3999,
+    mrp: 11125,
+    price: 11125,
     rating: 4.6,
     reviews: "3.2k",
     asin: "B084Z1B84N",
@@ -1818,25 +1818,25 @@ export const PRODUCTS = [
     specs: {
       "Weight": "1 Lb each (2 Lbs total)",
       "Material": "Steel wrapped in silicone",
-      "Colors": "Various aesthetic shades",
+      "Colors": "Monochromatic Sea",
       "Benefits": "Hands-free resistance, easy to clean"
     },
     tags: ["bala bangles", "ankle weights", "wrist weights", "pilates", "fitness", "wellness"],
-    image: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=600&q=80",
-    link: "https://www.amazon.in/dp/B084Z1B84N?tag=skinwithtanvi-21",
+    image: "/products/bala_bangles_sea.jpg",
+    link: "https://amzn.to/4e4xfZa",
     hideFromShop: true
   },
   {
     id: 1008,
-    name: "PureCure Magnesium Oil Spray for Muscle Recovery & Sleep",
-    brand: "PureCure",
+    name: "TYC - Trust Your Choice Natural Magnesium Oil Mist Spray",
+    brand: "TYC",
     category: "Wellness",
     subcat: "Recovery",
-    mrp: 799,
-    price: 599,
+    mrp: 302,
+    price: 302,
     rating: 4.4,
     reviews: "950",
-    asin: "B0CSYNV47P",
+    asin: "B0D9M63K54",
     badge: "Recovery Essential",
     description: "Pure transdermal magnesium oil. Promotes deep muscle relaxation, reduces soreness, and supports restful sleep after low-impact exercise. Spray 4-5 times post-workout.",
     specs: {
@@ -1846,8 +1846,8 @@ export const PRODUCTS = [
       "Benefits": "Muscle recovery, cortisol regulation"
     },
     tags: ["magnesium spray", "magnesium oil", "muscle recovery", "sleep aid", "cortisol management"],
-    image: "https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?auto=format&fit=crop&w=600&q=80",
-    link: "https://www.amazon.in/dp/B0CSYNV47P?tag=skinwithtanvi-21",
+    image: "/products/tyc_magnesium.jpg",
+    link: "https://amzn.to/43XbkTV",
     hideFromShop: true
   },
   {
@@ -1875,6 +1875,30 @@ export const PRODUCTS = [
     hideFromShop: true
   },
   {
+    id: 1011,
+    name: "Solved Labs SOS Save Our Skin Hydrating Facial Toner",
+    brand: "Solved Labs",
+    category: "Skincare",
+    subcat: "Face Mist",
+    mrp: 349,
+    price: 349,
+    rating: 4.5,
+    reviews: "120",
+    asin: "B0CXSVYRYS",
+    badge: "Gym Bag Essential",
+    description: "Advanced hypochlorous acid facial mist. Instantly purifies skin, reduces redness, and defends against sweat-induced breakouts and acne mechanica.",
+    specs: {
+      "Volume": "100ml",
+      "Active Ingredient": "0.02% Active Hypochlorous Acid",
+      "Skin Type": "Acne-prone, sensitive, all skin types",
+      "Benefits": "Antibacterial, hydrating, barrier support"
+    },
+    tags: ["solved labs", "sos spray", "hypochlorous acid", "face toner", "gym skincare", "acne toner"],
+    image: "/products/solved_sos_spray.jpg",
+    link: "https://amzn.to/4v4e1iA",
+    hideFromShop: true
+  },
+  {
     id: 1010,
     name: "Boldfit High-Density Foam Roller for Posture & Back Stretch",
     brand: "Boldfit",
@@ -1884,7 +1908,7 @@ export const PRODUCTS = [
     price: 699,
     rating: 4.5,
     reviews: "6.2k",
-    asin: "B07W5238PT",
+    asin: "B0CKYY1M62",
     badge: "Posture Realign",
     description: "High-density EVA foam roller. Designed to release upper back tension, stretch tight chest muscles, and correct desk slouching posture. Includes online guides.",
     specs: {
@@ -1894,8 +1918,8 @@ export const PRODUCTS = [
       "Type": "Full round roller"
     },
     tags: ["foam roller", "posture correction", "back stretch", "thoracic mobility", "desk neck"],
-    image: "https://images.unsplash.com/photo-1600880292089-90a7e086f0e0?auto=format&fit=crop&w=600&q=80",
-    link: "https://www.amazon.in/dp/B07W5238PT?tag=skinwithtanvi-21",
+    image: "/products/boldfit_foam_roller.jpg",
+    link: "https://amzn.to/3QxtBEg",
     hideFromShop: true
   }
 ];

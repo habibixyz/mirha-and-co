@@ -83,10 +83,10 @@ export default function GymBagSkincareBlog() {
         </p>
 
         <AffiliateCard
-          title="Sirona Hypochlorous Acid Daily Skin Spray"
-          description="Soothing, antibacterial facial mist. Formulated with hypochlorous acid to cleanse skin, reduce redness, and prevent gym sweat breakouts (acne mechanica) immediately after workouts."
-          price="₹399"
-          asin="B0C9QW91K5"
+          title="Solved Labs SOS Save Our Skin Hydrating Facial Toner"
+          description="Advanced hypochlorous acid facial mist. Instantly purifies skin, reduces redness, and defends against sweat-induced breakouts and acne mechanica."
+          price="₹349"
+          asin="B0CXSVYRYS"
           affiliateTag={AFFILIATE_TAG}
           badge="Gym Bag Essential"
         />

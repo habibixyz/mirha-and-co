@@ -86,7 +86,7 @@ export default function PostureWealthBlog() {
           title="Boldfit High-Density Foam Roller for Posture & Back Stretch"
           description="High-density EVA foam roller. Designed to release upper back tension, stretch tight chest muscles, and correct desk slouching posture. Includes online guides."
           price="₹699"
-          asin="B07W5238PT"
+          asin="B0CKYY1M62"
           affiliateTag={AFFILIATE_TAG}
           badge="Posture Realign"
         />
