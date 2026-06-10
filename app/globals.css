@@ -521,3 +521,11 @@ html, body {
     display: none !important;
   }
 }
+
+/* Hide injected affiliate overlays (like 'VIEW' buttons) inside product image wrappers */
+.affiliate-image-wrapper > div,
+.result-image > div,
+.image-panel > div,
+.related-card > div {
+  display: none !important;
+}

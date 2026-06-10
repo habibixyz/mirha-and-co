@@ -50,6 +50,7 @@ export default function BlogProductCard({ asin }: { asin: string }) {
         }}
       >
         <div
+          className="affiliate-image-wrapper"
           style={{
             width: "80px",
             height: "80px",

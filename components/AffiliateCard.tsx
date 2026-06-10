@@ -65,6 +65,7 @@ export function AffiliateCard(props: any) {
 
       {/* Image */}
       <div
+        className="affiliate-image-wrapper"
         style={{
           background: "#faf8f5",
           width: "100%",
