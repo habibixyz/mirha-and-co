@@ -63,7 +63,7 @@ export default async function ProgrammaticBlogPost({ params }: PageProps) {
       sections={post.sections}
     >
       <section className="post-section">
-        <h2>Dermatologist-Backed Skincare Picks</h2>
+        <h2>Dermatologist-Recommended Skincare Picks</h2>
         <p>
           These products are selected for their texture, ingredients, and ability to handle regional climate challenges.
         </p>

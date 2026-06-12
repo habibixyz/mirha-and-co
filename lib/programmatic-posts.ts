@@ -90,7 +90,7 @@ export function getAsinsForConcern(concernSlug: string): string[] {
 export function generatePostContent(city: City, concern: Concern) {
   const currentYear = new Date().getFullYear();
   const title = `Best Moisturizer for ${concern.name} in ${city.name} (${currentYear})`;
-  const description = `Dermatologist-backed moisturizers for ${concern.name.toLowerCase()} in ${city.name}, ${city.state}. Curated for ${city.name}'s specific ${city.region} climate conditions.`;
+  const description = `Dermatologist-recommended moisturizers for ${concern.name.toLowerCase()} in ${city.name}, ${city.state}. Curated for ${city.name}'s specific ${city.region} climate conditions.`;
   
   let climateNote = "";
   if (city.region === "humid") {

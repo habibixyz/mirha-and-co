@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { POSTS, getRelevantImage } from "@/lib/posts";
 import MoleculeWrapper from "@/components/MoleculeWrapper";
 import BlogSearchClient from "./BlogSearchClient";
+import RegionalGuidesSelector from "@/components/RegionalGuidesSelector";
+
 
 export const metadata: Metadata = {
  title: "Skincare Journal, Guides & Reviews | Mirha & Co.",
@@ -613,6 +615,87 @@ export default function BlogIndex() {
 
  <section className="article-section">
  <BlogSearchClient initialPosts={posts} catColors={catColors} />
+ </section>
+
+ <section 
+ className="regional-guides-section" 
+ style={{ 
+ padding: "5rem 2.5rem 6rem", 
+ maxWidth: "1100px", 
+ margin: "0 auto", 
+ borderTop: "1px solid #ded7cf"
+ }}
+ >
+ <p 
+ style={{ 
+ color: "#a27b5c", 
+ letterSpacing: "0.22em", 
+ fontSize: "0.65rem", 
+ textTransform: "uppercase", 
+ fontWeight: 700, 
+ marginBottom: "1rem",
+ textAlign: "center"
+ }}
+ >
+ Climate &amp; Location Guides
+ </p>
+ <h2 
+ style={{ 
+ fontFamily: "var(--font-playfair), serif", 
+ fontSize: "2.2rem", 
+ fontWeight: 400, 
+ marginBottom: "2.5rem",
+ textAlign: "center",
+ color: "var(--ink, #1a1714)"
+ }}
+ >
+ Climate-Specific Skincare by Region
+ </h2 >
+ 
+ <RegionalGuidesSelector />
+
+ <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))", gap: "1.5rem" }}>
+ {[
+ { cityName: "Mumbai", citySlug: "mumbai", concernName: "Oily Skin", concernSlug: "oily-skin" },
+ { cityName: "Delhi", citySlug: "delhi", concernName: "Dry Skin", concernSlug: "dry-skin" },
+ { cityName: "Chennai", citySlug: "chennai", concernName: "Acne", concernSlug: "acne" },
+ { cityName: "Bangalore", citySlug: "bangalore", concernName: "Hyperpigmentation", concernSlug: "hyperpigmentation" },
+ { cityName: "Pune", citySlug: "pune", concernName: "Oily Skin", concernSlug: "oily-skin" },
+ { cityName: "Hyderabad", citySlug: "hyderabad", concernName: "Dry Skin", concernSlug: "dry-skin" },
+ { cityName: "Kolkata", citySlug: "kolkata", concernName: "Acne", concernSlug: "acne" },
+ { cityName: "Jaipur", citySlug: "jaipur", concernName: "Hyperpigmentation", concernSlug: "hyperpigmentation" }
+ ].map((guide) => (
+ <a 
+ key={`${guide.citySlug}-${guide.concernSlug}`} 
+ href={`/blog/best-moisturizer-for-${guide.concernSlug}-in-${guide.citySlug}`}
+ style={{
+ display: "flex",
+ flexDirection: "column",
+ justifyContent: "space-between",
+ background: "#fff",
+ padding: "1.5rem",
+ borderRadius: "12px",
+ border: "1px solid #e8e2d9",
+ boxShadow: "0 2px 8px rgba(0,0,0,0.01)",
+ transition: "all 0.2s ease",
+ textDecoration: "none"
+ }}
+ className="guide-link-card"
+ >
+ <div>
+ <span style={{ fontSize: "0.58rem", color: "#a27b5c", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.15em" }}>
+ {guide.cityName}
+ </span>
+ <h4 style={{ fontFamily: "var(--font-playfair), serif", fontSize: "1.1rem", margin: "0.5rem 0 1rem", color: "#1a1714", fontWeight: 400, lineHeight: 1.35 }}>
+ Best Moisturizer for {guide.concernName} in {guide.cityName}
+ </h4>
+ </div>
+ <span style={{ fontSize: "0.72rem", color: "#c8473a", fontWeight: 700, letterSpacing: "0.05em", textTransform: "uppercase" }}>
+ Read Guide &rarr;
+ </span>
+ </a>
+ ))}
+ </div>
  </section>
 
  <section className="footer-cta">
