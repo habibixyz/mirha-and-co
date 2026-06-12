@@ -39,12 +39,16 @@ import SiteHeader from "@/components/SiteHeader";
 import NewsletterForm from "@/components/NewsletterForm";
 
 export async function generateMetadata() {
- return {
- title: "Mirha & Co. — Beauty, Wellness & The Good Life",
- description:
- "Honest reviews, curated finds, and the products worth your money. Beauty and wellness for women who know what they want.",
- };
+  return {
+    title: "Mirha & Co. — Beauty, Wellness & The Good Life",
+    description:
+      "Honest reviews, curated finds, and the products worth your money. Beauty and wellness for women who know what they want.",
+    verification: {
+      google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || "google-verification-code-here",
+    },
+  };
 }
+
 
 export default async function RootLayout({
  children,
