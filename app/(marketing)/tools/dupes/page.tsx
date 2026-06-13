@@ -131,7 +131,7 @@ const DUPES_DATABASE = [
  actives: "Matrixyl 3000, Argireline, Peptides",
  description: "While one is a cream and one is a serum, both deliver a massive dose of signal peptides to boost collagen production, firm the skin, and repair the barrier for anti-aging without the premium markup.",
  image: "/products/minimalist-peptide.jpg",
- link: "https://amzn.to/3OExEO6",
+ link: "https://amzn.to/41R6Jlq",
  }
  },
  {
@@ -152,7 +152,7 @@ const DUPES_DATABASE = [
  actives: "Vitamin C, Squalane, Rosehip",
  description: "Achieves that exact same 'morning glow' and overnight repair. Instead of relying purely on botanical oils, this dupe provides active brightening with a hydrating base that works perfectly for Indian climates.",
  image: "/products/plum-vitc.jpg",
- link: "https://amzn.to/3Qa5pau",
+ link: "https://amzn.to/4t7YmO1",
  }
  }
 ];
@@ -806,7 +806,9 @@ export default function DupeFinderPage() {
  
  {selectedItems.map(id => {
  const item = DUPES_DATABASE.find(d => d.id === id);
- if (!item) return null;
+    if (!item) return null;
+    const matchingProduct = PRODUCTS.find(p => p.asin === item.dupe.asin);
+    const affiliateUrl = matchingProduct?.link || item.dupe.link;
 
  const count = purchasesPerYear[id] || 2;
  const savings = (item.luxury.price - item.dupe.price) * count;
@@ -853,7 +855,7 @@ export default function DupeFinderPage() {
  <span style={{ fontSize: "0.78rem", color: "#2d8a5c", fontWeight: 600 }}>Save ₹{savings.toLocaleString("en-IN")}/yr</span>
  </div>
 
- <a href={item.dupe.link} target="_blank" rel="noopener noreferrer" className="shop-dupe-btn">
+ <a href={affiliateUrl} target="_blank" rel="noopener noreferrer" className="shop-dupe-btn">
  Shop Dupe on Amazon <ArrowRight size={14} />
  </a>
  </div>
