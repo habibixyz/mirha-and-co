@@ -455,7 +455,7 @@ export default function DullSkinPage() {
  padding: "2rem",
  border: "2px solid var(--black)",
  textAlign: "center",
- background: "linear-gradient(135deg, #f5f1ed 0%, rgba(200, 71, 58, 0.05) 100%)"
+ background: "linear-gradient(135deg, #f5f1ed 0%, rgba(252, 39, 121, 0.05) 100%)"
 }}>
  <h3 style={{
  fontFamily: "'DM Serif Display', serif",

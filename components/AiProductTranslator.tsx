@@ -167,7 +167,7 @@ export default function AiProductTranslator({
  display: "inline-flex",
  alignItems: "center",
  gap: "6px",
- background: "linear-gradient(135deg, #c8473a, #b3392d)",
+ background: "linear-gradient(135deg, #fc2779, #b3392d)",
  color: "#fff",
  border: 0,
  borderRadius: "6px",
@@ -175,7 +175,7 @@ export default function AiProductTranslator({
  fontSize: "11px",
  fontWeight: 600,
  cursor: "pointer",
- boxShadow: "0 2px 8px rgba(200, 71, 58, 0.2)",
+ boxShadow: "0 2px 8px rgba(252, 39, 121, 0.2)",
  marginLeft: "auto",
  transition: "opacity 0.2s",
  }}

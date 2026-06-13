@@ -88,7 +88,7 @@ export default function BeginnerRoutinePage() {
  {/* STEP 1: CLEANSER */}
  <section style={{ marginBottom: "3rem" }}>
  <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "1rem" }}>
- <span style={{ fontFamily: "monospace", fontSize: "0.7rem", letterSpacing: "0.15em", color: "var(--rose)", background: "rgba(200,71,58,0.08)", padding: "0.3rem 0.7rem", borderRadius: 3 }}>STEP 1</span>
+ <span style={{ fontFamily: "monospace", fontSize: "0.7rem", letterSpacing: "0.15em", color: "var(--rose)", background: "rgba(252, 39, 121,0.08)", padding: "0.3rem 0.7rem", borderRadius: 3 }}>STEP 1</span>
  <h2 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "1.5rem", fontWeight: 400, color: "var(--ink)", margin: 0 }}>Cleanser</h2>
  </div>
  <p style={{ fontSize: "0.95rem", color: "var(--muted)", lineHeight: 1.8, marginBottom: "1rem" }}>
@@ -115,7 +115,7 @@ export default function BeginnerRoutinePage() {
  {/* STEP 2: MOISTURISER */}
  <section style={{ marginBottom: "3rem" }}>
  <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "1rem" }}>
- <span style={{ fontFamily: "monospace", fontSize: "0.7rem", letterSpacing: "0.15em", color: "var(--rose)", background: "rgba(200,71,58,0.08)", padding: "0.3rem 0.7rem", borderRadius: 3 }}>STEP 2</span>
+ <span style={{ fontFamily: "monospace", fontSize: "0.7rem", letterSpacing: "0.15em", color: "var(--rose)", background: "rgba(252, 39, 121,0.08)", padding: "0.3rem 0.7rem", borderRadius: 3 }}>STEP 2</span>
  <h2 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "1.5rem", fontWeight: 400, color: "var(--ink)", margin: 0 }}>Moisturiser</h2>
  </div>
  <p style={{ fontSize: "0.95rem", color: "var(--muted)", lineHeight: 1.8, marginBottom: "1rem" }}>
@@ -135,7 +135,7 @@ export default function BeginnerRoutinePage() {
  {/* STEP 3: SUNSCREEN */}
  <section style={{ marginBottom: "3rem" }}>
  <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "1rem" }}>
- <span style={{ fontFamily: "monospace", fontSize: "0.7rem", letterSpacing: "0.15em", color: "var(--rose)", background: "rgba(200,71,58,0.08)", padding: "0.3rem 0.7rem", borderRadius: 3 }}>STEP 3</span>
+ <span style={{ fontFamily: "monospace", fontSize: "0.7rem", letterSpacing: "0.15em", color: "var(--rose)", background: "rgba(252, 39, 121,0.08)", padding: "0.3rem 0.7rem", borderRadius: 3 }}>STEP 3</span>
  <h2 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "1.5rem", fontWeight: 400, color: "var(--ink)", margin: 0 }}>Sunscreen — The Non-Negotiable</h2>
  </div>
  <p style={{ fontSize: "0.95rem", color: "var(--muted)", lineHeight: 1.8, marginBottom: "1rem" }}>

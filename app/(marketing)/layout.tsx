@@ -46,6 +46,28 @@ export async function generateMetadata() {
     verification: {
       google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || "google-verification-code-here",
     },
+    openGraph: {
+      title: "Mirha & Co. — Beauty, Wellness & The Good Life",
+      description: "Honest reviews, curated finds, and the products worth your money. Beauty and wellness for women who know what they want.",
+      url: "https://mirhaandco.com",
+      siteName: "Mirha & Co.",
+      images: [
+        {
+          url: "/og-image.png",
+          width: 1200,
+          height: 630,
+          alt: "Mirha & Co. Skincare and Wellness",
+        },
+      ],
+      locale: "en_IN",
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: "Mirha & Co. — Beauty, Wellness & The Good Life",
+      description: "Honest reviews, curated finds, and the products worth your money. Beauty and wellness for women who know what they want.",
+      images: ["/og-image.png"],
+    },
   };
 }
 

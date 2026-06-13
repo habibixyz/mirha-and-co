@@ -65,7 +65,7 @@ export default function PricingPage() {
  .pricing-page {
  --black: #0c0a09;
  --white: #fafaf8;
- --rose: #c8473a;
+ --rose: #fc2779;
  --rose-light: #fbf7f2;
  --paper: #fffcf8;
  --ink: #2b2826;
@@ -109,7 +109,7 @@ export default function PricingPage() {
  .pricing-header h1 span {
  color: var(--rose);
  display: block;
- font-style: italic;
+ font-style: normal;
  font-weight: 600;
  }
 
@@ -208,7 +208,7 @@ export default function PricingPage() {
  }
 
  .plan-card.highlighted:hover {
- border-color: rgba(200, 71, 58, 0.35);
+ border-color: rgba(252, 39, 121, 0.35);
  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.12), 0 25px 50px rgba(0, 0, 0, 0.2);
  }
 
@@ -225,7 +225,7 @@ export default function PricingPage() {
  text-transform: uppercase;
  padding: 4px 14px;
  border-radius: 99px;
- box-shadow: 0 4px 12px rgba(200, 71, 58, 0.15);
+ box-shadow: 0 4px 12px rgba(252, 39, 121, 0.15);
  border: 1px solid rgba(255, 255, 255, 0.15);
  }
 

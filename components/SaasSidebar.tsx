@@ -85,7 +85,7 @@ export function SaasSidebar() {
  fontSize: "0.85rem",
  fontWeight: 600,
  textAlign: "center",
- boxShadow: "0 8px 20px rgba(200, 71, 58, 0.15)"
+ boxShadow: "0 8px 20px rgba(252, 39, 121, 0.15)"
  }}>
  Upgrade to Pro
  </Link>

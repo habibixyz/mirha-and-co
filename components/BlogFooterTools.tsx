@@ -28,7 +28,7 @@ export default function BlogFooterTools() {
  font-size: 0.6rem;
  letter-spacing: 0.25em;
  text-transform: uppercase;
- color: #c8473a;
+ color: #fc2779;
  font-weight: 700;
  }
 
@@ -82,7 +82,7 @@ export default function BlogFooterTools() {
  font-size: 0.65rem;
  letter-spacing: 0.12em;
  text-transform: uppercase;
- color: #c8473a;
+ color: #fc2779;
  margin-top: 0.4rem;
  transition: letter-spacing 0.2s ease;
  }

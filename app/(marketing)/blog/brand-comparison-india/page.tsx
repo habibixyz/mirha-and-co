@@ -144,7 +144,7 @@ export default function BrandComparisonPage() {
  textTransform: "uppercase",
  color: "var(--rose)",
  fontFamily: "var(--font-mono, monospace)",
- background: "rgba(200,71,58,0.1)",
+ background: "rgba(252, 39, 121,0.1)",
  padding: "3px 8px",
  borderRadius: "3px",
  }}
@@ -240,7 +240,7 @@ export default function BrandComparisonPage() {
  textTransform: "uppercase",
  color: "var(--rose)",
  fontFamily: "var(--font-mono, monospace)",
- background: "rgba(200,71,58,0.1)",
+ background: "rgba(252, 39, 121,0.1)",
  padding: "3px 8px",
  borderRadius: "3px",
  }}

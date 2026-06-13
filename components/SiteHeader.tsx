@@ -61,7 +61,7 @@ export default function SiteHeader() {
  <div className="md:hidden flex-1 flex items-center justify-end">
  {!menuOpen && (
  <button
- className="text-black p-2 hover:text-[#c8473a] transition-colors bg-transparent border-none outline-none shadow-none cursor-pointer"
+ className="text-black p-2 hover:text-[#fc2779] transition-colors bg-transparent border-none outline-none shadow-none cursor-pointer"
  onClick={() => setMenuOpen(true)}
  aria-label="Toggle Menu"
  >
@@ -133,7 +133,7 @@ export default function SiteHeader() {
  </span>
  <button 
  onClick={() => setMenuOpen(false)} 
- className="text-black hover:text-[#c8473a] transition-colors -mr-2 p-2 bg-transparent border-none outline-none cursor-pointer"
+ className="text-black hover:text-[#fc2779] transition-colors -mr-2 p-2 bg-transparent border-none outline-none cursor-pointer"
  aria-label="Close Menu"
  >
  <X size={20} />
@@ -142,7 +142,7 @@ export default function SiteHeader() {
 
  <Link
  href="/tools/ingredients"
- className="hover:text-[#c8473a] transition-colors"
+ className="hover:text-[#fc2779] transition-colors"
  style={{ fontSize: "0.75rem", letterSpacing: "0.18em", textTransform: "uppercase", fontWeight: "600", color: "#2b2826", padding: "0.2rem 0", fontFamily: "var(--font-dm-sans), sans-serif" }}
  onClick={() => setMenuOpen(false)}
  >
@@ -150,7 +150,7 @@ export default function SiteHeader() {
  </Link>
  <Link
  href="/tools/hard-water"
- className="hover:text-[#c8473a] transition-colors"
+ className="hover:text-[#fc2779] transition-colors"
  style={{ fontSize: "0.75rem", letterSpacing: "0.18em", textTransform: "uppercase", fontWeight: "600", color: "#2b2826", padding: "0.2rem 0", fontFamily: "var(--font-dm-sans), sans-serif" }}
  onClick={() => setMenuOpen(false)}
  >
@@ -158,7 +158,7 @@ export default function SiteHeader() {
  </Link>
  <Link
  href="/tools/dupes"
- className="hover:text-[#c8473a] transition-colors"
+ className="hover:text-[#fc2779] transition-colors"
  style={{ fontSize: "0.75rem", letterSpacing: "0.18em", textTransform: "uppercase", fontWeight: "600", color: "#2b2826", padding: "0.2rem 0", fontFamily: "var(--font-dm-sans), sans-serif" }}
  onClick={() => setMenuOpen(false)}
  >
@@ -169,7 +169,7 @@ export default function SiteHeader() {
 
  <Link
  href="/blog"
- className="hover:text-[#c8473a] transition-colors"
+ className="hover:text-[#fc2779] transition-colors"
  style={{ fontSize: "0.75rem", letterSpacing: "0.18em", textTransform: "uppercase", fontWeight: "600", color: "#2b2826", padding: "0.2rem 0", fontFamily: "var(--font-dm-sans), sans-serif" }}
  onClick={() => setMenuOpen(false)}
  >
@@ -177,7 +177,7 @@ export default function SiteHeader() {
  </Link>
  <Link
  href="/pricing"
- className="hover:text-[#c8473a] transition-colors"
+ className="hover:text-[#fc2779] transition-colors"
  style={{ fontSize: "0.75rem", letterSpacing: "0.18em", textTransform: "uppercase", fontWeight: "600", color: "#2b2826", padding: "0.2rem 0", fontFamily: "var(--font-dm-sans), sans-serif" }}
  onClick={() => setMenuOpen(false)}
  >
@@ -185,7 +185,7 @@ export default function SiteHeader() {
  </Link>
  <Link
  href="/about"
- className="hover:text-[#c8473a] transition-colors"
+ className="hover:text-[#fc2779] transition-colors"
  style={{ fontSize: "0.75rem", letterSpacing: "0.18em", textTransform: "uppercase", fontWeight: "600", color: "#2b2826", padding: "0.2rem 0", fontFamily: "var(--font-dm-sans), sans-serif" }}
  onClick={() => setMenuOpen(false)}
  >
@@ -193,7 +193,7 @@ export default function SiteHeader() {
  </Link>
  <Link
  href="/dashboard"
- className="hover:text-[#c8473a] transition-colors"
+ className="hover:text-[#fc2779] transition-colors"
  style={{ fontSize: "0.75rem", letterSpacing: "0.18em", textTransform: "uppercase", fontWeight: "600", color: "#2b2826", padding: "0.2rem 0", fontFamily: "var(--font-dm-sans), sans-serif" }}
  onClick={() => setMenuOpen(false)}
  >

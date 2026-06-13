@@ -44,7 +44,7 @@ export default async function ShareRoutinePage({ searchParams }: SharePageProps)
  .share-routine-page {
  --black: #0c0a09;
  --white: #fafaf8;
- --rose: #c8473a;
+ --rose: #fc2779;
  --rose-light: #fbf7f2;
  --paper: #fffcf8;
  --ink: #2b2826;
@@ -81,7 +81,7 @@ export default async function ShareRoutinePage({ searchParams }: SharePageProps)
  content: '';
  position: absolute;
  inset: 0;
- background: radial-gradient(circle at top right, rgba(200, 71, 58, 0.15) 0%, transparent 60%);
+ background: radial-gradient(circle at top right, rgba(252, 39, 121, 0.15) 0%, transparent 60%);
  pointer-events: none;
  }
 
@@ -148,7 +148,7 @@ export default async function ShareRoutinePage({ searchParams }: SharePageProps)
  background: var(--rose-light);
  padding: 1.1rem 1.4rem;
  border-radius: 20px;
- border: 1px solid rgba(200, 71, 58, 0.05);
+ border: 1px solid rgba(252, 39, 121, 0.05);
  }
 
  .share-step-number {

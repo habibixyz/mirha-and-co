@@ -120,7 +120,7 @@ export default function AboutPage() {
  color: #d99a8f;
  display: block;
  font-family: var(--font-playfair), serif;
- font-style: italic;
+ font-style: normal;
  font-weight: 600;
  font-size: clamp(2rem, 5.5vw, 3.8rem);
  letter-spacing: -0.02em;
@@ -141,7 +141,7 @@ export default function AboutPage() {
  line-height: 1.6;
  color: rgba(255,255,255,0.7);
  margin-bottom: 3rem;
- font-style: italic;
+ font-style: normal;
  }
 
  .strip {
@@ -195,7 +195,7 @@ export default function AboutPage() {
  .section-title span {
  color: var(--rose);
  display: block;
- font-style: italic;
+ font-style: normal;
  }
 
  .body-copy p {
@@ -324,7 +324,7 @@ export default function AboutPage() {
  line-height: 1.6;
  margin-bottom: 3rem;
  font-family: var(--font-playfair), serif;
- font-style: italic;
+ font-style: normal;
  }
 
  .btn-row {

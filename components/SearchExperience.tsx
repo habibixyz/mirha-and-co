@@ -69,7 +69,7 @@ export default function SearchExperience() {
  }
 
  .eyebrow {
- color: #c8473a;
+ color: #fc2779;
  font-size: 10px;
  letter-spacing: 0.28em;
  text-transform: uppercase;
@@ -190,7 +190,7 @@ export default function SearchExperience() {
  }
 
  .result-card:hover {
- border-color: #c8473a;
+ border-color: #fc2779;
  }
 
  .result-image {
@@ -211,7 +211,7 @@ export default function SearchExperience() {
  }
 
  .result-card small {
- color: #c8473a;
+ color: #fc2779;
  font-size: 9px;
  letter-spacing: 0.16em;
  text-transform: uppercase;

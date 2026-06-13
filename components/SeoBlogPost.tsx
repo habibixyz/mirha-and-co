@@ -52,7 +52,7 @@ export function SeoBlogPost({
  }
 
  .eyebrow {
- color: #c8473a;
+ color: #fc2779;
  font-size: 10px;
  letter-spacing: 0.28em;
  text-transform: uppercase;
@@ -167,7 +167,7 @@ export function SeoBlogPost({
  }
 
  .post-footer a {
- color: #c8473a;
+ color: #fc2779;
  text-decoration: none;
  font-weight: 700;
  }

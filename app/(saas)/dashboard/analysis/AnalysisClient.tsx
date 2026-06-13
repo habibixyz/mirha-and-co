@@ -64,11 +64,14 @@ export function AnalysisClient({
  // Initialize Paddle on client
  useEffect(() => {
  if ((window as any).Paddle) {
- try {
- (window as any).Paddle.Initialize({
- token: process.env.NEXT_PUBLIC_PADDLE_CLIENT_TOKEN || "live_4847fa72f94757482f02c950a29",
- environment: "production",
- eventCallback: function (data: any) {
+      try {
+        const env = process.env.NEXT_PUBLIC_PADDLE_ENVIRONMENT || "production";
+        if ((window as any).Paddle.Environment) {
+          (window as any).Paddle.Environment.set(env);
+        }
+        (window as any).Paddle.Initialize({
+          token: process.env.NEXT_PUBLIC_PADDLE_CLIENT_TOKEN || "live_4847fa72f94757482f02c950a29",
+          eventCallback: function (data: any) {
  if (data.name === "checkout.completed" || data.name === "transaction.completed") {
  alert("Payment successful! Access granted.");
  window.location.reload();
@@ -135,7 +138,7 @@ export function AnalysisClient({
  alert("Payment successful! Welcome to Pro.");
  window.location.reload();
  },
- theme: { color: "#c8473a" },
+ theme: { color: "#fc2779" },
  };
 
  const rzp = new (window as any).Razorpay(options);
@@ -272,7 +275,7 @@ export function AnalysisClient({
  <header style={{ marginBottom: "2rem" }}>
  <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.5rem" }}>
  <span style={{
- background: "rgba(200, 71, 58, 0.1)",
+ background: "rgba(252, 39, 121, 0.1)",
  color: "var(--rose)",
  padding: "0.2rem 0.6rem",
  borderRadius: "6px",
@@ -311,7 +314,7 @@ export function AnalysisClient({
  animate={{ opacity: 1, y: 0 }}
  className="paywall-card"
  >
- <div style={{ display: "inline-flex", padding: "1rem", background: "rgba(200,71,58,0.1)", borderRadius: "50%", marginBottom: "1.5rem" }}>
+ <div style={{ display: "inline-flex", padding: "1rem", background: "rgba(252, 39, 121,0.1)", borderRadius: "50%", marginBottom: "1.5rem" }}>
  <Star size={32} color="var(--rose)" />
  </div>
  
@@ -429,7 +432,7 @@ export function AnalysisClient({
  fontSize: "0.85rem",
  fontWeight: 600,
  cursor: "pointer",
- boxShadow: "0 4px 12px rgba(200, 71, 58, 0.2)"
+ boxShadow: "0 4px 12px rgba(252, 39, 121, 0.2)"
  }}
  >
  {paymentPending ? <Loader2 size={16} style={{ animation: "spin 1s linear infinite" }} /> : (paymentRegion === "USD" ? "Unavailable" : "Subscribe")}
@@ -525,7 +528,7 @@ export function AnalysisClient({
  fontSize: "0.9rem",
  fontWeight: 600,
  cursor: "pointer",
- boxShadow: "0 8px 20px rgba(200, 71, 58, 0.2)",
+ boxShadow: "0 8px 20px rgba(252, 39, 121, 0.2)",
  display: "flex",
  alignItems: "center",
  gap: "0.5rem"
@@ -668,7 +671,7 @@ export function AnalysisClient({
  gap: "0.5rem",
  width: "100%",
  justifyContent: "center",
- boxShadow: "0 6px 15px rgba(200, 71, 58, 0.2)"
+ boxShadow: "0 6px 15px rgba(252, 39, 121, 0.2)"
  }}
  >
  <MessageSquare size={18} />

@@ -207,7 +207,7 @@ export default async function ProductPage({ params }: { params: Promise<{ asin: 
  }
 
  .kicker {
- color: #c8473a;
+ color: #fc2779;
  font-size: 10px;
  letter-spacing: 0.22em;
  text-transform: uppercase;
@@ -399,7 +399,7 @@ export default async function ProductPage({ params }: { params: Promise<{ asin: 
  }
 
  .related-card span {
- color: #c8473a;
+ color: #fc2779;
  font-size: 12px;
  font-weight: 700;
  }

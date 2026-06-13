@@ -23,7 +23,7 @@ export default function SunscreenPost() {
  <style>{`
  .post-hdr { background: var(--black); padding: 6rem 2.5rem 4rem; }
  .post-hdr-inner { max-width: 780px; margin: 0 auto; }
- .post-badge { background: #c8473a; color: #fff; font-size: 0.6rem; letter-spacing: 0.2em; padding: 0.3rem 0.8rem; margin-bottom: 1.5rem; display:inline-block; }
+ .post-badge { background: #fc2779; color: #fff; font-size: 0.6rem; letter-spacing: 0.2em; padding: 0.3rem 0.8rem; margin-bottom: 1.5rem; display:inline-block; }
  .post-headline { font-family: 'DM Serif Display', serif; font-size: 3rem; color: white; line-height: 1.1; }
  .post-stand { color: rgba(255,255,255,0.6); margin-top: 1rem; max-width: 600px; }
  .post-meta { margin-top: 1.5rem; font-size: 0.7rem; color: rgba(255,255,255,0.4); letter-spacing: 0.1em; }
@@ -31,9 +31,9 @@ export default function SunscreenPost() {
  .post-body { max-width: 780px; margin: 0 auto; padding: 4rem 2.5rem; }
  .post-body p { line-height: 1.9; margin-bottom: 1.5rem; color: #2c2826; }
 
- .highlight-box { background: var(--sand); padding: 1.5rem; border-left: 4px solid #c8473a; margin: 2rem 0; font-style: italic; }
+ .highlight-box { background: var(--sand); padding: 1.5rem; border-left: 4px solid #fc2779; margin: 2rem 0; font-style: italic; }
 
- .pnum { background: #c8473a; color: white; width: 3rem; height: 3rem; display:flex; align-items:center; justify-content:center; margin:2rem 0 0.5rem; font-family: 'Bebas Neue', sans-serif; }
+ .pnum { background: #fc2779; color: white; width: 3rem; height: 3rem; display:flex; align-items:center; justify-content:center; margin:2rem 0 0.5rem; font-family: 'Bebas Neue', sans-serif; }
 
  .verdict-box { background: var(--black); color: white; padding: 2rem; margin-top: 3rem; }
 

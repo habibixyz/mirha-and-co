@@ -247,7 +247,7 @@ export function RoutinesClient({ initialRoutines }: { initialRoutines: any[] }) 
  {sharedId === routine.id ? <Check size={18} style={{ color: "#059669" }} /> : <Share2 size={18} />}
  </motion.button>
  <motion.button
- whileHover={{ scale: 1.1, background: "rgba(200, 71, 58, 0.1)", color: "var(--dash-accent)" }}
+ whileHover={{ scale: 1.1, background: "rgba(252, 39, 121, 0.1)", color: "var(--dash-accent)" }}
  whileTap={{ scale: 0.9 }}
  onClick={() => handleDeleteRoutine(routine.id, routine.isNew)}
  disabled={isPending}

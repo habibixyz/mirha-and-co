@@ -8,7 +8,7 @@ import { POSTS, getRelevantImage } from "@/lib/posts";
 const catMeta = {
  beauty: {
  label: "Beauty",
- color: "#c8473a",
+ color: "#fc2779",
  description:
  "Skincare, routines, and products that actually work on Indian skin.",
  },
@@ -92,7 +92,7 @@ export default async function CategoryPage({
  .journal-page { 
  background-color: #faf8f5; 
  background-image: 
- radial-gradient(circle at 15% 5%, rgba(200,71,58,0.04) 0%, transparent 45%),
+ radial-gradient(circle at 15% 5%, rgba(252, 39, 121,0.04) 0%, transparent 45%),
  radial-gradient(circle at 85% 30%, rgba(162,123,92,0.03) 0%, transparent 55%);
  color: #2b2826; 
  min-height: 100vh; 

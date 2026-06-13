@@ -86,7 +86,7 @@ export default function BarrierRepairPage() {
  {/* WEEK 1 */}
  <section style={{ marginBottom: "3rem" }}>
  <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "1rem" }}>
- <span style={{ fontFamily: "monospace", fontSize: "0.7rem", letterSpacing: "0.15em", color: "var(--rose)", background: "rgba(200,71,58,0.08)", padding: "0.3rem 0.7rem", borderRadius: 3 }}>WEEK 1</span>
+ <span style={{ fontFamily: "monospace", fontSize: "0.7rem", letterSpacing: "0.15em", color: "var(--rose)", background: "rgba(252, 39, 121,0.08)", padding: "0.3rem 0.7rem", borderRadius: 3 }}>WEEK 1</span>
  <h2 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "1.5rem", fontWeight: 400, color: "var(--ink)", margin: 0 }}>Strip Everything Down</h2>
  </div>
  <p style={{ fontSize: "0.95rem", color: "var(--muted)", lineHeight: 1.8, marginBottom: "1rem" }}>
@@ -108,7 +108,7 @@ export default function BarrierRepairPage() {
  {/* WEEK 2 */}
  <section style={{ marginBottom: "3rem" }}>
  <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "1rem" }}>
- <span style={{ fontFamily: "monospace", fontSize: "0.7rem", letterSpacing: "0.15em", color: "var(--rose)", background: "rgba(200,71,58,0.08)", padding: "0.3rem 0.7rem", borderRadius: 3 }}>WEEK 2</span>
+ <span style={{ fontFamily: "monospace", fontSize: "0.7rem", letterSpacing: "0.15em", color: "var(--rose)", background: "rgba(252, 39, 121,0.08)", padding: "0.3rem 0.7rem", borderRadius: 3 }}>WEEK 2</span>
  <h2 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "1.5rem", fontWeight: 400, color: "var(--ink)", margin: 0 }}>Add Hydration Back</h2>
  </div>
  <p style={{ fontSize: "0.95rem", color: "var(--muted)", lineHeight: 1.8, marginBottom: "1rem" }}>
@@ -126,7 +126,7 @@ export default function BarrierRepairPage() {
  {/* WEEK 3 */}
  <section style={{ marginBottom: "3rem" }}>
  <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "1rem" }}>
- <span style={{ fontFamily: "monospace", fontSize: "0.7rem", letterSpacing: "0.15em", color: "var(--rose)", background: "rgba(200,71,58,0.08)", padding: "0.3rem 0.7rem", borderRadius: 3 }}>WEEK 3</span>
+ <span style={{ fontFamily: "monospace", fontSize: "0.7rem", letterSpacing: "0.15em", color: "var(--rose)", background: "rgba(252, 39, 121,0.08)", padding: "0.3rem 0.7rem", borderRadius: 3 }}>WEEK 3</span>
  <h2 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "1.5rem", fontWeight: 400, color: "var(--ink)", margin: 0 }}>Reintroduce Niacinamide</h2>
  </div>
  <p style={{ fontSize: "0.95rem", color: "var(--muted)", lineHeight: 1.8, marginBottom: "1rem" }}>
@@ -143,7 +143,7 @@ export default function BarrierRepairPage() {
  {/* WEEK 4 */}
  <section style={{ marginBottom: "3rem" }}>
  <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "1rem" }}>
- <span style={{ fontFamily: "monospace", fontSize: "0.7rem", letterSpacing: "0.15em", color: "var(--rose)", background: "rgba(200,71,58,0.08)", padding: "0.3rem 0.7rem", borderRadius: 3 }}>WEEK 4+</span>
+ <span style={{ fontFamily: "monospace", fontSize: "0.7rem", letterSpacing: "0.15em", color: "var(--rose)", background: "rgba(252, 39, 121,0.08)", padding: "0.3rem 0.7rem", borderRadius: 3 }}>WEEK 4+</span>
  <h2 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "1.5rem", fontWeight: 400, color: "var(--ink)", margin: 0 }}>Reintroduce Actives — Slowly</h2>
  </div>
  <p style={{ fontSize: "0.95rem", color: "var(--muted)", lineHeight: 1.8, marginBottom: "1rem" }}>

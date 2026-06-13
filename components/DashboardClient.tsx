@@ -316,7 +316,7 @@ export function DashboardClient({ user, routines, recentJournal, stats }: any) {
  justifyContent: "center",
  gap: "0.5rem",
  marginTop: "1.5rem",
- boxShadow: "0 10px 25px rgba(200, 71, 58, 0.25)",
+ boxShadow: "0 10px 25px rgba(252, 39, 121, 0.25)",
  transition: "all 0.2s"
  }}
  >

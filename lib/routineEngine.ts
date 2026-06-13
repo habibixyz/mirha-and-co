@@ -38,22 +38,32 @@ export interface RoutineRecommendation {
 // cetaphil_cream ₹1317 ✓ under 2000 only
 
 const ASIN = {
- cetaphil_facewash: "B01CCGW4OE",
- simple_facewash: "B00V4R0ET0",
- minimalist_ala_wash: "B09VLDY46B",
- minimalist_niacinamide: "B0DH88LZ11",
- ordinary_niacinamide: "B01MDTVZTZ",
- plum_vitamin_c: "B095PRGHDX",
- minimalist_retinol: "B091JG3GJ5",
- dotkey_hyaluronic: "B0FG2PQVK5",
- neutrogena_hydro_boost: "B00BQFTQW6",
- cetaphil_cream: "B099MJH88B",
- minimalist_spf: "B0DHY6LQTW",
- aqualogica_spf: "B0C9JPWLR4",
- deconstruct_spf: "B0B45RB1RV",
- lakme_spf: "B00CS1KT96",
- wishcare_spf: "B0CW1N7QRT",
-};
+  cetaphil_facewash: "B01CCGW4OE",
+  simple_facewash: "B00V4R0ET0",
+  minimalist_ala_wash: "B09VLDY46B",
+  minimalist_niacinamide: "B0DH88LZ11",
+  ordinary_niacinamide: "B01MDTVZTZ",
+  plum_vitamin_c: "B095PRGHDX",
+  minimalist_retinol: "B091JG3GJ5",
+  dotkey_hyaluronic: "B0FG2PQVK5",
+  neutrogena_hydro_boost: "B00BQFTQW6",
+  cetaphil_cream: "B099MJH88B",
+  minimalist_spf: "B0DHY6LQTW",
+  aqualogica_spf: "B0C9JPWLR4",
+  deconstruct_spf: "B0B45RB1RV",
+  lakme_spf: "B00CS1KT96",
+  wishcare_spf: "B0CW1N7QRT",
+  // 12 New high-intent additions
+  dermaco_salicylic_wash: "B095J52W7P",
+  dermaco_hyaluronic_spf: "B0C6M3KHXV",
+  reequil_matte_spf: "B07VP5JFRB",
+  cosrx_snail_mucin: "B00PBX3L7K",
+  cosrx_low_ph_wash: "B016NRXO06",
+  foxtale_glow_spf: "B0C3CP6B5Y",
+  dotkey_cica_gel: "B09HC3QNLG",
+  bioderma_atoderm: "B08475HN8L",
+  pilgrim_salicylic_wash: "B0B8D63GV6",
+}
 
 // ─── BUDGET TIERS ─────────────────────────────────────────────────────────
 // budget_500 = total routine under ₹500 → only products ≤ ₹400 each
@@ -64,28 +74,28 @@ const ROUTINE_MAP: Record<string, Record<string, RoutineRecommendation>> = {
 
  // ── OILY SKIN ─────────────────────────────────────────────────────────────
 
- oily_acne: {
- budget_500: {
- cleanser: { asin: ASIN.minimalist_ala_wash, name: "Minimalist 7% ALA + Glycolic Face Wash", reason: "Gently exfoliates excess oil and unclogs pores without stripping the skin barrier. ₹380." },
- treatment: { asin: ASIN.dotkey_hyaluronic, name: "Dot & Key Watermelon Hyaluronic Serum", reason: "Hydrates without clogging pores — oily acne-prone skin is often dehydrated underneath. ₹400." },
- moisturiser: { asin: ASIN.aqualogica_spf, name: "Aqualogica Radiance+ Dewy Sunscreen SPF 50 PA++++", reason: "Doubles as your SPF and light moisturiser. Fragrance-free, no white cast. ₹388." },
- sunscreen: { asin: ASIN.deconstruct_spf, name: "Deconstruct Gel Sunscreen SPF 50 PA++++", reason: "4 next-gen UV filters, 100% photostable, airy gel texture for oily skin. ₹281." },
- },
- budget_1000: {
- cleanser: { asin: ASIN.minimalist_ala_wash, name: "Minimalist 7% ALA + Glycolic Face Wash", reason: "Gently exfoliates excess oil and unclogs pores without stripping the skin barrier." },
- treatment: { asin: ASIN.ordinary_niacinamide, name: "The Ordinary Niacinamide 10% + Zinc 1%", reason: "The international benchmark for pore control and oil reduction. Cult product for a reason." },
- moisturiser: { asin: ASIN.neutrogena_hydro_boost, name: "Neutrogena Hydro Boost Water Gel", reason: "Oil-free gel that hydrates without clogging pores. Dermatologist-approved for oily skin." },
- sunscreen: { asin: ASIN.deconstruct_spf, name: "Deconstruct Gel Sunscreen SPF 50 PA++++", reason: "4 next-gen UV filters. 100% photostable. Lightweight gel — perfect for oily and combination skin." },
- },
- budget_2000: {
- cleanser: { asin: ASIN.cetaphil_facewash, name: "Cetaphil Gentle Skin Hydrating Face Wash", reason: "Dermatologist gold standard. Cleans without stripping — critical when using actives." },
- treatment: { asin: ASIN.minimalist_niacinamide, name: "Minimalist 10% Niacinamide + Zinc Serum", reason: "Controls sebum, reduces breakouts, and fades post-acne marks — the most useful active for Indian skin." },
- moisturiser: { asin: ASIN.neutrogena_hydro_boost, name: "Neutrogena Hydro Boost Water Gel", reason: "Oil-free gel that hydrates without clogging pores. Cult pick for oily skin globally." },
- sunscreen: { asin: ASIN.aqualogica_spf, name: "Aqualogica Radiance+ Dewy Sunscreen SPF 50 PA++++", reason: "Anti-pollution technology. Watermelon + Niacinamide for oily Indian skin. No white cast." },
- },
- },
+   oily_acne: {
+    budget_500: {
+      cleanser: { asin: ASIN.dermaco_salicylic_wash, name: "The Derma Co 1% Salicylic Acid Gel Face Wash", reason: "Contains Salicylic Acid and Witch Hazel to penetrate deep into pores, reducing active acne and excess sebum. ₹249." },
+      treatment: { asin: ASIN.dotkey_hyaluronic, name: "Dot & Key Watermelon Hyaluronic Serum", reason: "Hydrates without clogging pores — oily acne-prone skin is often dehydrated underneath. ₹400." },
+      moisturiser: { asin: ASIN.dotkey_cica_gel, name: "Dot & Key CICA Calming Skin Renewing Night Gel", reason: "Supercharged with Cica and Niacinamide to soothe acne inflammation, reduce redness, and hydrate oily skin without clogging. ₹395." },
+      sunscreen: { asin: ASIN.foxtale_glow_spf, name: "Foxtale Glow Sunscreen SPF 50 PA++++", reason: "Vitamin C and Niacinamide brightens skin, while giving a lightweight, zero-white-cast matte finish suitable for oily skin. ₹345." },
+    },
+    budget_1000: {
+      cleanser: { asin: ASIN.cosrx_low_ph_wash, name: "COSRX Low pH Good Morning Gel Cleanser", reason: "Formulated with purifying botanical ingredients and mild acids to gently cleanse acne-prone skin without stripping it." },
+      treatment: { asin: ASIN.ordinary_niacinamide, name: "The Ordinary Niacinamide 10% + Zinc 1%", reason: "The international benchmark for pore control and oil reduction. Cult product for a reason." },
+      moisturiser: { asin: ASIN.neutrogena_hydro_boost, name: "Neutrogena Hydro Boost Water Gel", reason: "Oil-free gel that hydrates without clogging pores. Dermatologist-approved for oily skin." },
+      sunscreen: { asin: ASIN.reequil_matte_spf, name: "RE' EQUIL Ultra Matte Dry Touch Sunscreen", reason: "Silicon-based gel sunscreen that acts like a primer. Completely matte, water/sweat resistant, and non-comedogenic." },
+    },
+    budget_2000: {
+      cleanser: { asin: ASIN.cetaphil_facewash, name: "Cetaphil Gentle Skin Hydrating Face Wash", reason: "Dermatologist gold standard. Cleans without stripping — critical when using actives." },
+      treatment: { asin: ASIN.minimalist_niacinamide, name: "Minimalist 10% Niacinamide + Zinc Serum", reason: "Controls sebum, reduces breakouts, and fades post-acne marks — the most useful active for Indian skin." },
+      moisturiser: { asin: ASIN.neutrogena_hydro_boost, name: "Neutrogena Hydro Boost Water Gel", reason: "Oil-free gel that hydrates without clogging pores. Cult pick for oily skin globally." },
+      sunscreen: { asin: ASIN.dermaco_hyaluronic_spf, name: "The Derma Co 1% Hyaluronic Sunscreen Aqua Gel", reason: "Ultra-lightweight, hydrating sunscreen with SPF 50 PA++++. Zero white cast, absorbs instantly, and contains hyaluronic acid." },
+    },
+  },
 
- oily_pigmentation: {
+  oily_pigmentation: {
  budget_500: {
  cleanser: { asin: ASIN.minimalist_ala_wash, name: "Minimalist 7% ALA + Glycolic Face Wash", reason: "Mild exfoliation helps surface pigmentation and keeps pores clear. ₹380." },
  treatment: { asin: ASIN.plum_vitamin_c, name: "Plum 15% Vitamin C Face Serum", reason: "Stable 15% Vitamin C targets melanin. Use mornings before SPF. ₹445." },
@@ -127,51 +137,51 @@ const ROUTINE_MAP: Record<string, Record<string, RoutineRecommendation>> = {
  },
  },
 
- oily_dehydration: {
- budget_500: {
- cleanser: { asin: ASIN.simple_facewash, name: "Simple Kind To Skin Moisturising Facial Wash", reason: "Soap-free formula that cleanses without removing moisture — critical for dehydrated oily skin. ₹329." },
- treatment: { asin: ASIN.dotkey_hyaluronic, name: "Dot & Key Watermelon Hyaluronic Serum", reason: "Triple hyaluronic acid pulls water into dehydrated oily skin. ₹400." },
- moisturiser: { asin: ASIN.wishcare_spf, name: "WishCare Niacinamide Sunscreen SPF 50 PA++++", reason: "Lightweight, non-drying SPF doubles as final moisture step. ₹316." },
- sunscreen: { asin: ASIN.lakme_spf, name: "Lakme SPF 50 PA++++ Sunscreen", reason: "UV exposure worsens dehydration. Lightweight budget SPF. ₹282." },
- },
- budget_1000: {
- cleanser: { asin: ASIN.simple_facewash, name: "Simple Kind To Skin Moisturising Facial Wash", reason: "Hydrating cleanser with Panthenol that strengthens the skin barrier." },
- treatment: { asin: ASIN.dotkey_hyaluronic, name: "Dot & Key Watermelon Hyaluronic Serum", reason: "Instantly plumps dehydrated skin. Lightweight, non-sticky, absorbs in seconds." },
- moisturiser: { asin: ASIN.neutrogena_hydro_boost, name: "Neutrogena Hydro Boost Water Gel", reason: "Hyaluronic acid-based. Hydrates for 48 hours without grease — dermat-approved for oily types." },
- sunscreen: { asin: ASIN.aqualogica_spf, name: "Aqualogica Radiance+ Dewy Sunscreen SPF 50 PA++++", reason: "Dewy, hydrating sunscreen — counters the drying effect of UV exposure." },
- },
- budget_2000: {
- cleanser: { asin: ASIN.cetaphil_facewash, name: "Cetaphil Gentle Skin Hydrating Face Wash", reason: "Niacinamide + Panthenol cleanser that actively supports the moisture barrier while cleansing." },
- treatment: { asin: ASIN.dotkey_hyaluronic, name: "Dot & Key Watermelon Hyaluronic Serum", reason: "Triple HA + Watermelon extract — deep hydration that's still light enough for oily skin." },
- moisturiser: { asin: ASIN.neutrogena_hydro_boost, name: "Neutrogena Hydro Boost Water Gel", reason: "Cult-favourite oil-free moisturiser. 48-hour hydration. Works on oily-dehydrated combination." },
- sunscreen: { asin: ASIN.wishcare_spf, name: "WishCare Niacinamide Sunscreen SPF 50 PA++++", reason: "Lightweight, non-drying formula. Niacinamide supports barrier health alongside UV protection." },
- },
- },
+   oily_dehydration: {
+    budget_500: {
+      cleanser: { asin: ASIN.simple_facewash, name: "Simple Kind To Skin Moisturising Facial Wash", reason: "Soap-free formula that cleanses without removing moisture — critical for dehydrated oily skin. ₹329." },
+      treatment: { asin: ASIN.dotkey_hyaluronic, name: "Dot & Key Watermelon Hyaluronic Serum", reason: "Triple hyaluronic acid pulls water into dehydrated oily skin. ₹400." },
+      moisturiser: { asin: ASIN.wishcare_spf, name: "WishCare Niacinamide Sunscreen SPF 50 PA++++", reason: "Lightweight, non-drying SPF doubles as final moisture step. ₹316." },
+      sunscreen: { asin: ASIN.lakme_spf, name: "Lakme SPF 50 PA++++ Sunscreen", reason: "UV exposure worsens dehydration. Lightweight budget SPF. ₹282." },
+    },
+    budget_1000: {
+      cleanser: { asin: ASIN.simple_facewash, name: "Simple Kind To Skin Moisturising Facial Wash", reason: "Hydrating cleanser with Panthenol that strengthens the skin barrier." },
+      treatment: { asin: ASIN.dotkey_hyaluronic, name: "Dot & Key Watermelon Hyaluronic Serum", reason: "Instantly plumps dehydrated skin. Lightweight, non-sticky, absorbs in seconds." },
+      moisturiser: { asin: ASIN.neutrogena_hydro_boost, name: "Neutrogena Hydro Boost Water Gel", reason: "Hyaluronic acid-based. Hydrates for 48 hours without grease — dermat-approved for oily types." },
+      sunscreen: { asin: ASIN.aqualogica_spf, name: "Aqualogica Radiance+ Dewy Sunscreen SPF 50 PA++++", reason: "Dewy, hydrating sunscreen — counters the drying effect of UV exposure." },
+    },
+    budget_2000: {
+      cleanser: { asin: ASIN.cetaphil_facewash, name: "Cetaphil Gentle Skin Hydrating Face Wash", reason: "Niacinamide + Panthenol cleanser that actively supports the moisture barrier while cleansing." },
+      treatment: { asin: ASIN.cosrx_snail_mucin, name: "Cosrx Advanced Snail 96 Mucin Power Essence", reason: "A global cult product containing 96% snail secretion filtrate to deeply hydrate, repair the barrier, and create a glass-skin glow." },
+      moisturiser: { asin: ASIN.neutrogena_hydro_boost, name: "Neutrogena Hydro Boost Water Gel", reason: "Oil-free gel moisturiser. 48-hour hydration. Works on oily-dehydrated combination." },
+      sunscreen: { asin: ASIN.wishcare_spf, name: "WishCare Niacinamide Sunscreen SPF 50 PA++++", reason: "Lightweight, non-drying formula. Niacinamide supports barrier health alongside UV protection." },
+    },
+  },
 
- // ── DRY SKIN ──────────────────────────────────────────────────────────────
+  // ── DRY SKIN ──────────────────────────────────────────────────────────────
 
- dry_acne: {
- budget_500: {
- cleanser: { asin: ASIN.simple_facewash, name: "Simple Kind To Skin Moisturising Facial Wash", reason: "100% soap-free. Retains moisture while clearing the skin — essential for dry acne-prone skin. ₹329." },
- treatment: { asin: ASIN.dotkey_hyaluronic, name: "Dot & Key Watermelon Hyaluronic Serum", reason: "Dry acne skin needs hydration first. Hyaluronic acid without any irritating actives. ₹400." },
- moisturiser: { asin: ASIN.wishcare_spf, name: "WishCare Niacinamide Sunscreen SPF 50 PA++++", reason: "Niacinamide helps with acne while SPF protects. Non-drying formula. ₹316." },
- sunscreen: { asin: ASIN.lakme_spf, name: "Lakme SPF 50 PA++++ Sunscreen", reason: "Waterlight texture with niacinamide. Budget-friendly SPF that doesn't dry out. ₹282." },
- },
- budget_1000: {
- cleanser: { asin: ASIN.cetaphil_facewash, name: "Cetaphil Gentle Skin Hydrating Face Wash", reason: "The dermatologist's cleanser for dry and sensitive skin. Niacinamide and Vitamin B5 preserve moisture." },
- treatment: { asin: ASIN.ordinary_niacinamide, name: "The Ordinary Niacinamide 10% + Zinc 1%", reason: "Treats acne without acid exfoliation — the right call for dry skin prone to breakouts." },
- moisturiser: { asin: ASIN.neutrogena_hydro_boost, name: "Neutrogena Hydro Boost Water Gel", reason: "Hydrates deeply without the heaviness of a cream. Works for dry skin that also breaks out." },
- sunscreen: { asin: ASIN.minimalist_spf, name: "Minimalist Sunscreen SPF 50 PA+++ 100gm", reason: "Multi-vitamin formula SPF that doesn't strip moisture. 100gm — great value." },
- },
- budget_2000: {
- cleanser: { asin: ASIN.cetaphil_facewash, name: "Cetaphil Gentle Skin Hydrating Face Wash", reason: "Vitamin B5 and Niacinamide cleanser. Supports barrier recovery alongside acne control." },
- treatment: { asin: ASIN.minimalist_niacinamide, name: "Minimalist 10% Niacinamide + Zinc Serum", reason: "Treats acne and post-marks without the dryness of acids. Right call for dry acne-prone skin." },
- moisturiser: { asin: ASIN.cetaphil_cream, name: "Cetaphil Moisturising Cream 250g", reason: "Clinical-grade barrier repair. The best OTC moisturiser for consistently dry or eczema-prone skin." },
- sunscreen: { asin: ASIN.aqualogica_spf, name: "Aqualogica Radiance+ Dewy Sunscreen SPF 50 PA++++", reason: "Dewy, hydrating sunscreen that adds moisture rather than stripping it." },
- },
- },
+   dry_acne: {
+    budget_500: {
+      cleanser: { asin: ASIN.simple_facewash, name: "Simple Kind To Skin Moisturising Facial Wash", reason: "100% soap-free. Retains moisture while clearing the skin — essential for dry acne-prone skin. ₹329." },
+      treatment: { asin: ASIN.dotkey_hyaluronic, name: "Dot & Key Watermelon Hyaluronic Serum", reason: "Dry acne skin needs hydration first. Hyaluronic acid without any irritating actives. ₹400." },
+      moisturiser: { asin: ASIN.bioderma_atoderm, name: "Bioderma Atoderm Intensive Baume", reason: "Deeply nourishing ceramide-barrier cream that calms irritation, flaking, and dry skin sensitivity. ₹382." },
+      sunscreen: { asin: ASIN.lakme_spf, name: "Lakme SPF 50 PA++++ Sunscreen", reason: "Waterlight texture with niacinamide. Budget-friendly SPF that doesn't dry out. ₹282." },
+    },
+    budget_1000: {
+      cleanser: { asin: ASIN.cetaphil_facewash, name: "Cetaphil Gentle Skin Hydrating Face Wash", reason: "The dermatologist's cleanser for dry and sensitive skin. Niacinamide and Vitamin B5 preserve moisture." },
+      treatment: { asin: ASIN.ordinary_niacinamide, name: "The Ordinary Niacinamide 10% + Zinc 1%", reason: "Treats acne without acid exfoliation — the right call for dry skin prone to breakouts." },
+      moisturiser: { asin: ASIN.bioderma_atoderm, name: "Bioderma Atoderm Intensive Baume", reason: "Deeply nourishing ceramide-barrier cream that calms irritation, flaking, and dry skin sensitivity." },
+      sunscreen: { asin: ASIN.minimalist_spf, name: "Minimalist Sunscreen SPF 50 PA+++ 100gm", reason: "Multi-vitamin formula SPF that doesn't strip moisture. 100gm — great value." },
+    },
+    budget_2000: {
+      cleanser: { asin: ASIN.cetaphil_facewash, name: "Cetaphil Gentle Skin Hydrating Face Wash", reason: "Vitamin B5 and Niacinamide cleanser. Supports barrier recovery alongside acne control." },
+      treatment: { asin: ASIN.minimalist_niacinamide, name: "Minimalist 10% Niacinamide + Zinc Serum", reason: "Treats acne and post-marks without the dryness of acids. Right call for dry acne-prone skin." },
+      moisturiser: { asin: ASIN.cetaphil_cream, name: "Cetaphil Moisturising Cream 250g", reason: "Clinical-grade barrier repair. The best OTC moisturiser for consistently dry or eczema-prone skin." },
+      sunscreen: { asin: ASIN.aqualogica_spf, name: "Aqualogica Radiance+ Dewy Sunscreen SPF 50 PA++++", reason: "Dewy, hydrating sunscreen that adds moisture rather than stripping it." },
+    },
+  },
 
- dry_pigmentation: {
+  dry_pigmentation: {
  budget_500: {
  cleanser: { asin: ASIN.simple_facewash, name: "Simple Kind To Skin Moisturising Facial Wash", reason: "Soap-free, Panthenol-enriched cleanser that preserves moisture while prepping skin for actives. ₹329." },
  treatment: { asin: ASIN.plum_vitamin_c, name: "Plum 15% Vitamin C Face Serum", reason: "Stable 15% Vitamin C fades pigmentation without drying. Vegan, dermat-tested. ₹445." },
@@ -213,28 +223,28 @@ const ROUTINE_MAP: Record<string, Record<string, RoutineRecommendation>> = {
  },
  },
 
- dry_dehydration: {
- budget_500: {
- cleanser: { asin: ASIN.simple_facewash, name: "Simple Kind To Skin Moisturising Facial Wash", reason: "Soap-free, enriched with Panthenol. Cleanses without removing any moisture. ₹329." },
- treatment: { asin: ASIN.dotkey_hyaluronic, name: "Dot & Key Watermelon Hyaluronic Serum", reason: "Triple hyaluronic acid — the fastest fix for dehydrated dry skin. Apply on damp skin. ₹400." },
- moisturiser: { asin: ASIN.aqualogica_spf, name: "Aqualogica Radiance+ Dewy Sunscreen SPF 50 PA++++", reason: "Dewy finish adds hydration at the SPF step. ₹388." },
- sunscreen: { asin: ASIN.lakme_spf, name: "Lakme SPF 50 PA++++ Sunscreen", reason: "Lightweight, non-drying SPF. UV protection is critical even for dehydrated skin. ₹282." },
- },
- budget_1000: {
- cleanser: { asin: ASIN.cetaphil_facewash, name: "Cetaphil Gentle Skin Hydrating Face Wash", reason: "Hydrating cleanser that actively supports the moisture barrier rather than challenging it." },
- treatment: { asin: ASIN.dotkey_hyaluronic, name: "Dot & Key Watermelon Hyaluronic Serum", reason: "Deep, instant hydration. Apply on damp skin for maximum absorption." },
- moisturiser: { asin: ASIN.neutrogena_hydro_boost, name: "Neutrogena Hydro Boost Water Gel", reason: "Seals in serum hydration and prevents further transepidermal water loss." },
- sunscreen: { asin: ASIN.aqualogica_spf, name: "Aqualogica Radiance+ Dewy Sunscreen SPF 50 PA++++", reason: "Dewy finish adds visible hydration while protecting against UV-caused dehydration." },
- },
- budget_2000: {
- cleanser: { asin: ASIN.cetaphil_facewash, name: "Cetaphil Gentle Skin Hydrating Face Wash", reason: "Niacinamide and Vitamin B5 actively support a compromised moisture barrier." },
- treatment: { asin: ASIN.dotkey_hyaluronic, name: "Dot & Key Watermelon Hyaluronic Serum", reason: "Triple HA for layered hydration. Lightweight and absorbs before moisturiser." },
- moisturiser: { asin: ASIN.cetaphil_cream, name: "Cetaphil Moisturising Cream 250g", reason: "Clinical barrier repair. Best option for very dry, dehydrated, or eczema-adjacent skin." },
- sunscreen: { asin: ASIN.wishcare_spf, name: "WishCare Niacinamide Sunscreen SPF 50 PA++++", reason: "Non-drying SPF formula. Niacinamide supports hydration alongside UV defence." },
- },
- },
+   dry_dehydration: {
+    budget_500: {
+      cleanser: { asin: ASIN.simple_facewash, name: "Simple Kind To Skin Moisturising Facial Wash", reason: "Soap-free, enriched with Panthenol. Cleanses without removing any moisture. ₹329." },
+      treatment: { asin: ASIN.dotkey_hyaluronic, name: "Dot & Key Watermelon Hyaluronic Serum", reason: "Triple hyaluronic acid — the fastest fix for dehydrated dry skin. Apply on damp skin. ₹400." },
+      moisturiser: { asin: ASIN.bioderma_atoderm, name: "Bioderma Atoderm Intensive Baume", reason: "Deeply nourishing ceramide-barrier cream that calms irritation, flaking, and dry skin sensitivity. ₹382." },
+      sunscreen: { asin: ASIN.lakme_spf, name: "Lakme SPF 50 PA++++ Sunscreen", reason: "Lightweight, non-drying SPF. UV protection is critical even for dehydrated skin. ₹282." },
+    },
+    budget_1000: {
+      cleanser: { asin: ASIN.cetaphil_facewash, name: "Cetaphil Gentle Skin Hydrating Face Wash", reason: "Hydrating cleanser that actively supports the moisture barrier rather than challenging it." },
+      treatment: { asin: ASIN.dotkey_hyaluronic, name: "Dot & Key Watermelon Hyaluronic Serum", reason: "Deep, instant hydration. Apply on damp skin for maximum absorption." },
+      moisturiser: { asin: ASIN.bioderma_atoderm, name: "Bioderma Atoderm Intensive Baume", reason: "Clinical-grade barrier repair. Deeply hydrates and restores extremely dry skin." },
+      sunscreen: { asin: ASIN.aqualogica_spf, name: "Aqualogica Radiance+ Dewy Sunscreen SPF 50 PA++++", reason: "Dewy finish adds visible hydration while protecting against UV-caused dehydration." },
+    },
+    budget_2000: {
+      cleanser: { asin: ASIN.cetaphil_facewash, name: "Cetaphil Gentle Skin Hydrating Face Wash", reason: "Niacinamide and Vitamin B5 actively support a compromised moisture barrier." },
+      treatment: { asin: ASIN.cosrx_snail_mucin, name: "Cosrx Advanced Snail 96 Mucin Power Essence", reason: "A global cult product containing 96% snail secretion filtrate to deeply hydrate, repair the barrier, and create a glass-skin glow." },
+      moisturiser: { asin: ASIN.cetaphil_cream, name: "Cetaphil Moisturising Cream 250g", reason: "Clinical barrier repair. Best option for very dry, dehydrated, or eczema-adjacent skin." },
+      sunscreen: { asin: ASIN.wishcare_spf, name: "WishCare Niacinamide Sunscreen SPF 50 PA++++", reason: "Non-drying SPF formula. Niacinamide supports hydration alongside UV defence." },
+    },
+  },
 
- // ── COMBINATION SKIN ──────────────────────────────────────────────────────
+  // ── COMBINATION SKIN ──────────────────────────────────────────────────────
 
  combination_acne: {
  budget_500: {
@@ -299,28 +309,28 @@ const ROUTINE_MAP: Record<string, Record<string, RoutineRecommendation>> = {
  },
  },
 
- combination_dehydration: {
- budget_500: {
- cleanser: { asin: ASIN.simple_facewash, name: "Simple Kind To Skin Moisturising Facial Wash", reason: "Soap-free. Keeps moisture in while cleansing the oily zones of combination skin. ₹329." },
- treatment: { asin: ASIN.dotkey_hyaluronic, name: "Dot & Key Watermelon Hyaluronic Serum", reason: "Hydrates the dry zones without making the oily zones greasier. ₹400." },
- moisturiser: { asin: ASIN.wishcare_spf, name: "WishCare Niacinamide Sunscreen SPF 50 PA++++", reason: "Non-drying SPF that works as the final hydration and protection step. ₹316." },
- sunscreen: { asin: ASIN.lakme_spf, name: "Lakme SPF 50 PA++++ Sunscreen", reason: "UV exposure worsens dehydration. Daily SPF is non-negotiable. ₹282." },
- },
- budget_1000: {
- cleanser: { asin: ASIN.simple_facewash, name: "Simple Kind To Skin Moisturising Facial Wash", reason: "Strengthens skin barrier. Combination skin that's dehydrated needs barrier support first." },
- treatment: { asin: ASIN.dotkey_hyaluronic, name: "Dot & Key Watermelon Hyaluronic Serum", reason: "Triple HA serum. Apply to damp skin for maximum hydration delivery." },
- moisturiser: { asin: ASIN.neutrogena_hydro_boost, name: "Neutrogena Hydro Boost Water Gel", reason: "Dermatologist-recommended for exactly this profile: oily in places, dehydrated overall." },
- sunscreen: { asin: ASIN.aqualogica_spf, name: "Aqualogica Radiance+ Dewy Sunscreen SPF 50 PA++++", reason: "Adds dewy hydration to the final step — counters dryness from UV exposure." },
- },
- budget_2000: {
- cleanser: { asin: ASIN.cetaphil_facewash, name: "Cetaphil Gentle Skin Hydrating Face Wash", reason: "Niacinamide + Panthenol cleanser that actively supports moisture barrier in dehydrated combination skin." },
- treatment: { asin: ASIN.dotkey_hyaluronic, name: "Dot & Key Watermelon Hyaluronic Serum", reason: "Non-sticky triple hyaluronic acid. The fastest visible improvement for dehydrated skin." },
- moisturiser: { asin: ASIN.neutrogena_hydro_boost, name: "Neutrogena Hydro Boost Water Gel", reason: "Cult gel moisturiser. 48-hour hydration without grease." },
- sunscreen: { asin: ASIN.wishcare_spf, name: "WishCare Niacinamide Sunscreen SPF 50 PA++++", reason: "Non-drying SPF formula. Niacinamide supports hydration alongside UV defence." },
- },
- },
+   combination_dehydration: {
+    budget_500: {
+      cleanser: { asin: ASIN.simple_facewash, name: "Simple Kind To Skin Moisturising Facial Wash", reason: "Soap-free. Keeps moisture in while cleansing the oily zones of combination skin. ₹329." },
+      treatment: { asin: ASIN.dotkey_hyaluronic, name: "Dot & Key Watermelon Hyaluronic Serum", reason: "Hydrates the dry zones without making the oily zones greasier. ₹400." },
+      moisturiser: { asin: ASIN.wishcare_spf, name: "WishCare Niacinamide Sunscreen SPF 50 PA++++", reason: "Non-drying SPF that works as the final hydration and protection step. ₹316." },
+      sunscreen: { asin: ASIN.lakme_spf, name: "Lakme SPF 50 PA++++ Sunscreen", reason: "UV exposure worsens dehydration. Daily SPF is non-negotiable. ₹282." },
+    },
+    budget_1000: {
+      cleanser: { asin: ASIN.simple_facewash, name: "Simple Kind To Skin Moisturising Facial Wash", reason: "Strengthens skin barrier. Combination skin that's dehydrated needs barrier support first." },
+      treatment: { asin: ASIN.dotkey_hyaluronic, name: "Dot & Key Watermelon Hyaluronic Serum", reason: "Triple HA serum. Apply to damp skin for maximum hydration delivery." },
+      moisturiser: { asin: ASIN.neutrogena_hydro_boost, name: "Neutrogena Hydro Boost Water Gel", reason: "Dermatologist-recommended for exactly this profile: oily in places, dehydrated overall." },
+      sunscreen: { asin: ASIN.aqualogica_spf, name: "Aqualogica Radiance+ Dewy Sunscreen SPF 50 PA++++", reason: "Adds dewy hydration to the final step — counters dryness from UV exposure." },
+    },
+    budget_2000: {
+      cleanser: { asin: ASIN.cetaphil_facewash, name: "Cetaphil Gentle Skin Hydrating Face Wash", reason: "Niacinamide + Panthenol cleanser that actively supports moisture barrier in dehydrated combination skin." },
+      treatment: { asin: ASIN.cosrx_snail_mucin, name: "Cosrx Advanced Snail 96 Mucin Power Essence", reason: "A global cult product containing 96% snail secretion filtrate to deeply hydrate, repair the barrier, and create a glass-skin glow." },
+      moisturiser: { asin: ASIN.neutrogena_hydro_boost, name: "Neutrogena Hydro Boost Water Gel", reason: "Cult gel moisturiser. 48-hour hydration without grease." },
+      sunscreen: { asin: ASIN.wishcare_spf, name: "WishCare Niacinamide Sunscreen SPF 50 PA++++", reason: "Non-drying SPF formula. Niacinamide supports hydration alongside UV defence." },
+    },
+  },
 
- // ── SENSITIVE SKIN ────────────────────────────────────────────────────────
+  // ── SENSITIVE SKIN ────────────────────────────────────────────────────────
 
  sensitive: {
  budget_500: {

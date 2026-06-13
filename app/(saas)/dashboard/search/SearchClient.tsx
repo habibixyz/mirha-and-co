@@ -53,7 +53,7 @@ function ResultCard({ item, isAiRecommended, isBest }: { item: SearchItem; isAiR
  
  {item.price && (
  <div style={{ marginTop: '12px' }}>
- <span style={{ color: '#c8473a', fontWeight: 700, fontSize: '0.8rem' }}>₹{item.price.toLocaleString("en-IN")}</span>
+ <span style={{ color: '#fc2779', fontWeight: 700, fontSize: '0.8rem' }}>₹{item.price.toLocaleString("en-IN")}</span>
  </div>
  )}
  </div>
@@ -166,7 +166,7 @@ export function SearchClient({ isPro }: { isPro: boolean }) {
  }
 
  .eyebrow {
- color: #c8473a;
+ color: #fc2779;
  font-size: 10px;
  letter-spacing: 0.28em;
  text-transform: uppercase;
@@ -207,7 +207,7 @@ export function SearchClient({ isPro }: { isPro: boolean }) {
  
  .search-box:focus-within {
  border-color: var(--rose);
- box-shadow: 0 8px 24px rgba(200, 71, 58, 0.08);
+ box-shadow: 0 8px 24px rgba(252, 39, 121, 0.08);
  }
 
  .search-box input {
@@ -242,7 +242,7 @@ export function SearchClient({ isPro }: { isPro: boolean }) {
  gap: 6px;
  }
  .search-box button.search-btn.primary {
- background: #c8473a;
+ background: #fc2779;
  color: white;
  }
  .search-box button.search-btn.primary:hover {
@@ -316,7 +316,7 @@ export function SearchClient({ isPro }: { isPro: boolean }) {
  }
 
  .mirha-choice-badge {
- background: #c8473a;
+ background: #fc2779;
  color: white;
  padding: 4px 8px;
  border-radius: 6px;
@@ -329,11 +329,11 @@ export function SearchClient({ isPro }: { isPro: boolean }) {
  gap: 4px;
  width: fit-content;
  margin-bottom: 8px;
- box-shadow: 0 2px 8px rgba(200, 71, 58, 0.3);
+ box-shadow: 0 2px 8px rgba(252, 39, 121, 0.3);
  }
 
  .result-card.is-best {
- border: 2px solid #c8473a22;
+ border: 2px solid #fc277922;
  background: #fffdfc;
  transform: scale(1.02);
  }
@@ -364,7 +364,7 @@ export function SearchClient({ isPro }: { isPro: boolean }) {
  }
 
  .result-card:hover {
- border-color: #c8473a;
+ border-color: #fc2779;
  }
 
  .result-image {
@@ -385,7 +385,7 @@ export function SearchClient({ isPro }: { isPro: boolean }) {
  }
 
  .result-card small {
- color: #c8473a;
+ color: #fc2779;
  font-size: 9px;
  letter-spacing: 0.16em;
  text-transform: uppercase;
@@ -405,7 +405,7 @@ export function SearchClient({ isPro }: { isPro: boolean }) {
 
  .ai-badge {
  background: #fff1f0;
- color: #c8473a;
+ color: #fc2779;
  padding: 3px 8px;
  border-radius: 4px;
  font-size: 0.65rem;
@@ -440,7 +440,7 @@ export function SearchClient({ isPro }: { isPro: boolean }) {
  }
 
  .result-card.ai-highlight {
- border-color: #c8473a33;
+ border-color: #fc277933;
  background: #fff9f8;
  }
  .ai-reco-box {
@@ -523,7 +523,7 @@ export function SearchClient({ isPro }: { isPro: boolean }) {
  position: absolute;
  top: -10px;
  right: 12px;
- background: #c8473a;
+ background: #fc2779;
  color: white;
  font-size: 9px;
  font-weight: 700;
@@ -534,7 +534,7 @@ export function SearchClient({ isPro }: { isPro: boolean }) {
  display: flex;
  align-items: center;
  gap: 4px;
- box-shadow: 0 4px 10px rgba(200, 71, 58, 0.2);
+ box-shadow: 0 4px 10px rgba(252, 39, 121, 0.2);
  z-index: 2;
  }
 
@@ -663,15 +663,15 @@ export function SearchClient({ isPro }: { isPro: boolean }) {
 
  {/* ✅ RATE LIMIT MET */}
  {error === 'LIMIT_REACHED_UPGRADE' && (
- <div className="brain-card" style={{ width: '100%', maxWidth: '100%', boxSizing: 'border-box', border: '1px solid rgba(200, 71, 58, 0.2)', background: 'rgba(20, 18, 16, 0.95)', padding: '2rem', textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px', marginBottom: '2rem' }}>
- <div style={{ background: 'rgba(200, 71, 58, 0.1)', padding: '12px', borderRadius: '50%', color: '#c8473a' }}>
+ <div className="brain-card" style={{ width: '100%', maxWidth: '100%', boxSizing: 'border-box', border: '1px solid rgba(252, 39, 121, 0.2)', background: 'rgba(20, 18, 16, 0.95)', padding: '2rem', textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px', marginBottom: '2rem' }}>
+ <div style={{ background: 'rgba(252, 39, 121, 0.1)', padding: '12px', borderRadius: '50%', color: '#fc2779' }}>
  <Crown size={32} />
  </div>
  <h3 style={{ margin: '8px 0 4px', fontSize: '1.25rem', fontFamily: 'var(--dash-font-serif)', color: 'white' }}>Daily AI Search Limit Reached</h3>
  <p style={{ margin: '0 0 1.5rem', fontSize: '0.9rem', color: '#a89f97', maxWidth: '380px', lineHeight: 1.5 }}>
  You have used your 3 free daily consultations with Mirha Brain. <strong>Upgrade to Pro for 20 daily AI consultations</strong>, custom routines, and premium analysis!
  </p>
- <Link href="/dashboard/subscription" style={{ background: '#c8473a', color: 'white', border: 'none', borderRadius: '12px', padding: '12px 24px', fontSize: '0.9rem', fontWeight: 600, textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', transition: 'all 0.2s', boxShadow: '0 4px 12px rgba(200,71,58,0.3)' }}>
+ <Link href="/dashboard/subscription" style={{ background: '#fc2779', color: 'white', border: 'none', borderRadius: '12px', padding: '12px 24px', fontSize: '0.9rem', fontWeight: 600, textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', transition: 'all 0.2s', boxShadow: '0 4px 12px rgba(252, 39, 121,0.3)' }}>
  <span>⭐ Upgrade to Pro</span>
  <ArrowRight size={16} />
  </Link>
@@ -681,7 +681,7 @@ export function SearchClient({ isPro }: { isPro: boolean }) {
  {/* ✅ OTHER ERROR */}
  {error && error !== 'LIMIT_REACHED_UPGRADE' && (
  <div className="brain-card" style={{ width: '100%', maxWidth: '100%', boxSizing: 'border-box', border: '1px solid rgba(255, 255, 255, 0.1)', padding: '1.5rem', textAlign: 'center', marginBottom: '2rem' }}>
- <p style={{ margin: 0, color: '#c8473a', fontSize: '0.95rem', fontWeight: 600 }}>{error}</p>
+ <p style={{ margin: 0, color: '#fc2779', fontSize: '0.95rem', fontWeight: 600 }}>{error}</p>
  </div>
  )}
 
@@ -692,15 +692,15 @@ export function SearchClient({ isPro }: { isPro: boolean }) {
  <Star size={120} color="white" />
  </div>
  <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "1rem" }}>
- <Star size={20} color="#c8473a" />
- <span style={{ fontSize: "0.75rem", letterSpacing: "0.15em", textTransform: "uppercase", fontWeight: 700, color: "#c8473a" }}>Mirha Brain Mode</span>
+ <Star size={20} color="#fc2779" />
+ <span style={{ fontSize: "0.75rem", letterSpacing: "0.15em", textTransform: "uppercase", fontWeight: 700, color: "#fc2779" }}>Mirha Brain Mode</span>
  </div>
  
  {isAiLoading ? (
  <div style={{ padding: '1rem 0' }}>
  <p style={{ margin: 0, fontSize: '1.1rem', opacity: 0.6, fontStyle: "italic" }}>Mirha Brain is analyzing your request...</p>
  <div style={{ height: '4px', width: '100%', background: 'rgba(255,255,255,0.1)', borderRadius: '2px', marginTop: '1rem', overflow: 'hidden' }}>
- <div style={{ height: '100%', width: '30%', background: '#c8473a', borderRadius: '2px', animation: 'loadingMove 1.5s infinite linear' }}></div>
+ <div style={{ height: '100%', width: '30%', background: '#fc2779', borderRadius: '2px', animation: 'loadingMove 1.5s infinite linear' }}></div>
  </div>
  <style>{`
  @keyframes loadingMove {

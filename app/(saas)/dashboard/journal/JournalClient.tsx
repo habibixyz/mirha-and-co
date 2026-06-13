@@ -287,7 +287,7 @@ export function SkinJournalClient({ initialEntries, isPro }: { initialEntries: a
  boxShadow: "0 4px 14px rgba(0, 0, 0, 0.1)"
  }}
  >
- <Brain size={18} color="#c8473a" /> {isAnalyzingHistory ? "Thinking..." : "Skin Trends"}
+ <Brain size={18} color="#fc2779" /> {isAnalyzingHistory ? "Thinking..." : "Skin Trends"}
  </motion.button>
  {!showNewEntry && (
  <motion.button
@@ -306,7 +306,7 @@ export function SkinJournalClient({ initialEntries, isPro }: { initialEntries: a
  display: "flex",
  alignItems: "center",
  gap: "0.5rem",
- boxShadow: "0 4px 14px rgba(200, 71, 58, 0.2)"
+ boxShadow: "0 4px 14px rgba(252, 39, 121, 0.2)"
  }}
  >
  <Plus size={18} /> New Entry
@@ -374,8 +374,8 @@ export function SkinJournalClient({ initialEntries, isPro }: { initialEntries: a
  
  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "1.5rem" }}>
  <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
- <Brain size={20} color="#c8473a" />
- <span style={{ fontSize: "0.75rem", letterSpacing: "0.15em", textTransform: "uppercase", fontWeight: 700, color: "#c8473a" }}>Mirha Brain Analysis</span>
+ <Brain size={20} color="#fc2779" />
+ <span style={{ fontSize: "0.75rem", letterSpacing: "0.15em", textTransform: "uppercase", fontWeight: 700, color: "#fc2779" }}>Mirha Brain Analysis</span>
  </div>
  <button onClick={() => setHistoryAnalysis(null)} style={{ background: "transparent", border: "none", color: "white", opacity: 0.5, cursor: "pointer" }}><X size={18} /></button>
  </div>
@@ -648,7 +648,7 @@ export function SkinJournalClient({ initialEntries, isPro }: { initialEntries: a
  '#ffccbc', // 2 star
  '#ffab91', // 3 star
  '#ff8a65', // 4 star
- '#c8473a', // 5 star (glowing brand red!)
+ '#fc2779', // 5 star (glowing brand red!)
  ];
  bg = ratingColors[day.rating - 1];
  title = `Rating: ${day.rating} Stars on ${day.date.toLocaleDateString()}${day.hasPhoto ? ' (Photo logged)' : ''}`;
@@ -695,7 +695,7 @@ export function SkinJournalClient({ initialEntries, isPro }: { initialEntries: a
  <div style={{ width: '10px', height: '10px', background: '#ffccbc', borderRadius: '2px' }} />
  <div style={{ width: '10px', height: '10px', background: '#ffab91', borderRadius: '2px' }} />
  <div style={{ width: '10px', height: '10px', background: '#ff8a65', borderRadius: '2px' }} />
- <div style={{ width: '10px', height: '10px', background: '#c8473a', borderRadius: '2px' }} />
+ <div style={{ width: '10px', height: '10px', background: '#fc2779', borderRadius: '2px' }} />
  <span style={{ fontSize: '9px', color: 'var(--muted)' }}>Glowing</span>
  </div>
  <span style={{ fontSize: '10px', color: 'var(--muted)' }}>Today</span>

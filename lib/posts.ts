@@ -1,3 +1,5 @@
+import { HIGH_INTENT_POSTS } from "./high-intent-posts";
+
 export type PostCategory = "BEAUTY" | "SKINCARE" | "HAIR" | "WELLNESS" | "LIFESTYLE" | "MAKEUP";
 
 export type Post = {
@@ -12,7 +14,7 @@ export type Post = {
  tags: string[];
 };
 
-export const POSTS: Post[] = [
+const STATIC_POSTS: Post[] = [
  {
  category: "WELLNESS",
  title: "Is Your Workout Causing 'Cortisol Face'? The Low-Impact Shift",
@@ -604,16 +606,31 @@ export const POSTS: Post[] = [
  tags: ["routine", "indian climate", "humidity", "monsoon", "summer", "cetaphil", "minimalist", "deconstruct"],
  },
  {
- category: "SKINCARE",
- title: "What Niacinamide Actually Does to Your Skin (India Edition)",
- excerpt: "The no-fluff India-specific guide to niacinamide: oil control, open pores, acne marks, skin barrier support, and the best serums under ₹700.",
- slug: "what-niacinamide-does-to-your-skin",
- readTime: "10 min",
- date: "April 2026",
- productCount: 4,
- thumbnail: "NC",
- tags: ["niacinamide", "skin barrier", "pores", "oil control", "acne marks", "serums"],
+  category: "SKINCARE",
+  title: "What Niacinamide Actually Does to Your Skin (India Edition)",
+  excerpt: "The no-fluff India-specific guide to niacinamide: oil control, open pores, acne marks, skin barrier support, and the best serums under ₹700.",
+  slug: "what-niacinamide-does-to-your-skin",
+  readTime: "10 min",
+  date: "April 2026",
+  productCount: 4,
+  thumbnail: "NC",
+  tags: ["niacinamide", "skin barrier", "pores", "oil control", "acne marks", "serums"],
  },
+];
+
+export const POSTS: Post[] = [
+  ...STATIC_POSTS,
+  ...HIGH_INTENT_POSTS.map(p => ({
+    category: p.category,
+    title: p.title,
+    excerpt: p.excerpt,
+    slug: p.slug,
+    readTime: p.readTime,
+    date: p.date,
+    productCount: p.asins.length,
+    thumbnail: p.thumbnail,
+    tags: p.tags
+  }))
 ];
 
 const hashString = (str: string) => {

@@ -1,3 +1,5 @@
+import { HIGH_INTENT_POSTS } from "./high-intent-posts";
+
 export interface City {
   name: string;
   slug: string;
@@ -151,6 +153,20 @@ export function generatePostContent(city: City, concern: Concern) {
 
 // Find a matching post slug
 export function getProgrammaticPostBySlug(slug: string) {
+  // Check high-intent posts first
+  const hip = HIGH_INTENT_POSTS.find((p) => p.slug === slug);
+  if (hip) {
+    return {
+      title: hip.title,
+      description: hip.excerpt,
+      category: hip.category,
+      date: hip.date,
+      readTime: hip.readTime,
+      sections: hip.sections,
+      asins: hip.asins
+    };
+  }
+
   // Pattern: best-moisturizer-for-[concern]-in-[city]
   const match = slug.match(/^best-moisturizer-for-(oily-skin|dry-skin|acne|hyperpigmentation)-in-([a-z-]+)$/);
   if (!match) return null;
@@ -169,6 +185,12 @@ export function getProgrammaticPostBySlug(slug: string) {
 // Get all programmatic post slugs
 export function getAllProgrammaticSlugs(): string[] {
   const slugs: string[] = [];
+  
+  // Add high-intent post slugs
+  for (const hip of HIGH_INTENT_POSTS) {
+    slugs.push(hip.slug);
+  }
+
   for (const concern of CONCERNS) {
     for (const city of CITIES) {
       slugs.push(`best-moisturizer-for-${concern.slug}-in-${city.slug}`);

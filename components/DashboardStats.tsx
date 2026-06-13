@@ -23,8 +23,8 @@ export function DashboardStats({ stats }: any) {
  label: "Streak",
  value: stats?.routineStreak || 0,
  unit: "days",
- color: "#C8473A",
- bg: "rgba(200, 71, 58, 0.05)"
+ color: "#fc2779",
+ bg: "rgba(252, 39, 121, 0.05)"
  },
  {
  icon: <BookOpen size={14} />,

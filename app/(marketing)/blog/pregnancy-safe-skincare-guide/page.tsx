@@ -32,8 +32,8 @@ export default function BlogPost() {
  <article style={{ maxWidth: 720, margin: "0 auto", padding: "3rem 1.5rem 5rem" }}>
  <section style={{ marginBottom: "3rem" }}>
  
- <div style={{ background: "#fff0e8", border: "1px solid #c8473a", padding: "1.5rem", borderRadius: "8px", marginBottom: "2.5rem" }}>
- <p style={{ fontSize: "0.9rem", color: "#c8473a", margin: 0, fontWeight: 600, lineHeight: 1.6 }}>
+ <div style={{ background: "#fff0e8", border: "1px solid #fc2779", padding: "1.5rem", borderRadius: "8px", marginBottom: "2.5rem" }}>
+ <p style={{ fontSize: "0.9rem", color: "#fc2779", margin: 0, fontWeight: 600, lineHeight: 1.6 }}>
  MEDICAL DISCLAIMER: Every pregnancy is unique. The information provided below is based on general dermatological consensus, but it does NOT replace professional medical advice. You must ALWAYS consult your OB-GYN or dermatologist before introducing any new ingredient or product to your routine while pregnant or breastfeeding.
  </p>
  </div>

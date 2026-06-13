@@ -325,7 +325,7 @@ export function ConflictsClient({ isPro }: { isPro: boolean }) {
  gap: "0.5rem",
  width: "100%",
  maxWidth: "240px",
- boxShadow: "0 10px 25px rgba(200, 71, 58, 0.25)",
+ boxShadow: "0 10px 25px rgba(252, 39, 121, 0.25)",
  transition: "all 0.2s",
  opacity: (!productA.trim() || !productB.trim()) ? 0.6 : 1
  }}

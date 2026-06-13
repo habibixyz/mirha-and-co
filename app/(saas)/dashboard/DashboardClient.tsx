@@ -212,7 +212,7 @@ export function DashboardClient({ user, routines, recentJournal }: any) {
  justifyContent: "center",
  gap: "0.5rem",
  marginTop: "1.5rem",
- boxShadow: "0 4px 14px rgba(200, 71, 58, 0.2)"
+ boxShadow: "0 4px 14px rgba(252, 39, 121, 0.2)"
  }}
  >
  <CalendarPlus size={18} /> Add Today's Entry

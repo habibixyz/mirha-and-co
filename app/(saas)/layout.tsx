@@ -27,6 +27,28 @@ const bebasNeue = Bebas_Neue({
 export const metadata: Metadata = {
  title: "Dashboard — Mirha & Co.",
  description: "Manage your personalized routines and skin journal.",
+ openGraph: {
+   title: "Dashboard — Mirha & Co.",
+   description: "Manage your personalized routines and skin journal.",
+   url: "https://mirhaandco.com/dashboard",
+   siteName: "Mirha & Co.",
+   images: [
+     {
+       url: "/og-image.png",
+       width: 1200,
+       height: 630,
+       alt: "Mirha & Co. Skincare and Wellness",
+     },
+   ],
+   locale: "en_IN",
+   type: "website",
+ },
+ twitter: {
+   card: "summary_large_image",
+   title: "Dashboard — Mirha & Co.",
+   description: "Manage your personalized routines and skin journal.",
+   images: ["/og-image.png"],
+ },
 };
 
 export default function SaasLayout({
@@ -55,8 +77,8 @@ export default function SaasLayout({
  --dash-border: #EFEEEB;
  --dash-ink: #1A1714;
  --dash-muted: #8A8480;
- --dash-accent: #C8473A;
- --dash-accent-soft: rgba(200, 71, 58, 0.08);
+ --dash-accent: #fc2779;
+ --dash-accent-soft: rgba(252, 39, 121, 0.08);
  --dash-sidebar-w: 240px;
  --dash-font-sans: var(--font-dm-sans), 'DM Sans', sans-serif;
  --dash-font-serif: var(--font-dm-serif), 'DM Serif Display', serif;
@@ -205,7 +227,7 @@ export default function SaasLayout({
  color: var(--dash-accent);
  background: var(--dash-accent-soft);
  font-weight: 600;
- box-shadow: 0 4px 12px rgba(200, 71, 58, 0.08);
+ box-shadow: 0 4px 12px rgba(252, 39, 121, 0.08);
  }
 
  .dash-nav-icon {

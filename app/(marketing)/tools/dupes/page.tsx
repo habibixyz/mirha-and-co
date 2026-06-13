@@ -275,7 +275,7 @@ export default function DupeFinderPage() {
  font-weight: 500;
  }
  .back-link:hover {
- color: #c8473a;
+ color: #fc2779;
  }
  .header {
  margin-bottom: 48px;
@@ -300,8 +300,8 @@ export default function DupeFinderPage() {
  display: inline-flex;
  align-items: center;
  gap: 6px;
- background: rgba(200,71,58,0.08);
- color: #c8473a;
+ background: rgba(252, 39, 121,0.08);
+ color: #fc2779;
  font-size: 0.7rem;
  font-weight: 700;
  letter-spacing: 0.15em;
@@ -355,21 +355,21 @@ export default function DupeFinderPage() {
  gap: 14px;
  }
  .luxury-card:hover {
- border-color: #c8473a;
- box-shadow: 0 6px 20px rgba(200,71,58,0.06);
+ border-color: #fc2779;
+ box-shadow: 0 6px 20px rgba(252, 39, 121,0.06);
  transform: translateY(-1px);
  }
  .luxury-card.selected {
- border-color: #c8473a;
+ border-color: #fc2779;
  background: #fffaf8;
- box-shadow: 0 6px 20px rgba(200,71,58,0.08);
+ box-shadow: 0 6px 20px rgba(252, 39, 121,0.08);
  }
  .luxury-details {
  min-width: 0;
  }
  .luxury-brand {
  font-size: 0.68rem;
- color: #c8473a;
+ color: #fc2779;
  letter-spacing: 0.18em;
  text-transform: uppercase;
  font-weight: 700;
@@ -414,8 +414,8 @@ export default function DupeFinderPage() {
  transition: all 0.18s;
  }
  .luxury-card.selected .checkbox {
- background: #c8473a;
- border-color: #c8473a;
+ background: #fc2779;
+ border-color: #fc2779;
  color: #fff;
  }
  /* Sticky Calculator Sidebar - Desktop only */
@@ -451,7 +451,7 @@ export default function DupeFinderPage() {
  .mobile-savings-amount {
  font-family: 'DM Serif Display', serif;
  font-size: 1.6rem;
- color: #c8473a;
+ color: #fc2779;
  line-height: 1;
  }
  .mobile-savings-pct {
@@ -473,7 +473,7 @@ export default function DupeFinderPage() {
  .savings-stat {
  text-align: center;
  background: #fff0e8;
- border: 1px dashed rgba(200, 71, 58, 0.3);
+ border: 1px dashed rgba(252, 39, 121, 0.3);
  border-radius: 12px;
  padding: 24px;
  margin-bottom: 24px;
@@ -481,7 +481,7 @@ export default function DupeFinderPage() {
  .savings-amt {
  font-family: 'Bebas Neue', sans-serif;
  font-size: 48px;
- color: #c8473a;
+ color: #fc2779;
  line-height: 1;
  }
  .savings-pct {
@@ -533,7 +533,7 @@ export default function DupeFinderPage() {
  letter-spacing: 0.15em;
  text-transform: uppercase;
  font-weight: 700;
- color: #c8473a;
+ color: #fc2779;
  }
  .purchases-selector {
  display: flex;
@@ -651,7 +651,7 @@ export default function DupeFinderPage() {
  letter-spacing: 0.15em;
  text-transform: uppercase;
  font-weight: 700;
- color: #c8473a;
+ color: #fc2779;
  }
  .purchases-selector {
  display: flex;
@@ -762,7 +762,7 @@ export default function DupeFinderPage() {
  </div>
  <div className="calc-row total">
  <span>Net Annual Savings:</span>
- <span style={{ color: "#c8473a" }}>₹{math.savings.toLocaleString("en-IN")}</span>
+ <span style={{ color: "#fc2779" }}>₹{math.savings.toLocaleString("en-IN")}</span>
  </div>
 
  <button
@@ -829,7 +829,7 @@ export default function DupeFinderPage() {
  <div className="split-row">
  <div className="split-col luxury-side">
  <span className="col-header">High-End Luxury</span>
- <span style={{ fontSize: "0.8rem", color: "#c8473a", fontWeight: 700 }}>{item.luxury.brand}</span>
+ <span style={{ fontSize: "0.8rem", color: "#fc2779", fontWeight: 700 }}>{item.luxury.brand}</span>
  <h4 style={{ fontSize: "1.05rem", fontWeight: 600, margin: "2px 0 6px" }}>{item.luxury.name}</h4>
  <span className="actives-label">Key Actives:</span>
  <p className="actives-list">{item.luxury.actives}</p>

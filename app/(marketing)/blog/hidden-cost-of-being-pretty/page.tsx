@@ -92,7 +92,7 @@ export default function HiddenCostOfBeingPrettyBlog() {
  <li>Hair health treatments</li>
  </ul>
  </div>
- <div style={{ background: "rgba(200,71,58,0.06)", border: "1px solid rgba(200,71,58,0.15)", borderRadius: 12, padding: "1.5rem" }}>
+ <div style={{ background: "rgba(252, 39, 121,0.06)", border: "1px solid rgba(252, 39, 121,0.15)", borderRadius: 12, padding: "1.5rem" }}>
  <p style={{ fontSize: "0.7rem", letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--rose)", fontWeight: 700, margin: "0 0 1rem" }}>Audit Carefully</p>
  <ul style={{ fontSize: "0.88rem", color: "var(--muted)", lineHeight: 2, paddingLeft: "1.2rem", margin: 0 }}>
  <li>Monthly facials (DIY alternatives exist)</li>

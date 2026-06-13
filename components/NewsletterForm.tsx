@@ -62,12 +62,12 @@ export default function NewsletterForm() {
  transition: all 0.2s ease;
  }
  .newsletter-input:focus {
- border-color: var(--rose, #c8473a);
+ border-color: var(--rose, #fc2779);
  background: rgba(255, 255, 255, 0.08);
- box-shadow: 0 0 0 2px rgba(200, 71, 58, 0.15);
+ box-shadow: 0 0 0 2px rgba(252, 39, 121, 0.15);
  }
  .newsletter-submit {
- background: var(--rose, #c8473a);
+ background: var(--rose, #fc2779);
  color: #fff;
  border: none;
  border-radius: 8px;

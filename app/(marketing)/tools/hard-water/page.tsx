@@ -77,7 +77,7 @@ export default function HardWaterCalculator() {
  let riskColor = "#2d8a5c"; // Green
  if (finalScore >= 75) {
  riskLevel = "Extreme";
- riskColor = "#c8473a"; // Red/Rose
+ riskColor = "#fc2779"; // Red/Rose
  } else if (finalScore >= 45) {
  riskLevel = "Moderate to High";
  riskColor = "#e67e22"; // Orange
@@ -203,7 +203,7 @@ export default function HardWaterCalculator() {
  transition: color 0.2s;
  }
  .back-link:hover {
- color: #c8473a;
+ color: #fc2779;
  }
  .quiz-card {
  background: #fff;
@@ -269,7 +269,7 @@ export default function HardWaterCalculator() {
  transition: background 0.3s;
  }
  .step-dot.active {
- background: #c8473a;
+ background: #fc2779;
  }
  .city-grid {
  display: grid;
@@ -298,20 +298,20 @@ export default function HardWaterCalculator() {
  gap: 8px;
  }
  .city-btn:hover {
- border-color: #c8473a;
+ border-color: #fc2779;
  background: #fff0e8;
  }
  .city-btn.selected {
- border-color: #c8473a;
+ border-color: #fc2779;
  background: #fff0e8;
- box-shadow: 0 0 0 2px rgba(200, 71, 58, 0.15);
+ box-shadow: 0 0 0 2px rgba(252, 39, 121, 0.15);
  }
  .toggle-tds {
  display: block;
  margin: 20px auto 0;
  background: none;
  border: none;
- color: #c8473a;
+ color: #fc2779;
  font-size: 0.85rem;
  font-weight: 600;
  cursor: pointer;
@@ -334,13 +334,13 @@ export default function HardWaterCalculator() {
  text-align: center;
  }
  .custom-tds-input input:focus {
- border-color: #c8473a;
+ border-color: #fc2779;
  }
  .concern-section-title {
  font-size: 0.85rem;
  letter-spacing: 0.15em;
  text-transform: uppercase;
- color: #c8473a;
+ color: #fc2779;
  font-weight: 700;
  margin: 0 0 16px;
  }
@@ -368,11 +368,11 @@ export default function HardWaterCalculator() {
  gap: 12px;
  }
  .symptom-card:hover {
- border-color: #c8473a;
+ border-color: #fc2779;
  background: #fffaf4;
  }
  .symptom-card.selected {
- border-color: #c8473a;
+ border-color: #fc2779;
  background: #fff0e8;
  }
  .symptom-checkbox {
@@ -387,8 +387,8 @@ export default function HardWaterCalculator() {
  background: #fff;
  }
  .symptom-card.selected .symptom-checkbox {
- background: #c8473a;
- border-color: #c8473a;
+ background: #fc2779;
+ border-color: #fc2779;
  color: #fff;
  }
  .next-btn {
@@ -562,10 +562,10 @@ export default function HardWaterCalculator() {
  outline: none;
  }
  .lead-form input:focus {
- border-color: #c8473a;
+ border-color: #fc2779;
  }
  .lead-form button {
- background: #c8473a;
+ background: #fc2779;
  color: #fff;
  border: none;
  border-radius: 8px;
@@ -610,7 +610,7 @@ export default function HardWaterCalculator() {
  .rec-badge {
  align-self: flex-start;
  background: #fff0e8;
- color: #c8473a;
+ color: #fc2779;
  font-size: 0.7rem;
  letter-spacing: 0.1em;
  text-transform: uppercase;
@@ -687,7 +687,7 @@ export default function HardWaterCalculator() {
  className={`city-btn ${selectedCity === city.name ? "selected" : ""}`}
  onClick={() => setSelectedCity(city.name)}
  >
- <MapPin size={18} style={{ color: selectedCity === city.name ? "#c8473a" : "#8c857f" }} />
+ <MapPin size={18} style={{ color: selectedCity === city.name ? "#fc2779" : "#8c857f" }} />
  <span>{city.name}</span>
  </button>
  ))}
@@ -876,14 +876,14 @@ export default function HardWaterCalculator() {
 
  {/* Upgrade rec: Pro salon shampoo, only for extreme risk */}
  {results.score >= 75 && (
- <div className="rec-card" style={{ borderColor: "rgba(200,71,58,0.3)", background: "#fffaf8" }}>
+ <div className="rec-card" style={{ borderColor: "rgba(252, 39, 121,0.3)", background: "#fffaf8" }}>
  <img
  src={recs.chelatingPro.image}
  alt={recs.chelatingPro.name}
  style={{ width: "100%", height: "140px", objectFit: "contain", borderRadius: "8px", marginBottom: "12px", background: "#f9f5f0" }}
  />
  <div>
- <div className="rec-badge" style={{ background: "#c8473a", color: "#fff" }}>Extreme Risk Upgrade</div>
+ <div className="rec-badge" style={{ background: "#fc2779", color: "#fff" }}>Extreme Risk Upgrade</div>
  <h4 className="rec-name">{recs.chelatingPro.name}</h4>
  <div className="rec-brand">By {recs.chelatingPro.brand}</div>
  <p className="rec-desc">{recs.chelatingPro.description}</p>

@@ -45,7 +45,7 @@ export function SubscriptionClient({ isPro }: { isPro: boolean }) {
  window.location.reload();
  },
  theme: {
- color: "#c8473a",
+ color: "#fc2779",
  },
  };
 
@@ -104,7 +104,7 @@ export function SubscriptionClient({ isPro }: { isPro: boolean }) {
  text-transform: uppercase;
  letter-spacing: 0.15em;
  margin-bottom: 1rem;
- border: 1px solid rgba(200, 71, 58, 0.15);
+ border: 1px solid rgba(252, 39, 121, 0.15);
  line-height: 1;
  }
 
@@ -188,7 +188,7 @@ export function SubscriptionClient({ isPro }: { isPro: boolean }) {
  padding: 2px 8px;
  border-radius: 99px;
  letter-spacing: 0.05em;
- box-shadow: 0 4px 10px rgba(200, 71, 58, 0.25);
+ box-shadow: 0 4px 10px rgba(252, 39, 121, 0.25);
  white-space: nowrap;
  }
 
@@ -307,7 +307,7 @@ export function SubscriptionClient({ isPro }: { isPro: boolean }) {
  }
 
  .plan-card.highlighted .icon-wrap {
- background: rgba(200, 71, 58, 0.18);
+ background: rgba(252, 39, 121, 0.18);
  color: var(--dash-accent);
  }
 
@@ -339,12 +339,12 @@ export function SubscriptionClient({ isPro }: { isPro: boolean }) {
  .btn-primary {
  background: var(--dash-accent);
  color: white;
- box-shadow: 0 8px 25px rgba(200, 71, 58, 0.25);
+ box-shadow: 0 8px 25px rgba(252, 39, 121, 0.25);
  }
 
  .btn-primary:hover {
  background: #b5382b;
- box-shadow: 0 10px 30px rgba(200, 71, 58, 0.35);
+ box-shadow: 0 10px 30px rgba(252, 39, 121, 0.35);
  }
 
  .btn-active {
@@ -510,7 +510,7 @@ export function SubscriptionClient({ isPro }: { isPro: boolean }) {
  right: "-20%",
  width: "300px",
  height: "300px",
- background: "radial-gradient(circle, rgba(200,71,58,0.18) 0%, rgba(0,0,0,0) 70%)",
+ background: "radial-gradient(circle, rgba(252, 39, 121,0.18) 0%, rgba(0,0,0,0) 70%)",
  filter: "blur(45px)",
  pointerEvents: "none"
  }} />

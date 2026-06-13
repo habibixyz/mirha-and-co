@@ -267,7 +267,7 @@ export default function BeautyShopPage() {
  }
 
  .eyebrow {
- color: #c8473a;
+ color: #fc2779;
  font-size: 10px;
  letter-spacing: 0.28em;
  text-transform: uppercase;
@@ -418,7 +418,7 @@ export default function BeautyShopPage() {
  width: 5px;
  height: 5px;
  border-radius: 50%;
- background: #c8473a;
+ background: #fc2779;
  flex-shrink: 0;
  display: inline-block;
  }
@@ -475,13 +475,13 @@ export default function BeautyShopPage() {
  .concern-card:hover,
  .concern-card.active {
  transform: translateY(-4px);
- border-color: #c8473a;
+ border-color: #fc2779;
  background: #fffaf4;
- box-shadow: 0 16px 32px rgba(200, 71, 58, 0.08);
+ box-shadow: 0 16px 32px rgba(252, 39, 121, 0.08);
  }
 
  .concern-card small {
- color: #c8473a;
+ color: #fc2779;
  font-size: 11px;
  letter-spacing: 0.2em;
  text-transform: uppercase;
@@ -550,7 +550,7 @@ export default function BeautyShopPage() {
 
  .desk-actions small {
  display: block;
- color: #c8473a;
+ color: #fc2779;
  font-size: 9px;
  letter-spacing: 0.18em;
  text-transform: uppercase;
@@ -582,7 +582,7 @@ export default function BeautyShopPage() {
 
  .editor-pick:hover {
  transform: translateY(-2px);
- border-color: #c8473a;
+ border-color: #fc2779;
  }
 
  .editor-pick img {
@@ -653,9 +653,9 @@ export default function BeautyShopPage() {
  }
 
  .filter-row button.active {
- border-color: #c8473a;
+ border-color: #fc2779;
  background: #fff0e8;
- color: #c8473a;
+ color: #fc2779;
  }
 
  .shop-grid {
@@ -679,7 +679,7 @@ export default function BeautyShopPage() {
 
  .product-card:hover {
  transform: translateY(-3px);
- border-color: #c8473a;
+ border-color: #fc2779;
  box-shadow: 0 18px 48px rgba(40, 28, 20, 0.08);
  }
 
@@ -723,7 +723,7 @@ export default function BeautyShopPage() {
  }
 
  .product-kicker b {
- color: #c8473a;
+ color: #fc2779;
  font-weight: 700;
  }
 
@@ -807,8 +807,8 @@ export default function BeautyShopPage() {
  }
 
  .empty-state button {
- border: 1px solid #c8473a;
- color: #c8473a;
+ border: 1px solid #fc2779;
+ color: #fc2779;
  background: #fff0e8;
  border-radius: 999px;
  padding: 10px 16px;
@@ -834,7 +834,7 @@ export default function BeautyShopPage() {
  }
 
  .method-grid small {
- color: #c8473a;
+ color: #fc2779;
  font-size: 10px;
  letter-spacing: 0.18em;
  text-transform: uppercase;

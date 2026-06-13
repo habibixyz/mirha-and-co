@@ -429,7 +429,7 @@ export async function registerAction(_state: AuthState, formData: FormData): Pro
  Welcome to Mirha & Co, ${name.split(' ')[0]}! 🌸
  </h1>
  <p style="font-size: 1rem; color: #666; line-height: 1.6;">Your account is ready. Start your skincare journey now!</p>
- <a href="${await getBaseUrl()}/dashboard" style="background: #c8473a; color: white; padding: 12px 32px; border-radius: 8px; text-decoration: none; font-weight: 600; display: inline-block; margin: 2rem 0;">
+ <a href="${await getBaseUrl()}/dashboard" style="background: #fc2779; color: white; padding: 12px 32px; border-radius: 8px; text-decoration: none; font-weight: 600; display: inline-block; margin: 2rem 0;">
  Go to Dashboard
  </a>
  </div>
@@ -787,9 +787,9 @@ export async function submitLeadAction(email: string, type: string, data?: strin
  <h2 style="font-family: 'DM Serif Display', serif; font-size: 1.8rem; color: #161412; margin-bottom: 1rem; font-weight: normal;">Your Hard Water Analysis is Ready!</h2>
  <p style="font-size: 1rem; line-height: 1.6;">Hi there,</p>
  <p style="font-size: 1rem; line-height: 1.6;">Here is a summary of your hair and skin damage index:</p>
- <div style="background: #fff0e8; border: 1px dashed #c8473a; padding: 20px; border-radius: 12px; margin: 20px 0; text-align: center;">
+ <div style="background: #fff0e8; border: 1px dashed #fc2779; padding: 20px; border-radius: 12px; margin: 20px 0; text-align: center;">
  <span style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; color: #756b63; font-weight: 700;">Your Damage Index</span>
- <div style="font-size: 3rem; font-weight: bold; color: #c8473a; margin: 5px 0;">${parsedData.score || 0}%</div>
+ <div style="font-size: 3rem; font-weight: bold; color: #fc2779; margin: 5px 0;">${parsedData.score || 0}%</div>
  <div style="font-size: 0.95rem; color: #161412; font-weight: 600;">Risk Level: ${parsedData.level || "Moderate"}</div>
  </div>
  <p style="font-size: 1rem; line-height: 1.6;">To restore your skin and hair barrier from calcium and magnesium mineral buildup, we recommend starting a chelating wash and using barrier repair creams. You can review your customized recommendations and products anytime on our website.</p>

@@ -68,7 +68,7 @@ export default function BlogIndex() {
  .journal-page { 
  background-color: #faf8f5; 
  background-image: 
- radial-gradient(circle at 15% 5%, rgba(200,71,58,0.04) 0%, transparent 45%),
+ radial-gradient(circle at 15% 5%, rgba(252, 39, 121,0.04) 0%, transparent 45%),
  radial-gradient(circle at 85% 30%, rgba(162,123,92,0.03) 0%, transparent 55%);
  color: #2b2826; 
  min-height: 100vh; 
@@ -102,7 +102,7 @@ export default function BlogIndex() {
  letter-spacing: -0.02em;
  margin: 0;
  max-width: 760px;
- background: linear-gradient(135deg, #111111 0%, #a27b5c 50%, #c8473a 100%);
+ background: linear-gradient(135deg, #111111 0%, #a27b5c 50%, #fc2779 100%);
  background-size: 200% auto;
  -webkit-background-clip: text;
  -webkit-text-fill-color: transparent;
@@ -266,7 +266,7 @@ export default function BlogIndex() {
  left: 0;
  width: 100%;
  height: 3px;
- background: linear-gradient(90deg, #a27b5c, #c8473a);
+ background: linear-gradient(90deg, #a27b5c, #fc2779);
  opacity: 0;
  transition: opacity 0.3s ease;
  }
@@ -500,6 +500,14 @@ export default function BlogIndex() {
  margin: 0 auto 2rem;
  font-size: 1.05rem;
  }
+ .expert-guide-card {
+ transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+ }
+ .expert-guide-card:hover {
+ transform: translateY(-4px);
+ border-color: rgba(162, 123, 92, 0.35) !important;
+ box-shadow: 0 15px 30px rgba(162, 123, 92, 0.06) !important;
+ }
  @media (max-width: 980px) {
  .journal-hero, .featured-card { grid-template-columns: 1fr; }
  .journal-hero-copy { padding: 4rem 2rem; }
@@ -617,6 +625,85 @@ export default function BlogIndex() {
  <BlogSearchClient initialPosts={posts} catColors={catColors} />
  </section>
 
+  <section 
+  className="expert-guides-section" 
+  style={{ 
+  padding: "5rem 2.5rem 6rem", 
+  maxWidth: "1200px", 
+  margin: "0 auto", 
+  borderTop: "1px solid #ded7cf"
+  }}
+  >
+  <p 
+  style={{ 
+  color: "#a27b5c", 
+  letterSpacing: "0.22em", 
+  fontSize: "0.65rem", 
+  textTransform: "uppercase", 
+  fontWeight: 700, 
+  marginBottom: "1rem",
+  textAlign: "center"
+  }}
+  >
+  Expert Buying Guides
+  </p>
+  <h2 
+  style={{ 
+  fontFamily: "var(--font-playfair), serif", 
+  fontSize: "2.2rem", 
+  fontWeight: 400, 
+  marginBottom: "2.5rem",
+  textAlign: "center",
+  color: "var(--ink, #1a1714)"
+  }}
+  >
+  Trending Skincare &amp; Hair Care Analyses
+  </h2>
+  
+  <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(290px, 1fr))", gap: "1.5rem" }}>
+  {[
+    { title: "Best Niacinamide Serum in India", excerpt: "Ranked by concentration, formulation quality, and real-world performance for hyperpigmentation and oil control.", slug: "best-niacinamide-serum-india", category: "SKINCARE" },
+    { title: "Hard Water Hair Loss in India", excerpt: "The definitive science-backed guide to preventing mineral buildup, hair fall, and dry scalp with chelating shampoos.", slug: "hard-water-hair-loss-india", category: "HAIR" },
+    { title: "Korean Skincare for Humid Climate", excerpt: "How to adapt the famous glass-skin routine for intense humidity without clogging pores or triggering acne.", slug: "korean-skincare-humid-climate", category: "SKINCARE" },
+    { title: "Best Sunscreen for Oily Skin", excerpt: "Zero white cast, non-comedogenic, matte finish sunscreens tested under peak Indian summer conditions.", slug: "best-sunscreen-for-oily-skin-india", category: "SKINCARE" },
+    { title: "Minimalist vs The Ordinary", excerpt: "A head-to-head comparison of active ingredients, carrier formulations, pricing, and skin results.", slug: "minimalist-vs-the-ordinary", category: "SKINCARE" },
+    { title: "Best Moisturizer under ₹500", excerpt: "Dermatologist-recommended budget moisturizers that repair your skin barrier without breaking the bank.", slug: "best-moisturizer-under-500", category: "SKINCARE" }
+  ].map((guide) => (
+  <a 
+  key={guide.slug} 
+  href={`/blog/${guide.slug}`}
+  style={{
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "space-between",
+  background: "#fff",
+  padding: "1.8rem",
+  borderRadius: "16px",
+  border: "1px solid #e8e2d9",
+  boxShadow: "0 2px 8px rgba(0,0,0,0.01)",
+  textDecoration: "none"
+  }}
+  className="expert-guide-card"
+  >
+  <div>
+  <span style={{ fontSize: "0.6rem", color: catColors[guide.category] || "#a27b5c", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.15em" }}>
+  {guide.category}
+  </span>
+  <h4 style={{ fontFamily: "var(--font-playfair), serif", fontSize: "1.25rem", margin: "0.6rem 0 0.8rem", color: "#1a1714", fontWeight: 700, lineHeight: 1.3 }}>
+  {guide.title}
+  </h4>
+  <p style={{ color: "#6f6963", fontSize: "0.85rem", lineHeight: 1.6, margin: "0 0 1.5rem" }}>
+  {guide.excerpt}
+  </p>
+  </div>
+  <span style={{ fontSize: "0.72rem", color: "#fc2779", fontWeight: 700, letterSpacing: "0.05em", textTransform: "uppercase", display: "flex", alignItems: "center", gap: "0.3rem" }}>
+  Read Analysis &rarr;
+  </span>
+  </a>
+  ))}
+  </div>
+  </section>
+
  <section 
  className="regional-guides-section" 
  style={{ 
@@ -690,7 +777,7 @@ export default function BlogIndex() {
  Best Moisturizer for {guide.concernName} in {guide.cityName}
  </h4>
  </div>
- <span style={{ fontSize: "0.72rem", color: "#c8473a", fontWeight: 700, letterSpacing: "0.05em", textTransform: "uppercase" }}>
+ <span style={{ fontSize: "0.72rem", color: "#fc2779", fontWeight: 700, letterSpacing: "0.05em", textTransform: "uppercase" }}>
  Read Guide &rarr;
  </span>
  </a>

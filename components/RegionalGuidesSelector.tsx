@@ -95,7 +95,7 @@ export default function RegionalGuidesSelector() {
         onClick={handleNavigate}
         disabled={!selectedCity || !selectedConcern}
         style={{
-          background: selectedCity && selectedConcern ? "#c8473a" : "#d1ccc9",
+          background: selectedCity && selectedConcern ? "#fc2779" : "#d1ccc9",
           color: "#fff",
           border: "none",
           padding: "0.7rem 2.2rem",
@@ -106,7 +106,7 @@ export default function RegionalGuidesSelector() {
           letterSpacing: "0.05em",
           textTransform: "uppercase",
           transition: "all 0.2s ease",
-          boxShadow: selectedCity && selectedConcern ? "0 4px 12px rgba(200, 71, 58, 0.15)" : "none",
+          boxShadow: selectedCity && selectedConcern ? "0 4px 12px rgba(252, 39, 121, 0.15)" : "none",
         }}
       >
         View Climate Guide

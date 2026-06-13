@@ -79,8 +79,8 @@ export default function BlogProductCard({ asin }: { asin: string }) {
  fontSize: "9px",
  letterSpacing: "0.15em",
  textTransform: "uppercase",
- color: "#c8473a",
- background: "rgba(200, 71, 58, 0.08)",
+ color: "#fc2779",
+ background: "rgba(252, 39, 121, 0.08)",
  padding: "2px 8px",
  borderRadius: "99px",
  fontWeight: 700,
@@ -175,7 +175,7 @@ export default function BlogProductCard({ asin }: { asin: string }) {
  rel="noopener noreferrer"
  style={{
  flex: "1 1 200px",
- background: "#c8473a",
+ background: "#fc2779",
  color: "#fff",
  fontSize: "12px",
  fontWeight: 700,
@@ -187,7 +187,7 @@ export default function BlogProductCard({ asin }: { asin: string }) {
  alignItems: "center",
  justifyContent: "center",
  gap: "6px",
- boxShadow: "0 4px 12px rgba(200, 71, 58, 0.15)",
+ boxShadow: "0 4px 12px rgba(252, 39, 121, 0.15)",
  transition: "all 0.2s",
  cursor: "pointer",
  }}

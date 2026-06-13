@@ -1,17 +1,17 @@
 @import "tailwindcss";
 
 @theme {
- --font-bebas: var(--font-bebas), sans-serif;
- --font-playfair: var(--font-playfair), serif;
- --font-dm-serif: var(--font-dm-serif), serif;
+ --font-bebas: var(--font-dm-sans), sans-serif;
+ --font-playfair: var(--font-dm-sans), sans-serif;
+ --font-dm-serif: var(--font-dm-sans), sans-serif;
  --font-dm-sans: var(--font-dm-sans), sans-serif;
 }
 
 :root {
  --black: #0a0a0a;
  --white: #fcfbf9; /* Shiny pearl base */
- --rose: #c8473a;
- --rose-light: #f4e8e6;
+ --rose: #fc2779;
+ --rose-light: #ffe6f0;
  --sand: #f6f4f2; /* Soft pearl accent */
  --ink: #2b2826;
  --muted: #8c857f;
@@ -473,7 +473,7 @@ html, body {
 }
 
 .site-header-nav-link:hover {
- color: #c8473a !important;
+ color: #fc2779 !important;
 }
 
 /* ─────────────────────────────────────────
