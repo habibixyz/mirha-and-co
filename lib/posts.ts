@@ -128,17 +128,6 @@ const STATIC_POSTS: Post[] = [
  },
  {
  category: "LIFESTYLE",
- title: "Aesthetic Amazon Home Upgrades Under ₹1500 That Feel Expensive",
- excerpt: "From amber glass dispensers to linen organization. Tiny home upgrades that instantly elevate your space on a budget, carefully curated from Amazon India.",
- slug: "amazon-home-upgrades-under-1500",
- readTime: "6 min",
- date: "June 2026",
- productCount: 4,
- thumbnail: "AM",
- tags: ["amazon finds", "home decor", "budget upgrades", "aesthetic home", "organization"],
- },
- {
- category: "LIFESTYLE",
  title: "How to Build a Low-Friction Morning Routine You'll Actually Stick To",
  excerpt: "Stop trying to wake up at 5 AM. Here is a realistic, low-friction approach to mornings that doesn't rely on willpower or extreme discipline.",
  slug: "low-friction-morning-routine",
@@ -701,7 +690,6 @@ const SLUG_IMAGE_MAP: Record<string, string> = {
  "indian-night-routine-better-sleep": "/blog-thumbs/wellness_2.png",
 
  // LIFESTYLE — 5 posts
- "amazon-home-upgrades-under-1500": "/blog-thumbs/lifestyle.png",
  "low-friction-morning-routine": "/blog-thumbs/blog_morning_routine.png",
  "evening-wind-down-routine": "/blog-thumbs/wellness.png",
  "gift-guide-woman-who-has-everything": "/blog-thumbs/blog_gift_guide.png",

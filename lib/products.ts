@@ -3007,6 +3007,102 @@ export const PRODUCTS = [
     tags: ["biotin", "hair growth", "supplement", "wellness", "himalayan organics"],
     image: "/products/B07WVB1P8F.JPG",
     link: "https://amzn.to/4fPfDYR"
+  },
+  {
+    id: 1057,
+    name: "The Vintage Living Amber Glass Soap Dispenser with Rust-Proof Pump - Pack of 2 (500ml)",
+    brand: "Vintage Living",
+    category: "Lifestyle",
+    subcat: "Home",
+    mrp: 899,
+    price: 699,
+    rating: 4.4,
+    reviews: "1.2k",
+    asin: "B08HMR29N7",
+    badge: "Aesthetic",
+    description: "Pack of 2 premium amber glass soap dispensers with durable rust-proof pumps. Instantly elevates your bathroom or kitchen sink to a luxury boutique hotel vibe.",
+    specs: {
+      "Material": "Lead-free Glass",
+      "Capacity": "500ml each",
+      "Pack of": "2 Dispensers",
+      "Pump Type": "Rust-proof Premium Pump"
+    },
+    tags: ["dispenser", "amber glass", "bathroom decor", "soap dispenser", "home upgrade"],
+    image: "https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?auto=format&fit=crop&w=600&q=80",
+    link: "https://www.amazon.in/dp/B08HMR29N7?tag=skinwithtanvi-21",
+    hideFromShop: true
+  },
+  {
+    id: 1058,
+    name: "House of Quirk Fabric Drawer Organiser Dividers - Pack of 4",
+    brand: "House of Quirk",
+    category: "Lifestyle",
+    subcat: "Organiser",
+    mrp: 899,
+    price: 599,
+    rating: 4.3,
+    reviews: "4.8k",
+    asin: "B08M9J8QLK",
+    badge: "Organisation",
+    description: "Set of 4 foldable drawer organizer dividers made from high-quality fabric. Ideal for keeping dresser drawers, closets, and shelves neat, tidy, and aesthetic.",
+    specs: {
+      "Material": "Premium Non-Woven Fabric",
+      "Pack of": "4 Dividers",
+      "Type": "Foldable Storage Box",
+      "Ideal for": "Dresser drawers, wardrobe, closet"
+    },
+    tags: ["drawer organiser", "closet divider", "clothing storage", "wardrobe organiser", "home decor"],
+    image: "https://images.unsplash.com/photo-1595425970377-c9703cf48b6d?auto=format&fit=crop&w=600&q=80",
+    link: "https://www.amazon.in/dp/B08M9J8QLK?tag=skinwithtanvi-21",
+    hideFromShop: true
+  },
+  {
+    id: 1059,
+    name: "Philips Wiz Wi-Fi Enabled Smart LED Bulb (9W, Warm White to Cool White)",
+    brand: "Philips",
+    category: "Lifestyle",
+    subcat: "Home",
+    mrp: 999,
+    price: 649,
+    rating: 4.2,
+    reviews: "15k",
+    asin: "B08HM5Y82L",
+    badge: "Smart Lighting",
+    description: "Wi-Fi enabled smart LED bulb that lets you control your room lighting. Smoothly transition from cool daylight to cozy warm white (2700K) to set the perfect sleep environment.",
+    specs: {
+      "Wattage": "9 Watts",
+      "Base Type": "B22",
+      "Control": "Wiz App, Alexa, Google Assistant",
+      "Color Temp": "Warm White to Cool Day Light"
+    },
+    tags: ["smart bulb", "philips wiz", "led bulb", "warm lighting", "bedroom mood"],
+    image: "https://images.unsplash.com/photo-1550985616-10810253b84d?auto=format&fit=crop&w=600&q=80",
+    link: "https://www.amazon.in/dp/B08HM5Y82L?tag=skinwithtanvi-21",
+    hideFromShop: true
+  },
+  {
+    id: 1060,
+    name: "The Decor Remedy Ceramic Ribbed Gold Rimmed Catch-All Oval Tray",
+    brand: "Decor Remedy",
+    category: "Lifestyle",
+    subcat: "Organiser",
+    mrp: 1299,
+    price: 799,
+    rating: 4.5,
+    reviews: "120",
+    asin: "B0BF4YQLSM",
+    badge: "Premium Finish",
+    description: "Heavyweight ceramic ribbed oval tray with an elegant gold-rimmed edge. The perfect catch-all vanity tray for bedside tables, entryways, perfume bottles, or jewelry.",
+    specs: {
+      "Material": "Glazed Ceramic",
+      "Style": "Ribbed Oval with Gold Rim",
+      "Use": "Catch-all vanity tray",
+      "Dimensions": "Medium Oval Size"
+    },
+    tags: ["catch-all tray", "ceramic tray", "vanity organiser", "bedside tray", "home decor"],
+    image: "https://images.unsplash.com/photo-1618220179428-22790b461013?auto=format&fit=crop&w=600&q=80",
+    link: "https://www.amazon.in/dp/B0BF4YQLSM?tag=skinwithtanvi-21",
+    hideFromShop: true
   }
 ];
 
