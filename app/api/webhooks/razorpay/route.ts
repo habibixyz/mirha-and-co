@@ -59,7 +59,19 @@ export async function POST(req: Request) {
  }
  }
  }
- }
+  } else if (event.event === "subscription.cancelled" || event.event === "subscription.halted") {
+  const subscription = event.payload.subscription.entity;
+  
+  // Update the user's subscription in our database to free
+  await prisma.subscription.updateMany({
+  where: { stripeSubscriptionId: subscription.id },
+  data: {
+  tier: "free",
+  status: "cancelled",
+  endsAt: new Date(),
+  }
+  });
+  }
 
  return NextResponse.json({ status: "success" });
  } catch (error: any) {
