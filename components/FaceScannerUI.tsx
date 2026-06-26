@@ -126,6 +126,8 @@ export default function FaceScannerUI() {
  fill
  className="portrait-img"
  placeholder="blur"
+ priority
+ sizes="(max-width: 768px) 100vw, 50vw"
  />
 
  {/* HUD Frame */}

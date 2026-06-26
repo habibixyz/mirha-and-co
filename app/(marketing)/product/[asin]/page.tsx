@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ExternalLink } from "lucide-react";
 import { cookies } from "next/headers";
@@ -477,7 +478,15 @@ export default async function ProductPage({ params }: { params: Promise<{ asin: 
  }}
  >
  <div className="image-panel" style={{ order: isRtl ? 2 : 1 }}>
- <img src={product.image} alt={product.name} />
+ <Image 
+  src={product.image} 
+  alt={product.name} 
+  width={400} 
+  height={400} 
+  priority 
+  sizes="(max-width: 540px) 100vw, (max-width: 860px) 50vw, 400px" 
+  style={{ width: '82%', height: '82%', maxHeight: '380px', objectFit: 'contain' }} 
+  />
  </div>
 
  <div className="detail-panel" style={{ order: isRtl ? 1 : 2 }}>
@@ -567,7 +576,14 @@ export default async function ProductPage({ params }: { params: Promise<{ asin: 
  textAlign: isRtl ? "right" : "left",
  }}
  >
- <img src={item.image} alt={item.name} />
+ <Image 
+  src={item.image} 
+  alt={item.name} 
+  width={150} 
+  height={130} 
+  sizes="(max-width: 540px) 50vw, 150px" 
+  style={{ width: '100%', height: '130px', objectFit: 'contain', marginBottom: '12px' }} 
+  />
  <b>{item.name}</b>
  <span>{convertAndFormatPrice(item.price, currency)}</span>
  </Link>
