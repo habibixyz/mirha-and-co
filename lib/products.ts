@@ -3080,6 +3080,33 @@ export const PRODUCTS = [
     link: "https://www.amazon.in/dp/B0BF4YQLSM?tag=skinwithtanvi-21",
     hideFromShop: true
   }
+,
+
+  {
+    id: 99,
+    name: "Dot & Key Barrier Repair Ceramides Moisturizer",
+    brand: "Dot & Key",
+    category: "Skincare",
+    subcat: "Moisturiser",
+    mrp: 495,
+    price: 395,
+    rating: 4.4,
+    reviews: "15k",
+    asin: "B0B7H8S7H1",
+    badge: "Barrier Repair",
+    description: "Intense hydration for very dry or compromised skin. Fragrance-free and rice-water based.",
+    specs: {
+      "Skin Type": "Dry, Sensitive",
+      "Key Ingredient": "Ceramides, Rice Water",
+      "Texture": "Cream",
+      "Use": "AM & PM"
+    },
+    tags: ["moisturiser", "ceramides", "barrier repair", "dry skin", "dot and key"],
+    concerns: ["dryness", "barrier damage", "sensitive skin"],
+    image: "/products/dot-key-ceramides.png",
+    link: "https://www.amazon.in/dp/B0B7H8S7H1?tag=skinwithtanvi-21"
+  }
+
 ];
 
 
