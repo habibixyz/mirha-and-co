@@ -291,7 +291,7 @@ const staticItems: SearchItem[] = [
  type: "product",
  title: "Dot & Key Barrier Repair Ceramides Moisturizer",
  description: "Intense hydration for very dry or compromised skin. Fragrance-free and rice-water based.",
- url: "/product/B0B7H8S7H1",
+ url: "/product/B0BDVG99J5",
  tags: cleanTags(["product", "dot and key", "ceramides", "dry skin", "moisturizer"]),
  price: 395,
  },

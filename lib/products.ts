@@ -3092,7 +3092,7 @@ export const PRODUCTS = [
     price: 395,
     rating: 4.4,
     reviews: "15k",
-    asin: "B0B7H8S7H1",
+    asin: "B0BDVG99J5",
     badge: "Barrier Repair",
     description: "Intense hydration for very dry or compromised skin. Fragrance-free and rice-water based.",
     specs: {
@@ -3103,8 +3103,8 @@ export const PRODUCTS = [
     },
     tags: ["moisturiser", "ceramides", "barrier repair", "dry skin", "dot and key"],
     concerns: ["dryness", "barrier damage", "sensitive skin"],
-    image: "/products/dot-key-ceramides.png",
-    link: "https://www.amazon.in/dp/B0B7H8S7H1?tag=skinwithtanvi-21"
+    image: "/products/B0BDVG99J5.jpg",
+    link: "https://amzn.to/4vJPShm"
   }
 
 ];
