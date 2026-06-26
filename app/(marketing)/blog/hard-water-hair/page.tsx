@@ -645,7 +645,6 @@ export default function HardWaterHairPage() {
 
  <div className="product-label">Scalp Treatments — Weekly Pre-Wash Application</div>
  <div className="cards-row">
- <AffiliateCard asin="B08GG9M863" onClick={setSelectedProduct} tag={TAG} />
  <AffiliateCard asin="B07NDR2J4K" onClick={setSelectedProduct} tag={TAG} />
  </div>
 

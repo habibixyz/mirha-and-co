@@ -587,47 +587,6 @@ export default function BestNiacinamideSerumsPage() {
  {/* Product 4 */}
  <div className="product-section">
  <div className="product-number">4</div>
- <div className="product-title">Deconstruct 5% Niacinamide + Zinc + B5</div>
- <div className="product-subtitle">Best Budget Pick Under ₹500</div>
- 
- <div className="product-grid">
- <div>
- <BlogProductCard asin="B08GG9M863" />
- </div>
- <div className="product-specs">
- <div className="product-spec">
- <div className="product-spec-label">Concentration</div>
- <div className="product-spec-value">5% Niacinamide + Zinc + B5</div>
- </div>
- <div className="product-spec">
- <div className="product-spec-label">Best For</div>
- <div className="product-spec-value">Beginners, oily + sensitive combination</div>
- </div>
- <div className="product-spec">
- <div className="product-spec-label">Price Point</div>
- <div className="product-spec-value">Most affordable effective option</div>
- </div>
- <div className="product-spec">
- <div className="product-spec-label">Key Features</div>
- <ul style={{margin: "0.5rem 0 0", paddingLeft: "1rem", fontSize: "0.9rem"}}>
- <li>Beginner-friendly 5%</li>
- <li>Lightweight texture</li>
- <li>All skin types</li>
- </ul>
- </div>
- </div>
- </div>
-
- <p>Deconstruct's 5% niacinamide formulation is the best entry-point for people who are nervous about actives or have sensitive skin. The 5% concentration is clinically proven to work but with minimal irritation risk.</p>
-
- <p>The addition of panthenol (B5) makes this formula slightly more hydrating than a pure niacinamide serum, which is useful for people whose skin is reactive to stronger concentrations. Results are slightly slower than 10% serums (expect 6-8 weeks vs 2-4 weeks), but the tolerance is almost universal.</p>
-
- <p><strong>Best for:</strong> Anyone who is new to niacinamide, has sensitive skin, or wants an affordable introduction to the active. Once you're comfortable, you can upgrade to 10%.</p>
- </div>
-
- {/* Product 5 */}
- <div className="product-section">
- <div className="product-number">5</div>
  <div className="product-title">Minimalist 0.3% Retinol in Squalane</div>
  <div className="product-subtitle">The Advanced Next Step</div>
  
@@ -666,9 +625,9 @@ export default function BestNiacinamideSerumsPage() {
  <p><strong>The correct approach:</strong> Niacinamide in the morning, retinol at 0.3% on alternate nights to start, building to nightly use over 6–8 weeks. Minimalist's 0.3% concentration in squalane is the correct starting point for Indian skin that has not used vitamin A before. The squalane base reduces the likelihood of initial irritation and peeling. <strong>Always follow with sunscreen the next morning</strong> — retinol increases photosensitivity and makes unprotected UV exposure counterproductive.</p>
  </div>
 
- {/* Product 6 */}
+ {/* Product 5 */}
  <div className="product-section">
- <div className="product-number">6</div>
+ <div className="product-number">5</div>
  <div className="product-title">Deconstruct Gel Sunscreen SPF 50 PA++++</div>
  <div className="product-subtitle">The Step That Makes Niacinamide Work</div>
  

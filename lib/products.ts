@@ -1252,30 +1252,6 @@ export const PRODUCTS = [
  image: "/products/mamaearth_skin_correct.jpg",
  link: "https://www.amazon.in/dp/B0848GX3P6?tag=skinwithtanvi-21"
  },
- {
- id: 49,
- name: "Deconstruct 5% Niacinamide + Zinc + B5 Serum — 30ml",
- brand: "Deconstruct",
- category: "Skincare",
- subcat: "Serum",
- mrp: 449,
- price: 382,
- rating: 4.2,
- reviews: "3.2k",
- asin: "B08GG9M863",
- badge: "Best Budget Pick",
- description: "5% Niacinamide with Zinc PCA and Panthenol (B5) for gentle oil control and skin soothing.",
- specs: {
- "Skin Type": "Sensitive, Oily, Combination, Normal",
- "Key Ingredient": "Niacinamide 5%, Zinc, Panthenol",
- "Texture": "Watery Gel",
- "Use": "AM & PM"
- },
- tags: ["niacinamide", "serum", "gentle", "budget"],
- concerns: ["oily skin", "pigmentation"],
- image: "/products/deconstruct_niacinamide.jpg",
- link: "https://www.amazon.in/dp/B08GG9M863?tag=skinwithtanvi-21"
- },
 
  // ── Hard Water Shampoos ────────────────────────────────────────────────────
  {

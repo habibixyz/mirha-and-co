@@ -23,7 +23,7 @@ export const HIGH_INTENT_POSTS: HighIntentPost[] = [
     date: "June 2026",
     thumbnail: "NS",
     tags: ["niacinamide", "serums", "oil control", "acne marks", "brightening", "indian skin"],
-    asins: ["B0DH88LZ11", "B01MDTVZTZ", "B08GG9M863"],
+    asins: ["B0DH88LZ11", "B01MDTVZTZ"],
     sections: [
       {
         title: "Why Niacinamide is a Non-Negotiable in Indian Skincare",
@@ -1080,7 +1080,7 @@ export const HIGH_INTENT_POSTS: HighIntentPost[] = [
     date: "June 2026",
     thumbnail: "VS",
     tags: ["minimalist", "deconstruct", "skincare comparison", "niacinamide", "sunscreen", "budget beauty"],
-    asins: ["B0DH88LZ11", "B08GG9M863", "B0B45RB1RV"],
+    asins: ["B0DH88LZ11", "B0B45RB1RV"],
     sections: [
       {
         title: "The Rise of Indian Science-Led Skincare",
