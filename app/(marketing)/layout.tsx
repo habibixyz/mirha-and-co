@@ -32,7 +32,7 @@ const bebasNeue = Bebas_Neue({
  variable: "--font-bebas",
 });
 
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { Locale, Currency } from "@/lib/globalization";
 import { GlobalizationProvider } from "@/components/GlobalizationContext";
 import SiteHeader from "@/components/SiteHeader";
@@ -78,8 +78,10 @@ export default async function RootLayout({
  children: React.ReactNode;
 }) {
  const cookieStore = await cookies();
+ const headerStore = await headers();
+ 
  const locale = (cookieStore.get("mirha_locale")?.value || "en") as Locale;
- const currency = (cookieStore.get("mirha_currency")?.value || "INR") as Currency;
+ const currency = (cookieStore.get("mirha_currency")?.value || headerStore.get("x-default-currency") || "INR") as Currency;
  const isRtl = locale === "ar";
 
  return (

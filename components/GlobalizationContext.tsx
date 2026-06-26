@@ -9,6 +9,7 @@ import {
  convertAndFormatPrice,
  getLocalAffiliateUrl,
  RTL_LOCALES,
+  getLocalizedContent,
 } from "@/lib/globalization";
 
 interface GlobalizationContextProps {
@@ -20,6 +21,7 @@ interface GlobalizationContextProps {
  formatPrice: (inrAmount: number) => string;
  getAffiliateUrl: (asin: string, name: string, brand: string, originalLink?: string) => string;
  isRtl: boolean;
+ localizeContent: (text: string) => string;
 }
 
 const GlobalizationContext = createContext<GlobalizationContextProps | undefined>(undefined);
@@ -71,6 +73,8 @@ export function GlobalizationProvider({
 
  const isRtl = RTL_LOCALES.includes(locale);
 
+ const localizeContent = (text: string): string => getLocalizedContent(text, currency);
+
  return (
  <GlobalizationContext.Provider
  value={{
@@ -82,7 +86,8 @@ export function GlobalizationProvider({
  formatPrice,
  getAffiliateUrl,
  isRtl,
- }}
+ localizeContent,
+  }}
  >
  {children}
  </GlobalizationContext.Provider>

@@ -3,6 +3,8 @@ import { POSTS, getRelevantImage } from "@/lib/posts";
 import MoleculeWrapper from "@/components/MoleculeWrapper";
 import BlogSearchClient from "./BlogSearchClient";
 import RegionalGuidesSelector from "@/components/RegionalGuidesSelector";
+import { cookies, headers } from "next/headers";
+import { getLocalizedContent, Currency } from "@/lib/globalization";
 
 
 export const metadata: Metadata = {
@@ -60,7 +62,11 @@ const paths = [
  { label: "Shop", title: "Browse curated picks", text: "See products with price, use case, ingredients, and honest context.", href: "/" },
 ];
 
-export default function BlogIndex() {
+export default async function BlogIndex() {
+  const cookieStore = await cookies();
+  const headerStore = await headers();
+  const currency = (cookieStore.get("mirha_currency")?.value || headerStore.get("x-default-currency") || "INR") as Currency;
+  const localizeContent = (text: string) => getLocalizedContent(text, currency);
  return (
  <main>
  <style>{`
@@ -622,7 +628,7 @@ export default function BlogIndex() {
  </section>
 
  <section className="article-section">
- <BlogSearchClient initialPosts={posts} catColors={catColors} />
+ <BlogSearchClient initialPosts={posts} catColors={catColors} currency={currency} />
  </section>
 
   <section 

@@ -553,11 +553,11 @@ export default function AboutPage() {
  <div className="inner" style={{ maxWidth: "800px", margin: "0 auto", textAlign: "center" }}>
  <p className="eyebrow" style={{ justifyContent: "center" }}>Brand Partnerships</p>
  <h2 className="section-title">
- Introduce Your Product
- <span>Submit formulations for clinical audit.</span>
+ Partner With Us
+ <span style={{ fontSize: "clamp(1.8rem, 4vw, 3rem)" }}>Sell your brand on Mirha&nbsp;&amp;&nbsp;Co.</span>
  </h2>
  <p style={{ color: "var(--muted)", marginBottom: "3rem", fontSize: "1.05rem", lineHeight: "1.7" }}>
- Are you a laboratory, skincare brand, or formulator? We accept direct product audits to see if your formulations meet our ingredient-safety, climate-performance, and pricing transparency metrics.
+ Are you a skincare brand looking to reach a highly engaged audience? We partner with authentic brands to feature their products on our platform. Submit your brand details below to get started.
  </p>
  <CollabForm />
  </div>

@@ -18,10 +18,10 @@ export default function CollabForm() {
  const [errorMessage, setErrorMessage] = useState("");
 
  const steps = [
- "Establishing secure audit channel...",
- "Scanning key active concentrations...",
- "Auditing formulation safety parameters...",
- "Registering review with Curation Board...",
+ "Establishing secure connection...",
+ "Reviewing brand details...",
+ "Verifying partnership alignment...",
+ "Submitting application...",
  ];
 
  const handleSubmit = async (e: React.FormEvent) => {
@@ -370,7 +370,7 @@ export default function CollabForm() {
  {status === "loading" && (
  <div className="loading-overlay">
  <div className="spinner-pearly"></div>
- <div className="loading-title">Curation Verification</div>
+ <div className="loading-title">Partnership Verification</div>
  <div className="loading-step-text">
  {loadingStep < steps.length ? steps[loadingStep] : "Finalizing registry..."}
  </div>
@@ -382,10 +382,10 @@ export default function CollabForm() {
  <div className="check-circle">
  <Sparkles size={28} />
  </div>
- <h3 className="success-title">Audit Initiated</h3>
+ <h3 className="success-title">Application Received</h3>
  <p className="success-desc">
  Your formulation data for <strong>{formData.brandName}</strong> has been logged. 
- We've dispatched an verification receipt containing our clinical audit pathway parameters to <strong>{formData.email}</strong>.
+ We've sent a confirmation receipt to <strong>{formData.email}</strong>.
  </p>
  </div>
  ) : (
@@ -399,7 +399,7 @@ export default function CollabForm() {
  <div className="form-grid">
  <div className="form-group">
  <label className="form-label">
- <Building2 size={12} /> Brand / Lab Name
+ <Building2 size={12} /> Brand Name
  </label>
  <div className="input-wrapper">
  <span className="input-icon"><Building2 size={14} /></span>
@@ -466,10 +466,10 @@ export default function CollabForm() {
 
  <div className="form-group full-width">
  <label className="form-label">
- <Compass size={12} /> Key Active Ingredients
+ <Compass size={12} /> Why should we feature your brand?
  </label>
  <textarea
- placeholder="e.g. 10% Vitamin C, 0.5% Ferulic Acid (explain concentrations or unique delivery systems)"
+ placeholder="e.g. Our products are vegan, cruelty-free, and formulated for sensitive skin."
  value={formData.actives}
  onChange={(e) => setFormData({ ...formData, actives: e.target.value })}
  className="collab-textarea"
@@ -478,11 +478,11 @@ export default function CollabForm() {
  </div>
 
  <button type="submit" className="submit-btn">
- Submit Formulation for Audit
+ Submit Brand for Review
  </button>
 
  <div className="badge-trust">
- <Sparkles size={11} /> Curation is entirely merit-based. We do not charge or accept sponsorship for placement.
+ <Sparkles size={11} /> We carefully review all partners to ensure they align with our audience.
  </div>
  </form>
  )}

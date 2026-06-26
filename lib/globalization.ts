@@ -41,7 +41,7 @@ export const CURRENCIES: Record<Currency, CurrencyConfig> = {
  rate: 0.0095, // 1 INR = 0.0095 GBP
  locale: "en-GB",
  amazonDomain: "amazon.co.uk",
- affiliateTag: "mirhaglobal-21",
+ affiliateTag: "skinwithtan00-21",
  },
  AED: {
  code: "AED",
@@ -342,4 +342,25 @@ export function getLocalAffiliateUrl(
  // For international stores, search by Brand + Name to ensure they find the listing in their country's catalog!
  const query = encodeURIComponent(`${brand} ${name}`);
  return `https://www.${config.amazonDomain}/s?k=${query}&tag=${config.affiliateTag}`;
+}
+
+
+/**
+ * Smart content localization for text
+ */
+export function getLocalizedContent(text: string, currency: string): string {
+  if (!text || currency === "INR") return text;
+  
+  return text
+    .replace(/\bIndian Skin\b/g, "Brown & Olive Skin")
+    .replace(/\bindian skin\b/g, "brown & olive skin")
+    .replace(/\bin India\b/gi, "")
+    .replace(/\bIndian Summer\b/gi, "High Humidity Climates")
+    .replace(/\bIndian summer\b/gi, "high humidity climates")
+    .replace(/\bIndian Climate\b/gi, "Humid Climates")
+    .replace(/\bIndian Humidity\b/gi, "High Humidity")
+    .replace(/\bIndian Girl's\b/gi, "Modern Girl's")
+    .replace(/\bIndian\b/g, "South Asian")
+    .replace(/\bindian\b/g, "south asian")
+    .replace(/\s+/g, ' ').trim();
 }

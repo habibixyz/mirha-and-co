@@ -3,6 +3,8 @@ import { Metadata } from "next";
 import { SeoBlogPost } from "@/components/SeoBlogPost";
 import { AffiliateCard } from "@/components/AffiliateCard";
 import { getProgrammaticPostBySlug, getAllProgrammaticSlugs } from "@/lib/programmatic-posts";
+import { cookies, headers } from "next/headers";
+import { getLocalizedContent, Currency } from "@/lib/globalization";
 
 interface PageProps {
   params: Promise<{
@@ -46,6 +48,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function ProgrammaticBlogPost({ params }: PageProps) {
+  const cookieStore = await cookies();
+  const headerStore = await headers();
+  const currency = (cookieStore.get("mirha_currency")?.value || headerStore.get("x-default-currency") || "INR") as Currency;
+  const localizeContent = (text: string) => getLocalizedContent(text, currency);
   const { slug } = await params;
   const post = getProgrammaticPostBySlug(slug);
 
@@ -56,8 +62,8 @@ export default async function ProgrammaticBlogPost({ params }: PageProps) {
   return (
     <SeoBlogPost
       category={post.category}
-      title={post.title}
-      description={post.description}
+      title={localizeContent(post.title)}
+      description={localizeContent(post.description)}
       date={post.date}
       readTime={post.readTime}
       sections={post.sections}

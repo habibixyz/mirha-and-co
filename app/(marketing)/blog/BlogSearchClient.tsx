@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from "react";
 import { Search, X, Sparkles } from "lucide-react";
+import { getLocalizedContent, Currency } from "@/lib/globalization";
 
 type BlogSearchClientProps = {
  initialPosts: Array<{
@@ -17,13 +18,15 @@ type BlogSearchClientProps = {
  tags: string[];
  }>;
  catColors: Record<string, string>;
+ currency: Currency;
 };
 
 const CATEGORIES = ["ALL", "SKINCARE", "BEAUTY", "WELLNESS", "LIFESTYLE", "HAIR", "MAKEUP"];
 
 const POPULAR_TAGS = ["Sunscreen", "Niacinamide", "Oily Skin", "Hard Water", "Acne", "Cortisol"];
 
-export default function BlogSearchClient({ initialPosts, catColors }: BlogSearchClientProps) {
+export default function BlogSearchClient({ initialPosts, catColors, currency }: BlogSearchClientProps) {
+  const localizeContent = (text: string) => getLocalizedContent(text, currency);
  const [searchQuery, setSearchQuery] = useState("");
  const [selectedCategory, setSelectedCategory] = useState("ALL");
 
@@ -282,8 +285,8 @@ export default function BlogSearchClient({ initialPosts, catColors }: BlogSearch
  <p className="article-cat" style={{ color: catColors[post.category] || "#a27b5c" }}>
  {post.category}
  </p>
- <h3>{post.title}</h3>
- <p>{post.excerpt}</p>
+ <h3>{localizeContent(post.title)}</h3>
+ <p>{localizeContent(post.excerpt)}</p>
  <div className="article-meta">
  <span>{post.date}</span>
  <span>{post.readTime}</span>

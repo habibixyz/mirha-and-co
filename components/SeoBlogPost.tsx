@@ -1,12 +1,14 @@
 import Link from "next/link";
 import BlogFooterTools from "@/components/BlogFooterTools";
+import { cookies, headers } from "next/headers";
+import { getLocalizedContent, Currency } from "@/lib/globalization";
 
 type Section = {
  title: string;
  body: string[];
 };
 
-export function SeoBlogPost({
+export async function SeoBlogPost({
  category,
  title,
  description,
@@ -23,8 +25,13 @@ export function SeoBlogPost({
  sections: Section[];
  children?: React.ReactNode;
 }) {
- return (
- <main className="seo-post">
+ const cookieStore = await cookies();
+  const headerStore = await headers();
+  const currency = (cookieStore.get("mirha_currency")?.value || headerStore.get("x-default-currency") || "INR") as Currency;
+  const localizeContent = (text: string) => getLocalizedContent(text, currency);
+
+  return (
+  <main className="seo-post">
  <style>{`
  .seo-post {
  background: #fbf7f1;
@@ -202,8 +209,8 @@ export function SeoBlogPost({
 
  <header className="post-hero">
  <p className="eyebrow">{category}</p>
- <h1>{title}</h1>
- <p className="post-description">{description}</p>
+ <h1>{localizeContent(title)}</h1>
+ <p className="post-description">{localizeContent(description)}</p>
  <div className="post-meta">
  Updated {date} / {readTime} read / Affiliate links disclosed
  </div>
@@ -220,7 +227,7 @@ export function SeoBlogPost({
 
  {sections.map((section) => (
  <section className="post-section" key={section.title}>
- <h2>{section.title}</h2>
+ <h2>{localizeContent(section.title)}</h2>
  {section.body.map((paragraph) => (
  <p key={paragraph}>{paragraph}</p>
  ))}
