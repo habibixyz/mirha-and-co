@@ -635,7 +635,7 @@ const hashString = (str: string) => {
 const SLUG_IMAGE_MAP: Record<string, string> = {
  // NEW PREMIUM EDITORIAL SERIES — June 2026
  "workout-causing-cortisol-face": "/blog-thumbs/wellness.png",
- "gym-bag-skincare-guide": "/blog-thumbs/skincare_2.png",
+ "gym-bag-skincare-guide": "/blog-thumbs/blog_gym_skincare.png",
  "posture-ultimate-wealth-signifier": "/blog-thumbs/lifestyle.png",
  "why-rich-women-have-better-skin": "/blog-thumbs/blog_rich_women_skin.png",
  "economics-of-looking-expensive": "/blog-thumbs/blog_economics_expensive.png",
@@ -648,6 +648,18 @@ const SLUG_IMAGE_MAP: Record<string, string> = {
  "pregnancy-safe-skincare-guide": "/blog-thumbs/blog_pregnancy_safe.png",
  "damaged-skin-barrier-repair": "/blog-thumbs/blog_barrier_repair.png",
  "best-sunscreen-oily-skin-india": "/blog-thumbs/skincare_2.png",
+ "best-sunscreen-for-oily-skin-india": "/blog-thumbs/blog_sunscreen_oily.png",
+ "best-moisturizer-under-500": "/blog-thumbs/blog_budget_moisturizer.png",
+ "ceramide-moisturizer-dry-skin-india": "/blog-thumbs/blog_ceramide_dry.png",
+ "dot-and-key-vs-deconstruct": "/blog-thumbs/blog_brand_comparison.png",
+ "best-vitamin-c-serum-india": "/blog-thumbs/blog_vitamin_c.png",
+ "best-salicylic-acid-face-wash-india": "/blog-thumbs/blog_salicylic.png",
+ "best-face-wash-for-glowing-skin-india": "/blog-thumbs/blog_glow_facewash.png",
+ "best-moisturizer-for-combination-skin-india": "/blog-thumbs/blog_combination_moisturizer.png",
+ "best-benzoyl-peroxide-gel-india": "/blog-thumbs/blog_benzoyl_peroxide.png",
+ "korean-glass-skin-routine-india": "/blog-thumbs/photo_korean.png",
+ "best-hyaluronic-acid-serum-india": "/blog-thumbs/blog_hyaluronic.png",
+ "best-under-eye-cream-dark-circles-india": "/blog-thumbs/blog_dark_circles.png",
  "dark-circles-treatment-india": "/blog-thumbs/blog_dark_circles.png",
  "active-acne-treatment-india": "/blog-thumbs/blog_salicylic.png",
  "pigmentation-guide": "/blog-thumbs/skincare.png",
@@ -659,8 +671,9 @@ const SLUG_IMAGE_MAP: Record<string, string> = {
  "humidity-skincare-india": "/blog-thumbs/photo_korean.png",
  "best-moisturisers-india-2026": "/blog-thumbs/wellness.png",
  "best-niacinamide-serums-india": "/blog-thumbs/blog_niacinamide.png",
+ "best-niacinamide-serum-india": "/blog-thumbs/blog_niacinamide.png",
  "salicylic-acid-guide-india": "/blog-thumbs/hair.png", // use existing unused
- "what-niacinamide-does-to-your-skin": "/blog-thumbs/skincare_2.png", // pair: both niacinamide posts
+ "what-niacinamide-does-to-your-skin": "/blog-thumbs/blog_niacinamide.png", // pair: both niacinamide posts
 
  // BEAUTY — 17 posts
  "why-korean-skincare-fails-indian-skin": "/blog-thumbs/blog_korean_mismatch.png",
@@ -697,6 +710,40 @@ const SLUG_IMAGE_MAP: Record<string, string> = {
 
  // HAIR — 1 post
  "hard-water-hair": "/blog-thumbs/blog_hard_water.png",
+ "hard-water-hair-loss-india": "/blog-thumbs/blog_hard_water.png",
+ "minimalist-vs-the-ordinary": "/blog-thumbs/blog_brand_comparison.png",
+ "best-sunscreen-for-dry-skin-india": "/blog-thumbs/blog_indian_summer.png",
+ "best-retinol-serum-for-beginners-india": "/blog-thumbs/blog_morning_routine.png",
+ "best-sunscreen-under-500": "/blog-thumbs/blog_budget.png",
+ "cetaphil-vs-cerave-india": "/blog-thumbs/beauty_2.png",
+ "plum-vs-dot-and-key": "/blog-thumbs/photo_makeup.png",
+ "best-tranexamic-acid-serum-india": "/blog-thumbs/blog_hyperpigmentation.png",
+ "best-alpha-arbutin-serum-india": "/blog-thumbs/blog_hyperpigmentation.png",
+ "best-body-lotion-for-dry-skin-india": "/blog-thumbs/wellness.png",
+ "best-face-wash-for-oily-acne-prone-skin-india": "/blog-thumbs/blog_salicylic.png",
+ "hair-loss-treatment-men-india": "/blog-thumbs/blog_men_hairloss.png",
+ "how-to-remove-tan-from-face-india": "/blog-thumbs/blog_sun_damage.png",
+ "best-cica-moisturizer-india": "/blog-thumbs/blog_barrier_repair.png",
+ "best-sunscreen-no-white-cast-india": "/blog-thumbs/blog_sunscreen_oily.png",
+ "best-body-wash-for-dry-skin-india": "/blog-thumbs/wellness_2.png",
+ "best-peptide-serum-india": "/blog-thumbs/skincare.png",
+ "minimalist-vs-deconstruct": "/blog-thumbs/blog_brand_comparison.png",
+ "the-ordinary-vs-derma-co": "/blog-thumbs/photo_beauty.png",
+ "best-moisturizer-for-acne-prone-skin-india": "/blog-thumbs/blog_combination_moisturizer.png",
+ "salicylic-acid-vs-benzoyl-peroxide-acne": "/blog-thumbs/blog_benzoyl_peroxide.png",
+ "best-shampoo-for-frizzy-hair-india": "/blog-thumbs/photo_shampoo.png",
+ "best-hair-mask-for-damaged-hair-india": "/blog-thumbs/hair_2.png",
+ "best-sunscreen-for-acne-prone-skin-india": "/blog-thumbs/blog_sunscreen_oily.png",
+ "how-to-use-retinol-for-beginners": "/blog-thumbs/blog_morning_routine.png",
+ "best-niacinamide-moisturizer-india": "/blog-thumbs/blog_niacinamide.png",
+ "best-face-wash-under-300": "/blog-thumbs/blog_glow_facewash.png",
+ "best-vitamin-c-moisturizer-india": "/blog-thumbs/blog_vitamin_c.png",
+ "dandruff-vs-dry-scalp-treatment": "/blog-thumbs/hair.png",
+ "best-tea-tree-oil-for-acne-india": "/blog-thumbs/skincare_2.png",
+ "how-to-fix-damaged-skin-barrier-india": "/blog-thumbs/blog_barrier_repair.png",
+ "best-squalane-oil-india": "/blog-thumbs/skincare_3.png",
+ "best-glycolic-acid-toner-india": "/blog-thumbs/blog_salicylic.png",
+ "loreal-vs-tresemme-shampoo": "/blog-thumbs/photo_shampoo.png",
 };
 
 export const getRelevantImage = (slug: string, _title: string, category: string): string => {

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { submitLeadAction } from "@/app/(saas)/actions";
-import { Building2, User, Mail, Link as LinkIcon, Compass, Sparkles } from "lucide-react";
+import { Building2, User, Mail, Link as LinkIcon, Compass, Check, ShieldCheck } from "lucide-react";
 
 export default function CollabForm() {
  const [formData, setFormData] = useState({
@@ -380,7 +380,7 @@ export default function CollabForm() {
  {status === "success" ? (
  <div className="success-screen">
  <div className="check-circle">
- <Sparkles size={28} />
+ <Check size={28} />
  </div>
  <h3 className="success-title">Application Received</h3>
  <p className="success-desc">
@@ -482,7 +482,7 @@ export default function CollabForm() {
  </button>
 
  <div className="badge-trust">
- <Sparkles size={11} /> We carefully review all partners to ensure they align with our audience.
+ <ShieldCheck size={11} /> We carefully review all partners to ensure they align with our audience.
  </div>
  </form>
  )}

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { Search, X, Sparkles } from "lucide-react";
+import { Search, X, AlertCircle } from "lucide-react";
 import { getLocalizedContent, Currency } from "@/lib/globalization";
 
 type BlogSearchClientProps = {
@@ -297,7 +297,7 @@ export default function BlogSearchClient({ initialPosts, catColors, currency }: 
  </div>
  ) : (
  <div className="empty-state">
- <Sparkles style={{ margin: "0 auto 1rem", color: "#a27b5c" }} size={36} />
+ <AlertCircle style={{ margin: "0 auto 1rem", color: "#a27b5c" }} size={36} />
  <h3>No articles found</h3>
  <p>We couldn't find any articles matching your search criteria. Try a different search term or reset filters.</p>
  <button

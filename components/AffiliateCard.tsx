@@ -2,12 +2,13 @@
 
 import { PRODUCTS } from "@/lib/products";
 import { useGlobalization } from "./GlobalizationContext";
+import Link from "next/link";
 
 export function AffiliateCard(props: any) {
  const { asin, onClick } = props;
  const global = useGlobalization();
 
- const product = PRODUCTS.find((p) => p.asin === asin);
+ const product = PRODUCTS.find((p) => p.asin === asin) as any;
 
  const title = product?.name || props.title;
  const description = product?.description || props.description;
@@ -120,12 +121,28 @@ export function AffiliateCard(props: any) {
  fontSize: "1.1rem",
  lineHeight: 1.35,
  color: "var(--ink, #1a1714)",
- marginBottom: "0.6rem",
+ marginBottom: "0.4rem",
  fontWeight: 400,
  }}
  >
  {title}
  </h3>
+
+ {/* Chips */}
+ {(product?.skinTypes || product?.concerns) && (
+ <div style={{ display: "flex", flexWrap: "wrap", gap: "6px", marginBottom: "0.8rem" }}>
+ {product?.skinTypes?.slice(0, 2).map((st: string) => (
+ <span key={st} style={{ background: "#fdf5f2", color: "#e86b45", border: "1px solid #f8e1d9", padding: "2px 6px", borderRadius: "4px", fontSize: "0.6rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em" }}>
+ {st}
+ </span>
+ ))}
+ {product?.concerns?.slice(0, 2).map((c: string) => (
+ <span key={c} style={{ background: "#f2f7fb", color: "#4576e8", border: "1px solid #d9e5f8", padding: "2px 6px", borderRadius: "4px", fontSize: "0.6rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em" }}>
+ {c}
+ </span>
+ ))}
+ </div>
+ )}
 
  {/* Description */}
  <p
@@ -155,7 +172,7 @@ export function AffiliateCard(props: any) {
  {Object.entries(product.specs).slice(0, 3).map(([key, value]) => (
  <tr key={key} style={{ borderBottom: "1px solid #f4efe9" }}>
  <td style={{ padding: "5px 0", fontWeight: 700, color: "#1a1714", width: "45%" }}>{key}</td>
- <td style={{ padding: "5px 0", color: "#6a635d" }}>{value}</td>
+ <td style={{ padding: "5px 0", color: "#6a635d" }}>{value as any}</td>
  </tr>
  ))}
  <tr>
@@ -199,6 +216,7 @@ export function AffiliateCard(props: any) {
  )}
  </div>
 
+ <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px" }}>
  <a
  href={affiliateUrl}
  target="_blank"
@@ -209,12 +227,12 @@ export function AffiliateCard(props: any) {
  onClick?.(product || { asin, title });
  }}
  style={{
- fontSize: "0.7rem",
+ fontSize: "0.6rem",
  letterSpacing: "0.15em",
  textTransform: "uppercase",
  color: "#fff",
  background: "#fc2779",
- padding: "10px 14px",
+ padding: "10px",
  textDecoration: "none",
  textAlign: "center",
  fontWeight: 700,
@@ -223,14 +241,42 @@ export function AffiliateCard(props: any) {
  display: "flex",
  alignItems: "center",
  justifyContent: "center",
- gap: "6px",
+ gap: "4px",
  }}
  >
  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
  <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
  </svg>
- Compare Prices & Buy
+ Buy
  </a>
+
+ <Link
+ href={`/dashboard/analysis?product=${asin}`}
+ style={{
+ fontSize: "0.6rem",
+ letterSpacing: "0.15em",
+ textTransform: "uppercase",
+ color: "#1a1714",
+ background: "#f4efe9",
+ padding: "10px",
+ textDecoration: "none",
+ textAlign: "center",
+ fontWeight: 700,
+ borderRadius: "6px",
+ display: "flex",
+ alignItems: "center",
+ justifyContent: "center",
+ gap: "4px",
+ }}
+ >
+ <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+ <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+ <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+ <line x1="12" y1="22.08" x2="12" y2="12"></line>
+ </svg>
+ Analyze
+ </Link>
+ </div>
  </div>
 
  {/* Disclaimer / Authenticity Guarantee */}

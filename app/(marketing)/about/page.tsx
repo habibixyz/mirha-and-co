@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Brain, BookOpen, Fingerprint, Star } from "lucide-react";
+import { Brain, BookOpen, Fingerprint, Star, Coins } from "lucide-react";
 import FaceScannerUI from "@/components/FaceScannerUI";
 import CollabForm from "@/components/CollabForm";
 
@@ -218,12 +218,12 @@ export default function AboutPage() {
  color: var(--white);
  }
 
- .ecosystem-grid {
- display: grid;
- grid-template-columns: repeat(3, 1fr);
- gap: 2rem;
- margin-top: 4rem;
- }
+  .ecosystem-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 2rem;
+    margin-top: 4rem;
+  }
 
  .ecosystem-card {
  background: #fff;
@@ -446,31 +446,39 @@ export default function AboutPage() {
  </h2>
  </div>
 
- <div className="ecosystem-grid">
- <div className="ecosystem-card">
- <div className="eco-icon"><Brain size={28} /></div>
- <h3>Curated Database</h3>
- <p>
- We compile ingredient science, clinical data, and public reviews into a clean, searchable index. You get straight, hype-free answers about what works, without the marketing fluff.
- </p>
- </div>
+  <div className="ecosystem-grid">
+    <div className="ecosystem-card">
+      <div className="eco-icon"><Brain size={28} /></div>
+      <h3>Curated Science Database</h3>
+      <p>
+        We compile clinical literature, formulation science, and user data into a clean, searchable index. You get straight, hype-free answers about what works, without marketing fluff.
+      </p>
+    </div>
 
- <div className="ecosystem-card">
- <div className="eco-icon"><BookOpen size={28} /></div>
- <h3>Climate-Aware Curation</h3>
- <p>
- A rich cream that works beautifully in dry winters will clog pores in tropical humidity. We categorize recommendations based on local climate realities and skin needs, so you can adapt your routine wherever you are.
- </p>
- </div>
+    <div className="ecosystem-card">
+      <div className="eco-icon"><BookOpen size={28} /></div>
+      <h3>Climate-Aware Builder</h3>
+      <p>
+        A cream that works in dry winters will clog pores in tropical humidity. We build recommendations based on regional tap water hardness and seasonal climate realities.
+      </p>
+    </div>
 
- <div className="ecosystem-card">
- <div className="eco-icon"><Fingerprint size={28} /></div>
- <h3>Skin Journal & Tracking</h3>
- <p>
- Your skin changes with the weather, stress, and travel. Keep track of what you use daily, log your observations, and see clear patterns of how your skin responds over time.
- </p>
- </div>
- </div>
+    <div className="ecosystem-card">
+      <div className="eco-icon"><Fingerprint size={28} /></div>
+      <h3>Ingredient Checker</h3>
+      <p>
+        Layering active chemicals shouldn't be guesswork. Analyze conflicts instantly and generate structured, pH-balanced AM/PM routines to protect your skin barrier.
+      </p>
+    </div>
+
+    <div className="ecosystem-card">
+      <div className="eco-icon"><Coins size={28} /></div>
+      <h3>Beauty Dupe Finder</h3>
+      <p>
+        Save on marketing, pay for active ingredients. Swap premium luxury products for their drugstore active-equivalents and calculate your annual savings.
+      </p>
+    </div>
+  </div>
  </div>
  </section>
 
@@ -571,14 +579,17 @@ export default function AboutPage() {
  Stop guessing. Compare ingredients, understand formulations, and build a routine that actually matches your skin's needs.
  </p>
 
- <div className="btn-row">
- <Link href="/tools/ingredients" className="btn primary">
- Check Ingredients
- </Link>
- <Link href="/tools/routine" className="btn secondary">
- Build a Routine
- </Link>
- </div>
+  <div className="btn-row">
+    <Link href="/tools/routine" className="btn primary">
+      Build a Routine
+    </Link>
+    <Link href="/tools/ingredients" className="btn secondary">
+      Check Ingredients
+    </Link>
+    <Link href="/tools/dupes" className="btn secondary">
+      Find Beauty Dupes
+    </Link>
+  </div>
  </div>
  </section>
 

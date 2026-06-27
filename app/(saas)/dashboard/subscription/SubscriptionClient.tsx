@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Check, Loader2, Star, Sparkles, ShieldCheck, Zap } from "lucide-react";
+import { Check, Loader2, Star, ShieldCheck, Zap } from "lucide-react";
 import { useState } from "react";
 import Script from "next/script";
 
@@ -438,7 +438,7 @@ export function SubscriptionClient({ isPro }: { isPro: boolean }) {
 
  <div className="sub-header">
  <motion.div variants={itemVariants} className="premium-badge">
- <Sparkles size={13} />
+ <Star size={13} fill="currentColor" />
  Mirha Membership
  </motion.div>
  <motion.h1 variants={itemVariants} className="sub-title">

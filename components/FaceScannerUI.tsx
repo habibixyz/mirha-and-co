@@ -1,15 +1,11 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import Image from "next/image";
 import faceImage from "./premium_face_scan.png";
 
 export default function FaceScannerUI() {
- const router = useRouter();
-
  return (
  <div 
- onClick={() => router.push("/dashboard/analysis")}
  className="face-scan-container"
  >
  <style>{`

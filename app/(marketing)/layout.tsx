@@ -37,6 +37,7 @@ import { Locale, Currency } from "@/lib/globalization";
 import { GlobalizationProvider } from "@/components/GlobalizationContext";
 import SiteHeader from "@/components/SiteHeader";
 import NewsletterForm from "@/components/NewsletterForm";
+import BackToTop from "@/components/BackToTop";
 
 export async function generateMetadata() {
   return {
@@ -111,6 +112,7 @@ export default async function RootLayout({
  <SiteHeader />
 
  {children}
+ <BackToTop />
  </GlobalizationProvider>
 
  {/* Footer */}

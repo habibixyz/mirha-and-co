@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Layers, Droplet } from "lucide-react";
 import { PRODUCTS } from "@/lib/products";
 import { cookies } from "next/headers";
 import { Locale, DICTIONARY, RTL_LOCALES } from "@/lib/globalization";
@@ -161,47 +161,111 @@ export default async function BeautyShopPage() {
           background: rgba(255,255,255,0.42);
         }
 
-        .hero-panel {
-          background: #fffaf4;
-          border: 1px solid #e3d8ce;
-          border-radius: 14px;
-          overflow: hidden;
-          box-shadow: 0 24px 70px rgba(38, 28, 20, 0.08);
+        .hero-visuals {
+          position: relative;
+          width: 100%;
+          min-height: 540px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
         }
 
-        .hero-image {
-          min-height: 280px;
+        .ai-stack {
+          display: grid;
+          grid-template-columns: 1.1fr 0.9fr;
+          gap: 20px;
+          width: 100%;
+          max-width: 640px;
+          margin: 0 auto;
+          align-items: center;
+        }
+
+        .ai-stack-left {
+          display: flex;
+          flex-direction: column;
+          gap: 20px;
+          order: 1;
+        }
+
+        .ai-card {
+          box-sizing: border-box;
           position: relative;
-          z-index: 0;
+          background: rgba(255, 255, 255, 0.7);
+          backdrop-filter: blur(16px);
+          -webkit-backdrop-filter: blur(16px);
+          border: 1px solid rgba(255, 255, 255, 0.8);
+          border-radius: 20px;
+          box-shadow: 0 24px 60px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255,255,255,1);
+          padding: 24px;
+          transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s;
+          cursor: pointer;
+          width: 100%;
+          text-decoration: none !important;
+        }
+
+        .ai-card:hover {
+          transform: translateY(-8px) scale(1.02);
+          box-shadow: 0 32px 70px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255,255,255,1);
+          z-index: 10;
+        }
+
+        .ai-card-scanner {
+          order: 2;
+          width: 100%;
+          height: 440px;
+          padding: 0;
           overflow: hidden;
+        }
+
+        .ai-card-header {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          margin-bottom: 0;
+        }
+
+        .ai-icon {
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          background: #ffffff;
+          border: 1px solid rgba(22, 20, 18, 0.08);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: #fc2779;
+          flex-shrink: 0;
+          transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .ai-card:hover .ai-icon {
+          background: #fc2779;
+          color: #ffffff;
+          border-color: #fc2779;
+          box-shadow: 0 8px 20px rgba(252, 39, 121, 0.25);
+          transform: scale(1.05);
         }
         
-        .hero-image::after {
-          content: "";
-          position: absolute;
-          inset: 0;
-          background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0) 40%, rgba(251, 247, 241, 0.45) 100%);
-          pointer-events: none;
-          z-index: 1;
+        .ai-card h3 {
+          font-family: var(--font-playfair), serif;
+          font-size: 17px;
+          font-weight: 600;
+          margin: 0;
+          color: #161412;
+          letter-spacing: -0.01em;
         }
-
-        .hero-panel-body {
-          padding: 24px;
-        }
-
-        .hero-panel-body h2 {
-          font-family: 'DM Serif Display', serif;
-          font-size: 28px;
-          font-weight: 400;
-          line-height: 1.1;
-          margin: 0 0 10px;
-        }
-
-        .hero-panel-body p {
-          color: #756b63;
-          font-size: 13px;
-          line-height: 1.7;
-          margin: 0 0 18px;
+        
+        .ai-card p {
+          font-family: var(--font-dm-sans), sans-serif;
+          font-size: 9px;
+          color: #8d8178;
+          margin: 3px 0 0;
+          line-height: 1.2;
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
+          font-weight: 600;
         }
 
         .trust-row {
@@ -209,9 +273,9 @@ export default async function BeautyShopPage() {
           justify-content: center;
           align-items: center;
           gap: 24px;
-          padding: 18px 12px;
-          border-top: 1px solid #ece2d9;
+          padding: 24px 12px 0;
           flex-wrap: wrap;
+          width: 100%;
         }
 
         .trust-item {
@@ -345,19 +409,42 @@ export default async function BeautyShopPage() {
         }
 
         .desk-actions {
-          display: grid;
-          gap: 10px;
+          display: flex;
+          flex-direction: column;
+          gap: 0;
         }
 
         .desk-actions a {
-          border: 1px solid rgba(255,255,255,0.12);
-          border-radius: 9px;
-          padding: 16px;
+          border: none;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+          border-radius: 0;
+          padding: 16px 8px;
           display: flex;
           justify-content: space-between;
           align-items: center;
-          color: #fff;
+          color: rgba(255, 255, 255, 0.85);
           text-decoration: none;
+          transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .desk-actions a:last-child {
+          border-bottom: none;
+        }
+
+        .desk-actions a:hover {
+          color: #ffffff;
+          padding-left: 16px;
+          background: rgba(255, 255, 255, 0.02);
+        }
+
+        .desk-actions svg {
+          transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), color 0.3s;
+          color: rgba(255, 255, 255, 0.35);
+        }
+
+        .desk-actions a:hover svg {
+          transform: translateX(4px) !important;
+          color: #fc2779;
         }
 
         .desk-actions small {
@@ -367,10 +454,12 @@ export default async function BeautyShopPage() {
           letter-spacing: 0.18em;
           text-transform: uppercase;
           margin-bottom: 4px;
+          font-weight: 600;
         }
 
         .desk-actions b {
           font-size: 15px;
+          font-weight: 500;
         }
 
         .editor-grid {
@@ -724,6 +813,48 @@ export default async function BeautyShopPage() {
           .hero-actions {
             flex-direction: column;
           }
+
+          .hero-visuals {
+            min-height: auto;
+            margin-top: 24px;
+          }
+          
+           .ai-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            height: auto;
+            align-items: center;
+            width: 100%;
+          }
+
+          .ai-stack-left {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            width: 100%;
+            align-items: center;
+            order: 2;
+          }
+
+          .ai-card {
+            position: relative;
+            width: 100% !important;
+            max-width: 380px;
+            top: auto !important;
+            left: auto !important;
+            right: auto !important;
+            bottom: auto !important;
+            transform: none !important;
+          }
+
+          .ai-card-scanner {
+            height: 380px !important;
+            order: 1;
+            margin-bottom: 8px;
+            width: 100% !important;
+            max-width: 380px;
+          }
           
           .primary-btn,
           .secondary-btn {
@@ -864,8 +995,8 @@ export default async function BeautyShopPage() {
                 flexDirection: isRtl ? "row-reverse" : "row",
               }}
             >
-              <Link href="/tools/routine" className="primary-btn">
-                Find My Routine{" "}
+              <Link href="/register" className="primary-btn">
+                {t("hero.btn.primary")}{" "}
                 <ArrowRight
                   size={14}
                   style={{
@@ -873,19 +1004,38 @@ export default async function BeautyShopPage() {
                   }}
                 />
               </Link>
-              <a href="#shop" className="secondary-btn">
-                {t("hero.btn.primary")}
-              </a>
             </div>
           </div>
 
-          <div className="hero-panel" style={{ order: isRtl ? 1 : 2 }}>
-            <div className="hero-image" style={{ background: "#fffaf4" }}>
-              <FaceScannerUI />
-            </div>
-            <div className="hero-panel-body">
-              <h2>{t("hero.panel.title")}</h2>
-              <p>{t("hero.panel.desc")}</p>
+          <div className="hero-visuals" style={{ order: isRtl ? 1 : 2 }}>
+            <div className="ai-stack">
+              <Link href="/dashboard/analysis" className="ai-card ai-card-scanner">
+                <FaceScannerUI />
+              </Link>
+              <div className="ai-stack-left">
+                <Link href="/dashboard/routines" className="ai-card ai-card-routine">
+                  <div className="ai-card-header">
+                    <div className="ai-icon">
+                      <Layers size={18} strokeWidth={1.5} />
+                    </div>
+                    <div>
+                      <h3>AI Routine Builder</h3>
+                      <p>AM & PM Regimens</p>
+                    </div>
+                  </div>
+                </Link>
+                <Link href="/tools/hard-water" className="ai-card ai-card-water">
+                  <div className="ai-card-header">
+                    <div className="ai-icon">
+                      <Droplet size={18} strokeWidth={1.5} />
+                    </div>
+                    <div>
+                      <h3>Hard Water Test</h3>
+                      <p>City-based analysis</p>
+                    </div>
+                  </div>
+                </Link>
+              </div>
             </div>
             <div className="trust-row">
               <div className="trust-item">
