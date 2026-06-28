@@ -40,6 +40,7 @@ export function AffiliateCard(props: any) {
  overflow: "hidden",
  boxShadow: "0 4px 20px rgba(0,0,0,0.04)",
  transition: "all 0.2s ease",
+ ...props.style,
  }}
  >
  {/* Badge */}

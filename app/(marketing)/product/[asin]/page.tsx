@@ -42,6 +42,36 @@ type Product = {
 
 const PRODUCT_LIST = PRODUCTS as unknown as Product[];
 
+const K_BEAUTY_ASINS = new Set([
+  "B09GP7K353",
+  "B09GXFVMCM",
+  "B06Y15D1LH",
+  "B0BSLFPGXT",
+  "B08ZXVVY8M",
+  "B0CYS32W5Q",
+  "B0FPLG687Q",
+  "B0CHVHGTDJ",
+  "B0B96L5S3B",
+  "B0966C6TRX",
+  "B09JBJDFHH",
+  "B0C5JFLMVT",
+  "B0CNT5D8J7",
+  "B09M8QG97L",
+  "B09TLFY4GP",
+  "B0DBJ5DBDW",
+  "B0C8Y1TSKZ",
+  "B0D1FNB4C2",
+  "B0CWNH9SMY",
+  "B07T5BN3P2",
+  "B08TWHXNCD",
+  "B0CFL7LS43",
+  "B0B3G73VF5",
+  "36PDT9JEXUMJP",
+  "B0DSBYS8ZV",
+  "B08B16MD34",
+  "B0BT1D5J52",
+]);
+
 function discount(mrp: number, price: number) {
  return mrp > price ? Math.round(((mrp - price) / mrp) * 100) : 0;
 }
@@ -106,6 +136,8 @@ export default async function ProductPage({ params }: { params: Promise<{ asin: 
  const product = findProduct(asin);
 
  if (!product) notFound();
+
+ const isKBeauty = K_BEAUTY_ASINS.has(product.asin);
 
  const cookieStore = await cookies();
  const locale = (cookieStore.get("mirha_locale")?.value || "en") as Locale;
@@ -490,7 +522,30 @@ export default async function ProductPage({ params }: { params: Promise<{ asin: 
  </div>
 
  <div className="detail-panel" style={{ order: isRtl ? 1 : 2 }}>
- <p className="kicker">{product.category} / {product.subcat}</p>
+ <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "10px", marginBottom: "14px" }}>
+  <p className="kicker" style={{ marginBottom: 0 }}>{product.category} / {product.subcat}</p>
+  {isKBeauty && (
+   <Link
+    href="/k-beauty"
+    style={{
+     background: "#fc2779",
+     color: "#fff",
+     fontSize: "0.55rem",
+     fontWeight: 700,
+     letterSpacing: "0.14em",
+     textTransform: "uppercase",
+     padding: "3px 8px",
+     borderRadius: "4px",
+     textDecoration: "none",
+     display: "inline-flex",
+     alignItems: "center",
+     boxShadow: "0 2px 6px rgba(252,39,121,0.2)",
+    }}
+   >
+    K-Beauty Collection →
+   </Link>
+  )}
+ </div>
  <h1>{product.name}</h1>
  <p className="brand">{product.brand} {product.badge ? `/ ${product.badge}` : ""}</p>
 

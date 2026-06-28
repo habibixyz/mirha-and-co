@@ -190,7 +190,7 @@ export default function AiProductTranslator({
  ) : (
  <>
  <Star size={12} />
- Translate with Gemini AI ⭐
+ Translate with AI ⭐
  </>
  )}
  </button>
@@ -199,7 +199,7 @@ export default function AiProductTranslator({
  <>
  <span style={{ color: "#166534", display: "inline-flex", alignItems: "center", gap: "6px", fontWeight: 500 }}>
  <Check size={14} />
- Translated to {LANGUAGE_NAMES[locale]} with Gemini AI
+ Translated to {LANGUAGE_NAMES[locale]} with AI
  </span>
  <button
  onClick={() => setTranslatedData(null)}

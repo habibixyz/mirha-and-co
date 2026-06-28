@@ -168,7 +168,7 @@ export default async function RootLayout({
  marginBottom: "2rem",
  }}
  >
- <div>
+ <div className="footer-col-full">
  <div style={{
  fontFamily: "'Bebas Neue', sans-serif",
  fontSize: "1.8rem",
@@ -222,7 +222,7 @@ export default async function RootLayout({
  </div>
  </div>
 
- <div>
+ <div className="footer-col-full">
  <p style={{
  fontSize: "0.65rem",
  letterSpacing: "0.2em",

@@ -3107,6 +3107,908 @@ export const PRODUCTS = [
     link: "https://amzn.to/4vJPShm"
   }
 
+,
+{
+  "id": 1061,
+  "name": "mixsoon Glacier Water Hyaluronic Acid Serum 100ml",
+  "brand": "mixsoon",
+  "category": "Skincare",
+  "subcat": "Serum",
+  "mrp": 2999,
+  "price": 2499,
+  "rating": 4.6,
+  "reviews": "2.5k",
+  "asin": "B09GP7K353",
+  "badge": "Intense Moisture",
+  "description": "Lightweight, non-sticky daily serum blending pure Glacier Water with multiple weights of Hyaluronic Acid to plump and hydrate deep skin layers.",
+  "specs": {
+    "Skin Type": "Dry, Dehydrated, All Skin Types",
+    "Key Ingredient": "Glacier Water, Multi-layer Hyaluronic Acid",
+    "Use": "AM & PM",
+    "Volume": "100ml"
+  },
+  "tags": [
+    "serum",
+    "mixsoon",
+    "glacier water",
+    "hyaluronic acid",
+    "hydration"
+  ],
+  "concerns": [
+    "dryness",
+    "dehydration"
+  ],
+  "image": "/products/B09GP7K353.jpg",
+  "link": "https://amzn.to/4ap0GZS"
+},
+{
+  "id": 1062,
+  "name": "mixsoon Bifida Sheet Mask Pack",
+  "brand": "mixsoon",
+  "category": "Skincare",
+  "subcat": "Sheet Mask",
+  "mrp": 350,
+  "price": 259,
+  "rating": 4.5,
+  "reviews": "500",
+  "asin": "B09GXFVMCM",
+  "badge": "Barrier Support",
+  "description": "Deeply moisturizing sheet mask infused with Bifida Ferment Lysate to strengthen the skin barrier, boost elasticity, and promote a radiant glass skin glow.",
+  "specs": {
+    "Skin Type": "All Skin Types, Weak Barrier",
+    "Key Ingredient": "Bifida Ferment Lysate, Ceramide NP",
+    "Use": "Weekly / Treatment",
+    "Volume": "5 Sheets"
+  },
+  "tags": [
+    "sheet mask",
+    "mixsoon",
+    "bifida",
+    "fermented",
+    "barrier repair"
+  ],
+  "concerns": [
+    "barrier damage",
+    "dryness"
+  ],
+  "image": "/products/B09GXFVMCM.jpg",
+  "link": "https://amzn.to/4oSLOJ5"
+},
+{
+  "id": 1063,
+  "name": "SKIN1004 Madagascar Centella Ampoule Facial Serum 100ml",
+  "brand": "SKIN1004",
+  "category": "Skincare",
+  "subcat": "Serum",
+  "mrp": 2100,
+  "price": 1743,
+  "rating": 4.7,
+  "reviews": "8k",
+  "asin": "B06Y15D1LH",
+  "badge": "100% Centella",
+  "description": "Made of 100% pure Centella Asiatica Extract to instantly soothe irritation, deeply hydrate dry or compromised skin barriers, and calm acne flares.",
+  "specs": {
+    "Skin Type": "Sensitive, Acne-Prone, Weak Barrier",
+    "Key Ingredient": "100% Centella Asiatica Extract",
+    "Use": "AM & PM",
+    "Volume": "100ml"
+  },
+  "tags": [
+    "serum",
+    "skin1004",
+    "centella",
+    "soothing",
+    "cica"
+  ],
+  "concerns": [
+    "sensitive skin",
+    "redness",
+    "barrier damage"
+  ],
+  "image": "/products/B06Y15D1LH.jpg",
+  "link": "https://amzn.to/4eQImu8"
+},
+{
+  "id": 1064,
+  "name": "TIRTIR Ceramic Milk Ampoule 40ml",
+  "brand": "TIRTIR",
+  "category": "Skincare",
+  "subcat": "Serum",
+  "mrp": 2999,
+  "price": 2428,
+  "rating": 4.5,
+  "reviews": "700",
+  "asin": "B0BSLFPGXT",
+  "badge": "Deep Moisture",
+  "description": "Highly concentrated ampoule containing fermented milk lipids and plant extracts to create a strong moisture seal for porcelain-smooth skin.",
+  "specs": {
+    "Skin Type": "Dry, Dehydrated, Sensitive",
+    "Key Ingredient": "Fermented Milk Lipids, Ceramides",
+    "Use": "AM & PM",
+    "Volume": "40ml"
+  },
+  "tags": [
+    "serum",
+    "ampoule",
+    "tirtir",
+    "milk ampoule",
+    "hydration"
+  ],
+  "concerns": [
+    "dryness",
+    "barrier damage"
+  ],
+  "image": "/products/B0BSLFPGXT.jpg",
+  "link": "https://amzn.to/4asPA6e"
+},
+{
+  "id": 1065,
+  "name": "mixsoon Centella Asiatica Toner 150ml",
+  "brand": "mixsoon",
+  "category": "Skincare",
+  "subcat": "Toner",
+  "mrp": 1800,
+  "price": 1499,
+  "rating": 4.5,
+  "reviews": "2.1k",
+  "asin": "B0B96L5S3B",
+  "badge": "Hydrating & Soothing",
+  "description": "A lightweight, soothing watery toner that delivers pure Centella hydration to calm dry, sensitive, or inflamed skin.",
+  "specs": {
+    "Skin Type": "Sensitive, Dry, Irritated",
+    "Key Ingredient": "Centella Asiatica Extract",
+    "Use": "AM & PM",
+    "Volume": "150ml"
+  },
+  "tags": [
+    "toner",
+    "mixsoon",
+    "centella",
+    "soothing",
+    "hydration"
+  ],
+  "concerns": [
+    "sensitive skin",
+    "redness",
+    "dryness"
+  ],
+  "image": "/products/B0B96L5S3B.jpg",
+  "link": "https://amzn.to/44ybqlb"
+},
+{
+  "id": 1066,
+  "name": "SKIN1004 Madagascar Centella Soothing Cream 30ml",
+  "brand": "SKIN1004",
+  "category": "Skincare",
+  "subcat": "Moisturizer",
+  "mrp": 800,
+  "price": 594,
+  "rating": 4.4,
+  "reviews": "900",
+  "asin": "B0966C6TRX",
+  "badge": "Barrier Recovery",
+  "description": "Lightweight cream packed with 72% Centella Asiatica extract and natural ceramides to restore skin hydration and strengthen a damaged barrier.",
+  "specs": {
+    "Skin Type": "Sensitive, Normal, Combination",
+    "Key Ingredient": "72% Centella Asiatica, Ceramides",
+    "Use": "AM & PM",
+    "Volume": "30ml"
+  },
+  "tags": [
+    "moisturizer",
+    "skin1004",
+    "centella",
+    "cica",
+    "soothing"
+  ],
+  "concerns": [
+    "barrier damage",
+    "sensitive skin",
+    "dryness"
+  ],
+  "image": "/products/B0966C6TRX.jpg",
+  "link": "https://amzn.to/4vDCmfo"
+},
+{
+  "id": 1067,
+  "name": "SKIN1004 Madagascar Centella Ampoule Foam Cleanser 125ml",
+  "brand": "SKIN1004",
+  "category": "Skincare",
+  "subcat": "Face Wash",
+  "mrp": 1400,
+  "price": 1148,
+  "rating": 4.5,
+  "reviews": "2k",
+  "asin": "B09JBJDFHH",
+  "badge": "Gentle Hydrating",
+  "description": "A pH-balanced foam cleanser infused with 33% Centella Asiatica extract to gently cleanse impurities while keeping skin hydrated and calm.",
+  "specs": {
+    "Skin Type": "Sensitive, All Skin Types",
+    "Key Ingredient": "33% Centella Asiatica Extract",
+    "Use": "AM & PM",
+    "Volume": "125ml"
+  },
+  "tags": [
+    "face wash",
+    "cleanser",
+    "skin1004",
+    "centella",
+    "soothing"
+  ],
+  "concerns": [
+    "sensitive skin"
+  ],
+  "image": "/products/B09JBJDFHH.jpg",
+  "link": "https://amzn.to/43Ww7ar"
+},
+{
+  "id": 1068,
+  "name": "TIRTIR Niacinamide 20% Serum 30ml",
+  "brand": "TIRTIR",
+  "category": "Skincare",
+  "subcat": "Serum",
+  "mrp": 1800,
+  "price": 1490,
+  "rating": 4.3,
+  "reviews": "1.1k",
+  "asin": "B0CNT5D8J7",
+  "badge": "High-Potency B3",
+  "description": "Powerful 20% Niacinamide formulation to visibly tighten enlarged pores, regulate excess sebum production, and fade dark spots.",
+  "specs": {
+    "Skin Type": "Oily, Combination, Acne-Prone",
+    "Key Ingredient": "20% Niacinamide, Zinc PCA",
+    "Use": "PM / Spot or full face",
+    "Volume": "30ml"
+  },
+  "tags": [
+    "serum",
+    "niacinamide",
+    "pore control",
+    "tirtir",
+    "brightening"
+  ],
+  "concerns": [
+    "pigmentation",
+    "pores",
+    "oil control"
+  ],
+  "image": "/products/B0CNT5D8J7.jpg",
+  "link": "https://amzn.to/4ezLITh"
+},
+{
+  "id": 1069,
+  "name": "mixsoon Daisy Essence 100ml",
+  "brand": "mixsoon",
+  "category": "Skincare",
+  "subcat": "Essence",
+  "mrp": 3999,
+  "price": 3499,
+  "rating": 4.5,
+  "reviews": "600",
+  "asin": "B09M8QG97L",
+  "badge": "Brightening Daily Serum",
+  "description": "A brightening daily essence formulated with daisy extract to reduce redness, target pigmentation, and restore skin luminosity.",
+  "specs": {
+    "Skin Type": "Dull, Uneven Skin Tone",
+    "Key Ingredient": "Daisy Flower Extract",
+    "Use": "AM & PM",
+    "Volume": "100ml"
+  },
+  "tags": [
+    "essence",
+    "mixsoon",
+    "daisy",
+    "brightening",
+    "pigmentation"
+  ],
+  "concerns": [
+    "dullness",
+    "pigmentation",
+    "redness"
+  ],
+  "image": "/products/B09M8QG97L.jpg",
+  "link": "https://amzn.to/4eLmZtX"
+},
+{
+  "id": 1070,
+  "name": "SKIN1004 Madagascar Centella Tone Brightening Capsule Ampoule",
+  "brand": "SKIN1004",
+  "category": "Skincare",
+  "subcat": "Serum",
+  "mrp": 2400,
+  "price": 1912,
+  "rating": 4.6,
+  "reviews": "1.5k",
+  "asin": "B09TLFY4GP",
+  "badge": "Calming Brightening",
+  "description": "Lightweight capsule ampoule loaded with Centella Asiatica and Madecassoside capsules to deeply soothe irritation and fade hyperpigmentation.",
+  "specs": {
+    "Skin Type": "Sensitive, Dull, Pigmented",
+    "Key Ingredient": "Centella Asiatica, Niacinamide, Madecassoside",
+    "Use": "AM & PM",
+    "Volume": "100ml"
+  },
+  "tags": [
+    "serum",
+    "skin1004",
+    "centella",
+    "brightening",
+    "hyperpigmentation"
+  ],
+  "concerns": [
+    "pigmentation",
+    "dullness",
+    "sensitive skin"
+  ],
+  "image": "/products/B09TLFY4GP.jpg",
+  "link": "https://amzn.to/3RasTNz"
+},
+{
+  "id": 1071,
+  "name": "SKIN1004 Madagascar Centella Poremizing Fresh Ampoule 30ml",
+  "brand": "SKIN1004",
+  "category": "Skincare",
+  "subcat": "Serum",
+  "mrp": 999,
+  "price": 764,
+  "rating": 4.4,
+  "reviews": "800",
+  "asin": "B0DBJ5DBDW",
+  "badge": "Soothing Hydration",
+  "description": "Infused with Pink Himalayan Salt and Peptide complex to deep-clean pores, regulate excess oil, and improve skin elasticity.",
+  "specs": {
+    "Skin Type": "Oily, Combination, Large Pores",
+    "Key Ingredient": "Pink Himalayan Salt, Peptides, Centella",
+    "Use": "AM & PM",
+    "Volume": "30ml"
+  },
+  "tags": [
+    "serum",
+    "skin1004",
+    "poremizing",
+    "pores",
+    "sebum control"
+  ],
+  "concerns": [
+    "pores",
+    "oil control"
+  ],
+  "image": "/products/B0DBJ5DBDW.jpg",
+  "link": "https://amzn.to/4ezodd3"
+},
+{
+  "id": 1072,
+  "name": "SKIN1004 Poremizing Quick Clay Stick Mask 27g",
+  "brand": "SKIN1004",
+  "category": "Skincare",
+  "subcat": "Mask",
+  "mrp": 1699,
+  "price": 1444,
+  "rating": 4.5,
+  "reviews": "1.1k",
+  "asin": "B0C8Y1TSKZ",
+  "badge": "Pore Care",
+  "description": "Hassle-free stick clay mask formulated with 5 clays and red bean powder to clarify pores, control sebum, and soothe skin instantly.",
+  "specs": {
+    "Skin Type": "Oily, Combination, Acne-Prone",
+    "Key Ingredient": "5 Clays, Red Bean Powder, Centella",
+    "Use": "Weekly / 10-min mask",
+    "Volume": "27g"
+  },
+  "tags": [
+    "mask",
+    "clay mask",
+    "skin1004",
+    "poremizing",
+    "pore care"
+  ],
+  "concerns": [
+    "pores",
+    "oil control"
+  ],
+  "image": "/products/B0C8Y1TSKZ.jpg",
+  "link": "https://amzn.to/4ezKis5"
+},
+{
+  "id": 1073,
+  "name": "TIRTIR Milk Skin Toner Light 4% Niacinamide",
+  "brand": "TIRTIR",
+  "category": "Skincare",
+  "subcat": "Toner",
+  "mrp": 350,
+  "price": 253,
+  "rating": 4.5,
+  "reviews": "900",
+  "asin": "B0D1FNB4C2",
+  "badge": "Pore-Tightening",
+  "description": "Lightweight version of the cult-favorite milk toner. Infused with 4% Niacinamide and Panthenol to regulate sebum and hydrate acne-prone or oily skin.",
+  "specs": {
+    "Skin Type": "Oily, Combination, Acne-Prone",
+    "Key Ingredient": "4% Niacinamide, Panthenol, Allantoin",
+    "Use": "AM & PM",
+    "Volume": "20ml"
+  },
+  "tags": [
+    "toner",
+    "tirtir",
+    "lightweight",
+    "niacinamide",
+    "oily skin"
+  ],
+  "concerns": [
+    "pores",
+    "acne",
+    "oil control"
+  ],
+  "image": "/products/B0D1FNB4C2.jpg",
+  "link": "https://amzn.to/4f7toB7"
+},
+{
+  "id": 1074,
+  "name": "TIRTIR Hydro Boost Enzyme Cleansing Balm 120ml",
+  "brand": "TIRTIR",
+  "category": "Skincare",
+  "subcat": "Cleansing Balm",
+  "mrp": 1699,
+  "price": 1449,
+  "rating": 4.5,
+  "reviews": "1k",
+  "asin": "B0CWNH9SMY",
+  "badge": "Deep Cleansing",
+  "description": "A nourishing first-step cleanser containing papaya and pineapple enzymes to dissolve stubborn makeup and impurities while gently exfoliating.",
+  "specs": {
+    "Skin Type": "All Skin Types",
+    "Key Ingredient": "Papaya Enzyme, Pineapple Enzyme",
+    "Use": "PM / Double cleanse",
+    "Volume": "120ml"
+  },
+  "tags": [
+    "cleansing balm",
+    "makeup remover",
+    "enzymes",
+    "tirtir",
+    "exfoliating"
+  ],
+  "concerns": [
+    "clogged pores"
+  ],
+  "image": "/products/B0CWNH9SMY.jpg",
+  "link": "https://amzn.to/4w97t25"
+},
+{
+  "id": 1075,
+  "name": "SKIN1004 Madagascar Centella Light Cleansing Oil",
+  "brand": "SKIN1004",
+  "category": "Skincare",
+  "subcat": "Cleansing Oil",
+  "mrp": 1999,
+  "price": 1614,
+  "rating": 4.6,
+  "reviews": "3k",
+  "asin": "B07T5BN3P2",
+  "badge": "Gentle Makeup Remover",
+  "description": "A lightweight cleansing oil infused with Centella extract to melt away sunscreen, makeup, and sebum without heavy residue or stinging.",
+  "specs": {
+    "Skin Type": "All Skin Types, Sensitive",
+    "Key Ingredient": "Centella Asiatica Oil, Botanical Oils",
+    "Use": "PM / First cleanse",
+    "Volume": "200ml"
+  },
+  "tags": [
+    "cleansing oil",
+    "makeup remover",
+    "skin1004",
+    "centella",
+    "double cleanse"
+  ],
+  "concerns": [
+    "clogged pores"
+  ],
+  "image": "/products/B07T5BN3P2.jpg",
+  "link": "https://amzn.to/4oZZF0w"
+},
+{
+  "id": 1076,
+  "name": "TIRTIR Collagen Eye Cream 15ml",
+  "brand": "TIRTIR",
+  "category": "Skincare",
+  "subcat": "Eye Cream",
+  "mrp": 1800,
+  "price": 1490,
+  "rating": 4.4,
+  "reviews": "500",
+  "asin": "B08TWHXNCD",
+  "badge": "Lifting & Firming",
+  "description": "Firming eye treatment infused with marine collagen and peptides to target puffiness, fine lines, and dark circles around the delicate eye area.",
+  "specs": {
+    "Skin Type": "All Skin Types",
+    "Key Ingredient": "Marine Collagen, Peptides",
+    "Use": "AM & PM",
+    "Volume": "15ml"
+  },
+  "tags": [
+    "eye cream",
+    "collagen",
+    "peptides",
+    "tirtir",
+    "firming"
+  ],
+  "concerns": [
+    "dark circles",
+    "anti-ageing",
+    "puffiness"
+  ],
+  "image": "/products/B08TWHXNCD.jpg",
+  "link": "https://amzn.to/3T53TI4"
+},
+{
+  "id": 1077,
+  "name": "SKIN1004 Centella Probio-Cica Bakuchiol Eye Cream 20ml",
+  "brand": "SKIN1004",
+  "category": "Skincare",
+  "subcat": "Eye Cream",
+  "mrp": 1200,
+  "price": 949,
+  "rating": 4.5,
+  "reviews": "700",
+  "asin": "B0CFL7LS43",
+  "badge": "Retinol Alternative",
+  "description": "Fermented Centella (Probio-Cica) blended with Bakuchiol to firm, smooth, and hydrate the delicate under-eye area without irritation.",
+  "specs": {
+    "Skin Type": "All Skin Types, Aging, Sensitive",
+    "Key Ingredient": "Probio-Cica, Bakuchiol, Hyaluronic Acid",
+    "Use": "PM / Eye care",
+    "Volume": "20ml"
+  },
+  "tags": [
+    "eye cream",
+    "skin1004",
+    "bakuchiol",
+    "probio-cica",
+    "anti-aging"
+  ],
+  "concerns": [
+    "dark circles",
+    "anti-ageing"
+  ],
+  "image": "/products/B0CFL7LS43.jpg",
+  "link": "https://amzn.to/43ZtCnO"
+},
+{
+  "id": 1078,
+  "name": "SKIN1004 Hyalu-Cica Water-Fit Sun Serum SPF 50 PA++++ 50ml",
+  "brand": "SKIN1004",
+  "category": "Skincare",
+  "subcat": "Sunscreen",
+  "mrp": 1999,
+  "price": 1699,
+  "rating": 4.8,
+  "reviews": "10k",
+  "asin": "B0B3G73VF5",
+  "badge": "Hydrating Sunscreen",
+  "description": "Extremely popular lightweight chemical sunscreen with SPF 50+ PA++++. Formulated with Hyaluronic Acid and Centella to soothe and hydrate without white cast.",
+  "specs": {
+    "Skin Type": "All Skin Types, Dehydrated",
+    "Key Ingredient": "Hydrating Chemical Filters, Centella",
+    "Use": "AM / Daily",
+    "Volume": "50ml"
+  },
+  "tags": [
+    "sunscreen",
+    "skin1004",
+    "hyalu-cica",
+    "spf 50",
+    "no white cast"
+  ],
+  "concerns": [
+    "sun protection",
+    "dehydration"
+  ],
+  "image": "/products/B0B3G73VF5.jpg",
+  "link": "https://amzn.to/3T5Y11b"
+},
+{
+  "id": 1079,
+  "name": "TIRTIR Mask Fit Red Foundation 29N Natural Beige 30ml",
+  "brand": "TIRTIR",
+  "category": "Makeup",
+  "subcat": "Foundation",
+  "mrp": 1999,
+  "price": 1790,
+  "rating": 4.3,
+  "reviews": "1.2k",
+  "asin": "36PDT9JEXUMJP",
+  "badge": "Radiant Skin",
+  "description": "Lightweight, long-wearing foundation with Red Energy Complex to deliver a natural, glowing, and radiant complexion for up to 72 hours.",
+  "specs": {
+    "Skin Type": "All Skin Types",
+    "Key Ingredient": "Red Energy Complex, Niacinamide",
+    "Use": "Makeup Base",
+    "Volume": "30ml"
+  },
+  "tags": [
+    "makeup",
+    "foundation",
+    "tirtir",
+    "cushion",
+    "radiant skin"
+  ],
+  "concerns": [
+    "dullness",
+    "uneven tone"
+  ],
+  "image": "/products/36PDT9JEXUMJP.jpg",
+  "link": "https://amzn.to/4vFiJUc"
+},
+{
+  "id": 1080,
+  "name": "TIRTIR Waterism Glow Tint 23 Peachricot 1.8g",
+  "brand": "TIRTIR",
+  "category": "Makeup",
+  "subcat": "Lip Tint",
+  "mrp": 750,
+  "price": 552,
+  "rating": 4.3,
+  "reviews": "400",
+  "asin": "B0DSBYS8ZV",
+  "badge": "Watery Glow",
+  "description": "Ultra-hydrating lip tint that delivers a juicy, glass-like shine with a gorgeous peachricot wash of color.",
+  "specs": {
+    "Skin Type": "All Skin Types",
+    "Key Ingredient": "Hyaluronic Acid, Peach Fruit Extract",
+    "Use": "Daily Lip Makeup",
+    "Volume": "1.8g"
+  },
+  "tags": [
+    "makeup",
+    "lip tint",
+    "lip glow",
+    "tirtir",
+    "peachricot"
+  ],
+  "concerns": [
+    "dryness"
+  ],
+  "image": "/products/B0DSBYS8ZV.jpg",
+  "link": "https://amzn.to/4gKdcHe"
+},
+{
+  "id": 1081,
+  "name": "TIRTIR My Glow Rosy Lip Oil 5.7ml",
+  "brand": "TIRTIR",
+  "category": "Makeup",
+  "subcat": "Lip Care",
+  "mrp": 999,
+  "price": 778,
+  "rating": 4.4,
+  "reviews": "800",
+  "asin": "B08B16MD34",
+  "badge": "Moisturizing Lip Care",
+  "description": "Enriched with nourishing botanical oils to deliver high-shine gloss, long-lasting hydration, and a subtle rosy tint without stickiness.",
+  "specs": {
+    "Skin Type": "All Skin Types",
+    "Key Ingredient": "Rosehip Oil, Jojoba Oil",
+    "Use": "Daily Lip Care",
+    "Volume": "5.7ml"
+  },
+  "tags": [
+    "makeup",
+    "lip oil",
+    "lip gloss",
+    "tirtir",
+    "moisturizing"
+  ],
+  "concerns": [
+    "dryness"
+  ],
+  "image": "/products/B08B16MD34.jpg",
+  "link": "https://amzn.to/44EuhuR"
+},
+{
+  "id": 1082,
+  "name": "mixsoon Bean Essence",
+  "brand": "mixsoon",
+  "category": "Skincare",
+  "subcat": "Essence",
+  "mrp": 4500,
+  "price": 3799,
+  "rating": 4.7,
+  "reviews": "5k",
+  "asin": "B08ZXVVY8M",
+  "badge": "Cult Classic",
+  "description": "Dual-purpose essence that gently exfoliates skin to remove dead cells and sebum while delivering intense hydration. Enriched with fermented soybean extract.",
+  "specs": {
+    "Skin Type": "All Skin Types, Dull",
+    "Key Ingredient": "Fermented Soybean Extract, Pomegranate Ferment",
+    "Use": "AM & PM",
+    "Volume": "50ml"
+  },
+  "tags": [
+    "essence",
+    "mixsoon",
+    "bean essence",
+    "fermented",
+    "exfoliation"
+  ],
+  "concerns": [
+    "dullness",
+    "roughness",
+    "dryness"
+  ],
+  "image": "/products/B08ZXVVY8M.jpg",
+  "link": "https://amzn.to/4xXLey4",
+  "hideFromShop": true
+},
+{
+  "id": 1083,
+  "name": "mixsoon Soondy Centella Asiatica Essence 50ml",
+  "brand": "mixsoon",
+  "category": "Skincare",
+  "subcat": "Essence",
+  "mrp": 2900,
+  "price": 2399,
+  "rating": 4.6,
+  "reviews": "1.8k",
+  "asin": "B0C5JFLMVT",
+  "badge": "Calming Essence",
+  "description": "100% Centella Asiatica extract essence designed to soothe irritation, calm redness, and strengthen the skin barrier. Featuring the iconic Soondy bear mascot.",
+  "specs": {
+    "Skin Type": "Sensitive, Irritated, Acne-Prone",
+    "Key Ingredient": "100% Centella Asiatica Extract",
+    "Use": "AM & PM",
+    "Volume": "50ml"
+  },
+  "tags": [
+    "essence",
+    "mixsoon",
+    "centella",
+    "soothing",
+    "cica"
+  ],
+  "concerns": [
+    "redness",
+    "acne",
+    "sensitive skin"
+  ],
+  "image": "/products/B0C5JFLMVT.jpg",
+  "link": "https://amzn.to/4eS6mwX",
+  "hideFromShop": true
+},
+{
+  "id": 1084,
+  "name": "mixsoon Bean Toner Pad 280ml",
+  "brand": "mixsoon",
+  "category": "Skincare",
+  "subcat": "Toner Pad",
+  "mrp": 3500,
+  "price": 2899,
+  "rating": 4.5,
+  "reviews": "1.2k",
+  "asin": "B0CYS32W5Q",
+  "badge": "Deep Hydration",
+  "description": "Pre-soaked toning pads packed with bean extract, Niacinamide, and hyaluronic acid to deliver immediate moisture, gentle exfoliation, and a plump glow.",
+  "specs": {
+    "Skin Type": "All Skin Types",
+    "Key Ingredient": "Bean Extract, Niacinamide, Hyaluronic Acid",
+    "Use": "AM & PM / Toner step",
+    "Volume": "280ml"
+  },
+  "tags": [
+    "toner pad",
+    "mixsoon",
+    "bean pads",
+    "hydration",
+    "glowing skin"
+  ],
+  "concerns": [
+    "dryness",
+    "roughness"
+  ],
+  "image": "/products/B0CYS32W5Q.jpg",
+  "link": "https://amzn.to/44v5ERo",
+  "hideFromShop": true
+},
+{
+  "id": 1085,
+  "name": "mixsoon Soybean Milk Pad 16ml x3",
+  "brand": "mixsoon",
+  "category": "Skincare",
+  "subcat": "Toner Pad",
+  "mrp": 300,
+  "price": 219,
+  "rating": 4.4,
+  "reviews": "300",
+  "asin": "B0FPLG687Q",
+  "badge": "Glass Skin Glow",
+  "description": "Nourishing travel-friendly toner pads saturated with fermented soybean extract and Centella to immediately soothe, smooth, and restore radiance.",
+  "specs": {
+    "Skin Type": "All Skin Types",
+    "Key Ingredient": "Fermented Soybean Extract, Centella, Hyaluronic Acid",
+    "Use": "AM & PM",
+    "Volume": "16ml x 3ea"
+  },
+  "tags": [
+    "toner pad",
+    "mixsoon",
+    "soybean",
+    "nourishing",
+    "travel friendly"
+  ],
+  "concerns": [
+    "dryness",
+    "dullness"
+  ],
+  "image": "/products/B0FPLG687Q.jpg",
+  "link": "https://amzn.to/4vLfJWc",
+  "hideFromShop": true
+},
+{
+  "id": 1086,
+  "name": "TIRTIR Milk Skin Toner 50ml 2% Niacinamide",
+  "brand": "TIRTIR",
+  "category": "Skincare",
+  "subcat": "Toner",
+  "mrp": 950,
+  "price": 778,
+  "rating": 4.6,
+  "reviews": "3.5k",
+  "asin": "B0CHVHGTDJ",
+  "badge": "Instant Glow",
+  "description": "Deeply moisturizing milk toner packed with 2% Niacinamide, Rice Bran Extract, Ceramides, and Panthenol for a healthy, hydrated glass-skin glow.",
+  "specs": {
+    "Skin Type": "Dry, Sensitive, Normal",
+    "Key Ingredient": "2% Niacinamide, Rice Bran Extract, Ceramides",
+    "Use": "AM & PM",
+    "Volume": "50ml"
+  },
+  "tags": [
+    "toner",
+    "tirtir",
+    "glass skin",
+    "rice bran",
+    "moisturizing"
+  ],
+  "concerns": [
+    "dryness",
+    "barrier damage"
+  ],
+  "image": "/products/B0CHVHGTDJ.jpg",
+  "link": "https://amzn.to/43VRuIV",
+  "hideFromShop": true
+},
+{
+  "id": 1087,
+  "name": "TIRTIR Milk Skin Toner Light Mask Fit Makeup Fixer 80ml",
+  "brand": "TIRTIR",
+  "category": "Makeup",
+  "subcat": "Setting Spray",
+  "mrp": 1100,
+  "price": 890,
+  "rating": 4.2,
+  "reviews": "600",
+  "asin": "B0BT1D5J52",
+  "badge": "Mask Proof",
+  "description": "A weightless setting spray that locks in makeup, prevents smudging, and keeps skin matte and refreshed all day.",
+  "specs": {
+    "Skin Type": "All Skin Types",
+    "Key Ingredient": "Centella Extract, Makeup Polymers",
+    "Use": "Post-makeup setting",
+    "Volume": "80ml"
+  },
+  "tags": [
+    "makeup",
+    "setting spray",
+    "tirtir",
+    "makeup fixer",
+    "long lasting"
+  ],
+  "concerns": [
+    "oil control"
+  ],
+  "image": "/products/B0BT1D5J52.jpg",
+  "link": "https://amzn.to/3SnBm0l",
+  "hideFromShop": true
+}
 ];
 
 
