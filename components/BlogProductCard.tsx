@@ -199,7 +199,7 @@ export default function BlogProductCard({ asin }: { asin: string }) {
  </a>
 
  <a
- href={affiliateUrl}
+ href={global.getBrandStorefrontUrl(product.brand)}
  target="_blank"
  rel="noopener noreferrer"
  style={{

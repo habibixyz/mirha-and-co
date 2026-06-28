@@ -17,14 +17,14 @@ export type Post = {
 const STATIC_POSTS: Post[] = [
  {
  category: "SKINCARE",
- title: "Glass Skin on a Student Budget: The K-Beauty Routine That Doesn't Need a Part-Time Job to Afford",
- excerpt: "Glass skin doesn't have to mean a 12-step routine that costs more than your rent. Here's a real, effective K-beauty routine under ₹3,000.",
+ title: "The Real Korean Glass Skin Routine: The High-Efficacy K-Beauty Stack Worth the Investment",
+ excerpt: "Glass skin requires layering high-quality hydration and focusing on barrier health. Here is the ultimate 100% authentic Korean skincare routine worth the investment.",
  slug: "glass-skin-student-budget-k-beauty",
  readTime: "7 min",
  date: "June 2026",
  productCount: 6,
  thumbnail: "KS",
- tags: ["k-beauty", "glass-skin", "budget-skincare", "genz", "tirtir", "mixsoon", "skin1004"],
+ tags: ["k-beauty", "glass-skin", "investment-skincare", "tirtir", "mixsoon", "skin1004"],
  },
  {
  category: "SKINCARE",
@@ -657,7 +657,7 @@ const hashString = (str: string) => {
 const SLUG_IMAGE_MAP: Record<string, string> = {
  // NEW PREMIUM EDITORIAL SERIES — June 2026
  "glass-skin-student-budget-k-beauty": "/blog-thumbs/photo_korean.png",
- "kbeauty-hype-vs-reality": "/blog-thumbs/blog_korean_mismatch.png",
+ "kbeauty-hype-vs-reality": "/blog-thumbs/kbeauty_hype_reality.png",
  "workout-causing-cortisol-face": "/blog-thumbs/wellness.png",
  "gym-bag-skincare-guide": "/blog-thumbs/blog_gym_skincare.png",
  "posture-ultimate-wealth-signifier": "/blog-thumbs/lifestyle.png",

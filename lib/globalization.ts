@@ -344,6 +344,18 @@ export function getLocalAffiliateUrl(
  return `https://www.${config.amazonDomain}/s?k=${query}&tag=${config.affiliateTag}`;
 }
 
+/**
+ * Format local Amazon Brand Storefront URL
+ */
+export function getLocalBrandStorefrontUrl(
+  brand: string,
+  targetCurrency: Currency
+): string {
+  const config = CURRENCIES[targetCurrency];
+  const query = encodeURIComponent(`${brand} storefront`);
+  return `https://www.${config.amazonDomain}/s?k=${query}&tag=${config.affiliateTag}`;
+}
+
 
 /**
  * Smart content localization for text

@@ -8,6 +8,7 @@ import {
  DICTIONARY,
  convertAndFormatPrice,
  getLocalAffiliateUrl,
+ getLocalBrandStorefrontUrl,
  RTL_LOCALES,
   getLocalizedContent,
 } from "@/lib/globalization";
@@ -20,6 +21,7 @@ interface GlobalizationContextProps {
  t: (key: string) => string;
  formatPrice: (inrAmount: number) => string;
  getAffiliateUrl: (asin: string, name: string, brand: string, originalLink?: string) => string;
+ getBrandStorefrontUrl: (brand: string) => string;
  isRtl: boolean;
  localizeContent: (text: string) => string;
 }
@@ -71,6 +73,10 @@ export function GlobalizationProvider({
  return getLocalAffiliateUrl(asin, currency, name, brand, originalLink);
  };
 
+ const getBrandStorefrontUrl = (brand: string): string => {
+ return getLocalBrandStorefrontUrl(brand, currency);
+ };
+
  const isRtl = RTL_LOCALES.includes(locale);
 
  const localizeContent = (text: string): string => getLocalizedContent(text, currency);
@@ -85,6 +91,7 @@ export function GlobalizationProvider({
  t,
  formatPrice,
  getAffiliateUrl,
+ getBrandStorefrontUrl,
  isRtl,
  localizeContent,
   }}
