@@ -219,18 +219,250 @@ export default function ShopFilterClient({ activeConcernProp }: { activeConcernP
 
   return (
     <>
+      <style>{`
+        /* COMPACT CONCERN BADGES / CHIPS */
+        .concern-grid {
+          display: grid !important;
+          grid-template-columns: repeat(6, minmax(0, 1fr)) !important;
+          gap: 10px !important;
+          margin-bottom: 32px !important;
+        }
+
+        .concern-card {
+          min-height: auto !important;
+          height: 48px !important;
+          padding: 0 16px !important;
+          border-radius: 30px !important;
+          display: flex !important;
+          flex-direction: row !important;
+          align-items: center !important;
+          justify-content: center !important;
+          gap: 8px !important;
+          background: #ffffff !important;
+          border: 1px solid #e8ded4 !important;
+          box-shadow: 0 2px 8px rgba(22, 20, 18, 0.02) !important;
+          transition: all 0.2s ease !important;
+          cursor: pointer !important;
+          width: 100% !important;
+        }
+
+        .concern-card small {
+          margin: 0 !important;
+          color: #fc2779 !important;
+          font-weight: 700 !important;
+          font-size: 11px !important;
+        }
+
+        .concern-card h3 {
+          margin: 0 !important;
+          font-size: 13.5px !important;
+          font-weight: 600 !important;
+          color: #161412 !important;
+          font-family: 'DM Sans', sans-serif !important;
+        }
+
+        .concern-card p {
+          display: none !important; /* Hide description to save space */
+        }
+
+        .concern-card:hover,
+        .concern-card.active {
+          transform: translateY(-2px) !important;
+          border-color: #fc2779 !important;
+          background: #fffaf4 !important;
+          box-shadow: 0 8px 16px rgba(252, 39, 121, 0.08) !important;
+        }
+
+        @media (max-width: 980px) {
+          .concern-grid {
+            grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+          }
+        }
+
+        @media (max-width: 640px) {
+          .concern-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+            gap: 8px !important;
+          }
+          
+          .concern-card {
+            height: 42px !important;
+            padding: 0 12px !important;
+            border-radius: 20px !important;
+          }
+
+          .concern-card h3 {
+            font-size: 12.5px !important;
+          }
+        }
+
+        /* SECTION HEAD RESPONSIVE RESET */
+        .section-head {
+          display: flex !important;
+          flex-direction: row !important;
+          align-items: flex-end !important;
+          justify-content: space-between !important;
+          gap: 16px !important;
+          margin-bottom: 22px !important;
+          width: 100% !important;
+        }
+
+        .section-head[data-rtl="true"] {
+          flex-direction: row-reverse !important;
+        }
+
+        .section-head > div {
+          flex: 1 !important;
+        }
+
+        .section-subtitle {
+          color: #93877d !important;
+          font-size: 12px !important;
+          line-height: 1.7 !important;
+          margin: 0 !important;
+          max-width: 320px !important;
+          text-align: right !important;
+        }
+
+        .section-head[data-rtl="true"] .section-subtitle {
+          text-align: left !important;
+        }
+
+        @media (max-width: 768px) {
+          .section-head {
+            flex-direction: column !important;
+            align-items: flex-start !important;
+            gap: 6px !important;
+            margin-bottom: 16px !important;
+          }
+
+          .section-head[data-rtl="true"] {
+            flex-direction: column !important;
+            align-items: flex-start !important;
+          }
+
+          .section-subtitle {
+            text-align: left !important;
+            max-width: 100% !important;
+            margin-top: 4px !important;
+          }
+
+          .section-head[data-rtl="true"] .section-subtitle {
+            text-align: right !important;
+          }
+        }
+
+        /* SEARCH BAR CONTROLS */
+        .shop-filter-controls {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+          gap: 16px;
+          margin-bottom: 28px;
+          width: 100%;
+        }
+
+        .filters {
+          margin-bottom: 0 !important;
+          display: block !important;
+        }
+
+        .search-bar-container {
+          flex: 1;
+          max-width: 360px;
+        }
+
+        .search-input-wrapper {
+          position: relative;
+          display: flex;
+          align-items: center;
+          width: 100%;
+        }
+
+        .search-icon {
+          position: absolute;
+          left: 16px;
+          color: #93877d;
+          pointer-events: none;
+        }
+
+        .search-input {
+          width: 100%;
+          padding: 11px 16px 11px 44px;
+          font-family: 'DM Sans', sans-serif;
+          font-size: 13.5px;
+          border: 1px solid #ded3ca;
+          border-radius: 30px;
+          background: #ffffff;
+          color: #161412;
+          outline: none;
+          transition: all 0.2s ease;
+        }
+
+        .search-input:focus {
+          border-color: #fc2779;
+          box-shadow: 0 0 0 3px rgba(252, 39, 121, 0.06);
+          background: #ffffff;
+        }
+
+        .search-clear-btn {
+          position: absolute;
+          right: 16px;
+          background: none;
+          border: none;
+          color: #93877d;
+          cursor: pointer;
+          font-size: 11px;
+          padding: 4px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .search-clear-btn:hover {
+          color: #fc2779;
+        }
+
+        @media (max-width: 768px) {
+          .shop-filter-controls {
+            flex-direction: column-reverse;
+            align-items: stretch;
+            gap: 12px;
+          }
+
+          .search-bar-container {
+            max-width: 100%;
+          }
+          
+          .filters {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+          }
+          
+          .filter-row {
+            display: flex;
+            flex-wrap: nowrap !important;
+            padding-bottom: 6px;
+            padding-left: 4px !important;
+            padding-right: 20px !important;
+            width: max-content;
+          }
+          
+          .filter-row button {
+            white-space: nowrap;
+          }
+        }
+      `}</style>
+
       <section className="section">
-        <div
-          className="section-head"
-          style={{
-            flexDirection: isRtl ? "row-reverse" : "row",
-          }}
-        >
+        <div className="section-head" data-rtl={isRtl ? "true" : "false"}>
           <div>
             <p className="eyebrow">{t("section.concerns.title")}</p>
             <h2>{t("section.concerns.desc")}</h2>
           </div>
-          <p>Tap a concern to filter the shop below. Keep it simple.</p>
+          <p className="section-subtitle">Tap a concern to filter the shop below. Keep it simple.</p>
         </div>
 
         <div className="concern-grid">
@@ -252,12 +484,7 @@ export default function ShopFilterClient({ activeConcernProp }: { activeConcernP
       </section>
 
       <section className="section" id="shop">
-        <div
-          className="section-head"
-          style={{
-            flexDirection: isRtl ? "row-reverse" : "row",
-          }}
-        >
+        <div className="section-head" data-rtl={isRtl ? "true" : "false"}>
           <div>
             <p className="eyebrow">{t("section.shop.title")}</p>
             <h2>
@@ -265,33 +492,53 @@ export default function ShopFilterClient({ activeConcernProp }: { activeConcernP
               {activeConcern ? ` / ${CONCERNS.find((c) => c.id === activeConcern)?.label}` : ""}
             </h2>
           </div>
-          <span>
+          <span className="section-subtitle">
             {filtered.length} item{filtered.length === 1 ? "" : "s"}
           </span>
         </div>
 
-        <div className="filters">
-          <div className="filter-row" style={{ flexDirection: isRtl ? "row-reverse" : "row" }}>
-            {CATEGORIES.map((category) => (
-              <button
-                key={category}
-                className={activeCategory === category ? "active" : ""}
-                onClick={() => setActiveCategory(category)}
-              >
-                {t(CATEGORY_KEYS[category] || category)}
-              </button>
-            ))}
-            {activeConcern || query || activeCategory !== "All" ? (
-              <button
-                onClick={() => {
-                  setActiveCategory("All");
-                  setActiveConcern(null);
-                  setQuery("");
-                }}
-              >
-                Clear all
-              </button>
-            ) : null}
+        <div className="shop-filter-controls">
+          <div className="filters">
+            <div className="filter-row" style={{ flexDirection: isRtl ? "row-reverse" : "row" }}>
+              {CATEGORIES.map((category) => (
+                <button
+                  key={category}
+                  className={activeCategory === category ? "active" : ""}
+                  onClick={() => setActiveCategory(category)}
+                >
+                  {t(CATEGORY_KEYS[category] || category)}
+                </button>
+              ))}
+              {activeConcern || query || activeCategory !== "All" ? (
+                <button
+                  onClick={() => {
+                    setActiveCategory("All");
+                    setActiveConcern(null);
+                    setQuery("");
+                  }}
+                >
+                  Clear all
+                </button>
+              ) : null}
+            </div>
+          </div>
+
+          <div className="search-bar-container">
+            <div className="search-input-wrapper">
+              <Search className="search-icon" size={16} />
+              <input
+                type="text"
+                placeholder={t("search.placeholder") || "Search products..."}
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                className="search-input"
+              />
+              {query && (
+                <button className="search-clear-btn" onClick={() => setQuery("")}>
+                  ✕
+                </button>
+              )}
+            </div>
           </div>
         </div>
 

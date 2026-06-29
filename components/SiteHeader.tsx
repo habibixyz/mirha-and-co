@@ -6,6 +6,24 @@ import { Menu, X } from "lucide-react";
 import { useGlobalization } from "./GlobalizationContext";
 import GlobalizationSwitcher from "./GlobalizationSwitcher";
 
+const InstagramIcon = ({ size = 16 }: { size?: number }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+    <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+  </svg>
+);
+
 export default function SiteHeader() {
   const { t } = useGlobalization();
   const [menuOpen, setMenuOpen] = useState(false);
@@ -46,6 +64,16 @@ export default function SiteHeader() {
             <Link href="/pricing"   className="site-header-nav-link">{t("nav.pricing")}</Link>
             <Link href="/about"     className="site-header-nav-link">{t("nav.about")}</Link>
             <Link href="/dashboard" className="site-header-nav-link">{t("nav.dashboard")}</Link>
+            <a
+              href="https://www.instagram.com/mirha_andco/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="site-header-nav-link flex items-center justify-center"
+              aria-label="Instagram"
+              style={{ display: "inline-flex", alignItems: "center" }}
+            >
+              <InstagramIcon size={15} />
+            </a>
             <GlobalizationSwitcher />
           </nav>
         </div>
@@ -55,7 +83,7 @@ export default function SiteHeader() {
           {!menuOpen && (
             <button
               className="text-black hover:text-[#fc2779] transition-colors cursor-pointer"
-              style={{ background: "transparent", border: "none", outline: "none", boxShadow: "none", padding: "8px", display: "flex", alignItems: "center", justifyContent: "center" }}
+              style={{ background: "transparent", border: "none", outline: "none", boxShadow: "none", padding: "8px", display: "flex", alignItems: "center", justify: "center" }}
               onClick={() => setMenuOpen(true)}
               aria-label="Toggle Menu"
             >
@@ -106,6 +134,21 @@ export default function SiteHeader() {
             <Link href="/pricing"   onClick={() => setMenuOpen(false)} className="hover:text-[#fc2779] transition-colors" style={navLinkStyle}>{t("nav.pricing")}</Link>
             <Link href="/about"     onClick={() => setMenuOpen(false)} className="hover:text-[#fc2779] transition-colors" style={navLinkStyle}>{t("nav.about")}</Link>
             <Link href="/dashboard" onClick={() => setMenuOpen(false)} className="hover:text-[#fc2779] transition-colors" style={navLinkStyle}>{t("nav.dashboard")}</Link>
+
+            <div style={{ height: "1px", background: "#e5ded6" }} />
+
+            {/* Instagram link */}
+            <a
+              href="https://www.instagram.com/mirha_andco/"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setMenuOpen(false)}
+              className="flex items-center gap-2 transition-colors hover:text-[#fc2779]"
+              style={{ ...navLinkStyle, textTransform: "none", display: "flex", alignItems: "center" }}
+            >
+              <InstagramIcon size={16} />
+              <span>Instagram</span>
+            </a>
 
             <div style={{ height: "1px", background: "#e5ded6" }} />
 

@@ -79,6 +79,7 @@ const SYNONYMS: Record<string, string[]> = {
  humidity: ["humidity", "humid", "monsoon", "summer", "sweat", "sweating", "sweaty"],
  fungal: ["fungal", "fungal acne", "malassezia", "yeast", "bumps", "itchy bumps"],
  sleep: ["sleep", "sleeping", "night routine", "bedtime", "bed", "magnesium", "rest", "wellness"],
+ kbeauty: ["k-beauty", "korean", "korean beauty", "korean skincare", "glass skin", "beauty of joseon", "the face shop", "seoulceuticals", "joseon", "snail mucin", "rice water"],
 };
 
 // 🎯 SMART CONCERN MAPPING: Maps user feelings to scientific ingredients

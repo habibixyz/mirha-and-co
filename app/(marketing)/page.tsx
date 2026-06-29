@@ -1,11 +1,12 @@
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, Layers, Droplet } from "lucide-react";
+import { ArrowRight, Layers, Droplet, Flower, Coins } from "lucide-react";
 import { PRODUCTS } from "@/lib/products";
 import { cookies } from "next/headers";
 import { Locale, DICTIONARY, RTL_LOCALES } from "@/lib/globalization";
 import FaceScannerUI from "@/components/FaceScannerUI";
 import ShopFilterClient from "@/components/ShopFilterClient";
+import heroIndianFace from "@/components/hero_indian_face.png";
 
 type Product = {
   id: number;
@@ -178,7 +179,7 @@ export default async function BeautyShopPage() {
           width: 100%;
           max-width: 640px;
           margin: 0 auto;
-          align-items: center;
+          align-items: stretch;
         }
 
         .ai-stack-left {
@@ -213,7 +214,8 @@ export default async function BeautyShopPage() {
         .ai-card-scanner {
           order: 2;
           width: 100%;
-          height: 440px;
+          height: 100%;
+          min-height: 440px;
           padding: 0;
           overflow: hidden;
         }
@@ -734,6 +736,10 @@ export default async function BeautyShopPage() {
         }
 
         @media (max-width: 980px) {
+          .hide-on-mobile {
+            display: none !important;
+          }
+
           .hero {
             grid-template-columns: 1fr;
             min-height: auto;
@@ -1010,7 +1016,7 @@ export default async function BeautyShopPage() {
           <div className="hero-visuals" style={{ order: isRtl ? 1 : 2 }}>
             <div className="ai-stack">
               <Link href="/dashboard/analysis" className="ai-card ai-card-scanner">
-                <FaceScannerUI />
+                <FaceScannerUI imageSrc={heroIndianFace} showMesh={false} />
               </Link>
               <div className="ai-stack-left">
                 <Link href="/dashboard/routines" className="ai-card ai-card-routine">
@@ -1032,6 +1038,28 @@ export default async function BeautyShopPage() {
                     <div>
                       <h3>Hard Water Test</h3>
                       <p>City-based analysis</p>
+                    </div>
+                  </div>
+                </Link>
+                <Link href="/k-beauty" className="ai-card ai-card-kbeauty hide-on-mobile">
+                  <div className="ai-card-header">
+                    <div className="ai-icon">
+                      <Flower size={18} strokeWidth={1.5} />
+                    </div>
+                    <div>
+                      <h3>K-Beauty Collection</h3>
+                      <p>Korean Skincare Guide</p>
+                    </div>
+                  </div>
+                </Link>
+                <Link href="/tools/dupes" className="ai-card ai-card-dupes hide-on-mobile">
+                  <div className="ai-card-header">
+                    <div className="ai-icon">
+                      <Coins size={18} strokeWidth={1.5} />
+                    </div>
+                    <div>
+                      <h3>Dupe Finder</h3>
+                      <p>Calculate your savings</p>
                     </div>
                   </div>
                 </Link>

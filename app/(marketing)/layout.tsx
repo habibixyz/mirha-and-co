@@ -169,21 +169,48 @@ export default async function RootLayout({
  }}
  >
  <div className="footer-col-full">
- <div style={{
- fontFamily: "'Bebas Neue', sans-serif",
- fontSize: "1.8rem",
- letterSpacing: "0.08em",
- marginBottom: "1rem",
- }}>MIRHA &amp; CO.</div>
- <p style={{
- fontSize: "0.82rem",
- color: "rgba(255,255,255,0.5)",
- lineHeight: 1.7,
- maxWidth: "240px",
- }}>
- Honest reviews, curated Amazon finds, and the products actually worth your money.
- </p>
- </div>
+  <div style={{
+  fontFamily: "'Bebas Neue', sans-serif",
+  fontSize: "1.8rem",
+  letterSpacing: "0.08em",
+  marginBottom: "1rem",
+  }}>MIRHA &amp; CO.</div>
+  <p style={{
+  fontSize: "0.82rem",
+  color: "rgba(255,255,255,0.5)",
+  lineHeight: 1.7,
+  maxWidth: "240px",
+  marginBottom: "1rem",
+  }}>
+  Honest reviews, curated Amazon finds, and the products actually worth your money.
+  </p>
+  <div style={{ display: "flex", gap: "0.8rem" }}>
+    <a 
+      href="https://www.instagram.com/mirha_andco/" 
+      target="_blank" 
+      rel="noopener noreferrer"
+      className="footer-link"
+      style={{ display: "inline-flex", alignItems: "center", gap: "0.4rem" }}
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width={16}
+        height={16}
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+        <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+      </svg>
+      @mirha_andco
+    </a>
+  </div>
+  </div>
 
  <div>
  <p style={{
