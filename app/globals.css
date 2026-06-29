@@ -559,4 +559,49 @@ html, body {
  gap: 1.2rem !important;
  }
 }
+
+/* ─────────────────────────────────────────
+ BLOG MOBILE STYLE FIXES
+ ───────────────────────────────────────── */
+.post-body .summary-box p strong,
+.post-body .summary-box strong,
+.summary-box p strong,
+.summary-box strong {
+ color: #ffffff !important;
+ font-weight: 600 !important;
+}
+
+.summary-box p {
+ color: rgba(255, 255, 255, 0.9) !important;
+}
+
+@media (max-width: 640px) {
+ .further-reading {
+ padding: 1.5rem 1.25rem !important;
+ }
+ 
+ .further-reading a {
+ flex-direction: column !important;
+ align-items: flex-start !important;
+ gap: 0.35rem !important;
+ }
+ 
+ .further-reading a span {
+ white-space: normal !important;
+ display: block !important;
+ width: 100% !important;
+ }
+ 
+ .further-reading a span:first-child {
+ font-size: 0.9rem !important;
+ line-height: 1.35 !important;
+ }
+
+ .further-reading a span:last-child {
+ font-size: 0.72rem !important;
+ color: #fc2779 !important;
+ margin-top: 0.1rem !important;
+ }
+}
+
 

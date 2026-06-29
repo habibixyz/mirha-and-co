@@ -160,9 +160,12 @@ export default function Niacinamide5vs10Page() {
  .disclosure { margin-top: 3rem; padding: 1.2rem 1.5rem; border: 1px solid #e8e4de; border-radius: 4px; }
  .disclosure-label { font-family: 'DM Sans', sans-serif; font-size: 0.58rem; letter-spacing: 0.25em; text-transform: uppercase; color: #ccc; margin-bottom: 0.4rem; }
  .disclosure p { font-size: 0.78rem !important; color: #bbb !important; margin: 0 !important; line-height: 1.6 !important; }
+ .back-to-journal { font-family: 'DM Sans', sans-serif; font-size: 0.72rem; color: rgba(255,255,255,0.4); text-decoration: none; margin-bottom: 2.2rem; letter-spacing: 0.15em; text-transform: uppercase; transition: color 0.2s ease; display: block; width: max-content; }
+ .back-to-journal:hover { color: var(--rose); }
 
  @media (max-width: 640px) {
  .post-hero { padding: 4rem 1.5rem 3rem; }
+ .back-to-journal { margin-bottom: 1.5rem; }
  .post-body { padding: 3rem 1.5rem 4rem; }
  .further-reading { padding: 2rem 1.5rem; }
  .summary-box { padding: 1.8rem 1.5rem; }
@@ -172,6 +175,9 @@ export default function Niacinamide5vs10Page() {
  {/* ── HERO ── */}
  <section className="post-hero">
  <div className="post-hero-inner">
+ <Link href="/blog" className="back-to-journal">
+  ← Back to Journal
+ </Link>
  <div className="post-eyebrow">Beauty · Skincare · Niacinamide</div>
  <h1>
  Niacinamide<br />
