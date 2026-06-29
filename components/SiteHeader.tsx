@@ -83,7 +83,7 @@ export default function SiteHeader() {
           {!menuOpen && (
             <button
               className="text-black hover:text-[#fc2779] transition-colors cursor-pointer"
-              style={{ background: "transparent", border: "none", outline: "none", boxShadow: "none", padding: "8px", display: "flex", alignItems: "center", justify: "center" }}
+              style={{ background: "transparent", border: "none", outline: "none", boxShadow: "none", padding: "8px", display: "flex", alignItems: "center", justifyContent: "center" }}
               onClick={() => setMenuOpen(true)}
               aria-label="Toggle Menu"
             >
