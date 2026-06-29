@@ -565,7 +565,7 @@ export default function AboutPage() {
  <span style={{ fontSize: "clamp(1.8rem, 4vw, 3rem)" }}>Sell your brand on Mirha&nbsp;&amp;&nbsp;Co.</span>
  </h2>
  <p style={{ color: "var(--muted)", marginBottom: "3rem", fontSize: "1.05rem", lineHeight: "1.7" }}>
- Are you a skincare brand looking to reach a highly engaged audience? We partner with authentic brands to feature their products on our platform. Submit your brand details below to get started.
+ Are you a skincare brand looking to reach a highly engaged audience? We partner with authentic brands to feature their products on our platform. Submit your brand details below to get started, or reach out directly at <strong style={{ color: "var(--rose)" }}>tanizcoldz@gmail.com</strong> / <strong style={{ color: "var(--rose)" }}>+91 9372159177</strong>.
  </p>
  <CollabForm />
  </div>

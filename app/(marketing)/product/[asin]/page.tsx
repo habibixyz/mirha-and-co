@@ -38,6 +38,7 @@ type Product = {
  watchOuts?: string[];
  image: string;
  link?: string;
+ notes?: string;
 };
 
 const PRODUCT_LIST = PRODUCTS as unknown as Product[];
@@ -138,6 +139,7 @@ export default async function ProductPage({ params }: { params: Promise<{ asin: 
  if (!product) notFound();
 
  const isKBeauty = K_BEAUTY_ASINS.has(product.asin);
+ const isMens = product.tags?.includes("mens") || product.category?.toLowerCase().includes("mens");
 
  const cookieStore = await cookies();
  const locale = (cookieStore.get("mirha_locale")?.value || "en") as Locale;
@@ -545,6 +547,27 @@ export default async function ProductPage({ params }: { params: Promise<{ asin: 
     K-Beauty Collection →
    </Link>
   )}
+  {isMens && (
+   <Link
+    href="/mens-grooming"
+    style={{
+     background: "#161412",
+     color: "#fff",
+     fontSize: "0.55rem",
+     fontWeight: 700,
+     letterSpacing: "0.14em",
+     textTransform: "uppercase",
+     padding: "3px 8px",
+     borderRadius: "4px",
+     textDecoration: "none",
+     display: "inline-flex",
+     alignItems: "center",
+     boxShadow: "0 2px 6px rgba(0,0,0,0.15)",
+    }}
+   >
+    Men's Grooming Collection →
+   </Link>
+  )}
  </div>
  <h1>{product.name}</h1>
  <p className="brand">{product.brand} {product.badge ? `/ ${product.badge}` : ""}</p>
@@ -571,6 +594,7 @@ export default async function ProductPage({ params }: { params: Promise<{ asin: 
  usage={product.usage || product.specs?.["Use"] || "Use as directed on the product label. Introduce one new product at a time and patch test first."}
  ingredients={ingredients}
  locale={locale}
+ mirhaNotes={product.notes}
  />
 
  <a

@@ -4,236 +4,293 @@ import { PRODUCTS } from "@/lib/products";
 import { useGlobalization } from "./GlobalizationContext";
 
 export default function BlogProductCard({ asin }: { asin: string }) {
- const global = useGlobalization();
- const product = PRODUCTS.find((p) => p.asin === asin);
- if (!product) return null;
+  const global = useGlobalization();
+  const product = PRODUCTS.find((p) => p.asin === asin);
+  if (!product) return null;
 
- const isRtl = global.isRtl;
+  const isRtl = global.isRtl;
 
- // Localized affiliate search URL
- const affiliateUrl = global.getAffiliateUrl(
- asin,
- product.name,
- product.brand,
- product.link
- );
+  // Localized affiliate search URL
+  const affiliateUrl = global.getAffiliateUrl(
+    asin,
+    product.name,
+    product.brand,
+    product.link
+  );
 
- const disc = product.mrp > product.price
- ? Math.round(((product.mrp - product.price) / product.mrp) * 100)
- : 0;
+  const disc = product.mrp > product.price
+    ? Math.round(((product.mrp - product.price) / product.mrp) * 100)
+    : 0;
 
- return (
- <div
- style={{
- background: "#faf8f5",
- border: "1px solid #e8e2d9",
- borderRadius: "16px",
- padding: "20px",
- margin: "28px 0",
- direction: isRtl ? "rtl" : "ltr",
- textAlign: isRtl ? "right" : "left",
- boxShadow: "0 4px 20px rgba(0,0,0,0.02)",
- }}
- >
- {/* 1. Header Product Row */}
- <a
- href={affiliateUrl}
- target="_blank"
- rel="noopener noreferrer"
- style={{
- display: "flex",
- gap: "16px",
- alignItems: "center",
- textDecoration: "none",
- color: "inherit",
- cursor: "pointer",
- }}
- >
- <div
- className="affiliate-image-wrapper"
- style={{
- width: "80px",
- height: "80px",
- flexShrink: 0,
- background: "#fff",
- borderRadius: "10px",
- overflow: "hidden",
- border: "1px solid #ede8e0",
- display: "flex",
- alignItems: "center",
- justifyContent: "center",
- }}
- >
- <img
- src={product.image}
- alt={product.name}
- style={{ width: "100%", height: "100%", objectFit: "contain", padding: "6px" }}
- />
- </div>
+  return (
+    <div className="editorial-product-card">
+      <style>{`
+        .editorial-product-card {
+          background: #ffffff;
+          border: 1px solid #ede8e0;
+          border-radius: 12px;
+          padding: 1.5rem;
+          margin: 2.5rem 0;
+          direction: ${isRtl ? "rtl" : "ltr"};
+          text-align: ${isRtl ? "right" : "left"};
+          transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .editorial-product-card:hover {
+          border-color: #d6ceb8;
+          box-shadow: 0 12px 30px rgba(162, 123, 92, 0.04);
+          transform: translateY(-2px);
+        }
+        .editorial-prod-row {
+          display: flex;
+          gap: 20px;
+          align-items: center;
+          text-decoration: none;
+          color: inherit;
+        }
+        .editorial-prod-img-box {
+          width: 90px;
+          height: 90px;
+          flex-shrink: 0;
+          background: #faf8f5;
+          border-radius: 8px;
+          overflow: hidden;
+          border: 1px solid #ede8e0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 8px;
+        }
+        .editorial-prod-img-box img {
+          max-width: 100%;
+          max-height: 100%;
+          object-fit: contain;
+        }
+        .editorial-prod-info {
+          flex: 1;
+          min-width: 0;
+        }
+        .editorial-prod-badge {
+          display: inline-block;
+          font-size: 0.55rem;
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
+          color: #8c725c;
+          background: #faf6f0;
+          border: 1px solid #e6decb;
+          padding: 2px 8px;
+          border-radius: 4px;
+          fontWeight: 700;
+          margin-bottom: 6px;
+        }
+        .editorial-prod-title {
+          font-family: 'DM Serif Display', serif;
+          font-size: 1.2rem;
+          color: #1a1714;
+          margin: 0 0 4px;
+          line-height: 1.35;
+          font-weight: 400;
+          overflow: hidden;
+          display: -webkit-box;
+          WebkitLineClamp: 2;
+          WebkitBoxOrient: "vertical";
+        }
+        .editorial-prod-brand {
+          font-family: var(--font-dm-sans), sans-serif;
+          font-size: 0.65rem;
+          color: #8c8179;
+          fontWeight: 700;
+          text-transform: uppercase;
+          letter-spacing: 0.1em;
+          margin: 0 0 8px;
+        }
+        .editorial-prod-price-box {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+        }
+        .editorial-prod-price {
+          font-family: 'DM Serif Display', serif;
+          font-size: 1.3rem;
+          color: #1a1714;
+        }
+        .editorial-prod-mrp {
+          font-size: 0.75rem;
+          color: #b2aba4;
+          text-decoration: line-through;
+        }
+        .editorial-prod-discount {
+          font-size: 0.58rem;
+          color: #5a9e6f;
+          background: #edf7f0;
+          border: 1px solid #cce8d4;
+          padding: 2px 6px;
+          border-radius: 4px;
+          font-weight: 700;
+          text-transform: uppercase;
+        }
+        .editorial-specs-divider {
+          margin-top: 1.2rem;
+          border-top: 1px solid #ede8e0;
+          padding-top: 1rem;
+        }
+        .editorial-specs-table {
+          width: 100%;
+          border-collapse: collapse;
+          font-size: 0.75rem;
+          color: #6a635d;
+        }
+        .editorial-specs-table td {
+          padding: 6px 0;
+          border-bottom: 1px solid #f5f1ed;
+        }
+        .editorial-specs-table tr:last-child td {
+          border-bottom: none;
+        }
+        .editorial-btn-group {
+          display: flex;
+          gap: 12px;
+          margin-top: 1.5rem;
+          flex-wrap: wrap;
+        }
+        .editorial-btn-primary {
+          flex: 1 1 200px;
+          background: #1a1714;
+          color: #ffffff;
+          border: 1px solid #1a1714;
+          font-size: 0.65rem;
+          letter-spacing: 0.15em;
+          text-transform: uppercase;
+          font-weight: 700;
+          padding: 12px 16px;
+          border-radius: 6px;
+          text-decoration: none;
+          text-align: center;
+          transition: all 0.2s ease;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 6px;
+        }
+        .editorial-btn-primary:hover {
+          background: #000000;
+          border-color: #000000;
+        }
+        .editorial-btn-secondary {
+          flex: 1 1 200px;
+          background: #ffffff;
+          color: #1a1714;
+          border: 1px solid #dcd5cc;
+          font-size: 0.65rem;
+          letter-spacing: 0.15em;
+          text-transform: uppercase;
+          font-weight: 700;
+          padding: 12px 16px;
+          border-radius: 6px;
+          text-decoration: none;
+          text-align: center;
+          transition: all 0.2s ease;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 6px;
+        }
+        .editorial-btn-secondary:hover {
+          background: #faf8f5;
+          border-color: #c8bfae;
+        }
+        .editorial-disclaimer {
+          text-align: center;
+          font-size: 0.58rem;
+          color: #9c9188;
+          margin-top: 1rem;
+          font-style: italic;
+        }
+        @media (max-width: 580px) {
+          .editorial-prod-row {
+            flex-direction: column;
+            align-items: flex-start;
+          }
+          .editorial-prod-img-box {
+            width: 100%;
+            height: 120px;
+          }
+        }
+      `}</style>
 
- <div style={{ flex: 1, minWidth: 0 }}>
- {product.badge && (
- <span
- style={{
- display: "inline-block",
- fontSize: "9px",
- letterSpacing: "0.15em",
- textTransform: "uppercase",
- color: "#fc2779",
- background: "rgba(252, 39, 121, 0.08)",
- padding: "2px 8px",
- borderRadius: "99px",
- fontWeight: 700,
- marginBottom: "6px",
- }}
- >
- {product.badge}
- </span>
- )}
- <h4
- style={{
- fontFamily: "'DM Serif Display', serif",
- fontSize: "16px",
- color: "#111",
- margin: "0 0 4px",
- lineHeight: 1.35,
- fontWeight: 400,
- overflow: "hidden",
- display: "-webkit-box",
- WebkitLineClamp: 2,
- WebkitBoxOrient: "vertical",
- }}
- >
- {product.name}
- </h4>
- <p style={{ fontSize: "11px", color: "#8b8580", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.05em", margin: "0 0 8px" }}>
- {product.brand}
- </p>
- <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexDirection: isRtl ? 'row-reverse' : 'row', justifyContent: isRtl ? 'flex-end' : 'flex-start' }}>
- <span style={{ fontSize: "18px", color: "#111", fontWeight: 700 }}>
- {global.formatPrice(product.price)}
- </span>
- {disc > 0 && (
- <>
- <span style={{ fontSize: "13px", color: "#bbb", textDecoration: "line-through" }}>
- {global.formatPrice(product.mrp)}
- </span>
- <span
- style={{
- fontSize: "10px",
- color: "#5a9e6f",
- background: "#edf7f0",
- padding: "2px 6px",
- borderRadius: "4px",
- fontWeight: 700,
- }}
- >
- {disc}% {global.t("product.off")}
- </span>
- </>
- )}
- </div>
- </div>
- </a>
+      {/* Header Product Row */}
+      <a
+        href={affiliateUrl}
+        target="_blank"
+        rel="noopener noreferrer sponsored"
+        className="editorial-prod-row"
+      >
+        <div className="editorial-prod-img-box">
+          <img src={product.image} alt={product.name} />
+        </div>
 
- {/* 2. Structured Specs Table (SEO Featured Snippet Target) */}
- {product.specs && (
- <div style={{ marginTop: "16px", borderTop: "1px solid #ede8e0", paddingTop: "14px" }}>
- <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "12px", color: "#4a4540" }}>
- <thead>
- <tr style={{ borderBottom: "1px solid #f4efe9" }}>
- <th style={{ textAlign: "left", padding: "6px 0", fontWeight: 600, color: "#8b8580", textTransform: "uppercase", fontSize: "10px", letterSpacing: "0.05em", width: "40%" }}>Attribute</th>
- <th style={{ textAlign: "left", padding: "6px 0", fontWeight: 600, color: "#8b8580", textTransform: "uppercase", fontSize: "10px", letterSpacing: "0.05em" }}>Specification</th>
- </tr>
- </thead>
- <tbody>
- {Object.entries(product.specs).map(([key, value]) => (
- <tr key={key} style={{ borderBottom: "1px solid #f4efe9" }}>
- <td style={{ padding: "8px 0", fontWeight: 600, color: "#1a1714" }}>{key}</td>
- <td style={{ padding: "8px 0", color: "#5c544e" }}>{value}</td>
- </tr>
- ))}
- <tr style={{ borderBottom: "1px solid #f4efe9" }}>
- <td style={{ padding: "8px 0", fontWeight: 600, color: "#1a1714" }}>Authenticity Check</td>
- <td style={{ padding: "8px 0", color: "#5a9e6f", display: "flex", alignItems: "center", gap: "4px", fontWeight: 600 }}>
- <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
- <polyline points="20 6 9 17 4 12"></polyline>
- </svg>
- 100% Genuine (Official Brand Storefront)
- </td>
- </tr>
- </tbody>
- </table>
- </div>
- )}
+        <div className="editorial-prod-info">
+          {product.badge && <span className="editorial-prod-badge">{product.badge}</span>}
+          <h4 className="editorial-prod-title">{product.name}</h4>
+          <p className="editorial-prod-brand">{product.brand}</p>
+          
+          <div className="editorial-prod-price-box">
+            <span className="editorial-prod-price">
+              {global.formatPrice(product.price)}
+            </span>
+            {disc > 0 && (
+              <>
+                <span className="editorial-prod-mrp">
+                  {global.formatPrice(product.mrp)}
+                </span>
+                <span className="editorial-prod-discount">
+                  {disc}% {global.t("product.off")}
+                </span>
+              </>
+            )}
+          </div>
+        </div>
+      </a>
 
- {/* 3. Action Buttons with Cookie Dropping Intent */}
- <div style={{ display: "flex", gap: "10px", marginTop: "18px", flexWrap: "wrap" }}>
- <a
- href={affiliateUrl}
- target="_blank"
- rel="noopener noreferrer"
- style={{
- flex: "1 1 200px",
- background: "#fc2779",
- color: "#fff",
- fontSize: "12px",
- fontWeight: 700,
- textDecoration: "none",
- padding: "12px 16px",
- borderRadius: "8px",
- textAlign: "center",
- display: "inline-flex",
- alignItems: "center",
- justifyContent: "center",
- gap: "6px",
- boxShadow: "0 4px 12px rgba(252, 39, 121, 0.15)",
- transition: "all 0.2s",
- cursor: "pointer",
- }}
- >
- <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
- <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
- </svg>
- Compare Prices & Check 
- </a>
+      {/* Specs Table */}
+      {product.specs && (
+        <div className="editorial-specs-divider">
+          <table className="editorial-specs-table">
+            <tbody>
+              {Object.entries(product.specs).map(([key, value]) => (
+                <tr key={key}>
+                  <td style={{ fontWeight: 700, color: "#1a1714", width: "40%" }}>{key}</td>
+                  <td>{value}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
 
- <a
- href={global.getBrandStorefrontUrl(product.brand)}
- target="_blank"
- rel="noopener noreferrer"
- style={{
- flex: "1 1 200px",
- background: "#fff",
- color: "#1a1714",
- fontSize: "12px",
- fontWeight: 700,
- textDecoration: "none",
- padding: "12px 16px",
- borderRadius: "8px",
- textAlign: "center",
- border: "1px solid #dcd5cc",
- display: "inline-flex",
- alignItems: "center",
- justifyContent: "center",
- gap: "6px",
- transition: "all 0.2s",
- cursor: "pointer",
- }}
- >
- <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
- <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
- </svg>
- Check Official Brand Storefront
- </a>
- </div>
+      {/* Action Buttons */}
+      <div className="editorial-btn-group">
+        <a
+          href={affiliateUrl}
+          target="_blank"
+          rel="noopener noreferrer sponsored"
+          className="editorial-btn-primary"
+        >
+          Check Price &amp; Storefront
+        </a>
 
- <div style={{ display: "flex", alignItems: "center", gap: "6px", fontSize: "10px", color: "#8b8580", marginTop: "10px", justifyContent: "center" }}>
- <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#5a9e6f" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
- <polyline points="20 6 9 17 4 12"></polyline>
- </svg>
- <span>Verified authentic link. Direct dispatch from brand warehouse or authorized seller.</span>
- </div>
- </div>
- );
+        <a
+          href={global.getBrandStorefrontUrl(product.brand)}
+          target="_blank"
+          rel="noopener noreferrer sponsored"
+          className="editorial-btn-secondary"
+        >
+          Official Brand Store
+        </a>
+      </div>
+
+      <div className="editorial-disclaimer">
+        *Verified partner link. Dispatched from official brand authorized warehouse.
+      </div>
+    </div>
+  );
 }

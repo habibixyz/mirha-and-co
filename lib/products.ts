@@ -4009,6 +4009,851 @@ export const PRODUCTS = [
   "link": "https://amzn.to/3SnBm0l",
   "hideFromShop": true
 }
+,
+{
+  id: 500,
+  name: "Beardo Beard & Hair Growth Oil",
+  brand: "Beardo",
+  category: "Mens Beard Care",
+  subcat: "Beard Care",
+  mrp: 492,
+  price: 492,
+  rating: 4.3,
+  reviews: "18k+",
+  asin: "B01C8FM764",
+  badge: "Bestseller",
+  description: "Beardo Beard and Hair Growth Oil - 50 ml for faste...",
+  specs: {
+    "Skin Type": "Men"
+  },
+  tags: [
+    "mens",
+    "beard care"
+  ],
+  concerns: [],
+  image: "/products/B01C8FM764.JPG",
+  link: "https://amzn.to/3R7fcis",
+  notes: "Daily Nourishment: 50ml value pack of natural oils to soften the beard and reduce itchiness."
+},
+{
+  id: 501,
+  name: "The Man Company Beard Oil",
+  brand: "The Man Company",
+  category: "Mens Beard Care",
+  subcat: "Beard Care",
+  mrp: 264,
+  price: 264,
+  rating: 4.2,
+  reviews: "9k+",
+  asin: "B01J1KFWQG",
+  badge: "Natural Formula",
+  description: "The Man Company Beard Oil for Growing Beard Faster...",
+  specs: {
+    "Skin Type": "Men"
+  },
+  tags: [
+    "mens",
+    "beard care"
+  ],
+  concerns: [],
+  image: "/products/B01J1KFWQG.JPG",
+  link: "https://amzn.to/4arT3Ss",
+  notes: "Patchiness Target: Thyme and almond oil warm the skin and boost local circulation to dormant follicles."
+},
+{
+  id: 502,
+  name: "Bombay Shaving Co. Onion Beard Oil",
+  brand: "Bombay Shaving Company",
+  category: "Mens Beard Care",
+  subcat: "Beard Care",
+  mrp: 248,
+  price: 248,
+  rating: 4.1,
+  reviews: "5k+",
+  asin: "B07V4SQP9M",
+  badge: "Trending",
+  description: "Bombay Shaving Company Beard Growth Onion Oil-10X ...",
+  specs: {
+    "Skin Type": "Men"
+  },
+  tags: [
+    "mens",
+    "beard care"
+  ],
+  concerns: [],
+  image: "/products/B07V4SQP9M.JPG",
+  link: "https://amzn.to/3RdsHNz",
+  notes: "Density Pick: Onion oil delivers natural sulfur to build keratin, making the beard look fuller and thicker."
+},
+{
+  id: 503,
+  name: "Ustraa Beard Growth Oil",
+  brand: "Ustraa",
+  category: "Mens Beard Care",
+  subcat: "Beard Care",
+  mrp: 277,
+  price: 277,
+  rating: 4.2,
+  reviews: "12k+",
+  asin: "B07CKPWJ6X",
+  badge: "With Redensyl",
+  description: "Ustraa Beard Growth Oil - 35ml - More Beard Growth...",
+  specs: {
+    "Skin Type": "Men"
+  },
+  tags: [
+    "mens",
+    "beard care"
+  ],
+  concerns: [],
+  image: "/products/B07CKPWJ6X.JPG",
+  link: "https://amzn.to/3SSu9W2",
+  notes: "Growth Active: Built around Redensyl to target patchy spots and stimulate new hair follicle growth."
+},
+{
+  id: 504,
+  name: "Man Arden 7X Beard Oil",
+  brand: "Man Arden",
+  category: "Mens Beard Care",
+  subcat: "Beard Care",
+  mrp: 399,
+  price: 399,
+  rating: 4.3,
+  reviews: "7k+",
+  asin: "B077ZVQHCL",
+  badge: "7 Premium Oils",
+  description: "Man Arden 7X Beard Oil 30ml (Musk) - 7 Premium Oil...",
+  specs: {
+    "Skin Type": "Men"
+  },
+  tags: [
+    "mens",
+    "beard care"
+  ],
+  concerns: [],
+  image: "/products/B077ZVQHCL.JPG",
+  link: "https://amzn.to/4vFnUUd",
+  notes: "Premium Blend: 7 nourishing oils in a non-greasy formula with a sophisticated musk scent."
+},
+{
+  id: 505,
+  name: "Garnier Men, Anti-Pimple Face Wash, Repairs Skin & Balances Oils, AcnoFight, 100 g",
+  brand: "Garnier Men",
+  category: "Mens Skincare",
+  subcat: "Skincare",
+  mrp: 187,
+  price: 187,
+  rating: 4.3,
+  reviews: "55k+",
+  asin: "B007921JYI",
+  badge: "Budget Pick",
+  description: "Garnier Men, Anti-Pimple Face Wash, Repairs Skin &...",
+  specs: {
+    "Skin Type": "Men"
+  },
+  tags: [
+    "mens",
+    "skincare"
+  ],
+  concerns: [],
+  image: "/products/B007921JYI.JPG",
+  link: "https://amzn.to/3SCP9jx"
+},
+{
+  id: 506,
+  name: "NIVEA MEN All in 1 Oil Control Face Wash | Prevents Acne | Removes excess oil and dirt | Reduces Blackheads and Whiteheads | Cooling Menthol | Unclogs & refines pores | 150ml",
+  brand: "NIVEA MEN",
+  category: "Mens Skincare",
+  subcat: "Skincare",
+  mrp: 242,
+  price: 242,
+  rating: 4.2,
+  reviews: "35k+",
+  asin: "B00X9UOCEI",
+  badge: "Oil Control",
+  description: "NIVEA MEN All in 1 Oil Control Face Wash | Prevent...",
+  specs: {
+    "Skin Type": "Men"
+  },
+  tags: [
+    "mens",
+    "skincare"
+  ],
+  concerns: [],
+  image: "/products/B00X9UOCEI.JPG",
+  link: "https://amzn.to/4vCJCIf"
+},
+{
+  id: 507,
+  name: "Bombay Shaving Company Cool Detox Face Wash Combo 2 x 100g | Charcoal Deep Clean & Menthol Cooling | Removes Dirt, Oil & Pollution | Long-Lasting Freshness | Value Pack",
+  brand: "Bombay Shaving Company",
+  category: "Mens Skincare",
+  subcat: "Skincare",
+  mrp: 279,
+  price: 279,
+  rating: 4.2,
+  reviews: "8k+",
+  asin: "B082L4WBMD",
+  badge: "Combo Value",
+  description: "Bombay Shaving Company Cool Detox Face Wash Combo ...",
+  specs: {
+    "Skin Type": "Men"
+  },
+  tags: [
+    "mens",
+    "skincare"
+  ],
+  concerns: [],
+  image: "/products/B082L4WBMD.JPG",
+  link: "https://amzn.to/4wmTJkF"
+},
+{
+  id: 508,
+  name: "The Man Company Charcoal Face Wash | Anti Pollution, Acne Oil Control | Deep Cleansing | Blackheads Removal | All Skin Types - 75 ml",
+  brand: "The Man Company",
+  category: "Mens Skincare",
+  subcat: "Skincare",
+  mrp: 189,
+  price: 189,
+  rating: 4.1,
+  reviews: "6k+",
+  asin: "B0BCJXZL39",
+  badge: "Charcoal Detox",
+  description: "The Man Company Charcoal Face Wash | Anti Pollutio...",
+  specs: {
+    "Skin Type": "Men"
+  },
+  tags: [
+    "mens",
+    "skincare"
+  ],
+  concerns: [],
+  image: "/products/B0BCJXZL39.JPG",
+  link: "https://amzn.to/4bhdt0J"
+},
+{
+  id: 509,
+  name: "Mamaearth Vitamin C Face Wash with Vitamin C and Turmeric for Skin Illumination - 100 ml | Brightens skin | Evens Tone | Makes skin Glow",
+  brand: "Mamaearth",
+  category: "Mens Skincare",
+  subcat: "Skincare",
+  mrp: 193,
+  price: 193,
+  rating: 4.2,
+  reviews: "22k+",
+  asin: "B089W938BR",
+  badge: "Glow Booster",
+  description: "Mamaearth Vitamin C Face Wash with Vitamin C and T...",
+  specs: {
+    "Skin Type": "Men"
+  },
+  tags: [
+    "mens",
+    "skincare"
+  ],
+  concerns: [],
+  image: "/products/B089W938BR.JPG",
+  link: "https://amzn.to/4oVfoh3"
+},
+{
+  id: 510,
+  name: "Aqualogica Glow+ Dewy Sunscreen",
+  brand: "Aqualogica",
+  category: "Mens Skincare",
+  subcat: "Skincare",
+  mrp: 359,
+  price: 359,
+  rating: 4.3,
+  reviews: "14k+",
+  asin: "B09TPFTJNN",
+  badge: "SPF 50+ PA++++",
+  description: "Aqualogica Glow+ Dewy Gel Sunscreen - 50 g | SPF 5...",
+  specs: {
+    "Skin Type": "Men"
+  },
+  tags: [
+    "mens",
+    "skincare"
+  ],
+  concerns: [],
+  image: "/products/B09TPFTJNN.JPG",
+  link: "https://amzn.to/3SEnMFO",
+  notes: "Editor's Choice: Ideal for humid Indian summers because the gel texture absorbs in seconds without clogging facial hair."
+},
+{
+  id: 511,
+  name: "Ustraa Anti Hair Fall Shampoo",
+  brand: "Ustraa",
+  category: "Mens Hair Care",
+  subcat: "Hair Care",
+  mrp: 259,
+  price: 259,
+  rating: 4.2,
+  reviews: "11k+",
+  asin: "B07PVBXJFT",
+  badge: "64% Less Fall",
+  description: "Ustraa Anti Hair Fall Shampoo 250ml - Clinically t...",
+  specs: {
+    "Skin Type": "Men"
+  },
+  tags: [
+    "mens",
+    "hair care"
+  ],
+  concerns: [],
+  image: "/products/B07PVBXJFT.JPG",
+  link: "https://amzn.to/4bjJJAn",
+  notes: "Scalp Care Note: Apple cider vinegar helps clear hard-water mineral buildup which is a major hidden cause of hair fall."
+},
+{
+  id: 512,
+  name: "L'Oréal Professionnel Absolut Repair Shampoo",
+  brand: "L'Oréal Professionnel",
+  category: "Mens Hair Care",
+  subcat: "Hair Care",
+  mrp: 638,
+  price: 638,
+  rating: 4.4,
+  reviews: "20k+",
+  asin: "B0744GC2CK",
+  badge: "Salon Grade",
+  description: "L'Oréal Professionnel Absolut Repair Shampoo for D...",
+  specs: {
+    "Skin Type": "Men"
+  },
+  tags: [
+    "mens",
+    "hair care"
+  ],
+  concerns: [],
+  image: "/products/B0744GC2CK.JPG",
+  link: "https://amzn.to/4g8IQxW",
+  notes: "Professional Grade: High protein content rebuilds dry and damaged hair strands from frequent styling or heat."
+},
+{
+  id: 513,
+  name: "The Man Company Hair Cream Wax",
+  brand: "The Man Company",
+  category: "Mens Hair Care",
+  subcat: "Hair Care",
+  mrp: 234,
+  price: 234,
+  rating: 4.1,
+  reviews: "8k+",
+  asin: "B07BLXWJNJ",
+  badge: "Strong Hold",
+  description: "The Man Company Machismo Stronghold Hair Cream Wax...",
+  specs: {
+    "Skin Type": "Men"
+  },
+  tags: [
+    "mens",
+    "hair care"
+  ],
+  concerns: [],
+  image: "/products/B07BLXWJNJ.JPG",
+  link: "https://amzn.to/4aom0Pd",
+  notes: "Style Note: Provides a flexible, restylable matte hold without the dry flakiness that cheap chemical gels cause."
+},
+{
+  id: 514,
+  name: "L'Oréal Professionnel Scalp Advanced Shampoo",
+  brand: "L'Oréal Professionnel",
+  category: "Mens Hair Care",
+  subcat: "Hair Care",
+  mrp: 855,
+  price: 855,
+  rating: 4.3,
+  reviews: "15k+",
+  asin: "B0BS6TQG87",
+  badge: "Anti-Dandruff",
+  description: "L'Oréal Professionnel Paris Scalp Advanced Anti-Da...",
+  specs: {
+    "Skin Type": "Men"
+  },
+  tags: [
+    "mens",
+    "hair care"
+  ],
+  concerns: [],
+  image: "/products/B0BS6TQG87.JPG",
+  link: "https://amzn.to/4eXYJ8m",
+  notes: "Treatment Note: Piroctone Olamine targets the root cause of dandruff flakes rather than just washing them away temporarily."
+},
+{
+  id: 515,
+  name: "Bare Anatomy Anti-Hair Fall Shampoo",
+  brand: "Bare Anatomy",
+  category: "Mens Hair Care",
+  subcat: "Hair Care",
+  mrp: 239,
+  price: 239,
+  rating: 4.2,
+  reviews: "4k+",
+  asin: "B0DP5118T6",
+  badge: "5x Hair Control",
+  description: "Bare Anatomy Anti-Hair Fall Shampoo | Provides 5x ...",
+  specs: {
+    "Skin Type": "Men"
+  },
+  tags: [
+    "mens",
+    "hair care"
+  ],
+  concerns: [],
+  image: "/products/B0DP5118T6.JPG",
+  link: "https://amzn.to/4wC1HXl",
+  notes: "Active Formula: Peptides and Adenosine strengthen weak roots to reduce hair fall caused by styling stress."
+},
+{
+  id: 516,
+  name: "Pilgrim Advanced Hair Growth Serum",
+  brand: "PILGRIM",
+  category: "Mens Hair Care",
+  subcat: "Hair Care",
+  mrp: 761,
+  price: 761,
+  rating: 4.3,
+  reviews: "18k+",
+  asin: "B096Y23VJK",
+  badge: "Redensyl 3%",
+  description: "PILGRIM Redensyl 3%+Anagain 4% Advanced Hair Growt...",
+  specs: {
+    "Skin Type": "Men"
+  },
+  tags: [
+    "mens",
+    "hair care"
+  ],
+  concerns: [],
+  image: "/products/B096Y23VJK.JPG",
+  link: "https://amzn.to/4eQkXJd",
+  notes: "Density Booster: The 3% Redensyl concentration is clinically proven to reactivate dormant hair follicles in 90 days."
+},
+{
+  id: 517,
+  name: "WishCare Hair Growth Serum",
+  brand: "WishCare",
+  category: "Mens Hair Care",
+  subcat: "Hair Care",
+  mrp: 632,
+  price: 632,
+  rating: 4.4,
+  reviews: "12k+",
+  asin: "B0B573QW21",
+  badge: "94% New Growth",
+  description: "WishCare Hair Growth Serum For Scalp | 94% Saw New...",
+  specs: {
+    "Skin Type": "Men"
+  },
+  tags: [
+    "mens",
+    "hair care"
+  ],
+  concerns: [],
+  image: "/products/B0B573QW21.JPG",
+  link: "https://amzn.to/4oYWW7t",
+  notes: "Clinical Choice: Lightweight water-based serum that doesn't leave the scalp greasy. Best applied right before bed."
+},
+{
+  id: 518,
+  name: "The Man Company Blanc Body Wash",
+  brand: "The Man Company",
+  category: "Mens Body Care",
+  subcat: "Body Care",
+  mrp: 219,
+  price: 219,
+  rating: 4.2,
+  reviews: "5k+",
+  asin: "B0C2HGXN9P",
+  badge: "Fragrant & Fresh",
+  description: "The Man Company Blanc Perfumed Body Wash for Men w...",
+  specs: {
+    "Skin Type": "Men"
+  },
+  tags: [
+    "mens",
+    "body care"
+  ],
+  concerns: [],
+  image: "/products/B0C2HGXN9P.JPG",
+  link: "https://amzn.to/4oWukMa",
+  notes: "Freshness Pick: The orange peel oil cuts body odor naturally while liquorice keeps skin hydrated after a workout."
+},
+{
+  id: 519,
+  name: "The Man Company Matcha Body Wash",
+  brand: "The Man Company",
+  category: "Mens Body Care",
+  subcat: "Body Care",
+  mrp: 234,
+  price: 234,
+  rating: 4.1,
+  reviews: "6k+",
+  asin: "B0BKPQNB9G",
+  badge: "Glowing Skin",
+  description: "The Man Company Aloe Vera & Matcha Body Wash | Sho...",
+  specs: {
+    "Skin Type": "Men"
+  },
+  tags: [
+    "mens",
+    "body care"
+  ],
+  concerns: [],
+  image: "/products/B0BKPQNB9G.JPG",
+  link: "https://amzn.to/44HzkL3",
+  notes: "Anti-Oxidant Rich: Moringa and Matcha green tea work together to clear body acne and smooth rough skin texture."
+},
+{
+  id: 520,
+  name: "The Man Company Sea Salt Body Wash",
+  brand: "The Man Company",
+  category: "Mens Body Care",
+  subcat: "Body Care",
+  mrp: 214,
+  price: 214,
+  rating: 4.1,
+  reviews: "4k+",
+  asin: "B0BKPS7RCL",
+  badge: "Sea Salt & Tea",
+  description: "The Man Company Patchouli & Sea Salt Perfumed Body...",
+  specs: {
+    "Skin Type": "Men"
+  },
+  tags: [
+    "mens",
+    "body care"
+  ],
+  concerns: [],
+  image: "/products/B0BKPS7RCL.JPG",
+  link: "https://amzn.to/4gO4hEF",
+  notes: "Exfoliating Note: Sea salt gently cleanses pores and removes dead skin, making it a great pick after outdoor sports."
+},
+{
+  id: 521,
+  name: "Beardo De-Tan Body Wash",
+  brand: "Beardo",
+  category: "Mens Body Care",
+  subcat: "Body Care",
+  mrp: 201,
+  price: 201,
+  rating: 4.2,
+  reviews: "9k+",
+  asin: "B07XVQ1Q75",
+  badge: "De-Tan",
+  description: "Beardo De-Tan Body Wash for Men, 200ml | Tan Remov...",
+  specs: {
+    "Skin Type": "Men"
+  },
+  tags: [
+    "mens",
+    "body care"
+  ],
+  concerns: [],
+  image: "/products/B07XVQ1Q75.JPG",
+  link: "https://amzn.to/4bjQTof",
+  notes: "Brightening Pick: Caffeine and coffee extracts work to reverse sun tan on the neck and shoulders after outdoor commutes."
+},
+{
+  id: 522,
+  name: "Bombay Shaving Co. Charcoal Body Wash",
+  brand: "BOMBAY SHAVING COMPANY",
+  category: "Mens Body Care",
+  subcat: "Body Care",
+  mrp: 299,
+  price: 299,
+  rating: 4.1,
+  reviews: "7k+",
+  asin: "B0CCYVW9PW",
+  badge: "Deep Clean",
+  description: "BOMBAY SHAVING COMPANY Charcoal Body wash | De-Tan...",
+  specs: {
+    "Skin Type": "Men"
+  },
+  tags: [
+    "mens",
+    "body care"
+  ],
+  concerns: [],
+  image: "/products/B0CCYVW9PW.JPG",
+  link: "https://amzn.to/4oQI6zG",
+  notes: "Deep Clean: Activated charcoal draws out deep-seated dirt, oil, and pollution. Perfect for city commutes."
+},
+{
+  id: 523,
+  name: "Wild Stone Ultra Sensual Perfume",
+  brand: "Wild Stone",
+  category: "Mens Fragrance",
+  subcat: "Fragrance",
+  mrp: 306,
+  price: 306,
+  rating: 4.3,
+  reviews: "20k+",
+  asin: "B08TGY698Y",
+  badge: "Long-Lasting",
+  description: "Wild Stone Ultra Sensual Perfume Spray for Men, 10...",
+  specs: {
+    "Skin Type": "Men"
+  },
+  tags: [
+    "mens",
+    "fragrance"
+  ],
+  concerns: [],
+  image: "/products/B08TGY698Y.JPG",
+  link: "https://amzn.to/3QxqlsJ",
+  notes: "Value Choice: A budget-friendly, aromatic daily scent that punches way above its price tag."
+},
+{
+  id: 524,
+  name: "Beardo Don Most Wanted Body Spray",
+  brand: "Beardo",
+  category: "Mens Fragrance",
+  subcat: "Fragrance",
+  mrp: 129,
+  price: 129,
+  rating: 4.1,
+  reviews: "10k+",
+  asin: "B09KHF2BVD",
+  badge: "Budget Pick",
+  description: "Beardo DON MOST WANTED Perfume Body Spray for Men,...",
+  specs: {
+    "Skin Type": "Men"
+  },
+  tags: [
+    "mens",
+    "fragrance"
+  ],
+  concerns: [],
+  image: "/products/B09KHF2BVD.JPG",
+  link: "https://amzn.to/4g7Eoj0",
+  notes: "Daily Driver: A clean, fresh, gas-free body spray that works great for post-gym or quick midday resets."
+},
+{
+  id: 525,
+  name: "Nivea Men Fresh Ocean Deo Spray",
+  brand: "NIVEA Men",
+  category: "Mens Fragrance",
+  subcat: "Fragrance",
+  mrp: 149,
+  price: 149,
+  rating: 4.3,
+  reviews: "32k+",
+  asin: "B01DYEKGWA",
+  badge: "48H Protection",
+  description: "NIVEA Men Fresh Ocean Deodorant Spray, 150ml | 48 ...",
+  specs: {
+    "Skin Type": "Men"
+  },
+  tags: [
+    "mens",
+    "fragrance"
+  ],
+  concerns: [],
+  image: "/products/B01DYEKGWA.JPG",
+  link: "https://amzn.to/4aVdZ4s",
+  notes: "Underarm Care: Marine extracts protect against sweat odor for up to 48 hours without causing skin irritation."
+},
+{
+  id: 526,
+  name: "Beardo Whisky Smoke EDP",
+  brand: "Beardo",
+  category: "Mens Perfume",
+  subcat: "Perfume",
+  mrp: 480,
+  price: 480,
+  rating: 4.2,
+  reviews: "14k+",
+  asin: "B096XV4HR4",
+  badge: "Date Night",
+  description: "Beardo Whisky Smoke Eau De Parfum Men Spicy, Woody...",
+  specs: {
+    "Skin Type": "Men"
+  },
+  tags: [
+    "mens",
+    "perfume"
+  ],
+  concerns: [],
+  image: "/products/B096XV4HR4.JPG",
+  link: "https://amzn.to/4v56rmX",
+  notes: "Signature Scent: The warm blend of whiskey, tobacco, and oudh makes this the ultimate choice for evening dates."
+},
+{
+  id: 527,
+  name: "Bombay Shaving Co. Mexico Perfume",
+  brand: "Bombay Shaving Company",
+  category: "Mens Perfume",
+  subcat: "Perfume",
+  mrp: 279,
+  price: 279,
+  rating: 4.2,
+  reviews: "8k+",
+  asin: "B09KTNPSZL",
+  badge: "Woody & Bold",
+  description: "Bombay Shaving Company Mexico Perfume for Men | Wo...",
+  specs: {
+    "Skin Type": "Men"
+  },
+  tags: [
+    "mens",
+    "perfume"
+  ],
+  concerns: [],
+  image: "/products/B09KTNPSZL.JPG",
+  link: "https://amzn.to/4xSxF2M",
+  notes: "Evening Choice: Bold woody and amber notes that linger on skin, making it perfect for formal events."
+},
+{
+  id: 528,
+  name: "Wild Stone Edge Perfume",
+  brand: "Wild Stone",
+  category: "Mens Perfume",
+  subcat: "Perfume",
+  mrp: 204,
+  price: 204,
+  rating: 4.2,
+  reviews: "22k+",
+  asin: "B07KS1ZKV3",
+  badge: "Best Value",
+  description: "Wild Stone Edge Perfume for Men, 50ml...",
+  specs: {
+    "Skin Type": "Men"
+  },
+  tags: [
+    "mens",
+    "perfume"
+  ],
+  concerns: [],
+  image: "/products/B07KS1ZKV3.JPG",
+  link: "https://amzn.to/4feapUD",
+  notes: "Fresh Signature: A clean, versatile fragrance that works perfectly for university or office wear."
+},
+{
+  id: 529,
+  name: "Wild Stone Hydra Energy EDP",
+  brand: "Wild Stone",
+  category: "Mens Perfume",
+  subcat: "Perfume",
+  mrp: 349,
+  price: 349,
+  rating: 4.3,
+  reviews: "28k+",
+  asin: "B06XVC9PN3",
+  badge: "Top Seller",
+  description: "Wild Stone Hydra Energy Eau De Perfume for Men, 10...",
+  specs: {
+    "Skin Type": "Men"
+  },
+  tags: [
+    "mens",
+    "perfume"
+  ],
+  concerns: [],
+  image: "/products/B06XVC9PN3.JPG",
+  link: "https://amzn.to/4oVYA9X",
+  notes: "Sporty Fragrance: The fresh, aquatic profile is energizing and great for post-workout top-ups."
+},
+{
+  id: 530,
+  name: "Philips OneBlade Hybrid Trimmer",
+  brand: "Philips",
+  category: "Mens Grooming Tools",
+  subcat: "Grooming Tools",
+  mrp: 1199,
+  price: 1199,
+  rating: 4.3,
+  reviews: "25k+",
+  asin: "B0BY5G7Z6H",
+  badge: "No Skin Irritation",
+  description: "Philips One Blade Face Hybrid Trimmer & Shaver For...",
+  specs: {
+    "Skin Type": "Men"
+  },
+  tags: [
+    "mens",
+    "grooming tools"
+  ],
+  concerns: [],
+  image: "/products/B0BY5G7Z6H.JPG",
+  link: "https://amzn.to/4xUmZAH"
+},
+{
+  id: 531,
+  name: "Beardo Chrome Beast Groomer",
+  brand: "Beardo",
+  category: "Mens Grooming Tools",
+  subcat: "Grooming Tools",
+  mrp: 1449,
+  price: 1449,
+  rating: 4.2,
+  reviews: "7k+",
+  asin: "B0CG1NYPKS",
+  badge: "All-in-1",
+  description: "Beardo Chrome Beast Multipurpose Full Body Groomer...",
+  specs: {
+    "Skin Type": "Men"
+  },
+  tags: [
+    "mens",
+    "grooming tools"
+  ],
+  concerns: [],
+  image: "/products/B0CG1NYPKS.JPG",
+  link: "https://amzn.to/4v1BL60",
+  notes: "All-in-One: A comprehensive groomer kit featuring 40 length settings to style your beard, body, and hair."
+},
+{
+  id: 532,
+  name: "Gillette Mach 3 Shaving Razor",
+  brand: "Gillette",
+  category: "Mens Grooming Tools",
+  subcat: "Grooming Tools",
+  mrp: 385,
+  price: 385,
+  rating: 4.5,
+  reviews: "80k+",
+  asin: "B07VGXW717",
+  badge: "Dermat Pick",
+  description: "Gillette Mach 3 (Handle + 2 Cartridges) Shaving Ra...",
+  specs: {
+    "Skin Type": "Men"
+  },
+  tags: [
+    "mens",
+    "grooming tools"
+  ],
+  concerns: [],
+  image: "/products/B07VGXW717.JPG",
+  link: "https://amzn.to/4gMbYLx",
+  notes: "Classic Choice: 3D blade technology contours to the jawline for a close, zero-irritation clean shave."
+},
+{
+  id: 533,
+  name: "LetsShave Pro Styler Beard Razor",
+  brand: "LetsShave",
+  category: "Mens Grooming Tools",
+  subcat: "Grooming Tools",
+  mrp: 219,
+  price: 219,
+  rating: 4,
+  reviews: "5k+",
+  asin: "B07RWCT9QQ",
+  badge: "60 Days Styling",
+  description: "LetsShave Pro Styler for Men Beard, Reusable, Pack...",
+  specs: {
+    "Skin Type": "Men"
+  },
+  tags: [
+    "mens",
+    "grooming tools"
+  ],
+  concerns: [],
+  image: "/products/B07RWCT9QQ.JPG",
+  link: "https://amzn.to/4wch9Jb",
+  notes: "Detailing Tool: A pack of 3 precise pen-style razors designed specifically for lining up cheeks and necklines."
+}
 ];
 
 

@@ -46,6 +46,7 @@ export default function SiteHeader() {
             <Link href="/tools/hard-water"  className="site-header-nav-link">Hard Water</Link>
             <Link href="/tools/dupes"       className="site-header-nav-link">Dupe Finder</Link>
             <Link href="/k-beauty"          className="site-header-nav-link site-header-nav-link--accent">K-Beauty</Link>
+            <Link href="/mens-grooming"     className="site-header-nav-link site-header-nav-link--accent">Men's</Link>
           </nav>
         </div>
 
@@ -126,6 +127,7 @@ export default function SiteHeader() {
             <Link href="/tools/hard-water"  onClick={() => setMenuOpen(false)} className="hover:text-[#fc2779] transition-colors" style={navLinkStyle}>Hard Water Test</Link>
             <Link href="/tools/dupes"       onClick={() => setMenuOpen(false)} className="hover:text-[#fc2779] transition-colors" style={navLinkStyle}>Dupe Finder</Link>
             <Link href="/k-beauty"          onClick={() => setMenuOpen(false)} className="transition-colors" style={{ ...navLinkStyle, color: "#fc2779" }}>K-Beauty ✦</Link>
+            <Link href="/mens-grooming"     onClick={() => setMenuOpen(false)} className="transition-colors" style={{ ...navLinkStyle, color: "#fc2779" }}>Men's Grooming ✦</Link>
 
             <div style={{ height: "1px", background: "#e5ded6" }} />
 

@@ -5,299 +5,337 @@ import { useGlobalization } from "./GlobalizationContext";
 import Link from "next/link";
 
 export function AffiliateCard(props: any) {
- const { asin, onClick } = props;
- const global = useGlobalization();
+  const { asin, onClick } = props;
+  const global = useGlobalization();
 
- const product = PRODUCTS.find((p) => p.asin === asin) as any;
+  const product = PRODUCTS.find((p) => p.asin === asin) as any;
 
- const title = product?.name || props.title;
- const description = product?.description || props.description;
- const image = product?.image || props.imageUrl;
- const badge = product?.badge || props.badge;
+  const title = props.title || product?.name;
+  const description = props.description || product?.description;
+  const image = product?.image || props.imageUrl;
+  const badge = product?.badge || props.badge;
 
- // Use localized formatted price
- const price = product?.price ? global.formatPrice(product.price) : props.price;
+  // Use localized formatted price
+  const price = product?.price ? global.formatPrice(product.price) : props.price;
 
- // Localized affiliate search URL
- const affiliateUrl = global.getAffiliateUrl(
- asin,
- title,
- product?.brand || props.brand || "",
- product?.link
- );
+  // Localized affiliate search URL
+  const affiliateUrl = global.getAffiliateUrl(
+    asin,
+    title,
+    product?.brand || props.brand || "",
+    product?.link
+  );
 
- return (
- <div
- style={{
- position: "relative",
- display: "flex",
- flexDirection: "column",
- border: "1px solid var(--rule, #e8e2d9)",
- background: "#fff",
- margin: "1.5rem auto",
- maxWidth: "380px",
- borderRadius: "14px",
- overflow: "hidden",
- boxShadow: "0 4px 20px rgba(0,0,0,0.04)",
- transition: "all 0.2s ease",
- ...props.style,
- }}
- >
- {/* Badge */}
- {badge && (
- <div
- style={{
- position: "absolute",
- top: 12,
- left: 12,
- background: "#fc2779",
- color: "#fff",
- fontSize: "0.55rem",
- letterSpacing: "0.2em",
- textTransform: "uppercase",
- padding: "0.3rem 0.6rem",
- zIndex: 2,
- fontWeight: 700,
- borderRadius: "4px",
- }}
- >
- {badge}
- </div>
- )}
+  return (
+    <div className="editorial-affiliate-card">
+      <style>{`
+        .editorial-affiliate-card {
+          display: flex;
+          flex-direction: row;
+          border: 1px solid #ede8e0;
+          background: #ffffff;
+          margin: 2.5rem 0;
+          border-radius: 12px;
+          overflow: hidden;
+          transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+          width: 100%;
+          position: relative;
+        }
+        .editorial-affiliate-card:hover {
+          border-color: #d6ceb8;
+          box-shadow: 0 12px 30px rgba(162, 123, 92, 0.04);
+          transform: translateY(-2px);
+        }
+        .editorial-img-container {
+          width: 200px;
+          background: #faf8f5;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-right: 1px solid #ede8e0;
+          padding: 1.5rem;
+          flex-shrink: 0;
+          position: relative;
+        }
+        .editorial-img-container img {
+          max-width: 100%;
+          max-height: 100%;
+          object-fit: contain;
+          transition: transform 0.3s ease;
+        }
+        .editorial-affiliate-card:hover .editorial-img-container img {
+          transform: scale(1.03);
+        }
+        .editorial-badge-pill {
+          position: absolute;
+          top: 12px;
+          left: 12px;
+          background: #faf6f0;
+          color: #8c725c;
+          border: 1px solid #e6decb;
+          font-size: 0.55rem;
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
+          padding: 3px 8px;
+          font-weight: 700;
+          border-radius: 4px;
+          z-index: 10;
+        }
+        .editorial-body {
+          flex: 1;
+          padding: 1.5rem 2rem;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+        }
+        .editorial-meta-brand {
+          font-family: var(--font-dm-sans), sans-serif;
+          font-size: 0.65rem;
+          letter-spacing: 0.15em;
+          text-transform: uppercase;
+          color: #8c8179;
+          font-weight: 700;
+          margin-bottom: 0.4rem;
+        }
+        .editorial-title {
+          font-family: 'DM Serif Display', serif;
+          font-size: 1.25rem;
+          line-height: 1.3;
+          color: #1a1714;
+          margin: 0 0 0.6rem 0;
+          font-weight: 400;
+        }
+        .editorial-desc {
+          font-family: var(--font-dm-sans), sans-serif;
+          font-size: 0.82rem;
+          color: #6f6963;
+          line-height: 1.65;
+          margin: 0 0 1.2rem 0;
+        }
+        .editorial-tag-row {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 6px;
+          margin-bottom: 1.2rem;
+        }
+        .editorial-tag {
+          font-size: 0.58rem;
+          font-weight: 700;
+          letter-spacing: 0.05em;
+          text-transform: uppercase;
+          padding: 2px 6px;
+          border-radius: 4px;
+        }
+        .editorial-tag-skintype {
+          background: #fdf5f2;
+          color: #d96f43;
+          border: 1px solid #f8decb;
+        }
+        .editorial-tag-concern {
+          background: #f2f6fb;
+          color: #438cd9;
+          border: 1px solid #cbdcf8;
+        }
+        .editorial-specs-box {
+          background: #faf8f5;
+          padding: 8px 12px;
+          border-radius: 6px;
+          border: 1px solid #ede8e0;
+          margin-bottom: 1.2rem;
+        }
+        .editorial-specs-table {
+          width: 100%;
+          border-collapse: collapse;
+          font-size: 0.72rem;
+          color: #6a635d;
+        }
+        .editorial-specs-table td {
+          padding: 4px 0;
+          border-bottom: 1px solid #f5f1ed;
+        }
+        .editorial-specs-table tr:last-child td {
+          border-bottom: none;
+        }
+        .editorial-price-section {
+          display: flex;
+          align-items: baseline;
+          gap: 8px;
+          margin-bottom: 1.2rem;
+        }
+        .editorial-price-current {
+          font-family: 'DM Serif Display', serif;
+          font-size: 1.4rem;
+          color: #1a1714;
+        }
+        .editorial-price-mrp {
+          font-size: 0.75rem;
+          color: #b2aba4;
+          text-decoration: line-through;
+        }
+        .editorial-actions {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 12px;
+        }
+        .editorial-btn-buy {
+          background: #1a1714;
+          color: #ffffff;
+          border: 1px solid #1a1714;
+          font-size: 0.65rem;
+          letter-spacing: 0.15em;
+          text-transform: uppercase;
+          font-weight: 700;
+          padding: 12px;
+          border-radius: 6px;
+          text-decoration: none;
+          text-align: center;
+          transition: all 0.2s ease;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 6px;
+        }
+        .editorial-btn-buy:hover {
+          background: #000000;
+          border-color: #000000;
+        }
+        .editorial-btn-analyze {
+          background: #ffffff;
+          color: #1a1714;
+          border: 1px solid #dcd5cc;
+          font-size: 0.65rem;
+          letter-spacing: 0.15em;
+          text-transform: uppercase;
+          font-weight: 700;
+          padding: 12px;
+          border-radius: 6px;
+          text-decoration: none;
+          text-align: center;
+          transition: all 0.2s ease;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 6px;
+        }
+        .editorial-btn-analyze:hover {
+          background: #faf8f5;
+          border-color: #c8bfae;
+        }
+        .editorial-disclosure {
+          text-align: center;
+          font-size: 0.58rem;
+          color: #9c9188;
+          margin-top: 1rem;
+          font-style: italic;
+        }
 
- {/* Image */}
- <div
- className="affiliate-image-wrapper"
- style={{
- background: "#faf8f5",
- width: "100%",
- height: "220px",
- overflow: "hidden",
- position: "relative",
- display: "flex",
- alignItems: "center",
- justifyContent: "center",
- borderBottom: "1px solid #f0ebe4",
- }}
- >
- <img
- src={image}
- alt={title}
- style={{
- maxWidth: "90%",
- maxHeight: "90%",
- objectFit: "contain",
- padding: "12px",
- }}
- />
- </div>
+        @media (max-width: 680px) {
+          .editorial-affiliate-card {
+            flex-direction: column;
+          }
+          .editorial-img-container {
+            width: 100%;
+            height: 180px;
+            border-right: none;
+            border-bottom: 1px solid #ede8e0;
+          }
+          .editorial-body {
+            padding: 1.25rem 1.5rem;
+          }
+        }
+      `}</style>
 
- {/* Body */}
- <div
- style={{
- padding: "1.2rem",
- display: "flex",
- flexDirection: "column",
- flex: 1,
- }}
- >
- {/* Label */}
- <p
- style={{
- fontSize: "0.58rem",
- letterSpacing: "0.25em",
- textTransform: "uppercase",
- color: "#fc2779",
- fontWeight: 700,
- marginBottom: "0.4rem",
- }}
- >
- {product?.brand ? `${product.brand} · Verification Verified` : "Found on Amazon"}
- </p>
+      {/* Image Block */}
+      <div className="editorial-img-container">
+        {badge && <div className="editorial-badge-pill">{badge}</div>}
+        <img src={image} alt={title} />
+      </div>
 
- {/* Title */}
- <h3
- style={{
- fontFamily: "'DM Serif Display', serif",
- fontSize: "1.1rem",
- lineHeight: 1.35,
- color: "var(--ink, #1a1714)",
- marginBottom: "0.4rem",
- fontWeight: 400,
- }}
- >
- {title}
- </h3>
+      {/* Content Block */}
+      <div className="editorial-body">
+        <div>
+          <div className="editorial-meta-brand">
+            {product?.brand || props.brand || "Curated Recommendation"}
+          </div>
 
- {/* Chips */}
- {(product?.skinTypes || product?.concerns) && (
- <div style={{ display: "flex", flexWrap: "wrap", gap: "6px", marginBottom: "0.8rem" }}>
- {product?.skinTypes?.slice(0, 2).map((st: string) => (
- <span key={st} style={{ background: "#fdf5f2", color: "#e86b45", border: "1px solid #f8e1d9", padding: "2px 6px", borderRadius: "4px", fontSize: "0.6rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em" }}>
- {st}
- </span>
- ))}
- {product?.concerns?.slice(0, 2).map((c: string) => (
- <span key={c} style={{ background: "#f2f7fb", color: "#4576e8", border: "1px solid #d9e5f8", padding: "2px 6px", borderRadius: "4px", fontSize: "0.6rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em" }}>
- {c}
- </span>
- ))}
- </div>
- )}
+          <h3 className="editorial-title">{title}</h3>
 
- {/* Description */}
- <p
- style={{
- fontSize: "0.78rem",
- color: "var(--muted, #6a635d)",
- lineHeight: 1.6,
- marginBottom: "1.2rem",
- }}
- >
- {description ? description.slice(0, 120) + "..." : ""}
- </p>
+          {/* Tags */}
+          {(product?.skinTypes || product?.concerns) && (
+            <div className="editorial-tag-row">
+              {product?.skinTypes?.slice(0, 2).map((st: string) => (
+                <span key={st} className="editorial-tag editorial-tag-skintype">
+                  {st}
+                </span>
+              ))}
+              {product?.concerns?.slice(0, 2).map((c: string) => (
+                <span key={c} className="editorial-tag editorial-tag-concern">
+                  {c}
+                </span>
+              ))}
+            </div>
+          )}
 
- {/* Specs Table (SEO Featured Snippet Target) */}
- {product?.specs && (
- <div
- style={{
- background: "#faf8f5",
- padding: "10px 12px",
- borderRadius: "8px",
- marginBottom: "1.2rem",
- border: "1px solid #f0ebe4",
- }}
- >
- <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "11px", color: "#5c544e" }}>
- <tbody>
- {Object.entries(product.specs).slice(0, 3).map(([key, value]) => (
- <tr key={key} style={{ borderBottom: "1px solid #f4efe9" }}>
- <td style={{ padding: "5px 0", fontWeight: 700, color: "#1a1714", width: "45%" }}>{key}</td>
- <td style={{ padding: "5px 0", color: "#6a635d" }}>{value as any}</td>
- </tr>
- ))}
- <tr>
- <td style={{ padding: "5px 0", fontWeight: 700, color: "#1a1714" }}>Authenticity</td>
- <td style={{ padding: "5px 0", color: "#5a9e6f", fontWeight: 700, display: "flex", alignItems: "center", gap: "3px" }}>
- <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
- <polyline points="20 6 9 17 4 12"></polyline>
- </svg>
- 100% Genuine
- </td>
- </tr>
- </tbody>
- </table>
- </div>
- )}
+          <p className="editorial-desc">
+            {description ? (description.length > 150 ? description.slice(0, 150) + "..." : description) : ""}
+          </p>
 
- {/* Price + CTA Area */}
- <div
- style={{
- display: "flex",
- flexDirection: "column",
- gap: "10px",
- marginTop: "auto",
- }}
- >
- <div style={{ display: "flex", alignItems: "baseline", gap: "6px" }}>
- <span
- style={{
- fontFamily: "'DM Serif Display', serif",
- fontSize: "1.25rem",
- color: "var(--ink, #1a1714)",
- fontWeight: 400,
- }}
- >
- {price}
- </span>
- {product?.mrp && product.mrp > product.price && (
- <span style={{ fontSize: "11px", color: "#bbb", textDecoration: "line-through" }}>
- {global.formatPrice(product.mrp)}
- </span>
- )}
- </div>
+          {/* Specs Table */}
+          {product?.specs && (
+            <div className="editorial-specs-box">
+              <table className="editorial-specs-table">
+                <tbody>
+                  {Object.entries(product.specs).slice(0, 3).map(([key, val]: any) => (
+                    <tr key={key}>
+                      <td style={{ fontWeight: 700, color: "#1a1714", width: "45%" }}>{key}</td>
+                      <td>{val}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </div>
 
- <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px" }}>
- <a
- href={affiliateUrl}
- target="_blank"
- rel="noopener noreferrer sponsored"
- onClick={(e) => {
- e.stopPropagation();
- console.log("Affiliate Click:", { asin, title });
- onClick?.(product || { asin, title });
- }}
- style={{
- fontSize: "0.6rem",
- letterSpacing: "0.15em",
- textTransform: "uppercase",
- color: "#fff",
- background: "#fc2779",
- padding: "10px",
- textDecoration: "none",
- textAlign: "center",
- fontWeight: 700,
- borderRadius: "6px",
- boxShadow: "0 4px 10px rgba(252, 39, 121, 0.12)",
- display: "flex",
- alignItems: "center",
- justifyContent: "center",
- gap: "4px",
- }}
- >
- <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
- <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
- </svg>
- Buy
- </a>
+        <div>
+          {/* Price */}
+          <div className="editorial-price-section">
+            <span className="editorial-price-current">{price}</span>
+            {product?.mrp && product.mrp > product.price && (
+              <span className="editorial-price-mrp">
+                {global.formatPrice(product.mrp)}
+              </span>
+            )}
+          </div>
 
- <Link
- href={`/dashboard/analysis?product=${asin}`}
- style={{
- fontSize: "0.6rem",
- letterSpacing: "0.15em",
- textTransform: "uppercase",
- color: "#1a1714",
- background: "#f4efe9",
- padding: "10px",
- textDecoration: "none",
- textAlign: "center",
- fontWeight: 700,
- borderRadius: "6px",
- display: "flex",
- alignItems: "center",
- justifyContent: "center",
- gap: "4px",
- }}
- >
- <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
- <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
- <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
- <line x1="12" y1="22.08" x2="12" y2="12"></line>
- </svg>
- Analyze
- </Link>
- </div>
- </div>
+          {/* CTAs */}
+          <div className="editorial-actions">
+            <a
+              href={affiliateUrl}
+              target="_blank"
+              rel="noopener noreferrer sponsored"
+              onClick={(e) => {
+                e.stopPropagation();
+                onClick?.(product || { asin, title });
+              }}
+              className="editorial-btn-buy"
+            >
+              Shop Product
+            </a>
 
- {/* Disclaimer / Authenticity Guarantee */}
- <div
- style={{
- display: "flex",
- alignItems: "center",
- gap: "4px",
- fontSize: "0.55rem",
- color: "#8b8580",
- marginTop: "10px",
- justifyContent: "center",
- }}
- >
- <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#5a9e6f" strokeWidth="3">
- <polyline points="20 6 9 17 4 12"></polyline>
- </svg>
- <span>Official Storefront · Verified Dispatch</span>
- </div>
- </div>
- </div>
- );
+            <Link
+              href={`/dashboard/analysis?product=${asin}`}
+              className="editorial-btn-analyze"
+            >
+              Analyze Ingredients
+            </Link>
+          </div>
+
+          <div className="editorial-disclosure">
+            *Independent review. We may receive a partner commission at no cost to you.
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }

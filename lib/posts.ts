@@ -15,6 +15,40 @@ export type Post = {
 };
 
 const STATIC_POSTS: Post[] = [
+  {
+    category: "LIFESTYLE",
+    title: "Patchy Beard? Here's How to Actually Fix It (Not Just Cope With It)",
+    excerpt: "Most beard patchiness isn't permanent — it's a circulation and follicle-health issue. The no-BS breakdown of beard growth oils that work, and the 90-day routine that actually moves the needle.",
+    slug: "patchy-beard-growth-guide",
+    readTime: "7 min",
+    date: "June 2026",
+    productCount: 5,
+    thumbnail: "BG",
+    tags: ["mens grooming","beard care","beard growth","beard oil","men","grooming"],
+  },
+  {
+    category: "LIFESTYLE",
+    title: "The GenZ Grooming Starter Kit: 8 Products, Zero Overthinking",
+    excerpt: "Not a 12-step Korean skincare routine you'll quit by Thursday. Not 'just use soap bro.' The practical middle ground — a starter kit for guys who want to look put-together.",
+    slug: "genz-grooming-starter-kit",
+    readTime: "6 min",
+    date: "June 2026",
+    productCount: 8,
+    thumbnail: "GZ",
+    tags: ["mens grooming","starter kit","face wash","sunscreen","hair care","men","genz"],
+  },
+  {
+    category: "LIFESTYLE",
+    title: "Your Cologne Game Is Holding You Back (Here's the Fix)",
+    excerpt: "Fragrance is the one thing people remember about you after you leave the room. The guide to picking a daytime scent, an evening scent, and layering them correctly.",
+    slug: "mens-fragrance-guide",
+    readTime: "5 min",
+    date: "June 2026",
+    productCount: 5,
+    thumbnail: "FR",
+    tags: ["mens grooming","fragrance","cologne","perfume","deo","date night","men"],
+  },
+
  {
  category: "SKINCARE",
  title: "Minimalist vs The Ordinary Niacinamide — Which 10% Serum Actually Wins for Indian Skin?",
@@ -710,6 +744,9 @@ const hashString = (str: string) => {
 
 // Complete slug → unique image lookup table (all 34 available images used)
 const SLUG_IMAGE_MAP: Record<string, string> = {
+  "patchy-beard-growth-guide": "/blog-thumbs/mens_beard_growth.png",
+  "genz-grooming-starter-kit": "/blog-thumbs/mens_genz_kit.png",
+  "mens-fragrance-guide": "/blog-thumbs/mens_fragrance.png",
  // NEW PREMIUM EDITORIAL SERIES — June 2026
  "glass-skin-student-budget-k-beauty": "/blog-thumbs/photo_korean.png",
  "kbeauty-hype-vs-reality": "/blog-thumbs/kbeauty_hype_reality.png",

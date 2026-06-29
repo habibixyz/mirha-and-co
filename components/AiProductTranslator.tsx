@@ -11,6 +11,7 @@ interface AiProductTranslatorProps {
  usage: string;
  ingredients: string[];
  locale: Locale;
+ mirhaNotes?: string;
 }
 
 export default function AiProductTranslator({
@@ -20,6 +21,7 @@ export default function AiProductTranslator({
  usage,
  ingredients,
  locale,
+ mirhaNotes,
 }: AiProductTranslatorProps) {
  const [translatedData, setTranslatedData] = useState<{
  description: string;
@@ -121,7 +123,7 @@ export default function AiProductTranslator({
 
  <div className="info-block">
  <h2>Mirha Notes</h2>
- <p>This pick is chosen for its category fit, price context, ingredient relevance and review signal. It is not medical advice.</p>
+ <p>{mirhaNotes || "This pick is chosen for its category fit, price context, ingredient relevance and review signal. It is not medical advice."}</p>
  </div>
  </section>
 
@@ -271,7 +273,7 @@ export default function AiProductTranslator({
 
  <div className="info-block">
  <h2>Mirha Notes</h2>
- <p>This pick is chosen for its category fit, price context, ingredient relevance and review signal. It is not medical advice.</p>
+ <p>{mirhaNotes || "This pick is chosen for its category fit, price context, ingredient relevance and review signal. It is not medical advice."}</p>
  </div>
  </section>
 
