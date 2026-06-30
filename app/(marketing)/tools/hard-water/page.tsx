@@ -661,6 +661,9 @@ export default function HardWaterCalculator() {
  `}</style>
 
  <div className="shell">
+  <h1 style={{ position: "absolute", width: "1px", height: "1px", padding: 0, margin: "-1px", overflow: "hidden", clip: "rect(0, 0, 0, 0)", border: 0 }}>
+    Hard Water Hair & Skin Damage Calculator
+  </h1>
  <Link href="/" className="back-link">
  <ArrowLeft size={16} /> Back to Shop
  </Link>
@@ -673,7 +676,7 @@ export default function HardWaterCalculator() {
  <div className="step-dot"></div>
  <div className="step-dot"></div>
  </div>
- <h1 className="quiz-title">Where do you wash your hair and skin?</h1>
+ <h2 className="quiz-title">Where do you wash your hair and skin?</h2>
  <p className="quiz-subtitle">
  Water mineral concentration in India varies heavily by geography. Let's find your baseline.
  </p>
@@ -736,7 +739,7 @@ export default function HardWaterCalculator() {
  <div className="step-dot active"></div>
  <div className="step-dot"></div>
  </div>
- <h1 className="quiz-title">What are you experiencing?</h1>
+ <h2 className="quiz-title">What are you experiencing?</h2>
  <p className="quiz-subtitle">
  Hard water minerals block hydration and react with soaps. Check all that apply to you.
  </p>
@@ -790,9 +793,9 @@ export default function HardWaterCalculator() {
  <span className="score-num">{results.score}%</span>
  <span className="score-lbl">Damage Index</span>
  </div>
- <h1 className="quiz-title" style={{ fontSize: "2.2rem" }}>
+ <h2 className="quiz-title" style={{ fontSize: "2.2rem" }}>
  Your water is {results.tds} ppm. Risk is <span style={{ color: results.color }}>{results.level}</span>.
- </h1>
+ </h2>
  <p className="results-summary-text">
  {results.score >= 75
  ? "Your hair and skin are fighting a losing battle against heavy calcium and magnesium carbonates. Minerals are building up, creating an invisible, moisture-blocking layer."

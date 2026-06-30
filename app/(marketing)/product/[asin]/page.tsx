@@ -14,6 +14,19 @@ import {
 } from "@/lib/globalization";
 import AiProductTranslator from "@/components/AiProductTranslator";
 
+function isCrueltyFree(product: any) {
+ const cfBrands = ["minimalist", "the ordinary", "cosrx", "wishcare", "pilgrim", "dot & key", "mamaearth", "beardo", "aqualogica", "plum", "deconstruct", "derma co"];
+ return cfBrands.includes(product.brand.toLowerCase()) || (product.tags || []).some((t: string) => t.toLowerCase() === "cruelty-free" || t.toLowerCase() === "cruelty free");
+}
+
+function isVegan(product: any) {
+ const veganBrands = ["minimalist", "the ordinary", "wishcare", "pilgrim", "aqualogica", "plum", "deconstruct"];
+ if (product.name.toLowerCase().includes("snail") || product.description.toLowerCase().includes("snail")) {
+  return false;
+ }
+ return veganBrands.includes(product.brand.toLowerCase()) || (product.tags || []).some((t: string) => t.toLowerCase() === "vegan" || t.toLowerCase() === "veg");
+}
+
 type Product = {
  id: number;
  name: string;
@@ -140,6 +153,8 @@ export default async function ProductPage({ params }: { params: Promise<{ asin: 
 
  const isKBeauty = K_BEAUTY_ASINS.has(product.asin);
  const isMens = product.tags?.includes("mens") || product.category?.toLowerCase().includes("mens");
+ const isVeg = isVegan(product);
+ const isCF = isCrueltyFree(product);
 
  const cookieStore = await cookies();
  const locale = (cookieStore.get("mirha_locale")?.value || "en") as Locale;
@@ -569,6 +584,44 @@ export default async function ProductPage({ params }: { params: Promise<{ asin: 
    </Link>
   )}
  </div>
+  {(isVeg || isCF) && (
+   <div style={{ display: "flex", gap: "8px", flexWrap: "wrap", marginTop: "10px", marginBottom: "12px" }}>
+    {isVeg && (
+     <span style={{
+      background: "#eef9f3",
+      color: "#2d8a5c",
+      fontSize: "0.55rem",
+      fontWeight: 700,
+      letterSpacing: "0.08em",
+      textTransform: "uppercase",
+      padding: "3px 8px",
+      borderRadius: "4px",
+      display: "inline-flex",
+      alignItems: "center",
+      border: "1px solid rgba(45, 138, 92, 0.15)"
+     }}>
+      🌱 {locale === "hi" ? "शाकाहारी / वीगन" : locale === "ar" ? "نباتي" : "100% Vegan"}
+     </span>
+    )}
+    {isCF && (
+     <span style={{
+      background: "#fff0e8",
+      color: "#fc2779",
+      fontSize: "0.55rem",
+      fontWeight: 700,
+      letterSpacing: "0.08em",
+      textTransform: "uppercase",
+      padding: "3px 8px",
+      borderRadius: "4px",
+      display: "inline-flex",
+      alignItems: "center",
+      border: "1px solid rgba(252, 39, 121, 0.15)"
+     }}>
+      🐰 {locale === "hi" ? "क्रूरता-मुक्त" : locale === "ar" ? "غير مجرب على الحيوانات" : "Cruelty-Free"}
+     </span>
+    )}
+   </div>
+  )}
  <h1>{product.name}</h1>
  <p className="brand">{product.brand} {product.badge ? `/ ${product.badge}` : ""}</p>
 

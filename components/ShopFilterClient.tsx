@@ -34,7 +34,7 @@ type Product = {
 
 const PRODUCT_LIST = (PRODUCTS as unknown as Product[]).filter((p) => !p.hideFromShop);
 
-const CATEGORIES = ["All", "Skincare", "Makeup", "Hair Care", "Body Care", "Wellness"];
+const CATEGORIES = ["All", "Skincare", "Makeup", "Hair Care", "Body Care", "Wellness", "Men's Grooming"];
 
 export const CONCERNS = [
   {
@@ -84,7 +84,8 @@ export const CATEGORY_KEYS: Record<string, string> = {
   "Makeup": "filter.category.makeup",
   "Hair Care": "filter.category.haircare",
   "Body Care": "filter.category.bodycare",
-  "Wellness": "filter.category.wellness"
+  "Wellness": "filter.category.wellness",
+  "Men's Grooming": "filter.category.mensgrooming"
 };
 
 function discount(mrp: number, price: number) {
@@ -93,6 +94,19 @@ function discount(mrp: number, price: number) {
 
 function normalize(value: string) {
   return value.toLowerCase().replace(/\s+/g, "");
+}
+
+export function isCrueltyFree(product: any) {
+  const cfBrands = ["minimalist", "the ordinary", "cosrx", "wishcare", "pilgrim", "dot & key", "mamaearth", "beardo", "aqualogica", "plum", "deconstruct", "derma co"];
+  return cfBrands.includes(product.brand.toLowerCase()) || (product.tags || []).some((t: string) => t.toLowerCase() === "cruelty-free" || t.toLowerCase() === "cruelty free");
+}
+
+export function isVegan(product: any) {
+  const veganBrands = ["minimalist", "the ordinary", "wishcare", "pilgrim", "aqualogica", "plum", "deconstruct"];
+  if (product.name.toLowerCase().includes("snail") || product.description.toLowerCase().includes("snail")) {
+    return false;
+  }
+  return veganBrands.includes(product.brand.toLowerCase()) || (product.tags || []).some((t: string) => t.toLowerCase() === "vegan" || t.toLowerCase() === "veg");
 }
 
 function productText(product: Product) {
@@ -207,15 +221,23 @@ export default function ShopFilterClient({ activeConcernProp }: { activeConcernP
   const [query, setQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState("All");
   const [activeConcern, setActiveConcern] = useState<string | null>(activeConcernProp || null);
+  const [veganOnly, setVeganOnly] = useState(false);
+  const [crueltyFreeOnly, setCrueltyFreeOnly] = useState(false);
 
   const filtered = useMemo(() => {
     return PRODUCT_LIST.filter((product) => {
       const categoryMatch =
-        activeCategory === "All" || normalize(product.category) === normalize(activeCategory);
+        activeCategory === "All" ||
+        (activeCategory === "Men's Grooming"
+          ? (product.tags || []).includes("mens") || product.category.toLowerCase().startsWith("mens")
+          : normalize(product.category) === normalize(activeCategory));
 
-      return categoryMatch && matchesConcern(product, activeConcern) && matchesQuery(product, query);
+      const veganMatch = !veganOnly || isVegan(product);
+      const crueltyFreeMatch = !crueltyFreeOnly || isCrueltyFree(product);
+
+      return categoryMatch && veganMatch && crueltyFreeMatch && matchesConcern(product, activeConcern) && matchesQuery(product, query);
     });
-  }, [activeCategory, activeConcern, query]);
+  }, [activeCategory, activeConcern, query, veganOnly, crueltyFreeOnly]);
 
   return (
     <>
@@ -509,12 +531,14 @@ export default function ShopFilterClient({ activeConcernProp }: { activeConcernP
                   {t(CATEGORY_KEYS[category] || category)}
                 </button>
               ))}
-              {activeConcern || query || activeCategory !== "All" ? (
+              {activeConcern || query || activeCategory !== "All" || veganOnly || crueltyFreeOnly ? (
                 <button
                   onClick={() => {
                     setActiveCategory("All");
                     setActiveConcern(null);
                     setQuery("");
+                    setVeganOnly(false);
+                    setCrueltyFreeOnly(false);
                   }}
                 >
                   Clear all
@@ -542,6 +566,50 @@ export default function ShopFilterClient({ activeConcernProp }: { activeConcernP
           </div>
         </div>
 
+        <div className="extra-filters" style={{ display: "flex", gap: "10px", marginBottom: "24px", flexWrap: "wrap", justifyContent: isRtl ? "flex-end" : "flex-start" }}>
+          <button
+            className={`extra-filter-chip ${veganOnly ? "active" : ""}`}
+            onClick={() => setVeganOnly(!veganOnly)}
+            style={{
+              padding: "6px 14px",
+              borderRadius: "20px",
+              fontSize: "12px",
+              border: veganOnly ? "1px solid #2d8a5c" : "1px solid #ded3ca",
+              background: veganOnly ? "#eef9f3" : "#ffffff",
+              color: veganOnly ? "#2d8a5c" : "#756b63",
+              cursor: "pointer",
+              fontWeight: 500,
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "6px",
+              transition: "all 0.2s ease"
+            }}
+          >
+            <span style={{ display: "inline-block", width: "8px", height: "8px", borderRadius: "50%", background: "#2d8a5c" }} />
+            {t("filter.vegan")}
+          </button>
+          <button
+            className={`extra-filter-chip ${crueltyFreeOnly ? "active" : ""}`}
+            onClick={() => setCrueltyFreeOnly(!crueltyFreeOnly)}
+            style={{
+              padding: "6px 14px",
+              borderRadius: "20px",
+              fontSize: "12px",
+              border: crueltyFreeOnly ? "1px solid #fc2779" : "1px solid #ded3ca",
+              background: crueltyFreeOnly ? "#fff0e8" : "#ffffff",
+              color: crueltyFreeOnly ? "#fc2779" : "#756b63",
+              cursor: "pointer",
+              fontWeight: 500,
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "6px",
+              transition: "all 0.2s ease"
+            }}
+          >
+            🐰 {t("filter.crueltyfree")}
+          </button>
+        </div>
+
         {filtered.length ? (
           <div className="shop-grid">
             {filtered.map((product) => (
@@ -557,6 +625,8 @@ export default function ShopFilterClient({ activeConcernProp }: { activeConcernP
                 setActiveCategory("All");
                 setActiveConcern(null);
                 setQuery("");
+                setVeganOnly(false);
+                setCrueltyFreeOnly(false);
               }}
             >
               Clear filters
