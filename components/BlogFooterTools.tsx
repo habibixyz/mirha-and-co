@@ -109,16 +109,16 @@ export default function BlogFooterTools() {
  </div>
 
  <div className="bft-grid">
- <Link href="/dashboard/analysis" className="bft-tool">
- <span className="bft-tool-eyebrow">AI-Powered</span>
- <span className="bft-tool-name">Skin Analyst</span>
- <span className="bft-tool-cta">Scan face →</span>
+ <Link href="/tools/hard-water" className="bft-tool">
+ <span className="bft-tool-eyebrow">Free Calculator</span>
+ <span className="bft-tool-name">Hard Water Test</span>
+ <span className="bft-tool-cta">Check your city →</span>
  </Link>
 
- <Link href="/dashboard/conflicts" className="bft-tool">
- <span className="bft-tool-eyebrow">Formulation</span>
- <span className="bft-tool-name">Conflict Checker</span>
- <span className="bft-tool-cta">Check routine →</span>
+ <Link href="/tools/dupes" className="bft-tool">
+ <span className="bft-tool-eyebrow">Savings Tool</span>
+ <span className="bft-tool-name">Dupe Finder</span>
+ <span className="bft-tool-cta">Find dupes →</span>
  </Link>
 
  <Link href="/tools/ingredients" className="bft-tool">

@@ -27,14 +27,18 @@ export function AffiliateCard(props: any) {
   );
 
   return (
-    <div className="editorial-affiliate-card">
+    <div className="editorial-affiliate-card-wrapper">
       <style>{`
+        .editorial-affiliate-card-wrapper {
+          container-type: inline-size;
+          width: 100%;
+          margin: 2.5rem 0;
+        }
         .editorial-affiliate-card {
           display: flex;
           flex-direction: row;
           border: 1px solid #ede8e0;
           background: #ffffff;
-          margin: 2.5rem 0;
           border-radius: 12px;
           overflow: hidden;
           transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
@@ -243,7 +247,23 @@ export function AffiliateCard(props: any) {
             padding: 1.25rem 1.5rem;
           }
         }
+        @container (max-width: 550px) {
+          .editorial-affiliate-card {
+            flex-direction: column;
+          }
+          .editorial-img-container {
+            width: 100%;
+            height: 180px;
+            border-right: none;
+            border-bottom: 1px solid #ede8e0;
+          }
+          .editorial-body {
+            padding: 1.25rem 1.5rem;
+          }
+        }
       `}</style>
+
+      <div className="editorial-affiliate-card">
 
       {/* Image Block */}
       <div className="editorial-img-container">
@@ -336,6 +356,7 @@ export function AffiliateCard(props: any) {
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 }

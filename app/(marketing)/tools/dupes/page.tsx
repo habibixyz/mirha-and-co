@@ -923,6 +923,68 @@ export default function DupeFinderPage() {
           .calculator-sidebar { display: none; }
           .mobile-savings-bar { display: flex; }
         }
+        .dupe-lead-panel {
+          background: #0c0a09;
+          border-radius: 16px;
+          padding: 24px;
+          margin-top: 20px;
+          text-align: center;
+        }
+        .dupe-lead-panel h4 {
+          font-family: 'DM Serif Display', serif;
+          font-size: 1.15rem;
+          font-weight: 400;
+          color: #fff;
+          margin: 0 0 6px;
+        }
+        .dupe-lead-panel p {
+          font-size: 0.78rem;
+          color: rgba(255,255,255,0.5);
+          margin: 0 0 16px;
+          line-height: 1.5;
+        }
+        .dupe-lead-form {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+        }
+        .dupe-lead-form input {
+          background: rgba(255,255,255,0.06);
+          border: 1px solid rgba(255,255,255,0.12);
+          border-radius: 8px;
+          padding: 11px 14px;
+          color: #fff;
+          font-size: 0.85rem;
+          outline: none;
+        }
+        .dupe-lead-form input:focus {
+          border-color: #fc2779;
+        }
+        .dupe-lead-form button {
+          background: #fc2779;
+          color: #fff;
+          border: none;
+          border-radius: 8px;
+          padding: 11px;
+          font-size: 0.85rem;
+          font-weight: 700;
+          cursor: pointer;
+          transition: background 0.2s;
+        }
+        .dupe-lead-form button:hover {
+          background: #e0226c;
+        }
+        .dupe-lead-success {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 6px;
+          background: rgba(45, 138, 92, 0.12);
+          color: #2d8a5c;
+          padding: 10px 16px;
+          border-radius: 8px;
+          font-size: 0.85rem;
+        }
       `}</style>
 
       <div className="shell">
@@ -1068,6 +1130,30 @@ export default function DupeFinderPage() {
                   >
                     <Share2 size={16} /> Share Savings on WhatsApp
                   </button>
+
+                  {/* Lead Capture */}
+                  <div className="dupe-lead-panel">
+                    <h4>Email Your Savings Report</h4>
+                    <p>Get your personalized dupes catalog and savings breakdown sent to your inbox.</p>
+                    {emailStatus === "success" ? (
+                      <div className="dupe-lead-success">
+                        <Check size={14} /> Check your inbox!
+                      </div>
+                    ) : (
+                      <form onSubmit={handleEmailSubmit} className="dupe-lead-form">
+                        <input
+                          type="email"
+                          placeholder="Enter your email"
+                          value={email}
+                          onChange={(e) => setEmail(e.target.value)}
+                          required
+                        />
+                        <button type="submit" disabled={emailStatus === "submitting"}>
+                          {emailStatus === "submitting" ? "Sending..." : "Send My Report"}
+                        </button>
+                      </form>
+                    )}
+                  </div>
                 </div>
               ) : (
                 <div style={{ textAlign: "center", padding: "20px 0", color: "#8c8179" }}>
@@ -1095,6 +1181,32 @@ export default function DupeFinderPage() {
             </button>
           )}
         </div>
+
+        {/* Mobile lead capture (visible when sidebar hidden) */}
+        {selectedItems.length > 0 && math.savings > 0 && (
+          <div className="dupe-lead-panel" style={{ marginTop: "24px" }}>
+            <h4>Email Your Savings Report</h4>
+            <p>Get your personalized dupes catalog and savings breakdown sent to your inbox.</p>
+            {emailStatus === "success" ? (
+              <div className="dupe-lead-success">
+                <Check size={14} /> Check your inbox!
+              </div>
+            ) : (
+              <form onSubmit={handleEmailSubmit} className="dupe-lead-form">
+                <input
+                  type="email"
+                  placeholder="Enter your email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+                <button type="submit" disabled={emailStatus === "submitting"}>
+                  {emailStatus === "submitting" ? "Sending..." : "Send My Report"}
+                </button>
+              </form>
+            )}
+          </div>
+        )}
 
         {selectedItems.length > 0 && (
           <div className="comparison-section">

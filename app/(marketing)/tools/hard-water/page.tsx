@@ -921,8 +921,8 @@ export default function HardWaterCalculator() {
  </div>
  </div>
 
- {/* Lead Capture - Hidden from front end but kept in stack */}
- {/* <div className="lead-panel">
+ {/* Lead Capture */}
+ <div className="lead-panel">
  <h3>Get Your Custom 12-Page Hard Water Guide</h3>
  <p>We'll email you a customized routine guide, mineral breakdowns for your city, and a list of chelating ingredients to look for in drugstore products.</p>
  {emailStatus === "success" ? (
@@ -943,7 +943,7 @@ export default function HardWaterCalculator() {
  </button>
  </form>
  )}
- </div> */}
+ </div>
  </div>
  )}
  </div>
