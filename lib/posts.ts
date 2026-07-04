@@ -17,6 +17,28 @@ export type Post = {
 const STATIC_POSTS: Post[] = [
   {
     category: "LIFESTYLE",
+    title: "The Aesthetic Scent Profiles: Matching Your Fragrance to Your Vibe",
+    excerpt: "Perfume isn't just about smelling nice; it's about matching your energy. Whether you're in your Clean Girl era, soft vanilla girl aesthetic, or going on a main-character date night, here is the exact perfume guide to match your vibe.",
+    slug: "womens-fragrance-vibe-guide",
+    readTime: "6 min",
+    date: "June 2026",
+    productCount: 4,
+    thumbnail: "FR",
+    tags: ["womens perfume", "fragrance", "titan skinn", "plum", "bella vita", "forest essentials", "lifestyle"],
+  },
+  {
+    category: "LIFESTYLE",
+    title: "Smelling Expensive on a Gen Z Budget: The Fragrance Hacks You Need",
+    excerpt: "You don't need a ₹15,000 designer bottle to smell like luxury. From the layering method to budget-luxury perfumes, here is how to smell rich without going broke.",
+    slug: "expensive-fragrance-budget-hacks",
+    readTime: "5 min",
+    date: "June 2026",
+    productCount: 4,
+    thumbnail: "BU",
+    tags: ["womens perfume", "fragrance", "titan skinn", "plum", "bella vita", "secret temptation", "budget"],
+  },
+  {
+    category: "LIFESTYLE",
     title: "Patchy Beard? Here's How to Actually Fix It (Not Just Cope With It)",
     excerpt: "Most beard patchiness isn't permanent — it's a circulation and follicle-health issue. The no-BS breakdown of beard growth oils that work, and the 90-day routine that actually moves the needle.",
     slug: "patchy-beard-growth-guide",
@@ -744,6 +766,8 @@ const hashString = (str: string) => {
 
 // Complete slug → unique image lookup table (all 34 available images used)
 const SLUG_IMAGE_MAP: Record<string, string> = {
+  "womens-fragrance-vibe-guide": "/blog-thumbs/photo_beauty.png",
+  "expensive-fragrance-budget-hacks": "/blog-thumbs/blog_economics_expensive.png",
   "patchy-beard-growth-guide": "/blog-thumbs/mens_beard_growth.png",
   "genz-grooming-starter-kit": "/blog-thumbs/mens_genz_kit.png",
   "mens-fragrance-guide": "/blog-thumbs/mens_fragrance.png",

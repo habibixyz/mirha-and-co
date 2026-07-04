@@ -11,9 +11,15 @@ export function AffiliateCard(props: any) {
   const product = PRODUCTS.find((p) => p.asin === asin) as any;
 
   const title = props.title || product?.name;
-  const description = props.description || product?.description;
   const image = product?.image || props.imageUrl;
   const badge = product?.badge || props.badge;
+
+  const isFragrance =
+    product?.category?.toLowerCase().includes("fragrance") ||
+    product?.category?.toLowerCase().includes("perfume") ||
+    props.isFragrance;
+
+  const displayDesc = props.description || (product?.description ? (product.description.length > 150 ? product.description.slice(0, 150) + "..." : product.description) : "");
 
   // Use localized formatted price
   const price = product?.price ? global.formatPrice(product.price) : props.price;
@@ -297,7 +303,7 @@ export function AffiliateCard(props: any) {
           )}
 
           <p className="editorial-desc">
-            {description ? (description.length > 150 ? description.slice(0, 150) + "..." : description) : ""}
+            {displayDesc}
           </p>
 
           {/* Specs Table */}
@@ -329,7 +335,7 @@ export function AffiliateCard(props: any) {
           </div>
 
           {/* CTAs */}
-          <div className="editorial-actions">
+          <div className="editorial-actions" style={isFragrance ? { gridTemplateColumns: "1fr" } : undefined}>
             <a
               href={affiliateUrl}
               target="_blank"
@@ -343,12 +349,14 @@ export function AffiliateCard(props: any) {
               Shop Product
             </a>
 
-            <Link
-              href={`/dashboard/analysis?product=${asin}`}
-              className="editorial-btn-analyze"
-            >
-              Analyze Ingredients
-            </Link>
+            {!isFragrance && (
+              <Link
+                href={`/dashboard/analysis?product=${asin}`}
+                className="editorial-btn-analyze"
+              >
+                Analyze Ingredients
+              </Link>
+            )}
           </div>
 
           <div className="editorial-disclosure">

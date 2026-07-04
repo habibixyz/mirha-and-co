@@ -34,7 +34,7 @@ type Product = {
 
 const PRODUCT_LIST = (PRODUCTS as unknown as Product[]).filter((p) => !p.hideFromShop);
 
-const CATEGORIES = ["All", "Skincare", "Makeup", "Hair Care", "Body Care", "Wellness", "Men's Grooming"];
+const CATEGORIES = ["All", "Skincare", "Makeup", "Hair Care", "Body Care", "Wellness", "Men's Grooming", "Fragrance"];
 
 export const CONCERNS = [
   {
@@ -85,7 +85,8 @@ export const CATEGORY_KEYS: Record<string, string> = {
   "Hair Care": "filter.category.haircare",
   "Body Care": "filter.category.bodycare",
   "Wellness": "filter.category.wellness",
-  "Men's Grooming": "filter.category.mensgrooming"
+  "Men's Grooming": "filter.category.mensgrooming",
+  "Fragrance": "filter.category.fragrance"
 };
 
 function discount(mrp: number, price: number) {
@@ -230,7 +231,13 @@ export default function ShopFilterClient({ activeConcernProp }: { activeConcernP
         activeCategory === "All" ||
         (activeCategory === "Men's Grooming"
           ? (product.tags || []).includes("mens") || product.category.toLowerCase().startsWith("mens")
-          : normalize(product.category) === normalize(activeCategory));
+          : activeCategory === "Fragrance"
+            ? normalize(product.category) === "fragrance" ||
+              normalize(product.category) === "mensperfume" ||
+              product.subcat.toLowerCase() === "perfume" ||
+              product.subcat.toLowerCase() === "body mist" ||
+              (product.tags || []).some((t) => ["fragrance", "perfume", "deo", "deodorant"].includes(t.toLowerCase()))
+            : normalize(product.category) === normalize(activeCategory));
 
       const veganMatch = !veganOnly || isVegan(product);
       const crueltyFreeMatch = !crueltyFreeOnly || isCrueltyFree(product);

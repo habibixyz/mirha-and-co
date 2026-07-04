@@ -1,55 +1,78 @@
+const fs = require('fs');
+const path = require('path');
 const { PrismaClient } = require('@prisma/client');
+
 const prisma = new PrismaClient();
 
 async function main() {
-  const products = [
-    {
-      name: "Barrier Restoring Cream",
-      brand: "Mirha & Co.",
-      category: "Moisturizer",
-      description: "A rich, ceramide-infused cream that deeply hydrates and repairs a compromised skin barrier.",
-      ingredients: ["Ceramides", "Hyaluronic Acid", "Squalane"],
-      concerns: ["dry", "redness", "sensitivity"]
-    },
-    {
-      name: "Gentle Oat Cleanser",
-      brand: "Mirha & Co.",
-      category: "Cleanser",
-      description: "A non-stripping daily cleanser that soothes inflammation while removing impurities.",
-      ingredients: ["Colloidal Oatmeal", "Glycerin"],
-      concerns: ["acne", "sensitivity", "dry"]
-    },
-    {
-      name: "Luminous C Serum",
-      brand: "Mirha & Co.",
-      category: "Serum",
-      description: "15% Vitamin C serum to fade dark spots and boost overall radiance.",
-      ingredients: ["Vitamin C", "Ferulic Acid", "Vitamin E"],
-      concerns: ["hyperpigmentation", "dullness", "aging"]
-    },
-    {
-      name: "BHA Clarifying Liquid",
-      brand: "Mirha & Co.",
-      category: "Toner",
-      description: "2% Salicylic acid exfoliant to clear pores and prevent breakouts.",
-      ingredients: ["Salicylic Acid", "Green Tea Extract"],
-      concerns: ["acne", "oiliness", "pores"]
-    },
-    {
-      name: "Peptide Firming Eye Cream",
-      brand: "Mirha & Co.",
-      category: "Eye Care",
-      description: "Targets fine lines and puffiness with a powerful peptide blend.",
-      ingredients: ["Peptides", "Caffeine", "Niacinamide"],
-      concerns: ["aging", "dark circles"]
-    }
-  ];
-
-  for (const p of products) {
-    await prisma.product.create({ data: p });
+  // Read lib/products.ts
+  const tsContent = fs.readFileSync(path.join(__dirname, 'lib', 'products.ts'), 'utf8');
+  
+  // Extract the PRODUCTS array text
+  const arrayStart = tsContent.indexOf('export const PRODUCTS = [');
+  if (arrayStart === -1) throw new Error('Could not find PRODUCTS array');
+  
+  // Find where getProductAffiliateUrl starts to locate the boundary of the array
+  const arrayEnd = tsContent.indexOf('export function getProductAffiliateUrl');
+  if (arrayEnd === -1) throw new Error('Could not find getProductAffiliateUrl boundary');
+  
+  let arrayText = tsContent.substring(arrayStart, arrayEnd).trim();
+  // Strip "export const PRODUCTS = "
+  arrayText = arrayText.replace('export const PRODUCTS =', '').trim();
+  // Remove trailing semicolon if present
+  if (arrayText.endsWith(';')) {
+    arrayText = arrayText.slice(0, -1);
   }
   
-  console.log(`Seeded ${products.length} products successfully.`);
+  // Evaluate the array text to parse it as a Javascript array
+  const products = eval(arrayText);
+  
+  console.log(`Parsed ${products.length} products from lib/products.ts`);
+  
+  // Upsert all products into the database
+  let count = 0;
+  for (const p of products) {
+    if (!p.asin) {
+      console.warn(`Skipping product with missing ASIN: ${p.name || p.id}`);
+      continue;
+    }
+    const skinType = p.specs?.["Skin Type"] || "All Skin Types";
+    const keyIngredient = p.specs?.["Key Ingredient"] || p.specs?.["Key Ingredients"] || "";
+    
+    await prisma.product.upsert({
+      where: { asin: p.asin },
+      update: {
+        name: p.name,
+        brand: p.brand,
+        price: parseFloat(p.price) || 0,
+        discount: p.mrp ? (parseFloat(p.mrp) - parseFloat(p.price)) : null,
+        category: p.category,
+        ingredients: keyIngredient,
+        concerns: p.concerns ? p.concerns.join(', ') : '',
+        skinTypes: skinType,
+        reviewUrl: p.link || null,
+        imageUrl: p.image || null,
+        rating: p.rating ? parseFloat(p.rating) : null,
+      },
+      create: {
+        asin: p.asin,
+        name: p.name,
+        brand: p.brand,
+        price: parseFloat(p.price) || 0,
+        discount: p.mrp ? (parseFloat(p.mrp) - parseFloat(p.price)) : null,
+        category: p.category,
+        ingredients: keyIngredient,
+        concerns: p.concerns ? p.concerns.join(', ') : '',
+        skinTypes: skinType,
+        reviewUrl: p.link || null,
+        imageUrl: p.image || null,
+        rating: p.rating ? parseFloat(p.rating) : null,
+      }
+    });
+    count++;
+  }
+  
+  console.log(`Successfully synced ${count} products to the database.`);
 }
 
 main()
