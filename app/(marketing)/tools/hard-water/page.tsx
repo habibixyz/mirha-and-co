@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
-import { ArrowRight, Droplet, MapPin, Share2, Check, Mail, ArrowLeft, Star } from "lucide-react";
+import { ArrowRight, Droplet, MapPin, Share2, Check, Mail, ArrowLeft, Star, Search, ChevronDown } from "lucide-react";
 import { PRODUCTS } from "@/lib/products";
 import Image from "next/image";
 import { submitLeadAction } from "@/app/(saas)/actions";
@@ -23,8 +23,65 @@ const INDIAN_CITIES = [
  { name: "Kochi", tds: 110, hardness: "Soft", description: "Very soft water. Hair and skin issues are usually due to high humidity and sweat build-up, not hard water minerals." },
 ];
 
+// Predefined water hardness data for all Indian States & Union Territories (ppm / TDS averages)
+const INDIAN_STATES = [
+  { name: "Andhra Pradesh", tds: 650, hardness: "Very Hard", description: "High levels of fluoride and mineral hardness causing dry scalp and frizzy hair." },
+  { name: "Arunachal Pradesh", tds: 120, hardness: "Soft", description: "Mainly soft natural river water. Skin and hair issues are rarely mineral-bound." },
+  { name: "Assam", tds: 280, hardness: "Moderately Hard", description: "Generally moderate mineral levels, but high natural iron content can cause hair stiffness." },
+  { name: "Bihar", tds: 450, hardness: "Hard", description: "High calcium and iron concentration causing scalp itchiness and product buildup." },
+  { name: "Chhattisgarh", tds: 320, hardness: "Moderately Hard", description: "Moderate hardness requiring mild chelating shampoo to maintain scalp health." },
+  { name: "Goa", tds: 90, hardness: "Soft", description: "Soft coastal water. Hair and skin issues are usually humidity-related rather than mineral-based." },
+  { name: "Gujarat", tds: 550, hardness: "Hard", description: "High mineral salinity leading to dry hair shaft damage and frizzy textures." },
+  { name: "Haryana", tds: 620, hardness: "Very Hard", description: "Very high mineral and salinity content. Speeds up hair breakage and dry scalp." },
+  { name: "Himachal Pradesh", tds: 140, hardness: "Soft", description: "Soft mountain water. Very low mineral content, gentle on hair and skin." },
+  { name: "Jharkhand", tds: 300, hardness: "Moderately Hard", description: "Moderate hardness. Iron contamination in some pockets can make hair feel stiff." },
+  { name: "Karnataka", tds: 520, hardness: "Hard", description: "Saline and calcium ground water causing dry scalp and hair fall." },
+  { name: "Kerala", tds: 110, hardness: "Soft", description: "Generally soft water. Hair and skin issues are usually due to high humidity and sweat." },
+  { name: "Madhya Pradesh", tds: 480, hardness: "Hard", description: "Hard groundwater minerals causing scalp buildup and skin barrier dryness." },
+  { name: "Maharashtra", tds: 340, hardness: "Moderately Hard", description: "Varies by source. Surface water is soft, but borewell mixing causes moderate hardness." },
+  { name: "Manipur", tds: 100, hardness: "Soft", description: "Soft water with low mineral concentration. Safe for daily hair washing." },
+  { name: "Meghalaya", tds: 80, hardness: "Soft", description: "Very soft rainwater-fed sources. Extremely gentle on skin and scalp." },
+  { name: "Mizoram", tds: 90, hardness: "Soft", description: "Soft water. Hair and skin issues are likely routine or climate-based." },
+  { name: "Nagaland", tds: 110, hardness: "Soft", description: "Soft water with negligible mineral buildup. Minimal risk of hard water damage." },
+  { name: "Odisha", tds: 360, hardness: "Moderately Hard", description: "Moderate hardness with localized iron content causing dry hair texture." },
+  { name: "Punjab", tds: 580, hardness: "Hard", description: "Hard groundwater from intensive agriculture area. Causes scalp dryness and frizz." },
+  { name: "Rajasthan", tds: 760, hardness: "Very Hard", description: "Extremely high TDS ground water. Highly saline and alkaline, causing severe dryness." },
+  { name: "Sikkim", tds: 90, hardness: "Soft", description: "Pristine soft mountain water. Very gentle on hair and skin barrier." },
+  { name: "Tamil Nadu", tds: 610, hardness: "Very Hard", description: "High mineral and salt levels in groundwater, leading to hair fall and skin flaking." },
+  { name: "Telangana", tds: 580, hardness: "Hard", description: "High carbonate salts leading to scalp scaling, hair fall, and dry skin." },
+  { name: "Tripura", tds: 140, hardness: "Soft", description: "Soft water. High iron content in some sources might cause hair stiffening." },
+  { name: "Uttar Pradesh", tds: 490, hardness: "Hard", description: "High mineral levels in Gangetic plains groundwater. Leads to dry scalp and frizzy hair." },
+  { name: "Uttarakhand", tds: 160, hardness: "Soft / Moderately Hard", description: "Mainly soft to moderate water. Gentle on skin and hair." },
+  { name: "West Bengal", tds: 260, hardness: "Moderately Hard", description: "Moderate hardness. Elevated iron levels in ground water can coat and stiffen hair strands." },
+  { name: "Andaman and Nicobar Islands", tds: 120, hardness: "Soft", description: "Soft water with low mineral concentration." },
+  { name: "Chandigarh", tds: 290, hardness: "Moderately Hard", description: "Moderate mineral content. Minimal risk of severe hard water buildup." },
+  { name: "Dadra and Nagar Haveli and Daman and Diu", tds: 340, hardness: "Moderately Hard", description: "Moderate hardness in groundwater sources." },
+  { name: "Delhi NCR", tds: 650, hardness: "Very Hard", description: "High mineral salinity leading to scalp scaling and hair breakage." },
+  { name: "Jammu and Kashmir", tds: 170, hardness: "Soft / Moderately Hard", description: "Low to moderate mineral content. Generally gentle on skin." },
+  { name: "Ladakh", tds: 140, hardness: "Soft", description: "Pristine glacier-fed soft water. Very gentle on skin and hair." },
+  { name: "Lakshadweep", tds: 320, hardness: "Moderately Hard", description: "Coral limestone island geology leads to moderate calcium hardness." },
+  { name: "Puducherry", tds: 480, hardness: "Hard", description: "Coastal saline ground water causing hair stiffness and scalp dryness." }
+];
+
 export default function HardWaterCalculator() {
  const [step, setStep] = useState<1 | 2 | 3>(1);
+ const [stateSearch, setStateSearch] = useState<string>("");
+ const [isStateDropdownOpen, setIsStateDropdownOpen] = useState<boolean>(false);
+
+ useEffect(() => {
+   const handleClickOutside = (event: MouseEvent) => {
+     const target = event.target as HTMLElement;
+     if (!target.closest(".autocomplete-container")) {
+       setIsStateDropdownOpen(false);
+     }
+   };
+   document.addEventListener("mousedown", handleClickOutside);
+   return () => document.removeEventListener("mousedown", handleClickOutside);
+ }, []);
+
+ const filteredStates = INDIAN_STATES.filter(state =>
+   state.name.toLowerCase().includes(stateSearch.toLowerCase())
+ );
  const [selectedCity, setSelectedCity] = useState<string>("");
  const [customTds, setCustomTds] = useState<string>("");
  const [useCustomTds, setUseCustomTds] = useState<boolean>(false);
@@ -55,7 +112,9 @@ export default function HardWaterCalculator() {
  return parseInt(customTds) || 100;
  }
  const city = INDIAN_CITIES.find(c => c.name === selectedCity);
- return city ? city.tds : 300;
+ if (city) return city.tds;
+ const state = INDIAN_STATES.find(s => s.name === selectedCity);
+ return state ? state.tds : 300;
  };
 
  // Calculate damage score & risks
@@ -142,7 +201,7 @@ export default function HardWaterCalculator() {
  // Share result to WhatsApp
  const handleShareWhatsApp = () => {
  const text = `I just calculated my Hard Water Hair & Skin Damage risk: it is ${results.score}% (${results.level} Risk) in ${useCustomTds ? "my area" : selectedCity}! Find your damage score and get a free recovery routine here:`;
- const url = "https://mirha-and-co.vercel.app/tools/hard-water";
+ const url = "https://mirhaandco.com/tools/hard-water";
  window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text + " " + url)}`, "_blank");
  };
 
@@ -658,6 +717,15 @@ export default function HardWaterCalculator() {
  font-weight: 700;
  text-decoration: none;
  }
+ .state-dropdown-item:hover {
+ background: #fff0e8 !important;
+ color: #fc2779 !important;
+ }
+ .state-search-input:focus {
+ border-color: #fc2779 !important;
+ box-shadow: 0 0 0 3px rgba(252, 39, 121, 0.1) !important;
+ background: #fff !important;
+ }
  `}</style>
 
  <div className="shell">
@@ -683,25 +751,137 @@ export default function HardWaterCalculator() {
 
  {!useCustomTds ? (
  <div>
+ <div style={{ fontSize: "0.85rem", fontWeight: 700, color: "#756b63", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: "12px" }}>
+ Quick Select Major Cities
+ </div>
  <div className="city-grid">
  {INDIAN_CITIES.map(city => (
  <button
  key={city.name}
  className={`city-btn ${selectedCity === city.name ? "selected" : ""}`}
- onClick={() => setSelectedCity(city.name)}
+ onClick={() => { setSelectedCity(city.name); setStateSearch(""); }}
  >
  <MapPin size={18} style={{ color: selectedCity === city.name ? "#fc2779" : "#8c857f" }} />
  <span>{city.name}</span>
  </button>
  ))}
  </div>
- <button 
- onClick={() => { setUseCustomTds(true); setSelectedCity(""); }} 
- className="toggle-tds"
- >
- I know my area's TDS meter reading
- </button>
- </div>
+
+ {/* Searchable State Selector */}
+ <div className="state-autocomplete-wrapper" style={{ marginTop: "24px", position: "relative" }}>
+ <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 700, color: "#756b63", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: "8px" }}>
+ Or Search / Select Your State
+ </label>
+ <div className="autocomplete-container" style={{ position: "relative" }}>
+ <div style={{ position: "relative" }}>
+ <MapPin size={18} style={{ position: "absolute", left: "16px", top: "50%", transform: "translateY(-50%)", color: "#8c857f", pointerEvents: "none" }} />
+ <input
+ type="text"
+ placeholder="Type to search state (e.g. Rajasthan, Goa...)"
+ value={stateSearch}
+  onChange={(e) => {
+  setStateSearch(e.target.value);
+  setIsStateDropdownOpen(true);
+  }}
+  onFocus={() => setIsStateDropdownOpen(true)}
+  style={{
+  width: "100%",
+  border: "1px solid #d8cdc3",
+  background: "#fffaf4",
+  color: "#161412",
+  borderRadius: "12px",
+  padding: "16px 44px 16px 44px",
+  fontSize: "0.95rem",
+  fontWeight: 500,
+  outline: "none",
+  transition: "all 0.2s",
+  boxSizing: "border-box"
+  }}
+  className="state-search-input"
+  />
+  <ChevronDown
+  size={18}
+  onClick={(e) => {
+  e.stopPropagation();
+  setIsStateDropdownOpen(!isStateDropdownOpen);
+  }}
+  style={{
+  position: "absolute",
+  right: "16px",
+  top: "50%",
+  color: "#8c857f",
+  cursor: "pointer",
+  transformOrigin: "center",
+  transition: "transform 0.2s",
+  transform: isStateDropdownOpen ? "translateY(-50%) rotate(180deg)" : "translateY(-50%)"
+  }}
+  />
+  </div>
+  
+  {isStateDropdownOpen && (
+  <div style={{
+  position: "absolute",
+  top: "100%",
+  left: 0,
+  right: 0,
+  background: "#fff",
+  border: "1px solid #e8ded4",
+  borderRadius: "12px",
+  marginTop: "8px",
+  maxHeight: "240px",
+  overflowY: "auto",
+  zIndex: 50,
+  boxShadow: "0 10px 30px rgba(38, 28, 20, 0.08)",
+  padding: "6px"
+  }}>
+  {filteredStates.length > 0 ? (
+  filteredStates.map(state => (
+  <div
+  key={state.name}
+  onClick={() => {
+  setSelectedCity(state.name);
+  setUseCustomTds(false);
+  setStateSearch(state.name);
+  setIsStateDropdownOpen(false);
+  }}
+  style={{
+  padding: "12px 14px",
+  borderRadius: "8px",
+  cursor: "pointer",
+  fontSize: "0.95rem",
+  fontWeight: 500,
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+  transition: "background 0.2s",
+  background: selectedCity === state.name ? "#fff0e8" : "transparent",
+  color: selectedCity === state.name ? "#fc2779" : "#161412"
+  }}
+  className="state-dropdown-item"
+  >
+  <span>{state.name}</span>
+  <span style={{ fontSize: "0.8rem", color: selectedCity === state.name ? "#fc2779" : "#8c857f", background: "#f6ede4", padding: "2px 8px", borderRadius: "12px" }}>
+  ~{state.tds} ppm
+  </span>
+  </div>
+  ))
+  ) : (
+  <div style={{ padding: "16px", color: "#8c857f", textAlign: "center", fontSize: "0.9rem" }}>
+  No states or UTs found
+  </div>
+  )}
+  </div>
+  )}
+  </div>
+  </div>
+
+  <button 
+  onClick={() => { setUseCustomTds(true); setSelectedCity(""); setStateSearch(""); }} 
+  className="toggle-tds"
+  >
+  I know my area's TDS meter reading
+  </button>
+  </div>
  ) : (
  <div>
  <div className="custom-tds-input">
@@ -789,13 +969,139 @@ export default function HardWaterCalculator() {
  {step === 3 && (
  <div>
  <div className="results-header">
- <div className="score-circle" style={{ backgroundColor: results.color }}>
- <span className="score-num">{results.score}%</span>
- <span className="score-lbl">Damage Index</span>
+ 
+ {/* Premium SVG Radial Gauge */}
+ <div className="gauge-container" style={{ position: "relative", width: "160px", height: "160px", margin: "0 auto 24px" }}>
+ <svg width="160" height="160" viewBox="0 0 160 160" style={{ transform: "rotate(-90deg)" }}>
+ <circle
+ cx="80"
+ cy="80"
+ r="70"
+ fill="transparent"
+ stroke="#ece2d9"
+ strokeWidth="10"
+ />
+ <circle
+ cx="80"
+ cy="80"
+ r="70"
+ fill="transparent"
+ stroke={results.color}
+ strokeWidth="10"
+ strokeDasharray={2 * Math.PI * 70}
+ strokeDashoffset={2 * Math.PI * 70 - (results.score / 100) * 2 * Math.PI * 70}
+ strokeLinecap="round"
+ style={{ transition: "stroke-dashoffset 1s ease-in-out" }}
+ />
+ </svg>
+ <div style={{
+ position: "absolute",
+ top: 0,
+ left: 0,
+ width: "160px",
+ height: "160px",
+ display: "flex",
+ flexDirection: "column",
+ alignItems: "center",
+ justifyContent: "center"
+ }}>
+ <span className="score-num" style={{ fontSize: "48px", fontWeight: 700, color: "#161412", lineHeight: 1 }}>
+ {results.score}%
+ </span>
+ <span className="score-lbl" style={{ fontSize: "0.65rem", letterSpacing: "0.15em", textTransform: "uppercase", fontWeight: 700, color: "#756b63", marginTop: "4px" }}>
+ Damage Index
+ </span>
  </div>
+ </div>
+
  <h2 className="quiz-title" style={{ fontSize: "2.2rem" }}>
  Your water is {results.tds} ppm. Risk is <span style={{ color: results.color }}>{results.level}</span>.
  </h2>
+ 
+ {/* Location Profile Detail Card */}
+ {selectedCity && !useCustomTds && (
+ <div className="location-profile-card" style={{
+ background: "rgba(255, 255, 255, 0.7)",
+ backdropFilter: "blur(12px)",
+ border: "1px solid #e8ded4",
+ borderRadius: "16px",
+ padding: "24px",
+ maxWidth: "550px",
+ margin: "24px auto 30px",
+ textAlign: "left",
+ boxShadow: "0 8px 24px rgba(38, 28, 20, 0.03)"
+ }}>
+ <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "12px", flexWrap: "wrap", gap: "8px" }}>
+ <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+ <MapPin size={18} style={{ color: "#fc2779" }} />
+ <span style={{ fontSize: "1.1rem", fontWeight: 700, color: "#161412" }}>{selectedCity}</span>
+ </div>
+ <span className="hardness-badge" style={{
+ backgroundColor: results.score >= 75 ? "#fff0e8" : results.score >= 45 ? "#fff6ee" : "#eaf7f0",
+ color: results.color,
+ fontSize: "0.75rem",
+ fontWeight: 700,
+ textTransform: "uppercase",
+ padding: "4px 10px",
+ borderRadius: "99px"
+ }}>
+ {
+ INDIAN_CITIES.find(c => c.name === selectedCity)?.hardness ||
+ INDIAN_STATES.find(s => s.name === selectedCity)?.hardness ||
+ "Unknown"
+ } Hardness
+ </span>
+ </div>
+ <p style={{ margin: 0, fontSize: "0.9rem", color: "#4f4741", lineHeight: 1.5 }}>
+ {
+ INDIAN_CITIES.find(c => c.name === selectedCity)?.description ||
+ INDIAN_STATES.find(s => s.name === selectedCity)?.description
+ }
+ </p>
+ </div>
+ )}
+
+ {useCustomTds && (
+ <div className="location-profile-card" style={{
+ background: "rgba(255, 255, 255, 0.7)",
+ backdropFilter: "blur(12px)",
+ border: "1px solid #e8ded4",
+ borderRadius: "16px",
+ padding: "24px",
+ maxWidth: "550px",
+ margin: "24px auto 30px",
+ textAlign: "left",
+ boxShadow: "0 8px 24px rgba(38, 28, 20, 0.03)"
+ }}>
+ <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "12px", flexWrap: "wrap", gap: "8px" }}>
+ <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+ <Droplet size={18} style={{ color: "#fc2779" }} />
+ <span style={{ fontSize: "1.1rem", fontWeight: 700, color: "#161412" }}>Custom TDS Reading</span>
+ </div>
+ <span className="hardness-badge" style={{
+ backgroundColor: results.score >= 75 ? "#fff0e8" : results.score >= 45 ? "#fff6ee" : "#eaf7f0",
+ color: results.color,
+ fontSize: "0.75rem",
+ fontWeight: 700,
+ textTransform: "uppercase",
+ padding: "4px 10px",
+ borderRadius: "99px"
+ }}>
+ {results.tds >= 500 ? "Very Hard" : results.tds >= 300 ? "Hard" : results.tds >= 150 ? "Moderately Hard" : "Soft"} Hardness
+ </span>
+ </div>
+ <p style={{ margin: 0, fontSize: "0.9rem", color: "#4f4741", lineHeight: 1.5 }}>
+ You entered a custom reading of <strong>{results.tds} ppm</strong>. {
+ results.tds >= 500
+ ? "This represents extremely mineral-dense water. Calcium and magnesium carbonates are likely coating your hair fibers, preventing moisture absorption and causing barrier irritation on your skin."
+ : results.tds >= 300
+ ? "This represents moderately hard water. It's enough to cause persistent frizz, stiffness, and slow soap lathering."
+ : "Your water is well within the soft to ideal range. Any hair or skin issues are likely due to lifestyle, products, or climatic conditions."
+ }
+ </p>
+ </div>
+ )}
+
  <p className="results-summary-text">
  {results.score >= 75
  ? "Your hair and skin are fighting a losing battle against heavy calcium and magnesium carbonates. Minerals are building up, creating an invisible, moisture-blocking layer."

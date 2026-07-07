@@ -4855,7 +4855,7 @@ export const PRODUCTS = [
   notes: "Detailing Tool: A pack of 3 precise pen-style razors designed specifically for lining up cheeks and necklines."
 },
 {
-  id: 601,
+id: 601,
   name: "Skinn By Titan | Celeste Perfume - 100 Ml | Perfume For Woman",
   brand: "Skinn by Titan",
   category: "Fragrance",
@@ -4997,6 +4997,78 @@ export const PRODUCTS = [
   concerns: ["fragrance", "body mist"],
   image: "/products/B08XCPMB7V.PNG",
   link: "https://amzn.to/3SH3AmN"
+},
+{
+  id: 1001,
+  name: "Detoxie Hard Water Repair Combo (Shampoo + Conditioner)",
+  brand: "Detoxie",
+  category: "Hair Care",
+  subcat: "Hair Combo",
+  mrp: 599,
+  price: 499,
+  rating: 4.2,
+  reviews: "1.2k",
+  asin: "B0CLP4RRPC",
+  badge: "Hard Water Fix",
+  description: "Detoxie Hard Water Repair Combo. Chelating shampoo + conditioner that removes calcium & magnesium deposits. Reduces hairfall and softens brittle strands. Safe for daily use.",
+  specs: {
+    "Hair Type": "Brittle, Hard Water Damaged",
+    "Key Ingredient": "Chelating Agents",
+    "Use": "AM or PM"
+  },
+  tags: ["hard water", "chelating", "shampoo", "conditioner", "detoxie"],
+  concerns: ["hairfall", "dryhair"],
+  image: "https://m.media-amazon.com/images/I/71vrYex5sYL._SL300_.jpg",
+  link: "https://amzn.to/3SfrSE5",
+  notes: "Perfect for regions with high groundwater hardness. Instantly strips mineral film from hair shafts."
+},
+{
+  id: 1002,
+  name: "L'Oréal Professionnel Metal DX Shampoo",
+  brand: "L'Oréal Professionnel",
+  category: "Hair Care",
+  subcat: "Shampoo",
+  mrp: 1490,
+  price: 1320,
+  rating: 4.4,
+  reviews: "8.5k",
+  asin: "B09B1FXGR3",
+  badge: "Dermat Approved",
+  description: "L'Oréal Professionnel Metal DX Shampoo. Professional-grade chelating shampoo. Neutralises copper, iron, and calcium embedded in hair by hard water. Ideal for colour-treated hair.",
+  specs: {
+    "Hair Type": "Color-Treated, All Hair Types",
+    "Key Ingredient": "Glicoamine",
+    "Use": "1-2 times weekly"
+  },
+  tags: ["metal dx", "loreal", "shampoo", "chelating", "hard water"],
+  concerns: ["dryhair", "fadedcolor"],
+  image: "https://m.media-amazon.com/images/I/61WbDYJgnpL._SL300_.jpg",
+  link: "https://amzn.to/4odVqOk",
+  notes: "Dermatologist-recommended professional shampoo to prevent metal particles from causing hair breakage."
+},
+{
+  id: 1003,
+  name: "Detoxie Power Cleanse Shampoo",
+  brand: "Detoxie",
+  category: "Hair Care",
+  subcat: "Shampoo",
+  mrp: 449,
+  price: 349,
+  rating: 4.1,
+  reviews: "950",
+  asin: "B0H11ZXLMZ",
+  badge: "Deep Cleanse",
+  description: "Detoxie Power Cleanse Shampoo. A clarifying and mineral-removing shampoo formulated to strip away hard water scale and product buildup from the scalp.",
+  specs: {
+    "Hair Type": "Oily Scalp, Brittle Hair",
+    "Key Ingredient": "Apple Cider Vinegar, Chelating Agents",
+    "Use": "2-3 times weekly"
+  },
+  tags: ["detoxie", "shampoo", "clarifying", "hard water", "buildup"],
+  concerns: ["itchyscalp", "hairfall"],
+  image: "https://m.media-amazon.com/images/I/61t-XfV43IL._SL300_.jpg",
+  link: "https://amzn.to/3OcD3Xz",
+  notes: "Combines chelating agents with clarifying botanicals to refresh mineral-heavy scalps."
 }
 ];
 

@@ -444,7 +444,7 @@ export default function DupeFinderPage() {
 
   const handleShareWhatsApp = () => {
     const text = `I just used the Skincare Dupe Finder & calculated that swapping luxury items for drugstore dupes will save me ₹${math.savings.toLocaleString("en-IN")}/year! Find your dupes here:`;
-    const url = "https://mirha-and-co.vercel.app/tools/dupes";
+    const url = "https://mirhaandco.com/tools/dupes";
     window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text + " " + url)}`, "_blank");
   };
 
