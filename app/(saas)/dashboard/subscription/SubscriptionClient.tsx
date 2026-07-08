@@ -8,6 +8,27 @@ import Script from "next/script";
 export function SubscriptionClient({ isPro }: { isPro: boolean }) {
  const [activePendingType, setActivePendingType] = useState<"monthly" | "yearly" | null>(null);
  const [billingPeriod, setBillingPeriod] = useState<"monthly" | "yearly">("yearly");
+  const [paymentRegion, setPaymentRegion] = useState<"INR" | "USD">("INR");
+
+  const handleDodoCheckout = async () => {
+    setActivePendingType("monthly");
+    try {
+      const res = await fetch("/api/dodo/checkout", { method: "POST" });
+      const data = await res.json();
+      if (data.error) throw new Error(data.error);
+
+      if (data.checkoutUrl) {
+        window.location.href = data.checkoutUrl;
+      } else {
+        throw new Error("No checkout URL returned from server");
+      }
+    } catch (error: any) {
+      console.error("Dodo Payments checkout error:", error);
+      alert(`Checkout Error: ${error.message || "Failed to initialize"}`);
+    } finally {
+      setActivePendingType(null);
+    }
+  };
 
  const loadRazorpayScript = () => {
  return new Promise((resolve) => {
@@ -448,6 +469,45 @@ export function SubscriptionClient({ isPro }: { isPro: boolean }) {
  Upgrade your routine from guessing to diagnostic precision. Unlock professional AI tools and formulation analysis.
  </motion.p>
 
+ 
+ {/* Region Selector */}
+ <div style={{ display: "flex", justifyContent: "center", gap: "0.5rem", marginBottom: "1.5rem" }}>
+ <button
+ onClick={() => {
+ setPaymentRegion("USD");
+ setBillingPeriod("monthly");
+ }}
+ style={{
+ padding: "0.4rem 0.8rem",
+ borderRadius: "8px",
+ border: "1px solid " + (paymentRegion === "USD" ? "var(--dash-ink)" : "var(--dash-border)"),
+ background: paymentRegion === "USD" ? "var(--dash-ink)" : "transparent",
+ color: paymentRegion === "USD" ? "var(--dash-surface)" : "var(--dash-ink)",
+ cursor: "pointer",
+ fontSize: "0.85rem",
+ fontWeight: 600
+ }}
+ >
+ Global (USD)
+ </button>
+ <button
+ onClick={() => setPaymentRegion("INR")}
+ style={{
+ padding: "0.4rem 0.8rem",
+ borderRadius: "8px",
+ border: "1px solid " + (paymentRegion === "INR" ? "var(--dash-ink)" : "var(--dash-border)"),
+ background: paymentRegion === "INR" ? "var(--dash-ink)" : "transparent",
+ color: paymentRegion === "INR" ? "var(--dash-surface)" : "var(--dash-ink)",
+ cursor: "pointer",
+ fontSize: "0.85rem",
+ fontWeight: 600
+ }}
+ >
+ India (INR)
+ </button>
+ </div>
+
+ {paymentRegion === "INR" && (
  <motion.div variants={itemVariants} className="toggle-wrapper">
  <button 
  className={`toggle-btn ${billingPeriod === "monthly" ? "active" : ""}`}
@@ -469,9 +529,10 @@ export function SubscriptionClient({ isPro }: { isPro: boolean }) {
  }}
  />
  </motion.div>
- </div>
+  )}
+  </div>
 
- <div className="pricing-grid-container">
+  <div className="pricing-grid-container">
  {/* FREE PLAN CARD */}
  <motion.div variants={itemVariants} className="plan-card">
  <span className="card-header-label">Basic Access</span>
@@ -526,13 +587,13 @@ export function SubscriptionClient({ isPro }: { isPro: boolean }) {
  </div>
 
  <div className="price-block" style={{ position: "relative", zIndex: 2 }}>
- <span className="price-number">
- {billingPeriod === "monthly" ? "₹199" : "₹1,499"}
- </span>
- <span className="price-period">
- {billingPeriod === "monthly" ? "/ month" : "/ year (save 37%)"}
- </span>
- </div>
+  <span className="price-number">
+  {paymentRegion === "USD" ? "$10.99" : (billingPeriod === "monthly" ? "₹199" : "₹1,499")}
+  </span>
+  <span className="price-period">
+  {paymentRegion === "USD" ? "/ month" : (billingPeriod === "monthly" ? "/ month" : "/ year (save 37%)")}
+  </span>
+  </div>
 
  <div className="feature-list" style={{ position: "relative", zIndex: 2 }}>
  <div className="feature-item">
@@ -569,24 +630,23 @@ export function SubscriptionClient({ isPro }: { isPro: boolean }) {
  <button className="action-btn btn-active" disabled style={{ position: "relative", zIndex: 2 }}>
  Active Plan
  </button>
- ) : (
- <motion.button
- onClick={() => handleUpgrade(billingPeriod)}
- disabled={activePendingType !== null}
- whileHover={{ scale: 1.02 }}
- whileTap={{ scale: 0.98 }}
- className="action-btn btn-primary"
- style={{ position: "relative", zIndex: 2 }}
- >
- {activePendingType === billingPeriod ? (
- <Loader2 size={18} style={{ animation: "spin 1s linear infinite" }} />
- ) : (
- <>
- <Zap size={14} fill="currentColor" />
- {billingPeriod === "monthly" ? "Upgrade for ₹199" : "Upgrade for ₹1,499"}
- </>
- )}
- </motion.button>
+ ) : ( <motion.button
+  onClick={() => paymentRegion === "USD" ? handleDodoCheckout() : handleUpgrade(billingPeriod)}
+  disabled={activePendingType !== null}
+  whileHover={{ scale: 1.02 }}
+  whileTap={{ scale: 0.98 }}
+  className="action-btn btn-primary"
+  style={{ position: "relative", zIndex: 2 }}
+  >
+  {activePendingType !== null ? (
+  <Loader2 size={18} style={{ animation: "spin 1s linear infinite" }} />
+  ) : (
+  <>
+  <Zap size={14} fill="currentColor" />
+  {paymentRegion === "USD" ? "Upgrade for $10.99" : (billingPeriod === "monthly" ? "Upgrade for ₹199" : "Upgrade for ₹1,499")}
+  </>
+  )}
+  </motion.button>
  )}
  </motion.div>
  </div>

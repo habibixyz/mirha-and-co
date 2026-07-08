@@ -386,7 +386,7 @@ export function AnalysisClient({
  <div className="pricing-card" style={{ background: "var(--sand)", border: "1px solid var(--rule)" }}>
  <span style={{ fontSize: "0.75rem", fontWeight: 700, textTransform: "uppercase", color: "var(--muted)" }}>One-Time Scan</span>
  <span style={{ fontSize: "2rem", fontWeight: 700, margin: "0.5rem 0", fontFamily: "'Bebas Neue', sans-serif" }}>
- {paymentRegion === "USD" ? "₹1.99" : "₹149"}
+ {paymentRegion === "USD" ? "$1.99" : "₹149"}
  </span>
  <p style={{ fontSize: "0.8rem", color: "var(--muted)", margin: "0 0 1.5rem", textAlign: "center" }}>
  {paymentRegion === "USD" ? "International payments are temporarily unavailable. Use INR checkout or contact support." : "Unlock a single scan report and chat session instantly."}
@@ -414,10 +414,10 @@ export function AnalysisClient({
  <div className="pricing-card" style={{ background: "var(--ink)", color: "var(--white)" }}>
  <span style={{ fontSize: "0.75rem", fontWeight: 700, textTransform: "uppercase", color: "var(--rose)" }}>Pro Monthly</span>
  <span style={{ fontSize: "2rem", fontWeight: 700, margin: "0.5rem 0", fontFamily: "'Bebas Neue', sans-serif" }}>
- {paymentRegion === "USD" ? "₹4.99" : "₹199"}
+ {paymentRegion === "USD" ? "$10.99" : "₹199"}
  </span>
  <p style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.7)", margin: "0 0 1.5rem", textAlign: "center" }}>
- {paymentRegion === "USD" ? "International subscriptions are temporarily unavailable. Use INR checkout or contact support." : "1 Scan / Day, unlimited routines, and full chat access."}
+ 1 Scan / Day, unlimited routines, and full chat access.
  </p>
  <button
  disabled={paymentPending}
@@ -435,7 +435,7 @@ export function AnalysisClient({
  boxShadow: "0 4px 12px rgba(252, 39, 121, 0.2)"
  }}
  >
- {paymentPending ? <Loader2 size={16} style={{ animation: "spin 1s linear infinite" }} /> : (paymentRegion === "USD" ? "Unavailable" : "Subscribe")}
+ {paymentPending ? <Loader2 size={16} style={{ animation: "spin 1s linear infinite" }} /> : "Subscribe"}
  </button>
  </div>
  </div>
