@@ -1899,7 +1899,7 @@ export const PRODUCTS = [
  hideFromShop: true
  },
  {
- id: 1011,
+ id: 5011,
  name: "Minimalist Anti-Dandruff Shampoo",
  brand: "Minimalist",
  category: "Hair Care",
@@ -4999,7 +4999,7 @@ id: 601,
   link: "https://amzn.to/3SH3AmN"
 },
 {
-  id: 1001,
+  id: 5001,
   name: "Detoxie Hard Water Repair Combo (Shampoo + Conditioner)",
   brand: "Detoxie",
   category: "Hair Care",
@@ -5023,7 +5023,7 @@ id: 601,
   notes: "Perfect for regions with high groundwater hardness. Instantly strips mineral film from hair shafts."
 },
 {
-  id: 1002,
+  id: 5002,
   name: "L'Oréal Professionnel Metal DX Shampoo",
   brand: "L'Oréal Professionnel",
   category: "Hair Care",
@@ -5047,7 +5047,7 @@ id: 601,
   notes: "Dermatologist-recommended professional shampoo to prevent metal particles from causing hair breakage."
 },
 {
-  id: 1003,
+  id: 5003,
   name: "Detoxie Power Cleanse Shampoo",
   brand: "Detoxie",
   category: "Hair Care",
@@ -5066,7 +5066,7 @@ id: 601,
   },
   tags: ["detoxie", "shampoo", "clarifying", "hard water", "buildup"],
   concerns: ["itchyscalp", "hairfall"],
-  image: "https://m.media-amazon.com/images/I/61t-XfV43IL._SL300_.jpg",
+  image: "/products/detoxie-power-cleanse-shampoo.jpg",
   link: "https://amzn.to/3OcD3Xz",
   notes: "Combines chelating agents with clarifying botanicals to refresh mineral-heavy scalps."
 }
