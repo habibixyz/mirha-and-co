@@ -474,20 +474,24 @@ export async function forgotPasswordAction(_state: AuthState, formData: FormData
  });
 
  const resetUrl = `${await getBaseUrl()}/reset-password?token=${token}`;
+ console.log("Password reset link generated:", resetUrl);
 
  if (process.env.RESEND_API_KEY && process.env.PASSWORD_RESET_FROM) {
+ try {
  const resend = new Resend(process.env.RESEND_API_KEY);
- await resend.emails.send({
+ const result = await resend.emails.send({
  from: process.env.PASSWORD_RESET_FROM,
  to: email,
  subject: "Reset your Mirha & Co. password",
  html: `<p>Use this link to reset your password. It expires in 1 hour.</p><p><a href="${resetUrl}">Reset password</a></p>`,
  });
- } else {
- console.log("Password reset link:", resetUrl);
+ console.log("Resend API response:", result);
+ } catch (resendError) {
+ console.error("Resend API error:", resendError);
+ }
  }
  } catch (error) {
- console.error("Forgot password error:", error);
+ console.error("Forgot password database/logic error:", error);
  }
 
  return { success };
@@ -861,5 +865,32 @@ export async function submitLeadAction(email: string, type: string, data?: strin
  console.error("Failed to save lead:", error);
  return { error: "Failed to submit. Please try again." };
  }
+}
+
+export async function updateUserBlacklist(blacklist: string[]) {
+ const session = await getSession();
+ if (!session) throw new Error("Unauthorized");
+
+ const user = await prisma.user.findUnique({ where: { id: session.userId } });
+ if (!user) throw new Error("User not found");
+
+ let profile: any = {};
+ if (user.skinProfile) {
+ try {
+ profile = JSON.parse(user.skinProfile);
+ } catch (e) {
+ // ignore
+ }
+ }
+
+ const updatedProfile = { ...profile, blacklist };
+
+ await prisma.user.update({
+ where: { id: session.userId },
+ data: { skinProfile: JSON.stringify(updatedProfile) }
+ });
+
+ revalidatePath("/dashboard/conflicts");
+ revalidatePath("/dashboard");
 }
 

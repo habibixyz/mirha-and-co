@@ -1,9 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useTransition } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { AlertTriangle, CheckCircle, ShieldAlert, Lock, ArrowRight, Star } from "lucide-react";
+import { AlertTriangle, CheckCircle, ShieldAlert, Lock, ArrowRight, Star, Plus, X, Tag } from "lucide-react";
 import Link from "next/link";
+import { updateUserBlacklist } from "../../actions";
 
 interface ConflictRule {
  a: string;
@@ -122,10 +123,14 @@ function findConflicts(a: string, b: string): ConflictRule[] {
  return found;
 }
 
-export function ConflictsClient({ isPro }: { isPro: boolean }) {
+export function ConflictsClient({ isPro, initialBlacklist = [] }: { isPro: boolean; initialBlacklist?: string[] }) {
  const [productA, setProductA] = useState("");
  const [productB, setProductB] = useState("");
  const [results, setResults] = useState<ConflictRule[] | null>(null);
+ 
+ const [blacklist, setBlacklist] = useState<string[]>(initialBlacklist);
+ const [newIngredient, setNewIngredient] = useState("");
+ const [isSaving, startTransition] = useTransition();
 
  useEffect(() => {
  if (!productA.trim() || !productB.trim()) {
@@ -133,9 +138,69 @@ export function ConflictsClient({ isPro }: { isPro: boolean }) {
  }
  }, [productA, productB]);
 
+ const handleAddIngredient = (e: React.FormEvent) => {
+ e.preventDefault();
+ if (!newIngredient.trim()) return;
+ const added = newIngredient.trim();
+ if (blacklist.includes(added)) return;
+
+ const updated = [...blacklist, added];
+ setBlacklist(updated);
+ setNewIngredient("");
+
+ startTransition(async () => {
+ try {
+ await updateUserBlacklist(updated);
+ } catch (err) {
+ console.error("Failed to save blacklist:", err);
+ }
+ });
+ };
+
+ const handleRemoveIngredient = (item: string) => {
+ const updated = blacklist.filter(i => i !== item);
+ setBlacklist(updated);
+
+ startTransition(async () => {
+ try {
+ await updateUserBlacklist(updated);
+ } catch (err) {
+ console.error("Failed to save blacklist:", err);
+ }
+ });
+ };
+
  function check() {
  if (!productA.trim() || !productB.trim()) return;
- setResults(findConflicts(productA, productB));
+
+ const chemicalConflicts = findConflicts(productA, productB);
+ const blacklistConflicts: ConflictRule[] = [];
+
+ const termsA = productA.toLowerCase().split(/[\s,;]+/).filter(Boolean).map(t => t.trim().replace(/[^a-z0-9]/g, ""));
+ const termsB = productB.toLowerCase().split(/[\s,;]+/).filter(Boolean).map(t => t.trim().replace(/[^a-z0-9]/g, ""));
+
+ blacklist.forEach(item => {
+ const normalizedItem = item.trim().toLowerCase().replace(/[^a-z0-9]/g, "");
+ if (!normalizedItem) return;
+
+ const inA = termsA.some(t => t.includes(normalizedItem) || normalizedItem.includes(t));
+ const inB = termsB.some(t => t.includes(normalizedItem) || normalizedItem.includes(t));
+
+ if (inA || inB) {
+ const foundIn = [];
+ if (inA) foundIn.push("Product A");
+ if (inB) foundIn.push("Product B");
+ 
+ blacklistConflicts.push({
+ a: item,
+ b: foundIn.join(" & "),
+ severity: "avoid",
+ reason: `Critical safety warning: This ingredient matches your personal sensitivity blacklist. Found in ${foundIn.join(" and ")}.`
+ });
+ }
+ });
+
+ setResults([...blacklistConflicts, ...chemicalConflicts]);
  }
 
  const containerVariants = {
@@ -415,6 +480,119 @@ export function ConflictsClient({ isPro }: { isPro: boolean }) {
  </motion.div>
  )}
  </AnimatePresence>
+
+ {/* Sensitivity Profile Manager */}
+ <motion.div variants={itemVariants} style={{
+ marginTop: "4rem",
+ background: "var(--white)",
+ border: "1px solid var(--dash-border)",
+ borderRadius: "28px",
+ padding: "2.5rem",
+ boxShadow: "0 20px 50px rgba(40, 28, 20, 0.03)",
+ }}>
+ <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.5rem" }}>
+ <Tag size={20} color="var(--dash-accent)" />
+ <h3 style={{ fontSize: "1.3rem", margin: 0, color: "var(--dash-ink)", fontWeight: 600, fontFamily: "var(--dash-font-serif)" }}>My Sensitivity Profile</h3>
+ </div>
+ <p style={{ color: "var(--dash-muted)", fontSize: "0.9rem", margin: "0 0 1.5rem 0", lineHeight: 1.5 }}>
+ Add ingredients you are sensitive or allergic to. We will automatically flag matches inside the Conflict Checker and AI product searches.
+ </p>
+
+ <form onSubmit={handleAddIngredient} style={{ display: "flex", gap: "0.75rem", marginBottom: "1.5rem" }}>
+ <input
+ type="text"
+ placeholder="e.g. Niacinamide, Salicylic Acid, Fragrance..."
+ value={newIngredient}
+ onChange={(e) => setNewIngredient(e.target.value)}
+ disabled={isSaving}
+ style={{
+ flex: 1,
+ padding: "0.8rem 1.2rem",
+ borderRadius: "14px",
+ border: "1px solid var(--dash-border)",
+ fontSize: "0.95rem",
+ outline: "none",
+ transition: "border-color 0.2s"
+ }}
+ />
+ <button
+ type="submit"
+ disabled={isSaving || !newIngredient.trim()}
+ style={{
+ background: "var(--dash-ink)",
+ color: "white",
+ border: "none",
+ borderRadius: "14px",
+ padding: "0.8rem 1.5rem",
+ fontSize: "0.9rem",
+ fontWeight: 600,
+ cursor: "pointer",
+ display: "flex",
+ alignItems: "center",
+ gap: "0.4rem",
+ transition: "opacity 0.2s",
+ opacity: (isSaving || !newIngredient.trim()) ? 0.6 : 1
+ }}
+ >
+ <Plus size={16} /> Add
+ </button>
+ </form>
+
+ {blacklist.length === 0 ? (
+ <div style={{
+ background: "#faf9f7",
+ border: "1px dashed var(--dash-border)",
+ borderRadius: "18px",
+ padding: "1.5rem",
+ textAlign: "center",
+ color: "var(--dash-muted)",
+ fontSize: "0.9rem"
+ }}>
+ No sensitivities added yet. Add items above to safeguard your routine.
+ </div>
+ ) : (
+ <div style={{ display: "flex", flexWrap: "wrap", gap: "0.6rem" }}>
+ {blacklist.map((item) => (
+ <span
+ key={item}
+ style={{
+ display: "inline-flex",
+ alignItems: "center",
+ gap: "0.4rem",
+ background: "#fff1f0",
+ color: "#fc2779",
+ border: "1px solid rgba(252, 39, 121, 0.15)",
+ padding: "0.4rem 0.8rem",
+ borderRadius: "99px",
+ fontSize: "0.85rem",
+ fontWeight: 600
+ }}
+ >
+ {item}
+ <button
+ type="button"
+ onClick={() => handleRemoveIngredient(item)}
+ disabled={isSaving}
+ style={{
+ background: "transparent",
+ border: "none",
+ color: "#fc2779",
+ cursor: "pointer",
+ padding: "2px",
+ display: "flex",
+ alignItems: "center",
+ justifyContent: "center",
+ opacity: 0.7
+ }}
+ >
+ <X size={14} />
+ </button>
+ </span>
+ ))}
+ </div>
+ )}
+ </motion.div>
+
  </motion.div>
  </div>
  </motion.div>

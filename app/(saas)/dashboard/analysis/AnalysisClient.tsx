@@ -60,6 +60,7 @@ export function AnalysisClient({
  const [messages, setMessages] = useState<{ sender: "user" | "bot"; text: string }[]>([]);
  const [inputMessage, setInputMessage] = useState("");
  const [chatLoading, setChatLoading] = useState(false);
+ const [selectedMetric, setSelectedMetric] = useState<"all" | "barrier" | "acne" | "redness" | "oiliness">("all");
 
  // Initialize Paddle on client
  useEffect(() => {
@@ -265,6 +266,172 @@ export function AnalysisClient({
  };
 
  const canScan = user.isPro && !nextAvailableAt || user.credits > 0;
+
+  const renderTrendChart = () => {
+    if (pastAnalyses.length < 2) {
+      return null;
+    }
+
+    const sorted = [...pastAnalyses].sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
+    const paddingLeft = 40;
+    const paddingRight = 20;
+    const paddingTop = 20;
+    const paddingBottom = 35;
+    const chartWidth = 600 - paddingLeft - paddingRight;
+    const chartHeight = 240 - paddingTop - paddingBottom;
+
+    const getPath = (key: "barrierScore" | "acneScore" | "rednessScore" | "oilinessScore") => {
+      return sorted.map((item, idx) => {
+        const x = paddingLeft + (idx * chartWidth) / (sorted.length - 1);
+        const y = paddingTop + chartHeight - (item[key] * chartHeight) / 100;
+        return `${idx === 0 ? "M" : "L"} ${x} ${y}`;
+      }).join(" ");
+    };
+
+    const metrics = [
+      { key: "barrierScore", label: "Barrier", color: "#22c55e", id: "barrier" },
+      { key: "acneScore", label: "Acne", color: "#eab308", id: "acne" },
+      { key: "rednessScore", label: "Redness", color: "#ef4444", id: "redness" },
+      { key: "oilinessScore", label: "Oiliness", color: "#3b82f6", id: "oiliness" }
+    ] as const;
+
+    return (
+      <div style={{
+        background: "rgba(255,255,255,0.75)",
+        backdropFilter: "blur(12px)",
+        border: "1px solid var(--rule)",
+        borderRadius: "20px",
+        padding: "1.5rem",
+        marginBottom: "2.5rem",
+        boxShadow: "0 10px 30px rgba(0,0,0,0.02)"
+      }}>
+        {/* Chart Header */}
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.5rem", flexWrap: "wrap", gap: "1rem" }}>
+          <div>
+            <h4 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "1.3rem", color: "var(--ink)", margin: 0 }}>Skin Progress Trends</h4>
+            <p style={{ color: "var(--muted)", fontSize: "0.8rem", margin: "0.2rem 0 0" }}>Interactive tracking across skin scans</p>
+          </div>
+          
+          {/* Legend Toggles */}
+          <div style={{ display: "flex", gap: "0.4rem", flexWrap: "wrap" }}>
+            <button
+              onClick={() => setSelectedMetric("all")}
+              style={{
+                fontSize: "0.75rem",
+                padding: "0.3rem 0.7rem",
+                borderRadius: "20px",
+                border: "1px solid " + (selectedMetric === "all" ? "var(--ink)" : "var(--rule)"),
+                background: selectedMetric === "all" ? "var(--ink)" : "transparent",
+                color: selectedMetric === "all" ? "var(--white)" : "var(--ink)",
+                cursor: "pointer",
+                fontWeight: 600,
+                transition: "all 0.2s"
+              }}
+            >
+              All Metrics
+            </button>
+            {metrics.map((m) => (
+              <button
+                key={m.id}
+                onClick={() => setSelectedMetric(m.id)}
+                style={{
+                  fontSize: "0.75rem",
+                  padding: "0.3rem 0.7rem",
+                  borderRadius: "20px",
+                  border: `1px solid ${selectedMetric === m.id ? m.color : "var(--rule)"}`,
+                  background: selectedMetric === m.id ? m.color : "transparent",
+                  color: selectedMetric === m.id ? "white" : "var(--ink)",
+                  cursor: "pointer",
+                  fontWeight: 600,
+                  transition: "all 0.2s"
+                }}
+              >
+                <span style={{ display: "inline-block", width: "8px", height: "8px", borderRadius: "50%", background: selectedMetric === m.id ? "white" : m.color, marginRight: "5px" }}></span>
+                {m.label}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* SVG Wrapper */}
+        <div style={{ position: "relative", width: "100%", overflowX: "auto" }}>
+          <svg viewBox="0 0 600 240" style={{ width: "100%", minWidth: "500px", display: "block" }}>
+            {/* Grid Lines */}
+            {[0, 25, 50, 75, 100].map((val) => {
+              const y = paddingTop + chartHeight - (val * chartHeight) / 100;
+              return (
+                <g key={val}>
+                  <line x1={paddingLeft} y1={y} x2={600 - paddingRight} y2={y} stroke="var(--rule)" strokeWidth="1" strokeDasharray="4 4" />
+                  <text x={paddingLeft - 8} y={y + 4} textAnchor="end" fontSize="10" fill="var(--muted)" fontWeight="500">{val}</text>
+                </g>
+              );
+            })}
+
+            {/* Date Ticks */}
+            {sorted.map((item, idx) => {
+              const x = paddingLeft + (idx * chartWidth) / (sorted.length - 1);
+              const dateStr = new Date(item.createdAt).toLocaleDateString(undefined, { month: "short", day: "numeric" });
+              return (
+                <g key={item.id}>
+                  <line x1={x} y1={paddingTop} x2={x} y2={paddingTop + chartHeight} stroke="var(--rule)" strokeWidth="0.5" />
+                  <text x={x} y={240 - 10} textAnchor="middle" fontSize="10" fill="var(--muted)" fontWeight="500">{dateStr}</text>
+                </g>
+              );
+            })}
+
+            {/* Plot Lines */}
+            {metrics.map((m) => {
+              const isVisible = selectedMetric === "all" || selectedMetric === m.id;
+              if (!isVisible) return null;
+              return (
+                <path
+                  key={m.key}
+                  d={getPath(m.key)}
+                  fill="none"
+                  stroke={m.color}
+                  strokeWidth="3"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  style={{ transition: "stroke-width 0.2s" }}
+                />
+              );
+            })}
+
+            {/* Data Points */}
+            {metrics.map((m) => {
+              const isVisible = selectedMetric === "all" || selectedMetric === m.id;
+              if (!isVisible) return null;
+              return sorted.map((item, idx) => {
+                const x = paddingLeft + (idx * chartWidth) / (sorted.length - 1);
+                const score = item[m.key];
+                const y = paddingTop + chartHeight - (score * chartHeight) / 100;
+                return (
+                  <circle
+                    key={`${item.id}-${m.key}`}
+                    cx={x}
+                    cy={y}
+                    r="5"
+                    fill="white"
+                    stroke={m.color}
+                    strokeWidth="3"
+                    style={{ cursor: "pointer" }}
+                    onClick={() => {
+                      setReport(item.detailedJson);
+                      setMessages([
+                        { sender: "bot", text: item.detailedJson.agentWelcomeMessage || "Consultation for this past report is active." }
+                      ]);
+                    }}
+                  >
+                    <title>{`${m.label}: ${score} (${new Date(item.createdAt).toLocaleDateString()})`}</title>
+                  </circle>
+                );
+              });
+            })}
+          </svg>
+        </div>
+      </div>
+    );
+  };
 
  return (
  <div className="analysis-container">
@@ -854,6 +1021,7 @@ export function AnalysisClient({
  {/* Scan History list */}
  {pastAnalyses.length > 0 && (
  <div style={{ marginTop: "3rem" }}>
+ {renderTrendChart()}
  <h3 style={{
  fontFamily: "'DM Serif Display', serif",
  fontSize: "1.8rem",

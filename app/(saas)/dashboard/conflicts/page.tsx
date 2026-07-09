@@ -11,5 +11,15 @@ export default async function ConflictsPage() {
 
  const isPro = user.subscription?.tier === "pro" && user.subscription?.status === "active";
 
- return <ConflictsClient isPro={isPro} />;
+ let blacklist: string[] = [];
+ if (user.skinProfile) {
+ try {
+ const profile = JSON.parse(user.skinProfile);
+ blacklist = profile.blacklist || [];
+ } catch (e) {
+ // ignore
+ }
+ }
+
+ return <ConflictsClient isPro={isPro} initialBlacklist={blacklist} />;
 }

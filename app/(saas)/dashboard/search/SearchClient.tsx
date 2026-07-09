@@ -4,10 +4,11 @@ import { useMemo, useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 import Link from "next/link";
-import { ArrowRight, Search, Crown, BookOpen, ShoppingBag, Droplets, ExternalLink, Star } from "lucide-react";
+import { ArrowRight, Search, Crown, BookOpen, ShoppingBag, Droplets, ExternalLink, Star, X } from "lucide-react";
 import { searchMirha } from "@/lib/searchIndex";
 import { SEARCH_INDEX, SearchItem } from "@/lib/searchIndex";
 import { getAISearchAdvice } from "@/app/(saas)/actions";
+import { PRODUCTS } from "@/lib/products";
 
 const QUICK = [
  "oily skin sunscreen",
@@ -32,9 +33,23 @@ function iconFor(type: SearchItem["type"]) {
  return <Droplets size={24} color="var(--rose)" />;
 }
 
-function ResultCard({ item, isAiRecommended, isBest }: { item: SearchItem; isAiRecommended?: boolean; isBest?: boolean }) {
+function ResultCard({
+  item,
+  isAiRecommended,
+  isBest,
+  isSelected,
+  onToggleCompare,
+  canSelectMore
+}: {
+  item: SearchItem;
+  isAiRecommended?: boolean;
+  isBest?: boolean;
+  isSelected: boolean;
+  onToggleCompare: () => void;
+  canSelectMore: boolean;
+}) {
  return (
- <Link href={item.url} className={`result-card ${isBest ? 'is-best' : ''} ${item.image ? 'with-image' : ''}`}>
+ <Link href={item.url} className={`result-card ${isBest ? 'is-best' : ''} ${item.image ? 'with-image' : ''}`} style={{ position: "relative" }}>
  {item.image && (
  <div className="result-image">
  <img src={item.image} alt={item.title} />
@@ -52,8 +67,75 @@ function ResultCard({ item, isAiRecommended, isBest }: { item: SearchItem; isAiR
  <p>{item.description}</p>
  
  {item.price && (
- <div style={{ marginTop: '12px' }}>
- <span style={{ color: '#fc2779', fontWeight: 700, fontSize: '0.8rem' }}>₹{item.price.toLocaleString("en-IN")}</span>
+ <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: '12px', flexWrap: "wrap", gap: "8px" }}>
+ <span style={{ color: '#fc2779', fontWeight: 700, fontSize: '0.85rem' }}>₹{item.price.toLocaleString("en-IN")}</span>
+ {item.type === "product" && (
+ <div 
+ onClick={(e) => {
+ e.preventDefault();
+ e.stopPropagation();
+ onToggleCompare();
+ }}
+ style={{
+ display: "inline-flex",
+ alignItems: "center",
+ gap: "4px",
+ background: isSelected ? "var(--dash-accent)" : "#faf9f7",
+ border: "1px solid " + (isSelected ? "var(--dash-accent)" : "var(--dash-border)"),
+ borderRadius: "8px",
+ padding: "4px 8px",
+ fontSize: "0.75rem",
+ fontWeight: 600,
+ color: isSelected ? "white" : "var(--dash-ink)",
+ cursor: "pointer",
+ transition: "all 0.2s"
+ }}
+ >
+ <input 
+ type="checkbox" 
+ checked={isSelected}
+ readOnly
+ disabled={!isSelected && !canSelectMore}
+ style={{ cursor: "pointer", pointerEvents: "none" }}
+ />
+ Compare
+ </div>
+ )}
+ </div>
+ )}
+
+ {!item.price && item.type === "product" && (
+ <div style={{ marginTop: "12px", display: "flex", justifyContent: "flex-end" }}>
+ <div 
+ onClick={(e) => {
+ e.preventDefault();
+ e.stopPropagation();
+ onToggleCompare();
+ }}
+ style={{
+ display: "inline-flex",
+ alignItems: "center",
+ gap: "4px",
+ background: isSelected ? "var(--dash-accent)" : "#faf9f7",
+ border: "1px solid " + (isSelected ? "var(--dash-accent)" : "var(--dash-border)"),
+ borderRadius: "8px",
+ padding: "4px 8px",
+ fontSize: "0.75rem",
+ fontWeight: 600,
+ color: isSelected ? "white" : "var(--dash-ink)",
+ cursor: "pointer",
+ transition: "all 0.2s"
+ }}
+ >
+ <input 
+ type="checkbox" 
+ checked={isSelected}
+ readOnly
+ disabled={!isSelected && !canSelectMore}
+ style={{ cursor: "pointer", pointerEvents: "none" }}
+ />
+ Compare
+ </div>
  </div>
  )}
  </div>
@@ -63,9 +145,24 @@ function ResultCard({ item, isAiRecommended, isBest }: { item: SearchItem; isAiR
  );
 }
 
-export function SearchClient({ isPro }: { isPro: boolean }) {
+export function SearchClient({ isPro, blacklist = [] }: { isPro: boolean; blacklist?: string[] }) {
  const router = useRouter();
  const searchParams = useSearchParams();
+ 
+ const [compareIds, setCompareIds] = useState<string[]>([]);
+ const [compareModalOpen, setCompareModalOpen] = useState(false);
+
+ const handleToggleCompare = (id: string) => {
+ setCompareIds((prev) => {
+ if (prev.includes(id)) {
+ return prev.filter((item) => item !== id);
+ }
+ if (prev.length >= 2) {
+ return prev;
+ }
+ return [...prev, id];
+ });
+ };
  
  // localQuery manages the input value instantly to eliminate typing lag
  const [localQuery, setLocalQuery] = useState(searchParams.get("q") || "");
@@ -766,6 +863,9 @@ export function SearchClient({ isPro }: { isPro: boolean }) {
  item={item} 
  isAiRecommended={aiAdvice?.recommendedIds?.includes(item.id)}
  isBest={results.indexOf(item) === 0}
+ isSelected={compareIds.includes(item.id)}
+ onToggleCompare={() => handleToggleCompare(item.id)}
+ canSelectMore={compareIds.length < 2}
  />
  ))}
  
@@ -775,6 +875,292 @@ export function SearchClient({ isPro }: { isPro: boolean }) {
  );
  })}
  </div>
+
+ {/* Product Compare components */}
+ {(() => {
+ const comparedProducts = compareIds.map(id => {
+ const asin = id.replace("product-", "");
+ return PRODUCTS.find(p => p.asin === asin);
+ }).filter(Boolean);
+
+ const getProductBlacklistMatches = (prod: any) => {
+ if (!prod) return [];
+ const matches: string[] = [];
+ const fieldsToSearch = [
+ prod.name || "",
+ prod.description || "",
+ prod.brand || "",
+ ...(prod.tags || []),
+ ...(prod.concerns || []),
+ ...(prod.skinTypes || []),
+ ...(prod.ingredients || []),
+ ...Object.values(prod.specs || {}).map(String)
+ ].map(s => s.toLowerCase().replace(/[^a-z0-9]/g, ""));
+
+ blacklist.forEach(item => {
+ const normalizedItem = item.trim().toLowerCase().replace(/[^a-z0-9]/g, "");
+ if (!normalizedItem) return;
+ const matchFound = fieldsToSearch.some(field => field.includes(normalizedItem) || normalizedItem.includes(field));
+ if (matchFound) {
+ matches.push(item);
+ }
+ });
+
+ return Array.from(new Set(matches));
+ };
+
+ return (
+ <>
+ {/* Compare Bar */}
+ {compareIds.length > 0 && (
+ <div style={{
+ position: "fixed",
+ bottom: "24px",
+ left: "50%",
+ transform: "translateX(-50%)",
+ background: "var(--dash-ink)",
+ color: "white",
+ borderRadius: "20px",
+ padding: "1rem 2rem",
+ display: "flex",
+ alignItems: "center",
+ gap: "1.5rem",
+ boxShadow: "0 20px 40px rgba(0,0,0,0.3)",
+ zIndex: 100,
+ width: "90%",
+ maxWidth: "500px",
+ justifyContent: "space-between"
+ }}>
+ <div style={{ fontSize: "0.9rem", fontWeight: 600 }}>
+ Compare Products ({compareIds.length}/2 selected)
+ </div>
+ <div style={{ display: "flex", gap: "0.8rem", alignItems: "center" }}>
+ <button
+ onClick={() => setCompareIds([])}
+ style={{
+ background: "transparent",
+ color: "#a89f97",
+ border: "none",
+ fontSize: "0.85rem",
+ cursor: "pointer",
+ fontWeight: 500
+ }}
+ >
+ Clear
+ </button>
+ <button
+ onClick={() => setCompareModalOpen(true)}
+ disabled={compareIds.length < 2}
+ style={{
+ background: "#fc2779",
+ color: "white",
+ border: "none",
+ borderRadius: "10px",
+ padding: "0.5rem 1rem",
+ fontSize: "0.85rem",
+ fontWeight: 600,
+ cursor: "pointer",
+ opacity: compareIds.length < 2 ? 0.5 : 1
+ }}
+ >
+ Compare
+ </button>
+ </div>
+ </div>
+ )}
+
+ {/* Comparison Modal */}
+ {compareModalOpen && comparedProducts.length === 2 && (
+ <div style={{
+ position: "fixed",
+ top: 0,
+ left: 0,
+ right: 0,
+ bottom: 0,
+ background: "rgba(22, 20, 18, 0.6)",
+ backdropFilter: "blur(8px)",
+ zIndex: 200,
+ display: "flex",
+ alignItems: "center",
+ justifyContent: "center",
+ padding: "20px"
+ }}>
+ <div style={{
+ background: "white",
+ borderRadius: "28px",
+ width: "100%",
+ maxWidth: "850px",
+ maxHeight: "90vh",
+ overflowY: "auto",
+ boxShadow: "0 30px 70px rgba(0,0,0,0.25)",
+ position: "relative",
+ display: "flex",
+ flexDirection: "column"
+ }}>
+ {/* Modal Header */}
+ <div style={{
+ position: "sticky",
+ top: 0,
+ background: "white",
+ zIndex: 10,
+ borderBottom: "1px solid var(--dash-border)",
+ padding: "1.5rem 2rem",
+ display: "flex",
+ justifyContent: "space-between",
+ alignItems: "center"
+ }}>
+ <h2 style={{
+ margin: 0,
+ fontFamily: "var(--dash-font-serif)",
+ fontSize: "1.5rem",
+ color: "var(--dash-ink)",
+ fontWeight: 400
+ }}>Product Comparison</h2>
+ <button
+ onClick={() => setCompareModalOpen(false)}
+ style={{
+ background: "transparent",
+ border: "none",
+ cursor: "pointer",
+ padding: "4px",
+ color: "var(--dash-ink)",
+ display: "flex",
+ alignItems: "center",
+ justifyContent: "center"
+ }}
+ >
+ <X size={20} />
+ </button>
+ </div>
+
+ {/* Modal Content */}
+ <div style={{ padding: "2rem" }}>
+ <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "2rem" }}>
+ {comparedProducts.map((prod: any) => {
+ const blacklistMatches = getProductBlacklistMatches(prod);
+ return (
+ <div key={prod.asin} style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+ {/* Brand & Name */}
+ <div>
+ <span style={{ fontSize: "0.75rem", letterSpacing: "0.1em", textTransform: "uppercase", fontWeight: 700, color: "var(--dash-accent)" }}>{prod.brand}</span>
+ <h3 style={{ margin: "0.2rem 0", fontSize: "1.2rem", fontFamily: "var(--dash-font-serif)", fontWeight: 400, color: "var(--dash-ink)", minHeight: "2.8rem", overflow: "hidden" }}>{prod.name}</h3>
+ </div>
+
+ {/* Image */}
+ <div style={{ height: "180px", background: "#faf9f7", borderRadius: "18px", display: "flex", alignItems: "center", justifyItems: "center", justifyContent: "center", overflow: "hidden", border: "1px solid var(--dash-border)" }}>
+ {prod.image ? (
+ <img src={prod.image} alt={prod.name} style={{ maxHeight: "80%", maxWidth: "80%", objectFit: "contain" }} />
+ ) : (
+ <span style={{ color: "var(--dash-muted)", fontSize: "0.85rem" }}>No image available</span>
+ )}
+ </div>
+
+ {/* Safety Check (Blacklist Warning) */}
+ <div>
+ {blacklistMatches.length > 0 ? (
+ <div style={{
+ background: "#fff1f0",
+ border: "1px solid rgba(252, 39, 121, 0.2)",
+ borderRadius: "12px",
+ padding: "0.8rem 1rem",
+ color: "#fc2779",
+ fontSize: "0.85rem",
+ fontWeight: 600,
+ display: "flex",
+ alignItems: "center",
+ gap: "0.5rem"
+ }}>
+ ⚠️ Contains blacklisted: {blacklistMatches.join(", ")}
+ </div>
+ ) : (
+ <div style={{
+ background: "rgba(16, 185, 129, 0.06)",
+ border: "1px solid rgba(16, 185, 129, 0.2)",
+ borderRadius: "12px",
+ padding: "0.8rem 1rem",
+ color: "#047857",
+ fontSize: "0.85rem",
+ fontWeight: 600,
+ display: "flex",
+ alignItems: "center",
+ gap: "0.5rem"
+ }}>
+ ✅ Safety Check: Safe for your skin
+ </div>
+ )}
+ </div>
+
+ {/* Specs / Table */}
+ <div style={{ display: "flex", flexDirection: "column", gap: "0.8rem", marginTop: "1rem" }}>
+ <div style={{ display: "flex", justifyContent: "space-between", borderBottom: "1px solid var(--dash-border)", paddingBottom: "0.5rem" }}>
+ <span style={{ fontSize: "0.85rem", color: "var(--dash-muted)" }}>Price</span>
+ <span style={{ fontSize: "0.85rem", fontWeight: 700, color: "#fc2779" }}>₹{prod.price?.toLocaleString("en-IN") || prod.mrp?.toLocaleString("en-IN")}</span>
+ </div>
+
+ <div style={{ display: "flex", justifyContent: "space-between", borderBottom: "1px solid var(--dash-border)", paddingBottom: "0.5rem" }}>
+ <span style={{ fontSize: "0.85rem", color: "var(--dash-muted)" }}>Rating</span>
+ <span style={{ fontSize: "0.85rem", fontWeight: 600, color: "var(--dash-ink)" }}>⭐ {prod.rating || "N/A"} ({prod.reviews || "0"} reviews)</span>
+ </div>
+
+ {Object.entries(prod.specs || {}).map(([key, val]: any) => (
+ <div key={key} style={{ display: "flex", flexDirection: "column", borderBottom: "1px solid var(--dash-border)", paddingBottom: "0.5rem", gap: "0.2rem" }}>
+ <span style={{ fontSize: "0.75rem", color: "var(--dash-muted)" }}>{key}</span>
+ <span style={{ fontSize: "0.85rem", fontWeight: 500, color: "var(--dash-ink)" }}>{String(val)}</span>
+ </div>
+ ))}
+
+ <div style={{ display: "flex", flexDirection: "column", gap: "0.2rem" }}>
+ <span style={{ fontSize: "0.75rem", color: "var(--dash-muted)" }}>Description</span>
+ <p style={{ margin: 0, fontSize: "0.8rem", lineHeight: 1.4, color: "var(--dash-muted)", display: "-webkit-box", WebkitLineClamp: 4, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{prod.description}</p>
+ </div>
+ </div>
+
+ {/* Link to Amazon / Detail */}
+ <div style={{ marginTop: "1.5rem" }}>
+ {prod.link ? (
+ <a href={prod.link} target="_blank" rel="noopener noreferrer" style={{
+ display: "flex",
+ alignItems: "center",
+ justifyContent: "center",
+ gap: "0.5rem",
+ background: "var(--dash-ink)",
+ color: "white",
+ padding: "0.8rem",
+ borderRadius: "12px",
+ fontSize: "0.85rem",
+ fontWeight: 600,
+ textDecoration: "none",
+ textAlign: "center"
+ }}>
+ Buy on Amazon <ExternalLink size={14} />
+ </a>
+ ) : (
+ <Link href={`/product/${prod.asin}`} style={{
+ display: "block",
+ background: "var(--dash-ink)",
+ color: "white",
+ padding: "0.8rem",
+ borderRadius: "12px",
+ fontSize: "0.85rem",
+ fontWeight: 600,
+ textDecoration: "none",
+ textAlign: "center"
+ }}>
+ View Product Details
+ </Link>
+ )}
+ </div>
+ </div>
+ );
+ })}
+ </div>
+ </div>
+ </div>
+ </div>
+ )}
+ </>
+ );
+ })()}
  </main>
  );
 }

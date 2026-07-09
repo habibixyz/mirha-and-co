@@ -1,10 +1,10 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { CheckCircle2, CalendarPlus, ChevronRight, LogOut } from "lucide-react";
+import { CheckCircle2, CalendarPlus, ChevronRight, LogOut, Sparkles, Lock } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { logoutAction, toggleRoutineStep } from "@/app/(saas)/actions";
+import { logoutAction, toggleRoutineStep, getJournalAnalysis } from "@/app/(saas)/actions";
 import { DashboardStats } from "./DashboardStats";
 
 export function DashboardClient({ user, routines, recentJournal, stats }: any) {
@@ -12,12 +12,40 @@ export function DashboardClient({ user, routines, recentJournal, stats }: any) {
  
  // Dynamic greeting based on hour
  const [greeting, setGreeting] = useState("Good Morning");
+ const [coachInsight, setCoachInsight] = useState<string | null>(null);
+ const [coachStatus, setCoachStatus] = useState<"loading" | "unlocked" | "need_pro" | "need_data">("loading");
  
  useEffect(() => {
  const hour = new Date().getHours();
  if (hour >= 17) setGreeting("Good Evening");
  else if (hour >= 12) setGreeting("Good Afternoon");
  else setGreeting("Good Morning");
+ }, []);
+
+ useEffect(() => {
+ async function loadCoach() {
+ try {
+ const res = await getJournalAnalysis();
+ if (!res) {
+ setCoachStatus("need_pro");
+ } else if ("error" in res) {
+ if (res.error === "UPGRADE_PRO") {
+ setCoachStatus("need_pro");
+ } else if (res.error === "NOT_ENOUGH_DATA") {
+ setCoachStatus("need_data");
+ } else {
+ setCoachStatus("need_pro");
+ }
+ } else {
+ setCoachInsight(res as string);
+ setCoachStatus("unlocked");
+ }
+ } catch (e) {
+ console.error("Failed to load coach insights", e);
+ setCoachStatus("need_pro");
+ }
+ }
+ loadCoach();
  }, []);
  
   const [checkedStepsMap, setCheckedStepsMap] = useState<Record<string, number[]>>({});
@@ -191,6 +219,95 @@ export function DashboardClient({ user, routines, recentJournal, stats }: any) {
           </motion.button>
         </div>
       </motion.header>
+
+      {/* AI Skincare Coach Card */}
+      <motion.div variants={itemVariants} style={{
+        background: "linear-gradient(135deg, #1c1917 0%, #292524 100%)",
+        color: "white",
+        borderRadius: "28px",
+        padding: "2rem",
+        marginBottom: "2.5rem",
+        position: "relative",
+        overflow: "hidden",
+        border: "1px solid rgba(255, 255, 255, 0.05)",
+        boxShadow: "0 20px 40px rgba(0,0,0,0.12)"
+      }}>
+        <div style={{ position: "absolute", top: "-10px", right: "-10px", opacity: 0.08 }}>
+          <Sparkles size={120} color="white" />
+        </div>
+
+        <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "1rem" }}>
+          <Sparkles size={18} color="#fc2779" />
+          <span style={{ fontSize: "0.75rem", letterSpacing: "0.15em", textTransform: "uppercase", fontWeight: 700, color: "#fc2779" }}>AI Skincare Coach</span>
+        </div>
+
+        {coachStatus === "loading" && (
+          <div>
+            <p style={{ margin: 0, fontStyle: "italic", opacity: 0.7, fontSize: "0.95rem" }}>Generating weekly routine observations...</p>
+            <div style={{ height: "3px", width: "100%", background: "rgba(255,255,255,0.1)", borderRadius: "2px", marginTop: "1rem", overflow: "hidden" }}>
+              <div style={{ height: "100%", width: "40%", background: "#fc2779", borderRadius: "2px", animation: "loadingMove 1.5s infinite linear" }}></div>
+            </div>
+          </div>
+        )}
+
+        {coachStatus === "need_pro" && (
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "1.2rem" }}>
+            <div style={{ flex: 1, minWidth: "240px" }}>
+              <h4 style={{ margin: 0, fontSize: "1.2rem", fontFamily: "var(--dash-font-serif)", fontWeight: 400 }}>Unlock Weekly AI Skincare Coaching</h4>
+              <p style={{ margin: "0.4rem 0 0", color: "#a89f97", fontSize: "0.85rem", lineHeight: 1.5 }}>
+                Get automated routines optimizations, checklist compliance insights, and personalized advice powered by Gemini.
+              </p>
+            </div>
+            <Link href="/dashboard/subscription" style={{ textDecoration: "none" }}>
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                style={{
+                  background: "#fc2779",
+                  color: "white",
+                  border: "none",
+                  borderRadius: "14px",
+                  padding: "0.75rem 1.25rem",
+                  fontSize: "0.85rem",
+                  fontWeight: 600,
+                  cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.4rem",
+                  boxShadow: "0 4px 12px rgba(252, 39, 121, 0.3)"
+                }}
+              >
+                <Lock size={14} /> Upgrade to Pro
+              </motion.button>
+            </Link>
+          </div>
+        )}
+
+        {coachStatus === "need_data" && (
+          <div>
+            <h4 style={{ margin: 0, fontSize: "1.2rem", fontFamily: "var(--dash-font-serif)", fontWeight: 400 }}>Awaiting Skin Entries</h4>
+            <p style={{ margin: "0.4rem 0 0", color: "#a89f97", fontSize: "0.85rem", lineHeight: 1.5 }}>
+              Please add at least <strong>3 daily entries</strong> in your Skin Journal so the coach can analyze your skin trends and checklist compliance.
+            </p>
+            <Link href="/dashboard/journal" style={{ textDecoration: "none", display: "inline-block", marginTop: "1rem" }}>
+              <span style={{ color: "#fc2779", fontSize: "0.85rem", fontWeight: 600, display: "flex", alignItems: "center", gap: "0.2rem" }}>
+                Go to Journal &rarr;
+              </span>
+            </Link>
+          </div>
+        )}
+
+        {coachStatus === "unlocked" && (
+          <div>
+            <div style={{ fontSize: "1rem", lineHeight: 1.6, color: "#f4f0ec", whiteSpace: "pre-wrap" }}>
+              {coachInsight}
+            </div>
+            <p style={{ margin: "1rem 0 0", fontSize: "0.75rem", color: "#a89f97", borderTop: "1px solid rgba(255,255,255,0.08)", paddingTop: "0.8rem" }}>
+              ✨ Routine recommendations are updated dynamically based on your last 7 days of logs.
+            </p>
+          </div>
+        )}
+      </motion.div>
 
       <div style={{
         display: "grid",

@@ -469,43 +469,44 @@ export function SubscriptionClient({ isPro }: { isPro: boolean }) {
  Upgrade your routine from guessing to diagnostic precision. Unlock professional AI tools and formulation analysis.
  </motion.p>
 
- 
- {/* Region Selector */}
- <div style={{ display: "flex", justifyContent: "center", gap: "0.5rem", marginBottom: "1.5rem" }}>
- <button
- onClick={() => {
- setPaymentRegion("USD");
- setBillingPeriod("monthly");
- }}
- style={{
- padding: "0.4rem 0.8rem",
- borderRadius: "8px",
- border: "1px solid " + (paymentRegion === "USD" ? "var(--dash-ink)" : "var(--dash-border)"),
- background: paymentRegion === "USD" ? "var(--dash-ink)" : "transparent",
- color: paymentRegion === "USD" ? "var(--dash-surface)" : "var(--dash-ink)",
- cursor: "pointer",
- fontSize: "0.85rem",
- fontWeight: 600
- }}
- >
- Global (USD)
- </button>
- <button
- onClick={() => setPaymentRegion("INR")}
- style={{
- padding: "0.4rem 0.8rem",
- borderRadius: "8px",
- border: "1px solid " + (paymentRegion === "INR" ? "var(--dash-ink)" : "var(--dash-border)"),
- background: paymentRegion === "INR" ? "var(--dash-ink)" : "transparent",
- color: paymentRegion === "INR" ? "var(--dash-surface)" : "var(--dash-ink)",
- cursor: "pointer",
- fontSize: "0.85rem",
- fontWeight: 600
- }}
- >
- India (INR)
- </button>
- </div>
+  {/* Region Selector (Hidden until Dodo Payments is approved) */}
+  {/* 
+  <div style={{ display: "flex", justifyContent: "center", gap: "0.5rem", marginBottom: "1.5rem" }}>
+    <button
+      onClick={() => {
+        setPaymentRegion("USD");
+        setBillingPeriod("monthly");
+      }}
+      style={{
+        padding: "0.4rem 0.8rem",
+        borderRadius: "8px",
+        border: "1px solid " + (paymentRegion === "USD" ? "var(--dash-ink)" : "var(--dash-border)"),
+        background: paymentRegion === "USD" ? "var(--dash-ink)" : "transparent",
+        color: paymentRegion === "USD" ? "var(--dash-surface)" : "var(--dash-ink)",
+        cursor: "pointer",
+        fontSize: "0.85rem",
+        fontWeight: 600
+      }}
+    >
+      Global (USD)
+    </button>
+    <button
+      onClick={() => setPaymentRegion("INR")}
+      style={{
+        padding: "0.4rem 0.8rem",
+        borderRadius: "8px",
+        border: "1px solid " + (paymentRegion === "INR" ? "var(--dash-ink)" : "var(--dash-border)"),
+        background: paymentRegion === "INR" ? "var(--dash-ink)" : "transparent",
+        color: paymentRegion === "INR" ? "var(--dash-surface)" : "var(--dash-ink)",
+        cursor: "pointer",
+        fontSize: "0.85rem",
+        fontWeight: 600
+      }}
+    >
+      India (INR)
+    </button>
+  </div>
+  */}
 
  {paymentRegion === "INR" && (
  <motion.div variants={itemVariants} className="toggle-wrapper">
