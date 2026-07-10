@@ -238,26 +238,29 @@ export default function B2BPlayground() {
           border-color: var(--rose);
         }
 
-        .btn-api {
+        .b2b-page a.btn-api,
+        .b2b-page button.btn-api {
           margin-top: 1rem;
-          background: var(--rose);
-          color: var(--white);
-          border: none;
-          padding: 1rem;
-          font-weight: 600;
-          font-size: 1rem;
-          border-radius: 8px;
-          cursor: pointer;
-          transition: background-color 0.2s, transform 0.2s;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 0.5rem;
+          background: var(--rose) !important;
+          color: var(--white) !important;
+          border: none !important;
+          padding: 0.8rem 1.8rem !important;
+          font-weight: 600 !important;
+          font-size: 1rem !important;
+          border-radius: 8px !important;
+          cursor: pointer !important;
+          transition: background-color 0.2s, transform 0.2s !important;
+          display: inline-flex !important;
+          align-items: center !important;
+          justify-content: center !important;
+          gap: 0.5rem !important;
+          text-decoration: none !important;
         }
 
-        .btn-api:hover {
-          background: #d41a65;
-          transform: translateY(-1px);
+        .b2b-page a.btn-api:hover,
+        .b2b-page button.btn-api:hover {
+          background: #d41a65 !important;
+          transform: translateY(-1px) !important;
         }
 
         .sandbox-results {
@@ -461,28 +464,31 @@ export default function B2BPlayground() {
           color: var(--muted);
         }
 
-        .btn-price {
-          background: var(--rose-light);
-          color: var(--rose);
-          border: 1px solid var(--rose);
-          padding: 0.8rem;
-          border-radius: 8px;
-          font-weight: 600;
-          text-align: center;
-          text-decoration: none;
-          cursor: pointer;
-          transition: all 0.2s;
+        .b2b-page a.btn-price {
+          background: var(--rose-light) !important;
+          color: var(--rose) !important;
+          border: 1px solid var(--rose) !important;
+          padding: 0.8rem 1.8rem !important;
+          border-radius: 8px !important;
+          font-weight: 600 !important;
+          text-align: center !important;
+          text-decoration: none !important;
+          cursor: pointer !important;
+          transition: all 0.2s !important;
+          display: inline-flex !important;
+          align-items: center !important;
+          justify-content: center !important;
         }
 
-        .btn-price.popular-btn {
-          background: var(--rose);
-          color: var(--white);
-          border: none;
+        .b2b-page a.btn-price.popular-btn {
+          background: var(--rose) !important;
+          color: var(--white) !important;
+          border: none !important;
         }
 
-        .btn-price:hover {
-          opacity: 0.95;
-          transform: translateY(-1px);
+        .b2b-page a.btn-price:hover {
+          opacity: 0.95 !important;
+          transform: translateY(-1px) !important;
         }
 
         .contact-section {
@@ -505,10 +511,10 @@ export default function B2BPlayground() {
             Renting out our custom formulation matching technology. Boost your store's sales, cut return rates, and give your customers dermatologist-level routines adapted for their regional tap water and weather.
           </p>
           <div style={{ display: "flex", gap: "1rem", justifyContent: "center" }}>
-            <a href="#sandbox" className="btn-api" style={{ textDecoration: "none", padding: "0.8rem 1.8rem" }}>
+            <a href="#sandbox" className="btn-api">
               Try Sandbox
             </a>
-            <a href="#pricing" className="btn-price" style={{ padding: "0.8rem 1.8rem", borderRadius: "8px" }}>
+            <a href="#pricing" className="btn-price">
               View Pricing (INR)
             </a>
           </div>
