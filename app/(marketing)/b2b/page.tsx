@@ -728,6 +728,9 @@ export default function B2BPlayground() {
                 Subscribe Now
               </a>
             </div>
+          </div>
+        </section>
+
         {/* FAQ SECTION */}
         <section className="faq-section" style={{ marginBottom: "6rem", maxWidth: "800px", margin: "0 auto 6rem auto" }}>
           <h2 style={{ fontFamily: "Playfair Display, Georgia, serif", fontSize: "2.2rem", textAlign: "center", marginBottom: "3rem" }}>
@@ -767,6 +770,15 @@ export default function B2BPlayground() {
               </h3>
               <p style={{ color: "var(--muted)", fontSize: "0.95rem", lineHeight: 1.6 }}>
                 The assistant automatically detects the shopper's location within India. It checks regional tap water hardness and real-time weather data (temperature and humidity) to swap products dynamically—ensuring they get the perfect skincare routine for their environment.
+              </p>
+            </div>
+
+            <div style={{ borderBottom: "1px solid var(--rule)", paddingBottom: "1.5rem" }}>
+              <h3 style={{ fontSize: "1.15rem", fontWeight: 700, marginBottom: "0.5rem", color: "var(--ink)" }}>
+                How long does onboarding and delivery of our custom widget take?
+              </h3>
+              <p style={{ color: "var(--muted)", fontSize: "0.95rem", lineHeight: 1.6 }}>
+                It depends on your catalog size and plan. For the <strong>Starter</strong> plan, you get test key instructions instantly (under 10 minutes). For the <strong>Grow</strong> plan (small brands with 10–40 products), delivery of your custom-tagged catalog widget takes <strong>1 to 2 days</strong>. For the <strong>Scale</strong> plan (larger stores with automated Shopify API syncing), it takes <strong>3 to 5 days</strong> to set up, test, and go live.
               </p>
             </div>
           </div>
