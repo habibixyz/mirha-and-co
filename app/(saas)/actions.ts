@@ -835,7 +835,39 @@ export async function submitLeadAction(email: string, type: string, data?: strin
  <p style="font-size: 0.9rem; color: #756b63; margin-top: 30px;">Best regards,<br/>The Mirha & Co. Curation Board</p>
  </div>
  `;
- } else {
+  } else if (type === "b2b_api") {
+    const parsedData = data ? JSON.parse(data) : {};
+    subject = "B2B API Integration Request — Mirha & Co. 🌸";
+    htmlContent = `
+    <div style="font-family: 'DM Sans', sans-serif; max-width: 600px; margin: 0 auto; padding: 40px 20px; color: #161412;">
+      <h2 style="font-family: 'DM Serif Display', serif; font-size: 1.8rem; color: #161412; margin-bottom: 1rem; font-weight: normal;">B2B API Key Request Received!</h2>
+      <p style="font-size: 1rem; line-height: 1.6;">Hi ${parsedData.name || "there"},</p>
+      <p style="font-size: 1rem; line-height: 1.6;">Thank you for your interest in our climate-aware formulation matching API. We have received your request for <strong>${parsedData.brand || "your brand"}</strong>.</p>
+      <p style="font-size: 1rem; line-height: 1.6;">Our team is reviewing your brand catalog. We will get back to you with your trial key and setup instructions shortly.</p>
+      <p style="font-size: 0.9rem; color: #756b63; margin-top: 30px;">Best wishes,<br/>The Mirha & Co. B2B Team</p>
+    </div>
+    `;
+
+    // Also send notification email to the admin
+    try {
+      await resend.emails.send({
+        from: process.env.PASSWORD_RESET_FROM,
+        to: "tanizcoldz@gmail.com",
+        subject: `🚨 New B2B API Key Request: ${parsedData.brand || "Unknown Brand"}`,
+        html: `
+        <div style="font-family: sans-serif; padding: 20px; border: 1px solid #eee; border-radius: 8px;">
+          <h2 style="color: #fc2779; margin-bottom: 20px;">New B2B Lead Registered</h2>
+          <p><strong>Name:</strong> ${parsedData.name || "N/A"}</p>
+          <p><strong>Brand:</strong> ${parsedData.brand || "N/A"}</p>
+          <p><strong>Email:</strong> ${email}</p>
+          <p><strong>Comments / Platform:</strong> ${parsedData.message || "N/A"}</p>
+        </div>
+        `
+      });
+    } catch (adminEmailError) {
+      console.error("Failed to send admin notification email:", adminEmailError);
+    }
+  } else {
  // Newsletter
  subject = "Welcome to the Mirha Skin Desk! 🌸";
  htmlContent = `
