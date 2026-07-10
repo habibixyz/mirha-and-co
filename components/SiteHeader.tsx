@@ -63,6 +63,7 @@ export default function SiteHeader() {
           <nav className="flex items-center gap-5">
             <Link href="/blog"      className="site-header-nav-link">{t("nav.blog")}</Link>
             <Link href="/pricing"   className="site-header-nav-link">{t("nav.pricing")}</Link>
+            <Link href="/b2b"       className="site-header-nav-link">B2B SaaS</Link>
             <Link href="/about"     className="site-header-nav-link">{t("nav.about")}</Link>
             <Link href="/dashboard" className="site-header-nav-link">{t("nav.dashboard")}</Link>
             <a
@@ -134,6 +135,7 @@ export default function SiteHeader() {
             {/* Main nav */}
             <Link href="/blog"      onClick={() => setMenuOpen(false)} className="hover:text-[#fc2779] transition-colors" style={navLinkStyle}>{t("nav.blog")}</Link>
             <Link href="/pricing"   onClick={() => setMenuOpen(false)} className="hover:text-[#fc2779] transition-colors" style={navLinkStyle}>{t("nav.pricing")}</Link>
+            <Link href="/b2b"       onClick={() => setMenuOpen(false)} className="hover:text-[#fc2779] transition-colors" style={navLinkStyle}>B2B SaaS</Link>
             <Link href="/about"     onClick={() => setMenuOpen(false)} className="hover:text-[#fc2779] transition-colors" style={navLinkStyle}>{t("nav.about")}</Link>
             <Link href="/dashboard" onClick={() => setMenuOpen(false)} className="hover:text-[#fc2779] transition-colors" style={navLinkStyle}>{t("nav.dashboard")}</Link>
 
