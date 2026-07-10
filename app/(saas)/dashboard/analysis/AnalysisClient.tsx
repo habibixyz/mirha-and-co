@@ -435,6 +435,20 @@ export function AnalysisClient({
 
  return (
  <div className="analysis-container">
+  <style>{`
+    @media (max-width: 600px) {
+      .scan-history-item {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 0.6rem !important;
+      }
+      .scan-history-item-left {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 0.4rem !important;
+      }
+    }
+  `}</style>
  {/* Paddle JS Script */}
  <Script src="https://cdn.paddle.com/paddle/v2/paddle.js" strategy="afterInteractive" />
 
@@ -898,6 +912,7 @@ export function AnalysisClient({
  width: "100%",
  maxWidth: "540px",
  height: "550px",
+ maxHeight: "85vh",
  display: "flex",
  flexDirection: "column",
  boxShadow: "0 25px 50px rgba(0,0,0,0.15)"
@@ -1038,6 +1053,7 @@ export function AnalysisClient({
  {pastAnalyses.map((item) => (
  <div 
  key={item.id}
+ className="scan-history-item"
  onClick={() => {
  setReport(item.detailedJson);
  // Pre-fill chat
@@ -1060,7 +1076,7 @@ export function AnalysisClient({
  transition: "all 0.2s ease"
  }}
  >
- <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+  <div className="scan-history-item-left" style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
  <div style={{ display: "flex", gap: "0.5rem", fontSize: "0.85rem", fontWeight: 600 }}>
  <span style={{ color: getScoreColor(item.barrierScore) }}>Barrier: {item.barrierScore}</span>
  <span style={{ color: "var(--rule)" }}>|</span>

@@ -18,13 +18,13 @@ export const metadata: Metadata = {
  "skincare routine builder",
  ],
  alternates: {
- canonical: "https://mirhaandco.com/tools/ingredients",
+ canonical: "https://www.mirhaandco.com/tools/ingredients",
  },
  openGraph: {
  title: "Skincare Ingredient Compatibility Checker",
  description:
  "Stop guessing what actives to layer. Get instant compatibility analysis for 20+ skincare ingredients — from Retinol to Copper Peptides — plus a safe AM/PM routine schedule.",
- url: "https://mirhaandco.com/tools/ingredients",
+ url: "https://www.mirhaandco.com/tools/ingredients",
  type: "website",
  images: [
  {
@@ -51,21 +51,21 @@ const jsonLd = {
  {
  "@type": "WebApplication",
  name: "Skincare Ingredient Compatibility Checker",
- url: "https://mirhaandco.com/tools/ingredients",
+ url: "https://www.mirhaandco.com/tools/ingredients",
  applicationCategory: "HealthApplication",
  description:
  "An interactive skincare tool that checks chemical compatibility between active ingredients like Retinol, Vitamin C, AHAs, BHAs, Niacinamide and more. It generates a safe AM/PM routine schedule based on your selection.",
  offers: {
  "@type": "Offer",
  price: "0",
- priceCurrency: "USD",
+ priceCurrency: "INR",
  },
  operatingSystem: "Any",
  browserRequirements: "Requires JavaScript",
  creator: {
  "@type": "Organization",
  name: "Mirha & Co.",
- url: "https://mirhaandco.com",
+ url: "https://www.mirhaandco.com",
  },
  },
  {

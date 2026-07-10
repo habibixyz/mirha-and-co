@@ -2,6 +2,8 @@ import { getDashboardData } from "../../actions";
 import { RoutinesClient } from "./RoutinesClient";
 import { redirect } from "next/navigation";
 
+export const dynamic = "force-dynamic";
+
 export default async function RoutinesPage() {
  const data = await getDashboardData();
 

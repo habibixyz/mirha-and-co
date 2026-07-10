@@ -15,13 +15,13 @@ export const metadata: Metadata = {
     "budget beauty routine",
   ],
   alternates: {
-    canonical: "https://mirhaandco.com/tools/dupes",
+    canonical: "https://www.mirhaandco.com/tools/dupes",
   },
   openGraph: {
     title: "Beauty Dupe Finder & Savings Calculator",
     description:
       "Stop overpaying for marketing. Find active-equivalent drugstore dupes for luxury skincare, makeup, and hair care brands. Calculate your annual savings instantly.",
-    url: "https://mirhaandco.com/tools/dupes",
+    url: "https://www.mirhaandco.com/tools/dupes",
     type: "website",
   },
 };

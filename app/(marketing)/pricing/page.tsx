@@ -1,11 +1,21 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Check, HelpCircle, Star } from "lucide-react";
+import { Check, HelpCircle, Star, X } from "lucide-react";
 
 export const metadata: Metadata = {
  title: "Pricing — Mirha & Co.",
  description:
  "Upgrade to Mirha Pro for full ingredient analysis, custom conflict checking, routine sharing, and personalized skin insights.",
+ alternates: {
+ canonical: "https://www.mirhaandco.com/pricing",
+ },
+ openGraph: {
+ title: "Pricing — Mirha & Co.",
+ description:
+ "Compare Free, Pro, and Annual Pro plans for Mirha & Co.'s AI skincare tools.",
+ url: "https://www.mirhaandco.com/pricing",
+ type: "website",
+ },
 };
 
 const PLANS = [
@@ -15,9 +25,11 @@ const PLANS = [
  period: "",
  description: "Perfect for casual skincare explorers.",
  features: [
- "Track up to 2 active routines",
+ "Create your skin profile",
+ "Track up to 2 routines per day",
  "Basic Skin Journal logs",
  "Standard ingredient checker",
+ "3 AI consultations/day",
  "Access to curated blog & guides",
  ],
  cta: "Get started",
@@ -30,7 +42,7 @@ const PLANS = [
  period: "/ month",
  description: "For people serious about their skin health.",
  features: [
- "Unlimited routines & logs",
+ "Unlimited routines and journal logs",
  "Cross-product Ingredient Conflict Checker",
  "Journal photo uploads & AI skin analysis per photo",
  "Expert AI face scan — daily barrier, acne & redness scores",
@@ -58,9 +70,54 @@ const PLANS = [
  },
 ];
 
+const COMPARISON_ROWS = [
+ { label: "Saved skin profile", free: true, pro: true },
+ { label: "Routine history and unlimited logs", free: false, pro: true },
+ { label: "Ingredient conflict checks", free: "Basic", pro: "Advanced" },
+ { label: "AI face scan and skin scores", free: false, pro: true },
+ { label: "Journal trend analysis", free: false, pro: true },
+ { label: "AI consultations per day", free: "3", pro: "20" },
+];
+
+const FAQS = [
+ {
+ q: "Can I cancel my plan anytime?",
+ a: "Yes, absolutely. You can cancel your subscription from your dashboard at any time. You will retain Pro features until the end of your current billing cycle.",
+ },
+ {
+ q: "What payment options are supported?",
+ a: "We support UPI, net banking, debit cards, and credit cards through Razorpay for instant activation.",
+ },
+ {
+ q: "How does the Ingredient Conflict Checker work?",
+ a: "It lets you paste raw ingredient lists of any two products. Our engine parses the ingredients and alerts you of potential conflicts (like layering multiple exfoliants or pH incompatibilities) to prevent skin barrier damage.",
+ },
+ {
+ q: "Are the recommendations truly independent?",
+ a: "Yes. Our AI Skin Analyst and formulation checker recommend products based purely on ingredients and suitability. We disclose affiliate commission tags transparently.",
+ },
+];
+
+const pricingStructuredData = {
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ mainEntity: FAQS.map((faq) => ({
+ "@type": "Question",
+ name: faq.q,
+ acceptedAnswer: {
+ "@type": "Answer",
+ text: faq.a,
+ },
+ })),
+};
+
 export default function PricingPage() {
  return (
  <main className="pricing-page">
+ <script
+ type="application/ld+json"
+ dangerouslySetInnerHTML={{ __html: JSON.stringify(pricingStructuredData) }}
+ />
  <style>{`
  .pricing-page {
  --black: #0c0a09;
@@ -128,6 +185,86 @@ export default function PricingPage() {
  max-width: 1140px;
  margin: 0 auto;
  align-items: start;
+ }
+
+ .upgrade-strip {
+ max-width: 980px;
+ margin: 3.5rem auto 0;
+ background: #fff;
+ border: 1px solid var(--rule);
+ border-radius: 18px;
+ overflow: hidden;
+ box-shadow: 0 12px 34px rgba(40, 28, 20, 0.03);
+ }
+
+ .upgrade-strip-header {
+ padding: 1.5rem 1.75rem;
+ border-bottom: 1px solid var(--rule);
+ display: flex;
+ justify-content: space-between;
+ gap: 1rem;
+ align-items: flex-end;
+ }
+
+ .upgrade-strip-header h2 {
+ font-family: var(--font-playfair), serif;
+ font-size: clamp(1.7rem, 3vw, 2.3rem);
+ margin: 0;
+ line-height: 1.1;
+ }
+
+ .upgrade-strip-header p {
+ color: var(--muted);
+ font-size: 0.9rem;
+ line-height: 1.6;
+ max-width: 420px;
+ margin: 0;
+ }
+
+ .comparison-table {
+ display: grid;
+ }
+
+ .comparison-row {
+ display: grid;
+ grid-template-columns: minmax(0, 1.35fr) minmax(110px, 0.65fr) minmax(110px, 0.65fr);
+ border-bottom: 1px solid var(--rule);
+ min-height: 54px;
+ align-items: center;
+ }
+
+ .comparison-row:last-child {
+ border-bottom: 0;
+ }
+
+ .comparison-row > div {
+ padding: 0.9rem 1.25rem;
+ font-size: 0.88rem;
+ }
+
+ .comparison-row > div:not(:last-child) {
+ border-right: 1px solid var(--rule);
+ }
+
+ .comparison-head {
+ background: #fbf7f2;
+ color: var(--muted);
+ font-size: 0.68rem !important;
+ letter-spacing: 0.16em;
+ text-transform: uppercase;
+ font-weight: 700;
+ }
+
+ .comparison-value {
+ display: inline-flex;
+ align-items: center;
+ gap: 0.45rem;
+ font-weight: 700;
+ color: var(--ink);
+ }
+
+ .comparison-value.pro {
+ color: var(--rose);
  }
 
  .plan-card {
@@ -389,6 +526,17 @@ export default function PricingPage() {
  .plans-grid {
  grid-template-columns: 1fr;
  }
+ .upgrade-strip-header {
+ flex-direction: column;
+ align-items: flex-start;
+ }
+ .comparison-row {
+ grid-template-columns: minmax(0, 1.2fr) minmax(82px, 0.7fr) minmax(82px, 0.7fr);
+ }
+ .comparison-row > div {
+ padding: 0.8rem;
+ font-size: 0.78rem;
+ }
  }
  `}</style>
 
@@ -402,7 +550,7 @@ export default function PricingPage() {
  <span>properly priced.</span>
  </h1>
  <p className="pricing-subtitle">
- Free tools to get started. Pro when you want to take your skincare consistency and compatibility to the next level.
+ Free tools to start your profile. Pro turns Mirha into a repeatable skincare system with saved history, scans, trend analysis, and deeper compatibility checks.
  </p>
  </div>
 
@@ -446,28 +594,48 @@ export default function PricingPage() {
  ))}
  </div>
 
+ <section className="upgrade-strip">
+ <div className="upgrade-strip-header">
+ <h2>Free for discovery. Pro for consistency.</h2>
+ <p>
+ The upgrade is for people who want Mirha to remember their routine, track what changed, and guide the next decision with their own history.
+ </p>
+ </div>
+ <div className="comparison-table">
+ <div className="comparison-row">
+ <div className="comparison-head">Feature</div>
+ <div className="comparison-head">Free</div>
+ <div className="comparison-head">Pro</div>
+ </div>
+ {COMPARISON_ROWS.map((row) => (
+ <div className="comparison-row" key={row.label}>
+ <div>{row.label}</div>
+ <div>
+ {row.free === true ? (
+ <span className="comparison-value"><Check size={15} color="var(--rose)" /> Yes</span>
+ ) : row.free === false ? (
+ <span className="comparison-value"><X size={15} color="var(--muted)" /> No</span>
+ ) : (
+ <span className="comparison-value">{row.free}</span>
+ )}
+ </div>
+ <div>
+ {row.pro === true ? (
+ <span className="comparison-value pro"><Check size={15} /> Yes</span>
+ ) : (
+ <span className="comparison-value pro">{row.pro}</span>
+ )}
+ </div>
+ </div>
+ ))}
+ </div>
+ </section>
+
  {/* FAQ */}
  <div className="faq-section">
  <h2>Common Questions</h2>
  <div className="faq-grid">
- {[
- {
- q: "Can I cancel my plan anytime?",
- a: "Yes, absolutely. You can cancel your subscription from your dashboard at any time. You will retain Pro features until the end of your current billing cycle.",
- },
- {
- q: "What payment options are supported?",
- a: "We support UPI, net banking, debit cards, and credit cards through Razorpay for instant activation.",
- },
- {
- q: "How does the Ingredient Conflict Checker work?",
- a: "It lets you paste raw ingredient lists of any two products. Our engine parses the ingredients and alerts you of potential conflicts (like layering multiple exfoliants or pH incompatibilities) to prevent skin barrier damage.",
- },
- {
- q: "Are the recommendations truly independent?",
- a: "Yes. Our AI Skin Analyst and formulation checker recommend products based purely on ingredients and suitability. We disclose affiliate commission tags transparently.",
- },
- ].map((faq) => (
+ {FAQS.map((faq) => (
  <div key={faq.q} className="faq-item">
  <h3 className="faq-question">
  <HelpCircle size={18} className="faq-question-icon" />

@@ -3,6 +3,8 @@ import { getSession } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { AnalysisClient } from "./AnalysisClient";
 
+export const dynamic = "force-dynamic";
+
 export default async function AnalysisPage() {
  const session = await getSession();
  if (!session || !session.userId) {
@@ -64,5 +66,4 @@ export default async function AnalysisPage() {
  />
  );
 }
-
 

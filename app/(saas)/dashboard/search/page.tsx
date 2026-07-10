@@ -3,6 +3,8 @@ import { getUserProfile } from "../../actions";
 import { SearchClient } from "./SearchClient";
 import { redirect } from "next/navigation";
 
+export const dynamic = "force-dynamic";
+
 export default async function SearchGuidePage() {
  const user = await getUserProfile();
  

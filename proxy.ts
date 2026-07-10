@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const response = NextResponse.next();
   
   // If the user already has a preferred currency saved, respect it.
@@ -27,14 +27,14 @@ export function middleware(request: NextRequest) {
       defaultCurrency = 'USD';
     }
     
-    // Set the cookie on the response so future requests have it
+    // Set the cookie on the response so future requests have it.
     response.cookies.set('mirha_currency', defaultCurrency, {
       path: '/',
       maxAge: 60 * 60 * 24 * 365, // 1 year
       sameSite: 'lax',
     });
     
-    // Also pass it down to the server components in the current request
+    // Also pass it down to the server components in the current request.
     response.headers.set('x-default-currency', defaultCurrency);
   }
   
@@ -42,6 +42,6 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  // Run middleware on all routes except static files, API, and images
+  // Run proxy on all routes except static files, API, and images.
   matcher: ['/((?!api|_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)'],
 };

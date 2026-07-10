@@ -135,6 +135,39 @@ export default async function BeautyShopPage() {
           flex-wrap: wrap;
         }
 
+        .saas-loop {
+          display: grid;
+          grid-template-columns: repeat(4, minmax(0, 1fr));
+          gap: 10px;
+          margin-top: 26px;
+          max-width: 660px;
+        }
+
+        .saas-loop-item {
+          border: 1px solid #e3d8ce;
+          background: rgba(255, 255, 255, 0.5);
+          border-radius: 10px;
+          padding: 12px;
+        }
+
+        .saas-loop-item small {
+          display: block;
+          color: #fc2779;
+          font-size: 9px;
+          letter-spacing: 0.18em;
+          text-transform: uppercase;
+          font-weight: 700;
+          margin-bottom: 6px;
+        }
+
+        .saas-loop-item b {
+          display: block;
+          color: #161412;
+          font-size: 12px;
+          line-height: 1.35;
+          font-weight: 700;
+        }
+
         .primary-btn,
         .secondary-btn {
           min-height: 46px;
@@ -820,6 +853,11 @@ export default async function BeautyShopPage() {
             flex-direction: column;
           }
 
+          .saas-loop {
+            grid-template-columns: 1fr 1fr;
+            margin-top: 20px;
+          }
+
           .hero-visuals {
             min-height: auto;
             margin-top: 24px;
@@ -1010,6 +1048,27 @@ export default async function BeautyShopPage() {
                   }}
                 />
               </Link>
+              <Link href="/pricing" className="secondary-btn">
+                See Pro Plans
+              </Link>
+            </div>
+            <div className="saas-loop">
+              <div className="saas-loop-item">
+                <small>01</small>
+                <b>Create your skin profile</b>
+              </div>
+              <div className="saas-loop-item">
+                <small>02</small>
+                <b>Build and save routines</b>
+              </div>
+              <div className="saas-loop-item">
+                <small>03</small>
+                <b>Check conflicts and scans</b>
+              </div>
+              <div className="saas-loop-item">
+                <small>04</small>
+                <b>Track progress monthly</b>
+              </div>
             </div>
           </div>
 
@@ -1091,10 +1150,11 @@ export default async function BeautyShopPage() {
           >
             <div style={{ order: isRtl ? 2 : 1 }}>
               <p className="eyebrow">Mirha Skin Desk</p>
-              <h2>Do not browse randomly.</h2>
+              <h2>Your skincare system, not another product list.</h2>
               <p>
-                Use the routine finder for a full AM/PM structure, search when you know
-                the concern, or read a guide when you want the why behind the pick.
+                Start with a profile, turn it into an AM/PM routine, check every new
+                product against your actives, and keep a journal so your routine improves
+                with evidence instead of guesswork.
               </p>
             </div>
             <div className="desk-actions" style={{ order: isRtl ? 1 : 2 }}>
@@ -1106,7 +1166,7 @@ export default async function BeautyShopPage() {
               >
                 <span style={{ textAlign: isRtl ? "right" : "left" }}>
                   <small>01 / Routine</small>
-                  <b>Build your 4-step routine</b>
+                  <b>Build and save your AM/PM routine</b>
                 </span>
                 <ArrowRight
                   size={15}
@@ -1123,7 +1183,7 @@ export default async function BeautyShopPage() {
               >
                 <span style={{ textAlign: isRtl ? "right" : "left" }}>
                   <small>02 / Diagnostics</small>
-                  <b>Hard Water Damage Risk Test</b>
+                  <b>Check climate and hard-water risk</b>
                 </span>
                 <ArrowRight
                   size={15}
@@ -1140,7 +1200,7 @@ export default async function BeautyShopPage() {
               >
                 <span style={{ textAlign: isRtl ? "right" : "left" }}>
                   <small>03 / Savings</small>
-                  <b>Skincare Dupe & Savings Finder</b>
+                  <b>Find compatible dupes and savings</b>
                 </span>
                 <ArrowRight
                   size={15}
@@ -1157,7 +1217,7 @@ export default async function BeautyShopPage() {
               >
                 <span style={{ textAlign: isRtl ? "right" : "left" }}>
                   <small>04 / Expert Search</small>
-                  <b>Access full expert search</b>
+                  <b>Ask Mirha Search with your context</b>
                 </span>
                 <ArrowRight
                   size={15}
@@ -1174,7 +1234,7 @@ export default async function BeautyShopPage() {
               >
                 <span style={{ textAlign: isRtl ? "right" : "left" }}>
                   <small>05 / Learn</small>
-                  <b>Read beauty guides</b>
+                  <b>Read the guide behind each choice</b>
                 </span>
                 <ArrowRight
                   size={15}

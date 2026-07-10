@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { CheckCircle2, CalendarPlus, ChevronRight, LogOut, Sparkles, Lock } from "lucide-react";
+import { CheckCircle2, CalendarPlus, ChevronRight, LogOut, BrainCircuit, Lock } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { logoutAction, toggleRoutineStep, getJournalAnalysis } from "@/app/(saas)/actions";
@@ -77,6 +77,10 @@ export function DashboardClient({ user, routines, recentJournal, stats }: any) {
       [routineId]: newCheckedSteps
     }));
 
+    if (routineId === "demo") {
+      return;
+    }
+
     try {
       await toggleRoutineStep(routineId, index, !isChecked);
     } catch (error) {
@@ -105,7 +109,7 @@ export function DashboardClient({ user, routines, recentJournal, stats }: any) {
     ? routines 
     : [
         {
-          id: null,
+          id: "demo",
           name: "Morning Routine",
           steps: [
             "Cleanser: CeraVe Hydrating",
@@ -115,6 +119,53 @@ export function DashboardClient({ user, routines, recentJournal, stats }: any) {
           ]
         }
       ];
+  const realRoutines = Array.isArray(routines) ? routines : [];
+  const hasRoutine = realRoutines.length > 0;
+  const totalRoutineSteps = routinesToDisplay.reduce((total: number, routine: any) => {
+    return total + (Array.isArray(routine.steps) ? routine.steps.length : 0);
+  }, 0);
+  const completedRoutineSteps = routinesToDisplay.reduce((total: number, routine: any) => {
+    return total + (checkedStepsMap[routine.id]?.length || 0);
+  }, 0);
+  const hasCompletedRoutineToday = totalRoutineSteps > 0 && completedRoutineSteps >= totalRoutineSteps;
+  const hasJournalToday = recentJournal
+    ? new Date(recentJournal.date).toISOString().split("T")[0] === today
+    : false;
+  const primaryAction = !hasRoutine
+    ? { href: "/dashboard/routines", label: "Build routine", helper: "Create your first saved AM/PM plan." }
+    : !hasCompletedRoutineToday
+      ? { href: "#today-routine", label: "Complete routine", helper: `${completedRoutineSteps}/${totalRoutineSteps} steps done today.` }
+      : !hasJournalToday
+        ? { href: "/dashboard/journal", label: "Log skin", helper: "Capture how your skin reacted today." }
+        : coachStatus === "need_pro"
+          ? { href: "/dashboard/subscription", label: "Unlock trends", helper: "Turn your logs into weekly AI insight." }
+          : { href: "/dashboard/analysis", label: "Refresh scan", helper: "Check barrier, acne, redness, and oiliness." };
+  const planSteps = [
+    {
+      title: "Complete routine",
+      detail: hasRoutine ? `${completedRoutineSteps}/${totalRoutineSteps} steps checked` : "Build a routine first",
+      done: hasCompletedRoutineToday,
+      href: hasRoutine ? "#today-routine" : "/dashboard/routines",
+    },
+    {
+      title: "Log skin condition",
+      detail: hasJournalToday ? "Journal updated today" : "Add rating, notes, and photos",
+      done: hasJournalToday,
+      href: "/dashboard/journal",
+    },
+    {
+      title: "Check product conflict",
+      detail: "Catch active clashes before layering",
+      done: false,
+      href: "/dashboard/conflicts",
+    },
+    {
+      title: "Review AI insight",
+      detail: coachStatus === "unlocked" ? "Trend insight ready" : "Needs Pro or more journal data",
+      done: coachStatus === "unlocked",
+      href: coachStatus === "need_pro" ? "/dashboard/subscription" : "/dashboard/analysis",
+    },
+  ];
 
   return (
     <motion.div
@@ -148,17 +199,57 @@ export function DashboardClient({ user, routines, recentJournal, stats }: any) {
         </div>
       </div>
 
-      <style jsx>{`
+      <style>{`
         @media (max-width: 768px) {
           .mobile-only { display: block !important; }
           .desktop-only { display: none !important; }
+          .dash-header-card {
+            padding: 1.5rem !important;
+            margin-bottom: 2rem !important;
+            border-radius: 28px !important;
+          }
+          .dash-plan-section {
+            padding: 1.25rem !important;
+            margin-bottom: 2rem !important;
+            border-radius: 24px !important;
+          }
+          .dash-coach-card {
+            padding: 1.5rem !important;
+            margin-bottom: 2rem !important;
+            border-radius: 24px !important;
+          }
+          .dash-bottom-card {
+            padding: 1.5rem !important;
+            border-radius: 24px !important;
+          }
+        }
+        @media (max-width: 480px) {
+          .dash-header-card {
+            padding: 1.2rem !important;
+            margin-bottom: 1.5rem !important;
+            border-radius: 20px !important;
+          }
+          .dash-plan-section {
+            padding: 1rem !important;
+            margin-bottom: 1.5rem !important;
+            border-radius: 18px !important;
+          }
+          .dash-coach-card {
+            padding: 1.2rem !important;
+            margin-bottom: 1.5rem !important;
+            border-radius: 18px !important;
+          }
+          .dash-bottom-card {
+            padding: 1.2rem !important;
+            border-radius: 18px !important;
+          }
         }
       `}</style>
 
       {/* Real stats wired and compact */}
       <DashboardStats stats={stats} />
 
-      <motion.header variants={itemVariants} style={{ 
+      <motion.header className="dash-header-card" variants={itemVariants} style={{ 
         marginBottom: "2.5rem", 
         display: "flex", 
         justifyContent: "space-between", 
@@ -220,8 +311,115 @@ export function DashboardClient({ user, routines, recentJournal, stats }: any) {
         </div>
       </motion.header>
 
+      <motion.section className="dash-plan-section" variants={itemVariants} style={{
+        background: "var(--white)",
+        border: "1px solid var(--dash-border)",
+        borderRadius: "28px",
+        padding: "1.5rem",
+        marginBottom: "2.5rem",
+        boxShadow: "0 18px 42px rgba(40, 28, 20, 0.05)"
+      }}>
+        <div style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "flex-start",
+          gap: "1rem",
+          flexWrap: "wrap",
+          marginBottom: "1.25rem"
+        }}>
+          <div>
+            <span style={{
+              color: "var(--dash-accent)",
+              fontSize: "0.68rem",
+              letterSpacing: "0.16em",
+              textTransform: "uppercase",
+              fontWeight: 700
+            }}>Today&apos;s Skin Plan</span>
+            <h2 style={{
+              fontFamily: "var(--dash-font-serif)",
+              fontSize: "clamp(1.45rem, 3vw, 2rem)",
+              fontWeight: 400,
+              margin: "0.35rem 0 0",
+              color: "var(--dash-ink)"
+            }}>Your next best skincare move.</h2>
+            <p style={{
+              color: "var(--dash-muted)",
+              margin: "0.35rem 0 0",
+              fontSize: "0.9rem",
+              lineHeight: 1.55
+            }}>{primaryAction.helper}</p>
+          </div>
+          <Link href={primaryAction.href} style={{ textDecoration: "none" }}>
+            <motion.button
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.98 }}
+              style={{
+                background: "var(--dash-ink)",
+                color: "var(--white)",
+                border: "none",
+                borderRadius: "16px",
+                padding: "0.85rem 1.15rem",
+                cursor: "pointer",
+                fontWeight: 700,
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "0.45rem",
+                boxShadow: "0 10px 24px rgba(0,0,0,0.12)"
+              }}
+            >
+              {primaryAction.label} <ChevronRight size={15} />
+            </motion.button>
+          </Link>
+        </div>
+
+        <div style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(190px, 1fr))",
+          gap: "0.8rem"
+        }}>
+          {planSteps.map((step, index) => (
+            <Link href={step.href} key={step.title} style={{ textDecoration: "none", color: "inherit" }}>
+              <motion.div
+                whileHover={{ y: -2 }}
+                style={{
+                  height: "100%",
+                  border: "1px solid var(--dash-border)",
+                  borderRadius: "20px",
+                  padding: "1rem",
+                  background: step.done ? "rgba(252, 39, 121, 0.06)" : "#FAF9F7",
+                  display: "flex",
+                  gap: "0.8rem",
+                  alignItems: "flex-start"
+                }}
+              >
+                <div style={{
+                  width: "28px",
+                  height: "28px",
+                  borderRadius: "50%",
+                  background: step.done ? "var(--dash-accent)" : "white",
+                  border: step.done ? "none" : "1px solid var(--dash-border)",
+                  color: step.done ? "white" : "var(--dash-muted)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  flexShrink: 0,
+                  fontSize: "0.75rem",
+                  fontWeight: 700
+                }}>
+                  {step.done ? <CheckCircle2 size={15} /> : index + 1}
+                </div>
+                <div>
+                  <h3 style={{ margin: 0, fontSize: "0.92rem", color: "var(--dash-ink)" }}>{step.title}</h3>
+                  <p style={{ margin: "0.25rem 0 0", fontSize: "0.78rem", color: "var(--dash-muted)", lineHeight: 1.45 }}>{step.detail}</p>
+                </div>
+              </motion.div>
+            </Link>
+          ))}
+        </div>
+      </motion.section>
+
       {/* AI Skincare Coach Card */}
-      <motion.div variants={itemVariants} style={{
+      <motion.div className="dash-coach-card" variants={itemVariants} style={{
         background: "linear-gradient(135deg, #1c1917 0%, #292524 100%)",
         color: "white",
         borderRadius: "28px",
@@ -233,11 +431,11 @@ export function DashboardClient({ user, routines, recentJournal, stats }: any) {
         boxShadow: "0 20px 40px rgba(0,0,0,0.12)"
       }}>
         <div style={{ position: "absolute", top: "-10px", right: "-10px", opacity: 0.08 }}>
-          <Sparkles size={120} color="white" />
+          <BrainCircuit size={120} color="white" />
         </div>
 
         <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "1rem" }}>
-          <Sparkles size={18} color="#fc2779" />
+          <BrainCircuit size={18} color="#fc2779" />
           <span style={{ fontSize: "0.75rem", letterSpacing: "0.15em", textTransform: "uppercase", fontWeight: 700, color: "#fc2779" }}>AI Skincare Coach</span>
         </div>
 
@@ -322,7 +520,7 @@ export function DashboardClient({ user, routines, recentJournal, stats }: any) {
           const checkedSteps = routineId ? (checkedStepsMap[routineId] || []) : [];
 
           return (
-            <motion.div key={routineId || `fallback-${rIdx}`} variants={itemVariants} style={{
+            <motion.div key={routineId || `fallback-${rIdx}`} className="dash-bottom-card" variants={itemVariants} style={{
               background: 'var(--white)',
               border: "1px solid var(--dash-border)",
               borderRadius: "28px",
@@ -330,7 +528,7 @@ export function DashboardClient({ user, routines, recentJournal, stats }: any) {
               boxShadow: '0 20px 50px rgba(40, 28, 20, 0.05)',
               position: "relative",
               overflow: "hidden"
-            }}>
+            }} id={rIdx === 0 ? "today-routine" : undefined}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.5rem" }}>
                 <h3 style={{ fontSize: "1.2rem", margin: 0, color: "var(--dash-ink)", fontWeight: 600, fontFamily: "var(--dash-font-serif)" }}>{routineName}</h3>
                 <span style={{ fontSize: "0.8rem", color: "var(--dash-muted)", background: "var(--dash-bg)", padding: "4px 10px", borderRadius: "20px", fontWeight: 600 }}>{checkedSteps.length}/{steps.length} completed</span>
@@ -395,7 +593,7 @@ export function DashboardClient({ user, routines, recentJournal, stats }: any) {
         })}
 
  {/* Card 2: Journal */}
- <motion.div variants={itemVariants} style={{
+ <motion.div className="dash-bottom-card" variants={itemVariants} style={{
  background: 'var(--white)',
  border: "1px solid var(--dash-border)",
  borderRadius: "28px",

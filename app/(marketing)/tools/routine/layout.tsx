@@ -14,13 +14,13 @@ export const metadata: Metadata = {
     "best skincare routine India",
   ],
   alternates: {
-    canonical: "https://mirhaandco.com/tools/routine",
+    canonical: "https://www.mirhaandco.com/tools/routine",
   },
   openGraph: {
     title: "Personalized Skincare Routine Builder & Quiz",
     description:
       "Answer a few questions about your skin type, climate, and concerns. Get a customized AM/PM skincare routine built for Indian realities — free, no sign-up required.",
-    url: "https://mirhaandco.com/tools/routine",
+    url: "https://www.mirhaandco.com/tools/routine",
     type: "website",
   },
 };

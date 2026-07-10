@@ -2,6 +2,8 @@ import { getUserProfile } from "../../actions";
 import { ConflictsClient } from "./ConflictsClient";
 import { redirect } from "next/navigation";
 
+export const dynamic = "force-dynamic";
+
 export default async function ConflictsPage() {
  const user = await getUserProfile();
 

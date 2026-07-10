@@ -127,6 +127,21 @@ export async function generateMetadata({ params }: { params: Promise<{ asin: str
  return {
  title: `${product.name} | Mirha & Co.`,
  description: product.description,
+ alternates: {
+ canonical: `https://www.mirhaandco.com/product/${product.asin}`,
+ },
+ openGraph: {
+ title: `${product.name} | Mirha & Co.`,
+ description: product.description,
+ url: `https://www.mirhaandco.com/product/${product.asin}`,
+ type: "website",
+ images: [
+ {
+ url: product.image,
+ alt: product.name,
+ },
+ ],
+ },
  };
 }
 
@@ -191,9 +206,42 @@ export default async function ProductPage({ params }: { params: Promise<{ asin: 
  const alternatives = PRODUCT_LIST.filter(
  (item) => item.asin !== product.asin && item.category === product.category
  ).slice(0, 4);
+ const productImageUrl = product.image.startsWith("http")
+ ? product.image
+ : `https://www.mirhaandco.com${product.image}`;
+ const productStructuredData = {
+ "@context": "https://schema.org",
+ "@type": "Product",
+ name: product.name,
+ brand: {
+ "@type": "Brand",
+ name: product.brand,
+ },
+ image: productImageUrl,
+ description: product.description,
+ sku: product.asin,
+ category: product.category,
+ aggregateRating: {
+ "@type": "AggregateRating",
+ ratingValue: product.rating,
+ reviewCount: Number(String(product.reviews || "0").replace(/[^0-9]/g, "")) || 1,
+ },
+ offers: {
+ "@type": "Offer",
+ url: `https://www.mirhaandco.com/product/${product.asin}`,
+ priceCurrency: "INR",
+ price: product.price,
+ availability: "https://schema.org/InStock",
+ itemCondition: "https://schema.org/NewCondition",
+ },
+ };
 
  return (
  <main className="product-page">
+ <script
+ type="application/ld+json"
+ dangerouslySetInnerHTML={{ __html: JSON.stringify(productStructuredData) }}
+ />
  <style>{`
  .product-page {
  background: #fbf7f1;

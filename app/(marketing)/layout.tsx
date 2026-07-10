@@ -84,10 +84,68 @@ export default async function RootLayout({
  const locale = (cookieStore.get("mirha_locale")?.value || "en") as Locale;
  const currency = (cookieStore.get("mirha_currency")?.value || headerStore.get("x-default-currency") || "INR") as Currency;
  const isRtl = locale === "ar";
+ const siteUrl = "https://www.mirhaandco.com";
+ const structuredData = [
+ {
+ "@context": "https://schema.org",
+ "@type": "Organization",
+ name: "Mirha & Co.",
+ url: siteUrl,
+ logo: `${siteUrl}/og-image.png`,
+ sameAs: ["https://www.instagram.com/mirha_andco/"],
+ },
+ {
+ "@context": "https://schema.org",
+ "@type": "WebSite",
+ name: "Mirha & Co.",
+ url: siteUrl,
+ potentialAction: {
+ "@type": "SearchAction",
+ target: `${siteUrl}/blog?search={search_term_string}`,
+ "query-input": "required name=search_term_string",
+ },
+ },
+ {
+ "@context": "https://schema.org",
+ "@type": "SoftwareApplication",
+ name: "Mirha & Co. AI Skincare Assistant",
+ applicationCategory: "HealthApplication",
+ operatingSystem: "Web",
+ url: siteUrl,
+ offers: [
+ {
+ "@type": "Offer",
+ name: "Free",
+ price: "0",
+ priceCurrency: "INR",
+ },
+ {
+ "@type": "Offer",
+ name: "Pro",
+ price: "199",
+ priceCurrency: "INR",
+ priceSpecification: {
+ "@type": "UnitPriceSpecification",
+ price: "199",
+ priceCurrency: "INR",
+ billingDuration: "P1M",
+ },
+ },
+ ],
+ description:
+ "AI skincare tools for routines, ingredient checks, hard water risk, product dupes, skin journaling, and personalized product discovery.",
+ },
+ ];
 
  return (
  <html lang={locale} dir={isRtl ? "rtl" : "ltr"} className={`${dmSans.variable} ${dmSerifDisplay.variable} ${playfairDisplay.variable} ${bebasNeue.variable}`}>
  <body>
+ <Script
+ id="mirha-site-structured-data"
+ type="application/ld+json"
+ strategy="beforeInteractive"
+ dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+ />
  <Script strategy="afterInteractive" src="https://www.dwin1.com/2904237.js" />
 
  <GlobalizationProvider initialLocale={locale} initialCurrency={currency}>

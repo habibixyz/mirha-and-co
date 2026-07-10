@@ -6,17 +6,25 @@ import { getAllProgrammaticSlugs } from "@/lib/programmatic-posts";
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = "https://www.mirhaandco.com";
 
-  // Standard static pages
   const staticRoutes = [
-    "",
-    "/about",
-    "/blog",
-    "/tools/routine",
-  ].map((route) => ({
+    { route: "", changeFrequency: "daily" as const, priority: 1.0 },
+    { route: "/pricing", changeFrequency: "weekly" as const, priority: 0.9 },
+    { route: "/tools/routine", changeFrequency: "weekly" as const, priority: 0.9 },
+    { route: "/tools/ingredients", changeFrequency: "weekly" as const, priority: 0.9 },
+    { route: "/tools/hard-water", changeFrequency: "weekly" as const, priority: 0.9 },
+    { route: "/tools/dupes", changeFrequency: "weekly" as const, priority: 0.9 },
+    { route: "/blog", changeFrequency: "daily" as const, priority: 0.8 },
+    { route: "/k-beauty", changeFrequency: "weekly" as const, priority: 0.8 },
+    { route: "/mens-grooming", changeFrequency: "weekly" as const, priority: 0.8 },
+    { route: "/about", changeFrequency: "monthly" as const, priority: 0.7 },
+    { route: "/privacy", changeFrequency: "monthly" as const, priority: 0.4 },
+    { route: "/terms", changeFrequency: "monthly" as const, priority: 0.4 },
+    { route: "/refunds", changeFrequency: "monthly" as const, priority: 0.4 },
+  ].map(({ route, changeFrequency, priority }) => ({
     url: `${baseUrl}${route}`,
     lastModified: new Date(),
-    changeFrequency: "daily" as const,
-    priority: route === "" ? 1.0 : 0.8,
+    changeFrequency,
+    priority,
   }));
 
   // Skincare guides & blog posts
