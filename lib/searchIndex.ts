@@ -283,7 +283,7 @@ const staticItems: SearchItem[] = [
  type: "product",
  title: "Re'equil Ultra Matte Dry Touch Sunscreen",
  description: "The highest-rated sunscreen for Indian summers. No white cast, waterproof, and extremely matte.",
- url: "/product/B07G7N9B7N",
+ url: "/product/B07VP5JFRB",
  tags: cleanTags(["product", "reequil", "sunscreen", "matte", "oily skin"]),
  price: 780,
  },

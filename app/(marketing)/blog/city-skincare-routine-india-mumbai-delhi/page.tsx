@@ -153,7 +153,7 @@ export default function CitySkincareRoutinePage() {
         </div>
 
         <BlogProductCard asin="B07DSC6CWP" />
-        <BlogProductCard asin="B07G7N9B7N" />
+        <BlogProductCard asin="B07VP5JFRB" />
 
         <hr className="post-rule" />
 
