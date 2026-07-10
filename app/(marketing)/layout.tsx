@@ -340,7 +340,7 @@ export default async function RootLayout({
  flexWrap: "wrap",
  }}
  >
- <span>© 2026 Mirha &amp; Co. All rights reserved.</span>
+ <span>© 2026 Mirha &amp; Co. Founded by <Link href="/about" style={{ color: "rgba(255,255,255,0.55)", textDecoration: "none" }}>Tanvir Khan</Link>. All rights reserved.</span>
  <div style={{ display: "flex", gap: "1.5rem" }}>
  <Link href="/terms" className="footer-link" style={{ color: "inherit", textDecoration: "none" }}>Terms of Service</Link>
  <Link href="/privacy" className="footer-link" style={{ color: "inherit", textDecoration: "none" }}>Privacy Policy</Link>

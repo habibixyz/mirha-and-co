@@ -510,9 +510,58 @@ export default function AboutPage() {
  />
  </div>
  </div>
- </section>
+  </section>
 
- {/* HONESTY & ETHICS */}
+  {/* MEET THE FOUNDER */}
+  <section className="section rose" style={{ borderTop: "1px solid var(--rule)", padding: "4rem 2.5rem" }}>
+  <div className="inner" style={{ maxWidth: "800px", margin: "0 auto" }}>
+  <div style={{ display: "flex", gap: "2.5rem", alignItems: "center", flexWrap: "wrap" }}>
+  <div style={{ 
+  width: "80px", 
+  height: "80px", 
+  borderRadius: "50%", 
+  overflow: "hidden",
+  position: "relative",
+  boxShadow: "0 8px 20px rgba(162, 123, 92, 0.2)",
+  flexShrink: 0,
+  }}>
+  <Image 
+  src="/images/tanvir.png" 
+  alt="Tanvir Khan — Founder" 
+  fill 
+  style={{ objectFit: "cover" }}
+  sizes="80px"
+  />
+  </div>
+  <div style={{ flex: 1, minWidth: "260px" }}>
+  <p className="eyebrow" style={{ marginBottom: "0.25rem" }}>Behind the Brand</p>
+  <h3 style={{ 
+  fontFamily: "var(--font-playfair), serif", 
+  fontSize: "1.6rem", 
+  fontWeight: 700, 
+  marginBottom: "0.5rem",
+  color: "var(--ink)"
+  }}>
+  Tanvir Khan <span style={{ fontSize: "0.85rem", fontWeight: 400, color: "var(--rose)", display: "inline-block", marginLeft: "6px" }}>— Founder</span>
+  </h3>
+  <p style={{ 
+  fontSize: "0.95rem", 
+  lineHeight: "1.6", 
+  color: "var(--muted)",
+  margin: 0
+  }}>
+  With over 8 years of sourcing operations experience managing premium beauty brands (including MAC, Kama Ayurveda, and Forest Essentials), Tanvir created Mirha & Co. to demystify skincare formulations and bring climate-aware, science-backed transparency directly to consumers.
+  </p>
+  <div style={{ marginTop: "0.75rem", display: "flex", gap: "1.2rem", fontSize: "0.82rem" }}>
+  <a href="mailto:tanizcoldz@gmail.com" style={{ color: "var(--rose)", textDecoration: "none", fontWeight: 600 }}>tanizcoldz@gmail.com</a>
+  <a href="https://www.linkedin.com/in/tanvir-khan-849b003a6/" target="_blank" rel="noopener noreferrer" style={{ color: "var(--rose)", textDecoration: "none", fontWeight: 600 }}>LinkedIn →</a>
+  </div>
+  </div>
+  </div>
+  </div>
+  </section>
+
+  {/* HONESTY & ETHICS */}
  <section className="section dark">
  <div className="inner two-col">
  <div>
