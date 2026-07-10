@@ -182,7 +182,66 @@ export default function B2BPlayground() {
 
         /* ── Contact form ── */
         .b2b-contact { background: #fff; border: 1px solid rgba(0,0,0,0.05); border-radius: 20px; padding: 2.5rem; max-width: 560px; margin: 0 auto; }
-        @media (max-width: 640px) { .b2b-contact { padding: 1.75rem; } }
+
+        /* ══════════════════════════════════════
+           MOBILE RESPONSIVE (≤ 640px)
+           ══════════════════════════════════════ */
+        @media (max-width: 640px) {
+          .b2b-container { padding: 2.5rem 1rem; }
+          .b2b-hero { margin-bottom: 3rem; }
+          .b2b-hero h1 { font-size: 1.75rem; }
+          .b2b-hero p { font-size: 0.9rem; margin-bottom: 1.5rem; }
+          .b2b-hero-btns { flex-direction: column; gap: 0.5rem; }
+          .b2b-page .b2b-btn-primary,
+          .b2b-page .b2b-btn-outline { width: 100%; justify-content: center; padding: 0.7rem 1rem; font-size: 0.9rem; }
+
+          .b2b-grid3 { gap: 1rem; margin-bottom: 3rem; }
+          .b2b-card { padding: 1.5rem; }
+          .b2b-card h3 { font-size: 1rem; }
+          .b2b-card p { font-size: 0.85rem; }
+
+          .b2b-sandbox { padding: 1.25rem; margin-bottom: 3rem; border-radius: 14px; }
+          .b2b-sandbox-head { margin-bottom: 1.5rem; }
+          .b2b-sandbox-head h2 { font-size: 1.4rem; }
+          .b2b-sandbox-head p { font-size: 0.82rem; }
+          .b2b-sandbox-grid { gap: 1.5rem; }
+          .b2b-sandbox-col h3 { font-size: 0.65rem; }
+          .b2b-form-group label { font-size: 0.68rem; }
+          .b2b-form-control { padding: 0.55rem 0.7rem; font-size: 0.85rem; }
+
+          .b2b-code-block { border-radius: 8px; }
+          .b2b-code-head { padding: 0.5rem 0.75rem; font-size: 0.65rem; }
+          .b2b-code-body { padding: 0.75rem; font-size: 0.65rem; max-height: 200px; word-break: break-all; }
+
+          .b2b-preview { padding: 1rem; border-radius: 10px; }
+          .b2b-product-item { padding: 0.85rem; }
+          .b2b-product-tag { font-size: 0.58rem; }
+          .b2b-product-item h5 { font-size: 0.88rem; }
+          .b2b-product-item p { font-size: 0.78rem; }
+
+          .b2b-integration { padding: 1.5rem; margin-bottom: 3rem; border-radius: 14px; }
+          .b2b-integration h2 { font-size: 1.35rem; }
+          .b2b-integration > p { font-size: 0.82rem; }
+
+          .b2b-pricing { margin-bottom: 3rem; }
+          .b2b-pricing h2 { font-size: 1.4rem; }
+          .b2b-pricing > p { font-size: 0.85rem; margin-bottom: 1.5rem; }
+          .b2b-price-card { padding: 1.75rem 1.25rem; border-radius: 14px; }
+          .b2b-price-card h3 { font-size: 1.05rem; }
+          .b2b-price-amount { font-size: 1.8rem; margin: 0.75rem 0; }
+          .b2b-price-amount span { font-size: 0.8rem; }
+          .b2b-price-features li { font-size: 0.8rem; }
+          .b2b-price-badge { font-size: 0.58rem; padding: 0.15rem 0.5rem; }
+
+          .b2b-faq { margin-bottom: 3rem; }
+          .b2b-faq h2 { font-size: 1.4rem; margin-bottom: 1.5rem; }
+          .b2b-faq-list { gap: 1rem; }
+          .b2b-faq-item { padding-bottom: 1rem; }
+          .b2b-faq-item h3 { font-size: 0.9rem; }
+          .b2b-faq-item p { font-size: 0.82rem; }
+
+          .b2b-contact { padding: 1.5rem; border-radius: 14px; }
+        }
       `}</style>
 
       <div className="b2b-container">
