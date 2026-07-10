@@ -3,10 +3,9 @@ import { generateRoutine, QuizAnswers } from "../../../../lib/routineEngine";
 
 /* ─── In-memory rate limiter (per-IP, per-key) ─── */
 const rateMap = new Map<string, { count: number; resetAt: number }>();
-const RATE_LIMIT = 30;           // max requests per window
 const RATE_WINDOW_MS = 60_000;   // 1-minute window
 
-function isRateLimited(identifier: string): boolean {
+function isRateLimited(identifier: string, limit: number): boolean {
   const now = Date.now();
   const entry = rateMap.get(identifier);
 
@@ -16,7 +15,7 @@ function isRateLimited(identifier: string): boolean {
   }
 
   entry.count++;
-  return entry.count > RATE_LIMIT;
+  return entry.count > limit;
 }
 
 // Periodically purge stale entries to prevent memory leak
@@ -54,10 +53,14 @@ export async function POST(req: NextRequest) {
     const body = await req.json().catch(() => ({}));
     const { apiKey, skinType, mainConcern, budget, experience = "beginner", climate } = body;
 
+    // Rate limit tier: trial keys get 60 req/min, paid/env keys get 5000 req/min
+    const isTrial = apiKey === "b2b_trial_key";
+    const limit = isTrial ? 60 : 5000;
+
     const rateLimitId = `${ip}:${apiKey || "none"}`;
-    if (isRateLimited(rateLimitId)) {
+    if (isRateLimited(rateLimitId, limit)) {
       return NextResponse.json(
-        { success: false, error: "Rate limit exceeded. Max 30 requests per minute." },
+        { success: false, error: `Rate limit exceeded. Max ${limit} requests per minute.` },
         { status: 429, headers: securityHeaders }
       );
     }
