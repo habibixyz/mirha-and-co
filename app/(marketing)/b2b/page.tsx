@@ -728,6 +728,47 @@ export default function B2BPlayground() {
                 Subscribe Now
               </a>
             </div>
+        {/* FAQ SECTION */}
+        <section className="faq-section" style={{ marginBottom: "6rem", maxWidth: "800px", margin: "0 auto 6rem auto" }}>
+          <h2 style={{ fontFamily: "Playfair Display, Georgia, serif", fontSize: "2.2rem", textAlign: "center", marginBottom: "3rem" }}>
+            Frequently Asked Questions
+          </h2>
+          <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
+            <div style={{ borderBottom: "1px solid var(--rule)", paddingBottom: "1.5rem" }}>
+              <h3 style={{ fontSize: "1.15rem", fontWeight: 700, marginBottom: "0.5rem", color: "var(--ink)" }}>
+                Will the widget recommend Amazon products or competitor links to my customers?
+              </h3>
+              <p style={{ color: "var(--muted)", fontSize: "0.95rem", lineHeight: 1.6 }}>
+                <strong>Absolutely not.</strong> Your custom integration only recommends products from <strong>your own brand's inventory</strong>. It syncs with your Shopify catalog to drive sales directly to your own checkout page.
+              </p>
+            </div>
+
+            <div style={{ borderBottom: "1px solid var(--rule)", paddingBottom: "1.5rem" }}>
+              <h3 style={{ fontSize: "1.15rem", fontWeight: 700, marginBottom: "0.5rem", color: "var(--ink)" }}>
+                How do we load our products into your recommendation system?
+              </h3>
+              <p style={{ color: "var(--muted)", fontSize: "0.95rem", lineHeight: 1.6 }}>
+                Once you subscribe to the Grow or Scale plan, you can easily sync your store's catalog (via a CSV upload or a simple Shopify API integration). Our system automatically categorizes and matches your products to different skin concerns and climates.
+              </p>
+            </div>
+
+            <div style={{ borderBottom: "1px solid var(--rule)", paddingBottom: "1.5rem" }}>
+              <h3 style={{ fontSize: "1.15rem", fontWeight: 700, marginBottom: "0.5rem", color: "var(--ink)" }}>
+                How difficult is it to install the assistant widget?
+              </h3>
+              <p style={{ color: "var(--muted)", fontSize: "0.95rem", lineHeight: 1.6 }}>
+                It takes under 3 minutes. You just copy-paste a single line of JavaScript code into your website's header (e.g. your Shopify theme header or WooCommerce builder). No software engineering skills are required.
+              </p>
+            </div>
+
+            <div style={{ borderBottom: "1px solid var(--rule)", paddingBottom: "1.5rem" }}>
+              <h3 style={{ fontSize: "1.15rem", fontWeight: 700, marginBottom: "0.5rem", color: "var(--ink)" }}>
+                How does the climate-aware recommendation work?
+              </h3>
+              <p style={{ color: "var(--muted)", fontSize: "0.95rem", lineHeight: 1.6 }}>
+                The assistant automatically detects the shopper's location within India. It checks regional tap water hardness and real-time weather data (temperature and humidity) to swap products dynamically—ensuring they get the perfect skincare routine for their environment.
+              </p>
+            </div>
           </div>
         </section>
 
