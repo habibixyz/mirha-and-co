@@ -78,17 +78,17 @@ export default function B2BPlayground() {
     <main className="b2b-page">
       <style>{`
         .b2b-page {
-          --black: #0c0a09;
-          --white: #fafaf8;
-          --rose: #a27b5c;
-          --rose-light: #fbf7f2;
-          --paper: #fffcf8;
-          --ink: #2b2826;
-          --muted: #8c8179;
-          --rule: #e8ded6;
-          background: var(--paper);
+          --black: var(--black);
+          --white: var(--white);
+          --rose: var(--rose);
+          --rose-light: var(--rose-light);
+          --paper: var(--white);
+          --ink: var(--ink);
+          --muted: var(--muted);
+          --rule: rgba(0, 0, 0, 0.05);
+          background: var(--white);
           color: var(--ink);
-          font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+          font-family: var(--font-dm-sans), system-ui, sans-serif;
           line-height: 1.5;
         }
 
@@ -127,24 +127,26 @@ export default function B2BPlayground() {
         }
 
         .card {
-          background: var(--rose-light);
-          border: 1px solid var(--rule);
+          background: rgba(255, 255, 255, 0.6);
+          backdrop-filter: blur(8px);
+          border: 1px solid rgba(0, 0, 0, 0.04);
           border-radius: 16px;
           padding: 2.5rem;
-          transition: transform 0.3s ease, box-shadow 0.3s ease;
+          transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
         }
 
         .card:hover {
           transform: translateY(-4px);
-          box-shadow: 0 12px 30px rgba(162, 123, 92, 0.08);
+          border-color: var(--rose);
+          box-shadow: 0 12px 30px rgba(252, 39, 121, 0.06);
         }
 
         .icon-box {
           width: 48px;
           height: 48px;
           border-radius: 12px;
-          background: var(--rose);
-          color: var(--white);
+          background: var(--rose-light);
+          color: var(--rose);
           display: flex;
           align-items: center;
           justify-content: center;
@@ -165,11 +167,13 @@ export default function B2BPlayground() {
         }
 
         .sandbox-section {
-          background: var(--white);
-          border: 1px solid var(--rule);
+          background: rgba(255, 255, 255, 0.85);
+          backdrop-filter: blur(12px);
+          border: 1px solid rgba(0, 0, 0, 0.04);
           border-radius: 24px;
           padding: 3.5rem;
           margin-bottom: 6rem;
+          box-shadow: 0 10px 40px rgba(0, 0, 0, 0.02);
         }
 
         .sandbox-header {
@@ -221,11 +225,12 @@ export default function B2BPlayground() {
 
         .form-control {
           padding: 0.8rem 1rem;
-          border: 1px solid var(--rule);
+          border: 1px solid rgba(0, 0, 0, 0.08);
           border-radius: 8px;
-          background: var(--paper);
+          background: rgba(255, 255, 255, 0.9);
           color: var(--ink);
           font-size: 0.95rem;
+          transition: border-color 0.2s;
         }
 
         .form-control:focus {
@@ -243,7 +248,7 @@ export default function B2BPlayground() {
           font-size: 1rem;
           border-radius: 8px;
           cursor: pointer;
-          transition: background 0.2s;
+          transition: background-color 0.2s, transform 0.2s;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -251,7 +256,8 @@ export default function B2BPlayground() {
         }
 
         .btn-api:hover {
-          background: #8c6a4e;
+          background: #d41a65;
+          transform: translateY(-1px);
         }
 
         .sandbox-results {
@@ -261,35 +267,37 @@ export default function B2BPlayground() {
         }
 
         .tab-container {
-          background: var(--black);
+          background: #0f172a;
           border-radius: 12px;
           overflow: hidden;
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
         }
 
         .tab-header {
-          background: #1c1917;
+          background: #1e293b;
           padding: 0.75rem 1.5rem;
           font-family: monospace;
           font-size: 0.8rem;
-          color: #a8a29e;
+          color: #94a3b8;
           display: flex;
           justify-content: space-between;
-          border-bottom: 1px solid #2e2a24;
+          border-bottom: 1px solid #334155;
         }
 
         .code-display {
           padding: 1.5rem;
           font-family: "Courier New", Courier, monospace;
           font-size: 0.85rem;
-          color: #f5f5f4;
+          color: #f8fafc;
           overflow-x: auto;
           margin: 0;
           white-space: pre-wrap;
         }
 
         .preview-pane {
-          background: var(--rose-light);
-          border: 1px solid var(--rule);
+          background: rgba(255, 255, 255, 0.6);
+          backdrop-filter: blur(8px);
+          border: 1px solid rgba(0, 0, 0, 0.04);
           border-radius: 12px;
           padding: 2rem;
         }
@@ -298,8 +306,9 @@ export default function B2BPlayground() {
           font-family: "Playfair Display", Georgia, serif;
           font-size: 1.25rem;
           margin-bottom: 1.5rem;
-          border-bottom: 1px solid var(--rule);
+          border-bottom: 1px solid rgba(0, 0, 0, 0.05);
           padding-bottom: 0.5rem;
+          color: var(--ink);
         }
 
         .product-list {
@@ -309,39 +318,50 @@ export default function B2BPlayground() {
         }
 
         .product-item {
-          background: var(--white);
-          border: 1px solid var(--rule);
-          border-radius: 8px;
-          padding: 1.2rem;
+          background: rgba(255, 255, 255, 0.95);
+          border: 1px solid rgba(0, 0, 0, 0.04);
+          border-radius: 10px;
+          padding: 1.4rem;
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.01);
+          transition: transform 0.2s;
+        }
+
+        .product-item:hover {
+          transform: translateY(-2px);
+          border-color: rgba(252, 39, 121, 0.2);
         }
 
         .product-item h5 {
-          font-size: 1rem;
+          font-size: 1.05rem;
           font-weight: 700;
-          margin-bottom: 0.25rem;
+          margin-bottom: 0.35rem;
+          color: var(--ink);
         }
 
         .product-item p {
-          font-size: 0.85rem;
+          font-size: 0.88rem;
           color: var(--muted);
+          line-height: 1.5;
           margin: 0;
         }
 
         .product-tag {
           display: inline-block;
-          font-size: 0.75rem;
-          font-weight: 600;
+          font-size: 0.7rem;
+          font-weight: 700;
           text-transform: uppercase;
+          letter-spacing: 0.05em;
           background: var(--rose-light);
           color: var(--rose);
-          padding: 0.2rem 0.5rem;
+          padding: 0.25rem 0.6rem;
           border-radius: 4px;
-          margin-bottom: 0.5rem;
+          margin-bottom: 0.6rem;
         }
 
         .integration-section {
-          background: var(--rose-light);
-          border: 1px solid var(--rule);
+          background: rgba(255, 255, 255, 0.5);
+          backdrop-filter: blur(8px);
+          border: 1px solid rgba(0, 0, 0, 0.04);
           border-radius: 24px;
           padding: 3.5rem;
           margin-bottom: 6rem;
@@ -372,18 +392,26 @@ export default function B2BPlayground() {
         }
 
         .price-card {
-          background: var(--white);
-          border: 1px solid var(--rule);
+          background: rgba(255, 255, 255, 0.6);
+          backdrop-filter: blur(8px);
+          border: 1px solid rgba(0, 0, 0, 0.04);
           border-radius: 16px;
           padding: 3rem 2rem;
           display: flex;
           flex-direction: column;
           text-align: left;
+          transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .price-card:hover {
+          transform: translateY(-4px);
+          border-color: var(--rose);
+          box-shadow: 0 12px 30px rgba(252, 39, 121, 0.05);
         }
 
         .price-card.popular {
           border-color: var(--rose);
-          box-shadow: 0 10px 30px rgba(162, 123, 92, 0.08);
+          box-shadow: 0 12px 40px rgba(252, 39, 121, 0.08);
           position: relative;
         }
 
@@ -402,6 +430,7 @@ export default function B2BPlayground() {
         .price-card h3 {
           font-size: 1.4rem;
           margin-bottom: 0.5rem;
+          color: var(--ink);
         }
 
         .price-amount {
@@ -452,17 +481,19 @@ export default function B2BPlayground() {
         }
 
         .btn-price:hover {
-          opacity: 0.9;
-          transform: scale(1.02);
+          opacity: 0.95;
+          transform: translateY(-1px);
         }
 
         .contact-section {
-          background: var(--white);
-          border: 1px solid var(--rule);
+          background: rgba(255, 255, 255, 0.75);
+          backdrop-filter: blur(12px);
+          border: 1px solid rgba(0, 0, 0, 0.04);
           border-radius: 24px;
           padding: 3.5rem;
           max-width: 600px;
           margin: 0 auto;
+          box-shadow: 0 10px 40px rgba(0, 0, 0, 0.02);
         }
       `}</style>
 
