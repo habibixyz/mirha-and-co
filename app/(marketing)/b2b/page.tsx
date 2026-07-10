@@ -78,13 +78,6 @@ export default function B2BPlayground() {
     <main className="b2b-page">
       <style>{`
         .b2b-page {
-          --black: var(--black);
-          --white: var(--white);
-          --rose: var(--rose);
-          --rose-light: var(--rose-light);
-          --paper: var(--white);
-          --ink: var(--ink);
-          --muted: var(--muted);
           --rule: rgba(0, 0, 0, 0.05);
           background: var(--white);
           color: var(--ink);
@@ -241,8 +234,8 @@ export default function B2BPlayground() {
         .b2b-page a.btn-api,
         .b2b-page button.btn-api {
           margin-top: 1rem;
-          background: var(--rose) !important;
-          color: var(--white) !important;
+          background: #fc2779 !important;
+          color: #ffffff !important;
           border: none !important;
           padding: 0.8rem 1.8rem !important;
           font-weight: 600 !important;
@@ -465,9 +458,9 @@ export default function B2BPlayground() {
         }
 
         .b2b-page a.btn-price {
-          background: var(--rose-light) !important;
-          color: var(--rose) !important;
-          border: 1px solid var(--rose) !important;
+          background: #ffe6f0 !important;
+          color: #fc2779 !important;
+          border: 1px solid #fc2779 !important;
           padding: 0.8rem 1.8rem !important;
           border-radius: 8px !important;
           font-weight: 600 !important;
@@ -481,8 +474,8 @@ export default function B2BPlayground() {
         }
 
         .b2b-page a.btn-price.popular-btn {
-          background: var(--rose) !important;
-          color: var(--white) !important;
+          background: #fc2779 !important;
+          color: #ffffff !important;
           border: none !important;
         }
 
@@ -624,15 +617,11 @@ export default function B2BPlayground() {
                 </div>
               </div>
 
-              <button className="btn-api" onClick={triggerAPI} disabled={loading}>
+              <button className="btn-api" onClick={triggerAPI} disabled={loading} style={{ width: "100%", marginBottom: "2rem" }}>
                 {loading ? "Generating..." : "Call API & Get Recommendations"}
               </button>
-            </div>
 
-            <div className="sandbox-results">
               <h3 style={{ fontSize: "1.2rem", fontWeight: 700, marginBottom: "0.5rem" }}>API Response</h3>
-              
-              {/* Tab component displaying the raw JSON */}
               <div className="tab-container">
                 <div className="tab-header">
                   <span>POST /api/v1/recommend</span>
@@ -650,33 +639,44 @@ export default function B2BPlayground() {
                   )}
                 </pre>
               </div>
+            </div>
 
-              {/* Renders the output visually to simulate rendering on a client's page */}
-              {response && (
-                <div className="preview-pane">
-                  <h4>Interactive Preview on Storefront</h4>
-                  
-                  {response.climateAdjustment && (
-                    <div style={{ background: "rgba(162,123,92,0.1)", borderLeft: "4px solid var(--rose)", padding: "0.75rem", borderRadius: "4px", fontSize: "0.85rem", marginBottom: "1rem" }}>
-                      <strong>Climate Alert:</strong> {response.climateAdjustment.alertText}
+            <div className="sandbox-results">
+              <h3 style={{ fontSize: "1.2rem", fontWeight: 700, marginBottom: "0.5rem" }}>Interactive Preview on Storefront</h3>
+              <div className="preview-pane">
+                {response ? (
+                  <>
+                    {response.climateAdjustment && (
+                      <div style={{ background: "rgba(252,39,121,0.06)", borderLeft: "4px solid #fc2779", padding: "0.75rem", borderRadius: "4px", fontSize: "0.85rem", marginBottom: "1rem", color: "var(--ink)" }}>
+                        <strong>Climate Alert:</strong> {response.climateAdjustment.alertText}
+                      </div>
+                    )}
+
+                    <div className="product-list">
+                      {["cleanser", "treatment", "moisturiser", "sunscreen"].map((step) => {
+                        const item = response[step];
+                        if (!item) return null;
+                        return (
+                          <div className="product-item" key={step}>
+                            <span className="product-tag">{step}</span>
+                            <h5>{item.name}</h5>
+                            <p>{item.reason}</p>
+                          </div>
+                        );
+                      })}
                     </div>
-                  )}
-
-                  <div className="product-list">
-                    {["cleanser", "treatment", "moisturiser", "sunscreen"].map((step) => {
-                      const item = response[step];
-                      if (!item) return null;
-                      return (
-                        <div className="product-item" key={step}>
-                          <span className="product-tag">{step}</span>
-                          <h5>{item.name}</h5>
-                          <p>{item.reason}</p>
-                        </div>
-                      );
-                    })}
+                  </>
+                ) : (
+                  <div style={{ textAlign: "center", padding: "4rem 1.5rem", color: "var(--muted)" }}>
+                    <div style={{ marginBottom: "1rem", color: "#fc2779", opacity: 0.6 }}>
+                      <Zap size={32} style={{ margin: "0 auto" }} />
+                    </div>
+                    <p style={{ fontSize: "0.9rem", lineHeight: 1.5 }}>
+                      No active session. Adjust parameters on the left and click <strong>Call API & Get Recommendations</strong> to see recommended routines.
+                    </p>
                   </div>
-                </div>
-              )}
+                )}
+              </div>
             </div>
           </div>
         </section>
