@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { Code, Server, Smartphone, Zap, Check, Send, CheckCircle2 } from "lucide-react";
+import { submitLeadAction } from "../../(saas)/actions";
 
 export default function B2BPlayground() {
   const [skinType, setSkinType] = useState("oily");
@@ -57,10 +58,20 @@ export default function B2BPlayground() {
     }
   };
 
-  const handleContactSubmit = (e: React.FormEvent) => {
+  const handleContactSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!contactName || !contactEmail || !contactBrand) return;
-    setSubmittedContact(true);
+    try {
+      const dataStr = JSON.stringify({
+        name: contactName,
+        brand: contactBrand,
+        message: contactMessage,
+      });
+      await submitLeadAction(contactEmail, "b2b_api", dataStr);
+      setSubmittedContact(true);
+    } catch (err) {
+      console.error("Database lead submission error:", err);
+    }
   };
 
   return (
