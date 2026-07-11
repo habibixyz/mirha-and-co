@@ -563,9 +563,9 @@ export default async function BlogIndex() {
  <h1 className="hero-title">
  Beauty advice with <span>receipts.</span>
  </h1>
- <p className="hero-copy">
- Guides, comparisons, and routines for Indian skin: clear enough for beginners, useful enough for people who already know their actives.
- </p>
+  <p className="hero-copy">
+  {localizeContent("Guides, comparisons, and routines for Indian skin: clear enough for beginners, useful enough for people who already know their actives.")}
+  </p>
  <div className="hero-actions">
  <a href="/dashboard/search" className="primary-btn">Search Mirha</a>
  <a href="/tools/routine" className="secondary-btn">Build Routine</a>
@@ -585,7 +585,7 @@ export default async function BlogIndex() {
  </section>
 
  <div className="trust-strip">
- <div className="trust-item">Indian skin + climate</div>
+ <div className="trust-item">{localizeContent("Indian skin + climate")}</div>
  <div className="trust-item">Ingredient reasoning</div>
  <div className="trust-item">Budget-aware picks</div>
  <div className="trust-item">Affiliate links disclosed</div>
@@ -745,19 +745,28 @@ export default async function BlogIndex() {
  Climate-Specific Skincare by Region
  </h2 >
  
- <RegionalGuidesSelector />
+ <RegionalGuidesSelector currency={currency} />
 
  <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))", gap: "1.5rem" }}>
- {[
- { cityName: "Mumbai", citySlug: "mumbai", concernName: "Oily Skin", concernSlug: "oily-skin" },
- { cityName: "Delhi", citySlug: "delhi", concernName: "Dry Skin", concernSlug: "dry-skin" },
- { cityName: "Chennai", citySlug: "chennai", concernName: "Acne", concernSlug: "acne" },
- { cityName: "Bangalore", citySlug: "bangalore", concernName: "Hyperpigmentation", concernSlug: "hyperpigmentation" },
- { cityName: "Pune", citySlug: "pune", concernName: "Oily Skin", concernSlug: "oily-skin" },
- { cityName: "Hyderabad", citySlug: "hyderabad", concernName: "Dry Skin", concernSlug: "dry-skin" },
- { cityName: "Kolkata", citySlug: "kolkata", concernName: "Acne", concernSlug: "acne" },
- { cityName: "Jaipur", citySlug: "jaipur", concernName: "Hyperpigmentation", concernSlug: "hyperpigmentation" }
- ].map((guide) => (
+  {(currency === "INR" ? [
+    { cityName: "Mumbai", citySlug: "mumbai", concernName: "Oily Skin", concernSlug: "oily-skin" },
+    { cityName: "Delhi", citySlug: "delhi", concernName: "Dry Skin", concernSlug: "dry-skin" },
+    { cityName: "Chennai", citySlug: "chennai", concernName: "Acne", concernSlug: "acne" },
+    { cityName: "Bangalore", citySlug: "bangalore", concernName: "Hyperpigmentation", concernSlug: "hyperpigmentation" },
+    { cityName: "Pune", citySlug: "pune", concernName: "Oily Skin", concernSlug: "oily-skin" },
+    { cityName: "Hyderabad", citySlug: "hyderabad", concernName: "Dry Skin", concernSlug: "dry-skin" },
+    { cityName: "Kolkata", citySlug: "kolkata", concernName: "Acne", concernSlug: "acne" },
+    { cityName: "Jaipur", citySlug: "jaipur", concernName: "Hyperpigmentation", concernSlug: "hyperpigmentation" }
+  ] : [
+    { cityName: "New York", citySlug: "new-york", concernName: "Oily Skin", concernSlug: "oily-skin" },
+    { cityName: "London", citySlug: "london", concernName: "Dry Skin", concernSlug: "dry-skin" },
+    { cityName: "Dubai", citySlug: "dubai", concernName: "Acne", concernSlug: "acne" },
+    { cityName: "Singapore", citySlug: "singapore", concernName: "Hyperpigmentation", concernSlug: "hyperpigmentation" },
+    { cityName: "Sydney", citySlug: "sydney", concernName: "Oily Skin", concernSlug: "oily-skin" },
+    { cityName: "Toronto", citySlug: "toronto", concernName: "Dry Skin", concernSlug: "dry-skin" },
+    { cityName: "Los Angeles", citySlug: "los-angeles", concernName: "Acne", concernSlug: "acne" },
+    { cityName: "Paris", citySlug: "paris", concernName: "Hyperpigmentation", concernSlug: "hyperpigmentation" }
+  ]).map((guide) => (
  <a 
  key={`${guide.citySlug}-${guide.concernSlug}`} 
  href={`/blog/best-moisturizer-for-${guide.concernSlug}-in-${guide.citySlug}`}

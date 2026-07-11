@@ -13,6 +13,19 @@ export interface Concern {
   category: string;
 }
 
+
+export const GLOBAL_CITIES: City[] = [
+  { name: "New York", slug: "new-york", region: "extreme", state: "New York, US" },
+  { name: "London", slug: "london", region: "moderate", state: "Greater London, UK" },
+  { name: "Dubai", slug: "dubai", region: "extreme", state: "Dubai, UAE" },
+  { name: "Singapore", slug: "singapore", region: "humid", state: "Singapore" },
+  { name: "Sydney", slug: "sydney", region: "moderate", state: "New South Wales, AU" },
+  { name: "Toronto", slug: "toronto", region: "extreme", state: "Ontario, CA" },
+  { name: "Los Angeles", slug: "los-angeles", region: "moderate", state: "California, US" },
+  { name: "Paris", slug: "paris", region: "moderate", state: "Île-de-France, FR" },
+  { name: "Tokyo", slug: "tokyo", region: "humid", state: "Tokyo, JP" }
+];
+
 export const CITIES: City[] = [
   { name: "Mumbai", slug: "mumbai", region: "humid", state: "Maharashtra" },
   { name: "Delhi", slug: "delhi", region: "extreme", state: "Delhi NCR" },
@@ -174,7 +187,7 @@ export function getProgrammaticPostBySlug(slug: string) {
   const concernSlug = match[1];
   const citySlug = match[2];
 
-  const city = CITIES.find((c) => c.slug === citySlug);
+  const city = CITIES.find((c) => c.slug === citySlug) || GLOBAL_CITIES.find((c) => c.slug === citySlug);
   const concern = CONCERNS.find((cr) => cr.slug === concernSlug);
 
   if (!city || !concern) return null;
@@ -193,6 +206,9 @@ export function getAllProgrammaticSlugs(): string[] {
 
   for (const concern of CONCERNS) {
     for (const city of CITIES) {
+      slugs.push(`best-moisturizer-for-${concern.slug}-in-${city.slug}`);
+    }
+    for (const city of GLOBAL_CITIES) {
       slugs.push(`best-moisturizer-for-${concern.slug}-in-${city.slug}`);
     }
   }

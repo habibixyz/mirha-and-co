@@ -1,9 +1,10 @@
 "use client";
 
 import React, { useState } from "react";
-import { CITIES, CONCERNS } from "@/lib/programmatic-posts";
+import { CITIES, GLOBAL_CITIES, CONCERNS } from "@/lib/programmatic-posts";
 
-export default function RegionalGuidesSelector() {
+export default function RegionalGuidesSelector({ currency = "INR" }: { currency?: string }) {
+  const citiesList = currency === "INR" ? CITIES : GLOBAL_CITIES;
   const [selectedCity, setSelectedCity] = useState("");
   const [selectedConcern, setSelectedConcern] = useState("");
 
@@ -61,7 +62,7 @@ export default function RegionalGuidesSelector() {
           }}
         >
           <option value="">Select City</option>
-          {CITIES.map((city) => (
+          {citiesList.map((city) => (
             <option key={city.slug} value={city.slug}>
               {city.name}
             </option>
