@@ -192,29 +192,29 @@ export default function HardWaterCalculator() {
     const isGlobal = regionMode === "global";
 
     if (isGlobal) {
-      const malibuCombo = PRODUCTS.find(p => p.asin === "B00194E1SS");
+      const malibuCombo = PRODUCTS.find(p => p.asin === "B01N23J5C1");
       const lorealMetal = PRODUCTS.find(p => p.asin === "B09B1FXGR3");
       const cream = PRODUCTS.find(p => p.asin === "B099MJH88B");
-      const malibuRemedy = PRODUCTS.find(p => p.asin === "B000143LHY");
+      const malibuRemedy = PRODUCTS.find(p => p.asin === "B07L9VXQN2");
 
       return {
         chelatingCombo: malibuCombo || {
-          asin: "B00194E1SS",
+          asin: "B01N23J5C1",
           name: "Malibu C Hard Water Wellness Shampoo",
           brand: "Malibu C",
           description: "The industry standard for hard water. Removes copper, iron, calcium, and chlorine. Restores volume, shine, and manageability.",
           price: 1799, mrp: 2199,
-          image: "/products/malibu-c-shampoo.png",
-          link: "https://amzn.to/3W0P4k5"
+          image: "/products/B01N23J5C1.JPG",
+          link: "https://link.amazon/B01RUwEae"
         },
         chelatingPro: malibuRemedy || {
-          asin: "B000143LHY",
+          asin: "B07L9VXQN2",
           name: "Malibu C Hard Water Wellness Remedy",
           brand: "Malibu C",
           description: "Patented crystal packets that instantly remove hard water mineral build-up and surface discoloration. Ideal for extreme hardness.",
           price: 1499, mrp: 1899,
-          image: "/products/malibu-c-remedy.png",
-          link: "https://amzn.to/40qKxM1"
+          image: "/products/B07L9VXQN2.JPG",
+          link: "https://link.amazon/B0h1MCcCr"
         },
         dailyMaintain: lorealMetal || {
           asin: "B09B1FXGR3",
