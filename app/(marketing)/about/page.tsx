@@ -7,7 +7,7 @@ import CollabForm from "@/components/CollabForm";
 export const metadata = {
  title: "About | Mirha & Co.",
  description:
- "Mirha & Co. is an intelligent skincare guide for Indian consumers, blending curated ingredient context with AI-powered personalized advice.",
+ "Mirha & Co. is a global skincare intelligence platform and plug-and-play B2B SaaS widget provider, blending curated ingredient analysis with AI-powered personalized advice.",
 };
 
 export default function AboutPage() {
@@ -220,20 +220,24 @@ export default function AboutPage() {
 
   .ecosystem-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    grid-template-columns: repeat(6, 1fr);
     gap: 2rem;
     margin-top: 4rem;
   }
 
  .ecosystem-card {
- background: #fff;
- border: 1px solid var(--rule);
- border-radius: 20px;
- padding: 2.5rem;
- transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
- position: relative;
- overflow: hidden;
- }
+    background: #fff;
+    border: 1px solid var(--rule);
+    border-radius: 20px;
+    padding: 2.5rem;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    overflow: hidden;
+    grid-column: span 2;
+  }
+  .ecosystem-card.wide {
+    grid-column: span 3;
+  }
 
  .ecosystem-card:hover {
  box-shadow: 0 20px 40px rgba(162, 123, 92, 0.05);
@@ -371,39 +375,61 @@ export default function AboutPage() {
  transform: translateY(-2px);
  }
 
- @media (max-width: 900px) {
- .hero-inner,
- .two-col,
- .honesty-row {
- grid-template-columns: 1fr !important;
- gap: 2rem;
- }
+  @media (max-width: 900px) {
+    .hero-inner,
+    .two-col,
+    .honesty-row {
+      grid-template-columns: 1fr !important;
+      gap: 2rem;
+    }
 
- .hero { padding: 6rem 1.5rem 0rem; }
- .section, .cta { padding: 5rem 1.5rem; }
+    .hero { padding: 6rem 1.5rem 0rem; }
+    .section, .cta { padding: 5rem 1.5rem; }
 
- .ecosystem-grid {
- grid-template-columns: 1fr;
- gap: 1.5rem;
- }
+    .ecosystem-grid {
+      grid-template-columns: repeat(2, 1fr) !important;
+      gap: 1.5rem;
+    }
+    .ecosystem-card {
+      grid-column: span 1 !important;
+    }
+    .ecosystem-card.wide {
+      grid-column: span 1 !important;
+    }
+    .ecosystem-card:last-child {
+      grid-column: span 2 !important;
+    }
 
- .hero-img {
- grid-column: span 1 !important;
- height: 400px;
- margin-top: 2rem;
- }
+    .hero-img {
+      grid-column: span 1 !important;
+      height: 400px;
+      margin-top: 2rem;
+    }
 
- .side-img {
- height: 300px;
- margin-top: 2rem;
- }
+    .side-img {
+      height: 300px;
+      margin-top: 2rem;
+    }
 
- .btn-row {
- flex-direction: column;
- width: 100%;
- }
- .btn { width: 100%; justify-content: center; }
- }
+    .btn-row {
+      flex-direction: column;
+      width: 100%;
+    }
+    .btn { width: 100%; justify-content: center; }
+  }
+
+  @media (max-width: 600px) {
+    .ecosystem-grid {
+      grid-template-columns: 1fr !important;
+      gap: 1.25rem;
+    }
+    .ecosystem-card,
+    .ecosystem-card.wide,
+    .ecosystem-card:last-child {
+      grid-column: span 1 !important;
+      padding: 1.75rem !important;
+    }
+  }
  `}</style>
 
  <div className="about-page">
@@ -471,13 +497,21 @@ export default function AboutPage() {
       </p>
     </div>
 
-    <div className="ecosystem-card">
+    <div className="ecosystem-card wide">
       <div className="eco-icon"><Coins size={28} /></div>
       <h3>Beauty Dupe Finder</h3>
       <p>
         Save on marketing, pay for active ingredients. Swap premium luxury products for their drugstore active-equivalents and calculate your annual savings.
       </p>
     </div>
+
+     <div className="ecosystem-card wide" style={{ border: "1px solid rgba(252, 39, 121, 0.2)" }}>
+       <div className="eco-icon" style={{ background: "rgba(252, 39, 121, 0.08)", color: "#fc2779" }}><Star size={28} /></div>
+       <h3 style={{ color: "#fc2779" }}>Plug-and-Play B2B SaaS</h3>
+       <p>
+         We license our climate-aware skincare recommendation engine to brands worldwide. Shopify and WooCommerce stores embed our AI widget to drive conversions globally.
+       </p>
+     </div>
   </div>
  </div>
  </section>
@@ -550,7 +584,7 @@ export default function AboutPage() {
   color: "var(--muted)",
   margin: 0
   }}>
-  With over 8 years of sourcing operations experience managing premium beauty brands (including MAC, Kama Ayurveda, and Forest Essentials), Tanvir created Mirha & Co. to demystify skincare formulations and bring climate-aware, science-backed transparency directly to consumers.
+  With over 8 years of sourcing operations experience managing premium beauty brands (including MAC, Kama Ayurveda, and Forest Essentials), Tanvir created Mirha & Co. to demystify skincare formulations and bring climate-aware, science-backed transparency directly to consumers and brands globally.
   </p>
   <div style={{ marginTop: "0.75rem", display: "flex", gap: "1.2rem", fontSize: "0.82rem" }}>
   <a href="mailto:tanizcoldz@gmail.com" style={{ color: "var(--rose)", textDecoration: "none", fontWeight: 600 }}>tanizcoldz@gmail.com</a>
@@ -614,7 +648,7 @@ export default function AboutPage() {
  <span style={{ fontSize: "clamp(1.8rem, 4vw, 3rem)" }}>Sell your brand on Mirha&nbsp;&amp;&nbsp;Co.</span>
  </h2>
  <p style={{ color: "var(--muted)", marginBottom: "3rem", fontSize: "1.05rem", lineHeight: "1.7" }}>
- Are you a skincare brand looking to reach a highly engaged audience? We partner with authentic brands to feature their products on our platform. Submit your brand details below to get started, or reach out directly at <strong style={{ color: "var(--rose)" }}>tanizcoldz@gmail.com</strong> / <strong style={{ color: "var(--rose)" }}>+91 9372159177</strong>.
+ Are you a skincare brand looking to reach a global audience or integrate our climate-aware recommendation widget directly onto your storefront? We license our B2B SaaS tools to brands worldwide and feature authentic partners on our platform. Submit your details below to get started, or reach out directly at <strong style={{ color: "var(--rose)" }}>tanizcoldz@gmail.com</strong> / <strong style={{ color: "var(--rose)" }}>+91 9372159177</strong>.
  </p>
  <CollabForm />
  </div>
