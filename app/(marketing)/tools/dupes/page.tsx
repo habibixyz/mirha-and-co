@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ArrowRight, Share2, Check, ArrowLeft, TrendingDown, Star, Search, X } from "lucide-react";
 import { PRODUCTS } from "@/lib/products";
 import { submitLeadAction } from "@/app/(saas)/actions";
+import { useGlobalization } from "@/components/GlobalizationContext";
 
 // Define the luxury products and their matching drugstore dupes
 const DUPES_DATABASE = [
@@ -326,6 +327,8 @@ const DUPES_DATABASE = [
 ];
 
 export default function DupeFinderPage() {
+  const { formatPrice, getAffiliateUrl, currency } = useGlobalization();
+  const amazonLabel = currency === "INR" ? "Amazon.in" : currency === "GBP" ? "Amazon.co.uk" : currency === "EUR" ? "Amazon.de" : currency === "AED" ? "Amazon.ae" : currency === "SAR" ? "Amazon.sa" : "Amazon.com";
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const [purchasesPerYear, setPurchasesPerYear] = useState<Record<string, number>>({});
   
@@ -443,7 +446,7 @@ export default function DupeFinderPage() {
   }, [selectedItems, purchasesPerYear]);
 
   const handleShareWhatsApp = () => {
-    const text = `I just used the Skincare Dupe Finder & calculated that swapping luxury items for drugstore dupes will save me ₹${math.savings.toLocaleString("en-IN")}/year! Find your dupes here:`;
+    const text = `I just used the Skincare Dupe Finder & calculated that swapping luxury items for drugstore dupes will save me ${formatPrice(math.savings)}/year! Find your dupes here:`;
     const url = "https://mirhaandco.com/tools/dupes";
     window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text + " " + url)}`, "_blank");
   };
@@ -994,11 +997,11 @@ export default function DupeFinderPage() {
 
         <div className="header">
           <div className="header-badge">
-            <Star size={12} /> Free Tool — No Sign Up Required
+            <Star size={12} /> Free Worldwide Tool — No Sign Up Required
           </div>
-          <h1>Beauty Dupe Finder &amp; Savings Calculator</h1>
+          <h1>Global Beauty Dupe Finder &amp; Savings Calculator</h1>
           <p>
-            Stop overpaying for marketing. Pair highly coveted luxury beauty products (Skincare, Makeup, Hair Care, and Body Care) with active-equivalent drugstore dupes and calculate your yearly savings.
+            Stop overpaying for marketing. Match luxury products (Estée Lauder, Drunk Elephant, Olaplex, MAC) with science-equivalent drugstore dupes — and see exactly how much you save yearly, in your local currency.
           </p>
         </div>
 
@@ -1070,7 +1073,7 @@ export default function DupeFinderPage() {
                           <span style={{ fontStyle: "italic" }}>Actives: {item.luxury.actives.split(",")[0]}…</span>
                         </div>
                       </div>
-                      <div className="luxury-price">₹{item.luxury.price.toLocaleString("en-IN")}</div>
+                      <div className="luxury-price">{formatPrice(item.luxury.price)}</div>
                     </div>
                   );
                 })}
@@ -1106,21 +1109,21 @@ export default function DupeFinderPage() {
                 <div>
                   <div className="savings-stat">
                     <span style={{ fontSize: "0.75rem", letterSpacing: "0.15em", textTransform: "uppercase", fontWeight: 700, color: "#756b63" }}>Estimated Annual Savings</span>
-                    <div className="savings-amt">₹{math.savings.toLocaleString("en-IN")}</div>
+                    <div className="savings-amt">{formatPrice(math.savings)}</div>
                     <div className="savings-pct">Save {math.percentage}% on this routine</div>
                   </div>
 
                   <div className="calc-row">
                     <span>Luxury Total (Annual):</span>
-                    <span>₹{math.luxuryTotal.toLocaleString("en-IN")}</span>
+                    <span>{formatPrice(math.luxuryTotal)}</span>
                   </div>
                   <div className="calc-row">
                     <span>Dupe Total (Annual):</span>
-                    <span>₹{math.dupeTotal.toLocaleString("en-IN")}</span>
+                    <span>{formatPrice(math.dupeTotal)}</span>
                   </div>
                   <div className="calc-row total">
                     <span>Net Annual Savings:</span>
-                    <span style={{ color: "#fc2779" }}>₹{math.savings.toLocaleString("en-IN")}</span>
+                    <span style={{ color: "#fc2779" }}>{formatPrice(math.savings)}</span>
                   </div>
 
                   <button
@@ -1169,7 +1172,7 @@ export default function DupeFinderPage() {
         <div className="mobile-savings-bar">
           <div>
             <div className="mobile-savings-label">Annual Savings</div>
-            <div className="mobile-savings-amount">₹{math.savings.toLocaleString("en-IN")}</div>
+            <div className="mobile-savings-amount">{formatPrice(math.savings)}</div>
             {math.percentage > 0 && <div className="mobile-savings-pct">Save {math.percentage}%</div>}
           </div>
           {math.savings > 0 && (
@@ -1216,7 +1219,7 @@ export default function DupeFinderPage() {
               const item = DUPES_DATABASE.find(d => d.id === id);
               if (!item) return null;
               const matchingProduct = PRODUCTS.find(p => p.asin === item.dupe.asin);
-              const affiliateUrl = matchingProduct?.link || item.dupe.link;
+              const affiliateUrl = getAffiliateUrl(item.dupe.asin, item.dupe.name, item.dupe.brand, matchingProduct?.link || item.dupe.link);
 
               const count = purchasesPerYear[id] || 2;
               const savings = (item.luxury.price - item.dupe.price) * count;
@@ -1243,7 +1246,7 @@ export default function DupeFinderPage() {
                       <h4 style={{ fontSize: "1.05rem", fontWeight: 600, margin: "2px 0 6px" }}>{item.luxury.name}</h4>
                       <span className="actives-label">Key Actives:</span>
                       <p className="actives-list">{item.luxury.actives}</p>
-                      <div className="split-price">₹{item.luxury.price.toLocaleString("en-IN")}</div>
+                      <div className="split-price">{formatPrice(item.luxury.price)}</div>
                     </div>
 
                     <div className="split-col">
@@ -1259,12 +1262,12 @@ export default function DupeFinderPage() {
                       <p className="actives-list">{item.dupe.actives}</p>
                       
                       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginTop: "auto" }}>
-                        <div className="split-price" style={{ color: "#2d8a5c" }}>₹{item.dupe.price.toLocaleString("en-IN")}</div>
-                        <span style={{ fontSize: "0.78rem", color: "#2d8a5c", fontWeight: 600 }}>Save ₹{savings.toLocaleString("en-IN")}/yr</span>
+                        <div className="split-price" style={{ color: "#2d8a5c" }}>{formatPrice(item.dupe.price)}</div>
+                        <span style={{ fontSize: "0.78rem", color: "#2d8a5c", fontWeight: 600 }}>Save {formatPrice(savings)}/yr</span>
                       </div>
 
                       <a href={affiliateUrl} target="_blank" rel="noopener noreferrer" className="shop-dupe-btn">
-                        Shop Dupe on Amazon <ArrowRight size={14} />
+                        Shop Dupe on {amazonLabel} <ArrowRight size={14} />
                       </a>
                     </div>
                   </div>

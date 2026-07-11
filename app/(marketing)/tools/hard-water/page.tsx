@@ -204,7 +204,7 @@ export default function HardWaterCalculator() {
           brand: "Malibu C",
           description: "The industry standard for hard water. Removes copper, iron, calcium, and chlorine. Restores volume, shine, and manageability.",
           price: 1799, mrp: 2199,
-          image: "https://m.media-amazon.com/images/I/61GgC-Qh2tL._SL300_.jpg",
+          image: "/products/malibu-c-shampoo.png",
           link: "https://amzn.to/3W0P4k5"
         },
         chelatingPro: malibuRemedy || {
@@ -213,7 +213,7 @@ export default function HardWaterCalculator() {
           brand: "Malibu C",
           description: "Patented crystal packets that instantly remove hard water mineral build-up and surface discoloration. Ideal for extreme hardness.",
           price: 1499, mrp: 1899,
-          image: "https://m.media-amazon.com/images/I/61Y0S217fOL._SL300_.jpg",
+          image: "/products/malibu-c-remedy.png",
           link: "https://amzn.to/40qKxM1"
         },
         dailyMaintain: lorealMetal || {
@@ -819,9 +819,19 @@ export default function HardWaterCalculator() {
   <h1 style={{ position: "absolute", width: "1px", height: "1px", padding: 0, margin: "-1px", overflow: "hidden", clip: "rect(0, 0, 0, 0)", border: 0 }}>
     Hard Water Hair & Skin Damage Calculator
   </h1>
- <Link href="/" className="back-link">
- <ArrowLeft size={16} /> Back to Shop
- </Link>
+ {step > 1 ? (
+   <button 
+     onClick={() => setStep(1)} 
+     className="back-link" 
+     style={{ background: "transparent", border: "none", cursor: "pointer", display: "inline-flex", alignItems: "center", gap: "8px", padding: 0, outline: "none" }}
+   >
+     <ArrowLeft size={16} /> Back to Hard Water Test
+   </button>
+ ) : (
+   <Link href="/" className="back-link">
+     <ArrowLeft size={16} /> Back to Shop
+   </Link>
+ )}
 
  <div className="quiz-card">
  {step === 1 && (
@@ -831,7 +841,7 @@ export default function HardWaterCalculator() {
  <div className="step-dot"></div>
  <div className="step-dot"></div>
  </div>
- <h2 className="quiz-title">Where do you wash your hair and skin?</h2>
+ <h2 className="quiz-title">Where in the world do you wash?</h2>
  <p className="quiz-subtitle">
  {(regionMode === "in") ? "Water mineral concentration in India varies heavily by geography. Let's find your baseline." : "Water mineral concentration varies heavily by geography. Let's find your baseline."}
  </p>
@@ -842,7 +852,8 @@ export default function HardWaterCalculator() {
     padding: "4px",
     marginBottom: "24px",
     border: "1px solid #e5ded6",
-    alignItems: "center"
+    alignItems: "center",
+    gap: "2px"
   }}>
     <button
       onClick={() => {
@@ -851,18 +862,21 @@ export default function HardWaterCalculator() {
         setStateSearch("");
       }}
       style={{
-        padding: "8px 16px",
+        padding: "8px 18px",
         borderRadius: "99px",
-        fontSize: "0.8rem",
-        fontWeight: 600,
+        fontSize: "0.82rem",
+        fontWeight: 700,
         border: "none",
         cursor: "pointer",
         transition: "all 0.2s",
         background: regionMode === "in" ? "#fc2779" : "transparent",
-        color: regionMode === "in" ? "#fff" : "#756b63"
+        color: regionMode === "in" ? "#fff" : "#756b63",
+        display: "inline-flex",
+        alignItems: "center",
+        gap: "6px"
       }}
     >
-      India
+      🇮🇳 India
     </button>
     <button
       onClick={() => {
@@ -871,18 +885,21 @@ export default function HardWaterCalculator() {
         setStateSearch("");
       }}
       style={{
-        padding: "8px 16px",
+        padding: "8px 18px",
         borderRadius: "99px",
-        fontSize: "0.8rem",
-        fontWeight: 600,
+        fontSize: "0.82rem",
+        fontWeight: 700,
         border: "none",
         cursor: "pointer",
         transition: "all 0.2s",
         background: regionMode === "global" ? "#fc2779" : "transparent",
-        color: regionMode === "global" ? "#fff" : "#756b63"
+        color: regionMode === "global" ? "#fff" : "#756b63",
+        display: "inline-flex",
+        alignItems: "center",
+        gap: "6px"
       }}
     >
-      Global / International
+      🌍 Worldwide
     </button>
   </div>
 
@@ -1255,12 +1272,17 @@ export default function HardWaterCalculator() {
  Retake Quiz
  </button>
  </div>
+ {regionMode === "global" && (
+ <div style={{ display: "inline-flex", alignItems: "center", gap: "8px", background: "rgba(252,39,121,0.06)", border: "1px solid rgba(252,39,121,0.15)", borderRadius: "99px", padding: "6px 16px", fontSize: "0.78rem", fontWeight: 700, color: "#fc2779", marginTop: "16px" }}>
+ 🌍 Showing globally available products for your region
+ </div>
+ )}
  </div>
 
  {/* Recommendations */}
  {results.score >= 45 && (
  <div className="recs-section">
- <h3>Your Hard Water Rescue Routine</h3>
+ <h3>{regionMode === "global" ? "Your Global Hard Water Rescue Routine" : "Your Hard Water Rescue Routine"}</h3>
  <div className="recs-grid">
 
  {/* Step 1: Weekly Chelating Combo */}
@@ -1347,27 +1369,27 @@ export default function HardWaterCalculator() {
 
  {/* Science Breakdown */}
  <div className="science-section">
- <h3>The Science of Hard Water Damage</h3>
+ <h3>The Global Science of Hard Water Damage</h3>
  <div className="science-grid">
  <div className="science-card">
  <h4>1. Mineral Scum</h4>
- <p>Calcium and magnesium minerals react with standard foaming agents to create insoluble "scum." This scum clogs skin pores and forms a layer on the scalp.</p>
+ <p>Calcium and magnesium react with soaps to form insoluble "scum" — a universal problem from London to Dubai to Delhi. It coats the scalp and clogs pores.</p>
  </div>
  <div className="science-card">
  <h4>2. Keratin Crystallization</h4>
- <p>Minerals crystallize inside the hair shafts, making hair fibers stiff, brittle, and highly prone to breaking under tension (like brushing).</p>
+ <p>Minerals crystallize inside the hair shaft, making fibers stiff, brittle, and prone to breakage — regardless of your climate or hair type.</p>
  </div>
  <div className="science-card">
  <h4>3. pH Alkalinity</h4>
- <p>Hard water is highly alkaline (pH &gt; 8). Healthy skin needs an acidic environment (pH ~5.5) to keep bacteria out and moisture in. High pH leads to barrier failure.</p>
+ <p>Hard water is alkaline (pH &gt; 8). Healthy skin needs pH ~5.5. Alkaline water disrupts this everywhere — it's chemistry, not geography.</p>
  </div>
  </div>
  </div>
 
  {/* Lead Capture */}
  <div className="lead-panel">
- <h3>Get Your Custom 12-Page Hard Water Guide</h3>
- <p>We'll email you a customized routine guide, mineral breakdowns for your city, and a list of chelating ingredients to look for in drugstore products.</p>
+ <h3>Get Your Personalised Hard Water Guide</h3>
+ <p>We'll email you a free routine guide with chelating ingredients, product picks for your region, and a water hardness breakdown for your area.</p>
  {emailStatus === "success" ? (
  <div style={{ display: "inline-flex", alignItems: "center", gap: "8px", background: "rgba(45, 138, 92, 0.15)", color: "#2d8a5c", padding: "12px 24px", borderRadius: "8px", fontSize: "0.95rem" }}>
  <Check size={18} /> Check your inbox! Your report has been dispatched.
