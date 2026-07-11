@@ -94,9 +94,12 @@ const GLOBAL_COUNTRIES = [
 
 export default function HardWaterCalculator() {
   const { currency, formatPrice, getAffiliateUrl } = useGlobalization();
-  const isInr = currency === "INR";
-  const activeCities = isInr ? INDIAN_CITIES : GLOBAL_CITIES;
-  const activeStates = isInr ? INDIAN_STATES : GLOBAL_COUNTRIES;
+  const [regionMode, setRegionMode] = useState<"in" | "global">("in");
+  useEffect(() => {
+    setRegionMode(currency === "INR" ? "in" : "global");
+  }, [currency]);
+  const activeCities = regionMode === "in" ? INDIAN_CITIES : GLOBAL_CITIES;
+  const activeStates = regionMode === "in" ? INDIAN_STATES : GLOBAL_COUNTRIES;
  const [step, setStep] = useState<1 | 2 | 3>(1);
  const [stateSearch, setStateSearch] = useState<string>("");
  const [isStateDropdownOpen, setIsStateDropdownOpen] = useState<boolean>(false);
@@ -783,13 +786,63 @@ name: "Cetaphil Moisturising Cream 250g",
  </div>
  <h2 className="quiz-title">Where do you wash your hair and skin?</h2>
  <p className="quiz-subtitle">
- {isInr ? "Water mineral concentration in India varies heavily by geography. Let's find your baseline." : "Water mineral concentration varies heavily by geography. Let's find your baseline."}
+ {(regionMode === "in") ? "Water mineral concentration in India varies heavily by geography. Let's find your baseline." : "Water mineral concentration varies heavily by geography. Let's find your baseline."}
  </p>
+  <div style={{
+    display: "inline-flex",
+    background: "#f5ece2",
+    borderRadius: "99px",
+    padding: "4px",
+    marginBottom: "24px",
+    border: "1px solid #e5ded6",
+    alignItems: "center"
+  }}>
+    <button
+      onClick={() => {
+        setRegionMode("in");
+        setSelectedCity("");
+        setStateSearch("");
+      }}
+      style={{
+        padding: "8px 16px",
+        borderRadius: "99px",
+        fontSize: "0.8rem",
+        fontWeight: 600,
+        border: "none",
+        cursor: "pointer",
+        transition: "all 0.2s",
+        background: regionMode === "in" ? "#fc2779" : "transparent",
+        color: regionMode === "in" ? "#fff" : "#756b63"
+      }}
+    >
+      India
+    </button>
+    <button
+      onClick={() => {
+        setRegionMode("global");
+        setSelectedCity("");
+        setStateSearch("");
+      }}
+      style={{
+        padding: "8px 16px",
+        borderRadius: "99px",
+        fontSize: "0.8rem",
+        fontWeight: 600,
+        border: "none",
+        cursor: "pointer",
+        transition: "all 0.2s",
+        background: regionMode === "global" ? "#fc2779" : "transparent",
+        color: regionMode === "global" ? "#fff" : "#756b63"
+      }}
+    >
+      Global / International
+    </button>
+  </div>
 
  {!useCustomTds ? (
  <div>
  <div style={{ fontSize: "0.85rem", fontWeight: 700, color: "#756b63", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: "12px" }}>
- {isInr ? "Quick Select Major Cities" : "Quick Select Global Cities"}
+ {(regionMode === "in") ? "Quick Select Major Cities" : "Quick Select Global Cities"}
  </div>
  <div className="city-grid">
  {activeCities.map(city => (
@@ -807,14 +860,14 @@ name: "Cetaphil Moisturising Cream 250g",
  {/* Searchable State Selector */}
  <div className="state-autocomplete-wrapper" style={{ marginTop: "24px", position: "relative" }}>
  <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 700, color: "#756b63", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: "8px" }}>
- {isInr ? "Or Search / Select Your State" : "Or Search / Select Your Country"}
+ {(regionMode === "in") ? "Or Search / Select Your State" : "Or Search / Select Your Country"}
  </label>
  <div className="autocomplete-container" style={{ position: "relative" }}>
  <div style={{ position: "relative" }}>
  <MapPin size={18} style={{ position: "absolute", left: "16px", top: "50%", transform: "translateY(-50%)", color: "#8c857f", pointerEvents: "none" }} />
  <input
  type="text"
- placeholder={isInr ? "Type to search state (e.g. Rajasthan, Goa...)" : "Type to search country (e.g. United Kingdom, Germany...)"}
+ placeholder={(regionMode === "in") ? "Type to search state (e.g. Rajasthan, Goa...)" : "Type to search country (e.g. United Kingdom, Germany...)"}
  value={stateSearch}
   onChange={(e) => {
   setStateSearch(e.target.value);
@@ -904,7 +957,7 @@ name: "Cetaphil Moisturising Cream 250g",
   ))
   ) : (
   <div style={{ padding: "16px", color: "#8c857f", textAlign: "center", fontSize: "0.9rem" }}>
-  {isInr ? "No states or UTs found" : "No countries found"}
+  {(regionMode === "in") ? "No states or UTs found" : "No countries found"}
   </div>
   )}
   </div>
