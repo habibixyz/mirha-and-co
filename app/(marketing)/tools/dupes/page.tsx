@@ -30,6 +30,17 @@ const DUPES_DATABASE = [
       description: "Uses a high concentration of Bifida Ferment Lysate combined with Niacinamide to repair skin barrier, soothe irritation, and boost cellular turnover just like the luxury equivalent.",
       image: "/products/Niacinamide-Serum.jpg",
       link: "https://amzn.to/4ceFxl5",
+    },
+    // Globally: The Ordinary Buffet covers the peptide + bifida angle
+    globalDupe: {
+      name: "The Ordinary \"Buffet\" Multi-Technology Peptide Serum",
+      brand: "The Ordinary",
+      price: 1800,
+      asin: "B01NAXDKSE",
+      actives: "Matrixyl 3000, Argireline, Leuphasyl, Hyaluronic Acid, Bifida Ferment Lysate",
+      description: "The Ordinary's flagship 'Buffet' stacks multiple peptide technologies with Bifida Ferment Lysate — the exact same active in Estée Lauder ANR — to repair skin barrier and boost collagen. Available worldwide via DECIEM.com and major global retailers.",
+      image: "/products/Niacinamide-Serum.jpg",
+      link: "https://deciem.com/en-us/theordinary/the-ordinary-buffet-30ml-100449900.html",
     }
   },
   {
@@ -53,6 +64,7 @@ const DUPES_DATABASE = [
       image: "/products/Neutrogena-Hydro.jpg",
       link: "https://amzn.to/3Qa5pau",
     }
+    // Neutrogena Hydro Boost is available worldwide — no globalDupe needed
   },
   {
     id: "paulas-choice-bha",
@@ -75,6 +87,7 @@ const DUPES_DATABASE = [
       image: "/products/Ordinary-Salicylic- Acid.jpg",
       link: "https://amzn.to/4sQOxDx",
     }
+    // The Ordinary is available worldwide — no globalDupe needed
   },
   {
     id: "skinceuticals-ce-ferulic",
@@ -96,6 +109,17 @@ const DUPES_DATABASE = [
       description: "Matches the clinical concentration of 15% Vitamin C combined with stabilizing antioxidants. Rapidly brightens dark spots, boosts collagen, and protects against UV free radicals.",
       image: "/products/Plum-15.jpg",
       link: "https://amzn.to/4t7YmO1",
+    },
+    // Plum is India-only — global users get The Ordinary Vitamin C alternative
+    globalDupe: {
+      name: "The Ordinary Ascorbyl Glucoside Solution 12%",
+      brand: "The Ordinary",
+      price: 1500,
+      asin: "B07QDC77XC",
+      actives: "12% Ascorbyl Glucoside (Vitamin C derivative), Propanediol",
+      description: "A stable, non-irritating Vitamin C derivative that brightens skin tone, fades hyperpigmentation, and boosts antioxidant defence. Available globally at DECIEM.com, Sephora, and major international retailers.",
+      image: "/products/Plum-15.jpg",
+      link: "https://deciem.com/en-us/theordinary/the-ordinary-ascorbyl-glucoside-solution-12-30ml.html",
     }
   },
   {
@@ -118,6 +142,17 @@ const DUPES_DATABASE = [
       description: "An oil-free, water-burst gel moisturizer that delivers lightweight, cooling hydration. Mimics Tatcha's pore-refining and clarifying botanical benefits with soothing Cica and redness-reducing Niacinamide.",
       image: "/products/B09HC3QNLG.JPG",
       link: "https://amzn.to/4fOwj2F",
+    },
+    // Dot & Key is India-only — global users get a widely available alternative
+    globalDupe: {
+      name: "Neutrogena Hydro Boost Gel Cream for Extra-Dry Skin",
+      brand: "Neutrogena",
+      price: 2200,
+      asin: "B00BQFTQW4",
+      actives: "Hyaluronic Acid, Glycerin, Dimethicone, Panthenol",
+      description: "A gel-cream hybrid that delivers the same lightweight, water-burst texture as Tatcha's Water Cream — with clinically proven 24-hour hydration. Available at every major pharmacy and supermarket worldwide.",
+      image: "/products/Neutrogena-Hydro.jpg",
+      link: "https://www.neutrogena.com/skin/moisturizers/hydro-boost-gel-cream-for-extra-dry-skin/6811040.html",
     }
   },
   {
@@ -140,6 +175,17 @@ const DUPES_DATABASE = [
       description: "While one is a cream and one is a serum, both deliver a massive dose of signal peptides to boost collagen production, firm the skin, and repair the barrier for anti-aging without the premium markup.",
       image: "/products/Minimalist-Multi-Peptide.jpg",
       link: "https://amzn.to/41R6Jlq",
+    },
+    // Minimalist has limited global availability — global users get The Ordinary alternative
+    globalDupe: {
+      name: "The Ordinary \"Buffet\" + Copper Peptides 1%",
+      brand: "The Ordinary",
+      price: 2500,
+      asin: "B07QH4JY49",
+      actives: "Copper Peptides, Matrixyl 3000, Argireline, Growth Factor Analogs",
+      description: "The closest global dupe to Drunk Elephant Protini. Stacks copper peptides with signal peptides that directly stimulate collagen synthesis and skin renewal. Available at DECIEM.com, Sephora, Cult Beauty, and major retailers worldwide.",
+      image: "/products/Minimalist-Multi-Peptide.jpg",
+      link: "https://deciem.com/en-us/theordinary/the-ordinary-buffet-copper-peptides-1-30ml.html",
     }
   },
 
@@ -161,10 +207,11 @@ const DUPES_DATABASE = [
       price: 324,
       asin: "B087XFYCDQ",
       actives: "Matte Micro-powders, Dimethicone",
-      description: "Matches Dior's lightweight fluid coverage and soft-focus blurring effect. Controls oil and sweat through high Indian humidity and holds beautifully for everyday wear.",
+      description: "Matches Dior's lightweight fluid coverage and soft-focus blurring effect. Controls oil and sweat and holds beautifully for everyday wear.",
       image: "/products/Maybelline-New.jpg",
       link: "https://amzn.to/4tCP38S",
     }
+    // Maybelline is global — no globalDupe needed
   },
   {
     id: "nars-creamy-concealer",
@@ -187,6 +234,7 @@ const DUPES_DATABASE = [
       image: "/products/product-40.jpg",
       link: "https://www.amazon.in/dp/B0046VGJJA?tag=skinwithtanvi-21",
     }
+    // Maybelline is global — no globalDupe needed
   },
   {
     id: "mac-matte-lipstick",
@@ -208,6 +256,17 @@ const DUPES_DATABASE = [
       description: "A comfortable, primer-infused matte lipstick that lasts all day. Delivers the exact same soft blushing nude undertone as MAC's famous shades, keeping lips hydrated and smooth.",
       image: "/products/product-43.jpg",
       link: "https://www.amazon.in/dp/B076PV1SQM?tag=skinwithtanvi-21",
+    },
+    // Lakme is India-only — global users get Milani or e.l.f.
+    globalDupe: {
+      name: "e.l.f. Cosmetics Velvet Matte Lipstick",
+      brand: "e.l.f. Cosmetics",
+      price: 1200,
+      asin: "B09P3LB5KT",
+      actives: "Castor Oil, Vitamin E, Shea Butter, Matte Pigments",
+      description: "e.l.f.'s velvet matte formula gives the same rich, creamy matte finish as MAC at a fraction of the cost. Available at Target, Ulta, Boots UK, and major retailers across the US, UK, Canada, and Australia.",
+      image: "/products/product-43.jpg",
+      link: "https://www.elfcosmetics.com/velvet-matte-lipstick/83699.html",
     }
   },
   {
@@ -227,10 +286,11 @@ const DUPES_DATABASE = [
       price: 479,
       asin: "B08H46YXYH",
       actives: "Bamboo Extract, Extension Fibers",
-      description: "Matches the intense length, volume, and lightweight hold of Hourglass' high-end brush. Stays waterproof and smudge-proof through long Indian work days and humid summer afternoons.",
+      description: "Matches the intense length, volume, and lightweight hold of Hourglass' high-end brush. Stays waterproof and smudge-proof through long work days.",
       image: "/products/product-42.jpg",
       link: "https://www.amazon.in/dp/B08H46YXYH?tag=skinwithtanvi-21",
     }
+    // Maybelline Sky High is a massive global hit — no globalDupe needed
   },
 
   // HAIR CARE (2 items)
@@ -254,6 +314,17 @@ const DUPES_DATABASE = [
       description: "Uses a patent-pending active bond repair complex designed to mimic Olaplex's disulfide bond rebuilding science. Repairs severe split ends, heat damage, and color treatment lines from within.",
       image: "/products/minimalist-bond-repair.jpg",
       link: "https://www.amazon.in/dp/B0FWKGNZRJ?tag=skinwithtanvi-21",
+    },
+    // Minimalist has limited global reach — global users get the Bondi Boost or Aussie alternative
+    globalDupe: {
+      name: "Aussie SOS Bond Repair Mask",
+      brand: "Aussie",
+      price: 1800,
+      asin: "B0C1P4HY7Y",
+      actives: "Maleic Acid (Bond Repair), Australian Jojoba Oil, Glycerin",
+      description: "Aussie's bond repair formula uses the same maleic acid bond-repair technology as Olaplex, rebuilding broken disulfide bonds in just 3 minutes. Available at Walmart, Boots, Priceline, and major supermarkets across the US, UK, Canada, and Australia.",
+      image: "/products/minimalist-bond-repair.jpg",
+      link: "https://www.walmart.com/search?q=Aussie+SOS+Bond+Repair+Hair+Mask",
     }
   },
   {
@@ -273,10 +344,11 @@ const DUPES_DATABASE = [
       price: 634,
       asin: "B07L3ZCJ53",
       actives: "Keratin Protein, Argan Oil, Mild Surfactants",
-      description: "Provides salon-grade bond-smoothing and keratin care. Tames frizzy hair flyaways, protects hair fibers, and locks in moisture under harsh Indian tap water.",
+      description: "Provides salon-grade bond-smoothing and keratin care. Tames frizzy hair flyaways, protects hair fibers, and locks in moisture.",
       image: "/products/TRESemmé-Keratin.jpg",
       link: "https://amzn.to/3Q6pAWQ",
     }
+    // TRESemmé is sold in 30+ countries — no globalDupe needed
   },
 
   // BODY CARE (2 items)
@@ -297,9 +369,20 @@ const DUPES_DATABASE = [
       price: 316,
       asin: "B0CHJTCGS3",
       actives: "Vitamin C, Vitamin E, Niacinamide, Shea Butter",
-      description: "A rich, deeply nourishing lotion that brightens uneven skin tone and smooths body texture. Pairs a massive boost of antioxidants with hydrating lipids, offering a sweet tropical fragrance without the luxury price tag.",
+      description: "A rich, deeply nourishing lotion that brightens uneven skin tone and smooths body texture. Pairs antioxidants with hydrating lipids, with a sweet tropical fragrance.",
       image: "/products/Dot-Key-Vitamin.jpg",
       link: "https://amzn.to/4t7Wq8d",
+    },
+    // Dot & Key is India-only — global users get Soap & Glory or St. Ives
+    globalDupe: {
+      name: "Palmer's Cocoa Butter Formula Body Lotion",
+      brand: "Palmer's",
+      price: 1200,
+      asin: "B00014E46I",
+      actives: "Cocoa Butter, Vitamin E, Shea Butter, Collagen",
+      description: "Palmer's rich cocoa butter delivers the same deep body nourishment and glow as Sol de Janeiro, with a warm tropical scent. Available in virtually every country at supermarkets, pharmacies, and Amazon worldwide.",
+      image: "/products/Dot-Key-Vitamin.jpg",
+      link: "https://www.palmers.com/products/cocoa-butter-formula-body-lotion",
     }
   },
   {
@@ -322,6 +405,17 @@ const DUPES_DATABASE = [
       description: "While marketed for eyes, its ultra-rich Shea Butter and Vitamin K base behaves identically on highly dry areas, offering cellular repair and deep occlusive hydration for a fraction of the cost.",
       image: "/products/minimalist-eye.jpg",
       link: "https://amzn.to/42eKwxO",
+    },
+    // Minimalist has limited global reach — global users get a lip-focused global dupe
+    globalDupe: {
+      name: "CeraVe Healing Ointment",
+      brand: "CeraVe",
+      price: 1000,
+      asin: "B00TTD9BRC",
+      actives: "Petrolatum, Ceramides (1, 3, 6-II), Hyaluronic Acid",
+      description: "CeraVe's healing ointment is the dermatologist-favourite lip overnight treatment. Applied as a lip mask, it creates the same occlusive, barrier-restoring effect as Laneige — healing chapped lips overnight. Available at every drugstore worldwide.",
+      image: "/products/minimalist-eye.jpg",
+      link: "https://www.cerave.com/face-skincare/healing-ointment",
     }
   }
 ];
@@ -347,14 +441,16 @@ export default function DupeFinderPage() {
     return DUPES_DATABASE.filter(item => {
       const categoryMatch = selectedCategory === "All" || item.category === selectedCategory;
       
+      const activeDupe = currency !== "INR" && item.globalDupe ? item.globalDupe : item.dupe;
+      
       const query = searchQuery.toLowerCase().trim();
       const searchMatch = !query || 
         item.luxury.brand.toLowerCase().includes(query) ||
         item.luxury.name.toLowerCase().includes(query) ||
         item.luxury.actives.toLowerCase().includes(query) ||
-        item.dupe.brand.toLowerCase().includes(query) ||
-        item.dupe.name.toLowerCase().includes(query) ||
-        item.dupe.actives.toLowerCase().includes(query);
+        activeDupe.brand.toLowerCase().includes(query) ||
+        activeDupe.name.toLowerCase().includes(query) ||
+        activeDupe.actives.toLowerCase().includes(query);
         
       return categoryMatch && searchMatch;
     });
@@ -369,14 +465,15 @@ export default function DupeFinderPage() {
     });
     
     DUPES_DATABASE.forEach(item => {
+      const activeDupe = currency !== "INR" && item.globalDupe ? item.globalDupe : item.dupe;
       const query = searchQuery.toLowerCase().trim();
       const searchMatch = !query || 
         item.luxury.brand.toLowerCase().includes(query) ||
         item.luxury.name.toLowerCase().includes(query) ||
         item.luxury.actives.toLowerCase().includes(query) ||
-        item.dupe.brand.toLowerCase().includes(query) ||
-        item.dupe.name.toLowerCase().includes(query) ||
-        item.dupe.actives.toLowerCase().includes(query);
+        activeDupe.brand.toLowerCase().includes(query) ||
+        activeDupe.name.toLowerCase().includes(query) ||
+        activeDupe.actives.toLowerCase().includes(query);
         
       if (searchMatch) {
         if (counts[item.category] !== undefined) {
@@ -428,9 +525,10 @@ export default function DupeFinderPage() {
     selectedItems.forEach(id => {
       const item = DUPES_DATABASE.find(d => d.id === id);
       if (item) {
+        const activeDupe = currency !== "INR" && item.globalDupe ? item.globalDupe : item.dupe;
         const count = purchasesPerYear[id] || 2;
         luxuryTotal += item.luxury.price * count;
-        dupeTotal += item.dupe.price * count;
+        dupeTotal += activeDupe.price * count;
       }
     });
 
@@ -443,7 +541,7 @@ export default function DupeFinderPage() {
       savings,
       percentage
     };
-  }, [selectedItems, purchasesPerYear]);
+  }, [selectedItems, purchasesPerYear, currency]);
 
   const handleShareWhatsApp = () => {
     const text = `I just used the Skincare Dupe Finder & calculated that swapping luxury items for drugstore dupes will save me ${formatPrice(math.savings)}/year! Find your dupes here:`;
@@ -1218,11 +1316,13 @@ export default function DupeFinderPage() {
             {selectedItems.map(id => {
               const item = DUPES_DATABASE.find(d => d.id === id);
               if (!item) return null;
-              const matchingProduct = PRODUCTS.find(p => p.asin === item.dupe.asin);
-              const affiliateUrl = getAffiliateUrl(item.dupe.asin, item.dupe.name, item.dupe.brand, matchingProduct?.link || item.dupe.link);
+              
+              const activeDupe = currency !== "INR" && item.globalDupe ? item.globalDupe : item.dupe;
+              const matchingProduct = PRODUCTS.find(p => p.asin === activeDupe.asin);
+              const affiliateUrl = getAffiliateUrl(activeDupe.asin, activeDupe.name, activeDupe.brand, matchingProduct?.link || activeDupe.link);
 
               const count = purchasesPerYear[id] || 2;
-              const savings = (item.luxury.price - item.dupe.price) * count;
+              const savings = (item.luxury.price - activeDupe.price) * count;
 
               return (
                 <div key={item.id} className="dupe-comparison-card">
@@ -1253,16 +1353,16 @@ export default function DupeFinderPage() {
                       <span className="col-header" style={{ color: "#2d8a5c", display: "flex", alignItems: "center", gap: "4px" }}>
                         Active Dupe Match <Check size={12} />
                       </span>
-                      <span style={{ fontSize: "0.8rem", color: "#756b63", fontWeight: 700 }}>{item.dupe.brand}</span>
-                      <h4 style={{ fontSize: "1.05rem", fontWeight: 600, margin: "2px 0 6px" }}>{item.dupe.name}</h4>
+                      <span style={{ fontSize: "0.8rem", color: "#756b63", fontWeight: 700 }}>{activeDupe.brand}</span>
+                      <h4 style={{ fontSize: "1.05rem", fontWeight: 600, margin: "2px 0 6px" }}>{activeDupe.name}</h4>
                       <p style={{ fontSize: "0.82rem", color: "#756b63", lineHeight: 1.5, margin: "8px 0" }}>
-                        {item.dupe.description}
+                        {activeDupe.description}
                       </p>
                       <span className="actives-label">Dupe Actives:</span>
-                      <p className="actives-list">{item.dupe.actives}</p>
+                      <p className="actives-list">{activeDupe.actives}</p>
                       
                       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginTop: "auto" }}>
-                        <div className="split-price" style={{ color: "#2d8a5c" }}>{formatPrice(item.dupe.price)}</div>
+                        <div className="split-price" style={{ color: "#2d8a5c" }}>{formatPrice(activeDupe.price)}</div>
                         <span style={{ fontSize: "0.78rem", color: "#2d8a5c", fontWeight: 600 }}>Save {formatPrice(savings)}/yr</span>
                       </div>
 
