@@ -1,11 +1,26 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { Code, Server, Smartphone, Zap, Check, Send, CheckCircle2 } from "lucide-react";
 import { submitLeadAction } from "../../(saas)/actions";
 
 export default function B2BPlayground() {
+  const [paymentRegion, setPaymentRegion] = useState<"INR" | "USD">("INR");
+
+  // Automatically detect timezone to set default region
+  useEffect(() => {
+    try {
+      const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+      if (tz && (tz.includes("Kolkata") || tz.includes("Calcutta") || tz.includes("Delhi") || tz.includes("Mumbai"))) {
+        setPaymentRegion("INR");
+      } else {
+        setPaymentRegion("USD");
+      }
+    } catch (e) {
+      console.warn("Timezone detection failed, defaulting to INR");
+    }
+  }, []);
   const [skinType, setSkinType] = useState("oily");
   const [mainConcern, setMainConcern] = useState("acne");
   const [budget, setBudget] = useState("under_1000");
@@ -245,12 +260,47 @@ export default function B2BPlayground() {
       `}</style>
 
       <div className="b2b-container">
+        {/* Dynamic Region Selector Toggle */}
+        <div style={{ display: "flex", justifyContent: "center", gap: "0.5rem", marginBottom: "2rem" }}>
+          <button
+            onClick={() => setPaymentRegion("USD")}
+            style={{
+              padding: "0.4rem 1.1rem",
+              borderRadius: "99px",
+              border: "1px solid " + (paymentRegion === "USD" ? "#fc2779" : "rgba(0,0,0,0.08)"),
+              background: paymentRegion === "USD" ? "#fc2779" : "transparent",
+              color: paymentRegion === "USD" ? "#fff" : "#2b2826",
+              cursor: "pointer",
+              fontSize: "0.8rem",
+              fontWeight: 600,
+              transition: "all 0.3s ease"
+            }}
+          >
+            🇺🇸 Global (USD)
+          </button>
+          <button
+            onClick={() => setPaymentRegion("INR")}
+            style={{
+              padding: "0.4rem 1.1rem",
+              borderRadius: "99px",
+              border: "1px solid " + (paymentRegion === "INR" ? "#fc2779" : "rgba(0,0,0,0.08)"),
+              background: paymentRegion === "INR" ? "#fc2779" : "transparent",
+              color: paymentRegion === "INR" ? "#fff" : "#2b2826",
+              cursor: "pointer",
+              fontSize: "0.8rem",
+              fontWeight: 600,
+              transition: "all 0.3s ease"
+            }}
+          >
+            🇮🇳 India (INR)
+          </button>
+        </div>
         <section className="b2b-hero">
-          <h1>Plug-and-Play AI Skincare for Indian Brands</h1>
-          <p>Rent our climate-aware recommendation engine. Boost your store sales, cut returns, and give customers dermatologist-level routines adapted for their tap water and weather.</p>
+          <h1>{paymentRegion === "INR" ? "Plug-and-Play AI Skincare for Indian Brands" : "Plug-and-Play AI Skincare for Global Brands"}</h1>
+          <p>Rent our climate-aware recommendation engine. Boost your store sales, cut returns, and give customers dermatologist-level routines {paymentRegion === "INR" ? "adapted for their tap water and weather" : "adapted for their local water and weather"}.</p>
           <div className="b2b-hero-btns">
             <a href="#sandbox" className="b2b-btn-primary">Try Sandbox</a>
-            <a href="#pricing" className="b2b-btn-outline">View Pricing (INR)</a>
+            <a href="#pricing" className="b2b-btn-outline">View Pricing {paymentRegion === "INR" ? "(INR)" : "(USD)"}</a>
           </div>
         </section>
 
@@ -263,7 +313,7 @@ export default function B2BPlayground() {
           <div className="b2b-card">
             <div className="b2b-icon"><Server size={22} /></div>
             <h3>Climate-Aware Algorithm</h3>
-            <p>Our backend calculates real-time temperature, humidity, and water hardness metrics across India to suggest the best skincare fits.</p>
+            <p>{paymentRegion === "INR" ? "Our backend calculates real-time temperature, humidity, and water hardness metrics across India to suggest the best skincare fits." : "Our backend calculates real-time temperature, humidity, and water hardness metrics globally to suggest the best skincare fits."}</p>
           </div>
           <div className="b2b-card">
             <div className="b2b-icon"><Smartphone size={22} /></div>
@@ -301,9 +351,19 @@ export default function B2BPlayground() {
               <div className="b2b-form-group">
                 <label>Budget Tier</label>
                 <select className="b2b-form-control" value={budget} onChange={(e) => setBudget(e.target.value)}>
-                  <option value="under_500">Under ₹500 / product</option>
-                  <option value="under_1000">Under ₹1,000 / product</option>
-                  <option value="under_2000">All Products / High-end</option>
+                  {paymentRegion === "INR" ? (
+                    <>
+                      <option value="under_500">Under ₹500 / product</option>
+                      <option value="under_1000">Under ₹1,000 / product</option>
+                      <option value="under_2000">All Products / High-end</option>
+                    </>
+                  ) : (
+                    <>
+                      <option value="under_500">Under $15 / product</option>
+                      <option value="under_1000">Under $30 / product</option>
+                      <option value="under_2000">All Products / High-end</option>
+                    </>
+                  )}
                 </select>
               </div>
               <div className="b2b-form-group">
@@ -397,13 +457,13 @@ export default function B2BPlayground() {
         </section>
 
         <section id="pricing" className="b2b-pricing">
-          <h2>Simple, Flat INR Pricing</h2>
-          <p>Start testing for free and scale as your traffic grows. Keep it local, pay in Rupees.</p>
+          <h2>{paymentRegion === "INR" ? "Simple, Flat INR Pricing" : "Simple, Flat USD Pricing"}</h2>
+          <p>{paymentRegion === "INR" ? "Start testing for free and scale as your traffic grows. Keep it local, pay in Rupees." : "Start testing for free and scale as your traffic grows. Keep it global, pay in Dollars."}</p>
           <div className="b2b-pricing-grid">
             <div className="b2b-price-card">
               <h3>Starter</h3>
               <p className="price-desc">Best for dev testing and setting up.</p>
-              <div className="b2b-price-amount">₹0 <span>/ month</span></div>
+              <div className="b2b-price-amount">{paymentRegion === "INR" ? "₹0" : "$0"} <span>/ month</span></div>
               <ul className="b2b-price-features">
                 <li><Check size={14} color="#fc2779" /> 100 API requests / month</li>
                 <li><Check size={14} color="#fc2779" /> Full climate adjustments</li>
@@ -414,8 +474,8 @@ export default function B2BPlayground() {
             <div className="b2b-price-card popular">
               <span className="b2b-price-badge">Most Popular</span>
               <h3>Grow Plan</h3>
-              <p className="price-desc">Perfect for active Indian beauty brands.</p>
-              <div className="b2b-price-amount">₹3,999 <span>/ month</span></div>
+              <p className="price-desc">{paymentRegion === "INR" ? "Perfect for active Indian beauty brands." : "Perfect for active global beauty brands."}</p>
+              <div className="b2b-price-amount">{paymentRegion === "INR" ? "₹3,999" : "$49"} <span>/ month</span></div>
               <ul className="b2b-price-features">
                 <li><Check size={14} color="#fc2779" /> 5,000 API requests / month</li>
                 <li><Check size={14} color="#fc2779" /> Custom product recommendations</li>
@@ -427,7 +487,7 @@ export default function B2BPlayground() {
             <div className="b2b-price-card">
               <h3>Scale Plan</h3>
               <p className="price-desc">Designed for high-traffic stores.</p>
-              <div className="b2b-price-amount">₹7,999 <span>/ month</span></div>
+              <div className="b2b-price-amount">{paymentRegion === "INR" ? "₹7,999" : "$99"} <span>/ month</span></div>
               <ul className="b2b-price-features">
                 <li><Check size={14} color="#fc2779" /> 20,000 API requests / month</li>
                 <li><Check size={14} color="#fc2779" /> Multi-domain licensing</li>
@@ -456,7 +516,7 @@ export default function B2BPlayground() {
             </div>
             <div className="b2b-faq-item">
               <h3>How does the climate-aware recommendation work?</h3>
-              <p>The assistant automatically detects the shopper{"'"}s location within India. It checks regional tap water hardness and real-time weather data (temperature and humidity) to swap products dynamically—ensuring they get the perfect skincare routine for their environment.</p>
+              <p>{paymentRegion === "INR" ? "The assistant automatically detects the shopper's location within India. It checks regional tap water hardness and real-time weather data (temperature and humidity) to swap products dynamically—ensuring they get the perfect skincare routine for their environment." : "The assistant automatically detects the shopper's location globally. It checks local tap water hardness and real-time weather data (temperature and humidity) to swap products dynamically—ensuring they get the perfect skincare routine for their environment."}</p>
             </div>
             <div className="b2b-faq-item">
               <h3>How long does onboarding and delivery of our custom widget take?</h3>
@@ -472,7 +532,7 @@ export default function B2BPlayground() {
                 <CheckCircle2 size={48} />
               </div>
               <h3 style={{ fontFamily: "Playfair Display, serif", fontSize: "1.6rem", marginBottom: "0.5rem" }}>Request Submitted!</h3>
-              <p style={{ color: "#8c857f", fontSize: "0.9rem" }}>Thank you, we{"'"}ve registered your interest. We will email you with your active API key and UPI payment details within 24 hours.</p>
+              <p style={{ color: "#8c857f", fontSize: "0.9rem" }}>{paymentRegion === "INR" ? "Thank you, we've registered your interest. We will email you with your active API key and UPI payment details within 24 hours." : "Thank you, we've registered your interest. We will email you with your active API key and checkout details within 24 hours."}</p>
             </div>
           ) : (
             <form onSubmit={handleContactSubmit} style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
@@ -490,7 +550,7 @@ export default function B2BPlayground() {
               </div>
               <div className="b2b-form-group">
                 <label>Brand / Store Name</label>
-                <input type="text" required className="b2b-form-control" value={contactBrand} onChange={(e) => setContactBrand(e.target.value)} placeholder="e.g. Indie Organics India" />
+                <input type="text" required className="b2b-form-control" value={contactBrand} onChange={(e) => setContactBrand(e.target.value)} placeholder={paymentRegion === "INR" ? "e.g. Indie Organics India" : "e.g. Aura Skincare US"} />
               </div>
               <div className="b2b-form-group">
                 <label>Integration Platform / Comments</label>
