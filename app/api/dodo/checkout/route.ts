@@ -28,9 +28,9 @@ export async function POST(req: Request) {
     }
 
     // Detect if we should use test or live endpoint based on API key prefix
-    const baseUrl = apiKey.startsWith("live_") 
-      ? "https://live.dodopayments.com" 
-      : "https://test.dodopayments.com";
+    const baseUrl = apiKey.startsWith("test_") 
+      ? "https://test.dodopayments.com" 
+      : "https://live.dodopayments.com";
 
     const returnUrl = `${process.env.NEXT_PUBLIC_SITE_URL || "https://www.mirhaandco.com"}/dashboard/subscription`;
 

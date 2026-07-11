@@ -469,8 +469,7 @@ export function SubscriptionClient({ isPro }: { isPro: boolean }) {
  Upgrade your routine from guessing to diagnostic precision. Unlock professional AI tools and formulation analysis.
  </motion.p>
 
-  {/* Region Selector (Hidden until Dodo Payments is approved) */}
-  {/* 
+  {/* Region Selector */}
   <div style={{ display: "flex", justifyContent: "center", gap: "0.5rem", marginBottom: "1.5rem" }}>
     <button
       onClick={() => {
@@ -506,7 +505,6 @@ export function SubscriptionClient({ isPro }: { isPro: boolean }) {
       India (INR)
     </button>
   </div>
-  */}
 
  {paymentRegion === "INR" && (
  <motion.div variants={itemVariants} className="toggle-wrapper">
