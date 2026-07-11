@@ -46,7 +46,7 @@ export default function SiteHeader() {
             <Link href="/tools/hard-water"  className="site-header-nav-link">Hard Water</Link>
             <Link href="/tools/dupes"       className="site-header-nav-link">Dupe Finder</Link>
             <Link href="/k-beauty"          className="site-header-nav-link site-header-nav-link--accent">K-Beauty</Link>
-            <Link href="/mens-grooming"     className="site-header-nav-link site-header-nav-link--accent">Men's</Link>
+            <Link href="/mens-grooming"     className="site-header-nav-link site-header-nav-link--accent">Men</Link>
           </nav>
         </div>
 
