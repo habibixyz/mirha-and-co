@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Check, HelpCircle, Star, X } from "lucide-react";
+import { PricingCards } from "./PricingCards";
 
 export const metadata: Metadata = {
  title: "Pricing — Mirha & Co.",
@@ -18,57 +19,7 @@ export const metadata: Metadata = {
  },
 };
 
-const PLANS = [
- {
- name: "Free",
- price: "₹0",
- period: "",
- description: "Perfect for casual skincare explorers.",
- features: [
- "Create your skin profile",
- "Track up to 2 routines per day",
- "Basic Skin Journal logs",
- "Standard ingredient checker",
- "3 AI consultations/day",
- "Access to curated blog & guides",
- ],
- cta: "Get started",
- href: "/dashboard",
- highlight: false,
- },
- {
- name: "Pro",
- price: "₹199",
- period: "/ month",
- description: "For people serious about their skin health.",
- features: [
- "Unlimited routines and journal logs",
- "Cross-product Ingredient Conflict Checker",
- "Journal photo uploads & AI skin analysis per photo",
- "Expert AI face scan — daily barrier, acne & redness scores",
- "AI Skin Trends — Mirha Brain analyses your journal history",
- "Mirha Search Brain Mode — 20 AI consultations/day",
- ],
- cta: "Upgrade to Pro",
- href: "/dashboard/subscription",
- highlight: true,
- },
- {
- name: "Annual Pro",
- price: "₹1,499",
- period: "/ year",
- description: "Save ₹889 compared to monthly billing.",
- features: [
- "Everything in Pro tier",
- "Equivalent to 2 months free",
- "Shareable routine card links",
- "Priority support via email",
- ],
- cta: "Get Annual Pro",
- href: "/dashboard/subscription",
- highlight: false,
- },
-];
+
 
 const COMPARISON_ROWS = [
  { label: "Saved skin profile", free: true, pro: true },
@@ -554,45 +505,10 @@ export default function PricingPage() {
  </p>
  </div>
 
- {/* Plans */}
- <div className="plans-grid">
- {PLANS.map((plan) => (
- <div
- key={plan.name}
- className={`plan-card ${plan.highlight ? "highlighted" : ""}`}
- >
- <div className="gloss-sheen" />
- {plan.highlight && <span className="popular-badge">Most Popular</span>}
+   {/* Dynamic Plans */}
+  <PricingCards />
 
- <p className="plan-name">{plan.name}</p>
- <div className="plan-price-row">
- <span className="plan-price">{plan.price}</span>
- <span className="plan-period">{plan.period}</span>
- </div>
- <p className="plan-desc">{plan.description}</p>
 
- <Link
- href={plan.href}
- className={`plan-cta ${
- plan.highlight ? "highlighted-cta" : "normal-cta"
- }`}
- >
- {plan.cta}
- </Link>
-
- <ul className="features-list">
- {plan.features.map((feature) => (
- <li key={feature} className="feature-item">
- <span className="feature-icon-wrap">
- <Check size={14} color="var(--rose)" strokeWidth={2.5} />
- </span>
- <span>{feature}</span>
- </li>
- ))}
- </ul>
- </div>
- ))}
- </div>
 
  <section className="upgrade-strip">
  <div className="upgrade-strip-header">
