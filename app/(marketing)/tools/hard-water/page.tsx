@@ -6,6 +6,7 @@ import { ArrowRight, Droplet, MapPin, Share2, Check, Mail, ArrowLeft, Star, Sear
 import { PRODUCTS } from "@/lib/products";
 import Image from "next/image";
 import { submitLeadAction } from "@/app/(saas)/actions";
+import { useGlobalization } from "@/components/GlobalizationContext";
 
 // Predefined water hardness data for major Indian cities (ppm / TDS)
 const INDIAN_CITIES = [
@@ -63,7 +64,39 @@ const INDIAN_STATES = [
   { name: "Puducherry", tds: 480, hardness: "Hard", description: "Coastal saline ground water causing hair stiffness and scalp dryness." }
 ];
 
+
+// Predefined water hardness data for major global cities
+const GLOBAL_CITIES = [
+  { name: "New York City", tds: 50, hardness: "Soft", description: "Generally soft surface water. Minimal risk of mineral damage; focus on hydration." },
+  { name: "London", tds: 300, hardness: "Hard", description: "Chalk and limestone aquifers create hard water. High risk of scale buildup, frizz, and dry scalp." },
+  { name: "Dubai", tds: 420, hardness: "Very Hard", description: "Desalinated water has high mineral salinity. Can dry out hair shafts and lead to scalp flaking." },
+  { name: "Singapore", tds: 75, hardness: "Soft", description: "Soft water with low mineral levels. Hair dryness is likely due to high humidity and sweat, not minerals." },
+  { name: "Sydney", tds: 60, hardness: "Soft", description: "Generally very soft water. Skin irritation is typically due to climate drafts rather than minerals." },
+  { name: "Toronto", tds: 120, hardness: "Soft / Moderately Hard", description: "Moderately soft water. Requires light moisture barrier support during seasonal dry swings." },
+  { name: "Los Angeles", tds: 260, hardness: "Moderately Hard", description: "Mixed sources. Causes noticeable hard water buildup and styling resistance over time." },
+  { name: "Paris", tds: 280, hardness: "Hard", description: "High calcium carbonates. Can disrupt the skin's pH balance, making it feel tight and dry after washing." },
+  { name: "Riyadh", tds: 580, hardness: "Very Hard", description: "High ground mineral and salinity levels. Speeds up color fading and hair breakage." }
+];
+
+// Predefined water hardness data for major global countries
+const GLOBAL_COUNTRIES = [
+  { name: "United States", tds: 220, hardness: "Moderately Hard", description: "Varies heavily. Midwest and Southwest have very hard aquifer water; Northwest is soft." },
+  { name: "United Kingdom", tds: 260, hardness: "Hard", description: "Southern & Eastern England are very hard; Scotland, Wales, and Northern England are soft." },
+  { name: "Canada", tds: 150, hardness: "Soft / Moderately Hard", description: "Generally soft in major cities (Vancouver, Toronto), but hard in Prairie provinces." },
+  { name: "Australia", tds: 140, hardness: "Soft / Moderately Hard", description: "Soft surface water in most capitals, but Adelaide and regional ground water are hard." },
+  { name: "Germany", tds: 320, hardness: "Hard", description: "High calcium carbonates in central/southern regions causing scalp flaking and dry hair." },
+  { name: "United Arab Emirates", tds: 380, hardness: "Hard", description: "Desalinated water mixed with local groundwater causes high mineral salinity." },
+  { name: "Saudi Arabia", tds: 540, hardness: "Very Hard", description: "High natural groundwater salinity and TDS causing brittle hair strands." },
+  { name: "France", tds: 270, hardness: "Hard", description: "High calcium content in Paris basin and central areas, causing skin tightness." },
+  { name: "Singapore", tds: 75, hardness: "Soft", description: "Soft tap water source. Safe for daily washing." },
+  { name: "Japan", tds: 60, hardness: "Soft", description: "Soft mountain water. Extremely gentle on skin and hair." }
+];
+
 export default function HardWaterCalculator() {
+  const { currency, formatPrice, getAffiliateUrl } = useGlobalization();
+  const isInr = currency === "INR";
+  const activeCities = isInr ? INDIAN_CITIES : GLOBAL_CITIES;
+  const activeStates = isInr ? INDIAN_STATES : GLOBAL_COUNTRIES;
  const [step, setStep] = useState<1 | 2 | 3>(1);
  const [stateSearch, setStateSearch] = useState<string>("");
  const [isStateDropdownOpen, setIsStateDropdownOpen] = useState<boolean>(false);
@@ -79,7 +112,7 @@ export default function HardWaterCalculator() {
    return () => document.removeEventListener("mousedown", handleClickOutside);
  }, []);
 
- const filteredStates = INDIAN_STATES.filter(state =>
+ const filteredStates = activeStates.filter(state =>
    state.name.toLowerCase().includes(stateSearch.toLowerCase())
  );
  const [selectedCity, setSelectedCity] = useState<string>("");
@@ -111,9 +144,9 @@ export default function HardWaterCalculator() {
  if (useCustomTds && customTds) {
  return parseInt(customTds) || 100;
  }
- const city = INDIAN_CITIES.find(c => c.name === selectedCity);
+ const city = activeCities.find(c => c.name === selectedCity);
  if (city) return city.tds;
- const state = INDIAN_STATES.find(s => s.name === selectedCity);
+ const state = activeStates.find(s => s.name === selectedCity);
  return state ? state.tds : 300;
  };
 
@@ -161,7 +194,8 @@ export default function HardWaterCalculator() {
 
  return {
  chelatingCombo: detoxieCombo || {
- name: "Detoxie Hard Water Repair Combo",
+ asin: "B0CLP4RRPC",
+name: "Detoxie Hard Water Repair Combo",
  brand: "Detoxie",
  description: "Chelating shampoo + conditioner that removes calcium & magnesium deposits. Reduces hairfall and softens brittle strands. Safe for daily use.",
  price: 499, mrp: 599,
@@ -169,7 +203,8 @@ export default function HardWaterCalculator() {
  link: "https://amzn.to/3SfrSE5"
  },
  chelatingPro: lorealMetal || {
- name: "L'Oréal Professionnel Metal DX Shampoo",
+ asin: "B09B1FXGR3",
+name: "L'Oréal Professionnel Metal DX Shampoo",
  brand: "L'Oréal Professionnel",
  description: "Professional-grade chelating shampoo. Neutralises copper, iron, and calcium embedded in hair by hard water. Ideal for colour-treated hair.",
  price: 1320, mrp: 1490,
@@ -177,7 +212,8 @@ export default function HardWaterCalculator() {
  link: "https://amzn.to/4odVqOk"
  },
  dailyMaintain: detoxiePower || {
- name: "Detoxie Power Cleanse Shampoo",
+ asin: "B0H11ZXLMZ",
+name: "Detoxie Power Cleanse Shampoo",
  brand: "Detoxie",
  description: "Daily-use detox shampoo with Amla, Bhringraj & Shikakai. Fights sweat, pollution, and hard water buildup every wash.",
  price: 249, mrp: 299,
@@ -185,7 +221,8 @@ export default function HardWaterCalculator() {
  link: "https://amzn.to/4dZVe1K"
  },
  barrierCream: cream || {
- name: "Cetaphil Moisturising Cream 250g",
+ asin: "B099MJH88B",
+name: "Cetaphil Moisturising Cream 250g",
  brand: "Cetaphil",
  description: "Intense moisture barrier support. Hydrates and repairs skin dried out by hard water mineral salts.",
  price: 1317, mrp: 1349,
@@ -746,16 +783,16 @@ export default function HardWaterCalculator() {
  </div>
  <h2 className="quiz-title">Where do you wash your hair and skin?</h2>
  <p className="quiz-subtitle">
- Water mineral concentration in India varies heavily by geography. Let's find your baseline.
+ {isInr ? "Water mineral concentration in India varies heavily by geography. Let's find your baseline." : "Water mineral concentration varies heavily by geography. Let's find your baseline."}
  </p>
 
  {!useCustomTds ? (
  <div>
  <div style={{ fontSize: "0.85rem", fontWeight: 700, color: "#756b63", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: "12px" }}>
- Quick Select Major Cities
+ {isInr ? "Quick Select Major Cities" : "Quick Select Global Cities"}
  </div>
  <div className="city-grid">
- {INDIAN_CITIES.map(city => (
+ {activeCities.map(city => (
  <button
  key={city.name}
  className={`city-btn ${selectedCity === city.name ? "selected" : ""}`}
@@ -770,14 +807,14 @@ export default function HardWaterCalculator() {
  {/* Searchable State Selector */}
  <div className="state-autocomplete-wrapper" style={{ marginTop: "24px", position: "relative" }}>
  <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 700, color: "#756b63", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: "8px" }}>
- Or Search / Select Your State
+ {isInr ? "Or Search / Select Your State" : "Or Search / Select Your Country"}
  </label>
  <div className="autocomplete-container" style={{ position: "relative" }}>
  <div style={{ position: "relative" }}>
  <MapPin size={18} style={{ position: "absolute", left: "16px", top: "50%", transform: "translateY(-50%)", color: "#8c857f", pointerEvents: "none" }} />
  <input
  type="text"
- placeholder="Type to search state (e.g. Rajasthan, Goa...)"
+ placeholder={isInr ? "Type to search state (e.g. Rajasthan, Goa...)" : "Type to search country (e.g. United Kingdom, Germany...)"}
  value={stateSearch}
   onChange={(e) => {
   setStateSearch(e.target.value);
@@ -867,7 +904,7 @@ export default function HardWaterCalculator() {
   ))
   ) : (
   <div style={{ padding: "16px", color: "#8c857f", textAlign: "center", fontSize: "0.9rem" }}>
-  No states or UTs found
+  {isInr ? "No states or UTs found" : "No countries found"}
   </div>
   )}
   </div>
@@ -1046,16 +1083,16 @@ export default function HardWaterCalculator() {
  borderRadius: "99px"
  }}>
  {
- INDIAN_CITIES.find(c => c.name === selectedCity)?.hardness ||
- INDIAN_STATES.find(s => s.name === selectedCity)?.hardness ||
+ activeCities.find(c => c.name === selectedCity)?.hardness ||
+ activeStates.find(s => s.name === selectedCity)?.hardness ||
  "Unknown"
  } Hardness
  </span>
  </div>
  <p style={{ margin: 0, fontSize: "0.9rem", color: "#4f4741", lineHeight: 1.5 }}>
  {
- INDIAN_CITIES.find(c => c.name === selectedCity)?.description ||
- INDIAN_STATES.find(s => s.name === selectedCity)?.description
+ activeCities.find(c => c.name === selectedCity)?.description ||
+ activeStates.find(s => s.name === selectedCity)?.description
  }
  </p>
  </div>
@@ -1140,8 +1177,8 @@ export default function HardWaterCalculator() {
  <p className="rec-desc">{recs.chelatingCombo.description}</p>
  </div>
  <div className="rec-price-row">
- <span className="rec-price">₹{recs.chelatingCombo.price}</span>
- <a href={recs.chelatingCombo.link} target="_blank" rel="noopener noreferrer" className="rec-link">Shop →</a>
+ <span className="rec-price">{formatPrice(recs.chelatingCombo.price)}</span>
+ <a href={getAffiliateUrl(recs.chelatingCombo.asin || "B0CLP4RRPC", recs.chelatingCombo.name, recs.chelatingCombo.brand, recs.chelatingCombo.link)} target="_blank" rel="noopener noreferrer" className="rec-link">Shop →</a>
  </div>
  </div>
 
@@ -1159,8 +1196,8 @@ export default function HardWaterCalculator() {
  <p className="rec-desc">{recs.dailyMaintain.description}</p>
  </div>
  <div className="rec-price-row">
- <span className="rec-price">₹{recs.dailyMaintain.price}</span>
- <a href={recs.dailyMaintain.link} target="_blank" rel="noopener noreferrer" className="rec-link">Shop →</a>
+ <span className="rec-price">{formatPrice(recs.dailyMaintain.price)}</span>
+ <a href={getAffiliateUrl(recs.dailyMaintain.asin || "B0H11ZXLMZ", recs.dailyMaintain.name, recs.dailyMaintain.brand, recs.dailyMaintain.link)} target="_blank" rel="noopener noreferrer" className="rec-link">Shop →</a>
  </div>
  </div>
 
@@ -1178,8 +1215,8 @@ export default function HardWaterCalculator() {
  <p className="rec-desc">{recs.barrierCream.description}</p>
  </div>
  <div className="rec-price-row">
- <span className="rec-price">₹{recs.barrierCream.price}</span>
- <a href={recs.barrierCream.link} target="_blank" rel="noopener noreferrer" className="rec-link">Shop →</a>
+ <span className="rec-price">{formatPrice(recs.barrierCream.price)}</span>
+ <a href={getAffiliateUrl(recs.barrierCream.asin || "B099MJH88B", recs.barrierCream.name, recs.barrierCream.brand, recs.barrierCream.link)} target="_blank" rel="noopener noreferrer" className="rec-link">Shop →</a>
  </div>
  </div>
 
@@ -1198,8 +1235,8 @@ export default function HardWaterCalculator() {
  <p className="rec-desc">{recs.chelatingPro.description}</p>
  </div>
  <div className="rec-price-row">
- <span className="rec-price">₹{recs.chelatingPro.price}</span>
- <a href={recs.chelatingPro.link} target="_blank" rel="noopener noreferrer" className="rec-link">Shop →</a>
+ <span className="rec-price">{formatPrice(recs.chelatingPro.price)}</span>
+ <a href={getAffiliateUrl(recs.chelatingPro.asin || "B09B1FXGR3", recs.chelatingPro.name, recs.chelatingPro.brand, recs.chelatingPro.link)} target="_blank" rel="noopener noreferrer" className="rec-link">Shop →</a>
  </div>
  </div>
  )}

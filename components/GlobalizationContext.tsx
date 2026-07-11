@@ -26,6 +26,32 @@ interface GlobalizationContextProps {
  localizeContent: (text: string) => string;
 }
 
+
+function detectPreferredCurrency(): Currency {
+  try {
+    const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    if (!tz) return "USD";
+    if (tz.includes("Kolkata") || tz.includes("Calcutta") || tz.includes("Asia/Colombo") || tz.includes("Asia/Katmandu")) {
+      return "INR";
+    }
+    if (tz.includes("London") || tz.includes("Europe/London") || tz.includes("Europe/Belfast")) {
+      return "GBP";
+    }
+    if (tz.includes("Dubai") || tz.includes("Asia/Dubai")) {
+      return "AED";
+    }
+    if (tz.includes("Riyadh") || tz.includes("Asia/Riyadh")) {
+      return "SAR";
+    }
+    if (tz.includes("Europe/")) {
+      return "EUR";
+    }
+    return "USD";
+  } catch (e) {
+    return "USD";
+  }
+}
+
 const GlobalizationContext = createContext<GlobalizationContextProps | undefined>(undefined);
 
 export function GlobalizationProvider({
@@ -37,9 +63,22 @@ export function GlobalizationProvider({
  initialLocale: Locale;
  initialCurrency: Currency;
 }) {
- const [locale, setLocaleState] = useState<Locale>(initialLocale);
- const [currency, setCurrencyState] = useState<Currency>(initialCurrency);
- const router = useRouter();
+  const [locale, setLocaleState] = useState<Locale>(initialLocale);
+  const [currency, setCurrencyState] = useState<Currency>(initialCurrency);
+  const router = useRouter();
+
+  // Client-side auto-update fallback for visitors from other countries
+  useEffect(() => {
+    const hasCurrencyCookie = document.cookie.split(';').some((item) => item.trim().startsWith('mirha_currency='));
+    if (!hasCurrencyCookie) {
+      const detected = detectPreferredCurrency();
+      if (detected !== currency) {
+        setCurrencyState(detected);
+        document.cookie = `mirha_currency=${detected}; path=/; max-age=31536000; SameSite=Lax`;
+        router.refresh();
+      }
+    }
+  }, []);
 
  // Sync state with HTML dir attribute for RTL support (Arabic)
  useEffect(() => {
