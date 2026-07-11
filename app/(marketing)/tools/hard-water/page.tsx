@@ -188,52 +188,99 @@ export default function HardWaterCalculator() {
 
  const results = getResults();
 
- // Recommendations matching with our actual products database
- const getHardWaterRecommendations = () => {
- const detoxieCombo = PRODUCTS.find(p => p.asin === "B0CLP4RRPC"); // Detoxie Hard Water Combo
- const detoxiePower = PRODUCTS.find(p => p.asin === "B0H11ZXLMZ"); // Detoxie Power Cleanse
- const lorealMetal = PRODUCTS.find(p => p.asin === "B09B1FXGR3"); // L'Oréal Metal DX
- const cream = PRODUCTS.find(p => p.asin === "B099MJH88B"); // Cetaphil barrier cream
+  const getHardWaterRecommendations = () => {
+    const isGlobal = regionMode === "global";
 
- return {
- chelatingCombo: detoxieCombo || {
- asin: "B0CLP4RRPC",
-name: "Detoxie Hard Water Repair Combo",
- brand: "Detoxie",
- description: "Chelating shampoo + conditioner that removes calcium & magnesium deposits. Reduces hairfall and softens brittle strands. Safe for daily use.",
- price: 499, mrp: 599,
- image: "https://m.media-amazon.com/images/I/71vrYex5sYL._SL300_.jpg",
- link: "https://amzn.to/3SfrSE5"
- },
- chelatingPro: lorealMetal || {
- asin: "B09B1FXGR3",
-name: "L'Oréal Professionnel Metal DX Shampoo",
- brand: "L'Oréal Professionnel",
- description: "Professional-grade chelating shampoo. Neutralises copper, iron, and calcium embedded in hair by hard water. Ideal for colour-treated hair.",
- price: 1320, mrp: 1490,
- image: "https://m.media-amazon.com/images/I/61WbDYJgnpL._SL300_.jpg",
- link: "https://amzn.to/4odVqOk"
- },
- dailyMaintain: detoxiePower || {
- asin: "B0H11ZXLMZ",
-name: "Detoxie Power Cleanse Shampoo",
- brand: "Detoxie",
- description: "Daily-use detox shampoo with Amla, Bhringraj & Shikakai. Fights sweat, pollution, and hard water buildup every wash.",
- price: 249, mrp: 299,
- image: "https://m.media-amazon.com/images/I/61uVXRviVgL._SL300_.jpg",
- link: "https://amzn.to/4dZVe1K"
- },
- barrierCream: cream || {
- asin: "B099MJH88B",
-name: "Cetaphil Moisturising Cream 250g",
- brand: "Cetaphil",
- description: "Intense moisture barrier support. Hydrates and repairs skin dried out by hard water mineral salts.",
- price: 1317, mrp: 1349,
- image: "/products/Cetaphil-Moisturisingz.jpg",
- link: "https://amzn.to/3NYBSQA"
- },
- };
- };
+    if (isGlobal) {
+      const malibuCombo = PRODUCTS.find(p => p.asin === "B00194E1SS");
+      const lorealMetal = PRODUCTS.find(p => p.asin === "B09B1FXGR3");
+      const cream = PRODUCTS.find(p => p.asin === "B099MJH88B");
+      const malibuRemedy = PRODUCTS.find(p => p.asin === "B000143LHY");
+
+      return {
+        chelatingCombo: malibuCombo || {
+          asin: "B00194E1SS",
+          name: "Malibu C Hard Water Wellness Shampoo",
+          brand: "Malibu C",
+          description: "The industry standard for hard water. Removes copper, iron, calcium, and chlorine. Restores volume, shine, and manageability.",
+          price: 1799, mrp: 2199,
+          image: "https://m.media-amazon.com/images/I/61GgC-Qh2tL._SL300_.jpg",
+          link: "https://amzn.to/3W0P4k5"
+        },
+        chelatingPro: malibuRemedy || {
+          asin: "B000143LHY",
+          name: "Malibu C Hard Water Wellness Remedy",
+          brand: "Malibu C",
+          description: "Patented crystal packets that instantly remove hard water mineral build-up and surface discoloration. Ideal for extreme hardness.",
+          price: 1499, mrp: 1899,
+          image: "https://m.media-amazon.com/images/I/61Y0S217fOL._SL300_.jpg",
+          link: "https://amzn.to/40qKxM1"
+        },
+        dailyMaintain: lorealMetal || {
+          asin: "B09B1FXGR3",
+          name: "L'Oréal Professionnel Metal DX Shampoo",
+          brand: "L'Oréal Professionnel",
+          description: "Professional-grade chelating shampoo. Neutralises copper, iron, and calcium embedded in hair by hard water. Ideal for color-treated hair.",
+          price: 1320, mrp: 1490,
+          image: "https://m.media-amazon.com/images/I/61WbDYJgnpL._SL300_.jpg",
+          link: "https://amzn.to/4odVqOk"
+        },
+        barrierCream: cream || {
+          asin: "B099MJH88B",
+          name: "Cetaphil Moisturising Cream 250g",
+          brand: "Cetaphil",
+          description: "Intense moisture barrier support. Hydrates and repairs skin dried out by hard water mineral salts.",
+          price: 1317, mrp: 1349,
+          image: "/products/Cetaphil-Moisturisingz.jpg",
+          link: "https://amzn.to/3NYBSQA"
+        },
+      };
+    }
+
+    const detoxieCombo = PRODUCTS.find(p => p.asin === "B0CLP4RRPC"); // Detoxie Hard Water Combo
+    const detoxiePower = PRODUCTS.find(p => p.asin === "B0H11ZXLMZ"); // Detoxie Power Cleanse
+    const lorealMetal = PRODUCTS.find(p => p.asin === "B09B1FXGR3"); // L'Oréal Metal DX
+    const cream = PRODUCTS.find(p => p.asin === "B099MJH88B"); // Cetaphil barrier cream
+
+    return {
+      chelatingCombo: detoxieCombo || {
+        asin: "B0CLP4RRPC",
+        name: "Detoxie Hard Water Repair Combo",
+        brand: "Detoxie",
+        description: "Chelating shampoo + conditioner that removes calcium & magnesium deposits. Reduces hairfall and softens brittle strands. Safe for daily use.",
+        price: 499, mrp: 599,
+        image: "https://m.media-amazon.com/images/I/71vrYex5sYL._SL300_.jpg",
+        link: "https://amzn.to/3SfrSE5"
+      },
+      chelatingPro: lorealMetal || {
+        asin: "B09B1FXGR3",
+        name: "L'Oréal Professionnel Metal DX Shampoo",
+        brand: "L'Oréal Professionnel",
+        description: "Professional-grade chelating shampoo. Neutralises copper, iron, and calcium embedded in hair by hard water. Ideal for colour-treated hair.",
+        price: 1320, mrp: 1490,
+        image: "https://m.media-amazon.com/images/I/61WbDYJgnpL._SL300_.jpg",
+        link: "https://amzn.to/4odVqOk"
+      },
+      dailyMaintain: detoxiePower || {
+        asin: "B0H11ZXLMZ",
+        name: "Detoxie Power Cleanse Shampoo",
+        brand: "Detoxie",
+        description: "Daily-use detox shampoo with Amla, Bhringraj & Shikakai. Fights sweat, pollution, and hard water buildup every wash.",
+        price: 249, mrp: 299,
+        image: "https://m.media-amazon.com/images/I/61uVXRviVgL._SL300_.jpg",
+        link: "https://amzn.to/4dZVe1K"
+      },
+      barrierCream: cream || {
+        asin: "B099MJH88B",
+        name: "Cetaphil Moisturising Cream 250g",
+        brand: "Cetaphil",
+        description: "Intense moisture barrier support. Hydrates and repairs skin dried out by hard water mineral salts.",
+        price: 1317, mrp: 1349,
+        image: "/products/Cetaphil-Moisturisingz.jpg",
+        link: "https://amzn.to/3NYBSQA"
+      },
+    };
+  };
 
  const recs = getHardWaterRecommendations();
 
