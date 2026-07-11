@@ -68,7 +68,7 @@ export const DICTIONARY: Record<Locale, Record<string, string>> = {
  "nav.pricing": "Pricing",
  "nav.about": "About",
  "nav.dashboard": "Dashboard",
- "hero.eyebrow": "Mirha & Co. / India's AI Skincare Assistant",
+ "hero.eyebrow": "Mirha & Co. / The Global AI Skincare Assistant",
  "hero.title1": "Skincare,",
  "hero.title2": "decoded by AI.",
  "hero.copy": "We analyze ingredient science, cross-reference clinical research, and curate the market's best products. Upload your routine, scan ingredients, or get an instant AI analysis to build your perfect, science-backed regimen.",
