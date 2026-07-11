@@ -125,26 +125,26 @@ export default function B2BPlayground() {
         .b2b-sandbox-head { text-align: center; margin-bottom: 2.5rem; }
         .b2b-sandbox-head h2 { font-family: "Playfair Display", Georgia, serif; font-size: 1.8rem; margin-bottom: 0.4rem; }
         .b2b-sandbox-head p { color: #8c857f; font-size: 0.9rem; }
-        .b2b-sandbox-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; align-items: start; }
+        .b2b-sandbox-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; align-items: start; max-width: 100%; }
         @media (max-width: 860px) { .b2b-sandbox-grid { grid-template-columns: 1fr; } }
 
-        .b2b-sandbox-col { display: flex; flex-direction: column; gap: 1rem; }
+        .b2b-sandbox-col { display: flex; flex-direction: column; gap: 1rem; min-width: 0; max-width: 100%; }
         .b2b-sandbox-col h3 { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: #8c857f; margin-bottom: 0.25rem; }
-        .b2b-form-group { display: flex; flex-direction: column; gap: 0.35rem; }
+        .b2b-form-group { display: flex; flex-direction: column; gap: 0.35rem; width: 100%; max-width: 100%; }
         .b2b-form-group label { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: #8c857f; }
-        .b2b-form-control { padding: 0.65rem 0.85rem; border: 1px solid rgba(0,0,0,0.08); border-radius: 6px; background: #fcfbf9; color: #2b2826; font-size: 0.9rem; transition: border-color 0.2s; }
+        .b2b-form-control { width: 100%; box-sizing: border-box; padding: 0.65rem 0.85rem; border: 1px solid rgba(0,0,0,0.08); border-radius: 6px; background: #fcfbf9; color: #2b2826; font-size: 0.9rem; transition: border-color 0.2s; }
         .b2b-form-control:focus { outline: none; border-color: #fc2779; }
-        .b2b-row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+        .b2b-row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; width: 100%; max-width: 100%; }
 
         /* Code block */
-        .b2b-code-block { background: #0f172a; border-radius: 10px; overflow: hidden; }
+        .b2b-code-block { background: #0f172a; border-radius: 10px; overflow: hidden; width: 100%; max-width: 100%; }
         .b2b-code-head { background: #1e293b; padding: 0.6rem 1rem; font-family: monospace; font-size: 0.75rem; color: #94a3b8; display: flex; justify-content: space-between; border-bottom: 1px solid #334155; }
-        .b2b-code-body { padding: 1rem; font-family: "Courier New", monospace; font-size: 0.8rem; color: #f1f5f9; margin: 0; white-space: pre-wrap; overflow-x: auto; max-height: 280px; }
+        .b2b-code-body { padding: 1rem; font-family: "Courier New", monospace; font-size: 0.8rem; color: #f1f5f9; margin: 0; white-space: pre-wrap; overflow-x: auto; max-height: 280px; width: 100%; max-width: 100%; box-sizing: border-box; }
 
         /* Preview pane */
-        .b2b-preview { background: #fcfbf9; border: 1px solid rgba(0,0,0,0.05); border-radius: 12px; padding: 1.5rem; min-height: 200px; }
-        .b2b-product-list { display: flex; flex-direction: column; gap: 1rem; }
-        .b2b-product-item { background: #fff; border: 1px solid rgba(0,0,0,0.04); border-radius: 8px; padding: 1.1rem; transition: transform 0.2s; }
+        .b2b-preview { background: #fcfbf9; border: 1px solid rgba(0,0,0,0.05); border-radius: 12px; padding: 1.5rem; min-height: 200px; width: 100%; max-width: 100%; box-sizing: border-box; }
+        .b2b-product-list { display: flex; flex-direction: column; gap: 1rem; width: 100%; }
+        .b2b-product-item { background: #fff; border: 1px solid rgba(0,0,0,0.04); border-radius: 8px; padding: 1.1rem; transition: transform 0.2s; width: 100%; box-sizing: border-box; }
         .b2b-product-item:hover { transform: translateY(-1px); border-color: rgba(252,39,121,0.15); }
         .b2b-product-tag { display: inline-block; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; background: #ffe6f0; color: #fc2779; padding: 0.2rem 0.5rem; border-radius: 3px; margin-bottom: 0.4rem; }
         .b2b-product-item h5 { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.2rem; }
