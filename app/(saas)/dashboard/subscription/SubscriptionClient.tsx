@@ -611,7 +611,7 @@ export function SubscriptionClient({ isPro }: { isPro: boolean }) {
  <span className="icon-wrap"><Check size={12} /></span>
  <span><strong>Advanced Search</strong> - 20 daily ingredient & profile lookups</span>
  </div>
- {billingPeriod === "yearly" && (
+ {(billingPeriod === "yearly" || paymentRegion === "USD") && (
  <>
  <div className="feature-item">
  <span className="icon-wrap"><Check size={12} /></span>

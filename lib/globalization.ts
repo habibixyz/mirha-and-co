@@ -25,7 +25,7 @@ export const CURRENCIES: Record<Currency, CurrencyConfig> = {
  rate: 0.012, // 1 INR = 0.012 USD
  locale: "en-US",
  amazonDomain: "amazon.com",
- affiliateTag: "mirhaglobal-21",
+ affiliateTag: "skinwithtanvi-20",
  },
  EUR: {
  code: "EUR",
@@ -33,7 +33,7 @@ export const CURRENCIES: Record<Currency, CurrencyConfig> = {
  rate: 0.011, // 1 INR = 0.011 EUR
  locale: "de-DE",
  amazonDomain: "amazon.de",
- affiliateTag: "mirhaglobal-21",
+ affiliateTag: "skinwithtanvi-20",
  },
  GBP: {
  code: "GBP",
@@ -49,7 +49,7 @@ export const CURRENCIES: Record<Currency, CurrencyConfig> = {
  rate: 0.044, // 1 INR = 0.044 AED
  locale: "ar-AE",
  amazonDomain: "amazon.ae",
- affiliateTag: "mirhaglobal-21",
+ affiliateTag: "skinwithtanvi-20",
  },
  SAR: {
  code: "SAR",
@@ -57,7 +57,7 @@ export const CURRENCIES: Record<Currency, CurrencyConfig> = {
  rate: 0.045, // 1 INR = 0.045 SAR
  locale: "ar-SA",
  amazonDomain: "amazon.sa",
- affiliateTag: "mirhaglobal-21",
+ affiliateTag: "skinwithtanvi-20",
  },
 };export const RTL_LOCALES: Locale[] = ["ar"];
 
