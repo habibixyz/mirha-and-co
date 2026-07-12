@@ -553,11 +553,34 @@ export default function DupeFinderPage() {
     e.preventDefault();
     if (!email) return;
     setEmailStatus("submitting");
+    const recommendations = selectedItems.map(id => {
+      const item = DUPES_DATABASE.find(d => d.id === id);
+      if (!item) return null;
+      
+      const activeDupe = currency !== "INR" && item.globalDupe ? item.globalDupe : item.dupe;
+      const matchingProduct = PRODUCTS.find(p => p.asin === activeDupe.asin);
+      const affiliateUrl = getAffiliateUrl(activeDupe.asin, activeDupe.name, activeDupe.brand, matchingProduct?.link || activeDupe.link);
+      const count = purchasesPerYear[id] || 2;
+      const itemSavings = (item.luxury.price - activeDupe.price) * count;
+
+      return {
+        luxuryBrand: item.luxury.brand,
+        luxuryName: item.luxury.name,
+        dupeBrand: activeDupe.brand,
+        dupeName: activeDupe.name,
+        price: formatPrice(activeDupe.price),
+        savings: formatPrice(itemSavings),
+        link: affiliateUrl
+      };
+    }).filter(Boolean);
+
     const leadData = {
       savings: math.savings,
+      formattedSavings: formatPrice(math.savings),
       percentage: math.percentage,
       luxuryTotal: math.luxuryTotal,
       dupeTotal: math.dupeTotal,
+      recommendations
     };
     
     try {
@@ -1019,10 +1042,14 @@ export default function DupeFinderPage() {
           background: #e0226c;
           transform: translateY(-1px);
         }
+        .mobile-lead-panel {
+          display: none !important;
+        }
         @media (max-width: 480px) {
           .dupe-finder-page { padding: 36px 16px 140px; }
           .calculator-sidebar { display: none; }
           .mobile-savings-bar { display: flex; }
+          .mobile-lead-panel { display: block !important; }
         }
         .dupe-lead-panel {
           background: #0c0a09;
@@ -1285,7 +1312,7 @@ export default function DupeFinderPage() {
 
         {/* Mobile lead capture (visible when sidebar hidden) */}
         {selectedItems.length > 0 && math.savings > 0 && (
-          <div className="dupe-lead-panel" style={{ marginTop: "24px" }}>
+          <div className="dupe-lead-panel mobile-lead-panel" style={{ marginTop: "24px" }}>
             <h4>Email Your Savings Report</h4>
             <p>Get your personalized dupes catalog and savings breakdown sent to your inbox.</p>
             {emailStatus === "success" ? (

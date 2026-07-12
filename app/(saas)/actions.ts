@@ -802,17 +802,36 @@ export async function submitLeadAction(email: string, type: string, data?: strin
  `;
  } else if (type === "dupe") {
  const parsedData = data ? JSON.parse(data) : {};
+
+ let recommendationsHtml = "";
+ if (parsedData.recommendations && parsedData.recommendations.length > 0) {
+ recommendationsHtml = `
+ <div style="margin: 30px 0;">
+ <h3 style="font-family: 'DM Serif Display', serif; font-size: 1.4rem; color: #161412; margin-bottom: 16px; font-weight: normal;">Your Personalized Matches</h3>
+ ${parsedData.recommendations.map((rec: any) => `
+ <div style="background: #fff; border: 1px solid #ede5dc; padding: 16px; border-radius: 8px; margin-bottom: 12px; display: flex; flex-direction: column; gap: 8px;">
+ <div style="font-size: 0.75rem; color: #756b63; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700;">Instead of ${rec.luxuryBrand} ${rec.luxuryName}</div>
+ <div style="font-size: 1.1rem; color: #161412; font-weight: 600;">${rec.dupeName}</div>
+ <div style="font-size: 0.9rem; color: #756b63;">By ${rec.dupeBrand} • ${rec.price}</div>
+ <a href="${rec.link}" style="display: inline-block; background: #fc2779; color: #fff; text-decoration: none; padding: 8px 16px; border-radius: 6px; font-weight: 600; font-size: 0.9rem; margin-top: 8px; text-align: center; width: fit-content;">Shop Dupe →</a>
+ </div>
+ `).join("")}
+ </div>
+ `;
+ }
+
  subject = "Your Skincare Dupes Catalog & Savings Sheet 🏷️";
  htmlContent = `
  <div style="font-family: 'DM Sans', sans-serif; max-width: 600px; margin: 0 auto; padding: 40px 20px; color: #161412;">
  <h2 style="font-family: 'DM Serif Display', serif; font-size: 1.8rem; color: #161412; margin-bottom: 1rem; font-weight: normal;">Your Skincare Savings Breakdown!</h2>
  <p style="font-size: 1rem; line-height: 1.6;">Hi there,</p>
- <p style="font-size: 1rem; line-height: 1.6;">By switching luxury beauty items for science-backed active-equivalent Indian drugstore dupes, you are on track to save:</p>
+ <p style="font-size: 1rem; line-height: 1.6;">By switching luxury beauty items for science-backed, high-quality clinical alternatives, you are on track to save:</p>
  <div style="background: #eef7f2; border: 1px dashed #2d8a5c; padding: 20px; border-radius: 12px; margin: 20px 0; text-align: center;">
  <span style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; color: #756b63; font-weight: 700;">Estimated Annual Savings</span>
- <div style="font-size: 3rem; font-weight: bold; color: #2d8a5c; margin: 5px 0;">₹${(parsedData.savings || 0).toLocaleString("en-IN")}</div>
+ <div style="font-size: 3rem; font-weight: bold; color: #2d8a5c; margin: 5px 0;">${parsedData.formattedSavings || `₹${(parsedData.savings || 0).toLocaleString("en-IN")}`}</div>
  </div>
- <p style="font-size: 1rem; line-height: 1.6;">We've attached your requested dupes catalog with over 50+ luxury swaps. Stop paying the premium for marketing and start saving on your routine today!</p>
+ ${recommendationsHtml}
+ <p style="font-size: 1rem; line-height: 1.6;">Stop paying the premium for marketing and start saving on your routine today!</p>
  <p style="font-size: 0.9rem; color: #756b63; margin-top: 30px;">Best wishes,<br/>The Mirha & Co. Team</p>
  </div>
  `;
