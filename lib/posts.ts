@@ -804,9 +804,9 @@ const SLUG_IMAGE_MAP: Record<string, string> = {
   "patchy-beard-growth-guide": "/blog-thumbs/mens_beard_growth.png",
   "genz-grooming-starter-kit": "/blog-thumbs/mens_genz_kit.png",
   "mens-fragrance-guide": "/blog-thumbs/mens_fragrance.png",
-  "american-skin-mens-grooming": "/blog-thumbs/mens_genz_kit.png",
-  "asian-skin-mens-grooming": "/blog-thumbs/photo_korean.png",
-  "uk-skin-mens-grooming": "/blog-thumbs/mens_beard_growth.png",
+  "american-skin-mens-grooming": "/blog-thumbs/blog_american_mens_skin.jpg",
+  "asian-skin-mens-grooming": "/blog-thumbs/blog_asian_mens_skin.jpg",
+  "uk-skin-mens-grooming": "/blog-thumbs/blog_uk_mens_skin.jpg",
  // NEW PREMIUM EDITORIAL SERIES — June 2026
  "glass-skin-student-budget-k-beauty": "/blog-thumbs/photo_korean.png",
  "kbeauty-hype-vs-reality": "/blog-thumbs/kbeauty_hype_reality.png",

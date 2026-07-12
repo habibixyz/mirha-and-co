@@ -2,11 +2,11 @@ import type { Metadata } from "next";
 import BlogFooterTools from "@/components/BlogFooterTools";
 
 export const metadata: Metadata = {
-  title: "The American Man's Skincare Playbook | Mirha & Co.",
-  description: "Most American men are either doing nothing for their skin or doing too much. This is what your skin actually needs given where you live, what you eat, and US weather.",
+  title: "The American Men's Skincare Routine: A Complete Playbook | Mirha & Co.",
+  description: "The ultimate men's skincare routine for the US climate. Combat hard water, UV damage, and seasonal changes with this simple, dermatologist-backed guide.",
   openGraph: {
-    title: "The American Man's Skincare Playbook",
-    description: "The 4 non-negotiables for American men's skin. What works in Miami melts in Minnesota winters.",
+    title: "The American Men's Skincare Routine: A Complete Playbook",
+    description: "The 4 non-negotiable skincare steps for American men. Protect your skin from hard water, sun damage, and winter dehydration.",
   },
 };
 
@@ -38,11 +38,32 @@ export default function AmericanSkinMensGroomingPage() {
 
       <a href="/blog" className="nav-back">← Back to Journal</a>
 
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Article",
+            "headline": "The American Men's Skincare Routine: A Complete Playbook",
+            "image": [
+              "https://mirha.co/blog-thumbs/blog_american_mens_skin.jpg"
+            ],
+            "datePublished": "2026-07-12T08:00:00+08:00",
+            "dateModified": "2026-07-12T08:00:00+08:00",
+            "author": [{
+              "@type": "Organization",
+              "name": "Mirha & Co.",
+              "url": "https://mirha.co/"
+            }]
+          })
+        }}
+      />
+
       <header className="post-hdr">
         <div className="post-hdr-inner">
           <span className="post-badge">Men's Grooming · Skincare</span>
           <h1 className="post-headline">
-            The American Man's Skincare Playbook
+            The American Men's Skincare Routine: A Complete Playbook
           </h1>
           <p className="post-stand">
             What Your Skin Actually Needs Given Where You Live, What You Eat, and How American Weather Behaves.
@@ -61,7 +82,7 @@ export default function AmericanSkinMensGroomingPage() {
           Most American men are either doing nothing for their skin or doing too much after falling down a 47-product rabbit hole. Both extremes cost you. This is the middle ground — what your skin actually needs given where you live, what you eat, and how American weather behaves.
         </p>
 
-        <h2>Why American Skin Has Its Own Set of Problems</h2>
+        <h2>Why American Men's Skin Needs a Different Routine</h2>
         <p>
           The US isn't one climate. It's fifteen of them stacked on top of each other. What works in Miami melts in Minnesota winters. What survives a Phoenix summer does nothing for a Seattle drizzle. Add in:
         </p>
@@ -75,7 +96,7 @@ export default function AmericanSkinMensGroomingPage() {
           The result: most American men deal with a combination of dehydration, oiliness, and sensitivity all at once — often caused by the environment, not their skin type.
         </p>
 
-        <h2>The 4 Non-Negotiables for American Men's Skin</h2>
+        <h2>The 4 Non-Negotiable Steps for an American Men's Skincare Routine</h2>
 
         <h3>1. A Gentle Face Wash (Not Bar Soap)</h3>
         <p>

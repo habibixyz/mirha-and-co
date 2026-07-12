@@ -2,11 +2,11 @@ import type { Metadata } from "next";
 import BlogFooterTools from "@/components/BlogFooterTools";
 
 export const metadata: Metadata = {
-  title: "The British Man's Skin Actually Has It Harder Than You Think | Mirha & Co.",
-  description: "British men tend to have more barrier damage, persistent redness, and premature dehydration than they realise. Here is what actually works for UK skin.",
+  title: "British Men's Skincare Routine: Hard Water & Winter Guide | Mirha & Co.",
+  description: "The ultimate British men's skincare routine. Learn how to protect your skin from hard water, central heating, and year-round UVA exposure in the UK.",
   openGraph: {
-    title: "The British Man's Skin Actually Has It Harder Than You Think",
-    description: "The complete grooming guide built around the specific conditions UK skin deals with year-round.",
+    title: "British Men's Skincare Routine: Hard Water & Winter Guide",
+    description: "The complete grooming guide for British men. Fix barrier damage, persistent redness, and premature dehydration caused by UK weather.",
   },
 };
 
@@ -35,11 +35,32 @@ export default function UKSkinMensGroomingPage() {
 
       <a href="/blog" className="nav-back">← Back to Journal</a>
 
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Article",
+            "headline": "British Men's Skincare Routine: Hard Water & Winter Guide",
+            "image": [
+              "https://mirha.co/blog-thumbs/blog_uk_mens_skin.jpg"
+            ],
+            "datePublished": "2026-07-12T08:00:00+08:00",
+            "dateModified": "2026-07-12T08:00:00+08:00",
+            "author": [{
+              "@type": "Organization",
+              "name": "Mirha & Co.",
+              "url": "https://mirha.co/"
+            }]
+          })
+        }}
+      />
+
       <header className="post-hdr">
         <div className="post-hdr-inner">
           <span className="post-badge">Men's Grooming · Skincare</span>
           <h1 className="post-headline">
-            The British Man's Skin Actually Has It Harder Than You Think
+            British Men's Skincare Routine: The Hard Water & Weather Guide
           </h1>
           <p className="post-stand">
             British men tend to have more barrier damage, persistent redness, and premature dehydration than they realise. Here's how to fix it.
@@ -71,7 +92,7 @@ export default function UKSkinMensGroomingPage() {
           <li><strong>Fair to medium skin tones</strong> — more common in the UK, and more prone to redness, sensitivity, broken capillaries, and rosacea than darker skin types.</li>
         </ul>
 
-        <h2>The 4 Things Every British Man's Routine Needs</h2>
+        <h2>The 4 Skincare Routine Steps Every British Man Needs</h2>
 
         <h3>1. A Barrier-Friendly Cleanser</h3>
         <p>

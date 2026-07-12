@@ -2,11 +2,11 @@ import type { Metadata } from "next";
 import BlogFooterTools from "@/components/BlogFooterTools";
 
 export const metadata: Metadata = {
-  title: "East & Southeast Asian Men's Skincare | Mirha & Co.",
-  description: "What the K-Beauty industry gets right (and what it misses) for Asian men's skin across different climates.",
+  title: "Asian Men's Skincare Routine: K-Beauty, PIH & Humidity Guide | Mirha & Co.",
+  description: "The complete Asian men's skincare routine. Learn how to prevent PIH, manage oily skin in high humidity, and adapt K-Beauty for East & Southeast Asian skin.",
   openGraph: {
-    title: "East & Southeast Asian Men's Skincare",
-    description: "The complete guide to Asian men's skin, handling PIH, and building a routine that works for your specific climate.",
+    title: "Asian Men's Skincare Routine: K-Beauty, PIH & Humidity Guide",
+    description: "The complete guide to Asian men's skin. Overcome Post-Inflammatory Hyperpigmentation and build a routine that actually works for your climate.",
   },
 };
 
@@ -35,11 +35,32 @@ export default function AsianSkinMensGroomingPage() {
 
       <a href="/blog" className="nav-back">← Back to Journal</a>
 
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Article",
+            "headline": "Asian Men's Skincare Routine: K-Beauty, PIH & Humidity Guide",
+            "image": [
+              "https://mirha.co/blog-thumbs/blog_asian_mens_skin.jpg"
+            ],
+            "datePublished": "2026-07-12T08:00:00+08:00",
+            "dateModified": "2026-07-12T08:00:00+08:00",
+            "author": [{
+              "@type": "Organization",
+              "name": "Mirha & Co.",
+              "url": "https://mirha.co/"
+            }]
+          })
+        }}
+      />
+
       <header className="post-hdr">
         <div className="post-hdr-inner">
           <span className="post-badge">Men's Grooming · Skincare</span>
           <h1 className="post-headline">
-            East & Southeast Asian Men's Skincare
+            Asian Men's Skincare Routine: K-Beauty & Beyond
           </h1>
           <p className="post-stand">
             What the K-Beauty Industry Gets Right (And What It Misses)
@@ -91,7 +112,7 @@ export default function AsianSkinMensGroomingPage() {
           <li style={{ marginBottom: "0.5rem" }}><strong>The right actives for fading marks on Asian skin</strong> are different from what works on lighter skin. Hydroquinone is commonly recommended but carries risks for Asian skin with longer-term use. The better stack: <strong>niacinamide + alpha arbutin + tranexamic acid</strong> — gentler, equally effective, and much better tolerated.</li>
         </ol>
 
-        <h2>The 4-Step Routine That Actually Works</h2>
+        <h2>The 4-Step Skincare Routine for Asian Men</h2>
 
         <h3>Step 1: Double Cleanse (Non-Negotiable in Southeast Asia, Important in East Asia)</h3>
         <p>
