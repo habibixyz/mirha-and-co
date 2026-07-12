@@ -768,14 +768,30 @@ export async function askSkincareConsultant(userQuery: string) {
 }
 
 export async function submitLeadAction(email: string, type: string, data?: string) {
- try {
- const lead = await (prisma as any).lead.create({
- data: {
- email: email.trim().toLowerCase(),
- type,
- data,
- }
- });
+  try {
+    const normalizedEmail = email.trim().toLowerCase();
+
+    // ✅ Rate limiting: 3 per day per email
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const recentLeadsCount = await (prisma as any).lead.count({
+      where: {
+        email: normalizedEmail,
+        createdAt: { gte: today }
+      }
+    });
+
+    if (recentLeadsCount >= 3) {
+      return { error: "You've reached the daily limit of 3 reports. Please try again tomorrow!" };
+    }
+
+    const lead = await (prisma as any).lead.create({
+      data: {
+        email: normalizedEmail,
+        type,
+        data,
+      }
+    });
 
  if (process.env.RESEND_API_KEY && process.env.PASSWORD_RESET_FROM) {
  try {

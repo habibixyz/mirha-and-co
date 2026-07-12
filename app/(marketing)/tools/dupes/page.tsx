@@ -594,7 +594,12 @@ export default function DupeFinderPage() {
     }
 
     try {
-      await submitLeadAction(email, "dupe", JSON.stringify(leadData));
+      const res = await submitLeadAction(email, "dupe", JSON.stringify(leadData));
+      if (res && res.error) {
+        alert(res.error);
+        setEmailStatus("idle");
+        return;
+      }
     } catch (err) {
       console.error("Non-blocking server-side lead submit failed:", err);
     }
