@@ -831,6 +831,10 @@ export async function submitLeadAction(email: string, type: string, data?: strin
  <div style="font-size: 3rem; font-weight: bold; color: #2d8a5c; margin: 5px 0;">${parsedData.formattedSavings || `₹${(parsedData.savings || 0).toLocaleString("en-IN")}`}</div>
  </div>
  ${recommendationsHtml}
+ <div style="background: #fdfaf7; border-left: 4px solid #fc2779; padding: 15px 20px; border-radius: 4px; margin: 30px 0;">
+ <p style="font-size: 0.95rem; line-height: 1.5; margin: 0; color: #161412;"><strong>Want deeper insights into your skincare?</strong><br/>
+ Unlock AI-powered ingredient analysis, personalized routine tracking, and endless dupe matching by upgrading to <a href="https://mirhaandco.com/pricing" style="color: #fc2779; text-decoration: none; font-weight: bold;">Mirha & Co. Premium</a>.</p>
+ </div>
  <p style="font-size: 0.9rem; color: #756b63; margin-top: 30px;">Best wishes,<br/>The Mirha & Co. Team</p>
  </div>
  `;
