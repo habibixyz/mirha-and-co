@@ -1,6 +1,6 @@
 # Mirha & Co
 
-A modern, AI-powered skincare and wellness SaaS platform built specifically for Indian consumers. Mirha & Co simplifies skincare through minimal routines, data-driven AI consultations, and honest recommendations.
+A modern, AI-powered skincare and wellness SaaS platform built for a global audience. Mirha & Co simplifies skincare through minimal routines, data-driven AI consultations, and honest recommendations tailored to your local climate and region.
 
 ---
 
@@ -20,7 +20,7 @@ The platform is designed to:
 
 * **Minimal over maximal:** Fewer products, better results.
 * **Science over hype:** Active-ingredient focus without the marketing fluff.
-* **Results over trends:** Tailored for the climate, water quality, and lifestyle realities of Indian skin.
+* **Results over trends:** Tailored for the specific climate, water quality, and lifestyle realities of your region (US, UK, Asia, India, and beyond).
 
 ---
 
@@ -33,6 +33,10 @@ The platform is designed to:
 * **Routine Tracker:** Daily tracking of AM/PM routines to maintain consistency.
 * **Conflict Checker (Pro Feature):** Cross-references ingredient lists between multiple products to warn users about dangerous chemical layerings (e.g., Retinol + AHAs).
 * **Automated Email Workflows:** Resend integrations for welcome emails, password resets, and targeted lead-magnet downloads (e.g., Hard Water Guides, Dupe Sheets).
+* **Globalized Commerce & Content:** 
+  * Region-aware dynamic pricing and currency localization (USD, GBP, INR).
+  * Automated Dupe Finder tool that redirects to local Amazon affiliate storefronts.
+  * Regional editorial content tailored for diverse global climates and skin types.
 
 ---
 
