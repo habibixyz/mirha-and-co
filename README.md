@@ -27,7 +27,7 @@ The platform is designed to:
 ## Key SaaS Features
 
 * **Secure Authentication:** Custom, secure user accounts with encrypted sessions.
-* **Pro Subscriptions:** Integrated billing (Paddle/Stripe) to unlock premium features and higher usage limits.
+* **Pro Subscriptions:** Integrated billing (Razorpay & Dodo Payments) to unlock premium features and higher usage limits.
 * **AI Skincare Consultant:** A dynamic RAG (Retrieval-Augmented Generation) search engine powered by Gemini that answers queries based on our specific, verified product catalog.
 * **Skin Journal & Analyzer:** Users can log daily skin progress, upload photos, and receive immediate AI dermatological analysis.
 * **Routine Tracker:** Daily tracking of AM/PM routines to maintain consistency.
