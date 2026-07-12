@@ -831,7 +831,6 @@ export async function submitLeadAction(email: string, type: string, data?: strin
  <div style="font-size: 3rem; font-weight: bold; color: #2d8a5c; margin: 5px 0;">${parsedData.formattedSavings || `₹${(parsedData.savings || 0).toLocaleString("en-IN")}`}</div>
  </div>
  ${recommendationsHtml}
- <p style="font-size: 1rem; line-height: 1.6;">Stop paying the premium for marketing and start saving on your routine today!</p>
  <p style="font-size: 0.9rem; color: #756b63; margin-top: 30px;">Best wishes,<br/>The Mirha & Co. Team</p>
  </div>
  `;
