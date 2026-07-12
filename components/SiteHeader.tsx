@@ -24,6 +24,24 @@ const InstagramIcon = ({ size = 16 }: { size?: number }) => (
   </svg>
 );
 
+const LinkedInIcon = ({ size = 16 }: { size?: number }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+    <rect width="4" height="12" x="2" y="9" />
+    <circle cx="4" cy="4" r="2" />
+  </svg>
+);
+
 export default function SiteHeader() {
   const { t } = useGlobalization();
   const [menuOpen, setMenuOpen] = useState(false);
@@ -75,6 +93,16 @@ export default function SiteHeader() {
               style={{ display: "inline-flex", alignItems: "center" }}
             >
               <InstagramIcon size={15} />
+            </a>
+            <a
+              href="https://www.linkedin.com/company/mirhaandco/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="site-header-nav-link flex items-center justify-center"
+              aria-label="LinkedIn"
+              style={{ display: "inline-flex", alignItems: "center" }}
+            >
+              <LinkedInIcon size={15} />
             </a>
             <GlobalizationSwitcher />
           </nav>
@@ -152,6 +180,19 @@ export default function SiteHeader() {
             >
               <InstagramIcon size={16} />
               <span>Instagram</span>
+            </a>
+
+            {/* LinkedIn link */}
+            <a
+              href="https://www.linkedin.com/company/mirhaandco/"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setMenuOpen(false)}
+              className="flex items-center gap-2 transition-colors hover:text-[#fc2779]"
+              style={{ ...navLinkStyle, textTransform: "none", display: "flex", alignItems: "center" }}
+            >
+              <LinkedInIcon size={16} />
+              <span>LinkedIn</span>
             </a>
 
             <div style={{ height: "1px", background: "#e5ded6" }} />

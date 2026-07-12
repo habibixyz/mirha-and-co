@@ -242,7 +242,7 @@ export default async function RootLayout({
   }}>
   Honest reviews, curated Amazon finds, and the products actually worth your money.
   </p>
-  <div style={{ display: "flex", gap: "0.8rem" }}>
+  <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem" }}>
     <a 
       href="https://www.instagram.com/mirha_andco/" 
       target="_blank" 
@@ -266,6 +266,30 @@ export default async function RootLayout({
         <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
       </svg>
       @mirha_andco
+    </a>
+    <a 
+      href="https://www.linkedin.com/company/mirhaandco/" 
+      target="_blank" 
+      rel="noopener noreferrer"
+      className="footer-link"
+      style={{ display: "inline-flex", alignItems: "center", gap: "0.4rem" }}
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width={16}
+        height={16}
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+        <rect width="4" height="12" x="2" y="9" />
+        <circle cx="4" cy="4" r="2" />
+      </svg>
+      Mirha &amp; Co.
     </a>
   </div>
   </div>
