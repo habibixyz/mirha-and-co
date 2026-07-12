@@ -48,46 +48,66 @@ export async function POST(req: Request) {
  return NextResponse.json({ status: "ignored_no_user" });
  }
 
- // Handle Subscription Created/Activated/Updated
- if (
- eventType === "subscription.activated" ||
- eventType === "subscription.updated"
- ) {
- const endsAtDate = data.current_billing_period?.ends_at
- ? new Date(data.current_billing_period.ends_at)
- : null;
+  // Handle Subscription Created/Activated/Updated
+  if (
+    eventType === "subscription.activated" ||
+    eventType === "subscription.updated"
+  ) {
+    const endsAtDate = data.current_billing_period?.ends_at
+      ? new Date(data.current_billing_period.ends_at)
+      : null;
 
- // Find user
- const user = await prisma.user.findUnique({
- where: { id: userId },
- include: { subscription: true },
- });
+    // Find user
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      include: { subscription: true },
+    });
 
- if (user) {
- if (user.subscription) {
- await prisma.subscription.update({
- where: { id: user.subscription.id },
- data: {
- tier: "pro",
- stripeSubscriptionId: data.id, // Storing Paddle subscription ID in this field
- status: "active",
- endsAt: endsAtDate,
- },
- });
- } else {
- await prisma.subscription.create({
- data: {
- userId: user.id,
- tier: "pro",
- stripeSubscriptionId: data.id,
- status: "active",
- endsAt: endsAtDate,
- },
- });
- }
- console.log(`Paddle Webhook: User ${userId} subscription activated.`);
- }
- }
+    if (user) {
+      if (user.subscription) {
+        await prisma.subscription.update({
+          where: { id: user.subscription.id },
+          data: {
+            tier: "pro",
+            stripeSubscriptionId: "paddle_" + data.id, // Prefix to identify Paddle
+            status: "active",
+            endsAt: endsAtDate,
+          },
+        });
+      } else {
+        await prisma.subscription.create({
+          data: {
+            userId: user.id,
+            tier: "pro",
+            stripeSubscriptionId: "paddle_" + data.id,
+            status: "active",
+            endsAt: endsAtDate,
+          },
+        });
+      }
+      console.log(`Paddle Webhook: User ${userId} subscription activated.`);
+    }
+  }
+
+  // Handle Cancellation
+  if (eventType === "subscription.canceled") {
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      include: { subscription: true },
+    });
+
+    if (user && user.subscription) {
+      await prisma.subscription.update({
+        where: { id: user.subscription.id },
+        data: {
+          tier: "free",
+          status: "canceled",
+          endsAt: new Date(),
+        },
+      });
+      console.log(`Paddle Webhook: Downgraded user ${userId} to free (subscription canceled).`);
+    }
+  }
 
  // Handle One-Time purchases (e.g. transactions)
  if (eventType === "transaction.completed") {

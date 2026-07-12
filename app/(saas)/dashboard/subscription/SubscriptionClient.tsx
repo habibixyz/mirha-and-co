@@ -5,10 +5,36 @@ import { Check, Loader2, Star, ShieldCheck, Zap } from "lucide-react";
 import { useState } from "react";
 import Script from "next/script";
 
-export function SubscriptionClient({ isPro }: { isPro: boolean }) {
- const [activePendingType, setActivePendingType] = useState<"monthly" | "yearly" | null>(null);
- const [billingPeriod, setBillingPeriod] = useState<"monthly" | "yearly">("yearly");
+interface SubscriptionClientProps {
+  isPro: boolean;
+  subscriptionId?: string | null;
+  provider?: "dodo" | "razorpay" | null;
+  userId?: string;
+}
+
+export function SubscriptionClient({ 
+  isPro, 
+  subscriptionId, 
+  provider, 
+  userId 
+}: SubscriptionClientProps) {
+  const [activePendingType, setActivePendingType] = useState<"monthly" | "yearly" | null>(null);
+  const [billingPeriod, setBillingPeriod] = useState<"monthly" | "yearly">("yearly");
   const [paymentRegion, setPaymentRegion] = useState<"INR" | "USD">("INR");
+  const [isPortalLoading, setIsPortalLoading] = useState(false);
+
+  const handleManageBilling = async () => {
+    if (provider !== "dodo") return;
+    setIsPortalLoading(true);
+    try {
+      window.location.href = "https://customer.dodopayments.com/";
+    } catch (error: any) {
+      console.error("Portal redirect error:", error);
+      alert(`Error loading billing portal: ${error.message || "Please contact support."}`);
+    } finally {
+      setIsPortalLoading(false);
+    }
+  };
 
   const handleDodoCheckout = async () => {
     setActivePendingType("monthly");
@@ -455,7 +481,7 @@ export function SubscriptionClient({ isPro }: { isPro: boolean }) {
  }
 
  @keyframes spin { 100% { transform: rotate(360deg); } }
- `}</style>
+`}</style>
 
  <div className="sub-header">
  <motion.div variants={itemVariants} className="premium-badge">
@@ -490,7 +516,9 @@ export function SubscriptionClient({ isPro }: { isPro: boolean }) {
       Global (USD)
     </button>
     <button
-      onClick={() => setPaymentRegion("INR")}
+      onClick={() => {
+        setPaymentRegion("INR");
+      }}
       style={{
         padding: "0.4rem 0.8rem",
         borderRadius: "8px",
@@ -528,7 +556,7 @@ export function SubscriptionClient({ isPro }: { isPro: boolean }) {
  }}
  />
  </motion.div>
-  )}
+ )}
   </div>
 
   <div className="pricing-grid-container">
@@ -626,9 +654,29 @@ export function SubscriptionClient({ isPro }: { isPro: boolean }) {
  </div>
 
  {isPro ? (
- <button className="action-btn btn-active" disabled style={{ position: "relative", zIndex: 2 }}>
- Active Plan
- </button>
+    provider === "razorpay" ? (
+      <div style={{ position: "relative", zIndex: 2, display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+        <button className="action-btn btn-active" disabled>
+          Active Plan (via Razorpay)
+        </button>
+        <p style={{ fontSize: "0.72rem", color: "rgba(255,255,255,0.55)", textAlign: "center" }}>
+          To manage your subscription, please contact support.
+        </p>
+      </div>
+    ) : (
+      <button 
+        onClick={handleManageBilling}
+        disabled={isPortalLoading}
+        className="action-btn btn-primary" 
+        style={{ position: "relative", zIndex: 2 }}
+      >
+        {isPortalLoading ? (
+          <Loader2 size={18} style={{ animation: "spin 1s linear infinite" }} />
+        ) : (
+          "Manage Subscription"
+        )}
+      </button>
+    )
  ) : ( <motion.button
   onClick={() => paymentRegion === "USD" ? handleDodoCheckout() : handleUpgrade(billingPeriod)}
   disabled={activePendingType !== null}

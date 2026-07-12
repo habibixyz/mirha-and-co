@@ -68,7 +68,7 @@ export async function POST(req: Request) {
             where: { id: user.subscription.id },
             data: {
               tier: "pro",
-              stripeSubscriptionId: subscriptionId, // Store Dodo subscription_id
+              stripeSubscriptionId: "dodo_" + subscriptionId, // Store Dodo subscription_id prefixed
               status: "active",
               endsAt: endsAtDate,
             },
@@ -78,7 +78,7 @@ export async function POST(req: Request) {
             data: {
               userId: user.id,
               tier: "pro",
-              stripeSubscriptionId: subscriptionId,
+              stripeSubscriptionId: "dodo_" + subscriptionId,
               status: "active",
               endsAt: endsAtDate,
             },

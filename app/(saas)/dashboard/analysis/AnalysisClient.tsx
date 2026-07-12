@@ -62,53 +62,29 @@ export function AnalysisClient({
  const [chatLoading, setChatLoading] = useState(false);
  const [selectedMetric, setSelectedMetric] = useState<"all" | "barrier" | "acne" | "redness" | "oiliness">("all");
 
- // Initialize Paddle on client
- useEffect(() => {
- if ((window as any).Paddle) {
-      try {
-        const env = process.env.NEXT_PUBLIC_PADDLE_ENVIRONMENT || "production";
-        if ((window as any).Paddle.Environment) {
-          (window as any).Paddle.Environment.set(env);
-        }
-        (window as any).Paddle.Initialize({
-          token: process.env.NEXT_PUBLIC_PADDLE_CLIENT_TOKEN || "live_4847fa72f94757482f02c950a29",
-          eventCallback: function (data: any) {
- if (data.name === "checkout.completed" || data.name === "transaction.completed") {
- alert("Payment successful! Access granted.");
- window.location.reload();
- }
- },
- });
- } catch (err) {
- console.error("Paddle initialization error:", err);
- }
- }
- }, []);
+  const handleDodoCheckout = async () => {
+    setPaymentPending(true);
+    try {
+      const res = await fetch("/api/dodo/checkout", { method: "POST" });
+      const data = await res.json();
+      if (data.error) throw new Error(data.error);
 
- const handleGlobalPaymentUnavailable = () => {
- alert("International card payments are temporarily unavailable. Please use India (INR) checkout for now or contact support@mirhaandco.com for manual access.");
- };
+      if (data.checkoutUrl) {
+        window.location.href = data.checkoutUrl;
+      } else {
+        throw new Error("No checkout URL returned from server");
+      }
+    } catch (error: any) {
+      console.error("Dodo checkout error:", error);
+      alert(`Checkout Error: ${error.message || "Failed to initialize"}`);
+    } finally {
+      setPaymentPending(false);
+    }
+  };
 
- const handlePaddleCheckout = (priceId: string, isSubscription: boolean) => {
- if (!(window as any).Paddle) {
- alert("Paddle SDK is still loading. Please wait a moment.");
- return;
- }
- setPaymentPending(true);
- try {
- (window as any).Paddle.Checkout.open({
- items: [{ priceId: priceId, quantity: 1 }],
- customData: {
- userId: user.id,
- type: isSubscription ? "subscription" : "onetime_scan",
- },
- });
- } catch (error: any) {
- alert(`Checkout failed: ${error.message}`);
- } finally {
- setPaymentPending(false);
- }
- };
+  const handleOneTimeUnavailable = () => {
+    alert("One-time scans are currently only available in India (INR). For the USD region, please select the Pro Monthly subscription below.");
+  };
 
  const handleRazorpayCheckout = async () => {
  setPaymentPending(true);
@@ -449,8 +425,6 @@ export function AnalysisClient({
       }
     }
   `}</style>
- {/* Paddle JS Script */}
- <Script src="https://cdn.paddle.com/paddle/v2/paddle.js" strategy="afterInteractive" />
 
  {/* Header */}
  <header style={{ marginBottom: "2rem" }}>
@@ -570,11 +544,11 @@ export function AnalysisClient({
  {paymentRegion === "USD" ? "$1.99" : "₹149"}
  </span>
  <p style={{ fontSize: "0.8rem", color: "var(--muted)", margin: "0 0 1.5rem", textAlign: "center" }}>
- {paymentRegion === "USD" ? "International payments are temporarily unavailable. Use INR checkout or contact support." : "Unlock a single scan report and chat session instantly."}
+ {paymentRegion === "USD" ? "One-time scans are currently unavailable in USD. Please select the Pro Subscription." : "Unlock a single scan report and chat session instantly."}
  </p>
  <button
  disabled={paymentPending}
- onClick={paymentRegion === "USD" ? handleGlobalPaymentUnavailable : handleRazorpayCheckout}
+ onClick={paymentRegion === "USD" ? handleOneTimeUnavailable : handleRazorpayCheckout}
  style={{
  background: "var(--ink)",
  color: "var(--white)",
@@ -602,7 +576,7 @@ export function AnalysisClient({
  </p>
  <button
  disabled={paymentPending}
- onClick={paymentRegion === "USD" ? handleGlobalPaymentUnavailable : handleRazorpayCheckout}
+ onClick={paymentRegion === "USD" ? handleDodoCheckout : handleRazorpayCheckout}
  style={{
  background: "var(--rose)",
  color: "var(--white)",
