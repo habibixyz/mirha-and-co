@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Camera, Upload, Check, MessageSquare, History, Calendar, CreditCard, User, Shield, ShieldCheck, Heart, Loader2, Star } from "lucide-react";
+import { Camera, Upload, Check, MessageSquare, History, Mic, MicOff, Calendar, CreditCard, User, Shield, ShieldCheck, Heart, Loader2, Star } from "lucide-react";
 import Script from "next/script";
 
 interface UserProfile {
@@ -35,6 +35,72 @@ interface PastAnalysis {
  createdAt: string;
 }
 
+function MessageText({ text }: { text: string }) {
+  const lines = text.split("\n");
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
+      {lines.map((line, idx) => {
+        let trimmed = line.trim();
+        if (!trimmed) return <div key={idx} style={{ height: "0.4rem" }} />;
+        
+        const isBullet = trimmed.startsWith("* ") || trimmed.startsWith("- ");
+        if (isBullet) {
+          trimmed = trimmed.substring(2);
+        }
+        
+        const parts: React.ReactNode[] = [];
+        const regex = /(\*\*.*?\*\*|\[.*?\]\(.*?\))/g;
+        const segments = trimmed.split(regex);
+        
+        segments.forEach((part, pIdx) => {
+          if (part.startsWith("**") && part.endsWith("**")) {
+            parts.push(
+              <strong key={pIdx} style={{ fontWeight: 700 }}>
+                {part.slice(2, -2)}
+              </strong>
+            );
+          } else if (part.startsWith("[") && part.includes("](")) {
+            const closingBrace = part.indexOf("]");
+            const linkText = part.substring(1, closingBrace);
+            const linkUrl = part.substring(closingBrace + 2, part.length - 1);
+            const isExternal = linkUrl.startsWith("http");
+            
+            parts.push(
+              <a 
+                key={pIdx} 
+                href={linkUrl} 
+                target={isExternal ? "_blank" : undefined}
+                rel={isExternal ? "noopener noreferrer" : undefined}
+                style={{ 
+                  color: "var(--rose)", 
+                  textDecoration: "underline", 
+                  fontWeight: 600,
+                  cursor: "pointer"
+                }}
+              >
+                {linkText}
+              </a>
+            );
+          } else {
+            parts.push(part);
+          }
+        });
+        
+        if (isBullet) {
+          return (
+            <div key={idx} style={{ display: "flex", gap: "0.4rem", paddingLeft: "0.6rem", alignItems: "flex-start" }}>
+              <span style={{ color: "var(--rose)", flexShrink: 0, marginTop: "0.15rem" }}>•</span>
+              <span style={{ flex: 1 }}>{parts}</span>
+            </div>
+          );
+        }
+        
+        return <p key={idx} style={{ margin: 0 }}>{parts}</p>;
+      })}
+    </div>
+  );
+}
+
 export function AnalysisClient({
  user,
  pastAnalyses,
@@ -61,6 +127,54 @@ export function AnalysisClient({
  const [inputMessage, setInputMessage] = useState("");
  const [chatLoading, setChatLoading] = useState(false);
  const [selectedMetric, setSelectedMetric] = useState<"all" | "barrier" | "acne" | "redness" | "oiliness">("all");
+
+  const [isListening, setIsListening] = useState(false);
+  const recognitionRef = useRef<any>(null);
+
+  const toggleSpeechToText = () => {
+    const SpeechRecognition =
+      (window as any).SpeechRecognition ||
+      (window as any).webkitSpeechRecognition;
+
+    if (!SpeechRecognition) {
+      alert("Voice-to-text is not supported in this browser. Please try Chrome, Edge, or Safari.");
+      return;
+    }
+
+    if (isListening) {
+      if (recognitionRef.current) {
+        recognitionRef.current.stop();
+      }
+      setIsListening(false);
+      return;
+    }
+
+    const recognition = new SpeechRecognition();
+    recognition.lang = "en-US";
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+
+    recognition.onstart = () => {
+      setIsListening(true);
+    };
+
+    recognition.onresult = (event: any) => {
+      const resultText = event.results[0][0].transcript;
+      setInputMessage(prev => prev ? `${prev} ${resultText}` : resultText);
+    };
+
+    recognition.onerror = (event: any) => {
+      console.error("Speech recognition error:", event.error);
+      setIsListening(false);
+    };
+
+    recognition.onend = () => {
+      setIsListening(false);
+    };
+
+    recognitionRef.current = recognition;
+    recognition.start();
+  };
 
   const handleDodoCheckout = async () => {
     setPaymentPending(true);
@@ -941,7 +1055,7 @@ export function AnalysisClient({
  fontSize: "0.9rem",
  lineHeight: 1.45
  }}>
- {m.text}
+ <MessageText text={m.text} />
  </div>
  </div>
  ))}
@@ -981,7 +1095,26 @@ export function AnalysisClient({
  }}
  />
  <button
- type="submit"
+        type="button"
+        onClick={toggleSpeechToText}
+        style={{
+          background: isListening ? "var(--rose)" : "var(--sand)",
+          color: isListening ? "var(--white)" : "var(--ink)",
+          border: "none",
+          borderRadius: "8px",
+          padding: "0.8rem",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          cursor: "pointer",
+          transition: "all 0.2s ease"
+        }}
+        title={isListening ? "Listening... click to stop" : "Use Voice-to-Text"}
+      >
+        {isListening ? <MicOff size={18} /> : <Mic size={18} />}
+      </button>
+      <button
+      type="submit"
  style={{
  background: "var(--ink)",
  color: "var(--white)",
