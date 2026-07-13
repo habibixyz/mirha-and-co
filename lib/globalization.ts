@@ -378,12 +378,110 @@ export function getLocalBrandStorefrontUrl(
 
 
 /**
+ * Dynamic price localization for blog post content
+ */
+export function getLocalizedPrices(text: string, targetCurrency: Currency): string {
+  if (!text) return text;
+  
+  const config = CURRENCIES[targetCurrency] || CURRENCIES.USD;
+  const usdRate = CURRENCIES.USD.rate;
+  const factor = config.rate / usdRate;
+
+  // Helper to convert and format a single numeric value
+  const convertValue = (val: number): string => {
+    const converted = val * factor;
+    // Round to nice numbers
+    let rounded = Math.round(converted);
+    if (rounded >= 100) {
+      // Round to nearest 5 or 10 for cleaner display of larger numbers
+      rounded = Math.round(rounded / 5) * 5;
+    }
+    
+    if (targetCurrency === "AED" || targetCurrency === "SAR") {
+      return `${rounded.toLocaleString(config.locale)} ${config.symbol}`;
+    }
+    return `${config.symbol}${rounded.toLocaleString(config.locale)}`;
+  };
+
+  // Replace ranges like $30-50 or $200–400 (hyphen or en-dash)
+  let result = text.replace(/\$([0-9,]+)\s*[-–]\s*([0-9,]+)/g, (match, minStr, maxStr) => {
+    const min = parseInt(minStr.replace(/,/g, ""), 10);
+    const max = parseInt(maxStr.replace(/,/g, ""), 10);
+    if (isNaN(min) || isNaN(max)) return match;
+    
+    const minConv = Math.round(min * factor);
+    const maxConv = Math.round(max * factor);
+    const minNice = minConv >= 100 ? Math.round(minConv / 5) * 5 : minConv;
+    const maxNice = maxConv >= 100 ? Math.round(maxConv / 5) * 5 : maxConv;
+
+    if (targetCurrency === "AED" || targetCurrency === "SAR") {
+      return `${minNice.toLocaleString(config.locale)}–${maxNice.toLocaleString(config.locale)} ${config.symbol}`;
+    } else {
+      return `${config.symbol}${minNice.toLocaleString(config.locale)}–${config.symbol}${maxNice.toLocaleString(config.locale)}`;
+    }
+  });
+
+  // Replace single prices like $345, $20, $1,000 (avoid matching already-converted prices)
+  result = result.replace(/\$([0-9,]+)(?!\s*[-–]\s*[0-9,]+)/g, (match, priceStr) => {
+    const cleanPrice = priceStr.replace(/,/g, "");
+    const val = parseInt(cleanPrice, 10);
+    if (isNaN(val)) return match;
+    return convertValue(val);
+  });
+
+  // Replace Rupee ranges like ₹300-500 or ₹200–400
+  result = result.replace(/₹\s*([0-9,]+)\s*[-–]\s*([0-9,]+)/g, (match, minStr, maxStr) => {
+    const min = parseInt(minStr.replace(/,/g, ""), 10);
+    const max = parseInt(maxStr.replace(/,/g, ""), 10);
+    if (isNaN(min) || isNaN(max)) return match;
+    
+    const minConv = Math.round(min * config.rate);
+    const maxConv = Math.round(max * config.rate);
+    const minNice = minConv >= 100 ? Math.round(minConv / 5) * 5 : minConv;
+    const maxNice = maxConv >= 100 ? Math.round(maxConv / 5) * 5 : maxConv;
+
+    if (targetCurrency === "AED" || targetCurrency === "SAR") {
+      return `${minNice.toLocaleString(config.locale)}–${maxNice.toLocaleString(config.locale)} ${config.symbol}`;
+    } else {
+      return `${config.symbol}${minNice.toLocaleString(config.locale)}–${config.symbol}${maxNice.toLocaleString(config.locale)}`;
+    }
+  });
+
+  // Replace single Rupee prices like ₹500, ₹299
+  result = result.replace(/₹\s*([0-9,]+)(?!\s*[-–]\s*[0-9,]+)/g, (match, priceStr) => {
+    const cleanPrice = priceStr.replace(/,/g, "");
+    const val = parseInt(cleanPrice, 10);
+    if (isNaN(val)) return match;
+    
+    const converted = val * config.rate;
+    let rounded = Math.round(converted);
+    if (rounded >= 100) {
+      rounded = Math.round(rounded / 5) * 5;
+    }
+    
+    if (targetCurrency === "AED" || targetCurrency === "SAR") {
+      return `${rounded.toLocaleString(config.locale)} ${config.symbol}`;
+    }
+    return `${config.symbol}${rounded.toLocaleString(config.locale)}`;
+  });
+
+  return result;
+}
+
+/**
  * Smart content localization for text
  */
 export function getLocalizedContent(text: string, currency: string): string {
-  if (!text || currency === "INR") return text;
+  if (!text) return text;
   
-  return text
+  const targetCurrency = (currency as Currency) || "USD";
+  
+  // First localize any prices listed in USD
+  let localized = getLocalizedPrices(text, targetCurrency);
+
+  if (targetCurrency === "INR") return localized;
+  
+  return localized
     .replace(/\bIndian Skin\b/g, "Brown & Olive Skin")
     .replace(/\bindian skin\b/g, "brown & olive skin")
     .replace(/\bin India\b/gi, "")

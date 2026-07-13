@@ -773,19 +773,31 @@ const STATIC_POSTS: Post[] = [
  },
 ];
 
+const NEW_SLUGS = [
+  "la-mer-myth-dupes",
+  "skincare-routine-14-hour-day",
+  "city-skin-aging-comparison",
+  "clean-girl-aesthetic-cost",
+  "dopamine-skin-blue-light",
+  "fast-skincare-barrier-damage"
+];
+
+const mappedHighIntent = HIGH_INTENT_POSTS.map(p => ({
+  category: p.category,
+  title: p.title,
+  excerpt: p.excerpt,
+  slug: p.slug,
+  readTime: p.readTime,
+  date: p.date,
+  productCount: p.asins.length,
+  thumbnail: p.thumbnail,
+  tags: p.tags
+}));
+
 export const POSTS: Post[] = [
+  ...mappedHighIntent.filter(p => NEW_SLUGS.includes(p.slug)),
   ...STATIC_POSTS,
-  ...HIGH_INTENT_POSTS.map(p => ({
-    category: p.category,
-    title: p.title,
-    excerpt: p.excerpt,
-    slug: p.slug,
-    readTime: p.readTime,
-    date: p.date,
-    productCount: p.asins.length,
-    thumbnail: p.thumbnail,
-    tags: p.tags
-  }))
+  ...mappedHighIntent.filter(p => !NEW_SLUGS.includes(p.slug))
 ];
 
 const hashString = (str: string) => {
@@ -818,6 +830,12 @@ const SLUG_IMAGE_MAP: Record<string, string> = {
  "10-years-sun-damage-indian-skin": "/blog-thumbs/blog_sun_damage.png",
  "hidden-cost-of-being-pretty": "/blog-thumbs/photo_beauty.png",
  "the-founder-face": "/blog-thumbs/blog_founder_wellness.png",
+ "la-mer-myth-dupes": "/blog-thumbs/blog_la_mer_dupes.png",
+ "skincare-routine-14-hour-day": "/blog-thumbs/blog_14_hour_skincare.png",
+ "city-skin-aging-comparison": "/blog-thumbs/blog_city_skin_aging.png",
+ "clean-girl-aesthetic-cost": "/blog-thumbs/blog_clean_girl_cost.png",
+ "dopamine-skin-blue-light": "/blog-thumbs/blog_blue_light_skin.png",
+ "fast-skincare-barrier-damage": "/blog-thumbs/blog_fast_skincare_barrier.png",
 
  // SKINCARE — 17 posts
  "why-is-my-face-darker-than-my-body": "/blog-thumbs/blog_face_darker.png",

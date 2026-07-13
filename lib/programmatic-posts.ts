@@ -175,7 +175,7 @@ export function getProgrammaticPostBySlug(slug: string) {
       category: hip.category,
       date: hip.date,
       readTime: hip.readTime,
-      sections: hip.sections,
+      sections: hip.sections, // includes sectionAsins where set
       asins: hip.asins
     };
   }

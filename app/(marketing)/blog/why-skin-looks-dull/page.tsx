@@ -210,32 +210,8 @@ export default function DullSkinPage() {
  </p>
  <BlogProductCard asin="B01CCGW4OE" />
  </section>
- {/* ── INTERNAL LINKS ── */}
-<section style={{
- margin: "3rem 0",
- padding: "1.5rem",
- background: "var(--sand)",
- border: "1px solid var(--rule)",
- borderRadius: "8px"
-}}>
- <p style={{
- fontSize: "0.7rem",
- letterSpacing: "0.15em",
- textTransform: "uppercase",
- color: "var(--rose)",
- marginBottom: "0.8rem"
- }}>
- Continue Reading
- </p>
 
- <ul style={{ listStyle: "none", padding: 0, margin: 0, lineHeight: 1.8 }}>
- <li><Link href="/blog/skincare-routine-every-skin-type">Complete Skincare Routine →</Link></li>
- <li><Link href="/blog/serums-essences-moisturizers-guide">Serums vs Essences →</Link></li>
- <li><Link href="/blog/best-sunscreen-india-spf50">Why SPF 50 Matters →</Link></li>
- </ul>
-</section>
-
- <hr style={{ border: "none", borderTop: "1px solid var(--rule)", margin: "2.5rem 0" }} />
+  <hr style={{ border: "none", borderTop: "1px solid var(--rule)", margin: "2.5rem 0" }} />
 
  {/* ── SECTION 3: LAYERING ── */}
  <section style={{ marginBottom: "3rem" }}>

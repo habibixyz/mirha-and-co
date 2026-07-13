@@ -1,7 +1,6 @@
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import { SeoBlogPost } from "@/components/SeoBlogPost";
-import { AffiliateCard } from "@/components/AffiliateCard";
 import { getProgrammaticPostBySlug, getAllProgrammaticSlugs } from "@/lib/programmatic-posts";
 import { cookies, headers } from "next/headers";
 import { getLocalizedContent, Currency } from "@/lib/globalization";
@@ -67,18 +66,6 @@ export default async function ProgrammaticBlogPost({ params }: PageProps) {
       date={post.date}
       readTime={post.readTime}
       sections={post.sections}
-    >
-      <section className="post-section">
-        <h2>Dermatologist-Recommended Skincare Picks</h2>
-        <p>
-          These products are selected for their texture, ingredients, and ability to handle regional climate challenges.
-        </p>
-        <div className="cards-row">
-          {post.asins.map((asin) => (
-            <AffiliateCard key={asin} asin={asin} />
-          ))}
-        </div>
-      </section>
-    </SeoBlogPost>
+    />
   );
 }

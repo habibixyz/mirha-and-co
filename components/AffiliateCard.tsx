@@ -5,7 +5,7 @@ import { useGlobalization } from "./GlobalizationContext";
 import Link from "next/link";
 
 export function AffiliateCard(props: any) {
-  const { asin, onClick } = props;
+  const { asin, onClick, compact } = props;
   const global = useGlobalization();
 
   const product = PRODUCTS.find((p) => p.asin === asin) as any;
@@ -32,7 +32,97 @@ export function AffiliateCard(props: any) {
     product?.link
   );
 
-  return (
+  return compact ? (
+    <a
+      href={affiliateUrl}
+      target="_blank"
+      rel="noopener noreferrer sponsored"
+      className="aff-compact"
+      onClick={(e) => { e.stopPropagation(); onClick?.(product || { asin, title }); }}
+    >
+      <style>{`
+        .aff-compact {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          padding: 10px 14px;
+          background: #fff;
+          border: 1px solid #eae4dc;
+          border-radius: 10px;
+          text-decoration: none;
+          transition: box-shadow 0.2s, border-color 0.2s;
+          width: 100%;
+        }
+        .aff-compact:hover {
+          border-color: #d1c8bb;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        .aff-compact-img {
+          width: 52px;
+          height: 52px;
+          object-fit: contain;
+          border-radius: 6px;
+          background: #faf8f5;
+          flex-shrink: 0;
+          padding: 4px;
+          border: 1px solid #f0eae0;
+        }
+        .aff-compact-info {
+          flex: 1;
+          min-width: 0;
+        }
+        .aff-compact-brand {
+          font-size: 9px;
+          font-weight: 700;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          color: #a27b5c;
+          display: block;
+          margin-bottom: 2px;
+        }
+        .aff-compact-name {
+          font-family: 'DM Serif Display', serif;
+          font-size: 13px;
+          color: #1a1714;
+          line-height: 1.3;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: block;
+        }
+        .aff-compact-price {
+          font-size: 12px;
+          font-weight: 700;
+          color: #1a1714;
+          margin-top: 2px;
+          display: block;
+        }
+        .aff-compact-btn {
+          flex-shrink: 0;
+          background: #1a1714;
+          color: #fff;
+          font-size: 10px;
+          font-weight: 700;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          padding: 8px 14px;
+          border-radius: 6px;
+          white-space: nowrap;
+        }
+        @media (max-width: 480px) {
+          .aff-compact-name { font-size: 12px; }
+          .aff-compact-btn { padding: 7px 10px; font-size: 9px; }
+        }
+      `}</style>
+      <img className="aff-compact-img" src={image} alt={title} />
+      <div className="aff-compact-info">
+        <span className="aff-compact-brand">{product?.brand || "Pick"}</span>
+        <span className="aff-compact-name">{title}</span>
+        <span className="aff-compact-price">{price}</span>
+      </div>
+      <span className="aff-compact-btn">Shop →</span>
+    </a>
+  ) : (
     <div className="editorial-affiliate-card-wrapper">
       <style>{`
         .editorial-affiliate-card-wrapper {

@@ -377,8 +377,19 @@ export default async function BlogIndex() {
  transition: all 0.3s ease;
  }
  .featured-card:hover .featured-btn {
- color: #a27b5c;
- }
+  color: #a27b5c;
+  }
+  .featured-meta-mobile {
+  display: none;
+  font-size: 0.72rem;
+  color: #9b8e83;
+  margin-top: 1.25rem;
+  padding-top: 0.8rem;
+  border-top: 1px solid #f2ebe4;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 500;
+  }
  .featured-side {
  background: #1c1917;
  color: #fafaf9;
@@ -515,45 +526,65 @@ export default async function BlogIndex() {
  box-shadow: 0 15px 30px rgba(162, 123, 92, 0.06) !important;
  }
  @media (max-width: 980px) {
- .journal-hero, .featured-card { grid-template-columns: 1fr; }
- .journal-hero-copy { padding: 4rem 2rem; }
- .journal-hero-visual { min-height: 420px; border-left: none; border-bottom: 1px solid #ded7cf; }
- .trust-strip, .path-grid, .article-grid { grid-template-columns: repeat(2, 1fr); }
- }
+  .journal-hero { min-height: auto !important; }
+  .journal-hero, .featured-card { grid-template-columns: 1fr; }
+  .journal-hero-copy { padding: 4rem 2rem; }
+  .journal-hero-visual { display: none !important; }
+  .trust-strip, .path-grid, .article-grid { grid-template-columns: repeat(2, 1fr); }
+  }
  @media (max-width: 640px) {
- .journal-hero-copy { padding: 3rem 1.4rem; }
- .journal-hero-visual { min-height: 380px; padding: 1.5rem; }
- .trust-strip, .path-grid, .article-grid { grid-template-columns: 1fr; gap: 1rem; }
- .path-section, .featured-band, .article-section { padding-left: 1.4rem; padding-right: 1.4rem; }
- .article-header { align-items: flex-start; flex-direction: column; }
- .path-card {
- padding: 1.25rem !important;
- }
- .path-card h3 {
- font-size: 1.1rem !important;
- }
- .path-card p {
- font-size: 0.8rem !important;
- }
- .featured-main {
- padding: 1.5rem !important;
- }
- .featured-main h2 {
- font-size: 1.35rem !important;
- }
- .featured-main p {
- font-size: 0.88rem !important;
- margin-bottom: 1.25rem !important;
- }
- .featured-side {
- padding: 1.25rem 1.5rem !important;
- border-left: none !important;
- border-top: 1px solid rgba(255,255,255,0.05) !important;
- }
- .featured-side p {
- font-size: 0.8rem !important;
- }
- }
+  .journal-hero-copy { padding: 2.2rem 1.25rem !important; }
+  .journal-hero-copy .eyebrow { margin: 0 0 0.5rem !important; }
+  .journal-hero-copy .hero-title { font-size: 2.2rem !important; }
+  .journal-hero-copy .hero-copy { font-size: 0.92rem !important; margin: 0.8rem 0 1.5rem !important; line-height: 1.6 !important; }
+  .journal-hero-copy .hero-actions { gap: 0.75rem !important; }
+  .primary-btn, .secondary-btn { min-height: 42px !important; padding: 0 1.5rem !important; font-size: 0.68rem !important; border-radius: 8px !important; }
+  .trust-strip {
+  grid-template-columns: repeat(2, 1fr) !important;
+  gap: 0 !important;
+  }
+  .trust-item {
+  padding: 0.8rem 0.5rem !important;
+  border-right: 1px solid rgba(255,255,255,0.05) !important;
+  border-bottom: 1px solid rgba(255,255,255,0.05) !important;
+  font-size: 0.6rem !important;
+  letter-spacing: 0.12em !important;
+  }
+  .trust-item:nth-child(2n) {
+  border-right: none !important;
+  }
+  .trust-item:nth-child(3), .trust-item:nth-child(4) {
+  border-bottom: none !important;
+  }
+  .path-grid, .article-grid { grid-template-columns: 1fr !important; gap: 1rem !important; }
+  .path-section, .featured-band, .article-section { padding-left: 1.4rem; padding-right: 1.4rem; }
+  .article-header { align-items: flex-start; flex-direction: column; }
+  .path-card {
+  padding: 1.25rem !important;
+  }
+  .path-card h3 {
+  font-size: 1.1rem !important;
+  }
+  .path-card p {
+  font-size: 0.8rem !important;
+  }
+  .featured-main {
+  padding: 1.5rem !important;
+  }
+  .featured-main h2 {
+  font-size: 1.35rem !important;
+  }
+  .featured-main p {
+  font-size: 0.88rem !important;
+  margin-bottom: 1.25rem !important;
+  }
+  .featured-side {
+  display: none !important;
+  }
+  .featured-meta-mobile {
+  display: block !important;
+  }
+  }
  `}</style>
 
  <div className="journal-page">
@@ -613,11 +644,12 @@ export default async function BlogIndex() {
  <section className="featured-band">
  <a href={`/blog/${featured.slug}`} className="featured-card">
  <div className="featured-main">
- <p className="section-kicker">{featured.tag} / {featured.category}</p>
- <h2>{featured.title}</h2>
- <p>{featured.excerpt}</p>
- <span className="featured-btn">Read guide &rarr;</span>
- </div>
+  <p className="section-kicker">{featured.tag} / {featured.category}</p>
+  <h2>{featured.title}</h2>
+  <p>{featured.excerpt}</p>
+  <span className="featured-btn">Read guide &rarr;</span>
+  <div className="featured-meta-mobile">{featured.date} · {featured.readTime}</div>
+  </div>
  <div className="featured-side">
  <p>{featured.date} / {featured.readTime}</p>
  <p style={{ marginTop: "1rem" }}>
