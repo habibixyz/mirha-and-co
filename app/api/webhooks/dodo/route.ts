@@ -70,6 +70,13 @@ export async function POST(req: Request) {
 
       // --- B2B Flow ---
       if (b2bEmail) {
+        // Idempotency check: If key already provisioned and active for this subscription ID, return early
+        const existing = await prisma.b2BApiKey.findFirst({ where: { email: b2bEmail } });
+        if (existing && existing.razorpaySubscriptionId === subscriptionId && existing.status === "active") {
+          console.log(`Dodo Webhook: Subscription ${subscriptionId} key already active. Skipping duplicate email.`);
+          return NextResponse.json({ status: "success", idempotency: "already_processed" });
+        }
+
         const brandName = data.metadata?.b2b_brand || "Unknown Brand";
         const tier = data.metadata?.b2b_tier || "growth"; // "growth" | "scale"
         const monthlyQuota = tier === "scale" ? 1000000 : 150000;
@@ -79,8 +86,6 @@ export async function POST(req: Request) {
         nextMonth.setMonth(nextMonth.getMonth() + 1);
         nextMonth.setHours(0, 0, 0, 0);
 
-        // Upsert — if same email re-subscribes, reactivate
-        const existing = await prisma.b2BApiKey.findFirst({ where: { email: b2bEmail } });
         if (existing) {
           await prisma.b2BApiKey.update({
             where: { id: existing.id },

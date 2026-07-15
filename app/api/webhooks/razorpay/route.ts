@@ -70,7 +70,15 @@ export async function POST(req: Request) {
         return NextResponse.json({ status: "success" });
       }
 
-      // ── Provision B2B key ──
+      // ── Idempotency & Upsert Check ──
+      const existing = await prisma.b2BApiKey.findFirst({ where: { email } });
+      
+      // If key already provisioned for this subscription and active, skip duplicate email
+      if (existing && existing.razorpaySubscriptionId === subscription.id && existing.status === "active") {
+        console.log(`Razorpay Webhook: Key for subscription ${subscription.id} already active. Skipping duplicate email.`);
+        return NextResponse.json({ status: "success", idempotency: "already_processed" });
+      }
+
       const monthlyQuota = tier === "scale" ? 1000000 : 150000;
       const apiKey = generateB2BKey(tier);
       const nextMonth = new Date();
@@ -78,8 +86,6 @@ export async function POST(req: Request) {
       nextMonth.setMonth(nextMonth.getMonth() + 1);
       nextMonth.setHours(0, 0, 0, 0);
 
-      // Upsert — if same email re-subscribes, reactivate
-      const existing = await prisma.b2BApiKey.findFirst({ where: { email } });
       let savedKey;
       if (existing) {
         savedKey = await prisma.b2BApiKey.update({

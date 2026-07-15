@@ -39,7 +39,14 @@ export async function OPTIONS() {
 }
 
 export async function POST(req: NextRequest) {
+  const origin = req.headers.get("origin") || req.headers.get("referer") || "*";
+  const dynamicHeaders = {
+    ...securityHeaders,
+    "Access-Control-Allow-Origin": origin.startsWith("http") ? new URL(origin).origin : "*",
+  };
+
   try {
+
     const forwarded = req.headers.get("x-forwarded-for");
     const ip = forwarded?.split(",")[0]?.trim() || "unknown";
 
@@ -49,7 +56,7 @@ export async function POST(req: NextRequest) {
     if (!apiKey) {
       return NextResponse.json(
         { success: false, error: "Unauthorized. A valid B2B API Key is required." },
-        { status: 401, headers: securityHeaders }
+        { status: 401, headers: dynamicHeaders }
       );
     }
 
@@ -59,7 +66,7 @@ export async function POST(req: NextRequest) {
       if (isRateLimited(`${ip}:trial`, 60)) {
         return NextResponse.json(
           { success: false, error: "Rate limit exceeded. Trial keys allow 60 requests per minute." },
-          { status: 429, headers: securityHeaders }
+          { status: 429, headers: dynamicHeaders }
         );
       }
     } else {
@@ -69,7 +76,7 @@ export async function POST(req: NextRequest) {
       if (!b2bKey || b2bKey.status !== "active") {
         return NextResponse.json(
           { success: false, error: "Invalid or suspended API key." },
-          { status: 401, headers: securityHeaders }
+          { status: 401, headers: dynamicHeaders }
         );
       }
 
@@ -93,7 +100,7 @@ export async function POST(req: NextRequest) {
             success: false,
             error: `Monthly quota of ${b2bKey.monthlyQuota.toLocaleString()} API calls exceeded. Upgrade your plan or contact support.`,
           },
-          { status: 429, headers: securityHeaders }
+          { status: 429, headers: dynamicHeaders }
         );
       }
 
@@ -101,7 +108,7 @@ export async function POST(req: NextRequest) {
       if (isRateLimited(`${ip}:${apiKey}`, 1000)) {
         return NextResponse.json(
           { success: false, error: "Burst rate limit exceeded. Max 1,000 requests per minute per key." },
-          { status: 429, headers: securityHeaders }
+          { status: 429, headers: dynamicHeaders }
         );
       }
 
@@ -130,21 +137,21 @@ export async function POST(req: NextRequest) {
     if (!skinType || !allowedSkinTypes.includes(skinType)) {
       return NextResponse.json(
         { success: false, error: `Invalid skinType. Must be one of: ${allowedSkinTypes.join(", ")}` },
-        { status: 400, headers: securityHeaders }
+        { status: 400, headers: dynamicHeaders }
       );
     }
 
     if (skinType !== "sensitive" && (!mainConcern || !allowedConcerns.includes(mainConcern))) {
       return NextResponse.json(
         { success: false, error: `Invalid mainConcern. Must be one of: ${allowedConcerns.join(", ")}` },
-        { status: 400, headers: securityHeaders }
+        { status: 400, headers: dynamicHeaders }
       );
     }
 
     if (!budget || !allowedBudgets.includes(budget)) {
       return NextResponse.json(
         { success: false, error: `Invalid budget. Must be one of: ${allowedBudgets.join(", ")}` },
-        { status: 400, headers: securityHeaders }
+        { status: 400, headers: dynamicHeaders }
       );
     }
 
@@ -160,12 +167,12 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json(
       { success: true, recommendation },
-      { status: 200, headers: securityHeaders }
+      { status: 200, headers: dynamicHeaders }
     );
   } catch (error: any) {
     return NextResponse.json(
       { success: false, error: error.message || "Internal Server Error" },
-      { status: 500, headers: securityHeaders }
+      { status: 500, headers: dynamicHeaders }
     );
   }
 }
