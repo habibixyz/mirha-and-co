@@ -1,24 +1,22 @@
 import { NextRequest, NextResponse } from "next/server";
 import { generateRoutine, QuizAnswers } from "../../../../lib/routineEngine";
+import { prisma } from "@/lib/prisma";
 
-/* ─── In-memory rate limiter (per-IP, per-key) ─── */
+/* ─── In-memory rate limiter (per-IP burst protection) ─── */
 const rateMap = new Map<string, { count: number; resetAt: number }>();
-const RATE_WINDOW_MS = 60_000;   // 1-minute window
+const RATE_WINDOW_MS = 60_000;
 
 function isRateLimited(identifier: string, limit: number): boolean {
   const now = Date.now();
   const entry = rateMap.get(identifier);
-
   if (!entry || now > entry.resetAt) {
     rateMap.set(identifier, { count: 1, resetAt: now + RATE_WINDOW_MS });
     return false;
   }
-
   entry.count++;
   return entry.count > limit;
 }
 
-// Periodically purge stale entries to prevent memory leak
 setInterval(() => {
   const now = Date.now();
   for (const [key, val] of rateMap) {
@@ -26,10 +24,7 @@ setInterval(() => {
   }
 }, 5 * 60_000);
 
-/* ─── Allowed API keys ─── */
-const DEFAULT_KEYS = ["b2b_trial_key", "b2b_grow_key"];
-
-/* ─── Security response headers ─── */
+/* ─── Security headers ─── */
 const securityHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Methods": "POST, OPTIONS",
@@ -39,41 +34,92 @@ const securityHeaders = {
   "Referrer-Policy": "strict-origin-when-cross-origin",
 };
 
-// Handle CORS preflight
 export async function OPTIONS() {
   return new NextResponse(null, { status: 204, headers: securityHeaders });
 }
 
 export async function POST(req: NextRequest) {
   try {
-    /* ── Rate limiting by IP + API key ── */
     const forwarded = req.headers.get("x-forwarded-for");
     const ip = forwarded?.split(",")[0]?.trim() || "unknown";
 
     const body = await req.json().catch(() => ({}));
     const { apiKey, skinType, mainConcern, budget, experience = "beginner", climate } = body;
 
-    // Rate limit tier: trial keys get 60 req/min, paid/env keys get 5000 req/min
-    const isTrial = apiKey === "b2b_trial_key";
-    const limit = isTrial ? 60 : 5000;
-
-    const rateLimitId = `${ip}:${apiKey || "none"}`;
-    if (isRateLimited(rateLimitId, limit)) {
-      return NextResponse.json(
-        { success: false, error: `Rate limit exceeded. Max ${limit} requests per minute.` },
-        { status: 429, headers: securityHeaders }
-      );
-    }
-
-    /* ── API Key Validation ── */
-    const envKeys = process.env.B2B_API_KEYS ? process.env.B2B_API_KEYS.split(",") : [];
-    const validKeys = [...DEFAULT_KEYS, ...envKeys];
-
-    if (!apiKey || !validKeys.includes(apiKey)) {
+    if (!apiKey) {
       return NextResponse.json(
         { success: false, error: "Unauthorized. A valid B2B API Key is required." },
         { status: 401, headers: securityHeaders }
       );
+    }
+
+    // ── Trial key: bypass DB, use static rate limit ──
+    const isTrial = apiKey === "b2b_trial_key";
+    if (isTrial) {
+      if (isRateLimited(`${ip}:trial`, 60)) {
+        return NextResponse.json(
+          { success: false, error: "Rate limit exceeded. Trial keys allow 60 requests per minute." },
+          { status: 429, headers: securityHeaders }
+        );
+      }
+    } else {
+      // ── Live B2B key: look up in DB ──
+      const b2bKey = await prisma.b2BApiKey.findUnique({ where: { key: apiKey } });
+
+      if (!b2bKey || b2bKey.status !== "active") {
+        return NextResponse.json(
+          { success: false, error: "Invalid or suspended API key." },
+          { status: 401, headers: securityHeaders }
+        );
+      }
+
+      // Reset monthly quota if we've rolled into a new month
+      const now = new Date();
+      if (now > b2bKey.quotaResetAt) {
+        await prisma.b2BApiKey.update({
+          where: { id: b2bKey.id },
+          data: {
+            usageThisMonth: 0,
+            quotaResetAt: new Date(now.getFullYear(), now.getMonth() + 1, 1),
+          },
+        });
+        b2bKey.usageThisMonth = 0;
+      }
+
+      // Enforce monthly quota
+      if (b2bKey.usageThisMonth >= b2bKey.monthlyQuota) {
+        return NextResponse.json(
+          {
+            success: false,
+            error: `Monthly quota of ${b2bKey.monthlyQuota.toLocaleString()} API calls exceeded. Upgrade your plan or contact support.`,
+          },
+          { status: 429, headers: securityHeaders }
+        );
+      }
+
+      // Per-minute burst limit (1000/min for any live key)
+      if (isRateLimited(`${ip}:${apiKey}`, 1000)) {
+        return NextResponse.json(
+          { success: false, error: "Burst rate limit exceeded. Max 1,000 requests per minute per key." },
+          { status: 429, headers: securityHeaders }
+        );
+      }
+
+      // Increment usage + log call (fire-and-forget to not slow response)
+      prisma.b2BApiKey.update({
+        where: { id: b2bKey.id },
+        data: { usageThisMonth: { increment: 1 } },
+      }).catch(() => {});
+
+      prisma.b2BUsageLog.create({
+        data: {
+          keyId: b2bKey.id,
+          endpoint: "/api/v1/recommend",
+          skinType: skinType || null,
+          city: climate?.city || null,
+          ppm: climate?.ppm || null,
+        },
+      }).catch(() => {});
     }
 
     /* ── Input Validation ── */

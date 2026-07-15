@@ -299,7 +299,10 @@ export default function B2BPlayground() {
           <h1>{paymentRegion === "INR" ? "Plug-and-Play AI Skincare for Indian Brands" : "Plug-and-Play AI Skincare for Global Brands"}</h1>
           <p>Rent our climate-aware recommendation engine. Boost your store sales, cut returns, and give customers dermatologist-level routines {paymentRegion === "INR" ? "adapted for their tap water and weather" : "adapted for their local water and weather"}.</p>
           <div className="b2b-hero-btns">
-            <a href="#sandbox" className="b2b-btn-primary">Try Sandbox</a>
+            <Link href="/b2b/pitch" className="b2b-btn-primary" style={{ background: "linear-gradient(135deg, #fc2779 0%, #8b5cf6 100%)" }}>
+              View Interactive Pitch Deck
+            </Link>
+            <a href="#sandbox" className="b2b-btn-outline">Try Sandbox</a>
             <a href="#pricing" className="b2b-btn-outline">View Pricing {paymentRegion === "INR" ? "(INR)" : "(USD)"}</a>
           </div>
         </section>

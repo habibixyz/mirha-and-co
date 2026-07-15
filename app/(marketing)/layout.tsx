@@ -92,7 +92,7 @@ export default async function RootLayout({
  name: "Mirha & Co.",
  url: siteUrl,
  logo: `${siteUrl}/og-image.png`,
- sameAs: ["https://www.instagram.com/mirha_andco/"],
+ sameAs: ["https://www.instagram.com/mirha_andco/", "https://www.linkedin.com/company/mirhaandco/"],
  },
  {
  "@context": "https://schema.org",

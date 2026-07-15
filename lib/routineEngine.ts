@@ -354,11 +354,25 @@ const ROUTINE_MAP: Record<string, Record<string, RoutineRecommendation>> = {
  },
 };
 
+// ─── WATER HARDNESS TIERS ─────────────────────────────────────────────────────
+// Very Hard:       > 200 PPM — London (280), LA (320), Dubai, Chennai
+// Hard:            150–200 PPM — Delhi, Bangalore, Manchester
+// Moderately Hard: 75–149 PPM — Mumbai (140), Sydney, Miami
+// Soft:            < 75 PPM   — New York (55), Stockholm (20), Tokyo
+
+export interface ClimateInput {
+  temp: number;      // °C
+  humidity: number;  // %
+  city: string;
+  ppm?: number;      // Water hardness in Parts Per Million (Growth+ tier)
+  dewpoint?: number; // °C — if not supplied, computed via Magnus formula (Scale tier)
+}
+
 // ─── GENERATE ROUTINE ─────────────────────────────────────────────────────────
 
 export const generateRoutine = (
- answers: QuizAnswers,
- climate?: { temp: number; humidity: number; city: string }
+  answers: QuizAnswers,
+  climate?: ClimateInput
 ): RoutineRecommendation => {
  const { skinType, mainConcern, budget } = answers;
 
@@ -385,73 +399,122 @@ export const generateRoutine = (
  };
 
  if (climate) {
- const { temp, humidity, city } = climate;
- const swappedFields: string[] = [];
+  const { temp, humidity, city, ppm, dewpoint } = climate;
+  const swappedFields: string[] = [];
 
- if (temp > 35 && humidity > 70) {
- // Hot and sticky summer/monsoon conditions -> avoid heavy pore-clogging emollient creams
- if (routine.moisturiser.asin === ASIN.cetaphil_cream) {
- routine.moisturiser = {
- asin: ASIN.neutrogena_hydro_boost,
- name: "Neutrogena Hydro Boost Water Gel",
- reason: `[Adaptive Climate Swap] It's currently extremely hot and humid in ${city} (${temp}°C, ${humidity}% humidity). We have swapped out the heavy Cetaphil Cream for the ultra-lightweight Neutrogena Hydro Boost Water Gel to prevent sweat-clogged pores.`
- };
- swappedFields.push('moisturiser');
- }
+  // ── HARD WATER MATRIX (Growth + Scale tier) ─────────────────────────────
+  // PPM > 200: calcium binds with cleanser surfactants → soap scum clogs pores
+  // Fix: chelating low-pH cleanser + lightweight moisturiser
+  if (ppm && ppm > 200) {
+    if (routine.cleanser.asin !== ASIN.cosrx_low_ph_wash && routine.cleanser.asin !== ASIN.minimalist_ala_wash) {
+      routine.cleanser = {
+        asin: ASIN.cosrx_low_ph_wash,
+        name: "COSRX Low pH Good Morning Gel Cleanser",
+        reason: `[Hard Water Matrix — ${ppm} PPM Very Hard] Tap water in ${city} has extremely high mineral content. Standard cleansers form insoluble calcium soap scum on skin. COSRX Low pH formula minimises mineral binding and rinses clean even in very hard water.`,
+      };
+      swappedFields.push("cleanser");
+    }
+    if (routine.moisturiser.asin === ASIN.cetaphil_cream && skinType !== "dry") {
+      routine.moisturiser = {
+        asin: ASIN.neutrogena_hydro_boost,
+        name: "Neutrogena Hydro Boost Water Gel",
+        reason: `[Hard Water Matrix — ${ppm} PPM Very Hard] Heavy emollient creams trap mineral deposits from ${city}'s hard water against skin. Hydro Boost water-gel absorbs fully with no residue for minerals to bind to.`,
+      };
+      swappedFields.push("moisturiser");
+    }
+  }
 
- // Swap sunscreen for lighter gel if budget permits
- if (routine.sunscreen.asin === ASIN.lakme_spf && budgetKey !== "budget_500") {
- routine.sunscreen = {
- asin: ASIN.deconstruct_spf,
- name: "Deconstruct Gel Sunscreen SPF 50 PA++++",
- reason: `[Adaptive Climate Swap] In ${city}'s sticky ${humidity}% humidity, standard sunscreens feel heavy and melt off. We swapped to Deconstruct Gel Sunscreen for its zero-grease, photostable matte gel finish.`
- };
- swappedFields.push('sunscreen');
- }
+  // Moderately hard (75–200 PPM): add barrier repair treatment on premium tier
+  if (ppm && ppm >= 75 && ppm <= 200 && budgetKey === "budget_2000" && skinType !== "dry" && routine.treatment.asin !== ASIN.cosrx_snail_mucin) {
+    routine.treatment = {
+      asin: ASIN.cosrx_snail_mucin,
+      name: "COSRX Advanced Snail 96 Mucin Power Essence",
+      reason: `[Hard Water Matrix — ${ppm} PPM Moderately Hard] ${city}'s tap water gradually degrades the skin lipid barrier. Snail Mucin 96% directly repairs mineral-induced micro-inflammation and restores barrier integrity.`,
+    };
+    swappedFields.push("treatment");
+  }
 
- if (swappedFields.length > 0) {
- routine.climateAdjustment = {
- type: 'humid_heat',
- city,
- temp,
- humidity,
- alertText: `Extremely hot and humid conditions detected in ${city} (${temp}°C, ${humidity}% RH). We have adapted your routine by swapping heavy emollients and sunscreens for ultra-lightweight, non-comedogenic gel formulations.`,
- swappedFields
- };
- }
- } else if (temp < 18 && humidity < 40) {
- // Cold and dry winter conditions -> introduce heavy barrier creams to trap moisture
- if (routine.moisturiser.asin === ASIN.neutrogena_hydro_boost || routine.moisturiser.asin === ASIN.aqualogica_spf) {
- routine.moisturiser = {
- asin: ASIN.cetaphil_cream,
- name: "Cetaphil Moisturising Cream 250g",
- reason: `[Adaptive Climate Swap] It's currently cold and dry in ${city} (${temp}°C, ${humidity}% humidity). Gel hydration is not enough to stop peeling; we've swapped to clinical-grade Cetaphil barrier repair cream.`
- };
- swappedFields.push('moisturiser');
- }
+  // ── DYNAMIC DEWPOINT ADJUSTER (Scale Enterprise tier) ───────────────────
+  // Dewpoint > 20°C: muggy — sebum + sweat cause cream SPF to pill on skin
+  // Dewpoint < 2°C: critically dry — gels lose water faster than skin absorbs them
+  const dp = dewpoint ?? (temp - ((100 - humidity) / 5)); // Magnus approximation
 
- // Prevent dry stripping from strong cleansers
- if (routine.cleanser.asin === ASIN.minimalist_ala_wash) {
- routine.cleanser = {
- asin: ASIN.cetaphil_facewash,
- name: "Cetaphil Gentle Skin Hydrating Face Wash",
- reason: `[Adaptive Climate Swap] To prevent dry skin stripping in ${city}'s cold winter breeze, we have swapped your exfoliating ALA face wash for the skin-softening, panthenol-enriched Cetaphil Hydrating Cleanser.`
- };
- swappedFields.push('cleanser');
- }
+  if (dp > 20 && !swappedFields.includes("sunscreen")) {
+    if (routine.sunscreen.asin === ASIN.lakme_spf || routine.sunscreen.asin === ASIN.wishcare_spf) {
+      routine.sunscreen = {
+        asin: ASIN.deconstruct_spf,
+        name: "Deconstruct Gel Sunscreen SPF 50 PA++++",
+        reason: `[Dewpoint Adjuster — ${dp.toFixed(1)}°C dew point] At this dew point in ${city}, sweat causes cream SPFs to pill and migrate into pores. Deconstruct's photostable gel matrix stays intact on wet skin.`,
+      };
+      swappedFields.push("sunscreen");
+    }
+  } else if (dp < 2 && !swappedFields.includes("moisturiser")) {
+    if (routine.moisturiser.asin === ASIN.neutrogena_hydro_boost || routine.moisturiser.asin === ASIN.aqualogica_spf) {
+      routine.moisturiser = {
+        asin: ASIN.cetaphil_cream,
+        name: "Cetaphil Moisturising Cream 250g",
+        reason: `[Dewpoint Adjuster — ${dp.toFixed(1)}°C dew point] Air in ${city} is critically dry. Gel moisturisers lose water to the atmosphere faster than skin absorbs them. Cetaphil Cream's occlusive barrier locks in hydration.`,
+      };
+      swappedFields.push("moisturiser");
+    }
+  }
 
- if (swappedFields.length > 0) {
- routine.climateAdjustment = {
- type: 'cold_dry',
- city,
- temp,
- humidity,
- alertText: `Cold and dry winter conditions detected in ${city} (${temp}°C, ${humidity}% RH). We have adapted your routine by replacing exfoliating cleansers and light gels with barrier-protecting emollients.`,
- swappedFields
- };
- }
- }
+  // ── CLASSIC TEMP + HUMIDITY CHECKS ──────────────────────────────────────
+  if (temp > 35 && humidity > 70) {
+    if (routine.moisturiser.asin === ASIN.cetaphil_cream && !swappedFields.includes("moisturiser")) {
+      routine.moisturiser = {
+        asin: ASIN.neutrogena_hydro_boost,
+        name: "Neutrogena Hydro Boost Water Gel",
+        reason: `[Adaptive Climate Swap] Extremely hot and humid in ${city} (${temp}°C, ${humidity}% RH). Swapped heavy cream for ultra-lightweight water gel to prevent sweat-clogged pores.`,
+      };
+      swappedFields.push("moisturiser");
+    }
+    if (routine.sunscreen.asin === ASIN.lakme_spf && budgetKey !== "budget_500" && !swappedFields.includes("sunscreen")) {
+      routine.sunscreen = {
+        asin: ASIN.deconstruct_spf,
+        name: "Deconstruct Gel Sunscreen SPF 50 PA++++",
+        reason: `[Adaptive Climate Swap] In ${city}'s ${humidity}% humidity, cream sunscreens melt off. Swapped to Deconstruct's photostable gel formula.`,
+      };
+      swappedFields.push("sunscreen");
+    }
+  } else if (temp < 18 && humidity < 40) {
+    if ((routine.moisturiser.asin === ASIN.neutrogena_hydro_boost || routine.moisturiser.asin === ASIN.aqualogica_spf) && !swappedFields.includes("moisturiser")) {
+      routine.moisturiser = {
+        asin: ASIN.cetaphil_cream,
+        name: "Cetaphil Moisturising Cream 250g",
+        reason: `[Adaptive Climate Swap] Cold and dry in ${city} (${temp}°C, ${humidity}% RH). Gel hydration won't hold — swapped to clinical-grade Cetaphil barrier repair cream.`,
+      };
+      swappedFields.push("moisturiser");
+    }
+    if (routine.cleanser.asin === ASIN.minimalist_ala_wash && !swappedFields.includes("cleanser")) {
+      routine.cleanser = {
+        asin: ASIN.cetaphil_facewash,
+        name: "Cetaphil Gentle Skin Hydrating Face Wash",
+        reason: `[Adaptive Climate Swap] Swapped exfoliating ALA wash for Cetaphil Hydrating Cleanser to prevent cold-weather barrier stripping in ${city}.`,
+      };
+      swappedFields.push("cleanser");
+    }
+  }
+
+  if (swappedFields.length > 0) {
+    const alerts: string[] = [];
+    if (ppm && ppm > 200) alerts.push(`Very hard tap water (${ppm} PPM) — mineral-resistant chelating cleanser applied`);
+    if (ppm && ppm >= 75 && ppm <= 200) alerts.push(`Moderately hard water (${ppm} PPM) — barrier-repair treatment upgraded`);
+    if (dp > 20) alerts.push(`High dew point (${dp.toFixed(1)}°C) — photostable gel SPF applied`);
+    if (dp < 2) alerts.push(`Critically dry air (${dp.toFixed(1)}°C dew point) — occlusive barrier moisturiser applied`);
+    if (temp > 35 && humidity > 70) alerts.push(`Extreme heat + humidity (${temp}°C, ${humidity}% RH) — lightweight gel swaps applied`);
+    if (temp < 18 && humidity < 40) alerts.push(`Cold dry conditions (${temp}°C, ${humidity}% RH) — barrier emollients applied`);
+
+    routine.climateAdjustment = {
+      type: temp > 20 ? "humid_heat" : "cold_dry",
+      city,
+      temp,
+      humidity,
+      alertText: alerts.join(". "),
+      swappedFields,
+    };
+  }
  }
 
  return routine;
-};
+};

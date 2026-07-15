@@ -169,18 +169,31 @@ export default function SiteHeader() {
 
             <div style={{ height: "1px", background: "#e5ded6" }} />
 
-            {/* Instagram link */}
-            <a
-              href="https://www.instagram.com/mirha_andco/"
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => setMenuOpen(false)}
-              className="flex items-center gap-2 transition-colors hover:text-[#fc2779]"
-              style={{ ...navLinkStyle, textTransform: "none", display: "flex", alignItems: "center" }}
-            >
-              <InstagramIcon size={16} />
-              <span>Instagram</span>
-            </a>
+            {/* Social links */}
+            <div className="flex flex-col gap-3">
+              <a
+                href="https://www.instagram.com/mirha_andco/"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setMenuOpen(false)}
+                className="flex items-center gap-2 transition-colors hover:text-[#fc2779]"
+                style={{ ...navLinkStyle, textTransform: "none", display: "flex", alignItems: "center" }}
+              >
+                <InstagramIcon size={16} />
+                <span>Instagram</span>
+              </a>
+              <a
+                href="https://www.linkedin.com/company/mirhaandco/"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setMenuOpen(false)}
+                className="flex items-center gap-2 transition-colors hover:text-[#fc2779]"
+                style={{ ...navLinkStyle, textTransform: "none", display: "flex", alignItems: "center" }}
+              >
+                <LinkedInIcon size={16} />
+                <span>LinkedIn</span>
+              </a>
+            </div>
 
             {/* LinkedIn link */}
             <a
