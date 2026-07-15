@@ -7,6 +7,8 @@ import { cookies, headers } from "next/headers";
 import { getLocalizedContent, Currency } from "@/lib/globalization";
 
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
  title: "Skincare Journal, Guides & Reviews | Mirha & Co.",
  description:

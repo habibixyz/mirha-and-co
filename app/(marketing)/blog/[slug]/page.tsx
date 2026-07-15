@@ -11,12 +11,7 @@ interface PageProps {
   }>;
 }
 
-export async function generateStaticParams() {
-  const slugs = getAllProgrammaticSlugs();
-  return slugs.map((slug) => ({
-    slug,
-  }));
-}
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
