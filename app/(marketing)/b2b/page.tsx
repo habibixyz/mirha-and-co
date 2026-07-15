@@ -2,571 +2,1799 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { Code, Server, Smartphone, Zap, Check, Send, CheckCircle2 } from "lucide-react";
+import { 
+  ChevronLeft, 
+  ChevronRight, 
+  Play, 
+  TrendingUp, 
+  ShieldAlert, 
+  Cpu, 
+  DollarSign, 
+  Zap, 
+  ArrowRight,
+  Database,
+  MapPin,
+  CheckCircle2,
+  Droplet,
+  CloudSun,
+  Code2,
+  Lock,
+  Layers,
+  Sparkles,
+  RefreshCw,
+  Sliders,
+  DollarSign as DollarIcon
+} from "lucide-react";
 import { submitLeadAction } from "../../(saas)/actions";
 
-export default function B2BPlayground() {
-  const [paymentRegion, setPaymentRegion] = useState<"INR" | "USD">("INR");
+// Types for Hotspot Demo
+interface CityData {
+  name: string;
+  country: string;
+  ppm: number;
+  type: "Very Hard" | "Hard" | "Moderately Hard" | "Soft" | "Very Soft";
+  minerals: { calcium: number; magnesium: number; iron: number };
+  humidity: number;
+  temp: number;
+  friction: string;
+  adaptation: string;
+  recommendedSku: {
+    category: string;
+    name: string;
+    reason: string;
+  }[];
+}
 
-  // Automatically detect timezone to set default region
-  useEffect(() => {
-    try {
-      const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
-      if (tz && (tz.includes("Kolkata") || tz.includes("Calcutta") || tz.includes("Delhi") || tz.includes("Mumbai"))) {
-        setPaymentRegion("INR");
-      } else {
-        setPaymentRegion("USD");
-      }
-    } catch (e) {
-      console.warn("Timezone detection failed, defaulting to INR");
-    }
-  }, []);
-  const [skinType, setSkinType] = useState("oily");
-  const [mainConcern, setMainConcern] = useState("acne");
-  const [budget, setBudget] = useState("under_1000");
-  const [city, setCity] = useState("Mumbai");
-  const [temp, setTemp] = useState(32);
-  const [humidity, setHumidity] = useState(80);
-  
-  const [loading, setLoading] = useState(false);
-  const [response, setResponse] = useState<any>(null);
-  const [error, setError] = useState<string | null>(null);
-  
-  const [contactName, setContactName] = useState("");
-  const [contactEmail, setContactEmail] = useState("");
-  const [contactBrand, setContactBrand] = useState("");
-  const [contactMessage, setContactMessage] = useState("");
-  const [submittedContact, setSubmittedContact] = useState(false);
+const CITY_DATABASE: Record<string, CityData> = {
+  london: {
+    name: "London",
+    country: "United Kingdom",
+    ppm: 280,
+    type: "Very Hard",
+    minerals: { calcium: 100, magnesium: 12, iron: 0.1 },
+    humidity: 78,
+    temp: 18,
+    friction: "Heavy calcium binding disrupts skin lipid barrier, leading to dryness, eczema flares, and clogged pores from heavy cleansers failing to emulsify.",
+    adaptation: "Deploy Chelating Micellar Rinse + Mineral-Resistant Ceramides to prevent calcium deposition and repair barrier function.",
+    recommendedSku: [
+      { category: "Cleanser", name: "Mirha Chelating Micellar Gel", reason: "Formulated with EDTA to trap and rinse off heavy tap water minerals." },
+      { category: "Barrier Shield", name: "Ceramide NP Lipid Recovery Cream", reason: "Restores skin lipids dissolved by hard water soap scum." }
+    ]
+  },
+  los_angeles: {
+    name: "Los Angeles",
+    country: "United States",
+    ppm: 320,
+    type: "Very Hard",
+    minerals: { calcium: 115, magnesium: 18, iron: 0.2 },
+    humidity: 45,
+    temp: 26,
+    friction: "Ultra-high mineral content combined with low relative humidity evaporates skin moisture rapidly, crystallizing minerals on the skin surface and causing micro-abrasions.",
+    adaptation: "Recommend Humectant-Rich Hyaluronic serums that form a non-crystallizing moisture shield + Chelating foaming cleansers.",
+    recommendedSku: [
+      { category: "Cleanser", name: "Mineral-Bind Chelating Cleanser", reason: "Neutralizes heavy calcium and magnesium deposits on contact." },
+      { category: "Hydration", name: "Squalane & Hyaluronic Acid Mist", reason: "Blocks trans-epidermal water loss aggravated by dry desert winds." }
+    ]
+  },
+  mumbai: {
+    name: "Mumbai",
+    country: "India",
+    ppm: 140,
+    type: "Moderately Hard",
+    minerals: { calcium: 45, magnesium: 8, iron: 0.4 },
+    humidity: 85,
+    temp: 32,
+    friction: "Moderate mineral content mixed with high humidity and heat triggers sebum overproduction. Hard water minerals react with excess sebum to form solid pore plugs.",
+    adaptation: "Introduce oil-free Salicylic Acid micro-exfoliating washes + ultra-lightweight niacinamide gel moisturizers.",
+    recommendedSku: [
+      { category: "Treatment", name: "2% Salicylic Acid Pore Purifier", reason: "Dissolves sebum-mineral plugs before they turn into cystic acne." },
+      { category: "Hydrator", name: "Ultra-Lightweight Niacinamide Water-Gel", reason: "Controls sebum while reinforcing skin barrier in high humidity." }
+    ]
+  },
+  new_york: {
+    name: "New York",
+    country: "United States",
+    ppm: 55,
+    type: "Soft",
+    minerals: { calcium: 16, magnesium: 4, iron: 0.05 },
+    humidity: 35,
+    temp: 4,
+    friction: "Soft water preserves the barrier, but seasonal freezing temperatures and indoor heating strip all skin lipids, causing severe skin cracking and inflammation.",
+    adaptation: "Bypasses water chelators entirely; focus catalog logic on rich lipid replenishment, occlusives, and cold-weather wind barriers.",
+    recommendedSku: [
+      { category: "Moisturizer", name: "Shea & Panthenol Rich Recovery Balm", reason: "Formulated for dry sub-zero temperatures and indoor heating." },
+      { category: "Barrier", name: "Squalane Oil Concentrate", reason: "Locks in deep hydration in extremely dry winter air." }
+    ]
+  },
+  stockholm: {
+    name: "Stockholm",
+    country: "Sweden",
+    ppm: 20,
+    type: "Very Soft",
+    minerals: { calcium: 6, magnesium: 1, iron: 0.01 },
+    humidity: 60,
+    temp: 8,
+    friction: "Virtually zero mineral friction. However, cold winds require protection without the need for anti-mineral chelators, which could over-strip soft-water skin.",
+    adaptation: "Pure hydration and prebiotic barrier defense. Eliminate chelating agents to avoid unnecessary skin sensitization.",
+    recommendedSku: [
+      { category: "Serum", name: "Prebiotic Oat Calm Serum", reason: "Supports natural skin microbiome without heavy anti-mineral actives." },
+      { category: "Moisturizer", name: "Beta-Glucan Soothing Cream", reason: "Provides lightweight protection in cold, clean climates." }
+    ]
+  }
+};
 
-  const triggerAPI = async () => {
-    setLoading(true);
-    setError(null);
-    setResponse(null);
-    try {
-      const res = await fetch("/api/v1/recommend", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          apiKey: "b2b_trial_key",
-          skinType,
-          mainConcern,
-          budget,
-          climate: {
-            city,
-            temp: Number(temp),
-            humidity: Number(humidity),
-          },
-        }),
-      });
+export default function B2BPitchDeck() {
+  const [currentSlide, setCurrentSlide] = useState(1);
+  const totalSlides = 6;
+
+  // Slide 3: Hotspot Demo State
+  const [selectedCity, setSelectedCity] = useState<keyof typeof CITY_DATABASE>("london");
+  const activeCityData = CITY_DATABASE[selectedCity];
+
+  // Slide 4: ROI Calculator State
+  const [traffic, setTraffic] = useState(500000); // 500k monthly sessions
+  const [aov, setAov] = useState(50); // $50 AOV
+  const [cr, setCr] = useState(2.5); // 2.5% Conversion Rate
+  const [returnsRate, setReturnsRate] = useState(22); // 22% average returns
+
+  // Calculations
+  const monthlyOrders = (traffic * (cr / 100));
+  const currentMonthlyRevenue = monthlyOrders * aov;
+  const aovLiftRevenue = monthlyOrders * (aov * 1.18) - currentMonthlyRevenue; // +18% AOV
+  
+  // Return savings
+  const currentReturns = monthlyOrders * (returnsRate / 100);
+  const newReturns = monthlyOrders * ((returnsRate * (1 - 0.34)) / 100); // -34% drop in returns
+  const returnsSaved = currentReturns - newReturns;
+  const shippingHandlingCostPerReturn = 12; // average shipping/handling cost per return
+  const returnSavingsUSD = returnsSaved * (aov * 0.75 + shippingHandlingCostPerReturn); // product cost + logistics cost saved
+
+  const totalMonthlyImpact = aovLiftRevenue + returnSavingsUSD;
+  const totalAnnualImpact = totalMonthlyImpact * 12;
+
+  // Slide 5: Latency Simulator
+  const [latencyText, setLatencyText] = useState("Click test to check API response time");
+  const [latencyMs, setLatencyMs] = useState<number | null>(null);
+  const [isSimulating, setIsSimulating] = useState(false);
+
+  const simulateLatencyTest = () => {
+    setIsSimulating(true);
+    setLatencyText("Pinging Global Edge Nodes...");
+    setLatencyMs(null);
+    setTimeout(() => {
+      const randomMs = Math.floor(Math.random() * 15) + 26; // 26ms - 40ms
+      setLatencyMs(randomMs);
+      setLatencyText(`Completed: Response received in ${randomMs}ms from edge CDN node.`);
+      setIsSimulating(false);
+    }, 1200);
+  };
+
+  // Slide 6: Pricing Tier Toggle
+  const [annualBilling, setAnnualBilling] = useState(false);
+  const [isInternational, setIsInternational] = useState(true);
+
+  // Checkout state
+  const [checkoutLoading, setCheckoutLoading] = useState<string | null>(null);
+  const [checkoutError, setCheckoutError] = useState<string | null>(null);
+
+  const handleSubscribe = async (tier: "growth" | "scale") => {
+    setCheckoutError(null);
+    if (!leadEmail || !leadBrand) {
+      setCheckoutError("Please fill in your Work Email and Brand Name in the form below first.");
       
-      const data = await res.json();
-      if (!res.ok) {
-        throw new Error(data.error || "Failed to query API");
+      // Scroll to the lead form box
+      const formEl = document.getElementById("lead-form-section");
+      if (formEl) formEl.scrollIntoView({ behavior: "smooth" });
+      
+      return;
+    }
+    setCheckoutLoading(tier);
+    try {
+      if (isInternational) {
+        // Dodo Payments (International)
+        const res = await fetch("/api/dodo/b2b-checkout", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            tier,
+            billing: annualBilling ? "annual" : "monthly",
+            email: leadEmail,
+            brandName: leadBrand,
+          }),
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error);
+        if (data.checkoutUrl) {
+          window.location.href = data.checkoutUrl;
+        }
+      } else {
+        // Razorpay (India)
+        const res = await fetch("/api/razorpay/b2b-checkout", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            tier,
+            billing: annualBilling ? "annual" : "monthly",
+            email: leadEmail,
+            brandName: leadBrand,
+          }),
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error);
+
+        const rzp = new (window as any).Razorpay({
+          key: data.keyId,
+          subscription_id: data.subscriptionId,
+          name: "Mirha & Co. B2B API",
+          description: `${tier === "scale" ? "Scale Enterprise" : "Growth"} Tier — Climate & Hard Water API`,
+          image: "https://www.mirhaandco.com/icon.png",
+          prefill: { email: leadEmail, name: leadBrand },
+          theme: { color: "#fc2779" },
+          handler: () => {
+            setLeadSubmitted(true);
+          },
+        });
+        rzp.open();
       }
-      setResponse(data.recommendation);
     } catch (err: any) {
-      setError(err.message || "An error occurred");
+      console.error("Checkout err:", err);
+      setCheckoutError(err.message || "Failed to initiate checkout");
     } finally {
-      setLoading(false);
+      setCheckoutLoading(null);
     }
   };
 
-  const handleContactSubmit = async (e: React.FormEvent) => {
+  // Lead capture state
+  const [leadName, setLeadName] = useState("");
+  const [leadEmail, setLeadEmail] = useState("");
+  const [leadBrand, setLeadBrand] = useState("");
+  const [leadSubmitted, setLeadSubmitted] = useState(false);
+  const [isSubmittingLead, setIsSubmittingLead] = useState(false);
+
+  const handleLeadSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!contactName || !contactEmail || !contactBrand) return;
+    if (!leadName || !leadEmail || !leadBrand) return;
+    setIsSubmittingLead(true);
     try {
       const dataStr = JSON.stringify({
-        name: contactName,
-        brand: contactBrand,
-        message: contactMessage,
+        name: leadName,
+        brand: leadBrand,
+        interest: "B2B Pitch Deck Demo Call",
+        calculator: {
+          traffic,
+          aov,
+          annualImpact: Math.round(totalAnnualImpact)
+        }
       });
-      await submitLeadAction(contactEmail, "b2b_api", dataStr);
-      setSubmittedContact(true);
+      await submitLeadAction(leadEmail, "b2b_api", dataStr);
+      setLeadSubmitted(true);
     } catch (err) {
-      console.error("Database lead submission error:", err);
+      console.error("Lead submission error:", err);
+    } finally {
+      setIsSubmittingLead(false);
     }
   };
 
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "ArrowRight" || e.key === "Space") {
+        if (currentSlide < totalSlides) {
+          setCurrentSlide(prev => prev + 1);
+        }
+      } else if (e.key === "ArrowLeft") {
+        if (currentSlide > 1) {
+          setCurrentSlide(prev => prev - 1);
+        }
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [currentSlide]);
+
   return (
-    <main className="b2b-page">
+    <main className="pitch-page">
       <style>{`
-        .b2b-page {
-          background: #fcfbf9;
-          color: #2b2826;
-          font-family: var(--font-dm-sans), system-ui, sans-serif;
-          line-height: 1.6;
+        .pitch-page {
+          background: #070a12;
+          color: #f1f5f9;
+          font-family: var(--font-dm-sans), sans-serif;
+          min-height: calc(100vh - 4rem);
+          display: flex;
+          flex-direction: column;
+          position: relative;
+          overflow-x: hidden;
         }
-        .b2b-container { max-width: 1100px; margin: 0 auto; padding: 5rem 1.5rem; }
-        @media (max-width: 640px) { .b2b-container { padding: 3rem 1.25rem; } }
 
-        /* ── Hero ── */
-        .b2b-hero { text-align: center; max-width: 720px; margin: 0 auto 4.5rem; }
-        .b2b-hero h1 { font-family: "Playfair Display", Georgia, serif; font-size: clamp(2rem, 5vw, 3rem); font-weight: 700; line-height: 1.15; margin-bottom: 1.25rem; }
-        .b2b-hero p { font-size: 1.05rem; color: #8c857f; margin-bottom: 2rem; max-width: 600px; margin-left: auto; margin-right: auto; }
-        .b2b-hero-btns { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
-
-        /* ── Buttons (hardcoded colors) ── */
-        .b2b-page .b2b-btn-primary {
-          background: #fc2779; color: #fff; border: none;
-          padding: 0.75rem 2rem; border-radius: 8px; font-weight: 600; font-size: 0.95rem;
-          cursor: pointer; text-decoration: none; display: inline-flex; align-items: center;
-          justify-content: center; gap: 0.5rem; transition: background 0.2s, transform 0.15s;
+        /* ── Deck Framework Layout ── */
+        .deck-wrapper {
+          display: grid;
+          grid-template-columns: 260px 1fr;
+          flex: 1;
+          max-width: 100%;
+          min-height: calc(100vh - 8rem);
         }
-        .b2b-page .b2b-btn-primary:hover { background: #d41a65; transform: translateY(-1px); }
-        .b2b-page .b2b-btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
 
-        .b2b-page .b2b-btn-outline {
-          background: #ffe6f0; color: #fc2779; border: 1px solid #fc2779;
-          padding: 0.75rem 2rem; border-radius: 8px; font-weight: 600; font-size: 0.95rem;
-          cursor: pointer; text-decoration: none; display: inline-flex; align-items: center;
-          justify-content: center; gap: 0.5rem; transition: all 0.2s;
+        @media (max-width: 1024px) {
+          .deck-wrapper {
+            grid-template-columns: 1fr;
+          }
         }
-        .b2b-page .b2b-btn-outline:hover { background: #ffd6e8; transform: translateY(-1px); }
 
-        /* ── 3-col value cards ── */
-        .b2b-grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-bottom: 5rem; }
-        @media (max-width: 768px) { .b2b-grid3 { grid-template-columns: 1fr; } }
-        .b2b-card { background: #fff; border: 1px solid rgba(0,0,0,0.05); border-radius: 14px; padding: 2rem; transition: transform 0.25s, box-shadow 0.25s; }
-        .b2b-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.04); }
-        .b2b-icon { width: 44px; height: 44px; border-radius: 10px; background: #ffe6f0; color: #fc2779; display: flex; align-items: center; justify-content: center; margin-bottom: 1.25rem; }
-        .b2b-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; }
-        .b2b-card p { color: #8c857f; font-size: 0.9rem; line-height: 1.6; }
+        /* Sidebar Navigation */
+        .deck-sidebar {
+          background: #0c101d;
+          border-right: 1px solid rgba(255,255,255,0.06);
+          padding: 2rem 1.5rem;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+        }
 
-        /* ── Sandbox ── */
-        .b2b-sandbox { background: #fff; border: 1px solid rgba(0,0,0,0.05); border-radius: 20px; padding: 2.5rem; margin-bottom: 5rem; }
-        @media (max-width: 640px) { .b2b-sandbox { padding: 1.5rem; } }
-        .b2b-sandbox-head { text-align: center; margin-bottom: 2.5rem; }
-        .b2b-sandbox-head h2 { font-family: "Playfair Display", Georgia, serif; font-size: 1.8rem; margin-bottom: 0.4rem; }
-        .b2b-sandbox-head p { color: #8c857f; font-size: 0.9rem; }
-        .b2b-sandbox-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; align-items: start; max-width: 100%; }
-        @media (max-width: 860px) { .b2b-sandbox-grid { grid-template-columns: 1fr; } }
+        @media (max-width: 1024px) {
+          .deck-sidebar {
+            display: none;
+          }
+        }
 
-        .b2b-sandbox-col { display: flex; flex-direction: column; gap: 1rem; min-width: 0; max-width: 100%; }
-        .b2b-sandbox-col h3 { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: #8c857f; margin-bottom: 0.25rem; }
-        .b2b-form-group { display: flex; flex-direction: column; gap: 0.35rem; width: 100%; max-width: 100%; }
-        .b2b-form-group label { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: #8c857f; }
-        .b2b-form-control { width: 100%; box-sizing: border-box; padding: 0.65rem 0.85rem; border: 1px solid rgba(0,0,0,0.08); border-radius: 6px; background: #fcfbf9; color: #2b2826; font-size: 0.9rem; transition: border-color 0.2s; }
-        .b2b-form-control:focus { outline: none; border-color: #fc2779; }
-        .b2b-row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; width: 100%; max-width: 100%; }
+        .sidebar-title {
+          font-size: 0.65rem;
+          font-weight: 700;
+          text-transform: uppercase;
+          letter-spacing: 0.15em;
+          color: rgba(255, 255, 255, 0.4);
+          margin-bottom: 1.5rem;
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+        }
 
-        /* Code block */
-        .b2b-code-block { background: #0f172a; border-radius: 10px; overflow: hidden; width: 100%; max-width: 100%; }
-        .b2b-code-head { background: #1e293b; padding: 0.6rem 1rem; font-family: monospace; font-size: 0.75rem; color: #94a3b8; display: flex; justify-content: space-between; border-bottom: 1px solid #334155; }
-        .b2b-code-body { padding: 1rem; font-family: "Courier New", monospace; font-size: 0.8rem; color: #f1f5f9; margin: 0; white-space: pre-wrap; overflow-x: auto; max-height: 280px; width: 100%; max-width: 100%; box-sizing: border-box; }
+        .slide-nav-list {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+          display: flex;
+          flex-direction: column;
+          gap: 0.5rem;
+        }
 
-        /* Preview pane */
-        .b2b-preview { background: #fcfbf9; border: 1px solid rgba(0,0,0,0.05); border-radius: 12px; padding: 1.5rem; min-height: 200px; width: 100%; max-width: 100%; box-sizing: border-box; }
-        .b2b-product-list { display: flex; flex-direction: column; gap: 1rem; width: 100%; }
-        .b2b-product-item { background: #fff; border: 1px solid rgba(0,0,0,0.04); border-radius: 8px; padding: 1.1rem; transition: transform 0.2s; width: 100%; box-sizing: border-box; }
-        .b2b-product-item:hover { transform: translateY(-1px); border-color: rgba(252,39,121,0.15); }
-        .b2b-product-tag { display: inline-block; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; background: #ffe6f0; color: #fc2779; padding: 0.2rem 0.5rem; border-radius: 3px; margin-bottom: 0.4rem; }
-        .b2b-product-item h5 { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.2rem; }
-        .b2b-product-item p { font-size: 0.82rem; color: #8c857f; line-height: 1.5; margin: 0; }
+        .slide-nav-item {
+          padding: 0.75rem 1rem;
+          border-radius: 8px;
+          cursor: pointer;
+          font-size: 0.85rem;
+          font-weight: 500;
+          color: rgba(255,255,255,0.6);
+          transition: all 0.2s ease;
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
+          border: 1px solid transparent;
+        }
 
-        /* ── Integration snippet ── */
-        .b2b-integration { background: #fff; border: 1px solid rgba(0,0,0,0.05); border-radius: 20px; padding: 2.5rem; margin-bottom: 5rem; max-width: 800px; margin-left: auto; margin-right: auto; }
-        .b2b-integration h2 { font-family: "Playfair Display", serif; font-size: 1.8rem; text-align: center; margin-bottom: 0.5rem; }
-        .b2b-integration > p { color: #8c857f; text-align: center; margin-bottom: 1.5rem; font-size: 0.9rem; }
+        .slide-nav-item:hover {
+          background: rgba(255,255,255,0.03);
+          color: #fff;
+        }
 
-        /* ── Pricing ── */
-        .b2b-pricing { text-align: center; margin-bottom: 5rem; }
-        .b2b-pricing h2 { font-family: "Playfair Display", serif; font-size: clamp(1.6rem, 4vw, 2.2rem); margin-bottom: 0.5rem; }
-        .b2b-pricing > p { color: #8c857f; margin-bottom: 2.5rem; font-size: 0.95rem; }
-        .b2b-pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; max-width: 960px; margin: 0 auto; }
-        @media (max-width: 768px) { .b2b-pricing-grid { grid-template-columns: 1fr; max-width: 400px; } }
-        .b2b-price-card { background: #fff; border: 1px solid rgba(0,0,0,0.05); border-radius: 16px; padding: 2.5rem 1.75rem; display: flex; flex-direction: column; text-align: left; position: relative; transition: transform 0.25s, box-shadow 0.25s; }
-        .b2b-price-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.04); }
-        .b2b-price-card.popular { border-color: #fc2779; box-shadow: 0 8px 30px rgba(252,39,121,0.06); }
-        .b2b-price-badge { position: absolute; top: 0.75rem; right: 0.75rem; background: #fc2779; color: #fff; font-size: 0.65rem; font-weight: 700; padding: 0.2rem 0.6rem; border-radius: 20px; letter-spacing: 0.03em; }
-        .b2b-price-card h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 0.25rem; }
-        .b2b-price-card .price-desc { color: #8c857f; font-size: 0.85rem; }
-        .b2b-price-amount { font-size: 2.2rem; font-weight: 800; margin: 1rem 0; }
-        .b2b-price-amount span { font-size: 0.9rem; font-weight: 500; color: #8c857f; }
-        .b2b-price-features { list-style: none; margin-bottom: 2rem; flex: 1; padding: 0; }
-        .b2b-price-features li { margin-bottom: 0.6rem; display: flex; align-items: center; gap: 0.4rem; font-size: 0.85rem; color: #8c857f; }
+        .slide-nav-item.active {
+          background: rgba(252,39,121,0.08);
+          color: #fc2779;
+          border-color: rgba(252,39,121,0.2);
+          font-weight: 600;
+        }
 
-        /* ── FAQ ── */
-        .b2b-faq { max-width: 720px; margin: 0 auto 5rem; }
-        .b2b-faq h2 { font-family: "Playfair Display", serif; font-size: 1.8rem; text-align: center; margin-bottom: 2.5rem; }
-        .b2b-faq-list { display: flex; flex-direction: column; gap: 1.5rem; }
-        .b2b-faq-item { border-bottom: 1px solid rgba(0,0,0,0.05); padding-bottom: 1.25rem; }
-        .b2b-faq-item h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.4rem; }
-        .b2b-faq-item p { color: #8c857f; font-size: 0.9rem; line-height: 1.6; }
+        .slide-nav-number {
+          font-family: monospace;
+          opacity: 0.5;
+        }
 
-        /* ── Contact form ── */
-        .b2b-contact { background: #fff; border: 1px solid rgba(0,0,0,0.05); border-radius: 20px; padding: 2.5rem; max-width: 560px; margin: 0 auto; }
+        /* Slide Container */
+        .deck-body {
+          padding: 3rem;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          position: relative;
+          background: radial-gradient(circle at 70% 30%, rgba(252,39,121,0.03) 0%, transparent 60%);
+        }
 
-        /* ══════════════════════════════════════
-           MOBILE RESPONSIVE (≤ 640px)
-           ══════════════════════════════════════ */
         @media (max-width: 640px) {
-          .b2b-container { padding: 2.5rem 1rem; }
-          .b2b-hero { margin-bottom: 3rem; }
-          .b2b-hero h1 { font-size: 1.75rem; }
-          .b2b-hero p { font-size: 0.9rem; margin-bottom: 1.5rem; }
-          .b2b-hero-btns { flex-direction: column; gap: 0.5rem; }
-          .b2b-page .b2b-btn-primary,
-          .b2b-page .b2b-btn-outline { width: 100%; justify-content: center; padding: 0.7rem 1rem; font-size: 0.9rem; }
+          .deck-body {
+            padding: 1.5rem;
+          }
+        }
 
-          .b2b-grid3 { gap: 1rem; margin-bottom: 3rem; }
-          .b2b-card { padding: 1.5rem; }
-          .b2b-card h3 { font-size: 1rem; }
-          .b2b-card p { font-size: 0.85rem; }
+        /* Slide Frames */
+        .slide-viewport {
+          max-width: 1000px;
+          margin: 0 auto;
+          width: 100%;
+          min-height: 500px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+        }
 
-          .b2b-sandbox { padding: 1.25rem; margin-bottom: 3rem; border-radius: 14px; }
-          .b2b-sandbox-head { margin-bottom: 1.5rem; }
-          .b2b-sandbox-head h2 { font-size: 1.4rem; }
-          .b2b-sandbox-head p { font-size: 0.82rem; }
-          .b2b-sandbox-grid { gap: 1.5rem; }
-          .b2b-sandbox-col h3 { font-size: 0.65rem; }
-          .b2b-form-group label { font-size: 0.68rem; }
-          .b2b-form-control { padding: 0.55rem 0.7rem; font-size: 0.85rem; }
+        /* Navigation Bar Bottom */
+        .deck-controls {
+          background: #0c101d;
+          border-top: 1px solid rgba(255,255,255,0.06);
+          padding: 1rem 2.5rem;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          z-index: 10;
+        }
 
-          .b2b-code-block { border-radius: 8px; }
-          .b2b-code-head { padding: 0.5rem 0.75rem; font-size: 0.65rem; }
-          .b2b-code-body { padding: 0.75rem; font-size: 0.65rem; max-height: 200px; word-break: break-all; }
+        .progress-container {
+          flex: 1;
+          max-width: 300px;
+          height: 4px;
+          background: rgba(255,255,255,0.1);
+          border-radius: 99px;
+          margin: 0 2rem;
+          overflow: hidden;
+          position: relative;
+        }
 
-          .b2b-preview { padding: 1rem; border-radius: 10px; }
-          .b2b-product-item { padding: 0.85rem; }
-          .b2b-product-tag { font-size: 0.58rem; }
-          .b2b-product-item h5 { font-size: 0.88rem; }
-          .b2b-product-item p { font-size: 0.78rem; }
+        .progress-bar {
+          height: 100%;
+          background: #fc2779;
+          transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
 
-          .b2b-integration { padding: 1.5rem; margin-bottom: 3rem; border-radius: 14px; }
-          .b2b-integration h2 { font-size: 1.35rem; }
-          .b2b-integration > p { font-size: 0.82rem; }
+        /* ── Typography & Components ── */
+        .eyebrow-badge {
+          background: rgba(252,39,121,0.12);
+          border: 1px solid rgba(252,39,121,0.25);
+          color: #fc2779;
+          padding: 0.35rem 0.85rem;
+          border-radius: 99px;
+          font-size: 0.65rem;
+          font-weight: 700;
+          text-transform: uppercase;
+          letter-spacing: 0.15em;
+          display: inline-flex;
+          align-items: center;
+          gap: 0.4rem;
+          width: fit-content;
+          margin-bottom: 1.5rem;
+        }
 
-          .b2b-pricing { margin-bottom: 3rem; }
-          .b2b-pricing h2 { font-size: 1.4rem; }
-          .b2b-pricing > p { font-size: 0.85rem; margin-bottom: 1.5rem; }
-          .b2b-price-card { padding: 1.75rem 1.25rem; border-radius: 14px; }
-          .b2b-price-card h3 { font-size: 1.05rem; }
-          .b2b-price-amount { font-size: 1.8rem; margin: 0.75rem 0; }
-          .b2b-price-amount span { font-size: 0.8rem; }
-          .b2b-price-features li { font-size: 0.8rem; }
-          .b2b-price-badge { font-size: 0.58rem; padding: 0.15rem 0.5rem; }
+        .slide-title {
+          font-family: var(--font-playfair), Georgia, serif;
+          font-size: clamp(2rem, 5vw, 3rem);
+          font-weight: 700;
+          line-height: 1.15;
+          letter-spacing: -0.01em;
+          margin-bottom: 1rem;
+          color: #ffffff;
+        }
 
-          .b2b-faq { margin-bottom: 3rem; }
-          .b2b-faq h2 { font-size: 1.4rem; margin-bottom: 1.5rem; }
-          .b2b-faq-list { gap: 1rem; }
-          .b2b-faq-item { padding-bottom: 1rem; }
-          .b2b-faq-item h3 { font-size: 0.9rem; }
-          .b2b-faq-item p { font-size: 0.82rem; }
+        .slide-subtitle {
+          font-size: clamp(1rem, 2.5vw, 1.25rem);
+          color: #94a3b8;
+          line-height: 1.5;
+          margin-bottom: 2.5rem;
+          font-weight: 400;
+        }
 
-          .b2b-contact { padding: 1.5rem; border-radius: 14px; }
+        /* Slide 1 Cover Styles */
+        .cover-visuals {
+          position: absolute;
+          right: -10%;
+          top: 10%;
+          width: 500px;
+          height: 500px;
+          background: radial-gradient(circle, rgba(252,39,121,0.15) 0%, transparent 70%);
+          z-index: 0;
+          pointer-events: none;
+        }
+
+        /* Slide 2: Problem Grid */
+        .problem-grid {
+          display: grid;
+          grid-template-columns: 1.2fr 1fr;
+          gap: 3rem;
+          align-items: center;
+        }
+
+        @media (max-width: 768px) {
+          .problem-grid {
+            grid-template-columns: 1fr;
+            gap: 2rem;
+          }
+        }
+
+        .metric-banner {
+          background: rgba(255,255,255,0.02);
+          border: 1px solid rgba(255,255,255,0.06);
+          border-radius: 16px;
+          padding: 2rem;
+          position: relative;
+          overflow: hidden;
+        }
+
+        .metric-large {
+          font-size: 4rem;
+          font-weight: 800;
+          color: #fc2779;
+          line-height: 1;
+          margin-bottom: 0.5rem;
+          font-family: monospace;
+          text-shadow: 0 0 20px rgba(252,39,121,0.25);
+        }
+
+        .comparison-vs {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 1rem;
+        }
+
+        .vs-card {
+          padding: 1.25rem;
+          border-radius: 12px;
+          background: rgba(255,255,255,0.01);
+          border: 1px solid rgba(255,255,255,0.04);
+        }
+
+        .vs-card.bad {
+          border-left: 3px solid #ef4444;
+        }
+
+        .vs-card.good {
+          border-left: 3px solid #10b981;
+          background: rgba(16,185,129,0.02);
+        }
+
+        /* Slide 3: Interactive Hotspot Map */
+        .hotspot-container {
+          display: grid;
+          grid-template-columns: 1fr 1.2fr;
+          gap: 2rem;
+        }
+
+        @media (max-width: 900px) {
+          .hotspot-container {
+            grid-template-columns: 1fr;
+          }
+        }
+
+        .map-selector-box {
+          background: #0b0f19;
+          border: 1px solid rgba(255,255,255,0.06);
+          border-radius: 16px;
+          padding: 1.5rem;
+        }
+
+        .city-button {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          width: 100%;
+          padding: 1rem;
+          border-radius: 10px;
+          background: rgba(255,255,255,0.02);
+          border: 1px solid rgba(255,255,255,0.04);
+          color: #94a3b8;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.2s ease;
+          margin-bottom: 0.5rem;
+          text-align: left;
+        }
+
+        .city-button:hover {
+          background: rgba(255,255,255,0.04);
+          color: #fff;
+        }
+
+        .city-button.active {
+          background: rgba(252,39,121,0.08);
+          border-color: #fc2779;
+          color: #fff;
+        }
+
+        .city-pill {
+          font-size: 0.7rem;
+          padding: 0.25rem 0.5rem;
+          border-radius: 4px;
+          font-weight: 700;
+          background: rgba(255,255,255,0.1);
+        }
+
+        .city-pill.hard {
+          background: rgba(239,68,68,0.15);
+          color: #ef4444;
+        }
+
+        .city-pill.soft {
+          background: rgba(16,185,129,0.15);
+          color: #10b981;
+        }
+
+        .hotspot-details {
+          background: rgba(255,255,255,0.01);
+          border: 1px solid rgba(255,255,255,0.04);
+          border-radius: 16px;
+          padding: 2rem;
+          display: flex;
+          flex-direction: column;
+          gap: 1.25rem;
+        }
+
+        .ppm-dial {
+          display: flex;
+          align-items: center;
+          gap: 1.5rem;
+          padding-bottom: 1.25rem;
+          border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .ppm-circle {
+          width: 80px;
+          height: 80px;
+          border-radius: 50%;
+          border: 3px solid #fc2779;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          font-weight: 800;
+          color: #fc2779;
+          background: rgba(252,39,121,0.04);
+          text-shadow: 0 0 10px rgba(252,39,121,0.2);
+        }
+
+        /* Slide 4: ROI Calculator */
+        .roi-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 2.5rem;
+        }
+
+        @media (max-width: 860px) {
+          .roi-grid {
+            grid-template-columns: 1fr;
+          }
+        }
+
+        .roi-sliders {
+          background: #0b0f19;
+          border: 1px solid rgba(255,255,255,0.06);
+          border-radius: 16px;
+          padding: 2rem;
+          display: flex;
+          flex-direction: column;
+          gap: 1.5rem;
+        }
+
+        .slider-group {
+          display: flex;
+          flex-direction: column;
+          gap: 0.5rem;
+        }
+
+        .slider-header {
+          display: flex;
+          justify-content: space-between;
+          font-size: 0.85rem;
+          font-weight: 600;
+          color: #94a3b8;
+        }
+
+        .slider-value {
+          color: #fc2779;
+          font-family: monospace;
+          font-weight: 700;
+          font-size: 1rem;
+        }
+
+        .slider-input {
+          -webkit-appearance: none;
+          width: 100%;
+          height: 6px;
+          border-radius: 99px;
+          background: rgba(255,255,255,0.1);
+          outline: none;
+          cursor: pointer;
+        }
+
+        .slider-input::-webkit-slider-thumb {
+          -webkit-appearance: none;
+          width: 18px;
+          height: 18px;
+          border-radius: 50%;
+          background: #fc2779;
+          border: 2px solid #fff;
+          cursor: pointer;
+          transition: transform 0.1s;
+        }
+
+        .slider-input::-webkit-slider-thumb:hover {
+          transform: scale(1.15);
+        }
+
+        .roi-result-card {
+          background: linear-gradient(135deg, rgba(252,39,121,0.06) 0%, rgba(139,92,246,0.06) 100%);
+          border: 1px solid rgba(252,39,121,0.25);
+          border-radius: 16px;
+          padding: 2rem;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          text-align: center;
+          position: relative;
+          overflow: hidden;
+        }
+
+        .roi-result-card::before {
+          content: "";
+          position: absolute;
+          top: -50%;
+          left: -50%;
+          width: 200%;
+          height: 200%;
+          background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 60%);
+          pointer-events: none;
+        }
+
+        .annual-value {
+          font-size: clamp(2.5rem, 5vw, 3.5rem);
+          font-weight: 800;
+          color: #10b981;
+          line-height: 1.1;
+          margin: 1.5rem 0;
+          text-shadow: 0 0 25px rgba(16,185,129,0.25);
+          font-family: monospace;
+        }
+
+        /* Slide 5: Integration & Latency Benchmarks */
+        .latency-container {
+          background: #0b0f19;
+          border: 1px solid rgba(255,255,255,0.06);
+          border-radius: 16px;
+          padding: 1.5rem 2rem;
+          display: flex;
+          flex-direction: column;
+          gap: 1rem;
+        }
+
+        .latency-meter {
+          height: 10px;
+          background: rgba(255,255,255,0.06);
+          border-radius: 99px;
+          overflow: hidden;
+          position: relative;
+        }
+
+        .latency-pointer {
+          height: 100%;
+          background: linear-gradient(90deg, #10b981, #34d399);
+          border-radius: 99px;
+          transition: width 0.8s cubic-bezier(0.1, 0.8, 0.3, 1);
+        }
+
+        /* Slide 6: Pricing Tiers */
+        .pricing-deck {
+          display: grid;
+          grid-template-columns: 1fr 1fr 1fr;
+          gap: 1.5rem;
+        }
+
+        /* Slide 5: Performance grid */
+        .perf-grid {
+          display: grid;
+          grid-template-columns: 1.1fr 1fr;
+          gap: 2rem;
+        }
+
+        @media (max-width: 768px) {
+          .pricing-deck {
+            grid-template-columns: 1fr;
+          }
+        }
+
+        .tier-card {
+          background: #0b0f19;
+          border: 1px solid rgba(255,255,255,0.06);
+          border-radius: 16px;
+          padding: 2rem;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          position: relative;
+          transition: border-color 0.3s;
+        }
+
+        .tier-card.popular {
+          border-color: #fc2779;
+          background: linear-gradient(180deg, #0e1424 0%, #0b0f19 100%);
+        }
+
+        .tier-card.popular::after {
+          content: "Most Requested";
+          position: absolute;
+          top: -0.75rem;
+          left: 50%;
+          transform: translateX(-50%);
+          background: #fc2779;
+          color: #fff;
+          font-size: 0.65rem;
+          font-weight: 700;
+          text-transform: uppercase;
+          padding: 0.25rem 0.75rem;
+          border-radius: 99px;
+          letter-spacing: 0.05em;
+        }
+
+        /* Utility buttons */
+        .pitch-btn-primary {
+          background: #fc2779;
+          color: #fff;
+          border: none;
+          padding: 0.8rem 1.8rem;
+          border-radius: 8px;
+          font-weight: 600;
+          font-size: 0.9rem;
+          cursor: pointer;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.5rem;
+          transition: background 0.2s, transform 0.15s;
+          text-shadow: none;
+        }
+
+        .pitch-btn-primary:hover {
+          background: #d41a65;
+          transform: translateY(-1px);
+        }
+
+        .pitch-btn-outline {
+          background: transparent;
+          color: #fff;
+          border: 1px solid rgba(255,255,255,0.2);
+          padding: 0.8rem 1.8rem;
+          border-radius: 8px;
+          font-weight: 600;
+          font-size: 0.9rem;
+          cursor: pointer;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.5rem;
+          transition: background 0.2s, border-color 0.2s;
+        }
+
+        .pitch-btn-outline:hover {
+          background: rgba(255,255,255,0.03);
+          border-color: rgba(255,255,255,0.4);
+        }
+
+        .code-snippet {
+          background: #030712;
+          padding: 1rem;
+          border-radius: 10px;
+          font-family: "Courier New", Courier, monospace;
+          font-size: 0.75rem;
+          color: #38bdf8;
+          overflow-x: auto;
+          border: 1px solid rgba(255,255,255,0.04);
+          white-space: pre-wrap;
+          word-break: break-all;
+        }
+
+        /* Lead modal */
+        .lead-form-box {
+          background: #0b0f19;
+          border: 1px solid rgba(255,255,255,0.06);
+          border-radius: 12px;
+          padding: 1.5rem;
+        }
+
+        .pitch-input {
+          width: 100%;
+          padding: 0.65rem 0.85rem;
+          border-radius: 6px;
+          background: rgba(255,255,255,0.02);
+          border: 1px solid rgba(255,255,255,0.08);
+          color: #fff;
+          font-size: 0.85rem;
+          margin-bottom: 0.75rem;
+          outline: none;
+          transition: border-color 0.2s;
+        }
+
+        .pitch-input:focus {
+          border-color: #fc2779;
+        }
+        /* ── MOBILE OPTIMIZATIONS ── */
+        @media (max-width: 640px) {
+
+          /* Slide viewport — remove fixed min-height so content isn't clipped */
+          .slide-viewport {
+            min-height: unset;
+            padding-bottom: 1rem;
+          }
+
+          /* Deck body tighter padding */
+          .deck-body {
+            padding: 1.25rem 1rem 1.5rem;
+          }
+
+          /* Slide title smaller on phones */
+          .slide-title {
+            font-size: clamp(1.6rem, 7vw, 2.2rem) !important;
+            margin-bottom: 0.75rem;
+          }
+
+          /* Subtitle smaller */
+          .slide-subtitle {
+            font-size: 0.9rem !important;
+            margin-bottom: 1.5rem;
+          }
+
+          /* Eyebrow badge smaller */
+          .eyebrow-badge {
+            font-size: 0.6rem;
+            padding: 0.28rem 0.7rem;
+            margin-bottom: 1rem;
+          }
+
+          /* ── Problem Grid: full stack ── */
+          .problem-grid {
+            grid-template-columns: 1fr !important;
+            gap: 1rem;
+          }
+
+          /* Metric banners: smaller number */
+          .metric-large {
+            font-size: 2.5rem !important;
+          }
+
+          /* VS cards: smaller text */
+          .vs-card {
+            padding: 0.9rem;
+          }
+
+          /* ── Hotspot Demo: stack ── */
+          .hotspot-container {
+            grid-template-columns: 1fr !important;
+            gap: 1rem;
+          }
+
+          /* City buttons: stack label & pill vertically */
+          .city-button {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.35rem;
+            padding: 0.8rem;
+          }
+
+          .city-pill {
+            font-size: 0.65rem;
+          }
+
+          /* PPM dial: horizontal, smaller circle */
+          .ppm-circle {
+            width: 60px;
+            height: 60px;
+            min-width: 60px;
+          }
+
+          /* Hotspot details padding */
+          .hotspot-details {
+            padding: 1.25rem;
+          }
+
+          /* ── ROI Calculator: stack ── */
+          .roi-grid {
+            grid-template-columns: 1fr !important;
+            gap: 1.25rem;
+          }
+
+          .roi-sliders {
+            padding: 1.25rem;
+            gap: 1rem;
+          }
+
+          .roi-result-card {
+            padding: 1.25rem;
+          }
+
+          .annual-value {
+            font-size: 2rem !important;
+            margin: 1rem 0;
+          }
+
+          /* ── Pricing: stack ── */
+          .pricing-deck {
+            grid-template-columns: 1fr !important;
+            gap: 1rem;
+          }
+
+          .tier-card {
+            padding: 1.25rem;
+          }
+
+          /* Buttons: full width on mobile */
+          .pitch-btn-primary,
+          .pitch-btn-outline {
+            width: 100%;
+            justify-content: center;
+            padding: 0.85rem 1rem;
+          }
+
+          /* Lead form: tighter */
+          .lead-form-box {
+            padding: 1rem;
+          }
+
+          /* Bottom controls: tighter */
+          .deck-controls {
+            padding: 0.75rem 1rem;
+          }
+
+          .progress-container {
+            margin: 0 0.75rem;
+            max-width: unset;
+          }
+
+          /* ── Performance Slide 5: stack code + edge panel ── */
+          .perf-grid {
+            grid-template-columns: 1fr !important;
+          }
+        }
+
+        /* ── Mobile Slide Tab Bar (replaces hidden sidebar) ── */
+        .mobile-slide-tabs {
+          display: none;
+        }
+
+        @media (max-width: 1024px) {
+          .mobile-slide-tabs {
+            display: flex;
+            overflow-x: auto;
+            gap: 0.4rem;
+            padding: 0.75rem 1rem;
+            background: #0c101d;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            -webkit-overflow-scrolling: touch;
+          }
+
+          .mobile-slide-tabs::-webkit-scrollbar {
+            display: none;
+          }
+
+          .mobile-tab-btn {
+            flex-shrink: 0;
+            padding: 0.45rem 0.85rem;
+            border-radius: 99px;
+            border: 1px solid rgba(255,255,255,0.1);
+            background: transparent;
+            color: rgba(255,255,255,0.5);
+            font-size: 0.72rem;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s ease;
+            font-family: var(--font-dm-sans), sans-serif;
+          }
+
+          .mobile-tab-btn.active {
+            background: rgba(252,39,121,0.12);
+            border-color: #fc2779;
+            color: #fc2779;
+          }
         }
       `}</style>
 
-      <div className="b2b-container">
-        {/* Dynamic Region Selector Toggle */}
-        <div style={{ display: "flex", justifyContent: "center", gap: "0.5rem", marginBottom: "2rem" }}>
+      {/* Mobile Slide Tab Bar — visible below 1024px only */}
+      <div className="mobile-slide-tabs">
+        {[
+          "Cover",
+          "Problem",
+          "Solution",
+          "ROI",
+          "Performance",
+          "Pricing",
+        ].map((label, idx) => (
           <button
-            onClick={() => setPaymentRegion("USD")}
-            style={{
-              padding: "0.4rem 1.1rem",
-              borderRadius: "99px",
-              border: "1px solid " + (paymentRegion === "USD" ? "#fc2779" : "rgba(0,0,0,0.08)"),
-              background: paymentRegion === "USD" ? "#fc2779" : "transparent",
-              color: paymentRegion === "USD" ? "#fff" : "#2b2826",
-              cursor: "pointer",
-              fontSize: "0.8rem",
-              fontWeight: 600,
-              transition: "all 0.3s ease"
-            }}
+            key={idx}
+            className={`mobile-tab-btn ${currentSlide === idx + 1 ? "active" : ""}`}
+            onClick={() => setCurrentSlide(idx + 1)}
           >
-            🇺🇸 Global (USD)
+            <span style={{ opacity: 0.5, marginRight: "0.3rem", fontFamily: "monospace" }}>0{idx + 1}</span>
+            {label}
           </button>
-          <button
-            onClick={() => setPaymentRegion("INR")}
-            style={{
-              padding: "0.4rem 1.1rem",
-              borderRadius: "99px",
-              border: "1px solid " + (paymentRegion === "INR" ? "#fc2779" : "rgba(0,0,0,0.08)"),
-              background: paymentRegion === "INR" ? "#fc2779" : "transparent",
-              color: paymentRegion === "INR" ? "#fff" : "#2b2826",
-              cursor: "pointer",
-              fontSize: "0.8rem",
-              fontWeight: 600,
-              transition: "all 0.3s ease"
-            }}
-          >
-            🇮🇳 India (INR)
-          </button>
-        </div>
-        <section className="b2b-hero">
-          <h1>{paymentRegion === "INR" ? "Plug-and-Play AI Skincare for Indian Brands" : "Plug-and-Play AI Skincare for Global Brands"}</h1>
-          <p>Rent our climate-aware recommendation engine. Boost your store sales, cut returns, and give customers dermatologist-level routines {paymentRegion === "INR" ? "adapted for their tap water and weather" : "adapted for their local water and weather"}.</p>
-          <div className="b2b-hero-btns">
-            <Link href="/b2b/pitch" className="b2b-btn-primary" style={{ background: "linear-gradient(135deg, #fc2779 0%, #8b5cf6 100%)" }}>
-              View Interactive Pitch Deck
-            </Link>
-            <a href="#sandbox" className="b2b-btn-outline">Try Sandbox</a>
-            <a href="#pricing" className="b2b-btn-outline">View Pricing {paymentRegion === "INR" ? "(INR)" : "(USD)"}</a>
-          </div>
-        </section>
+        ))}
+      </div>
 
-        <section className="b2b-grid3">
-          <div className="b2b-card">
-            <div className="b2b-icon"><Zap size={22} /></div>
-            <h3>Embed With One Line</h3>
-            <p>Copy-paste our JavaScript snippet into your Shopify, WooCommerce, or HTML page. No developer setup required.</p>
-          </div>
-          <div className="b2b-card">
-            <div className="b2b-icon"><Server size={22} /></div>
-            <h3>Climate-Aware Algorithm</h3>
-            <p>{paymentRegion === "INR" ? "Our backend calculates real-time temperature, humidity, and water hardness metrics across India to suggest the best skincare fits." : "Our backend calculates real-time temperature, humidity, and water hardness metrics globally to suggest the best skincare fits."}</p>
-          </div>
-          <div className="b2b-card">
-            <div className="b2b-icon"><Smartphone size={22} /></div>
-            <h3>Proven Conversion Boost</h3>
-            <p>Customers shopping with personalized routines buy more items and experience 40% fewer product mismatches and returns.</p>
-          </div>
-        </section>
-
-        <section id="sandbox" className="b2b-sandbox">
-          <div className="b2b-sandbox-head">
-            <h2>Interactive Sandbox</h2>
-            <p>Test the recommendation engine with live parameters and inspect the raw B2B API response.</p>
-          </div>
-          <div className="b2b-sandbox-grid">
-            <div className="b2b-sandbox-col">
-              <h3>Parameters</h3>
-              <div className="b2b-form-group">
-                <label>Skin Type</label>
-                <select className="b2b-form-control" value={skinType} onChange={(e) => setSkinType(e.target.value)}>
-                  <option value="oily">Oily Skin</option>
-                  <option value="dry">Dry Skin</option>
-                  <option value="combination">Combination Skin</option>
-                  <option value="sensitive">Sensitive Skin</option>
-                </select>
-              </div>
-              <div className="b2b-form-group">
-                <label>Main Concern</label>
-                <select className="b2b-form-control" value={mainConcern} onChange={(e) => setMainConcern(e.target.value)}>
-                  <option value="acne">Acne & Breakouts</option>
-                  <option value="pigmentation">Pigmentation / Dark Spots</option>
-                  <option value="dullness">Dullness / Lack of Glow</option>
-                  <option value="dehydration">Dehydration / Dry Patches</option>
-                </select>
-              </div>
-              <div className="b2b-form-group">
-                <label>Budget Tier</label>
-                <select className="b2b-form-control" value={budget} onChange={(e) => setBudget(e.target.value)}>
-                  {paymentRegion === "INR" ? (
-                    <>
-                      <option value="under_500">Under ₹500 / product</option>
-                      <option value="under_1000">Under ₹1,000 / product</option>
-                      <option value="under_2000">All Products / High-end</option>
-                    </>
-                  ) : (
-                    <>
-                      <option value="under_500">Under $15 / product</option>
-                      <option value="under_1000">Under $30 / product</option>
-                      <option value="under_2000">All Products / High-end</option>
-                    </>
-                  )}
-                </select>
-              </div>
-              <div className="b2b-form-group">
-                <label>City</label>
-                <input type="text" className="b2b-form-control" value={city} onChange={(e) => setCity(e.target.value)} />
-              </div>
-              <div className="b2b-row2">
-                <div className="b2b-form-group">
-                  <label>Temp (°C)</label>
-                  <input type="number" className="b2b-form-control" value={temp} onChange={(e) => setTemp(Number(e.target.value))} />
-                </div>
-                <div className="b2b-form-group">
-                  <label>Humidity (%)</label>
-                  <input type="number" className="b2b-form-control" value={humidity} onChange={(e) => setHumidity(Number(e.target.value))} />
-                </div>
-              </div>
-              <button className="b2b-btn-primary" onClick={triggerAPI} disabled={loading} style={{ width: "100%", marginTop: "0.5rem" }}>
-                {loading ? "Generating..." : "Call API & Get Recommendations"}
-              </button>
-
-              <h3 style={{ marginTop: "1.5rem" }}>API Response</h3>
-              <div className="b2b-code-block">
-                <div className="b2b-code-head">
-                  <span>POST /api/v1/recommend</span>
-                  <span style={{ color: "#22c55e" }}>200 OK</span>
-                </div>
-                <pre className="b2b-code-body">
-                  {error ? (
-                    <span style={{ color: "#ef4444" }}>Error: {error}</span>
-                  ) : response ? (
-                    JSON.stringify(response, null, 2)
-                  ) : (
-                    `{\n  "message": "Click the button to run the AI engine."\n}`
-                  )}
-                </pre>
-              </div>
+      <div className="deck-wrapper">
+        
+        {/* Sidebar Nav */}
+        <aside className="deck-sidebar">
+          <div>
+            <div className="sidebar-title">
+              <Sparkles size={12} color="#fc2779" />
+              <span>Pitch Slides</span>
             </div>
+            <ul className="slide-nav-list">
+              {[
+                "Cover & Vision",
+                "The Skincare Problem",
+                "Environmental Solution",
+                "Business Case & ROI",
+                "Scale & Edge Performance",
+                "SaaS Pricing & Pilot"
+              ].map((title, idx) => (
+                <li 
+                  key={idx}
+                  className={`slide-nav-item ${currentSlide === idx + 1 ? "active" : ""}`}
+                  onClick={() => setCurrentSlide(idx + 1)}
+                >
+                  <span className="slide-nav-number">0{idx + 1}</span>
+                  <span>{title}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
 
-            <div className="b2b-sandbox-col">
-              <h3>Storefront Preview</h3>
-              <div className="b2b-preview">
-                {response ? (
-                  <>
-                    {response.climateAdjustment && (
-                      <div style={{ background: "rgba(252,39,121,0.06)", borderLeft: "4px solid #fc2779", padding: "0.75rem", borderRadius: "4px", fontSize: "0.85rem", marginBottom: "1rem" }}>
-                        <strong>Climate Alert:</strong> {response.climateAdjustment.alertText}
-                      </div>
-                    )}
-                    <div className="b2b-product-list">
-                      {["cleanser", "treatment", "moisturiser", "sunscreen"].map((step) => {
-                        const item = response[step];
-                        if (!item) return null;
-                        return (
-                          <div className="b2b-product-item" key={step}>
-                            <span className="b2b-product-tag">{step}</span>
-                            <h5>{item.name}</h5>
-                            <p>{item.reason}</p>
-                          </div>
-                        );
-                      })}
+          <div style={{ padding: "1.5rem", background: "rgba(255,255,255,0.02)", borderRadius: "12px", border: "1px solid rgba(255,255,255,0.04)" }}>
+            <span style={{ fontSize: "0.65rem", textTransform: "uppercase", letterSpacing: "0.08em", color: "#94a3b8", display: "block", marginBottom: "0.5rem" }}>
+              Targeting Enterprise
+            </span>
+            <p style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.5)", lineHeight: 1.4, margin: 0 }}>
+              Global Beauty Retailers & Enterprise Marketplaces
+            </p>
+          </div>
+        </aside>
+
+        {/* Slide viewport */}
+        <section className="deck-body">
+          <div className="slide-viewport">
+            
+            {/* SLIDE 1: Cover & Vision */}
+            {currentSlide === 1 && (
+              <div style={{ position: "relative", zIndex: 1 }}>
+                <div className="cover-visuals" />
+                <div className="eyebrow-badge">
+                  <Layers size={11} /> Enterprise sales deck
+                </div>
+                <h1 className="slide-title" style={{ fontSize: "clamp(2.5rem, 6vw, 3.75rem)", maxWidth: "850px" }}>
+                  Hyper-Personalizing Global Beauty: The Climate & Hard Water API
+                </h1>
+                <p className="slide-subtitle" style={{ maxWidth: "700px" }}>
+                  Transforming E-Commerce Intelligence, Slashing Returns, and Driving Conversions via Real-World Environmental Diagnostics.
+                </p>
+                <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+                  <button onClick={() => setCurrentSlide(2)} className="pitch-btn-primary">
+                    Start Presentation <ArrowRight size={16} />
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* SLIDE 2: The Problem */}
+            {currentSlide === 2 && (
+              <div>
+                <div className="eyebrow-badge">
+                  <ShieldAlert size={11} /> The Data-Driven Hook
+                </div>
+                <h2 className="slide-title">The Location-Blind Personalization Crisis</h2>
+                <p className="slide-subtitle">
+                  E-commerce personalization engines ask simple questions (e.g. "Oily vs Dry") but remain completely blind to where the skin actually lives.
+                </p>
+
+                <div className="problem-grid">
+                  <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+                    <div className="vs-card bad">
+                      <h4 style={{ fontWeight: 700, fontSize: "0.95rem", color: "#f87171", marginBottom: "0.25rem" }}>
+                        Static Quizzes Are Failing Customers
+                      </h4>
+                      <p style={{ fontSize: "0.85rem", color: "#94a3b8", lineHeight: 1.5 }}>
+                        A shopper in London buys an oily-skin moisturizer. It breaks them out because London's hard tap water minerals react with their cleanser, leaving soap scum that clogs pores. The quiz never saw the water.
+                      </p>
                     </div>
-                  </>
-                ) : (
-                  <div style={{ textAlign: "center", padding: "3rem 1rem", color: "#8c857f" }}>
-                    <Zap size={28} style={{ margin: "0 auto 0.75rem", opacity: 0.4, color: "#fc2779" }} />
-                    <p style={{ fontSize: "0.85rem" }}>Adjust parameters and click <strong>Call API</strong> to preview the storefront widget.</p>
+
+                    <div className="vs-card good">
+                      <h4 style={{ fontWeight: 700, fontSize: "0.95rem", color: "#34d399", marginBottom: "0.25rem" }}>
+                        The Environmental Telemetry Upgrade
+                      </h4>
+                      <p style={{ fontSize: "0.85rem", color: "#94a3b8", lineHeight: 1.5 }}>
+                        By capturing delivery zip codes, the Climate & Hard Water API immediately adapts catalog logic to mineral density, humidity, and dew point variables.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+                    <div className="metric-banner">
+                      <div className="metric-large">70%</div>
+                      <h5 style={{ fontWeight: 700, fontSize: "0.9rem", marginBottom: "0.25rem" }}>Skincare Routines Fail</h5>
+                      <p style={{ fontSize: "0.75rem", color: "#94a3b8", margin: 0 }}>
+                        Due to unaccounted external friction like calcium carbonates in tap water and sudden weather swings.
+                      </p>
+                    </div>
+
+                    <div className="metric-banner">
+                      <div className="metric-large">22%</div>
+                      <h5 style={{ fontWeight: 700, fontSize: "0.9rem", marginBottom: "0.25rem" }}>Average E-Commerce Return Rate</h5>
+                      <p style={{ fontSize: "0.75rem", color: "#94a3b8", margin: 0 }}>
+                        Driven directly by "unexpected skin breakouts" and poor formulation texture fits.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* SLIDE 3: The Solution / Hotspot Demo */}
+            {currentSlide === 3 && (
+              <div>
+                <div className="eyebrow-badge">
+                  <MapPin size={11} /> Interactive Hotspot Demo
+                </div>
+                <h2 className="slide-title">How the Engine Works</h2>
+                <p className="slide-subtitle">
+                  We match the shopper's location to environmental matrices. Test a city below to inspect real-time mineral analysis and catalog adaptation output.
+                </p>
+
+                <div className="hotspot-container">
+                  <div className="map-selector-box">
+                    <span style={{ fontSize: "0.7rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", color: "#94a3b8", display: "block", marginBottom: "1rem" }}>
+                      Select Pitch Hotspot City
+                    </span>
+                    <button 
+                      onClick={() => setSelectedCity("london")} 
+                      className={`city-button ${selectedCity === "london" ? "active" : ""}`}
+                    >
+                      <span>London, UK</span>
+                      <span className="city-pill hard">280 PPM (Very Hard)</span>
+                    </button>
+                    <button 
+                      onClick={() => setSelectedCity("los_angeles")} 
+                      className={`city-button ${selectedCity === "los_angeles" ? "active" : ""}`}
+                    >
+                      <span>Los Angeles, US</span>
+                      <span className="city-pill hard">320 PPM (Very Hard)</span>
+                    </button>
+                    <button 
+                      onClick={() => setSelectedCity("mumbai")} 
+                      className={`city-button ${selectedCity === "mumbai" ? "active" : ""}`}
+                    >
+                      <span>Mumbai, IN</span>
+                      <span className="city-pill hard">140 PPM (Mod. Hard)</span>
+                    </button>
+                    <button 
+                      onClick={() => setSelectedCity("new_york")} 
+                      className={`city-button ${selectedCity === "new_york" ? "active" : ""}`}
+                    >
+                      <span>New York, US</span>
+                      <span className="city-pill soft">55 PPM (Soft)</span>
+                    </button>
+                    <button 
+                      onClick={() => setSelectedCity("stockholm")} 
+                      className={`city-button ${selectedCity === "stockholm" ? "active" : ""}`}
+                    >
+                      <span>Stockholm, SE</span>
+                      <span className="city-pill soft">20 PPM (Very Soft)</span>
+                    </button>
+                  </div>
+
+                  <div className="hotspot-details">
+                    <div className="ppm-dial">
+                      <div className="ppm-circle">
+                        <span style={{ fontSize: "1.25rem" }}>{activeCityData.ppm}</span>
+                        <span style={{ fontSize: "0.55rem", opacity: 0.8 }}>PPM</span>
+                      </div>
+                      <div>
+                        <h3 style={{ fontSize: "1.1rem", fontWeight: 700, color: "#fff" }}>
+                          Water Profile: {activeCityData.type}
+                        </h3>
+                        <p style={{ fontSize: "0.8rem", color: "#94a3b8", margin: 0 }}>
+                          Calcium: {activeCityData.minerals.calcium} mg/L | Magnesium: {activeCityData.minerals.magnesium} mg/L | Humidity: {activeCityData.humidity}%
+                        </p>
+                      </div>
+                    </div>
+
+                    <div>
+                      <h4 style={{ fontSize: "0.8rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", color: "#fc2779", marginBottom: "0.25rem" }}>
+                        Skin Barrier Friction
+                      </h4>
+                      <p style={{ fontSize: "0.85rem", color: "#e2e8f0", lineHeight: 1.5 }}>
+                        {activeCityData.friction}
+                      </p>
+                    </div>
+
+                    <div>
+                      <h4 style={{ fontSize: "0.8rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", color: "#34d399", marginBottom: "0.25rem" }}>
+                        API Recommendation Output
+                      </h4>
+                      <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem", marginTop: "0.5rem" }}>
+                        {activeCityData.recommendedSku.map((sku, idx) => (
+                          <div key={idx} style={{ background: "rgba(255,255,255,0.02)", padding: "0.75rem", borderRadius: "8px", border: "1px solid rgba(255,255,255,0.04)" }}>
+                            <span style={{ fontSize: "0.6rem", fontWeight: 700, color: "#fc2779", textTransform: "uppercase" }}>{sku.category}</span>
+                            <div style={{ fontWeight: 600, fontSize: "0.85rem", color: "#fff", margin: "0.1rem 0" }}>{sku.name}</div>
+                            <p style={{ fontSize: "0.75rem", color: "#94a3b8", margin: 0 }}>{sku.reason}</p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* SLIDE 4: ROI Calculator */}
+            {currentSlide === 4 && (
+              <div>
+                <div className="eyebrow-badge">
+                  <TrendingUp size={11} /> The CFO Hook
+                </div>
+                <h2 className="slide-title">The Financial Impact Case</h2>
+                <p className="slide-subtitle">
+                  Slide parameters to calculate estimated return savings and AOV increases built on actual pilot benchmarks.
+                </p>
+
+                <div className="roi-grid">
+                  <div className="roi-sliders">
+                    <div className="slider-group">
+                      <div className="slider-header">
+                        <span>Monthly Traffic</span>
+                        <span className="slider-value">
+                          {traffic.toLocaleString()} sessions
+                        </span>
+                      </div>
+                      <input 
+                        type="range" 
+                        min="50000" 
+                        max="5000000" 
+                        step="50000" 
+                        className="slider-input" 
+                        value={traffic} 
+                        onChange={(e) => setTraffic(Number(e.target.value))} 
+                      />
+                    </div>
+
+                    <div className="slider-group">
+                      <div className="slider-header">
+                        <span>Average Order Value (AOV)</span>
+                        <span className="slider-value">${aov}</span>
+                      </div>
+                      <input 
+                        type="range" 
+                        min="10" 
+                        max="200" 
+                        step="5" 
+                        className="slider-input" 
+                        value={aov} 
+                        onChange={(e) => setAov(Number(e.target.value))} 
+                      />
+                    </div>
+
+                    <div className="slider-group">
+                      <div className="slider-header">
+                        <span>Current Return Rate</span>
+                        <span className="slider-value">{returnsRate}%</span>
+                      </div>
+                      <input 
+                        type="range" 
+                        min="5" 
+                        max="40" 
+                        step="1" 
+                        className="slider-input" 
+                        value={returnsRate} 
+                        onChange={(e) => setReturnsRate(Number(e.target.value))} 
+                      />
+                    </div>
+
+                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginTop: "0.5rem" }}>
+                      <div style={{ background: "rgba(255,255,255,0.02)", padding: "0.75rem", borderRadius: "8px" }}>
+                        <span style={{ fontSize: "0.7rem", color: "#94a3b8" }}>AOV Improvement</span>
+                        <div style={{ fontSize: "1.1rem", fontWeight: 700, color: "#34d399" }}>+18%</div>
+                      </div>
+                      <div style={{ background: "rgba(255,255,255,0.02)", padding: "0.75rem", borderRadius: "8px" }}>
+                        <span style={{ fontSize: "0.7rem", color: "#94a3b8" }}>Return Reduction</span>
+                        <div style={{ fontSize: "1.1rem", fontWeight: 700, color: "#34d399" }}>-34%</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="roi-result-card">
+                    <div>
+                      <span style={{ fontSize: "0.75rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", color: "#94a3b8" }}>
+                        Estimated Annual Value Created
+                      </span>
+                      <div className="annual-value">
+                        ${Math.round(totalAnnualImpact).toLocaleString()}
+                      </div>
+                    </div>
+
+                    <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem", textAlign: "left" }}>
+                      <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.85rem", borderBottom: "1px solid rgba(255,255,255,0.05)", paddingBottom: "0.5rem" }}>
+                        <span style={{ color: "#94a3b8" }}>Monthly AOV Lift (Bundles):</span>
+                        <span style={{ fontWeight: 600, color: "#fff" }}>+${Math.round(aovLiftRevenue).toLocaleString()}/mo</span>
+                      </div>
+                      <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.85rem", borderBottom: "1px solid rgba(255,255,255,0.05)", paddingBottom: "0.5rem" }}>
+                        <span style={{ color: "#94a3b8" }}>Reduced Return Logistics Savings:</span>
+                        <span style={{ fontWeight: 600, color: "#fff" }}>+${Math.round(returnSavingsUSD).toLocaleString()}/mo</span>
+                      </div>
+                      <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.85rem" }}>
+                        <span style={{ color: "#94a3b8" }}>Customer Retention Multiplier:</span>
+                        <span style={{ fontWeight: 600, color: "#fc2779" }}>2.4x</span>
+                      </div>
+                    </div>
+
+                    <div style={{ marginTop: "1rem" }}>
+                      <button onClick={() => setCurrentSlide(6)} className="pitch-btn-primary" style={{ width: "100%" }}>
+                        Book Enterprise Pilot
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* SLIDE 5: Technical Scale & Performance */}
+            {currentSlide === 5 && (
+              <div>
+                <div className="eyebrow-badge">
+                  <Cpu size={11} /> Enterprise Infrastructure
+                </div>
+                <h2 className="slide-title">Frictionless Integration & Scale</h2>
+                <p className="slide-subtitle">
+                  Guaranteed zero impact on site performance, loading speeds, or core web vitals.
+                </p>
+
+                <div className="perf-grid">
+                  <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+                    <div className="code-snippet">
+{`// Fetch climate & tap water diagnostics for shopper
+const response = await fetch('https://api.mirhaandco.com/v1/diagnostics', {
+  method: 'POST',
+  headers: { 'Authorization': 'Bearer <token>' },
+  body: JSON.stringify({ postal_code: "90210", country: "US" })
+});
+
+const { water_hardness, humidity, recommendation_vector } = await response.json();
+// recommendation_vector -> direct catalog SKU mappings`}
+                    </div>
+                    <div style={{ display: "flex", gap: "0.75rem" }}>
+                      <span className="city-pill">Shopify Plus</span>
+                      <span className="city-pill">Salesforce CC</span>
+                      <span className="city-pill">Headless API</span>
+                    </div>
+                  </div>
+
+                  <div className="hotspot-details" style={{ justifyContent: "center" }}>
+                    <h3 style={{ fontSize: "1.1rem", fontWeight: 700, margin: 0 }}>Edge Network Diagnostics</h3>
+                    <p style={{ fontSize: "0.8rem", color: "#94a3b8", margin: 0 }}>
+                      All API queries run on global edge middleware to respond in under 45ms.
+                    </p>
+
+                    <div className="latency-container">
+                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                        <span style={{ fontSize: "0.85rem", fontWeight: 600 }}>API Endpoint Ping Test</span>
+                        {latencyMs && (
+                          <span style={{ color: "#10b981", fontWeight: 700, fontSize: "0.85rem" }}>
+                            {latencyMs}ms
+                          </span>
+                        )}
+                      </div>
+                      
+                      <div className="latency-meter">
+                        <div 
+                          className="latency-pointer" 
+                          style={{ width: latencyMs ? `${(latencyMs / 100) * 100}%` : "0%" }}
+                        />
+                      </div>
+                      
+                      <p style={{ fontSize: "0.75rem", color: "#94a3b8", margin: 0 }}>
+                        {latencyText}
+                      </p>
+
+                      <button 
+                        onClick={simulateLatencyTest} 
+                        disabled={isSimulating}
+                        className="pitch-btn-outline" 
+                        style={{ padding: "0.5rem 1rem", fontSize: "0.8rem", alignSelf: "flex-start" }}
+                      >
+                        {isSimulating ? (
+                          <>
+                            <RefreshCw size={12} className="animate-spin" /> Pinging...
+                          </>
+                        ) : "Test Edge Latency"}
+                      </button>
+                    </div>
+
+                    <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem", fontSize: "0.8rem" }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                        <CheckCircle2 size={14} color="#10b981" />
+                        <span>Edge CDN caching for instant zip code lookup</span>
+                      </div>
+                      <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                        <CheckCircle2 size={14} color="#10b981" />
+                        <span>Fail-safe fallback returns baseline routines immediately</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* SLIDE 6: Pricing Tiers & CTA */}
+            {currentSlide === 6 && (
+              <div>
+                <div className="eyebrow-badge">
+                  <DollarIcon size={11} /> Commercial Models
+                </div>
+                <h2 className="slide-title">Flexible Commercial SaaS Tiers</h2>
+
+                {checkoutError && (
+                  <div style={{ background: "rgba(239,68,68,0.1)", border: "1px solid rgba(239,68,68,0.3)", padding: "1rem", borderRadius: "8px", color: "#ef4444", fontSize: "0.85rem", marginBottom: "1.5rem", textAlign: "center", maxWidth: "600px", margin: "0 auto 1.5rem" }}>
+                    {checkoutError}
                   </div>
                 )}
+                
+                {/* Region & Annual toggles */}
+                <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "1rem", marginBottom: "1.5rem" }}>
+                  <div style={{ display: "flex", justifyContent: "center", gap: "0.5rem", background: "rgba(255,255,255,0.05)", padding: "4px", borderRadius: "8px" }}>
+                    <button 
+                      onClick={() => setIsInternational(true)}
+                      style={{ padding: "0.35rem 1rem", fontSize: "0.75rem", borderRadius: "6px", background: isInternational ? "rgba(252,39,121,0.2)" : "transparent", color: isInternational ? "#fff" : "#94a3b8", transition: "all 0.2s" }}
+                    >
+                      Global ($)
+                    </button>
+                    <button 
+                      onClick={() => setIsInternational(false)}
+                      style={{ padding: "0.35rem 1rem", fontSize: "0.75rem", borderRadius: "6px", background: !isInternational ? "rgba(252,39,121,0.2)" : "transparent", color: !isInternational ? "#fff" : "#94a3b8", transition: "all 0.2s" }}
+                    >
+                      India (₹)
+                    </button>
+                  </div>
+
+                  <div style={{ display: "flex", justifyContent: "center", gap: "0.5rem" }}>
+                    <button 
+                      onClick={() => setAnnualBilling(false)}
+                      className="pitch-btn-outline" 
+                      style={{ padding: "0.35rem 1rem", fontSize: "0.75rem", background: !annualBilling ? "rgba(252,39,121,0.08)" : "transparent", borderColor: !annualBilling ? "#fc2779" : "rgba(255,255,255,0.15)" }}
+                    >
+                      Monthly Billing
+                    </button>
+                    <button 
+                      onClick={() => setAnnualBilling(true)}
+                      className="pitch-btn-outline" 
+                      style={{ padding: "0.35rem 1rem", fontSize: "0.75rem", background: annualBilling ? "rgba(252,39,121,0.08)" : "transparent", borderColor: annualBilling ? "#fc2779" : "rgba(255,255,255,0.15)" }}
+                    >
+                      Annual Billing (Save 20%)
+                    </button>
+                  </div>
+                </div>
+
+                {/* Step 1: Lead form — must fill before subscribing */}
+                <div id="lead-form-section" style={{ marginBottom: "2rem" }}>
+                  {leadSubmitted ? (
+                    <div style={{ background: "rgba(16,185,129,0.08)", border: "1px solid rgba(16,185,129,0.25)", padding: "1.25rem", borderRadius: "12px", display: "flex", alignItems: "center", gap: "1rem" }}>
+                      <CheckCircle2 size={24} color="#10b981" style={{ flexShrink: 0 }} />
+                      <div>
+                        <h4 style={{ fontWeight: 700, color: "#fff", marginBottom: "0.1rem", fontSize: "0.95rem" }}>Details saved — pick a plan below</h4>
+                        <p style={{ fontSize: "0.78rem", color: "#94a3b8", margin: 0 }}>Your API key will be emailed to <strong style={{ color: "#fff" }}>{leadEmail}</strong> after checkout.</p>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="lead-form-box" style={{ border: "1px solid rgba(252,39,121,0.3)", background: "rgba(252,39,121,0.04)" }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.6rem" }}>
+                        <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#fc2779", flexShrink: 0 }} />
+                        <h4 style={{ fontWeight: 700, fontSize: "0.9rem", color: "#fff", margin: 0 }}>
+                          Step 1 — Enter your details to unlock checkout
+                        </h4>
+                      </div>
+                      <p style={{ fontSize: "0.75rem", color: "#94a3b8", margin: "0 0 0.85rem" }}>Your API key will be sent to this email instantly after payment.</p>
+                      <form onSubmit={handleLeadSubmit} style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr auto", gap: "0.75rem", alignItems: "center" }}>
+                        <input 
+                          type="text" 
+                          required 
+                          placeholder="Your Name" 
+                          className="pitch-input" 
+                          style={{ marginBottom: 0 }}
+                          value={leadName}
+                          onChange={(e) => setLeadName(e.target.value)}
+                        />
+                        <input 
+                          type="email" 
+                          required 
+                          placeholder="Work Email" 
+                          className="pitch-input" 
+                          style={{ marginBottom: 0 }}
+                          value={leadEmail}
+                          onChange={(e) => setLeadEmail(e.target.value)}
+                        />
+                        <input 
+                          type="text" 
+                          required 
+                          placeholder="Brand (e.g. Sephora)" 
+                          className="pitch-input" 
+                          style={{ marginBottom: 0 }}
+                          value={leadBrand}
+                          onChange={(e) => setLeadBrand(e.target.value)}
+                        />
+                        <button type="submit" disabled={isSubmittingLead} className="pitch-btn-primary" style={{ padding: "0.65rem 1.5rem" }}>
+                          {isSubmittingLead ? "Saving..." : "Save & Continue"}
+                        </button>
+                      </form>
+                    </div>
+                  )}
+                </div>
+
+                {/* Step 2: Billing toggles — and then pick a plan */}
+                <script src="https://checkout.razorpay.com/v1/checkout.js" />
+                <div className="pricing-deck">
+                  <div className="tier-card">
+                    <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", height: "100%" }}>
+                      <div>
+                        <h3 style={{ fontSize: "1.1rem", fontWeight: 700, margin: 0 }}>Growth Tier</h3>
+                        <p style={{ fontSize: "0.75rem", color: "#94a3b8", marginTop: "0.25rem" }}>
+                          For scaling niche retailers.
+                        </p>
+                        <div style={{ margin: "1.5rem 0" }}>
+                          <span style={{ fontSize: "2.25rem", fontWeight: 800, color: "#fff" }}>
+                            {isInternational ? "$" : "₹"}
+                            {isInternational ? (annualBilling ? "399" : "499") : (annualBilling ? "33,200" : "41,500")}
+                          </span>
+                          <span style={{ fontSize: "0.85rem", color: "#94a3b8" }}>/mo</span>
+                        </div>
+                        <ul style={{ listStyle: "none", padding: 0, fontSize: "0.8rem", color: "#94a3b8", display: "flex", flexDirection: "column", gap: "0.5rem", marginBottom: "1.5rem" }}>
+                          <li>✓ Up to 50k API calls/mo</li>
+                          <li>✓ Hard Water Matrix (ppm)</li>
+                          <li>✓ Climate + Humidity Swaps</li>
+                          <li>✓ Email support (24h SLA)</li>
+                        </ul>
+                      </div>
+                      <button
+                        onClick={() => handleSubscribe("growth")}
+                        disabled={checkoutLoading === "growth" || !leadSubmitted}
+                        className="pitch-btn-outline"
+                        style={{ width: "100%", justifyContent: "center", opacity: !leadSubmitted ? 0.5 : 1, cursor: !leadSubmitted ? "not-allowed" : "pointer" }}
+                      >
+                        {checkoutLoading === "growth" ? "Opening..." : (!leadSubmitted ? "Complete Step 1 First" : "Subscribe — Growth")}
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="tier-card popular">
+                    <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", height: "100%" }}>
+                      <div>
+                        <h3 style={{ fontSize: "1.1rem", fontWeight: 700, margin: 0 }}>Scale Enterprise</h3>
+                        <p style={{ fontSize: "0.75rem", color: "#94a3b8", marginTop: "0.25rem" }}>
+                          For global beauty marketplaces.
+                        </p>
+                        <div style={{ margin: "1.5rem 0" }}>
+                          <span style={{ fontSize: "2.25rem", fontWeight: 800, color: "#fff" }}>
+                            {isInternational ? "$" : "₹"}
+                            {isInternational ? (annualBilling ? "1,499" : "1,899") : (annualBilling ? "1,24,000" : "1,58,000")}
+                          </span>
+                          <span style={{ fontSize: "0.85rem", color: "#94a3b8" }}>/mo</span>
+                        </div>
+                        <ul style={{ listStyle: "none", padding: 0, fontSize: "0.8rem", color: "#94a3b8", display: "flex", flexDirection: "column", gap: "0.5rem", marginBottom: "1.5rem" }}>
+                          <li>✓ Up to 500k API calls/mo</li>
+                          <li>✓ Advanced Water Mineral Matrix</li>
+                          <li>✓ Dynamic Dewpoint Adjusters</li>
+                          <li>✓ Dedicated Slack channel support</li>
+                        </ul>
+                      </div>
+                      <button
+                        onClick={() => handleSubscribe("scale")}
+                        disabled={checkoutLoading === "scale" || !leadSubmitted}
+                        className="pitch-btn-primary"
+                        style={{ width: "100%", justifyContent: "center", opacity: !leadSubmitted ? 0.5 : 1, cursor: !leadSubmitted ? "not-allowed" : "pointer" }}
+                      >
+                        {checkoutLoading === "scale" ? "Opening..." : (!leadSubmitted ? "Complete Step 1 First" : "Subscribe — Scale")}
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="tier-card" style={{ background: "rgba(255,255,255,0.01)" }}>
+                    <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", height: "100%" }}>
+                      <div>
+                        <h3 style={{ fontSize: "1.1rem", fontWeight: 700, margin: 0 }}>Global Custom</h3>
+                        <p style={{ fontSize: "0.75rem", color: "#94a3b8", marginTop: "0.25rem" }}>
+                          High volume, tailored SLA integrations.
+                        </p>
+                        <div style={{ margin: "1.5rem 0" }}>
+                          <span style={{ fontSize: "1.75rem", fontWeight: 800, color: "#fff" }}>Volume Pricing</span>
+                        </div>
+                        <ul style={{ listStyle: "none", padding: 0, fontSize: "0.8rem", color: "#94a3b8", display: "flex", flexDirection: "column", gap: "0.5rem", marginBottom: "1rem" }}>
+                          <li>✓ 500k+ custom API calls/mo</li>
+                          <li>✓ Tailored formulation parameters</li>
+                          <li>✓ Dedicated multi-region edge node</li>
+                          <li>✓ 99.9% uptime SLA guarantee</li>
+                        </ul>
+                      </div>
+                      <Link href="/contact" className="pitch-btn-outline" style={{ width: "100%", justifyContent: "center", textAlign: "center" }}>
+                        Contact Sales
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Provisioning Info Box */}
+                <div style={{ marginTop: "2rem", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "12px", padding: "1.5rem" }}>
+                  <h4 style={{ fontWeight: 600, color: "#fff", fontSize: "0.95rem", marginBottom: "1rem", display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                    <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#10b981" }} />
+                    Instant API Provisioning
+                  </h4>
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "1.5rem" }}>
+                    <div>
+                      <span style={{ display: "block", color: "#fc2779", fontWeight: 700, marginBottom: "0.25rem", fontSize: "0.85rem" }}>1. Checkout</span>
+                      <p style={{ margin: 0, fontSize: "0.75rem", color: "#94a3b8", lineHeight: 1.5 }}>
+                        Select your tier and complete the secure payment via our enterprise Merchant of Record.
+                      </p>
+                    </div>
+                    <div>
+                      <span style={{ display: "block", color: "#fc2779", fontWeight: 700, marginBottom: "0.25rem", fontSize: "0.85rem" }}>2. Key Generation</span>
+                      <p style={{ margin: 0, fontSize: "0.75rem", color: "#94a3b8", lineHeight: 1.5 }}>
+                        Our system automatically generates your unique <code style={{ color: "#38bdf8" }}>b2b_live_xxx</code> API key with your selected usage quota.
+                      </p>
+                    </div>
+                    <div>
+                      <span style={{ display: "block", color: "#fc2779", fontWeight: 700, marginBottom: "0.25rem", fontSize: "0.85rem" }}>3. Instant Delivery</span>
+                      <p style={{ margin: 0, fontSize: "0.75rem", color: "#94a3b8", lineHeight: 1.5 }}>
+                        Your API key and developer documentation are emailed to you instantly. Start integrating within 60 seconds.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
               </div>
-            </div>
+            )}
+
           </div>
-        </section>
-
-        <section className="b2b-integration">
-          <h2>Integration is This Simple</h2>
-          <p>Paste this snippet inside the header of your website to let your storefront request recommendations.</p>
-          <div className="b2b-code-block">
-            <div className="b2b-code-head"><span>Shopify / WooCommerce Embed Code</span></div>
-            <pre className="b2b-code-body" style={{ color: "#38bdf8" }}>
-{`<!-- Paste this inside your page header -->
-<script
-  src="https://www.mirhaandco.com/widgets/recommend.js"
-  data-api-key="YOUR_API_KEY"
-  data-theme="light"
-  async
-></script>
-
-<div id="mirha-skincare-widget"></div>`}
-            </pre>
-          </div>
-        </section>
-
-        <section id="pricing" className="b2b-pricing">
-          <h2>{paymentRegion === "INR" ? "Simple, Flat INR Pricing" : "Simple, Flat USD Pricing"}</h2>
-          <p>{paymentRegion === "INR" ? "Start testing for free and scale as your traffic grows. Keep it local, pay in Rupees." : "Start testing for free and scale as your traffic grows. Keep it global, pay in Dollars."}</p>
-          <div className="b2b-pricing-grid">
-            <div className="b2b-price-card">
-              <h3>Starter</h3>
-              <p className="price-desc">Best for dev testing and setting up.</p>
-              <div className="b2b-price-amount">{paymentRegion === "INR" ? "₹0" : "$0"} <span>/ month</span></div>
-              <ul className="b2b-price-features">
-                <li><Check size={14} color="#fc2779" /> 100 API requests / month</li>
-                <li><Check size={14} color="#fc2779" /> Full climate adjustments</li>
-                <li><Check size={14} color="#fc2779" /> Standard developer support</li>
-              </ul>
-              <a href="#contact" className="b2b-btn-outline" style={{ width: "100%", justifyContent: "center" }}>Get Trial Key</a>
-            </div>
-            <div className="b2b-price-card popular">
-              <span className="b2b-price-badge">Most Popular</span>
-              <h3>Grow Plan</h3>
-              <p className="price-desc">{paymentRegion === "INR" ? "Perfect for active Indian beauty brands." : "Perfect for active global beauty brands."}</p>
-              <div className="b2b-price-amount">{paymentRegion === "INR" ? "₹3,999" : "$49"} <span>/ month</span></div>
-              <ul className="b2b-price-features">
-                <li><Check size={14} color="#fc2779" /> 5,000 API requests / month</li>
-                <li><Check size={14} color="#fc2779" /> Custom product recommendations</li>
-                <li><Check size={14} color="#fc2779" /> Analytics dashboard</li>
-                <li><Check size={14} color="#fc2779" /> Priority support</li>
-              </ul>
-              <a href="#contact" className="b2b-btn-primary" style={{ width: "100%", justifyContent: "center" }}>Subscribe Now</a>
-            </div>
-            <div className="b2b-price-card">
-              <h3>Scale Plan</h3>
-              <p className="price-desc">Designed for high-traffic stores.</p>
-              <div className="b2b-price-amount">{paymentRegion === "INR" ? "₹7,999" : "$99"} <span>/ month</span></div>
-              <ul className="b2b-price-features">
-                <li><Check size={14} color="#fc2779" /> 20,000 API requests / month</li>
-                <li><Check size={14} color="#fc2779" /> Multi-domain licensing</li>
-                <li><Check size={14} color="#fc2779" /> Dedicated Slack channel</li>
-                <li><Check size={14} color="#fc2779" /> 99.9% API uptime SLA</li>
-              </ul>
-              <a href="#contact" className="b2b-btn-outline" style={{ width: "100%", justifyContent: "center" }}>Subscribe Now</a>
-            </div>
-          </div>
-        </section>
-
-        <section className="b2b-faq">
-          <h2>Frequently Asked Questions</h2>
-          <div className="b2b-faq-list">
-            <div className="b2b-faq-item">
-              <h3>Will the widget recommend Amazon products or competitor links to my customers?</h3>
-              <p><strong>Absolutely not.</strong> Your custom integration only recommends products from <strong>your own brand{"'"}s inventory</strong>. It syncs with your Shopify catalog to drive sales directly to your own checkout page.</p>
-            </div>
-            <div className="b2b-faq-item">
-              <h3>How do we load our products into your recommendation system?</h3>
-              <p>Once you subscribe to the Grow or Scale plan, you can easily sync your store{"'"}s catalog (via a CSV upload or a simple Shopify API integration). Our system automatically categorizes and matches your products to different skin concerns and climates.</p>
-            </div>
-            <div className="b2b-faq-item">
-              <h3>How difficult is it to install the assistant widget?</h3>
-              <p>It takes under 3 minutes. You just copy-paste a single line of JavaScript code into your website{"'"}s header (e.g. your Shopify theme header or WooCommerce builder). No software engineering skills are required.</p>
-            </div>
-            <div className="b2b-faq-item">
-              <h3>How does the climate-aware recommendation work?</h3>
-              <p>{paymentRegion === "INR" ? "The assistant automatically detects the shopper's location within India. It checks regional tap water hardness and real-time weather data (temperature and humidity) to swap products dynamically—ensuring they get the perfect skincare routine for their environment." : "The assistant automatically detects the shopper's location globally. It checks local tap water hardness and real-time weather data (temperature and humidity) to swap products dynamically—ensuring they get the perfect skincare routine for their environment."}</p>
-            </div>
-            <div className="b2b-faq-item">
-              <h3>How long does onboarding and delivery of our custom widget take?</h3>
-              <p>It depends on your catalog size and plan. For the <strong>Starter</strong> plan, you get test key instructions instantly (under 10 minutes). For the <strong>Grow</strong> plan (small brands with 10–40 products), delivery takes <strong>1 to 2 days</strong>. For the <strong>Scale</strong> plan (larger stores with automated Shopify API syncing), it takes <strong>3 to 5 days</strong> to set up, test, and go live.</p>
-            </div>
-          </div>
-        </section>
-
-        <section id="contact" className="b2b-contact">
-          {submittedContact ? (
-            <div style={{ textAlign: "center", padding: "2rem 0" }}>
-              <div style={{ display: "inline-flex", background: "rgba(252,39,121,0.08)", padding: "1rem", borderRadius: "50%", color: "#fc2779", marginBottom: "1.5rem" }}>
-                <CheckCircle2 size={48} />
-              </div>
-              <h3 style={{ fontFamily: "Playfair Display, serif", fontSize: "1.6rem", marginBottom: "0.5rem" }}>Request Submitted!</h3>
-              <p style={{ color: "#8c857f", fontSize: "0.9rem" }}>{paymentRegion === "INR" ? "Thank you, we've registered your interest. We will email you with your active API key and UPI payment details within 24 hours." : "Thank you, we've registered your interest. We will email you with your active API key and checkout details within 24 hours."}</p>
-            </div>
-          ) : (
-            <form onSubmit={handleContactSubmit} style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
-              <div style={{ textAlign: "center", marginBottom: "0.5rem" }}>
-                <h3 style={{ fontFamily: "Playfair Display, serif", fontSize: "1.6rem", marginBottom: "0.4rem" }}>Get Started Today</h3>
-                <p style={{ color: "#8c857f", fontSize: "0.85rem" }}>Provide your brand details to receive your API test key and payment setup instructions.</p>
-              </div>
-              <div className="b2b-form-group">
-                <label>Name</label>
-                <input type="text" required className="b2b-form-control" value={contactName} onChange={(e) => setContactName(e.target.value)} placeholder="e.g. Tanvir Khan" />
-              </div>
-              <div className="b2b-form-group">
-                <label>Email Address</label>
-                <input type="email" required className="b2b-form-control" value={contactEmail} onChange={(e) => setContactEmail(e.target.value)} placeholder="e.g. contact@yourbrand.com" />
-              </div>
-              <div className="b2b-form-group">
-                <label>Brand / Store Name</label>
-                <input type="text" required className="b2b-form-control" value={contactBrand} onChange={(e) => setContactBrand(e.target.value)} placeholder={paymentRegion === "INR" ? "e.g. Indie Organics India" : "e.g. Aura Skincare US"} />
-              </div>
-              <div className="b2b-form-group">
-                <label>Integration Platform / Comments</label>
-                <textarea className="b2b-form-control" rows={3} value={contactMessage} onChange={(e) => setContactMessage(e.target.value)} placeholder="e.g. Shopify store selling organic sunscreens..." />
-              </div>
-              <button type="submit" className="b2b-btn-primary" style={{ width: "100%" }}>
-                Submit & Request Key <Send size={16} />
-              </button>
-            </form>
-          )}
         </section>
       </div>
+
+      {/* Navigation Bar Bottom */}
+      <footer className="deck-controls">
+        <div style={{ display: "flex", gap: "0.5rem" }}>
+          <button 
+            onClick={() => setCurrentSlide(prev => Math.max(prev - 1, 1))}
+            disabled={currentSlide === 1}
+            className="pitch-btn-outline"
+            style={{ padding: "0.5rem 1rem", opacity: currentSlide === 1 ? 0.3 : 1 }}
+          >
+            <ChevronLeft size={16} /> Prev
+          </button>
+          <button 
+            onClick={() => setCurrentSlide(prev => Math.min(prev + 1, totalSlides))}
+            disabled={currentSlide === totalSlides}
+            className="pitch-btn-outline"
+            style={{ padding: "0.5rem 1rem", opacity: currentSlide === totalSlides ? 0.3 : 1 }}
+          >
+            Next <ChevronRight size={16} />
+          </button>
+        </div>
+
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <span style={{ fontSize: "0.75rem", color: "#94a3b8", fontFamily: "monospace" }}>
+            Slide {currentSlide} of {totalSlides}
+          </span>
+          <div className="progress-container">
+            <div 
+              className="progress-bar" 
+              style={{ width: `${(currentSlide / totalSlides) * 100}%` }}
+            />
+          </div>
+        </div>
+
+        <div>
+          <span style={{ fontSize: "0.75rem", color: "#fc2779", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em" }}>
+            Climate &amp; Hard Water API
+          </span>
+        </div>
+      </footer>
     </main>
   );
 }
-

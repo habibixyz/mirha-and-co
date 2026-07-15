@@ -65,6 +65,7 @@ export default function SiteHeader() {
             <Link href="/tools/dupes"       className="site-header-nav-link">Dupe Finder</Link>
             <Link href="/k-beauty"          className="site-header-nav-link site-header-nav-link--accent">K-Beauty</Link>
             <Link href="/mens-grooming"     className="site-header-nav-link site-header-nav-link--accent">Men</Link>
+            <Link href="/blog"              className="site-header-nav-link">{t("nav.blog")}</Link>
           </nav>
         </div>
 
@@ -79,10 +80,9 @@ export default function SiteHeader() {
         {/* Right Nav — Desktop only */}
         <div className="site-header-right">
           <nav className="flex items-center gap-5">
-            <Link href="/blog"      className="site-header-nav-link">{t("nav.blog")}</Link>
-            <Link href="/pricing"   className="site-header-nav-link">{t("nav.pricing")}</Link>
             <Link href="/b2b"       className="site-header-nav-link">B2B SaaS</Link>
             <Link href="/about"     className="site-header-nav-link">{t("nav.about")}</Link>
+            <Link href="/pricing"   className="site-header-nav-link">{t("nav.pricing")}</Link>
             <Link href="/dashboard" className="site-header-nav-link">{t("nav.dashboard")}</Link>
             <a
               href="https://www.instagram.com/mirha_andco/"
@@ -162,9 +162,9 @@ export default function SiteHeader() {
 
             {/* Main nav */}
             <Link href="/blog"      onClick={() => setMenuOpen(false)} className="hover:text-[#fc2779] transition-colors" style={navLinkStyle}>{t("nav.blog")}</Link>
-            <Link href="/pricing"   onClick={() => setMenuOpen(false)} className="hover:text-[#fc2779] transition-colors" style={navLinkStyle}>{t("nav.pricing")}</Link>
             <Link href="/b2b"       onClick={() => setMenuOpen(false)} className="hover:text-[#fc2779] transition-colors" style={navLinkStyle}>B2B SaaS</Link>
             <Link href="/about"     onClick={() => setMenuOpen(false)} className="hover:text-[#fc2779] transition-colors" style={navLinkStyle}>{t("nav.about")}</Link>
+            <Link href="/pricing"   onClick={() => setMenuOpen(false)} className="hover:text-[#fc2779] transition-colors" style={navLinkStyle}>{t("nav.pricing")}</Link>
             <Link href="/dashboard" onClick={() => setMenuOpen(false)} className="hover:text-[#fc2779] transition-colors" style={navLinkStyle}>{t("nav.dashboard")}</Link>
 
             <div style={{ height: "1px", background: "#e5ded6" }} />

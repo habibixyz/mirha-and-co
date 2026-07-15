@@ -305,6 +305,8 @@ export default async function RootLayout({
  <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem" }}>
  <Link href="/about" className="footer-link">About Us</Link>
  <Link href="/pricing" className="footer-link">Pricing Plans</Link>
+ <Link href="/b2b" className="footer-link">B2B SaaS API</Link>
+ <Link href="/contact" className="footer-link" style={{ color: "#fc2779", fontWeight: 600 }}>Contact &amp; Support</Link>
  <Link href="/blog" className="footer-link">Our Blog</Link>
  <Link href="/tools/ingredients" className="footer-link">Ingredient Checker</Link>
  <Link href="/tools/hard-water" className="footer-link">Hard Water Test</Link>
@@ -369,6 +371,7 @@ export default async function RootLayout({
  <Link href="/terms" className="footer-link" style={{ color: "inherit", textDecoration: "none" }}>Terms of Service</Link>
  <Link href="/privacy" className="footer-link" style={{ color: "inherit", textDecoration: "none" }}>Privacy Policy</Link>
  <Link href="/refunds" className="footer-link" style={{ color: "inherit", textDecoration: "none" }}>Refund Policy</Link>
+ <Link href="/contact" className="footer-link" style={{ color: "inherit", textDecoration: "none" }}>Contact &amp; Support</Link>
  </div>
  <span>Beauty · Skincare · Wellness · Lifestyle</span>
  </div>

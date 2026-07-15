@@ -3,7 +3,7 @@ import crypto from "crypto";
 import { prisma } from "@/lib/prisma";
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = new Resend(process.env.RESEND_API_KEY || "re_dummy");
 
 function generateB2BKey(tier: string): string {
   const prefix = tier === "scale" ? "b2b_scale_" : "b2b_live_";
@@ -111,7 +111,7 @@ export async function POST(req: Request) {
 
       // ── Email the API key to the client ──
       await resend.emails.send({
-        from: "Mirha & Co. B2B <b2b@mirhaandco.com>",
+        from: "Mirha & Co. B2B <noreply@mirhaandco.com>",
         to: email,
         subject: `Your Mirha & Co. API Key is Ready — ${tier === "scale" ? "Scale Enterprise" : "Growth"} Tier`,
         html: `

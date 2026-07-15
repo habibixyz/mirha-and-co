@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Check, HelpCircle, Star, X } from "lucide-react";
+import { Check, HelpCircle, Star, X, ArrowRight } from "lucide-react";
 import { PricingCards } from "./PricingCards";
 
 export const metadata: Metadata = {
@@ -500,9 +500,18 @@ export default function PricingPage() {
  Skincare intelligence,
  <span>properly priced.</span>
  </h1>
- <p className="pricing-subtitle">
+ <p className="pricing-subtitle" style={{ marginBottom: "2.5rem" }}>
  Free tools to start your profile. Pro turns Mirha into a repeatable skincare system with saved history, scans, trend analysis, and deeper compatibility checks.
  </p>
+
+ <div style={{ display: "inline-flex", background: "rgba(0,0,0,0.04)", padding: "0.35rem", borderRadius: "99px", alignItems: "center", gap: "0.5rem", border: "1px solid rgba(0,0,0,0.05)" }}>
+   <span style={{ fontSize: "0.85rem", fontWeight: 700, padding: "0.6rem 1.25rem", background: "#fff", color: "var(--ink)", borderRadius: "99px", boxShadow: "0 2px 8px rgba(0,0,0,0.06)" }}>
+     For Individuals
+   </span>
+   <Link href="/b2b" style={{ fontSize: "0.85rem", fontWeight: 600, padding: "0.6rem 1.25rem", color: "var(--muted)", textDecoration: "none", display: "flex", alignItems: "center", gap: "0.4rem", transition: "color 0.2s" }}>
+     For Enterprise (B2B) <ArrowRight size={14} />
+   </Link>
+ </div>
  </div>
 
    {/* Dynamic Plans */}

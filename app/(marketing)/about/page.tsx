@@ -7,7 +7,7 @@ import CollabForm from "@/components/CollabForm";
 export const metadata = {
  title: "About | Mirha & Co.",
  description:
- "Mirha & Co. is a global skincare intelligence platform and plug-and-play B2B SaaS widget provider, blending curated ingredient analysis with AI-powered personalized advice.",
+ "Mirha & Co. is a global skincare intelligence platform and headless B2B API provider. We license a climate-aware, ingredient-intelligent skincare recommendation engine to enterprise beauty brands worldwide.",
 };
 
 export default function AboutPage() {
@@ -505,11 +505,11 @@ export default function AboutPage() {
       </p>
     </div>
 
-     <div className="ecosystem-card wide" style={{ border: "1px solid rgba(252, 39, 121, 0.2)" }}>
+     <div className="ecosystem-card wide" style={{ border: "1px solid rgba(252, 39, 121, 0.2)", background: "rgba(252, 39, 121, 0.02)" }}>
        <div className="eco-icon" style={{ background: "rgba(252, 39, 121, 0.08)", color: "#fc2779" }}><Star size={28} /></div>
-       <h3 style={{ color: "#fc2779" }}>Plug-and-Play B2B SaaS</h3>
+       <h3 style={{ color: "#fc2779" }}>Enterprise B2B API</h3>
        <p>
-         We license our climate-aware skincare recommendation engine to brands worldwide. Shopify and WooCommerce stores embed our AI widget to drive conversions globally.
+         We license our headless skincare recommendation engine to beauty brands and marketplaces worldwide via a simple REST API. Enterprise clients get a dedicated API key, monthly call quotas, and climate-aware product recommendations that adapt to their customers&apos; local tap water hardness and humidity. <a href="/b2b" style={{ color: "#fc2779", fontWeight: 600, textDecoration: "none" }}>View pricing →</a>
        </p>
      </div>
   </div>
@@ -642,13 +642,13 @@ export default function AboutPage() {
  {/* COLLABORATIONS / BRAND REGISTRATION */}
  <section className="section rose" style={{ borderTop: "1px solid var(--rule)" }}>
  <div className="inner" style={{ maxWidth: "800px", margin: "0 auto", textAlign: "center" }}>
- <p className="eyebrow" style={{ justifyContent: "center" }}>Brand Partnerships</p>
+ <p className="eyebrow" style={{ justifyContent: "center" }}>Enterprise Partnerships</p>
  <h2 className="section-title">
- Partner With Us
- <span style={{ fontSize: "clamp(1.8rem, 4vw, 3rem)" }}>Sell your brand on Mirha&nbsp;&amp;&nbsp;Co.</span>
+  Integrate the API
+  <span style={{ fontSize: "clamp(1.8rem, 4vw, 3rem)" }}>Power your recommendations with Mirha&nbsp;&amp;&nbsp;Co.</span>
  </h2>
  <p style={{ color: "var(--muted)", marginBottom: "3rem", fontSize: "1.05rem", lineHeight: "1.7" }}>
- Are you a skincare brand looking to reach a global audience or integrate our climate-aware recommendation widget directly onto your storefront? We license our B2B SaaS tools to brands worldwide and feature authentic partners on our platform. Submit your details below to get started, or reach out directly at <strong style={{ color: "var(--rose)" }}>tanizcoldz@gmail.com</strong> / <strong style={{ color: "var(--rose)" }}>+91 9372159177</strong>.
+  Are you an enterprise beauty brand or marketplace looking to integrate a climate-aware skincare recommendation engine into your platform? We provide a headless B2B API that sends your customers personalised routines based on their local water hardness, humidity and temperature — all via a simple REST call. Interested in a pilot or a custom SLA? Reach out directly at <strong style={{ color: "var(--rose)" }}>tanizcoldz@gmail.com</strong> or submit your details below.
  </p>
  <CollabForm />
  </div>
@@ -663,14 +663,14 @@ export default function AboutPage() {
  </p>
 
   <div className="btn-row">
-    <Link href="/tools/routine" className="btn primary">
+    <Link href="/b2b" className="btn primary">
+      View B2B Enterprise API
+    </Link>
+    <Link href="/tools/routine" className="btn secondary">
       Build a Routine
     </Link>
     <Link href="/tools/ingredients" className="btn secondary">
       Check Ingredients
-    </Link>
-    <Link href="/tools/dupes" className="btn secondary">
-      Find Beauty Dupes
     </Link>
   </div>
  </div>
