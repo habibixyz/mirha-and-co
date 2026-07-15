@@ -427,6 +427,11 @@ html, body {
  justify-content: center !important;
  align-items: center !important;
  flex: 0 0 auto !important;
+ pointer-events: none !important;
+}
+
+.site-header-logo-wrapper a {
+ pointer-events: auto !important;
 }
 
 @media (min-width: 768px) {
@@ -436,6 +441,8 @@ html, body {
  justify-content: flex-start !important;
  align-items: center !important;
  min-width: 0 !important;
+ position: relative !important;
+ z-index: 10 !important;
  }
  
  .site-header-right {
@@ -445,6 +452,8 @@ html, body {
  align-items: center !important;
  min-width: 0 !important;
  gap: 1.5rem !important;
+ position: relative !important;
+ z-index: 10 !important;
  }
 
  .site-header-logo-wrapper {

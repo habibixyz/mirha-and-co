@@ -58,8 +58,8 @@ export default function SiteHeader() {
       <div className="site-header-container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
 
         {/* Left Nav — Desktop only */}
-        <div className="site-header-left">
-          <nav className="flex items-center gap-4">
+        <div className="site-header-left relative z-10">
+          <nav className="flex items-center gap-3 lg:gap-4">
             <Link href="/tools/ingredients" className="site-header-nav-link">{t("nav.ingredients")}</Link>
             <Link href="/tools/hard-water"  className="site-header-nav-link">Hard Water</Link>
             <Link href="/tools/dupes"       className="site-header-nav-link">Dupe Finder</Link>
@@ -194,19 +194,6 @@ export default function SiteHeader() {
                 <span>LinkedIn</span>
               </a>
             </div>
-
-            {/* LinkedIn link */}
-            <a
-              href="https://www.linkedin.com/company/mirhaandco/"
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => setMenuOpen(false)}
-              className="flex items-center gap-2 transition-colors hover:text-[#fc2779]"
-              style={{ ...navLinkStyle, textTransform: "none", display: "flex", alignItems: "center" }}
-            >
-              <LinkedInIcon size={16} />
-              <span>LinkedIn</span>
-            </a>
 
             <div style={{ height: "1px", background: "#e5ded6" }} />
 
