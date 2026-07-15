@@ -72,7 +72,7 @@ export async function POST(req: Request) {
       if (b2bEmail) {
         const brandName = data.metadata?.b2b_brand || "Unknown Brand";
         const tier = data.metadata?.b2b_tier || "growth"; // "growth" | "scale"
-        const monthlyQuota = tier === "scale" ? 500000 : 50000;
+        const monthlyQuota = tier === "scale" ? 1000000 : 150000;
         const apiKey = generateB2BKey(tier);
         const nextMonth = new Date();
         nextMonth.setDate(1);

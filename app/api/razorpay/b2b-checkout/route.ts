@@ -7,12 +7,12 @@ const TIER_CONFIG = {
   growth: {
     monthly: { amount: 4150000, label: "Growth Tier — Monthly ($499/mo)" },
     annual:  { amount: 39840000, label: "Growth Tier — Annual ($399/mo × 12)" },
-    quota: 50000,
+    quota: 150000,
   },
   scale: {
     monthly: { amount: 15800000, label: "Scale Enterprise — Monthly ($1,899/mo)" },
     annual:  { amount: 15168000, label: "Scale Enterprise — Annual ($1,499/mo × 12)" },
-    quota: 500000,
+    quota: 1000000,
   },
 } as const;
 

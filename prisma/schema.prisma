@@ -179,7 +179,7 @@ model B2BApiKey {
   billing     String   @default("monthly") // "monthly" | "annual"
 
   // Quota tracking
-  monthlyQuota  Int      @default(50000)  // 50k for growth, 500k for scale
+  monthlyQuota  Int      @default(150000) // 150k for growth, 1M for scale
   usageThisMonth Int     @default(0)
   quotaResetAt  DateTime @default(now())  // reset on the 1st of each month
 

@@ -71,7 +71,7 @@ export async function POST(req: Request) {
       }
 
       // ── Provision B2B key ──
-      const monthlyQuota = tier === "scale" ? 500000 : 50000;
+      const monthlyQuota = tier === "scale" ? 1000000 : 150000;
       const apiKey = generateB2BKey(tier);
       const nextMonth = new Date();
       nextMonth.setDate(1);

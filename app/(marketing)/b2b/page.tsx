@@ -1648,7 +1648,7 @@ const { water_hardness, humidity, recommendation_vector } = await response.json(
                           <span style={{ fontSize: "0.85rem", color: "#94a3b8" }}>/mo</span>
                         </div>
                         <ul style={{ listStyle: "none", padding: 0, fontSize: "0.8rem", color: "#94a3b8", display: "flex", flexDirection: "column", gap: "0.5rem", marginBottom: "1.5rem" }}>
-                          <li>✓ Up to 50k API calls/mo</li>
+                          <li>✓ Up to 150k API calls/mo</li>
                           <li>✓ Hard Water Matrix (ppm)</li>
                           <li>✓ Climate + Humidity Swaps</li>
                           <li>✓ Email support (24h SLA)</li>
@@ -1680,7 +1680,7 @@ const { water_hardness, humidity, recommendation_vector } = await response.json(
                           <span style={{ fontSize: "0.85rem", color: "#94a3b8" }}>/mo</span>
                         </div>
                         <ul style={{ listStyle: "none", padding: 0, fontSize: "0.8rem", color: "#94a3b8", display: "flex", flexDirection: "column", gap: "0.5rem", marginBottom: "1.5rem" }}>
-                          <li>✓ Up to 500k API calls/mo</li>
+                          <li>✓ Up to 1M API calls/mo</li>
                           <li>✓ Advanced Water Mineral Matrix</li>
                           <li>✓ Dynamic Dewpoint Adjusters</li>
                           <li>✓ Dedicated Slack channel support</li>
@@ -1708,7 +1708,7 @@ const { water_hardness, humidity, recommendation_vector } = await response.json(
                           <span style={{ fontSize: "1.75rem", fontWeight: 800, color: "#fff" }}>Volume Pricing</span>
                         </div>
                         <ul style={{ listStyle: "none", padding: 0, fontSize: "0.8rem", color: "#94a3b8", display: "flex", flexDirection: "column", gap: "0.5rem", marginBottom: "1rem" }}>
-                          <li>✓ 500k+ custom API calls/mo</li>
+                          <li>✓ 1M+ custom API calls/mo</li>
                           <li>✓ Tailored formulation parameters</li>
                           <li>✓ Dedicated multi-region edge node</li>
                           <li>✓ 99.9% uptime SLA guarantee</li>
@@ -1720,6 +1720,10 @@ const { water_hardness, humidity, recommendation_vector } = await response.json(
                     </div>
                   </div>
                 </div>
+
+                <p style={{ textAlign: "center", fontSize: "0.8rem", color: "#94a3b8", marginTop: "1.5rem" }}>
+                  * Overage volume billed dynamically at $0.008 per additional request on Growth, and $0.003 on Scale Enterprise.
+                </p>
 
                 {/* Provisioning Info Box */}
                 <div style={{ marginTop: "2rem", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "12px", padding: "1.5rem" }}>
