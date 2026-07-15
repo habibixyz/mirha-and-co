@@ -70,7 +70,7 @@ export default function SiteHeader() {
         </div>
 
         {/* Mobile spacer */}
-        <div className="md:hidden flex-1 flex justify-start" />
+        <div className="lg:hidden flex-1 flex justify-start" />
 
         {/* Logo */}
         <div className="site-header-logo-wrapper">
@@ -109,7 +109,7 @@ export default function SiteHeader() {
         </div>
 
         {/* Hamburger — Mobile */}
-        <div className="md:hidden flex-1 flex items-center justify-end">
+        <div className="lg:hidden flex-1 flex items-center justify-end">
           {!menuOpen && (
             <button
               className="text-black hover:text-[#fc2779] transition-colors cursor-pointer"

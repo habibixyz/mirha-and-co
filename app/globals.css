@@ -434,7 +434,7 @@ html, body {
  pointer-events: auto !important;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
  .site-header-left {
  display: flex !important;
  flex: 1 1 0% !important;
@@ -442,7 +442,7 @@ html, body {
  align-items: center !important;
  min-width: 0 !important;
  position: relative !important;
- z-index: 10 !important;
+ z-index: 20 !important;
  }
  
  .site-header-right {
@@ -453,7 +453,7 @@ html, body {
  min-width: 0 !important;
  gap: 1.5rem !important;
  position: relative !important;
- z-index: 10 !important;
+ z-index: 20 !important;
  }
 
  .site-header-logo-wrapper {
@@ -541,7 +541,7 @@ html, body {
  z-index: 10000 !important;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
  .site-header-drawer-overlay {
  display: none !important;
  }
