@@ -53,6 +53,17 @@ The platform is designed to:
 
 ---
 
+## AI Development & Codex / GPT-5.6 Integration
+
+This platform was architected and built with extensive AI pair-programming leveraging **OpenAI Codex** and **GPT-5.6** models:
+
+* **Full-Stack Architecture & Scaffolding**: Leveraged OpenAI Codex for rapid Next.js 16 App Router structuring, strict TypeScript interfaces, and Prisma ORM relational schema design (`User`, `Routine`, `SkinJournal`, `AiQueryLog`).
+* **Algorithmic Logic & RAG Search**: Engineered core backend algorithms with GPT-5.6, including the **Cross-Product Ingredient Conflict Matrix** (detecting AHA + Retinol layering conflicts), regional climate localization logic, and product vector search retrieval.
+* **Component Synthesis & Refactoring**: Applied Codex to generate responsive, glassmorphic UI components (`RoutineQuiz.tsx`, `IngredientConflictChecker.tsx`, `ShopFilterClient.tsx`) and optimize Next.js Server Actions.
+* **Automated Tooling & Scripts**: Utilized Codex to generate batch optimization scripts (`scratch/optimize_all_assets.py`, `scratch/make_submission_zip.ps1`) to streamline asset management and deployment packaging.
+
+---
+
 ## Project Structure
 
 ```bash
