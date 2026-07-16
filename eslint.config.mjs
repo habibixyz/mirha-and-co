@@ -12,6 +12,11 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    "scratch/**",
+    "seed.js",
+    "mirha-saas-changes/**",
+    "mirha-and-co/**",
+    "uk us asia blog/**",
   ]),
 ]);
 

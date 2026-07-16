@@ -47,3 +47,4 @@ next-env.d.ts
 /scratch/
 /public/temp_recent/
 .env*.local
+*.zip
