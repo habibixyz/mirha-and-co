@@ -1144,13 +1144,20 @@ export default function B2BPitchDeck() {
             </ul>
           </div>
 
-          <div style={{ padding: "1.5rem", background: "rgba(255,255,255,0.02)", borderRadius: "12px", border: "1px solid rgba(255,255,255,0.04)" }}>
-            <span style={{ fontSize: "0.65rem", textTransform: "uppercase", letterSpacing: "0.08em", color: "#94a3b8", display: "block", marginBottom: "0.5rem" }}>
-              Targeting Enterprise
+          <div style={{ padding: "1.25rem", background: "rgba(255,255,255,0.02)", borderRadius: "12px", border: "1px solid rgba(255,255,255,0.04)" }}>
+            <span style={{ fontSize: "0.65rem", textTransform: "uppercase", letterSpacing: "0.08em", color: "#38bdf8", display: "block", marginBottom: "0.5rem", fontWeight: 700 }}>
+              Developer Portal
             </span>
-            <p style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.5)", lineHeight: 1.4, margin: 0 }}>
-              Global Beauty Retailers & Enterprise Marketplaces
+            <p style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.6)", lineHeight: 1.4, margin: "0 0 0.75rem 0" }}>
+              Zip Code Geocoding & Custom Store Catalog Sandbox
             </p>
+            <Link
+              href="/b2b/dashboard"
+              className="pitch-btn-outline"
+              style={{ padding: "0.45rem 0.85rem", fontSize: "0.75rem", width: "100%", textDecoration: "none" }}
+            >
+              Enter API Portal <ArrowRight size={12} />
+            </Link>
           </div>
         </aside>
 
@@ -1169,15 +1176,19 @@ export default function B2BPitchDeck() {
                   Hyper-Personalizing Global Beauty: The Climate & Hard Water API
                 </h1>
                 <p className="slide-subtitle" style={{ maxWidth: "700px" }}>
-                  Transforming E-Commerce Intelligence, Slashing Returns, and Driving Conversions via Real-World Environmental Diagnostics.
+                  Transforming E-Commerce Intelligence, Slashing Returns, and Driving Conversions via Real-World Environmental Diagnostics & Custom Catalog Mapping.
                 </p>
                 <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
                   <button onClick={() => setCurrentSlide(2)} className="pitch-btn-primary">
                     Start Presentation <ArrowRight size={16} />
                   </button>
+                  <Link href="/b2b/dashboard" className="pitch-btn-outline" style={{ textDecoration: "none" }}>
+                    Developer API Portal <Code2 size={16} />
+                  </Link>
                 </div>
               </div>
             )}
+
 
             {/* SLIDE 2: The Problem */}
             {currentSlide === 2 && (

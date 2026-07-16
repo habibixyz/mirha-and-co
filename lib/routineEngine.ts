@@ -360,12 +360,144 @@ const ROUTINE_MAP: Record<string, Record<string, RoutineRecommendation>> = {
 // Moderately Hard: 75–149 PPM — Mumbai (140), Sydney, Miami
 // Soft:            < 75 PPM   — New York (55), Stockholm (20), Tokyo
 
-export interface ClimateInput {
-  temp: number;      // °C
-  humidity: number;  // %
+export interface ClientProduct {
+  id: string;
+  name: string;
+  category?: 'cleanser' | 'treatment' | 'moisturiser' | 'sunscreen' | string;
+  ingredients?: string;
+  tags?: string[];
+  price?: number;
+  reason?: string;
+}
+
+// ─── POSTAL CODE & GLOBAL CITY MATRIX ──────────────────────────────────────
+export interface ResolvedLocationData {
   city: string;
-  ppm?: number;      // Water hardness in Parts Per Million (Growth+ tier)
-  dewpoint?: number; // °C — if not supplied, computed via Magnus formula (Scale tier)
+  country: string;
+  ppm: number;
+  temp: number;
+  humidity: number;
+  dewpoint: number;
+  waterCategory: 'Very Hard' | 'Hard' | 'Moderately Hard' | 'Soft';
+}
+
+const GLOBAL_LOCATION_DB: Record<string, ResolvedLocationData> = {
+  // US Postal Codes & Cities
+  "90210": { city: "Los Angeles", country: "US", ppm: 320, temp: 26, humidity: 45, dewpoint: 13.5, waterCategory: "Very Hard" },
+  "los_angeles": { city: "Los Angeles", country: "US", ppm: 320, temp: 26, humidity: 45, dewpoint: 13.5, waterCategory: "Very Hard" },
+  "la": { city: "Los Angeles", country: "US", ppm: 320, temp: 26, humidity: 45, dewpoint: 13.5, waterCategory: "Very Hard" },
+  "10001": { city: "New York", country: "US", ppm: 55, temp: 14, humidity: 52, dewpoint: 4.2, waterCategory: "Soft" },
+  "new_york": { city: "New York", country: "US", ppm: 55, temp: 14, humidity: 52, dewpoint: 4.2, waterCategory: "Soft" },
+  "ny": { city: "New York", country: "US", ppm: 55, temp: 14, humidity: 52, dewpoint: 4.2, waterCategory: "Soft" },
+  "33101": { city: "Miami", country: "US", ppm: 145, temp: 31, humidity: 82, dewpoint: 24.1, waterCategory: "Moderately Hard" },
+  "miami": { city: "Miami", country: "US", ppm: 145, temp: 31, humidity: 82, dewpoint: 24.1, waterCategory: "Moderately Hard" },
+
+  // UK Postal Codes & Cities
+  "sw1a": { city: "London", country: "UK", ppm: 280, temp: 18, humidity: 78, dewpoint: 14.2, waterCategory: "Very Hard" },
+  "london": { city: "London", country: "UK", ppm: 280, temp: 18, humidity: 78, dewpoint: 14.2, waterCategory: "Very Hard" },
+  "m1": { city: "Manchester", country: "UK", ppm: 45, temp: 15, humidity: 80, dewpoint: 11.5, waterCategory: "Soft" },
+
+  // UAE
+  "dubai": { city: "Dubai", country: "AE", ppm: 290, temp: 36, humidity: 62, dewpoint: 27.5, waterCategory: "Very Hard" },
+  "dxb": { city: "Dubai", country: "AE", ppm: 290, temp: 36, humidity: 62, dewpoint: 27.5, waterCategory: "Very Hard" },
+
+  // Europe
+  "stockholm": { city: "Stockholm", country: "SE", ppm: 20, temp: 8, humidity: 60, dewpoint: 0.8, waterCategory: "Soft" },
+  "75001": { city: "Paris", country: "FR", ppm: 240, temp: 17, humidity: 70, dewpoint: 11.4, waterCategory: "Very Hard" },
+  "paris": { city: "Paris", country: "FR", ppm: 240, temp: 17, humidity: 70, dewpoint: 11.4, waterCategory: "Very Hard" },
+
+  // India
+  "400001": { city: "Mumbai", country: "IN", ppm: 140, temp: 32, humidity: 85, dewpoint: 26.2, waterCategory: "Moderately Hard" },
+  "mumbai": { city: "Mumbai", country: "IN", ppm: 140, temp: 32, humidity: 85, dewpoint: 26.2, waterCategory: "Moderately Hard" },
+  "110001": { city: "Delhi", country: "IN", ppm: 190, temp: 34, humidity: 65, dewpoint: 21.0, waterCategory: "Hard" },
+  "delhi": { city: "Delhi", country: "IN", ppm: 190, temp: 34, humidity: 65, dewpoint: 21.0, waterCategory: "Hard" },
+  "560001": { city: "Bangalore", country: "IN", ppm: 180, temp: 25, humidity: 62, dewpoint: 17.2, waterCategory: "Hard" },
+  "bangalore": { city: "Bangalore", country: "IN", ppm: 180, temp: 25, humidity: 62, dewpoint: 17.2, waterCategory: "Hard" },
+  "600001": { city: "Chennai", country: "IN", ppm: 260, temp: 33, humidity: 80, dewpoint: 25.5, waterCategory: "Very Hard" },
+  "chennai": { city: "Chennai", country: "IN", ppm: 260, temp: 33, humidity: 80, dewpoint: 25.5, waterCategory: "Very Hard" },
+};
+
+export function resolveLocationData(query?: { postalCode?: string; city?: string; country?: string; temp?: number; humidity?: number; ppm?: number; dewpoint?: number }): ResolvedLocationData {
+  const key = (query?.postalCode || query?.city || "london").toString().toLowerCase().trim();
+  const matched = GLOBAL_LOCATION_DB[key];
+
+  if (matched) {
+    return {
+      city: matched.city,
+      country: matched.country,
+      ppm: query?.ppm ?? matched.ppm,
+      temp: query?.temp ?? matched.temp,
+      humidity: query?.humidity ?? matched.humidity,
+      dewpoint: query?.dewpoint ?? matched.dewpoint,
+      waterCategory: matched.waterCategory,
+    };
+  }
+
+  const ppm = query?.ppm ?? 180;
+  const temp = query?.temp ?? 24;
+  const humidity = query?.humidity ?? 65;
+  const dp = query?.dewpoint ?? (temp - ((100 - humidity) / 5));
+
+  let waterCategory: ResolvedLocationData['waterCategory'] = "Hard";
+  if (ppm > 200) waterCategory = "Very Hard";
+  else if (ppm < 75) waterCategory = "Soft";
+  else if (ppm < 150) waterCategory = "Moderately Hard";
+
+  return {
+    city: query?.city || query?.postalCode || "Global Location",
+    country: query?.country || "Global",
+    ppm,
+    temp,
+    humidity,
+    dewpoint: dp,
+    waterCategory,
+  };
+}
+
+// ─── INGREDIENT AUTO-CLASSIFICATION ENGINE ─────────────────────────────────
+export function classifyClientProduct(prod: ClientProduct): {
+  isChelating: boolean;
+  isWaterGel: boolean;
+  isBarrierRepair: boolean;
+  isMatte: boolean;
+  category: string;
+} {
+  const ing = (prod.ingredients || "").toLowerCase();
+  const name = prod.name.toLowerCase();
+  const tags = (prod.tags || []).map(t => t.toLowerCase());
+
+  const isChelating = tags.includes("chelating") || tags.includes("anti_hardwater") ||
+    ing.includes("edta") || ing.includes("citric acid") || ing.includes("phytic acid") || ing.includes("sodium gluconate");
+
+  const isWaterGel = tags.includes("water_gel") || tags.includes("oil_free") ||
+    ing.includes("hyaluronic") || ing.includes("water gel") || name.includes("water gel") || name.includes("aqua gel");
+
+  const isBarrierRepair = tags.includes("barrier_repair") || tags.includes("occlusive") ||
+    ing.includes("ceramide") || ing.includes("shea") || ing.includes("squalane") || ing.includes("petrolatum") || name.includes("baume") || name.includes("cream");
+
+  const isMatte = tags.includes("matte") || tags.includes("dry_touch") ||
+    ing.includes("silicon") || ing.includes("niacinamide") || name.includes("matte");
+
+  let category = prod.category?.toLowerCase() || "";
+  if (!category) {
+    if (name.includes("wash") || name.includes("cleanser") || name.includes("gel face")) category = "cleanser";
+    else if (name.includes("spf") || name.includes("sunscreen") || name.includes("sun")) category = "sunscreen";
+    else if (name.includes("cream") || name.includes("moistur") || name.includes("lotion") || name.includes("balm")) category = "moisturiser";
+    else category = "treatment";
+  }
+
+  return { isChelating, isWaterGel, isBarrierRepair, isMatte, category };
+}
+
+export interface ClimateInput {
+  temp?: number;      // °C
+  humidity?: number;  // %
+  city?: string;
+  postalCode?: string;
+  country?: string;
+  ppm?: number;      // Water hardness in Parts Per Million
+  dewpoint?: number; // °C
+  catalog?: ClientProduct[]; // Custom merchant product array
 }
 
 // ─── GENERATE ROUTINE ─────────────────────────────────────────────────────────
@@ -399,13 +531,76 @@ export const generateRoutine = (
  };
 
  if (climate) {
-  const { temp, humidity, city, ppm, dewpoint } = climate;
+  const loc = resolveLocationData(climate);
+  const { temp, humidity, city, ppm, dewpoint } = loc;
+  const customCatalog = climate.catalog;
   const swappedFields: string[] = [];
 
-  // ── HARD WATER MATRIX (Growth + Scale tier) ─────────────────────────────
-  // PPM > 200: calcium binds with cleanser surfactants → soap scum clogs pores
-  // Fix: chelating low-pH cleanser + lightweight moisturiser
-  if (ppm && ppm > 200) {
+  // ── CUSTOM MERCHANT CATALOG SELECTION ──
+  if (customCatalog && customCatalog.length > 0) {
+    const categorized: Record<string, ClientProduct[]> = { cleanser: [], treatment: [], moisturiser: [], sunscreen: [] };
+    
+    customCatalog.forEach(prod => {
+      const meta = classifyClientProduct(prod);
+      const catKey = meta.category === "moisturizer" ? "moisturiser" : meta.category;
+      if (categorized[catKey]) {
+        categorized[catKey].push(prod);
+      }
+    });
+
+    if (categorized.cleanser.length > 0) {
+      let bestCleanser = categorized.cleanser[0];
+      if (ppm > 200) {
+        const chelatingMatch = categorized.cleanser.find(p => classifyClientProduct(p).isChelating);
+        if (chelatingMatch) bestCleanser = chelatingMatch;
+      }
+      routine.cleanser = {
+        asin: bestCleanser.id,
+        name: bestCleanser.name,
+        reason: bestCleanser.reason || `Selected from store catalog. Fits ${city} tap water profile (${ppm} PPM).`,
+      };
+    }
+
+    if (categorized.moisturiser.length > 0) {
+      let bestMoisturiser = categorized.moisturiser[0];
+      if (humidity > 75 || temp > 30) {
+        const gelMatch = categorized.moisturiser.find(p => classifyClientProduct(p).isWaterGel);
+        if (gelMatch) bestMoisturiser = gelMatch;
+      } else if (dewpoint < 2 || temp < 18) {
+        const barrierMatch = categorized.moisturiser.find(p => classifyClientProduct(p).isBarrierRepair);
+        if (barrierMatch) bestMoisturiser = barrierMatch;
+      }
+      routine.moisturiser = {
+        asin: bestMoisturiser.id,
+        name: bestMoisturiser.name,
+        reason: bestMoisturiser.reason || `Selected from store catalog. Formulated for ${city}'s ${humidity}% humidity.`,
+      };
+    }
+
+    if (categorized.sunscreen.length > 0) {
+      let bestSpf = categorized.sunscreen[0];
+      if (dewpoint > 20 || humidity > 75) {
+        const matteMatch = categorized.sunscreen.find(p => classifyClientProduct(p).isMatte || classifyClientProduct(p).isWaterGel);
+        if (matteMatch) bestSpf = matteMatch;
+      }
+      routine.sunscreen = {
+        asin: bestSpf.id,
+        name: bestSpf.name,
+        reason: bestSpf.reason || `Selected from store catalog. Photostable protection for ${city} weather.`,
+      };
+    }
+
+    if (categorized.treatment.length > 0) {
+      routine.treatment = {
+        asin: categorized.treatment[0].id,
+        name: categorized.treatment[0].name,
+        reason: categorized.treatment[0].reason || `Selected from store catalog. Targeted formula for ${skinType} skin.`,
+      };
+    }
+  }
+
+  // ── HARD WATER MATRIX (Growth + Scale tier) ──
+  if (ppm && ppm > 200 && (!customCatalog || customCatalog.length === 0)) {
     if (routine.cleanser.asin !== ASIN.cosrx_low_ph_wash && routine.cleanser.asin !== ASIN.minimalist_ala_wash) {
       routine.cleanser = {
         asin: ASIN.cosrx_low_ph_wash,
@@ -424,8 +619,8 @@ export const generateRoutine = (
     }
   }
 
-  // Moderately hard (75–200 PPM): add barrier repair treatment on premium tier
-  if (ppm && ppm >= 75 && ppm <= 200 && budgetKey === "budget_2000" && skinType !== "dry" && routine.treatment.asin !== ASIN.cosrx_snail_mucin) {
+  // Moderately hard (75–200 PPM)
+  if (ppm && ppm >= 75 && ppm <= 200 && budgetKey === "budget_2000" && skinType !== "dry" && routine.treatment.asin !== ASIN.cosrx_snail_mucin && (!customCatalog || customCatalog.length === 0)) {
     routine.treatment = {
       asin: ASIN.cosrx_snail_mucin,
       name: "COSRX Advanced Snail 96 Mucin Power Essence",
@@ -434,12 +629,9 @@ export const generateRoutine = (
     swappedFields.push("treatment");
   }
 
-  // ── DYNAMIC DEWPOINT ADJUSTER (Scale Enterprise tier) ───────────────────
-  // Dewpoint > 20°C: muggy — sebum + sweat cause cream SPF to pill on skin
-  // Dewpoint < 2°C: critically dry — gels lose water faster than skin absorbs them
-  const dp = dewpoint ?? (temp - ((100 - humidity) / 5)); // Magnus approximation
+  const dp = dewpoint ?? (temp - ((100 - humidity) / 5));
 
-  if (dp > 20 && !swappedFields.includes("sunscreen")) {
+  if (dp > 20 && !swappedFields.includes("sunscreen") && (!customCatalog || customCatalog.length === 0)) {
     if (routine.sunscreen.asin === ASIN.lakme_spf || routine.sunscreen.asin === ASIN.wishcare_spf) {
       routine.sunscreen = {
         asin: ASIN.deconstruct_spf,
@@ -448,7 +640,7 @@ export const generateRoutine = (
       };
       swappedFields.push("sunscreen");
     }
-  } else if (dp < 2 && !swappedFields.includes("moisturiser")) {
+  } else if (dp < 2 && !swappedFields.includes("moisturiser") && (!customCatalog || customCatalog.length === 0)) {
     if (routine.moisturiser.asin === ASIN.neutrogena_hydro_boost || routine.moisturiser.asin === ASIN.aqualogica_spf) {
       routine.moisturiser = {
         asin: ASIN.cetaphil_cream,
@@ -459,8 +651,8 @@ export const generateRoutine = (
     }
   }
 
-  // ── CLASSIC TEMP + HUMIDITY CHECKS ──────────────────────────────────────
-  if (temp > 35 && humidity > 70) {
+  // ── CLASSIC TEMP + HUMIDITY CHECKS ──
+  if (temp > 35 && humidity > 70 && (!customCatalog || customCatalog.length === 0)) {
     if (routine.moisturiser.asin === ASIN.cetaphil_cream && !swappedFields.includes("moisturiser")) {
       routine.moisturiser = {
         asin: ASIN.neutrogena_hydro_boost,
@@ -469,41 +661,13 @@ export const generateRoutine = (
       };
       swappedFields.push("moisturiser");
     }
-    if (routine.sunscreen.asin === ASIN.lakme_spf && budgetKey !== "budget_500" && !swappedFields.includes("sunscreen")) {
-      routine.sunscreen = {
-        asin: ASIN.deconstruct_spf,
-        name: "Deconstruct Gel Sunscreen SPF 50 PA++++",
-        reason: `[Adaptive Climate Swap] In ${city}'s ${humidity}% humidity, cream sunscreens melt off. Swapped to Deconstruct's photostable gel formula.`,
-      };
-      swappedFields.push("sunscreen");
-    }
-  } else if (temp < 18 && humidity < 40) {
-    if ((routine.moisturiser.asin === ASIN.neutrogena_hydro_boost || routine.moisturiser.asin === ASIN.aqualogica_spf) && !swappedFields.includes("moisturiser")) {
-      routine.moisturiser = {
-        asin: ASIN.cetaphil_cream,
-        name: "Cetaphil Moisturising Cream 250g",
-        reason: `[Adaptive Climate Swap] Cold and dry in ${city} (${temp}°C, ${humidity}% RH). Gel hydration won't hold — swapped to clinical-grade Cetaphil barrier repair cream.`,
-      };
-      swappedFields.push("moisturiser");
-    }
-    if (routine.cleanser.asin === ASIN.minimalist_ala_wash && !swappedFields.includes("cleanser")) {
-      routine.cleanser = {
-        asin: ASIN.cetaphil_facewash,
-        name: "Cetaphil Gentle Skin Hydrating Face Wash",
-        reason: `[Adaptive Climate Swap] Swapped exfoliating ALA wash for Cetaphil Hydrating Cleanser to prevent cold-weather barrier stripping in ${city}.`,
-      };
-      swappedFields.push("cleanser");
-    }
   }
 
-  if (swappedFields.length > 0) {
+  if (swappedFields.length > 0 || (customCatalog && customCatalog.length > 0)) {
     const alerts: string[] = [];
+    if (customCatalog && customCatalog.length > 0) alerts.push(`Dynamic Merchant Catalog applied (${customCatalog.length} custom SKUs evaluated)`);
     if (ppm && ppm > 200) alerts.push(`Very hard tap water (${ppm} PPM) — mineral-resistant chelating cleanser applied`);
     if (ppm && ppm >= 75 && ppm <= 200) alerts.push(`Moderately hard water (${ppm} PPM) — barrier-repair treatment upgraded`);
-    if (dp > 20) alerts.push(`High dew point (${dp.toFixed(1)}°C) — photostable gel SPF applied`);
-    if (dp < 2) alerts.push(`Critically dry air (${dp.toFixed(1)}°C dew point) — occlusive barrier moisturiser applied`);
-    if (temp > 35 && humidity > 70) alerts.push(`Extreme heat + humidity (${temp}°C, ${humidity}% RH) — lightweight gel swaps applied`);
-    if (temp < 18 && humidity < 40) alerts.push(`Cold dry conditions (${temp}°C, ${humidity}% RH) — barrier emollients applied`);
 
     routine.climateAdjustment = {
       type: temp > 20 ? "humid_heat" : "cold_dry",
@@ -517,4 +681,5 @@ export const generateRoutine = (
  }
 
  return routine;
-};
+};
+
