@@ -47,7 +47,7 @@ The platform is designed to:
 * **Backend:** Next.js Server Actions & API Routes
 * **Database:** PostgreSQL hosted on Supabase
 * **ORM:** Prisma
-* **AI:** Google Generative AI (Gemini Vision & Pro models)
+* **AI & Machine Learning:** Google Generative AI (Gemini Vision & Pro), Google Antigravity, OpenAI (Codex / ChatGPT), Anthropic Claude
 * **Email:** Resend
 * **Hosting:** Vercel
 
@@ -61,6 +61,14 @@ This platform was architected and built with extensive AI pair-programming lever
 * **Algorithmic Logic & RAG Search**: Engineered core backend algorithms with GPT-5.6, including the **Cross-Product Ingredient Conflict Matrix** (detecting AHA + Retinol layering conflicts), regional climate localization logic, and product vector search retrieval.
 * **Component Synthesis & Refactoring**: Applied Codex to generate responsive, glassmorphic UI components (`RoutineQuiz.tsx`, `IngredientConflictChecker.tsx`, `ShopFilterClient.tsx`) and optimize Next.js Server Actions.
 * **Automated Tooling & Scripts**: Utilized Codex to generate batch optimization scripts (`scratch/optimize_all_assets.py`, `scratch/make_submission_zip.ps1`) to streamline asset management and deployment packaging.
+
+### Multi-Model Ecosystem & Agentic Workflows
+
+In addition to core Codex pair-programming, full-stack development and content synthesis were powered by an integrated multi-model AI suite:
+
+* **Google Antigravity**: Driven by DeepMind's agentic AI coding assistant for end-to-end autonomous debugging, complex refactoring, deployment verification, and build pipeline stabilization.
+* **Google Gemini**: Powers the live production RAG engine ("Ask Mirha"), dermatological image diagnostics, and routine generation.
+* **ChatGPT (OpenAI) & Claude (Anthropic)**: Utilized for deep domain research, synthesizing regional skincare guides, refining chemical ingredient rules, and polishing UX copy.
 
 ---
 
