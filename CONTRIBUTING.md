@@ -1,57 +1,48 @@
-# Contributing to Mirha & Co.
+# Internal Team Development Guidelines
 
-Thank you for your interest in contributing to **Mirha & Co.**! We welcome contributions to improve our skincare AI tools, regional water diagnostic algorithms, and user interface.
+Welcome to the internal development guide for **Mirha & Co.**
 
 ---
 
-## Getting Started
+## Proprietary Software Notice
+
+This repository contains proprietary source code owned exclusively by **Mirha & Co.** Access is granted strictly to authorized project contributors and team members.
+
+---
+
+## Local Development Setup
 
 ### Prerequisites
 - **Node.js**: v18+ or v20+
 - **npm**: v9+
 - **PostgreSQL**: Local database or Railway instance
 
-### Development Setup
-1. **Clone the repository**:
-   ```bash
-   git clone https://gitlab.com/tanizcoldz/mirha-and-co.git
-   cd mirha-and-co
-   ```
-
-2. **Install dependencies**:
+### Setup Steps
+1. **Install dependencies**:
    ```bash
    npm install
    ```
 
-3. **Set up environment variables**:
+2. **Set up environment variables**:
    ```bash
    cp .env.example .env.local
    ```
 
-4. **Initialize Prisma Database**:
+3. **Initialize Prisma Database**:
    ```bash
    npx prisma generate
    npx prisma db push
    ```
 
-5. **Run the local dev server**:
+4. **Run local dev server**:
    ```bash
    npm run dev
    ```
-   Open `http://localhost:3000` in your browser.
 
 ---
 
 ## Code Guidelines
 
-- **TypeScript**: All new code should be written in TypeScript with proper type definitions.
-- **Styling**: Standardize on Vanilla CSS and CSS variables. High-contrast dark mode support is mandatory (`html.dark .selector`). Avoid hardcoded inline hex colors in JSX.
-- **Commits**: Write clear, imperative commit messages (e.g., `Fix dark mode FOUC in RoutineQuiz`).
-
----
-
-## Submitting Pull Requests
-
-1. Create a feature branch: `git checkout -b feature/your-feature-name`.
-2. Ensure the production build passes cleanly: `npx next build`.
-3. Open a Pull/Merge Request against the `main` branch.
+- **TypeScript**: Mandatory strict typing across all route handlers and UI components.
+- **Styling**: Standardize on Vanilla CSS variables with `.dark` root support. Avoid inline color overrides.
+- **Production Build**: Verify `npx next build` before pushing any changes to `main`.
