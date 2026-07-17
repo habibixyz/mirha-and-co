@@ -42,6 +42,10 @@ import BackToTop from "@/components/BackToTop";
 
 export async function generateMetadata() {
   return {
+    metadataBase: new URL("https://www.mirhaandco.com"),
+    alternates: {
+      canonical: "./",
+    },
     title: "Mirha & Co. — Beauty, Wellness & The Good Life",
     description:
       "Honest reviews, curated finds, and the products worth your money. Beauty and wellness for women who know what they want.",
