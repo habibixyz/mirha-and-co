@@ -138,7 +138,12 @@ export default function RefundsPage() {
  <li><strong>No Prorated Credits</strong>: We do not provide prorated credits or refunds for any unused days remaining in your active billing period after cancellation.</li>
  </ul>
 
- <h2>3. Contact Us</h2>
+ <h2>3. Billing Discrepancies &amp; Duplicate Charges</h2>
+ <p>
+ If you experience an accidental duplicate charge or technical error during checkout, please notify our support team at <strong>tanizcoldz@gmail.com</strong> within 7 business days with your invoice details. Verified duplicate payments will be promptly reversed.
+ </p>
+
+ <h2>4. Contact Us</h2>
  <p>
  If you have any questions or require assistance managing your subscription cancellation, please reach out to us at: <strong>tanizcoldz@gmail.com</strong>.
  </p>

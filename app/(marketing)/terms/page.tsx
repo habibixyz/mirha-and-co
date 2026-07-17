@@ -171,7 +171,12 @@ export default function TermsPage() {
  To the fullest extent permitted by applicable law, in no event shall Mirha & Co. or its creators be liable for any direct, indirect, incidental, special, consequential, or punitive damages arising out of or related to your use of the Platform or products purchased through affiliate links.
  </p>
 
- <h2>7. Contact Us</h2>
+ <h2>7. Affiliate Link Disclosure</h2>
+ <p>
+ Mirha & Co. contains links to external retail platforms (including Amazon India). Purchases made through these affiliate links earn us a referral commission at no additional cost to you. Product suggestions are provided based on ingredient compatibility logic and objective data analysis.
+ </p>
+
+ <h2>8. Contact Us</h2>
  <p>
  If you have any questions or clarifications regarding these Terms, please contact us at: <strong>tanizcoldz@gmail.com</strong>.
  </p>
