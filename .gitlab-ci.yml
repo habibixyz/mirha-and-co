@@ -3,6 +3,11 @@ image: node:20-alpine
 stages:
   - build
 
+variables:
+  DATABASE_URL: "postgresql://postgres:postgres@localhost:5432/mirha_db?schema=public"
+  JWT_SECRET: "ci-build-jwt-secret-key-32-chars-long"
+  NEXT_PUBLIC_SITE_URL: "https://www.mirhaandco.com"
+
 cache:
   key: ${CI_COMMIT_REF_SLUG}
   paths:
@@ -12,8 +17,10 @@ cache:
 
 build_job:
   stage: build
+  before_script:
+    - apk add --no-cache libc6-compat openssl
   script:
-    - npm ci --prefer-offline
+    - npm install --legacy-peer-deps
     - npx prisma generate
     - npx next build
   only:
