@@ -24,7 +24,10 @@ export async function POST(req: Request) {
       .update(bodyText)
       .digest("hex");
 
-    if (expectedSignature !== signature) {
+    const expectedBuf = Buffer.from(expectedSignature);
+    const sigBuf = Buffer.from(signature);
+
+    if (expectedBuf.length !== sigBuf.length || !crypto.timingSafeEqual(expectedBuf, sigBuf)) {
       return NextResponse.json({ error: "Invalid signature" }, { status: 400 });
     }
 
@@ -81,6 +84,7 @@ export async function POST(req: Request) {
 
       const monthlyQuota = tier === "scale" ? 1000000 : 150000;
       const apiKey = generateB2BKey(tier);
+      const keyHash = crypto.createHash("sha256").update(apiKey).digest("hex");
       const nextMonth = new Date();
       nextMonth.setDate(1);
       nextMonth.setMonth(nextMonth.getMonth() + 1);
@@ -92,6 +96,7 @@ export async function POST(req: Request) {
           where: { id: existing.id },
           data: {
             key: apiKey,
+            keyHash,
             tier,
             monthlyQuota,
             usageThisMonth: 0,
@@ -104,6 +109,7 @@ export async function POST(req: Request) {
         savedKey = await prisma.b2BApiKey.create({
           data: {
             key: apiKey,
+            keyHash,
             email,
             brandName,
             tier,

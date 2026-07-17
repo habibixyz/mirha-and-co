@@ -24,21 +24,21 @@ export async function POST(req: Request) {
 
     const secret = process.env.DODO_WEBHOOK_SECRET || "";
     
-    // In test/dev mode, bypass signature verification if secret is not yet set
-    if (secret && secret !== "dodo_webhook_secret_placeholder") {
-      try {
-        const wh = new Webhook(secret);
-        wh.verify(rawBody, {
-          "webhook-id": webhookId,
-          "webhook-signature": webhookSignature,
-          "webhook-timestamp": webhookTimestamp,
-        });
-      } catch (err: any) {
-        console.error("Dodo Webhook Signature Verification Failed:", err.message);
-        return NextResponse.json({ error: "Invalid signature" }, { status: 400 });
-      }
-    } else {
-      console.warn("Dodo Webhook: Signature verification skipped because DODO_WEBHOOK_SECRET is not configured.");
+    if (!secret || secret === "dodo_webhook_secret_placeholder") {
+      console.error("Dodo Webhook: Signature verification failed - DODO_WEBHOOK_SECRET is not configured.");
+      return NextResponse.json({ error: "Webhook server misconfigured" }, { status: 500 });
+    }
+
+    try {
+      const wh = new Webhook(secret);
+      wh.verify(rawBody, {
+        "webhook-id": webhookId,
+        "webhook-signature": webhookSignature,
+        "webhook-timestamp": webhookTimestamp,
+      });
+    } catch (err: any) {
+      console.error("Dodo Webhook Signature Verification Failed:", err.message);
+      return NextResponse.json({ error: "Invalid signature" }, { status: 400 });
     }
 
     const event = JSON.parse(rawBody);
@@ -81,6 +81,7 @@ export async function POST(req: Request) {
         const tier = data.metadata?.b2b_tier || "growth"; // "growth" | "scale"
         const monthlyQuota = tier === "scale" ? 1000000 : 150000;
         const apiKey = generateB2BKey(tier);
+        const keyHash = crypto.createHash("sha256").update(apiKey).digest("hex");
         const nextMonth = new Date();
         nextMonth.setDate(1);
         nextMonth.setMonth(nextMonth.getMonth() + 1);
@@ -91,6 +92,7 @@ export async function POST(req: Request) {
             where: { id: existing.id },
             data: {
               key: apiKey,
+              keyHash,
               tier,
               monthlyQuota,
               usageThisMonth: 0,
@@ -103,6 +105,7 @@ export async function POST(req: Request) {
           await prisma.b2BApiKey.create({
             data: {
               key: apiKey,
+              keyHash,
               email: b2bEmail,
               brandName,
               tier,

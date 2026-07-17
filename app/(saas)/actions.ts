@@ -361,28 +361,40 @@ async function getBaseUrl() {
  return `${protocol}://${host}`;
 }
 
+const loginRateMap = new Map<string, { count: number; resetAt: number }>();
+
+function isLoginRateLimited(identifier: string, limit = 5, windowMs = 15 * 60 * 1000): boolean {
+  const now = Date.now();
+  const entry = loginRateMap.get(identifier);
+  if (!entry || now > entry.resetAt) {
+    loginRateMap.set(identifier, { count: 1, resetAt: now + windowMs });
+    return false;
+  }
+  entry.count++;
+  return entry.count > limit;
+}
+
 export async function loginAction(_state: AuthState, formData: FormData): Promise<AuthState> {
- const email = normalizeEmail(formData.get("email"));
- const password = String(formData.get("password") || "");
+  const email = normalizeEmail(formData.get("email"));
+  const password = String(formData.get("password") || "");
 
- if (!email || !password) return { error: "Please enter your email and password." };
+  if (!email || !password) return { error: "Please enter your email and password." };
 
- try {
- const user = await prisma.user.findUnique({ where: { email } });
- if (!user || !(await verifyPassword(password, user.passwordHash))) {
- return { error: "Invalid email or password." };
- }
+  const headerStore = await headers();
+  const ip = headerStore.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+  const rateLimitKey = `${ip}:${email}`;
 
- // 🚀 TRANSPARENT MIGRATION: Upgrade legacy SHA-256 to bcrypt
- if (isLegacyHash(user.passwordHash)) {
- const newHash = await hashPassword(password);
- await prisma.user.update({
- where: { id: user.id },
- data: { passwordHash: newHash },
- });
- }
+  if (isLoginRateLimited(rateLimitKey, 5)) {
+    return { error: "Too many login attempts. Please wait 15 minutes before trying again." };
+  }
 
- await createSession(user.id);
+  try {
+    const user = await prisma.user.findUnique({ where: { email } });
+    if (!user || !(await verifyPassword(password, user.passwordHash))) {
+      return { error: "Invalid email or password." };
+    }
+
+  await createSession(user.id);
  } catch (error) {
  console.error("Login error:", error);
  return { error: "Unable to sign in right now. Please try again." };

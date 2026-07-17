@@ -31,10 +31,13 @@ export async function POST(req: Request) {
  .update(message)
  .digest("hex");
 
- if (expectedSignature !== h1) {
- console.error("Paddle Webhook Signature Mismatch!");
- return NextResponse.json({ error: "Invalid signature" }, { status: 400 });
- }
+  const expectedBuf = Buffer.from(expectedSignature);
+  const h1Buf = Buffer.from(h1);
+
+  if (expectedBuf.length !== h1Buf.length || !crypto.timingSafeEqual(expectedBuf, h1Buf)) {
+    console.error("Paddle Webhook Signature Mismatch!");
+    return NextResponse.json({ error: "Invalid signature" }, { status: 400 });
+  }
 
  const event = JSON.parse(rawBody);
  const eventType = event.event_type;

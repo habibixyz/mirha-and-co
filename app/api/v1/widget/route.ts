@@ -1,8 +1,28 @@
 import { NextRequest, NextResponse } from "next/server";
-import { generateRoutine, QuizAnswers } from "../../../../lib/routineEngine";
+import { generateRoutine } from "../../../../lib/routineEngine";
 import { resolveLocationDataLive } from "../../../../lib/geocoding";
 
+const widgetRateMap = new Map<string, { count: number; resetAt: number }>();
+
+function isWidgetRateLimited(ip: string, limit = 30): boolean {
+  const now = Date.now();
+  const entry = widgetRateMap.get(ip);
+  if (!entry || now > entry.resetAt) {
+    widgetRateMap.set(ip, { count: 1, resetAt: now + 60_000 });
+    return false;
+  }
+  entry.count++;
+  return entry.count > limit;
+}
+
 export async function GET(req: NextRequest) {
+  const forwarded = req.headers.get("x-forwarded-for");
+  const ip = forwarded?.split(",")[0]?.trim() || "unknown";
+
+  if (isWidgetRateLimited(ip, 30)) {
+    return new NextResponse("// Rate limit exceeded", { status: 429 });
+  }
+
   const { searchParams } = new URL(req.url);
   const apiKey = searchParams.get("apiKey") || "b2b_trial_key";
   const postalCode = searchParams.get("postalCode") || searchParams.get("city") || "90210";

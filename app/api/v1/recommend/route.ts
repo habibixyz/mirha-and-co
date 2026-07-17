@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { generateRoutine, QuizAnswers } from "../../../../lib/routineEngine";
 import { resolveLocationDataLive } from "../../../../lib/geocoding";
 import { prisma } from "@/lib/prisma";
+import crypto from "crypto";
 
 /* ─── In-memory rate limiter (per-IP burst protection) ─── */
 const rateMap = new Map<string, { count: number; resetAt: number }>();
@@ -72,14 +73,10 @@ export async function POST(req: NextRequest) {
     }
 
     // ── Live Global Geocoding Pipeline ──
-    // Nominatim resolves any zip code/city worldwide → lat/lon + city + countryCode
-    // Open-Meteo returns real-time temp + humidity for those coordinates
-    // Country PPM matrix maps countryCode → tap water hardness
     const liveLocation = await resolveLocationDataLive({
       postalCode: postalCode || climate?.postalCode,
       city: city || climate?.city,
       country: country || climate?.country,
-      // Manual overrides still respected if caller passes them
       ppm: climate?.ppm,
       temp: climate?.temp,
       humidity: climate?.humidity,
@@ -110,8 +107,13 @@ export async function POST(req: NextRequest) {
         );
       }
     } else {
-      // ── Live B2B key: look up in DB ──
-      const b2bKey = await prisma.b2BApiKey.findUnique({ where: { key: apiKey } });
+      // ── Live B2B key: look up in DB via SHA-256 hash or fallback plaintext key ──
+      const keyHash = crypto.createHash("sha256").update(apiKey).digest("hex");
+      const b2bKey = await prisma.b2BApiKey.findFirst({
+        where: {
+          OR: [{ keyHash }, { key: apiKey }],
+        },
+      });
 
       if (!b2bKey || b2bKey.status !== "active") {
         return NextResponse.json(

@@ -11,6 +11,28 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
+    // Enforce subscription daily limits (3/day free, 20/day pro)
+    const sub = await prisma.subscription.findUnique({ where: { userId: session.userId } });
+    const isPro = sub?.tier === 'pro' && sub?.status === 'active';
+    const maxQueriesPerDay = isPro ? 20 : 3;
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const dailyCount = await prisma.aiQueryLog.count({
+      where: {
+        userId: session.userId,
+        createdAt: { gte: today }
+      }
+    });
+
+    if (dailyCount >= maxQueriesPerDay) {
+      return NextResponse.json(
+        { error: isPro ? `You have reached your daily limit of ${maxQueriesPerDay} consultations.` : "LIMIT_REACHED_UPGRADE" },
+        { status: 429 }
+      );
+    }
+
     const { messages } = await req.json();
     if (!messages || !Array.isArray(messages)) {
       return NextResponse.json({ error: "Invalid messages array" }, { status: 400 });

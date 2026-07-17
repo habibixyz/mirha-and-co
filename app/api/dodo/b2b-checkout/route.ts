@@ -1,7 +1,30 @@
 import { NextResponse } from "next/server";
 
+const b2bCheckoutRateMap = new Map<string, { count: number; resetAt: number }>();
+
+function isB2bCheckoutRateLimited(ip: string, limit = 10): boolean {
+  const now = Date.now();
+  const entry = b2bCheckoutRateMap.get(ip);
+  if (!entry || now > entry.resetAt) {
+    b2bCheckoutRateMap.set(ip, { count: 1, resetAt: now + 60_000 });
+    return false;
+  }
+  entry.count++;
+  return entry.count > limit;
+}
+
 export async function POST(req: Request) {
   try {
+    const forwarded = req.headers.get("x-forwarded-for");
+    const ip = forwarded?.split(",")[0]?.trim() || "unknown";
+
+    if (isB2bCheckoutRateLimited(ip, 10)) {
+      return NextResponse.json(
+        { error: "Too many checkout requests. Please slow down." },
+        { status: 429 }
+      );
+    }
+
     const body = await req.json().catch(() => ({}));
     const { tier = "growth", billing = "monthly", email, brandName } = body;
 
