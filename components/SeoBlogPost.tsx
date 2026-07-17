@@ -506,8 +506,8 @@ export async function SeoBlogPost({
 
         /* ── Dark Mode Overrides */
         html.dark .seo-post, .dark .seo-post {
-          background: #0f0e0d !important;
-          color: #f7f5f2 !important;
+          background: #0b0f19 !important;
+          color: #f8fafc !important;
         }
         html.dark .post-hero h1, .dark .post-hero h1,
         html.dark .post-section h2, .dark .post-section h2,
@@ -517,38 +517,50 @@ export async function SeoBlogPost({
         html.dark .post-description, .dark .post-description,
         html.dark .post-section p, .dark .post-section p,
         html.dark .post-section li, .dark .post-section li {
-          color: #aba49d !important;
+          color: #d1d5db !important;
+        }
+        html.dark .post-section blockquote, .dark .post-section blockquote {
+          background: #181c2a !important;
+          color: #f1f5f9 !important;
+          border-left-color: #fc2779 !important;
+        }
+        html.dark code, .dark code {
+          background: #1e293b !important;
+          color: #f472b6 !important;
         }
         html.dark .trust-box, .dark .trust-box {
-          background: #181716 !important;
-          border-color: rgba(255, 255, 255, 0.12) !important;
-          border-left-color: #a27b5c !important;
+          background: #111827 !important;
+          border-color: #1f2937 !important;
+          border-left-color: #fc2779 !important;
+        }
+        html.dark .trust-box h2, .dark .trust-box h2 {
+          color: #f472b6 !important;
         }
         html.dark .trust-box p, .dark .trust-box p {
-          color: #aba49d !important;
+          color: #cbd5e1 !important;
         }
         html.dark .section-picks, .dark .section-picks,
         html.dark .picks-rail, .dark .picks-rail {
-          background: #181716 !important;
-          border-color: rgba(255, 255, 255, 0.12) !important;
+          background: #111827 !important;
+          border-color: #1f2937 !important;
         }
         html.dark .picks-heading, .dark .picks-heading {
           color: #ffffff !important;
         }
         html.dark .table-wrap table, .dark .table-wrap table {
-          background: #181716 !important;
+          background: #111827 !important;
         }
         html.dark .table-wrap th, .dark .table-wrap th {
-          background: #1e1c1a !important;
+          background: #1f2937 !important;
           color: #fc2779 !important;
-          border-color: rgba(255, 255, 255, 0.12) !important;
+          border-color: #374151 !important;
         }
         html.dark .table-wrap td, .dark .table-wrap td {
-          color: #f7f5f2 !important;
-          border-color: rgba(255, 255, 255, 0.08) !important;
+          color: #f8fafc !important;
+          border-color: #1f2937 !important;
         }
         html.dark .table-wrap tr:nth-child(even) td, .dark .table-wrap tr:nth-child(even) td {
-          background: #141312 !important;
+          background: #0f172a !important;
         }
       `}</style>
 

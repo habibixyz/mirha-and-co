@@ -288,16 +288,33 @@ export default function RoutineQuiz() {
  }
 
  return (
- <div
- style={{
- minHeight: '100vh',
- background: 'linear-gradient(135deg, #faf8f5 0%, #f5f1ed 100%)',
- display: 'flex',
- alignItems: 'center',
- justifyContent: 'center',
- padding: '40px 20px',
- }}
- >
+ <div className="rq-container">
+ <style>{`
+ .rq-container {
+ min-height: 100vh;
+ background: linear-gradient(135deg, #faf8f5 0%, #f5f1ed 100%);
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ padding: 40px 20px;
+ }
+ .rq-title { color: #111111; }
+ .rq-subtitle { color: #777777; }
+ .rq-card { background: #ffffff; border: 1px solid #e8e2d9; }
+ .rq-btn { border: 1px solid #e8e2d9; background: #ffffff; color: #111111; }
+ .rq-btn:hover { border-color: #d6d0c9; background: #faf8f5; }
+ .rq-btn-active { border: 1px solid #111111; background: #111111; color: #ffffff; }
+ .rq-modal-content { background: #ffffff; border: 1px solid #e8e2d9; color: #111111; }
+
+ html.dark .rq-container, .dark .rq-container { background: #0b0f19 !important; }
+ html.dark .rq-title, .dark .rq-title { color: #ffffff !important; }
+ html.dark .rq-subtitle, .dark .rq-subtitle { color: #9ca3af !important; }
+ html.dark .rq-card, .dark .rq-card { background: #111827 !important; border-color: #1f2937 !important; }
+ html.dark .rq-btn, .dark .rq-btn { border-color: #374151 !important; background: #1f2937 !important; color: #f3f4f6 !important; }
+ html.dark .rq-btn:hover, .dark .rq-btn:hover { border-color: #4b5563 !important; background: #374151 !important; }
+ html.dark .rq-btn-active, .dark .rq-btn-active { border-color: #fc2779 !important; background: #fc2779 !important; color: #ffffff !important; }
+ html.dark .rq-modal-content, .dark .rq-modal-content { background: #111827 !important; border-color: #1f2937 !important; color: #f8fafc !important; }
+ `}</style>
  <div style={{ width: '100%', maxWidth: '640px' }}>
  {/* Header */}
  <div style={{ textAlign: 'center', marginBottom: '48px' }}>
@@ -314,11 +331,11 @@ export default function RoutineQuiz() {
  Mirha & Co. / Routine Builder
  </p>
  <h1
+ className="rq-title"
  style={{
  fontFamily: "'DM Serif Display', serif",
  fontSize: 'clamp(32px, 6vw, 44px)',
  fontWeight: 400,
- color: '#111',
  margin: '0 0 16px',
  lineHeight: 1.2,
  }}
@@ -326,9 +343,9 @@ export default function RoutineQuiz() {
  Your Perfect Routine
  </h1>
  <p
+ className="rq-subtitle"
  style={{
  fontSize: '14px',
- color: '#888',
  lineHeight: 1.7,
  margin: '0 0 20px',
  }}

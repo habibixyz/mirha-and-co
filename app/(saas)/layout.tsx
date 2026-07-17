@@ -59,6 +59,13 @@ export default function SaasLayout({
 }) {
  return (
  <html lang="en" suppressHydrationWarning className={`${dmSans.variable} ${dmSerifDisplay.variable} ${bebasNeue.variable}`}>
+ <head>
+ <script
+ dangerouslySetInnerHTML={{
+ __html: `(function(){try{var t=localStorage.getItem('theme');if(t==='dark'||(!t&&window.matchMedia('(prefers-color-scheme: dark)').matches)){document.documentElement.classList.add('dark');document.documentElement.style.colorScheme='dark';}}catch(e){}})()`,
+ }}
+ />
+ </head>
  <body suppressHydrationWarning>
  <Script strategy="afterInteractive" src="https://www.dwin1.com/2904237.js" />
  <style>{`

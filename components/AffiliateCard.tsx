@@ -113,6 +113,22 @@ export function AffiliateCard(props: any) {
           .aff-compact-name { font-size: 12px; }
           .aff-compact-btn { padding: 7px 10px; font-size: 9px; }
         }
+        html.dark .aff-compact, .dark .aff-compact {
+          background: #141824 !important;
+          border-color: #283044 !important;
+        }
+        html.dark .aff-compact-img, .dark .aff-compact-img {
+          background: #0f131e !important;
+          border-color: #283044 !important;
+        }
+        html.dark .aff-compact-name, .dark .aff-compact-name,
+        html.dark .aff-compact-price, .dark .aff-compact-price {
+          color: #f8fafc !important;
+        }
+        html.dark .aff-compact-btn, .dark .aff-compact-btn {
+          background: #fc2779 !important;
+          color: #ffffff !important;
+        }
       `}</style>
       <img className="aff-compact-img" src={image} alt={title} />
       <div className="aff-compact-info">
@@ -356,6 +372,45 @@ export function AffiliateCard(props: any) {
           .editorial-body {
             padding: 1.25rem 1.5rem;
           }
+        }
+        html.dark .editorial-affiliate-card, .dark .editorial-affiliate-card {
+          background: #141824 !important;
+          border-color: #283044 !important;
+        }
+        html.dark .editorial-img-container, .dark .editorial-img-container {
+          background: #0f131e !important;
+          border-right-color: #283044 !important;
+          border-bottom-color: #283044 !important;
+        }
+        html.dark .editorial-title, .dark .editorial-title,
+        html.dark .editorial-price-current, .dark .editorial-price-current {
+          color: #f8fafc !important;
+        }
+        html.dark .editorial-meta-brand, .dark .editorial-meta-brand {
+          color: #38bdf8 !important;
+        }
+        html.dark .editorial-desc, .dark .editorial-desc {
+          color: #94a3b8 !important;
+        }
+        html.dark .editorial-specs-box, .dark .editorial-specs-box {
+          background: #1e293b !important;
+          border-color: #334155 !important;
+        }
+        html.dark .editorial-specs-table, .dark .editorial-specs-table {
+          color: #cbd5e1 !important;
+        }
+        html.dark .editorial-specs-table td, .dark .editorial-specs-table td {
+          border-bottom-color: #334155 !important;
+        }
+        html.dark .editorial-btn-buy, .dark .editorial-btn-buy {
+          background: #fc2779 !important;
+          color: #ffffff !important;
+          border-color: #fc2779 !important;
+        }
+        html.dark .editorial-btn-analyze, .dark .editorial-btn-analyze {
+          background: #1e293b !important;
+          color: #f8fafc !important;
+          border-color: #334155 !important;
         }
       `}</style>
 

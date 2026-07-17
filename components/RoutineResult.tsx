@@ -72,12 +72,11 @@ function ProductCard({
  target="_blank"
  rel="noopener noreferrer sponsored"
  onClick={onClick}
+ className="rr-product-card"
  style={{
  display: 'flex',
  gap: '16px',
  alignItems: 'flex-start',
- background: '#faf8f5',
- border: '1px solid #ede8e0',
  borderRadius: '12px',
  padding: '16px',
  textDecoration: 'none',
@@ -100,17 +99,16 @@ function ProductCard({
  >
  {/* Product Image */}
  <div
+ className="rr-img-box"
  style={{
  width: '80px',
  height: '80px',
  flexShrink: 0,
- background: '#fff',
  borderRadius: '8px',
  overflow: 'hidden',
  display: 'flex',
  alignItems: 'center',
  justifyContent: 'center',
- border: '1px solid #f0ebe3',
  }}
  >
  <img
@@ -387,16 +385,37 @@ export default function RoutineResult({
  };
 
  return (
- <div
- style={{
- minHeight: '100vh',
- background: 'linear-gradient(135deg, #faf8f5 0%, #f5f1ed 100%)',
- paddingTop: '80px',
- paddingBottom: '120px',
- paddingLeft: '20px',
- paddingRight: '20px',
- }}
- >
+ <div className="rr-container">
+ <style>{`
+ .rr-container {
+ min-height: 100vh;
+ background: linear-gradient(135deg, #faf8f5 0%, #f5f1ed 100%);
+ paddingTop: 80px;
+ paddingBottom: 120px;
+ paddingLeft: 20px;
+ paddingRight: 20px;
+ }
+ .rr-title { color: #111111; }
+ .rr-subtitle { color: #888888; }
+ .rr-widget { background: rgba(255, 255, 255, 0.8); border: 1px solid #e8e2d9; }
+ .rr-step-box { background: #ffffff; border: 1px solid #ede8e0; color: #111111; }
+ .rr-product-card { background: #faf8f5; border: 1px solid #ede8e0; color: #111111; }
+ .rr-img-box { background: #ffffff; border: 1px solid #f0ebe3; }
+ .rr-usage-box { background: #111111; color: #ffffff; border: 1px solid #222222; }
+
+ html.dark .rr-container, .dark .rr-container { background: #0b0f19 !important; }
+ html.dark .rr-title, .dark .rr-title { color: #ffffff !important; }
+ html.dark .rr-subtitle, .dark .rr-subtitle { color: #9ca3af !important; }
+ html.dark .rr-widget, .dark .rr-widget { background: #111827 !important; border-color: #1f2937 !important; }
+ html.dark .rr-widget h3, .dark .rr-widget h3 { color: #f8fafc !important; }
+ html.dark .rr-step-box, .dark .rr-step-box { background: #111827 !important; border-color: #1f2937 !important; color: #f8fafc !important; }
+ html.dark .rr-step-box h2, .dark .rr-step-box h2 { color: #ffffff !important; }
+ html.dark .rr-step-box p, .dark .rr-step-box p { color: #9ca3af !important; }
+ html.dark .rr-product-card, .dark .rr-product-card { background: #1f2937 !important; border-color: #374151 !important; color: #f8fafc !important; }
+ html.dark .rr-product-card p, .dark .rr-product-card p { color: #f8fafc !important; }
+ html.dark .rr-img-box, .dark .rr-img-box { background: #111827 !important; border-color: #374151 !important; }
+ html.dark .rr-usage-box, .dark .rr-usage-box { background: #1e293b !important; color: #f8fafc !important; border-color: #334155 !important; }
+ `}</style>
  <div style={{ width: '100%', maxWidth: '680px', margin: '0 auto' }}>
  {/* Header */}
  <div style={{ textAlign: 'center', marginBottom: '64px' }}>
@@ -413,11 +432,11 @@ export default function RoutineResult({
  ✓ Routine Generated
  </p>
  <h1
+ className="rr-title"
  style={{
  fontFamily: "'DM Serif Display', serif",
  fontSize: 'clamp(32px, 6vw, 48px)',
  fontWeight: 400,
- color: '#111',
  margin: '0 0 12px',
  lineHeight: 1.1,
  }}
@@ -426,9 +445,9 @@ export default function RoutineResult({
  <em style={{ fontStyle: 'italic', color: '#9b7e6b' }}>4-Step Routine</em>
  </h1>
  <p
+ className="rr-subtitle"
  style={{
  fontSize: '14px',
- color: '#888',
  lineHeight: 1.7,
  maxWidth: '480px',
  margin: '0 auto',
@@ -440,10 +459,9 @@ export default function RoutineResult({
 
  {/* Adaptive Climate Widget */}
  <div
+ className="rr-widget"
  style={{
- background: 'rgba(255, 255, 255, 0.8)',
  backdropFilter: 'blur(10px)',
- border: '1px solid #e8e2d9',
  borderRadius: '16px',
  padding: '24px',
  marginBottom: '32px',
@@ -616,9 +634,8 @@ export default function RoutineResult({
  return (
  <div
  key={step.key}
+ className="rr-step-box"
  style={{
- background: '#fff',
- border: '1px solid #ede8e0',
  borderRadius: '12px',
  overflow: 'hidden',
  transition: 'all 0.25s',
@@ -783,12 +800,11 @@ export default function RoutineResult({
 
  {/* Usage Guide */}
  <div
+ className="rr-usage-box"
  style={{
- background: '#111',
  borderRadius: '12px',
  padding: '32px',
  marginBottom: '32px',
- color: '#fff',
  }}
  >
  <h3

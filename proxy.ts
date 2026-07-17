@@ -2,6 +2,16 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 export function proxy(request: NextRequest) {
+  const path = request.nextUrl.pathname;
+
+  // Protect /dashboard routes with session check
+  if (path.startsWith('/dashboard')) {
+    const sessionCookie = request.cookies.get('mirha_session')?.value;
+    if (!sessionCookie) {
+      return NextResponse.redirect(new URL('/login', request.url));
+    }
+  }
+
   const response = NextResponse.next();
   
   // If the user already has a preferred currency saved, respect it.
@@ -42,6 +52,5 @@ export function proxy(request: NextRequest) {
 }
 
 export const config = {
-  // Run proxy on all routes except static files, API, and images.
   matcher: ['/((?!api|_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)'],
 };
