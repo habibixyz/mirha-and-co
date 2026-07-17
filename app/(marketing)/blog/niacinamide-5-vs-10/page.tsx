@@ -170,6 +170,92 @@ export default function Niacinamide5vs10Page() {
  .further-reading { padding: 2rem 1.5rem; }
  .summary-box { padding: 1.8rem 1.5rem; }
  }
+
+  /* Dark Mode Overrides */
+  html.dark .post-body p,
+  .dark .post-body p {
+    color: #aba49d !important;
+  }
+  html.dark .post-body p strong,
+  .dark .post-body p strong {
+    color: #ffffff !important;
+  }
+  html.dark .post-body h2,
+  .dark .post-body h2,
+  html.dark .post-body h3,
+  .dark .post-body h3 {
+    color: #ffffff !important;
+  }
+  html.dark .post-body h2,
+  .dark .post-body h2 {
+    border-top-color: #ffffff !important;
+  }
+  html.dark .post-rule,
+  .dark .post-rule {
+    border-top-color: rgba(255, 255, 255, 0.12) !important;
+  }
+  html.dark .post-body ul,
+  .dark .post-body ul,
+  html.dark .post-body ol,
+  .dark .post-body ol {
+    color: #aba49d !important;
+  }
+  html.dark .post-body li strong,
+  .dark .post-body li strong {
+    color: #ffffff !important;
+  }
+  html.dark .callout-box,
+  .dark .callout-box {
+    border-color: rgba(255, 255, 255, 0.12) !important;
+    background: #121110 !important;
+  }
+  html.dark .callout-box-label,
+  .dark .callout-box-label {
+    color: #ff4d94 !important;
+  }
+  html.dark .callout-box li,
+  .dark .callout-box li {
+    color: #aba49d !important;
+  }
+  html.dark .callout-box li strong,
+  .dark .callout-box li strong {
+    color: #ffffff !important;
+  }
+  html.dark .comparison-table td,
+  .dark .comparison-table td {
+    border-bottom-color: rgba(255, 255, 255, 0.08) !important;
+    color: #aba49d !important;
+  }
+  html.dark .comparison-table tr:nth-child(even) td,
+  .dark .comparison-table tr:nth-child(even) td {
+    background: #121110 !important;
+  }
+  html.dark .comparison-table td:first-child,
+  .dark .comparison-table td:first-child {
+    color: #ff4d94 !important;
+  }
+  html.dark .sources-section,
+  .dark .sources-section {
+    border-top-color: rgba(255, 255, 255, 0.12) !important;
+  }
+  html.dark .sources-list li,
+  .dark .sources-list li {
+    border-bottom-color: rgba(255, 255, 255, 0.06) !important;
+    color: #8c8179 !important;
+  }
+  html.dark .sources-list li em,
+  .dark .sources-list li em {
+    color: #8c8179 !important;
+  }
+  html.dark .disclosure,
+  .dark .disclosure {
+    border-color: rgba(255, 255, 255, 0.12) !important;
+    background: #121110 !important;
+  }
+  html.dark .disclosure p,
+  .dark .disclosure p {
+    color: #aba49d !important;
+  }
  `}</style>
 
  {/* ── HERO ── */}

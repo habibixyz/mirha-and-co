@@ -146,18 +146,16 @@ export default function AiProductTranslator({
  <div style={{ marginTop: "14px" }}>
  {/* Translation bar */}
  <div
- className="ai-translator-bar"
- style={{
- display: "flex",
- alignItems: "center",
- gap: "12px",
- marginBottom: "20px",
- padding: "10px 14px",
- background: isTranslated ? "#f0fdf4" : "#fff",
- border: isTranslated ? "1px solid #bbf7d0" : "1px solid #e3d8ce",
- borderRadius: "10px",
- fontSize: "13px",
- }}
+ className={`ai-translator-bar ${isTranslated ? "translated" : ""}`}
+  style={{
+  display: "flex",
+  alignItems: "center",
+  gap: "12px",
+  marginBottom: "20px",
+  padding: "10px 14px",
+  borderRadius: "10px",
+  fontSize: "13px",
+  }}
  >
  {!isTranslated ? (
  <>
@@ -199,16 +197,15 @@ export default function AiProductTranslator({
  </>
  ) : (
  <>
- <span style={{ color: "#166534", display: "inline-flex", alignItems: "center", gap: "6px", fontWeight: 500 }}>
+ <span className="translated-success" style={{ display: "inline-flex", alignItems: "center", gap: "6px", fontWeight: 500 }}>
  <Check size={14} />
  Translated to {LANGUAGE_NAMES[locale]} with AI
  </span>
  <button
  onClick={() => setTranslatedData(null)}
- style={{
- background: "transparent",
- border: 0,
- color: "#8c8179",
+ className="translator-reset-btn" style={{
+  background: "transparent",
+  border: 0,
  fontSize: "11px",
  cursor: "pointer",
  marginLeft: "auto",
@@ -230,9 +227,9 @@ export default function AiProductTranslator({
  {/* Description */}
  {isLoading ? (
  <div style={{ display: "grid", gap: "8px", marginBottom: "22px" }}>
- <div style={{ height: "16px", background: "#eee", borderRadius: "4px", width: "95%", animation: "pulse 1.5s infinite" }} />
- <div style={{ height: "16px", background: "#eee", borderRadius: "4px", width: "90%", animation: "pulse 1.5s infinite" }} />
- <div style={{ height: "16px", background: "#eee", borderRadius: "4px", width: "70%", animation: "pulse 1.5s infinite" }} />
+ <div className="skeleton-line" style={{ height: "16px", borderRadius: "4px", width: "95%", animation: "pulse 1.5s infinite" }} />
+ <div className="skeleton-line" style={{ height: "16px", borderRadius: "4px", width: "90%", animation: "pulse 1.5s infinite" }} />
+ <div className="skeleton-line" style={{ height: "16px", borderRadius: "4px", width: "70%", animation: "pulse 1.5s infinite" }} />
  </div>
  ) : (
  <p className="description">{activeDesc}</p>
@@ -243,7 +240,7 @@ export default function AiProductTranslator({
  <div className="info-block">
  <h2>Best For</h2>
  {isLoading ? (
- <div style={{ height: "40px", background: "#eee", borderRadius: "4px", animation: "pulse 1.5s infinite" }} />
+ <div className="skeleton-line" style={{ height: "40px", borderRadius: "4px", animation: "pulse 1.5s infinite" }} />
  ) : activeBestFor.length ? (
  <ul>{activeBestFor.map((item) => <li key={item}>{item}</li>)}</ul>
  ) : (
@@ -254,7 +251,7 @@ export default function AiProductTranslator({
  <div className="info-block">
  <h2>Avoid If</h2>
  {isLoading ? (
- <div style={{ height: "40px", background: "#eee", borderRadius: "4px", animation: "pulse 1.5s infinite" }} />
+ <div className="skeleton-line" style={{ height: "40px", borderRadius: "4px", animation: "pulse 1.5s infinite" }} />
  ) : activeAvoidIf.length ? (
  <ul>{activeAvoidIf.map((item) => <li key={item}>{item}</li>)}</ul>
  ) : (
@@ -265,7 +262,7 @@ export default function AiProductTranslator({
  <div className="info-block">
  <h2>How To Use</h2>
  {isLoading ? (
- <div style={{ height: "45px", background: "#eee", borderRadius: "4px", animation: "pulse 1.5s infinite" }} />
+ <div className="skeleton-line" style={{ height: "45px", borderRadius: "4px", animation: "pulse 1.5s infinite" }} />
  ) : (
  <p>{activeUsage}</p>
  )}
@@ -282,7 +279,7 @@ export default function AiProductTranslator({
  <div className="info-block">
  <h2>Ingredients To Notice</h2>
  {isLoading ? (
- <div style={{ height: "40px", background: "#eee", borderRadius: "4px", animation: "pulse 1.5s infinite" }} />
+ <div className="skeleton-line" style={{ height: "40px", borderRadius: "4px", animation: "pulse 1.5s infinite" }} />
  ) : activeIngredients.length ? (
  <ul>{activeIngredients.map((item) => <li key={item}>{item}</li>)}</ul>
  ) : (

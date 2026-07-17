@@ -718,7 +718,7 @@ export function AnalysisClient({
  {/* Input Dropzone & Visual scanner */}
  {!report && (
  <div style={{
- background: "rgba(255,255,255,0.7)",
+ background: "var(--dash-surface)",
  backdropFilter: "blur(8px)",
  border: "1px dashed var(--rule)",
  borderRadius: "16px",
@@ -755,7 +755,7 @@ export function AnalysisClient({
  </div>
  ) : (
  <div style={{ textAlign: "center" }}>
- <div style={{ padding: "1.2rem", background: "var(--sand)", borderRadius: "50%", display: "inline-flex", marginBottom: "1rem", color: "var(--muted)" }}>
+ <div style={{ padding: "1.2rem", background: "var(--dash-bg)", borderRadius: "50%", display: "inline-flex", marginBottom: "1rem", color: "var(--muted)" }}>
  <Camera size={36} />
  </div>
  <h3 style={{ fontSize: "1.25rem", margin: "0 0 0.5rem", fontWeight: 500 }}>Upload a Clear Front-Facing Selfie</h3>
@@ -769,8 +769,8 @@ export function AnalysisClient({
  {!scanning && (
  <div style={{ marginTop: "1.5rem", display: "flex", gap: "1rem" }}>
  <label style={{
- background: "var(--ink)",
- color: "var(--white)",
+ background: "var(--dash-accent)",
+ color: "white",
  padding: "0.8rem 1.5rem",
  borderRadius: "10px",
  fontSize: "0.9rem",
@@ -882,7 +882,7 @@ export function AnalysisClient({
 
  {/* Detailed Report Text */}
  <div className="detailed-report-grid" style={{
- background: "rgba(255,255,255,0.8)",
+ background: "var(--dash-surface)",
  border: "1px solid var(--rule)",
  borderRadius: "16px",
  padding: "clamp(1.1rem, 4vw, 2rem)",
@@ -994,7 +994,7 @@ export function AnalysisClient({
  animate={{ scale: 1, y: 0 }}
  exit={{ scale: 0.95, y: 15 }}
  style={{
- background: "var(--white)",
+ background: "var(--dash-surface)",
  border: "1px solid var(--rule)",
  borderRadius: "16px",
  width: "100%",

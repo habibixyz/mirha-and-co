@@ -1385,17 +1385,17 @@ export default function DupeFinderPage() {
                       <span className="col-header" style={{ color: "#2d8a5c", display: "flex", alignItems: "center", gap: "4px" }}>
                         Active Dupe Match <Check size={12} />
                       </span>
-                      <span style={{ fontSize: "0.8rem", color: "#756b63", fontWeight: 700 }}>{activeDupe.brand}</span>
-                      <h4 style={{ fontSize: "1.05rem", fontWeight: 600, margin: "2px 0 6px" }}>{activeDupe.name}</h4>
-                      <p style={{ fontSize: "0.82rem", color: "#756b63", lineHeight: 1.5, margin: "8px 0" }}>
+                      <span className="dupe-brand" style={{ fontSize: "0.8rem", fontWeight: 700 }}>{activeDupe.brand}</span>
+                      <h4 className="dupe-name" style={{ fontSize: "1.05rem", fontWeight: 600, margin: "2px 0 6px" }}>{activeDupe.name}</h4>
+                      <p className="dupe-desc" style={{ fontSize: "0.82rem", lineHeight: 1.5, margin: "8px 0" }}>
                         {activeDupe.description}
                       </p>
                       <span className="actives-label">Dupe Actives:</span>
                       <p className="actives-list">{activeDupe.actives}</p>
                       
                       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginTop: "auto" }}>
-                        <div className="split-price" style={{ color: "#2d8a5c" }}>{formatPrice(activeDupe.price)}</div>
-                        <span style={{ fontSize: "0.78rem", color: "#2d8a5c", fontWeight: 600 }}>Save {formatPrice(savings)}/yr</span>
+                        <div className="split-price dupe-price">{formatPrice(activeDupe.price)}</div>
+                        <span className="dupe-savings">Save {formatPrice(savings)}/yr</span>
                       </div>
 
                       <a href={affiliateUrl} target="_blank" rel="noopener noreferrer" className="shop-dupe-btn">

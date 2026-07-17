@@ -66,12 +66,11 @@ function KProductCard({ asin, section }: { asin: string; section: string }) {
 
   return (
     <div
+      className="kb-card"
       style={{
         display: "flex",
         flexDirection: "column",
         position: "relative",
-        background: "#fff",
-        border: "1px solid #e8e2d9",
         borderRadius: "12px",
         overflow: "hidden",
         boxShadow: "0 2px 12px rgba(0,0,0,0.04)",
@@ -114,12 +113,10 @@ function KProductCard({ asin, section }: { asin: string; section: string }) {
         )}
 
         {/* Image */}
-        <div style={{
+        <div className="kb-card-img" style={{
           position: "relative",
-          background: "#faf8f5",
           height: "200px",
           display: "flex", alignItems: "center", justifyContent: "center",
-          borderBottom: "1px solid #f0ebe4",
           flexShrink: 0,
         }}>
           <img
@@ -140,10 +137,10 @@ function KProductCard({ asin, section }: { asin: string; section: string }) {
           </p>
 
           {/* Name */}
-          <h3 style={{
+          <h3 className="kb-card-name" style={{
             fontFamily: "'DM Serif Display', serif",
             fontSize: "0.95rem", lineHeight: 1.35,
-            color: "#1a1714", fontWeight: 400,
+            fontWeight: 400,
             marginBottom: "0.5rem",
           }}>
             {product.name}
@@ -167,8 +164,8 @@ function KProductCard({ asin, section }: { asin: string; section: string }) {
           )}
 
           {/* Description */}
-          <p style={{
-            fontSize: "0.75rem", color: "#6a635d",
+          <p className="kb-card-desc" style={{
+            fontSize: "0.75rem",
             lineHeight: 1.6, marginBottom: "0.9rem",
             flex: 1,
           }}>
@@ -179,7 +176,7 @@ function KProductCard({ asin, section }: { asin: string; section: string }) {
           <div style={{ marginTop: "auto" }}>
             <div style={{ display: "flex", alignItems: "baseline", gap: "6px", marginBottom: "0.7rem" }}>
               {price && (
-                <span style={{ fontFamily: "'DM Serif Display', serif", fontSize: "1.15rem", color: "#1a1714" }}>
+                <span className="kb-card-price" style={{ fontFamily: "'DM Serif Display', serif", fontSize: "1.15rem" }}>
                   {price}
                 </span>
               )}
@@ -211,10 +208,11 @@ function KProductCard({ asin, section }: { asin: string; section: string }) {
           </Link>
           <Link
             href={`/dashboard/analysis?product=${asin}`}
+            className="kb-btn-analyze"
             style={{
               display: "flex", alignItems: "center", justifyContent: "center", gap: "5px",
               fontSize: "0.58rem", letterSpacing: "0.14em", textTransform: "uppercase",
-              fontWeight: 700, color: "#1a1714", background: "#f4efe9",
+              fontWeight: 700,
               padding: "9px 8px", borderRadius: "6px",
               textDecoration: "none",
             }}
@@ -342,17 +340,44 @@ export default function KBeautyPage() {
             padding: 1.5rem 1.1rem;
           }
         }
+        .kb-main { min-height: 100vh; background: #fffcf8; color: #2b2826; }
+        .kb-hero-sec { background: #fcf9f5; border-bottom: 1px solid #ebdcd0; padding: 5rem 1.5rem 4rem; text-align: center; }
+        .kb-hero-h1 { font-family: 'DM Serif Display', serif; font-size: clamp(2.2rem, 5vw, 3.5rem); line-height: 1.15; color: #2b2826; font-weight: 400; margin-bottom: 1.2rem; }
+        .kb-hero-p { font-size: 1rem; color: #5c544e; line-height: 1.75; max-width: 560px; margin: 0 auto; }
+        .kb-card { background: #fff; border: 1px solid #e8e2d9; }
+        .kb-card-img { background: #faf8f5; border-bottom: 1px solid #f0ebe4; }
+        .kb-card-name { color: #1a1714; }
+        .kb-card-desc { color: #6a635d; }
+        .kb-card-price { color: #1a1714; }
+        .kb-btn-analyze { background: #f4efe9; color: #1a1714; }
+        .kb-search-input { background: #fff; color: #2b2826; border: 1px solid #e0d8d0; }
+
+        html.dark .kb-main, .dark .kb-main { background: #0f0e0d !important; color: #f7f5f2 !important; }
+        html.dark .kb-hero-sec, .dark .kb-hero-sec { background: #161514 !important; border-bottom-color: rgba(255, 255, 255, 0.12) !important; }
+        html.dark .kb-hero-h1, .dark .kb-hero-h1 { color: #ffffff !important; }
+        html.dark .kb-hero-p, .dark .kb-hero-p { color: #aba49d !important; }
+        html.dark .kb-card, .dark .kb-card { background: #181716 !important; border-color: rgba(255, 255, 255, 0.12) !important; }
+        html.dark .kb-card-img, .dark .kb-card-img { background: #141312 !important; border-bottom-color: rgba(255, 255, 255, 0.08) !important; }
+        html.dark .kb-card-name, .dark .kb-card-name { color: #ffffff !important; }
+        html.dark .kb-card-desc, .dark .kb-card-desc { color: #aba49d !important; }
+        html.dark .kb-card-price, .dark .kb-card-price { color: #ffffff !important; }
+        html.dark .kb-btn-analyze, .dark .kb-btn-analyze { background: rgba(255,255,255,0.08) !important; color: #ffffff !important; }
+        html.dark .kb-search-input, .dark .kb-search-input { background: #181716 !important; border-color: rgba(255, 255, 255, 0.15) !important; color: #f7f5f2 !important; }
+        html.dark .kb-editorial-card, .dark .kb-editorial-card { background: #161514 !important; border-color: rgba(255, 255, 255, 0.12) !important; }
+        html.dark .kb-editorial-card h2, .dark .kb-editorial-card h2 { color: #ffffff !important; }
+        html.dark .kb-editorial-card p, .dark .kb-editorial-card p { color: #aba49d !important; }
+        html.dark .kb-editorial-inner-card, .dark .kb-editorial-inner-card { background: #1c1a18 !important; border-color: rgba(255, 255, 255, 0.12) !important; }
+        html.dark .kb-editorial-inner-card h3, .dark .kb-editorial-inner-card h3 { color: #ffffff !important; }
+        html.dark .kb-editorial-inner-card p, .dark .kb-editorial-inner-card p { color: #aba49d !important; }
+        html.dark .kb-tool, .dark .kb-tool { background: #181716 !important; border-color: rgba(255, 255, 255, 0.12) !important; }
+        html.dark .kb-tool h3, .dark .kb-tool h3 { color: #ffffff !important; }
+        html.dark .kb-tool p, .dark .kb-tool p { color: #aba49d !important; }
       `}</style>
 
-      <main style={{ minHeight: "100vh", background: "#fffcf8", color: "#2b2826" }}>
+      <main className="kb-main">
 
         {/* ── HERO ── */}
-        <section style={{
-          background: "#fcf9f5",
-          borderBottom: "1px solid #ebdcd0",
-          padding: "5rem 1.5rem 4rem",
-          textAlign: "center",
-        }}>
+        <section className="kb-hero-sec">
           <div style={{ maxWidth: "720px", margin: "0 auto" }}>
             <span style={{
               display: "block", fontSize: "0.65rem",
@@ -361,19 +386,11 @@ export default function KBeautyPage() {
             }}>
               Curated K-Beauty Destination
             </span>
-            <h1 style={{
-              fontFamily: "'DM Serif Display', serif",
-              fontSize: "clamp(2.2rem, 5vw, 3.5rem)",
-              lineHeight: 1.15, color: "#2b2826",
-              fontWeight: 400, marginBottom: "1.2rem",
-            }}>
+            <h1 className="kb-hero-h1">
               The K-Beauty{" "}
               <em style={{ color: "#fc2779", fontStyle: "italic" }}>Phenomenon</em>
             </h1>
-            <p style={{
-              fontSize: "1rem", color: "#5c544e",
-              lineHeight: 1.75, maxWidth: "560px", margin: "0 auto",
-            }}>
+            <p className="kb-hero-p">
               Trade high-strength chemical actives for the South Korean philosophy of gentle,
               multi-layered hydration — designed to build and protect your skin barrier.
             </p>

@@ -78,10 +78,34 @@ export default function PrivacyPage() {
  margin-bottom: 0.5rem;
  }
 
- .policy-content strong {
- color: var(--ink);
- font-weight: 600;
- }
+   .policy-content strong {
+  color: var(--ink);
+  font-weight: 600;
+  }
+
+  html.dark .policy-page,
+  .dark .policy-page {
+    --paper: #0f0e0d !important;
+    --ink: #f7f5f2 !important;
+    --muted: #aba49d !important;
+    --rule: rgba(255, 255, 255, 0.1) !important;
+    --rose: #ff4d94 !important;
+    --rose-light: #2b111e !important;
+    background: var(--paper) !important;
+    color: var(--ink) !important;
+  }
+
+  html.dark .policy-header h1,
+  .dark .policy-header h1,
+  html.dark .policy-content h2,
+  .dark .policy-content h2 {
+    color: #ffffff !important;
+  }
+
+  html.dark .policy-content strong,
+  .dark .policy-content strong {
+    color: var(--ink) !important;
+  }
  `}</style>
 
  <div className="policy-page">

@@ -215,6 +215,115 @@ export default function BlogProductCard({ asin }: { asin: string }) {
             height: 120px;
           }
         }
+
+        .editorial-specs-table td.spec-key {
+          font-weight: 700;
+          color: #1a1714;
+        }
+
+        html.dark .editorial-product-card,
+        .dark .editorial-product-card {
+          background: #181716 !important;
+          border-color: rgba(255, 255, 255, 0.12) !important;
+          box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4) !important;
+        }
+
+        html.dark .editorial-product-card:hover,
+        .dark .editorial-product-card:hover {
+          border-color: #ff4d94 !important;
+          box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6) !important;
+        }
+
+        html.dark .editorial-prod-img-box,
+        .dark .editorial-prod-img-box {
+          background: #242220 !important;
+          border-color: rgba(255, 255, 255, 0.12) !important;
+        }
+
+        html.dark .editorial-prod-badge,
+        .dark .editorial-prod-badge {
+          color: #ff4d94 !important;
+          background: rgba(255, 77, 148, 0.12) !important;
+          border-color: rgba(255, 77, 148, 0.25) !important;
+        }
+
+        html.dark .editorial-prod-title,
+        .dark .editorial-prod-title {
+          color: #ffffff !important;
+        }
+
+        html.dark .editorial-prod-brand,
+        .dark .editorial-prod-brand {
+          color: #aba49d !important;
+        }
+
+        html.dark .editorial-prod-price,
+        .dark .editorial-prod-price {
+          color: #ffffff !important;
+        }
+
+        html.dark .editorial-prod-mrp,
+        .dark .editorial-prod-mrp {
+          color: #8c8179 !important;
+        }
+
+        html.dark .editorial-prod-discount,
+        .dark .editorial-prod-discount {
+          color: #5a9e6f !important;
+          background: rgba(90, 158, 111, 0.12) !important;
+          border-color: rgba(90, 158, 111, 0.2) !important;
+        }
+
+        html.dark .editorial-specs-divider,
+        .dark .editorial-specs-divider {
+          border-color: rgba(255, 255, 255, 0.12) !important;
+        }
+
+        html.dark .editorial-specs-table,
+        .dark .editorial-specs-table {
+          color: #aba49d !important;
+        }
+
+        html.dark .editorial-specs-table td,
+        .dark .editorial-specs-table td {
+          border-bottom-color: rgba(255, 255, 255, 0.06) !important;
+        }
+
+        html.dark .editorial-specs-table td.spec-key,
+        .dark .editorial-specs-table td.spec-key {
+          color: #ffffff !important;
+        }
+
+        html.dark .editorial-btn-primary,
+        .dark .editorial-btn-primary {
+          background: #ffffff !important;
+          color: #0f0e0d !important;
+          border-color: #ffffff !important;
+        }
+
+        html.dark .editorial-btn-primary:hover,
+        .dark .editorial-btn-primary:hover {
+          background: #e8e4df !important;
+          border-color: #e8e4df !important;
+        }
+
+        html.dark .editorial-btn-secondary,
+        .dark .editorial-btn-secondary {
+          background: transparent !important;
+          color: #ffffff !important;
+          border-color: rgba(255, 255, 255, 0.24) !important;
+        }
+
+        html.dark .editorial-btn-secondary:hover,
+        .dark .editorial-btn-secondary:hover {
+          background: rgba(255, 255, 255, 0.08) !important;
+          border-color: rgba(255, 255, 255, 0.4) !important;
+        }
+
+        html.dark .editorial-disclaimer,
+        .dark .editorial-disclaimer {
+          color: #8c8179 !important;
+        }
       `}</style>
 
       {/* Header Product Row */}
@@ -258,7 +367,7 @@ export default function BlogProductCard({ asin }: { asin: string }) {
             <tbody>
               {Object.entries(product.specs).map(([key, value]) => (
                 <tr key={key}>
-                  <td style={{ fontWeight: 700, color: "#1a1714", width: "40%" }}>{key}</td>
+                  <td className="spec-key" style={{ width: "40%" }}>{key}</td>
                   <td>{value}</td>
                 </tr>
               ))}

@@ -80,7 +80,7 @@ function ResultCard({
  display: "inline-flex",
  alignItems: "center",
  gap: "4px",
- background: isSelected ? "var(--dash-accent)" : "#faf9f7",
+ background: isSelected ? "var(--dash-accent)" : "var(--dash-bg)",
  border: "1px solid " + (isSelected ? "var(--dash-accent)" : "var(--dash-border)"),
  borderRadius: "8px",
  padding: "4px 8px",
@@ -713,6 +713,56 @@ export function SearchClient({ isPro, blacklist = [] }: { isPro: boolean; blackl
  padding: 1rem;
  }
  }
+
+ html.dark .quick-row button, .dark .quick-row button {
+ background: #1e1c1a !important;
+ border-color: rgba(255, 255, 255, 0.15) !important;
+ color: #aba49d !important;
+ }
+
+ html.dark .result-card, .dark .result-card {
+ background: #181716 !important;
+ border-color: rgba(255, 255, 255, 0.1) !important;
+ color: #f7f5f2 !important;
+ }
+
+ html.dark .result-card.is-best, .dark .result-card.is-best {
+ background: #251b22 !important;
+ border-color: rgba(252, 39, 121, 0.3) !important;
+ }
+
+ html.dark .result-card.ai-highlight, .dark .result-card.ai-highlight {
+ background: #251b22 !important;
+ border-color: rgba(252, 39, 121, 0.3) !important;
+ }
+
+ html.dark .result-image, .dark .result-image {
+ background: #121110 !important;
+ border-color: rgba(255, 255, 255, 0.1) !important;
+ }
+
+ html.dark .type-badge, .dark .type-badge {
+ background: rgba(255, 255, 255, 0.08) !important;
+ color: #aba49d !important;
+ }
+
+ html.dark .ai-badge, .dark .ai-badge {
+ background: rgba(252, 39, 121, 0.15) !important;
+ color: #ff4d94 !important;
+ }
+
+ html.dark .result-card h3, .dark .result-card h3 {
+ color: #ffffff !important;
+ }
+
+ html.dark .result-card p, .dark .result-card p {
+ color: #aba49d !important;
+ }
+
+ html.dark .search-box button.search-btn.secondary, .dark .search-box button.search-btn.secondary {
+ background: rgba(255, 255, 255, 0.08) !important;
+ color: #aba49d !important;
+ }
  `}</style>
 
  <div className="search-shell">
@@ -918,7 +968,8 @@ export function SearchClient({ isPro, blacklist = [] }: { isPro: boolean; blackl
  bottom: "24px",
  left: "50%",
  transform: "translateX(-50%)",
- background: "var(--dash-ink)",
+ background: "#1c1917",
+ border: "1px solid rgba(255, 255, 255, 0.15)",
  color: "white",
  borderRadius: "20px",
  padding: "1rem 2rem",
@@ -986,7 +1037,7 @@ export function SearchClient({ isPro, blacklist = [] }: { isPro: boolean; blackl
  padding: "20px"
  }}>
  <div style={{
- background: "white",
+ background: "var(--dash-surface)",
  borderRadius: "28px",
  width: "100%",
  maxWidth: "850px",
@@ -1001,7 +1052,7 @@ export function SearchClient({ isPro, blacklist = [] }: { isPro: boolean; blackl
  <div style={{
  position: "sticky",
  top: 0,
- background: "white",
+ background: "var(--dash-surface)",
  zIndex: 10,
  borderBottom: "1px solid var(--dash-border)",
  padding: "1.5rem 2rem",
@@ -1047,7 +1098,7 @@ export function SearchClient({ isPro, blacklist = [] }: { isPro: boolean; blackl
  </div>
 
  {/* Image */}
- <div style={{ height: "180px", background: "#faf9f7", borderRadius: "18px", display: "flex", alignItems: "center", justifyItems: "center", justifyContent: "center", overflow: "hidden", border: "1px solid var(--dash-border)" }}>
+ <div style={{ height: "180px", background: "var(--dash-bg)", borderRadius: "18px", display: "flex", alignItems: "center", justifyItems: "center", justifyContent: "center", overflow: "hidden", border: "1px solid var(--dash-border)" }}>
  {prod.image ? (
  <img src={prod.image} alt={prod.name} style={{ maxHeight: "80%", maxWidth: "80%", objectFit: "contain" }} />
  ) : (
@@ -1059,8 +1110,8 @@ export function SearchClient({ isPro, blacklist = [] }: { isPro: boolean; blackl
  <div>
  {blacklistMatches.length > 0 ? (
  <div style={{
- background: "#fff1f0",
- border: "1px solid rgba(252, 39, 121, 0.2)",
+ background: "rgba(252, 39, 121, 0.12)",
+ border: "1px solid rgba(252, 39, 121, 0.3)",
  borderRadius: "12px",
  padding: "0.8rem 1rem",
  color: "#fc2779",
@@ -1074,11 +1125,11 @@ export function SearchClient({ isPro, blacklist = [] }: { isPro: boolean; blackl
  </div>
  ) : (
  <div style={{
- background: "rgba(16, 185, 129, 0.06)",
- border: "1px solid rgba(16, 185, 129, 0.2)",
+ background: "rgba(16, 185, 129, 0.12)",
+ border: "1px solid rgba(16, 185, 129, 0.3)",
  borderRadius: "12px",
  padding: "0.8rem 1rem",
- color: "#047857",
+ color: "#10b981",
  fontSize: "0.85rem",
  fontWeight: 600,
  display: "flex",
@@ -1123,7 +1174,7 @@ export function SearchClient({ isPro, blacklist = [] }: { isPro: boolean; blackl
  alignItems: "center",
  justifyContent: "center",
  gap: "0.5rem",
- background: "var(--dash-ink)",
+ background: "var(--dash-accent)",
  color: "white",
  padding: "0.8rem",
  borderRadius: "12px",
@@ -1137,7 +1188,7 @@ export function SearchClient({ isPro, blacklist = [] }: { isPro: boolean; blackl
  ) : (
  <Link href={`/product/${prod.asin}`} style={{
  display: "block",
- background: "var(--dash-ink)",
+ background: "var(--dash-accent)",
  color: "white",
  padding: "0.8rem",
  borderRadius: "12px",

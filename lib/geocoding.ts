@@ -256,8 +256,11 @@ export async function resolveLocationDataLive(query: {
   if (query.postalCode) {
     geoResult = await geocodePostalCode(query.postalCode, query.country);
   }
-  if (!geoResult && query.city) {
-    geoResult = await geocodeCityName(query.city, query.country);
+  if (!geoResult) {
+    const cityQuery = query.city || query.postalCode;
+    if (cityQuery) {
+      geoResult = await geocodeCityName(cityQuery, query.country);
+    }
   }
 
   // ── If geocoding succeeded ──

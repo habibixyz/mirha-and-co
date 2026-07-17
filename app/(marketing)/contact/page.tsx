@@ -46,250 +46,76 @@ const contactStructuredData = {
 
 export default function ContactPage() {
   return (
-    <main className="min-h-screen bg-[#fcfbf9]">
+    <main className="contact-page min-h-screen">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(contactStructuredData) }}
       />
       {/* Hero */}
-      <section
-        style={{
-          borderBottom: "1px solid #ded7cf",
-          padding: "5rem 1.5rem 4rem",
-          textAlign: "center",
-        }}
-      >
-        <p
-          style={{
-            fontFamily: "var(--font-dm-sans), sans-serif",
-            fontSize: "0.7rem",
-            letterSpacing: "0.22em",
-            textTransform: "uppercase",
-            color: "#9c8f85",
-            marginBottom: "1rem",
-          }}
-        >
+      <section className="contact-hero">
+        <p className="contact-eyebrow">
           Get In Touch
         </p>
-        <h1
-          style={{
-            fontFamily: "var(--font-bebas), sans-serif",
-            fontSize: "clamp(3rem, 8vw, 6rem)",
-            letterSpacing: "0.04em",
-            color: "#1a1714",
-            lineHeight: 1,
-            marginBottom: "1.5rem",
-          }}
-        >
+        <h1 className="contact-title">
           CONTACT US
         </h1>
-        <p
-          style={{
-            fontFamily: "var(--font-dm-sans), sans-serif",
-            fontSize: "1rem",
-            color: "#6b5f57",
-            maxWidth: "480px",
-            margin: "0 auto",
-            lineHeight: 1.7,
-          }}
-        >
+        <p className="contact-desc">
           Have a question about our tools, a B2B enquiry, or just want to say
           hello? We're happy to help.
         </p>
       </section>
 
       {/* Cards */}
-      <section
-        style={{
-          maxWidth: "860px",
-          margin: "0 auto",
-          padding: "4rem 1.5rem",
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
-          gap: "1.5rem",
-        }}
-      >
+      <section className="contact-grid">
         {/* General enquiries */}
-        <div
-          style={{
-            background: "#fff",
-            border: "1px solid #ded7cf",
-            borderRadius: "4px",
-            padding: "2rem",
-          }}
-        >
-          <p
-            style={{
-              fontFamily: "var(--font-dm-sans), sans-serif",
-              fontSize: "0.65rem",
-              letterSpacing: "0.2em",
-              textTransform: "uppercase",
-              color: "#9c8f85",
-              marginBottom: "0.75rem",
-            }}
-          >
+        <div className="contact-card">
+          <p className="card-eyebrow">
             General Enquiries
           </p>
-          <h2
-            style={{
-              fontFamily: "var(--font-bebas), sans-serif",
-              fontSize: "1.6rem",
-              letterSpacing: "0.05em",
-              color: "#1a1714",
-              marginBottom: "0.5rem",
-            }}
-          >
+          <h2 className="card-title">
             Say Hello
           </h2>
-          <p
-            style={{
-              fontFamily: "var(--font-dm-sans), sans-serif",
-              fontSize: "0.88rem",
-              color: "#6b5f57",
-              lineHeight: 1.6,
-              marginBottom: "1.25rem",
-            }}
-          >
+          <p className="card-desc">
             Questions about our ingredient checker, dupe finder, or anything
             else? Drop us a line.
           </p>
-          <a
-            href="mailto:tanizcoldz@gmail.com"
-            style={{
-              fontFamily: "var(--font-dm-sans), sans-serif",
-              fontSize: "0.75rem",
-              letterSpacing: "0.16em",
-              textTransform: "uppercase",
-              fontWeight: 700,
-              color: "#fc2779",
-              textDecoration: "none",
-              borderBottom: "1px solid #fc2779",
-              paddingBottom: "2px",
-            }}
-          >
+          <a href="mailto:tanizcoldz@gmail.com" className="card-link">
             tanizcoldz@gmail.com →
           </a>
         </div>
 
         {/* B2B / Partnership */}
-        <div
-          style={{
-            background: "#fff",
-            border: "1px solid #ded7cf",
-            borderRadius: "4px",
-            padding: "2rem",
-          }}
-        >
-          <p
-            style={{
-              fontFamily: "var(--font-dm-sans), sans-serif",
-              fontSize: "0.65rem",
-              letterSpacing: "0.2em",
-              textTransform: "uppercase",
-              color: "#9c8f85",
-              marginBottom: "0.75rem",
-            }}
-          >
+        <div className="contact-card">
+          <p className="card-eyebrow">
             B2B &amp; Partnerships
           </p>
-          <h2
-            style={{
-              fontFamily: "var(--font-bebas), sans-serif",
-              fontSize: "1.6rem",
-              letterSpacing: "0.05em",
-              color: "#1a1714",
-              marginBottom: "0.5rem",
-            }}
-          >
+          <h2 className="card-title">
             Work With Us
           </h2>
-          <p
-            style={{
-              fontFamily: "var(--font-dm-sans), sans-serif",
-              fontSize: "0.88rem",
-              color: "#6b5f57",
-              lineHeight: 1.6,
-              marginBottom: "1.25rem",
-            }}
-          >
+          <p className="card-desc">
             Interested in our API for your brand? Head to our B2B page or reach
             out directly for enterprise enquiries.
           </p>
-          <Link
-            href="/b2b"
-            style={{
-              fontFamily: "var(--font-dm-sans), sans-serif",
-              fontSize: "0.75rem",
-              letterSpacing: "0.16em",
-              textTransform: "uppercase",
-              fontWeight: 700,
-              color: "#fc2779",
-              textDecoration: "none",
-              borderBottom: "1px solid #fc2779",
-              paddingBottom: "2px",
-            }}
-          >
+          <Link href="/b2b" className="card-link">
             View B2B Plans →
           </Link>
         </div>
 
         {/* Support */}
-        <div
-          style={{
-            background: "#fff",
-            border: "1px solid #ded7cf",
-            borderRadius: "4px",
-            padding: "2rem",
-          }}
-        >
-          <p
-            style={{
-              fontFamily: "var(--font-dm-sans), sans-serif",
-              fontSize: "0.65rem",
-              letterSpacing: "0.2em",
-              textTransform: "uppercase",
-              color: "#9c8f85",
-              marginBottom: "0.75rem",
-            }}
-          >
+        <div className="contact-card">
+          <p className="card-eyebrow">
             Support
           </p>
-          <h2
-            style={{
-              fontFamily: "var(--font-bebas), sans-serif",
-              fontSize: "1.6rem",
-              letterSpacing: "0.05em",
-              color: "#1a1714",
-              marginBottom: "0.5rem",
-            }}
-          >
+          <h2 className="card-title">
             Need Help?
           </h2>
-          <p
-            style={{
-              fontFamily: "var(--font-dm-sans), sans-serif",
-              fontSize: "0.88rem",
-              color: "#6b5f57",
-              lineHeight: 1.6,
-              marginBottom: "1.25rem",
-            }}
-          >
+          <p className="card-desc">
             Account issues, API questions, or billing? Email our support team
             and we'll get back to you within 24 hours.
           </p>
           <a
             href="mailto:tanizcoldz@gmail.com?subject=Support%20Request"
-            style={{
-              fontFamily: "var(--font-dm-sans), sans-serif",
-              fontSize: "0.75rem",
-              letterSpacing: "0.16em",
-              textTransform: "uppercase",
-              fontWeight: 700,
-              color: "#fc2779",
-              textDecoration: "none",
-              borderBottom: "1px solid #fc2779",
-              paddingBottom: "2px",
-            }}
+            className="card-link"
           >
             tanizcoldz@gmail.com →
           </a>
@@ -297,39 +123,16 @@ export default function ContactPage() {
       </section>
 
       {/* Social */}
-      <section
-        style={{
-          borderTop: "1px solid #ded7cf",
-          padding: "3rem 1.5rem",
-          textAlign: "center",
-        }}
-      >
-        <p
-          style={{
-            fontFamily: "var(--font-dm-sans), sans-serif",
-            fontSize: "0.7rem",
-            letterSpacing: "0.2em",
-            textTransform: "uppercase",
-            color: "#9c8f85",
-            marginBottom: "1rem",
-          }}
-        >
+      <section className="contact-social">
+        <p className="contact-social-eyebrow">
           Follow Along
         </p>
-        <div style={{ display: "flex", gap: "1.5rem", justifyContent: "center" }}>
+        <div className="social-links-container">
           <a
             href="https://www.instagram.com/mirha_andco/"
             target="_blank"
             rel="noopener noreferrer"
-            style={{
-              fontFamily: "var(--font-dm-sans), sans-serif",
-              fontSize: "0.75rem",
-              letterSpacing: "0.16em",
-              textTransform: "uppercase",
-              fontWeight: 700,
-              color: "#2b2826",
-              textDecoration: "none",
-            }}
+            className="social-link"
           >
             Instagram ↗
           </a>
@@ -337,15 +140,7 @@ export default function ContactPage() {
             href="https://www.linkedin.com/company/mirhaandco/"
             target="_blank"
             rel="noopener noreferrer"
-            style={{
-              fontFamily: "var(--font-dm-sans), sans-serif",
-              fontSize: "0.75rem",
-              letterSpacing: "0.16em",
-              textTransform: "uppercase",
-              fontWeight: 700,
-              color: "#2b2826",
-              textDecoration: "none",
-            }}
+            className="social-link"
           >
             LinkedIn ↗
           </a>

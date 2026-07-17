@@ -312,7 +312,7 @@ export function DashboardClient({ user, routines, recentJournal, stats }: any) {
       </motion.header>
 
       <motion.section className="dash-plan-section" variants={itemVariants} style={{
-        background: "var(--white)",
+        background: "var(--dash-surface)",
         border: "1px solid var(--dash-border)",
         borderRadius: "28px",
         padding: "1.5rem",
@@ -355,7 +355,7 @@ export function DashboardClient({ user, routines, recentJournal, stats }: any) {
               whileTap={{ scale: 0.98 }}
               style={{
                 background: "var(--dash-ink)",
-                color: "var(--white)",
+                color: "var(--dash-surface)",
                 border: "none",
                 borderRadius: "16px",
                 padding: "0.85rem 1.15rem",
@@ -386,7 +386,7 @@ export function DashboardClient({ user, routines, recentJournal, stats }: any) {
                   border: "1px solid var(--dash-border)",
                   borderRadius: "20px",
                   padding: "1rem",
-                  background: step.done ? "rgba(252, 39, 121, 0.06)" : "#FAF9F7",
+                  background: step.done ? "var(--dash-accent-soft)" : "var(--dash-bg)",
                   display: "flex",
                   gap: "0.8rem",
                   alignItems: "flex-start"
@@ -396,7 +396,7 @@ export function DashboardClient({ user, routines, recentJournal, stats }: any) {
                   width: "28px",
                   height: "28px",
                   borderRadius: "50%",
-                  background: step.done ? "var(--dash-accent)" : "white",
+                  background: step.done ? "var(--dash-accent)" : "var(--dash-surface)",
                   border: step.done ? "none" : "1px solid var(--dash-border)",
                   color: step.done ? "white" : "var(--dash-muted)",
                   display: "flex",
@@ -521,7 +521,7 @@ export function DashboardClient({ user, routines, recentJournal, stats }: any) {
 
           return (
             <motion.div key={routineId || `fallback-${rIdx}`} className="dash-bottom-card" variants={itemVariants} style={{
-              background: 'var(--white)',
+              background: 'var(--dash-surface)',
               border: "1px solid var(--dash-border)",
               borderRadius: "28px",
               padding: "2rem",
@@ -552,7 +552,7 @@ export function DashboardClient({ user, routines, recentJournal, stats }: any) {
                         cursor: routineId ? "pointer" : "default",
                         padding: "0.8rem 1rem",
                         borderRadius: "18px",
-                        background: isChecked ? "rgba(0,0,0,0.02)" : '#fff',
+                        background: isChecked ? "var(--dash-bg)" : "var(--dash-surface)",
                         border: isChecked ? "1px solid transparent" : "1px solid var(--dash-border)",
                         transition: "all 0.2s"
                       }}
@@ -594,7 +594,7 @@ export function DashboardClient({ user, routines, recentJournal, stats }: any) {
 
  {/* Card 2: Journal */}
  <motion.div className="dash-bottom-card" variants={itemVariants} style={{
- background: 'var(--white)',
+ background: 'var(--dash-surface)',
  border: "1px solid var(--dash-border)",
  borderRadius: "28px",
  padding: "2rem",
@@ -606,7 +606,7 @@ export function DashboardClient({ user, routines, recentJournal, stats }: any) {
 
  {recentJournal ? (
  <div style={{
- background: '#FAF9F7',
+ background: 'var(--dash-bg)',
  borderRadius: "22px",
  padding: "1.2rem",
  color: "var(--dash-ink)",
@@ -622,7 +622,7 @@ export function DashboardClient({ user, routines, recentJournal, stats }: any) {
  </div>
  ) : (
  <div style={{
- background: '#FAF9F7',
+ background: 'var(--dash-bg)',
  borderRadius: "22px",
  padding: "2rem",
  color: "var(--dash-muted)",
@@ -641,7 +641,7 @@ export function DashboardClient({ user, routines, recentJournal, stats }: any) {
  whileTap={{ scale: 0.98 }}
  style={{
  background: "var(--dash-accent)",
- color: "var(--white)",
+ color: "#ffffff",
  border: "none",
  borderRadius: "18px",
  padding: "1rem",

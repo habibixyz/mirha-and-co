@@ -16,20 +16,34 @@ export default function AboutPage() {
  <style>{`
  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
- .about-page {
- --black: #0c0a09;
- --white: #fafaf8;
- --rose: #a27b5c;
- --rose-light: #fbf7f2;
- --paper: #fffcf8;
- --ink: #2b2826;
- --muted: #8c8179;
- --rule: #e8ded6;
- background: var(--paper);
- color: var(--ink);
- font-family: var(--font-dm-sans), sans-serif;
- overflow-x: hidden;
- }
+  .about-page {
+  --black: #0c0a09;
+  --white: #fafaf8;
+  --rose: #a27b5c;
+  --rose-light: #fbf7f2;
+  --paper: #fffcf8;
+  --ink: #2b2826;
+  --muted: #8c8179;
+  --rule: #e8ded6;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-dm-sans), sans-serif;
+  overflow-x: hidden;
+  }
+
+  html.dark .about-page,
+  .dark .about-page {
+    --black: #080707;
+    --white: #f7f5f2;
+    --rose: #ff4d94;
+    --rose-light: #1c1a18;
+    --paper: #0f0e0d;
+    --ink: #f7f5f2;
+    --muted: #aba49d;
+    --rule: rgba(255, 255, 255, 0.12);
+    background: var(--paper) !important;
+    color: var(--ink) !important;
+  }
 
  .img-wrap {
  border-radius: 24px;
@@ -183,14 +197,19 @@ export default function AboutPage() {
  align-items: center;
  }
 
- .section-title {
- font-family: var(--font-playfair), serif;
- font-size: clamp(2.5rem, 6vw, 3.8rem);
- line-height: 1.1;
- font-weight: 700;
- margin-bottom: 2rem;
- color: #111;
- }
+  .section-title {
+  font-family: var(--font-playfair), serif;
+  font-size: clamp(2.5rem, 6vw, 3.8rem);
+  line-height: 1.1;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  color: #111;
+  }
+
+  html.dark .section-title,
+  .dark .section-title {
+    color: #ffffff !important;
+  }
 
  .section-title span {
  color: var(--rose);
@@ -234,6 +253,23 @@ export default function AboutPage() {
     position: relative;
     overflow: hidden;
     grid-column: span 2;
+  }
+
+  html.dark .ecosystem-card,
+  .dark .ecosystem-card {
+    background: #181716 !important;
+    border-color: rgba(255, 255, 255, 0.12) !important;
+    color: #f7f5f2 !important;
+  }
+
+  html.dark .ecosystem-card h3,
+  .dark .ecosystem-card h3 {
+    color: #ffffff !important;
+  }
+
+  html.dark .ecosystem-card p,
+  .dark .ecosystem-card p {
+    color: #aba49d !important;
   }
   .ecosystem-card.wide {
     grid-column: span 3;
@@ -356,6 +392,17 @@ export default function AboutPage() {
  background: #111;
  color: #fff;
  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+ }
+
+ html.dark .btn.primary,
+ .dark .btn.primary {
+   background: #ffffff !important;
+   color: #0f0e0d !important;
+ }
+
+ html.dark .btn.primary:hover,
+ .dark .btn.primary:hover {
+   background: #e8e4df !important;
  }
 
  .btn.primary:hover {

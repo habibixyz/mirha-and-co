@@ -17,10 +17,10 @@ export default function RegionalGuidesSelector({ currency = "INR" }: { currency?
   return (
     <div
       style={{
-        background: "#fff",
+        background: "var(--dash-surface, #fff)",
         padding: "2rem 1.5rem",
         borderRadius: "16px",
-        border: "1px solid #ded7cf",
+        border: "1px solid var(--dash-border, #ded7cf)",
         maxWidth: "680px",
         margin: "0 auto 3rem",
         textAlign: "center",
@@ -33,7 +33,7 @@ export default function RegionalGuidesSelector({ currency = "INR" }: { currency?
           fontSize: "1.25rem",
           marginBottom: "1.2rem",
           fontWeight: 400,
-          color: "var(--ink, #1a1714)",
+          color: "var(--dash-ink, #1a1714)",
         }}
       >
         Select Your City &amp; Concern Climate Guide
@@ -53,8 +53,9 @@ export default function RegionalGuidesSelector({ currency = "INR" }: { currency?
           style={{
             padding: "0.7rem 1.2rem",
             borderRadius: "8px",
-            border: "1px solid #ded7cf",
-            background: "#fff",
+            border: "1px solid var(--dash-border, #ded7cf)",
+            background: "var(--dash-bg, #fff)",
+            color: "var(--dash-ink, #111)",
             outline: "none",
             fontSize: "0.85rem",
             minWidth: "180px",
@@ -75,8 +76,9 @@ export default function RegionalGuidesSelector({ currency = "INR" }: { currency?
           style={{
             padding: "0.7rem 1.2rem",
             borderRadius: "8px",
-            border: "1px solid #ded7cf",
-            background: "#fff",
+            border: "1px solid var(--dash-border, #ded7cf)",
+            background: "var(--dash-bg, #fff)",
+            color: "var(--dash-ink, #111)",
             outline: "none",
             fontSize: "0.85rem",
             minWidth: "180px",

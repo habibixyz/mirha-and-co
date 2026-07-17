@@ -271,7 +271,7 @@ export function RoutinesClient({ initialRoutines }: { initialRoutines: any[] }) 
  <div style={{ display: "flex", flexDirection: "column", gap: "0.8rem" }}>
  {routine.steps.map((step: string, idx: number) => (
  <div key={idx} style={{
- background: '#fff',
+ background: 'var(--dash-surface)',
  border: "1px solid var(--dash-border)",
  color: "var(--dash-ink)",
  padding: "1rem 1.25rem",

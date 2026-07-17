@@ -561,6 +561,44 @@ export default function HardWaterCalculator() {
  opacity: 0.5;
  cursor: not-allowed;
  }
+ .back-btn {
+ background: transparent;
+ border: 1px solid #d8cdc3;
+ color: #161412;
+ flex: 1;
+ border-radius: 10px;
+ padding: 16px;
+ font-size: 1rem;
+ font-weight: 600;
+ cursor: pointer;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ transition: all 0.2s;
+ }
+ .back-btn:hover {
+ background: #f5ece2;
+ border-color: #fc2779;
+ color: #fc2779;
+ }
+ .hardness-badge.risk-extreme {
+ background-color: #fff0e8;
+ color: #fc2779;
+ }
+ .hardness-badge.risk-moderate {
+ background-color: #fff6ee;
+ color: #e67e22;
+ }
+ .hardness-badge.risk-low {
+ background-color: #eaf7f0;
+ color: #2d8a5c;
+ }
+ .location-city-name {
+ color: #161412;
+ }
+ .score-num {
+ color: #161412;
+ }
  /* Results Section */
  .results-header {
  text-align: center;
@@ -813,6 +851,115 @@ export default function HardWaterCalculator() {
  box-shadow: 0 0 0 3px rgba(252, 39, 121, 0.1) !important;
  background: #fff !important;
  }
+
+ /* Scoped Dark Mode Overrides */
+ html.dark .hard-water-page, .dark .hard-water-page {
+   background: #0f0e0d !important;
+   color: #f7f5f2 !important;
+ }
+ html.dark .quiz-card, .dark .quiz-card {
+ background: #181716 !important;
+ border-color: rgba(255, 255, 255, 0.12) !important;
+ box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5) !important;
+ }
+ html.dark .quiz-title, .dark .quiz-title {
+ color: #ffffff !important;
+ }
+ html.dark .quiz-subtitle, .dark .quiz-subtitle {
+ color: #aba49d !important;
+ }
+ html.dark .city-btn, .dark .city-btn {
+ background: #1e1c1a !important;
+ border-color: rgba(255, 255, 255, 0.12) !important;
+ color: #ffffff !important;
+ }
+ html.dark .city-btn:hover, .dark .city-btn:hover,
+ html.dark .city-btn.selected, .dark .city-btn.selected {
+ background: rgba(252, 39, 121, 0.2) !important;
+ border-color: #fc2779 !important;
+ }
+ html.dark .symptom-card, .dark .symptom-card {
+ background: #1e1c1a !important;
+ border-color: rgba(255, 255, 255, 0.12) !important;
+ color: #ffffff !important;
+ }
+ html.dark .symptom-card:hover, .dark .symptom-card:hover,
+ html.dark .symptom-card.selected, .dark .symptom-card.selected {
+ background: rgba(252, 39, 121, 0.2) !important;
+ border-color: #fc2779 !important;
+ }
+ html.dark .symptom-checkbox, .dark .symptom-checkbox {
+ background: #2b2826 !important;
+ border-color: rgba(255, 255, 255, 0.2) !important;
+ }
+ html.dark .state-search-input, .dark .state-search-input {
+ background: #1e1c1a !important;
+ border-color: rgba(255, 255, 255, 0.15) !important;
+ color: #ffffff !important;
+ }
+ html.dark .location-profile-card, .dark .location-profile-card {
+  background: #1e1c1a !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+  color: #f7f5f2 !important;
+  }
+  html.dark .location-profile-card p, .dark .location-profile-card p {
+  color: #f7f5f2 !important;
+  }
+  html.dark .location-profile-card .location-city-name, .dark .location-profile-card .location-city-name {
+  color: #ffffff !important;
+  }
+  html.dark .hardness-badge.risk-extreme, .dark .hardness-badge.risk-extreme {
+  background-color: rgba(252, 39, 121, 0.15) !important;
+  color: #fc2779 !important;
+  }
+  html.dark .hardness-badge.risk-moderate, .dark .hardness-badge.risk-moderate {
+  background-color: rgba(230, 126, 34, 0.15) !important;
+  color: #e67e22 !important;
+  }
+  html.dark .hardness-badge.risk-low, .dark .hardness-badge.risk-low {
+  background-color: rgba(45, 138, 92, 0.15) !important;
+  color: #2d8a5c !important;
+  }
+  html.dark .score-num, .dark .score-num {
+  color: #ffffff !important;
+  }
+  html.dark .rec-card, .dark .rec-card,
+  html.dark .science-card, .dark .science-card {
+  background: #181716 !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+  color: #f7f5f2 !important;
+  }
+  html.dark .rec-name, .dark .rec-name,
+  html.dark .science-card h4, .dark .science-card h4 {
+  color: #ffffff !important;
+  }
+  html.dark .rec-desc, .dark .rec-desc,
+  html.dark .science-card p, .dark .science-card p {
+  color: #aba49d !important;
+  }
+  html.dark .back-btn, .dark .back-btn {
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  color: #ffffff !important;
+  background: transparent !important;
+  }
+  html.dark .back-btn:hover, .dark .back-btn:hover {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border-color: #fc2779 !important;
+  color: #fc2779 !important;
+  }
+  html.dark .share-btn, .dark .share-btn {
+  background: #1e1c1a !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+  color: #ffffff !important;
+  }
+  html.dark .share-btn:hover, .dark .share-btn:hover {
+  background: rgba(255, 255, 255, 0.05) !important;
+  }
+  html.dark .whatsapp-btn, .dark .whatsapp-btn {
+  background: #25d366 !important;
+  border-color: #25d366 !important;
+  color: #ffffff !important;
+  }
  `}</style>
 
  <div className="shell">
@@ -1099,24 +1246,21 @@ export default function HardWaterCalculator() {
  ))}
  </div>
 
-
-
  <div style={{ display: "flex", gap: "12px", marginTop: "30px" }}>
- <button
- className="next-btn"
- style={{ background: "transparent", border: "1px solid #d8cdc3", color: "#161412", flex: 1, marginTop: 0 }}
- onClick={() => setStep(1)}
- >
- Back
- </button>
- <button
- className="next-btn"
- style={{ flex: 2, marginTop: 0 }}
- onClick={() => setStep(3)}
- >
- Analyze My Water Risk <Star size={16} />
- </button>
- </div>
+  <button
+  className="back-btn"
+  onClick={() => setStep(1)}
+  >
+  Back
+  </button>
+  <button
+  className="next-btn"
+  style={{ flex: 2, marginTop: 0 }}
+  onClick={() => setStep(3)}
+  >
+  Analyze My Water Risk <Star size={16} />
+  </button>
+  </div>
  </div>
  )}
 
@@ -1159,7 +1303,7 @@ export default function HardWaterCalculator() {
  alignItems: "center",
  justifyContent: "center"
  }}>
- <span className="score-num" style={{ fontSize: "48px", fontWeight: 700, color: "#161412", lineHeight: 1 }}>
+ <span className="score-num" style={{ fontSize: "48px", fontWeight: 700, lineHeight: 1 }}>
  {results.score}%
  </span>
  <span className="score-lbl" style={{ fontSize: "0.65rem", letterSpacing: "0.15em", textTransform: "uppercase", fontWeight: 700, color: "#756b63", marginTop: "4px" }}>
@@ -1188,11 +1332,9 @@ export default function HardWaterCalculator() {
  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "12px", flexWrap: "wrap", gap: "8px" }}>
  <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
  <MapPin size={18} style={{ color: "#fc2779" }} />
- <span style={{ fontSize: "1.1rem", fontWeight: 700, color: "#161412" }}>{selectedCity}</span>
+ <span className="location-city-name" style={{ fontSize: "1.1rem", fontWeight: 700 }}>{selectedCity}</span>
  </div>
- <span className="hardness-badge" style={{
- backgroundColor: results.score >= 75 ? "#fff0e8" : results.score >= 45 ? "#fff6ee" : "#eaf7f0",
- color: results.color,
+ <span className={`hardness-badge risk-${results.score >= 75 ? "extreme" : results.score >= 45 ? "moderate" : "low"}`} style={{
  fontSize: "0.75rem",
  fontWeight: 700,
  textTransform: "uppercase",
@@ -1230,11 +1372,9 @@ export default function HardWaterCalculator() {
  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "12px", flexWrap: "wrap", gap: "8px" }}>
  <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
  <Droplet size={18} style={{ color: "#fc2779" }} />
- <span style={{ fontSize: "1.1rem", fontWeight: 700, color: "#161412" }}>Custom TDS Reading</span>
+ <span className="location-city-name" style={{ fontSize: "1.1rem", fontWeight: 700 }}>Custom TDS Reading</span>
  </div>
- <span className="hardness-badge" style={{
- backgroundColor: results.score >= 75 ? "#fff0e8" : results.score >= 45 ? "#fff6ee" : "#eaf7f0",
- color: results.color,
+ <span className={`hardness-badge risk-${results.score >= 75 ? "extreme" : results.score >= 45 ? "moderate" : "low"}`} style={{
  fontSize: "0.75rem",
  fontWeight: 700,
  textTransform: "uppercase",

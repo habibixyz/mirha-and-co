@@ -808,10 +808,10 @@ export default async function BlogIndex() {
  display: "flex",
  flexDirection: "column",
  justifyContent: "space-between",
- background: "#fff",
+ background: "var(--dash-surface, #fff)",
  padding: "1.5rem",
  borderRadius: "12px",
- border: "1px solid #e8e2d9",
+ border: "1px solid var(--dash-border, #e8e2d9)",
  boxShadow: "0 2px 8px rgba(0,0,0,0.01)",
  transition: "all 0.2s ease",
  textDecoration: "none"
@@ -822,7 +822,7 @@ export default async function BlogIndex() {
  <span style={{ fontSize: "0.58rem", color: "#a27b5c", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.15em" }}>
  {guide.cityName}
  </span>
- <h4 style={{ fontFamily: "var(--font-playfair), serif", fontSize: "1.1rem", margin: "0.5rem 0 1rem", color: "#1a1714", fontWeight: 400, lineHeight: 1.35 }}>
+ <h4 style={{ fontFamily: "var(--font-playfair), serif", fontSize: "1.1rem", margin: "0.5rem 0 1rem", color: "var(--dash-ink, #1a1714)", fontWeight: 400, lineHeight: 1.35 }}>
  Best Moisturizer for {guide.concernName} in {guide.cityName}
  </h4>
  </div>

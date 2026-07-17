@@ -35,6 +35,7 @@ const bebasNeue = Bebas_Neue({
 import { cookies, headers } from "next/headers";
 import { Locale, Currency } from "@/lib/globalization";
 import { GlobalizationProvider } from "@/components/GlobalizationContext";
+import { ThemeProvider } from "@/components/ThemeProvider";
 import SiteHeader from "@/components/SiteHeader";
 import NewsletterForm from "@/components/NewsletterForm";
 import BackToTop from "@/components/BackToTop";
@@ -148,12 +149,14 @@ export default async function RootLayout({
  />
  <Script strategy="afterInteractive" src="https://www.dwin1.com/2904237.js" />
 
+ <ThemeProvider>
  <GlobalizationProvider initialLocale={locale} initialCurrency={currency}>
  {/* Top disclosure bar */}
  <div 
+ className="top-disclosure-bar"
  style={{
- background: "#f6f4f2", // Warm premium sand
- color: "#8d8178", // Muted editorial taupe
+ background: "var(--sand)", // Warm premium sand
+ color: "var(--muted)", // Muted editorial taupe
  textAlign: "center",
  padding: "0.55rem 1rem",
  fontSize: "0.62rem",
@@ -161,7 +164,7 @@ export default async function RootLayout({
  textTransform: "uppercase",
  fontWeight: 600,
  fontFamily: "var(--font-dm-sans), sans-serif",
- borderBottom: "1px solid #ded7cf",
+ borderBottom: "1px solid var(--rule)",
  }}
  >
  Independent reviews. Honest opinions. Affiliate links disclosed.
@@ -172,6 +175,7 @@ export default async function RootLayout({
  {children}
  <BackToTop />
  </GlobalizationProvider>
+ </ThemeProvider>
 
  {/* Footer */}
  <footer style={{

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import { useGlobalization } from "./GlobalizationContext";
 import GlobalizationSwitcher from "./GlobalizationSwitcher";
+import { ThemeToggle } from "./ThemeToggle";
 
 const InstagramIcon = ({ size = 16 }: { size?: number }) => (
   <svg
@@ -105,6 +106,7 @@ export default function SiteHeader() {
               <LinkedInIcon size={15} />
             </a>
             <GlobalizationSwitcher />
+            <ThemeToggle />
           </nav>
         </div>
 
@@ -197,8 +199,9 @@ export default function SiteHeader() {
 
             <div style={{ height: "1px", background: "#e5ded6" }} />
 
-            <div style={{ display: "flex", justifyContent: "flex-start", paddingTop: "0.4rem" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingTop: "0.4rem" }}>
               <GlobalizationSwitcher />
+              <ThemeToggle />
             </div>
           </div>
         </div>

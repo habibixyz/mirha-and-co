@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { logoutAction } from "@/app/(saas)/actions";
 import { LogOut } from "lucide-react";
+import { ThemeToggle } from "./ThemeToggle";
 
 const NAV = [
  {
@@ -89,6 +90,10 @@ export function SaasSidebar() {
  }}>
  Upgrade to Pro
  </Link>
+
+ <div style={{ display: "flex", justifyContent: "center" }}>
+ <ThemeToggle />
+ </div>
 
  <button 
  onClick={() => logoutAction()}

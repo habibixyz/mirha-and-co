@@ -63,7 +63,7 @@ export function DashboardStats({ stats }: any) {
  }
 
  .stat-card-item {
- background: var(--white);
+ background: var(--dash-surface);
  border: 1px solid var(--dash-border);
  border-radius: 16px;
  padding: 1rem 0.6rem;

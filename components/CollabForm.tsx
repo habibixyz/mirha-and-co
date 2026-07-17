@@ -107,6 +107,21 @@ export default function CollabForm() {
  inset 0 0 0 1px rgba(255, 255, 255, 0.5);
  }
 
+ html.dark .collab-card,
+ .dark .collab-card {
+   background: rgba(24, 23, 22, 0.8) !important;
+   border-color: rgba(255, 255, 255, 0.12) !important;
+   box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), 
+   inset 0 0 0 1px rgba(255, 255, 255, 0.05) !important;
+ }
+
+ html.dark .collab-card:hover,
+ .dark .collab-card:hover {
+   border-color: #ff4d94 !important;
+   box-shadow: 0 35px 70px rgba(0, 0, 0, 0.6),
+   inset 0 0 0 1px rgba(255, 255, 255, 0.1) !important;
+ }
+
  .dark-theme-override {
  background: rgba(12, 10, 9, 0.95);
  border: 1px solid rgba(255, 255, 255, 0.06);
@@ -156,6 +171,11 @@ export default function CollabForm() {
  gap: 6px;
  }
 
+ html.dark .form-label,
+ .dark .form-label {
+   color: #aba49d !important;
+ }
+
  .input-wrapper {
  position: relative;
  display: flex;
@@ -167,6 +187,11 @@ export default function CollabForm() {
  left: 14px;
  color: #8c8179;
  opacity: 0.7;
+ }
+
+ html.dark .input-icon,
+ .dark .input-icon {
+   color: #aba49d !important;
  }
 
  .collab-input,
@@ -195,6 +220,31 @@ export default function CollabForm() {
  box-shadow: 0 0 0 3px rgba(162, 123, 92, 0.12);
  }
 
+ html.dark .collab-input,
+ html.dark .collab-textarea,
+ .dark .collab-input,
+ .dark .collab-textarea {
+   background: rgba(20, 19, 18, 0.6) !important;
+   border-color: rgba(255, 255, 255, 0.12) !important;
+   color: #f7f5f2 !important;
+ }
+
+ html.dark .collab-input:focus,
+ html.dark .collab-textarea:focus,
+ .dark .collab-input:focus,
+ .dark .collab-textarea:focus {
+   background: #1c1a18 !important;
+   border-color: #ff4d94 !important;
+   box-shadow: 0 0 0 3px rgba(255, 77, 148, 0.15) !important;
+ }
+
+ html.dark .collab-input::placeholder,
+ html.dark .collab-textarea::placeholder,
+ .dark .collab-input::placeholder,
+ .dark .collab-textarea::placeholder {
+   color: #aba49d !important;
+ }
+
  .submit-btn {
  width: 100%;
  background: #111;
@@ -215,6 +265,17 @@ export default function CollabForm() {
  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
  position: relative;
  overflow: hidden;
+ }
+
+ html.dark .submit-btn,
+ .dark .submit-btn {
+   background: #ffffff !important;
+   color: #0f0e0d !important;
+ }
+
+ html.dark .submit-btn:hover,
+ .dark .submit-btn:hover {
+   background: #e8e4df !important;
  }
 
  .submit-btn:hover {
@@ -254,6 +315,11 @@ export default function CollabForm() {
  gap: 6px;
  }
 
+ html.dark .badge-trust,
+ .dark .badge-trust {
+   color: #aba49d !important;
+ }
+
  /* Loading Overlay Styling */
  .loading-overlay {
  position: absolute;
@@ -267,6 +333,11 @@ export default function CollabForm() {
  text-align: center;
  z-index: 10;
  animation: fadeIn 0.3s ease;
+ }
+
+ html.dark .loading-overlay,
+ .dark .loading-overlay {
+   background: rgba(12, 10, 9, 0.98) !important;
  }
 
  .spinner-pearly {
@@ -287,11 +358,21 @@ export default function CollabForm() {
  margin-bottom: 0.5rem;
  }
 
+ html.dark .loading-title,
+ .dark .loading-title {
+   color: #ffffff !important;
+ }
+
  .loading-step-text {
  font-size: 0.8rem;
  color: #8c8179;
  min-height: 1.2rem;
  animation: pulse 1s infinite alternate;
+ }
+
+ html.dark .loading-step-text,
+ .dark .loading-step-text {
+   color: #aba49d !important;
  }
 
  /* Success screen styling */
@@ -319,6 +400,13 @@ export default function CollabForm() {
  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.02);
  }
 
+ html.dark .check-circle,
+ .dark .check-circle {
+   background: #2b111e !important;
+   border-color: rgba(255, 255, 255, 0.1) !important;
+   color: #ff4d94 !important;
+ }
+
  .success-title {
  font-family: var(--font-playfair), serif;
  font-size: 1.8rem;
@@ -327,11 +415,21 @@ export default function CollabForm() {
  margin-bottom: 1rem;
  }
 
+ html.dark .success-title,
+ .dark .success-title {
+   color: #ffffff !important;
+ }
+
  .success-desc {
  font-size: 0.95rem;
  color: #8c8179;
  line-height: 1.6;
  margin-bottom: 1.5rem;
+ }
+
+ html.dark .success-desc,
+ .dark .success-desc {
+   color: #aba49d !important;
  }
 
  .error-banner {

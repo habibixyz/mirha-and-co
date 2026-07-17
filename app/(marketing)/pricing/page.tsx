@@ -79,6 +79,11 @@ export default function PricingPage() {
  --ink: #2b2826;
  --muted: #8c8179;
  --rule: #e8ded6;
+ --toggle-bg: rgba(0, 0, 0, 0.04);
+ --toggle-border: rgba(0, 0, 0, 0.05);
+ --toggle-active-bg: #fff;
+ --toggle-active-color: var(--ink);
+ --toggle-inactive-color: var(--muted);
  background: var(--paper);
  color: var(--ink);
  font-family: var(--font-dm-sans), sans-serif;
@@ -489,6 +494,44 @@ export default function PricingPage() {
  font-size: 0.78rem;
  }
  }
+
+ /* ── Dark Mode Overrides */
+ html.dark .pricing-page, .dark .pricing-page {
+   --paper: #0f0e0d;
+   --ink: #f7f5f2;
+   --muted: #aba49d;
+   --rule: rgba(255, 255, 255, 0.12);
+   --rose-light: #181716;
+   --toggle-bg: rgba(255, 255, 255, 0.06);
+   --toggle-border: rgba(255, 255, 255, 0.08);
+   --toggle-active-bg: #1e1c1a;
+   --toggle-active-color: #ffffff;
+   --toggle-inactive-color: #aba49d;
+ }
+ html.dark .plan-card:not(.highlighted), .dark .plan-card:not(.highlighted) {
+   background: linear-gradient(135deg, #181716 0%, #1c1a19 100%) !important;
+   border-color: rgba(255, 255, 255, 0.08) !important;
+   box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.05), 0 8px 30px rgba(0, 0, 0, 0.2) !important;
+ }
+ html.dark .plan-cta.normal-cta, .dark .plan-cta.normal-cta {
+   background: #ffffff !important;
+   color: #0c0a09 !important;
+ }
+ html.dark .plan-cta.normal-cta:hover, .dark .plan-cta.normal-cta:hover {
+   background: #e5e5e5 !important;
+ }
+ html.dark .upgrade-strip, .dark .upgrade-strip {
+   background: #181716 !important;
+   border-color: rgba(255, 255, 255, 0.12) !important;
+ }
+ html.dark .comparison-head, .dark .comparison-head {
+   background: #1e1c1a !important;
+   color: var(--muted) !important;
+ }
+ html.dark .faq-item, .dark .faq-item {
+   background: #181716 !important;
+   border-color: rgba(255, 255, 255, 0.12) !important;
+ }
  `}</style>
 
  {/* Header */}
@@ -504,11 +547,11 @@ export default function PricingPage() {
  Free tools to start your profile. Pro turns Mirha into a repeatable skincare system with saved history, scans, trend analysis, and deeper compatibility checks.
  </p>
 
- <div style={{ display: "inline-flex", background: "rgba(0,0,0,0.04)", padding: "0.35rem", borderRadius: "99px", alignItems: "center", gap: "0.5rem", border: "1px solid rgba(0,0,0,0.05)" }}>
-   <span style={{ fontSize: "0.85rem", fontWeight: 700, padding: "0.6rem 1.25rem", background: "#fff", color: "var(--ink)", borderRadius: "99px", boxShadow: "0 2px 8px rgba(0,0,0,0.06)" }}>
+ <div style={{ display: "inline-flex", background: "var(--toggle-bg)", padding: "0.35rem", borderRadius: "99px", alignItems: "center", gap: "0.5rem", border: "1px solid var(--toggle-border)" }}>
+   <span style={{ fontSize: "0.85rem", fontWeight: 700, padding: "0.6rem 1.25rem", background: "var(--toggle-active-bg)", color: "var(--toggle-active-color)", borderRadius: "99px", boxShadow: "0 2px 8px rgba(0,0,0,0.06)" }}>
      For Individuals
    </span>
-   <Link href="/b2b" style={{ fontSize: "0.85rem", fontWeight: 600, padding: "0.6rem 1.25rem", color: "var(--muted)", textDecoration: "none", display: "flex", alignItems: "center", gap: "0.4rem", transition: "color 0.2s" }}>
+   <Link href="/b2b" style={{ fontSize: "0.85rem", fontWeight: 600, padding: "0.6rem 1.25rem", color: "var(--toggle-inactive-color)", textDecoration: "none", display: "flex", alignItems: "center", gap: "0.4rem", transition: "color 0.2s" }}>
      For Enterprise (B2B) <ArrowRight size={14} />
    </Link>
  </div>

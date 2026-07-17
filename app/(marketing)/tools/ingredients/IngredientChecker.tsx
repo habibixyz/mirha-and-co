@@ -818,6 +818,240 @@ export default function ActiveIngredientChecker() {
           color: #756b63;
           margin-top: 1px;
         }
+
+        /* ── Product Picks & Empty States */
+        .product-card {
+          display: flex;
+          gap: 16px;
+          background: #fff;
+          border: 1px solid #ede8e0;
+          border-radius: 12px;
+          padding: 16px;
+          text-decoration: none;
+          color: inherit;
+          transition: all 0.25s;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.01);
+        }
+        .product-card:hover {
+          border-color: #fc2779;
+          box-shadow: 0 8px 24px rgba(252, 39, 121, 0.05);
+          transform: translateY(-1px);
+        }
+        .product-img-wrap {
+          width: 70px;
+          height: 70px;
+          flex-shrink: 0;
+          background: #fff;
+          border-radius: 8px;
+          overflow: hidden;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border: 1px solid #f0ebe3;
+        }
+        .product-card-name {
+          font-size: 0.82rem;
+          color: #161412;
+          margin: 0;
+          font-weight: 600;
+          line-height: 1.3;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+        .product-card-price {
+          font-size: 0.85rem;
+          color: #161412;
+          font-weight: 700;
+        }
+        .picks-container {
+          margin-top: 5rem;
+          padding-top: 3rem;
+          border-top: 1px solid #ede5dc;
+        }
+        .picks-title {
+          font-family: 'DM Serif Display', serif;
+          font-size: 1.8rem;
+          font-weight: 400;
+          color: #161412;
+          margin-bottom: 24px;
+        }
+        .empty-search-state {
+          text-align: center;
+          padding: 48px 24px;
+          color: #8c8179;
+          background: #fff;
+          border: 1.5px dashed #ede5dc;
+          border-radius: 18px;
+        }
+        .empty-search-title {
+          font-size: 1.1rem;
+          font-weight: 600;
+          color: #161412;
+          margin-bottom: 4px;
+        }
+        .sun-warning-box {
+          margin-top: 20px;
+          padding: 12px;
+          background: #fff9db;
+          border-left: 4px solid #f59f00;
+          border-radius: 6px;
+          font-size: 0.72rem;
+          color: #666;
+          line-height: 1.45;
+        }
+
+        /* ── Dark Mode Overrides */
+        html.dark .ingredient-checker-page, .dark .ingredient-checker-page {
+          background: #0f0e0d;
+          color: #f7f5f2;
+        }
+        html.dark .header p, .dark .header p {
+          color: #aba49d;
+        }
+        html.dark .search-input, .dark .search-input {
+          background: #181716;
+          border-color: rgba(255, 255, 255, 0.12);
+          color: #f7f5f2;
+        }
+        html.dark .search-input:focus, .dark .search-input:focus {
+          border-color: #fc2779;
+          box-shadow: 0 4px 12px rgba(252, 39, 121, 0.1);
+        }
+        html.dark .selected-shelf, .dark .selected-shelf {
+          background: #1e1c1a;
+          border-color: rgba(255, 255, 255, 0.12);
+        }
+        html.dark .shelf-header, .dark .shelf-header {
+          color: #aba49d;
+        }
+        html.dark .shelf-tag, .dark .shelf-tag {
+          background: #181716;
+          border-color: #fc2779;
+          color: #fc2779;
+        }
+        html.dark .shelf-tag:hover, .dark .shelf-tag:hover {
+          background: rgba(252, 39, 121, 0.1);
+        }
+        html.dark .clear-shelf-btn, .dark .clear-shelf-btn {
+          color: #aba49d;
+        }
+        html.dark .clear-shelf-btn:hover, .dark .clear-shelf-btn:hover {
+          color: #fc2779;
+        }
+        html.dark .category-title, .dark .category-title {
+          border-color: rgba(255, 255, 255, 0.12);
+          color: #aba49d;
+        }
+        html.dark .ingredient-pill, .dark .ingredient-pill {
+          background: #181716;
+          border-color: rgba(255, 255, 255, 0.12);
+          color: #f7f5f2;
+        }
+        html.dark .ingredient-pill:hover, .dark .ingredient-pill:hover {
+          border-color: #fc2779;
+        }
+        html.dark .ingredient-pill.selected, .dark .ingredient-pill.selected {
+          background: #fc2779;
+          border-color: #fc2779;
+          color: #fff;
+        }
+        html.dark .sticky-sidebar, .dark .sticky-sidebar {
+          background: #181716;
+          border-color: rgba(255, 255, 255, 0.12);
+          box-shadow: 0 16px 48px rgba(0, 0, 0, 0.2);
+        }
+        html.dark .report-header, .dark .report-header {
+          border-color: rgba(255, 255, 255, 0.08);
+        }
+        html.dark .report-section-title, .dark .report-section-title {
+          color: #aba49d;
+          border-color: rgba(255, 255, 255, 0.08);
+        }
+        html.dark .stat-badge.alert, .dark .stat-badge.alert {
+          background: rgba(201, 42, 42, 0.15);
+          border-color: rgba(201, 42, 42, 0.3);
+          color: #ff8787;
+        }
+        html.dark .stat-badge.caution, .dark .stat-badge.caution {
+          background: rgba(230, 119, 0, 0.15);
+          border-color: rgba(230, 119, 0, 0.3);
+          color: #ffd43b;
+        }
+        html.dark .stat-badge.safe, .dark .stat-badge.safe {
+          background: rgba(45, 138, 92, 0.15);
+          border-color: rgba(45, 138, 92, 0.3);
+          color: #8ce99a;
+        }
+        html.dark .visual-rule-card.conflict, .dark .visual-rule-card.conflict {
+          background: rgba(201, 42, 42, 0.1);
+          border-color: rgba(201, 42, 42, 0.25);
+          color: #ff8787;
+        }
+        html.dark .visual-rule-card.caution, .dark .visual-rule-card.caution {
+          background: rgba(230, 119, 0, 0.1);
+          border-color: rgba(230, 119, 0, 0.25);
+          color: #ffd43b;
+        }
+        html.dark .visual-rule-card.safe, .dark .visual-rule-card.safe {
+          background: rgba(45, 138, 92, 0.15);
+          border-color: rgba(45, 138, 92, 0.25);
+          color: #8ce99a;
+        }
+        html.dark .timeline-step, .dark .timeline-step {
+          background: #1e1c1a;
+          border-color: rgba(255, 255, 255, 0.12);
+        }
+        html.dark .timeline-step.active-step, .dark .timeline-step.active-step {
+          border-color: #fc2779;
+          background: rgba(252, 39, 121, 0.05);
+        }
+        html.dark .step-name, .dark .step-name {
+          color: #ffffff;
+        }
+        html.dark .step-desc, .dark .step-desc {
+          color: #aba49d;
+        }
+        html.dark .step-num, .dark .step-num {
+          color: #aba49d;
+          background: rgba(255, 255, 255, 0.08);
+        }
+        html.dark .product-card, .dark .product-card {
+          background: #181716;
+          border-color: rgba(255, 255, 255, 0.12);
+        }
+        html.dark .product-card:hover, .dark .product-card:hover {
+          border-color: #fc2779;
+          box-shadow: 0 8px 24px rgba(252, 39, 121, 0.1);
+        }
+        html.dark .product-img-wrap, .dark .product-img-wrap {
+          background: #1e1c1a;
+          border-color: rgba(255, 255, 255, 0.08);
+        }
+        html.dark .product-card-name, .dark .product-card-name {
+          color: #ffffff;
+        }
+        html.dark .product-card-price, .dark .product-card-price {
+          color: #ffffff;
+        }
+        html.dark .picks-container, .dark .picks-container {
+          border-color: rgba(255, 255, 255, 0.12);
+        }
+        html.dark .picks-title, .dark .picks-title {
+          color: #ffffff;
+        }
+        html.dark .empty-search-state, .dark .empty-search-state {
+          background: #181716;
+          border-color: rgba(255, 255, 255, 0.12);
+          color: #aba49d;
+        }
+        html.dark .empty-search-title, .dark .empty-search-title {
+          color: #ffffff;
+        }
+        html.dark .sun-warning-box, .dark .sun-warning-box {
+          background: rgba(245, 159, 0, 0.15);
+          color: #ffe066;
+        }
       `}} />
 
       <div className="shell">
@@ -918,9 +1152,9 @@ export default function ActiveIngredientChecker() {
                 ))}
               </div>
             ) : (
-              <div style={{ textAlign: "center", padding: "48px 24px", color: "#8c8179", background: "#fff", border: "1.5px dashed #ede5dc", borderRadius: "18px" }}>
+              <div className="empty-search-state">
                 <AlertTriangle size={32} style={{ margin: "0 auto 12px", opacity: 0.5 }} />
-                <h4 style={{ fontSize: "1.1rem", fontWeight: 600, color: "#161412", marginBottom: "4px" }}>No Actives Found</h4>
+                <h4 className="empty-search-title">No Actives Found</h4>
                 <p style={{ fontSize: "0.9rem", margin: "0 0 16px" }}>We couldn't find any skincare ingredients matching "{searchQuery}".</p>
                 <button
                   type="button"
@@ -1036,7 +1270,7 @@ export default function ActiveIngredientChecker() {
 
                   {/* Sun warnings */}
                   {selectedIds.some(id => ["retinol", "glycolic_acid", "lactic_acid", "mandelic_acid", "salicylic_acid"].includes(id)) && (
-                    <div style={{ marginTop: "20px", padding: "12px", background: "#fff9db", borderLeft: "4px solid #f59f00", borderRadius: "6px", fontSize: "0.72rem", color: "#666", lineHeight: 1.45 }}>
+                    <div className="sun-warning-box">
                       <strong>Sun Protection Required:</strong> Active exfoliants/retinoids increase sun sensitivity. Apply SPF 50 daily.
                     </div>
                   )}
@@ -1048,8 +1282,8 @@ export default function ActiveIngredientChecker() {
 
         {/* Recommended Products for selected actives */}
         {selectedIds.length > 0 && (
-          <div style={{ marginTop: "5rem", paddingTop: "3rem", borderTop: "1px solid #ede5dc" }}>
-            <h2 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "1.8rem", fontWeight: 400, color: "#161412", marginBottom: "24px" }}>
+          <div className="picks-container">
+            <h2 className="picks-title">
               Science-Backed Picks for your Actives
             </h2>
             
@@ -1075,30 +1309,9 @@ export default function ActiveIngredientChecker() {
                             href={affiliateUrl}
                             target="_blank"
                             rel="noopener noreferrer sponsored"
-                            style={{
-                              display: "flex",
-                              gap: "16px",
-                              background: "#fff",
-                              border: "1px solid #ede8e0",
-                              borderRadius: "12px",
-                              padding: "16px",
-                              textDecoration: "none",
-                              color: "inherit",
-                              transition: "all 0.25s",
-                              boxShadow: "0 2px 8px rgba(0,0,0,0.01)",
-                            }}
-                            onMouseEnter={(e) => {
-                              e.currentTarget.style.borderColor = "#fc2779";
-                              e.currentTarget.style.boxShadow = "0 8px 24px rgba(252, 39, 121, 0.05)";
-                              e.currentTarget.style.transform = "translateY(-1px)";
-                            }}
-                            onMouseLeave={(e) => {
-                              e.currentTarget.style.borderColor = "#ede8e0";
-                              e.currentTarget.style.boxShadow = "0 2px 8px rgba(0,0,0,0.01)";
-                              e.currentTarget.style.transform = "translateY(0)";
-                            }}
+                            className="product-card"
                           >
-                            <div style={{ width: "70px", height: "70px", flexShrink: 0, background: "#fff", borderRadius: "8px", overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center", border: "1px solid #f0ebe3" }}>
+                            <div className="product-img-wrap">
                               <img
                                 src={product.image}
                                 alt={product.name}
@@ -1111,7 +1324,7 @@ export default function ActiveIngredientChecker() {
                                 <p style={{ fontSize: "0.65rem", color: "#fc2779", margin: "0 0 2px", textTransform: "uppercase", fontWeight: 700 }}>
                                   {product.brand}
                                 </p>
-                                <h4 style={{ fontSize: "0.82rem", color: "#161412", margin: 0, fontWeight: 600, lineHeight: 1.3, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                                <h4 className="product-card-name">
                                   {product.name}
                                 </h4>
                               </div>
@@ -1120,7 +1333,7 @@ export default function ActiveIngredientChecker() {
                                 {isCultBeauty ? (
                                   <span style={{ fontSize: "0.78rem", color: "#756b63" }}>Shop Global</span>
                                 ) : (
-                                  <span style={{ fontSize: "0.85rem", color: "#161412", fontWeight: 700 }}>
+                                  <span className="product-card-price">
                                     ₹{product.price.toLocaleString("en-IN")}
                                   </span>
                                 )}

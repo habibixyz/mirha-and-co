@@ -238,7 +238,7 @@ export function ConflictsClient({ isPro, initialBlacklist = [] }: { isPro: boole
  <div style={{
  position: "absolute",
  inset: "-16px",
- background: "rgba(248, 246, 243, 0.4)",
+ background: "rgba(0, 0, 0, 0.4)",
  backdropFilter: "blur(8px)",
  WebkitBackdropFilter: "blur(8px)",
  borderRadius: "32px",
@@ -252,7 +252,7 @@ export function ConflictsClient({ isPro, initialBlacklist = [] }: { isPro: boole
  border: "1px solid rgba(255,255,255,0.4)"
  }}>
  <div style={{
- background: "white",
+ background: "var(--dash-surface)",
  padding: "2.5rem 3rem",
  borderRadius: "28px",
  boxShadow: "0 25px 50px -12px rgba(40, 28, 20, 0.12)",
@@ -293,7 +293,7 @@ export function ConflictsClient({ isPro, initialBlacklist = [] }: { isPro: boole
  display: "inline-flex",
  alignItems: "center",
  gap: "0.5rem",
- background: "var(--dash-ink)",
+ background: "var(--dash-accent)",
  color: "white",
  padding: "1rem 2rem",
  borderRadius: "16px",
@@ -311,7 +311,7 @@ export function ConflictsClient({ isPro, initialBlacklist = [] }: { isPro: boole
 
  {/* Checker UI */}
  <motion.div variants={itemVariants} style={{
- background: "var(--white)",
+ background: "var(--dash-surface)",
  border: "1px solid var(--dash-border)",
  borderRadius: "28px",
  padding: "2.5rem",
@@ -484,7 +484,7 @@ export function ConflictsClient({ isPro, initialBlacklist = [] }: { isPro: boole
  {/* Sensitivity Profile Manager */}
  <motion.div variants={itemVariants} style={{
  marginTop: "4rem",
- background: "var(--white)",
+ background: "var(--dash-surface)",
  border: "1px solid var(--dash-border)",
  borderRadius: "28px",
  padding: "2.5rem",
@@ -519,7 +519,7 @@ export function ConflictsClient({ isPro, initialBlacklist = [] }: { isPro: boole
  type="submit"
  disabled={isSaving || !newIngredient.trim()}
  style={{
- background: "var(--dash-ink)",
+ background: "var(--dash-accent)",
  color: "white",
  border: "none",
  borderRadius: "14px",
@@ -540,7 +540,7 @@ export function ConflictsClient({ isPro, initialBlacklist = [] }: { isPro: boole
 
  {blacklist.length === 0 ? (
  <div style={{
- background: "#faf9f7",
+ background: "var(--dash-bg)",
  border: "1px dashed var(--dash-border)",
  borderRadius: "18px",
  padding: "1.5rem",
@@ -559,7 +559,7 @@ export function ConflictsClient({ isPro, initialBlacklist = [] }: { isPro: boole
  display: "inline-flex",
  alignItems: "center",
  gap: "0.4rem",
- background: "#fff1f0",
+ background: "var(--dash-accent-soft)",
  color: "#fc2779",
  border: "1px solid rgba(252, 39, 121, 0.15)",
  padding: "0.4rem 0.8rem",

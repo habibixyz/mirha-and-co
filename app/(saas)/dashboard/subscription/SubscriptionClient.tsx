@@ -481,6 +481,57 @@ export function SubscriptionClient({
  }
 
  @keyframes spin { 100% { transform: rotate(360deg); } }
+
+ html.dark .plan-card.highlighted,
+ .dark .plan-card.highlighted {
+ background: #251b22 !important;
+ border: 1px solid rgba(252, 39, 121, 0.3) !important;
+ color: #ffffff !important;
+ }
+
+ html.dark .plan-card.highlighted .card-header-label,
+ .dark .plan-card.highlighted .card-header-label {
+ color: #ff4d94 !important;
+ }
+
+ html.dark .plan-card.highlighted .price-period,
+ .dark .plan-card.highlighted .price-period {
+ color: rgba(255, 255, 255, 0.7) !important;
+ }
+
+ html.dark .plan-card.highlighted .feature-item,
+ .dark .plan-card.highlighted .feature-item {
+ color: rgba(255, 255, 255, 0.9) !important;
+ }
+
+ html.dark .toggle-wrapper,
+ .dark .toggle-wrapper {
+ background: rgba(255, 255, 255, 0.08) !important;
+ border-color: rgba(255, 255, 255, 0.12) !important;
+ }
+
+ html.dark .toggle-bg,
+ .dark .toggle-bg {
+ background: #22201e !important;
+ }
+
+ html.dark .toggle-btn.active,
+ .dark .toggle-btn.active {
+ color: #ffffff !important;
+ }
+
+ html.dark .btn-secondary,
+ .dark .btn-secondary {
+ background: rgba(255, 255, 255, 0.08) !important;
+ color: #ffffff !important;
+ }
+
+ html.dark .btn-active,
+ .dark .btn-active {
+ background: transparent !important;
+ color: rgba(255, 255, 255, 0.6) !important;
+ border-color: rgba(255, 255, 255, 0.2) !important;
+ }
 `}</style>
 
  <div className="sub-header">

@@ -64,35 +64,76 @@ export default function GlobalizationSwitcher() {
  />
  </button>
 
- {isOpen && (
- <div
- className="switcher-dropdown"
- style={{
- position: "absolute",
- top: "calc(100% + 8px)",
- right: isRtl ? "auto" : "0",
- left: isRtl ? "0" : "auto",
- background: "rgba(255, 255, 255, 0.96)",
- backdropFilter: "blur(16px)",
- border: "1px solid rgba(0, 0, 0, 0.08)",
- borderRadius: "14px",
- boxShadow: "0 16px 40px rgba(0, 0, 0, 0.08), 0 2px 6px rgba(0, 0, 0, 0.02)",
- padding: "16px",
- width: "280px",
- zIndex: 1000,
- animation: "slideDown 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards",
- }}
- >
- <style>{`
- @keyframes slideDown {
- from { opacity: 0; transform: translateY(-8px); }
- to { opacity: 1; transform: translateY(0); }
- }
- .switcher-option:hover {
- background: #fff5f3 !important;
- color: var(--rose) !important;
- }
- `}</style>
+   {isOpen && (
+  <div
+   className="switcher-dropdown"
+   style={{
+    right: isRtl ? "auto" : "0",
+    left: isRtl ? "0" : "auto",
+   }}
+  >
+   <style>{`
+   @keyframes slideDown {
+    from { opacity: 0; transform: translateY(-8px); }
+    to { opacity: 1; transform: translateY(0); }
+   }
+   .switcher-dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 14px;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08), 0 2px 6px rgba(0, 0, 0, 0.02);
+    padding: 16px;
+    width: 280px;
+    z-index: 1000;
+    animation: slideDown 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+   }
+   .switcher-option {
+    background: transparent;
+    color: var(--ink);
+    transition: all 0.15s ease;
+   }
+   .switcher-option.selected {
+    background: #fff5f3;
+    color: var(--rose);
+   }
+   .switcher-option:hover {
+    background: #fff5f3 !important;
+    color: var(--rose) !important;
+   }
+   .switcher-separator {
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+    padding-top: 12px;
+   }
+
+   html.dark .switcher-dropdown,
+   .dark .switcher-dropdown {
+    background: rgba(24, 23, 22, 0.96) !important;
+    border-color: rgba(255, 255, 255, 0.12) !important;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5), 0 2px 6px rgba(0, 0, 0, 0.2) !important;
+   }
+   html.dark .switcher-option,
+   .dark .switcher-option {
+    color: #aba49d !important;
+   }
+   html.dark .switcher-option.selected,
+   .dark .switcher-option.selected {
+    background: rgba(252, 39, 121, 0.12) !important;
+    color: #ff4d94 !important;
+   }
+   html.dark .switcher-option:hover,
+   .dark .switcher-option:hover {
+    background: rgba(252, 39, 121, 0.18) !important;
+    color: #ff4d94 !important;
+   }
+   html.dark .switcher-separator,
+   .dark .switcher-separator {
+    border-top-color: rgba(255, 255, 255, 0.08) !important;
+   }
+   `}</style>
 
  {/* Languages Section */}
  <div style={{ marginBottom: "16px" }}>
@@ -117,25 +158,22 @@ export default function GlobalizationSwitcher() {
  onClick={() => {
  setLocale(langKey);
  }}
- className="switcher-option"
- style={{
- display: "flex",
- alignItems: "center",
- justifyContent: "space-between",
- width: "100%",
- padding: "8px 10px",
- background: locale === langKey ? "#fff5f3" : "transparent",
- color: locale === langKey ? "var(--rose)" : "var(--ink)",
- border: 0,
- borderRadius: "8px",
- fontSize: "12px",
- fontWeight: locale === langKey ? 600 : 400,
- cursor: "pointer",
- textAlign: isRtl ? "right" : "left",
- flexDirection: isRtl ? "row-reverse" : "row",
- transition: "all 0.15s ease",
- fontFamily: "var(--font-dm-sans), sans-serif",
- }}
+ className={`switcher-option ${locale === langKey ? "selected" : ""}`}
+        style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        width: "100%",
+        padding: "8px 10px",
+        border: 0,
+        borderRadius: "8px",
+        fontSize: "12px",
+        fontWeight: locale === langKey ? 600 : 400,
+        cursor: "pointer",
+        textAlign: isRtl ? "right" : "left",
+        flexDirection: isRtl ? "row-reverse" : "row",
+        fontFamily: "var(--font-dm-sans), sans-serif",
+        }}
  >
  <span>{LANGUAGE_NAMES[langKey]}</span>
  {locale === langKey && <Check size={14} style={{ color: "var(--rose)" }} />}
@@ -146,10 +184,7 @@ export default function GlobalizationSwitcher() {
 
  {/* Currencies Section */}
  <div
- style={{
- borderTop: "1px solid rgba(0, 0, 0, 0.06)",
- paddingTop: "12px",
- }}
+ className="switcher-separator"
  >
  <p
  style={{
@@ -172,23 +207,20 @@ export default function GlobalizationSwitcher() {
  onClick={() => {
  setCurrency(currKey);
  }}
- className="switcher-option"
- style={{
- display: "flex",
- alignItems: "center",
- gap: "6px",
- padding: "8px 10px",
- background: currency === currKey ? "#fff5f3" : "transparent",
- color: currency === currKey ? "var(--rose)" : "var(--ink)",
- border: 0,
- borderRadius: "8px",
- fontSize: "11px",
- fontWeight: currency === currKey ? 600 : 400,
- cursor: "pointer",
- transition: "all 0.15s ease",
- justifyContent: "flex-start",
- fontFamily: "var(--font-dm-sans), sans-serif",
- }}
+ className={`switcher-option ${currency === currKey ? "selected" : ""}`}
+        style={{
+        display: "flex",
+        alignItems: "center",
+        gap: "6px",
+        padding: "8px 10px",
+        border: 0,
+        borderRadius: "8px",
+        fontSize: "11px",
+        fontWeight: currency === currKey ? 600 : 400,
+        cursor: "pointer",
+        justifyContent: "flex-start",
+        fontFamily: "var(--font-dm-sans), sans-serif",
+        }}
  >
  <span
  style={{

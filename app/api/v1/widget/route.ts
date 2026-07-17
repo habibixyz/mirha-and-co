@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { generateRoutine, QuizAnswers, resolveLocationData } from "../../../../lib/routineEngine";
+import { generateRoutine, QuizAnswers } from "../../../../lib/routineEngine";
+import { resolveLocationDataLive } from "../../../../lib/geocoding";
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
@@ -8,10 +9,18 @@ export async function GET(req: NextRequest) {
   const skinType = searchParams.get("skinType") || "oily";
   const mainConcern = searchParams.get("mainConcern") || "acne";
 
-  const locationDetails = resolveLocationData({ postalCode });
+  const locationDetails = await resolveLocationDataLive({ postalCode });
   const routine = generateRoutine(
     { skinType, mainConcern, budget: "under_1000", experience: "beginner" },
-    { postalCode }
+    {
+      city: locationDetails.city,
+      country: locationDetails.countryCode,
+      postalCode: postalCode,
+      ppm: locationDetails.ppm,
+      temp: locationDetails.temp,
+      humidity: locationDetails.humidity,
+      dewpoint: locationDetails.dewpoint,
+    }
   );
 
   const jsScript = `

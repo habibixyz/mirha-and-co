@@ -212,6 +212,16 @@ export default function BlogSearchClient({ initialPosts, catColors, currency }: 
  font-size: 0.7rem;
  }
  }
+
+ html.dark .search-input, .dark .search-input { background: #181716; color: #f7f5f2; border-color: rgba(255,255,255,0.15); }
+ html.dark .quick-tag-btn, .dark .quick-tag-btn { background: #181716; color: #aba49d; border-color: rgba(255,255,255,0.15); }
+ html.dark .quick-tag-btn:hover, .dark .quick-tag-btn:hover { background: #22201e; color: #ff4d94; border-color: #ff4d94; }
+ html.dark .cat-tab-btn, .dark .cat-tab-btn { color: #aba49d; }
+ html.dark .cat-tab-btn:hover, .dark .cat-tab-btn:hover { color: #ffffff; }
+ html.dark .cat-tab-btn.active, .dark .cat-tab-btn.active { background: #ff4d94; color: #ffffff; border-color: #ff4d94; }
+ html.dark .empty-state, .dark .empty-state { background: #181716; border-color: rgba(255,255,255,0.12); color: #f7f5f2; }
+ html.dark .empty-state h3, .dark .empty-state h3 { color: #ffffff; }
+ html.dark .empty-state p, .dark .empty-state p { color: #aba49d; }
  `}</style>
 
  <div className="search-section-inner">

@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { SaasSidebar } from "@/components/SaasSidebar";
 import { DM_Sans, DM_Serif_Display, Bebas_Neue } from "next/font/google";
 import { MobileMenuButton } from "@/components/MobileMenuButton";
+import { ThemeProvider } from "@/components/ThemeProvider";
 
 const dmSans = DM_Sans({
  subsets: ["latin"],
@@ -57,11 +58,7 @@ export default function SaasLayout({
  children: React.ReactNode;
 }) {
  return (
- <html
- lang="en"
- suppressHydrationWarning
- className={`${dmSans.variable} ${dmSerifDisplay.variable} ${bebasNeue.variable}`}
- >
+ <html lang="en" suppressHydrationWarning className={`${dmSans.variable} ${dmSerifDisplay.variable} ${bebasNeue.variable}`}>
  <body suppressHydrationWarning>
  <Script strategy="afterInteractive" src="https://www.dwin1.com/2904237.js" />
  <style>{`
@@ -85,6 +82,54 @@ export default function SaasLayout({
  
  /* Responsive font sizes */
  --font-h1: 3.2rem;
+ }
+
+ html.dark, .dark {
+ --dash-bg: #0f0e0d;
+ --dash-surface: #181716;
+ --dash-border: rgba(255, 255, 255, 0.1);
+ --dash-ink: #f7f5f2;
+ --dash-muted: #aba49d;
+ --dash-accent-soft: rgba(252, 39, 121, 0.15);
+
+ --white: #181716;
+ --sand: #22201e;
+ --ink: #f7f5f2;
+ --muted: #aba49d;
+ --rule: rgba(255, 255, 255, 0.1);
+ }
+
+ html.dark, html.dark body, .dark, .dark body {
+ background: #080707 !important;
+ color: #f7f5f2 !important;
+ }
+
+ html.dark .dash-shell, .dark .dash-shell {
+ background: #0f0e0d !important;
+ border-color: rgba(255, 255, 255, 0.1) !important;
+ box-shadow: 0 30px 100px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+ }
+
+ html.dark .dash-sidebar, .dark .dash-sidebar {
+ background: rgba(20, 19, 18, 0.85) !important;
+ border-right-color: rgba(255, 255, 255, 0.1) !important;
+ }
+
+ html.dark .dash-nav-link:hover, .dark .dash-nav-link:hover {
+ color: #ffffff !important;
+ background: rgba(255, 255, 255, 0.06) !important;
+ }
+
+ html.dark .dash-nav-link.active, .dark .dash-nav-link.active {
+ color: #ff4d94 !important;
+ background: rgba(252, 39, 121, 0.15) !important;
+ }
+
+ html.dark .mobile-menu-btn, .dark .mobile-menu-btn {
+ background: #181716 !important;
+ border-color: rgba(255, 255, 255, 0.15) !important;
+ color: #f7f5f2 !important;
+ }
  --font-h2: 1.4rem;
  }
 
@@ -472,6 +517,7 @@ export default function SaasLayout({
  }
 `}</style>
 
+ <ThemeProvider>
  <div className="dash-shell">
  <SaasSidebar />
  <MobileMenuButton />
@@ -479,6 +525,7 @@ export default function SaasLayout({
  <div className="dash-main-inner">{children}</div>
  </main>
  </div>
+ </ThemeProvider>
  </body>
  </html>
  );

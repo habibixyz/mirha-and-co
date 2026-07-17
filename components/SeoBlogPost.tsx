@@ -503,6 +503,53 @@ export async function SeoBlogPost({
           .post-section p, .post-section li { font-size: 15px; }
           .table-wrap table { font-size: 13px; }
         }
+
+        /* ── Dark Mode Overrides */
+        html.dark .seo-post, .dark .seo-post {
+          background: #0f0e0d !important;
+          color: #f7f5f2 !important;
+        }
+        html.dark .post-hero h1, .dark .post-hero h1,
+        html.dark .post-section h2, .dark .post-section h2,
+        html.dark .post-section strong, .dark .post-section strong {
+          color: #ffffff !important;
+        }
+        html.dark .post-description, .dark .post-description,
+        html.dark .post-section p, .dark .post-section p,
+        html.dark .post-section li, .dark .post-section li {
+          color: #aba49d !important;
+        }
+        html.dark .trust-box, .dark .trust-box {
+          background: #181716 !important;
+          border-color: rgba(255, 255, 255, 0.12) !important;
+          border-left-color: #a27b5c !important;
+        }
+        html.dark .trust-box p, .dark .trust-box p {
+          color: #aba49d !important;
+        }
+        html.dark .section-picks, .dark .section-picks,
+        html.dark .picks-rail, .dark .picks-rail {
+          background: #181716 !important;
+          border-color: rgba(255, 255, 255, 0.12) !important;
+        }
+        html.dark .picks-heading, .dark .picks-heading {
+          color: #ffffff !important;
+        }
+        html.dark .table-wrap table, .dark .table-wrap table {
+          background: #181716 !important;
+        }
+        html.dark .table-wrap th, .dark .table-wrap th {
+          background: #1e1c1a !important;
+          color: #fc2779 !important;
+          border-color: rgba(255, 255, 255, 0.12) !important;
+        }
+        html.dark .table-wrap td, .dark .table-wrap td {
+          color: #f7f5f2 !important;
+          border-color: rgba(255, 255, 255, 0.08) !important;
+        }
+        html.dark .table-wrap tr:nth-child(even) td, .dark .table-wrap tr:nth-child(even) td {
+          background: #141312 !important;
+        }
       `}</style>
 
       <div className="post-shell">

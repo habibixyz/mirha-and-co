@@ -244,6 +244,17 @@ export function SkinJournalClient({ initialEntries, isPro }: { initialEntries: a
  font-size: 1.5rem !important;
  }
  }
+
+ html.dark .journal-card, .dark .journal-card {
+ background: var(--dash-surface) !important;
+ border-color: var(--dash-border) !important;
+ }
+
+ html.dark textarea, .dark textarea {
+ background: var(--dash-bg) !important;
+ color: var(--dash-ink) !important;
+ border-color: var(--dash-border) !important;
+ }
  `}</style>
  <motion.header variants={itemVariants} style={{ 
  marginBottom: "2.5rem", 
@@ -273,8 +284,8 @@ export function SkinJournalClient({ initialEntries, isPro }: { initialEntries: a
  whileHover={{ scale: 1.05 }}
  whileTap={{ scale: 0.95 }}
  style={{
- background: "var(--ink)",
- color: "var(--white)",
+ background: "var(--dash-accent)",
+ color: "white",
  border: "none",
  borderRadius: "10px",
  padding: "0.8rem 1.2rem",
@@ -482,8 +493,8 @@ export function SkinJournalClient({ initialEntries, isPro }: { initialEntries: a
  onClick={handleAnalyze}
  disabled={isAnalyzing}
  style={{
- background: "var(--ink)",
- color: "var(--white)",
+ background: "var(--dash-accent)",
+ color: "white",
  border: "none",
  padding: "0.6rem 1rem",
  borderRadius: "8px",
@@ -640,7 +651,7 @@ export function SkinJournalClient({ initialEntries, isPro }: { initialEntries: a
  <div style={{ display: 'flex', gap: '6px', overflowX: 'auto', paddingBottom: '8px' }}>
  {streakInfo.calendarGrid.map((day, idx) => {
  // Color based on rating
- let bg = '#f4f0ec'; // Empty
+ let bg = 'var(--sand)'; // Empty
  let title = `No entry on ${day.date.toLocaleDateString()}`;
  if (day.rating > 0) {
  const ratingColors = [

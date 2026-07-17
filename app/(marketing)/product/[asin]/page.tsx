@@ -543,7 +543,211 @@ export default async function ProductPage({ params }: { params: Promise<{ asin: 
  height: 110px;
  }
  }
- `}</style>
+ 
+  /* ─────────────────────────────────────────
+     PRODUCT PAGE DARK MODE OVERRIDES
+  ───────────────────────────────────────── */
+  html.dark .product-page,
+  .dark .product-page {
+    background: #0f0e0d !important;
+    color: #f7f5f2 !important;
+  }
+
+  html.dark .back-link,
+  .dark .back-link {
+    color: #aba49d !important;
+  }
+  html.dark .back-link:hover,
+  .dark .back-link:hover {
+    color: #ffffff !important;
+  }
+
+  html.dark .image-panel,
+  .dark .image-panel {
+    background: #181716 !important;
+    border-color: rgba(255, 255, 255, 0.12) !important;
+  }
+
+  html.dark .detail-panel,
+  .dark .detail-panel {
+    background: #121110 !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+  }
+
+  html.dark .brand,
+  .dark .brand {
+    color: #aba49d !important;
+  }
+
+  html.dark .description,
+  .dark .description {
+    color: #aba49d !important;
+  }
+
+  html.dark .price-box div,
+  .dark .price-box div {
+    background: #181716 !important;
+    border-color: rgba(255, 255, 255, 0.12) !important;
+  }
+
+  html.dark .price-box small,
+  .dark .price-box small {
+    color: #aba49d !important;
+  }
+
+  html.dark .price-box b,
+  .dark .price-box b {
+    color: #ffffff !important;
+  }
+
+  html.dark .price-box em,
+  .dark .price-box em {
+    color: #34d399 !important;
+  }
+
+  html.dark .cta,
+  .dark .cta {
+    background: #f7f5f2 !important;
+    color: #0f0e0d !important;
+  }
+  html.dark .cta:hover,
+  .dark .cta:hover {
+    background: #e8e4df !important;
+  }
+
+  html.dark .disclosure,
+  .dark .disclosure {
+    color: #aba49d !important;
+  }
+
+  html.dark .info-block,
+  .dark .info-block {
+    background: #181716 !important;
+    border-color: rgba(255, 255, 255, 0.12) !important;
+  }
+
+  html.dark .info-block h2,
+  .dark .info-block h2 {
+    color: #ffffff !important;
+  }
+
+  html.dark .info-block p,
+  .dark .info-block p,
+  html.dark .info-block li,
+  .dark .info-block li {
+    color: #aba49d !important;
+  }
+
+  html.dark .spec-row,
+  .dark .spec-row {
+    border-bottom-color: rgba(255, 255, 255, 0.08) !important;
+  }
+
+  html.dark .spec-row span:first-child,
+  .dark .spec-row span:first-child {
+    color: #aba49d !important;
+  }
+
+  html.dark .spec-row span:last-child,
+  .dark .spec-row span:last-child {
+    color: #ffffff !important;
+  }
+
+  html.dark .related-card,
+  .dark .related-card {
+    background: #181716 !important;
+    border-color: rgba(255, 255, 255, 0.12) !important;
+    color: #ffffff !important;
+  }
+
+  html.dark .related-card b,
+  .dark .related-card b {
+    color: #ffffff !important;
+  }
+
+  html.dark .related-card span,
+  .dark .related-card span {
+    color: #ff4d94 !important;
+  }
+
+  /* ─────────────────────────────────────────
+     AI TRANSLATOR BAR (DARK MODE & SKELETONS)
+  ───────────────────────────────────────── */
+  .ai-translator-bar {
+    background: #fff;
+    border: 1px solid #e3d8ce;
+    color: #161412;
+  }
+  .ai-translator-bar.translated {
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+  }
+
+  html.dark .ai-translator-bar,
+  .dark .ai-translator-bar {
+    background: #181716 !important;
+    border-color: rgba(255, 255, 255, 0.12) !important;
+    color: #aba49d !important;
+  }
+  html.dark .ai-translator-bar.translated,
+  .dark .ai-translator-bar.translated {
+    background: #112a1d !important;
+    border-color: rgba(52, 211, 153, 0.25) !important;
+    color: #a7f3d0 !important;
+  }
+
+  .translated-success {
+    color: #166534;
+  }
+  html.dark .translated-success,
+  .dark .translated-success {
+    color: #34d399 !important;
+  }
+
+  .translator-reset-btn {
+    color: #8c8179;
+  }
+  html.dark .translator-reset-btn,
+  .dark .translator-reset-btn {
+    color: #aba49d !important;
+  }
+
+  .skeleton-line {
+    background: #eee;
+  }
+  html.dark .skeleton-line,
+  .dark .skeleton-line {
+    background: #2b2826 !important;
+  }
+
+  /* ─────────────────────────────────────────
+     VEGAN & CRUELTY-FREE BADGES (DARK MODE)
+  ───────────────────────────────────────── */
+  .badge-vegan {
+    background: #eef9f3;
+    color: #2d8a5c;
+    border: 1px solid rgba(45, 138, 92, 0.15);
+  }
+  html.dark .badge-vegan,
+  .dark .badge-vegan {
+    background: #112a1d !important;
+    color: #34d399 !important;
+    border-color: rgba(52, 211, 153, 0.25) !important;
+  }
+
+  .badge-cf {
+    background: #fff0e8;
+    color: #fc2779;
+    border: 1px solid rgba(252, 39, 121, 0.15);
+  }
+  html.dark .badge-cf,
+  .dark .badge-cf {
+    background: #2b111e !important;
+    color: #ff4d94 !important;
+    border-color: rgba(255, 77, 148, 0.25) !important;
+  }
+
+  `}</style>
 
  <div
  className="product-shell"
@@ -635,9 +839,7 @@ export default async function ProductPage({ params }: { params: Promise<{ asin: 
   {(isVeg || isCF) && (
    <div style={{ display: "flex", gap: "8px", flexWrap: "wrap", marginTop: "10px", marginBottom: "12px" }}>
     {isVeg && (
-     <span style={{
-      background: "#eef9f3",
-      color: "#2d8a5c",
+     <span className="badge-vegan" style={{
       fontSize: "0.55rem",
       fontWeight: 700,
       letterSpacing: "0.08em",
@@ -645,16 +847,13 @@ export default async function ProductPage({ params }: { params: Promise<{ asin: 
       padding: "3px 8px",
       borderRadius: "4px",
       display: "inline-flex",
-      alignItems: "center",
-      border: "1px solid rgba(45, 138, 92, 0.15)"
+      alignItems: "center"
      }}>
       🌱 {locale === "hi" ? "शाकाहारी / वीगन" : locale === "ar" ? "نباتي" : "100% Vegan"}
      </span>
     )}
     {isCF && (
-     <span style={{
-      background: "#fff0e8",
-      color: "#fc2779",
+     <span className="badge-cf" style={{
       fontSize: "0.55rem",
       fontWeight: 700,
       letterSpacing: "0.08em",
@@ -662,8 +861,7 @@ export default async function ProductPage({ params }: { params: Promise<{ asin: 
       padding: "3px 8px",
       borderRadius: "4px",
       display: "inline-flex",
-      alignItems: "center",
-      border: "1px solid rgba(252, 39, 121, 0.15)"
+      alignItems: "center"
      }}>
       🐰 {locale === "hi" ? "क्रूरता-मुक्त" : locale === "ar" ? "غير مجرب على الحيوانات" : "Cruelty-Free"}
      </span>

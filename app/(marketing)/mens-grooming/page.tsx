@@ -100,6 +100,15 @@ export default function MensGroomingPage() {
           --rose-light: #fff0f5;
         }
 
+        html.dark, .dark {
+          --parchment: #0f0e0d;
+          --parchment2: #161514;
+          --border: rgba(255, 255, 255, 0.12);
+          --ink: #f7f5f2;
+          --muted: #aba49d;
+          --rose-light: #2b111e;
+        }
+
         /* ── Page shell ─────────────────────────────── */
         .mg-page {
           background: var(--parchment);
