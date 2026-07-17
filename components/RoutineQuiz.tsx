@@ -301,9 +301,16 @@ export default function RoutineQuiz() {
  .rq-title { color: #111111; }
  .rq-subtitle { color: #777777; }
  .rq-card { background: #ffffff; border: 1px solid #e8e2d9; }
- .rq-btn { border: 1px solid #e8e2d9; background: #ffffff; color: #111111; }
+ .rq-btn { border: 1px solid #e8e2d9; background: #ffffff; color: #111111; transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); }
  .rq-btn:hover { border-color: #d6d0c9; background: #faf8f5; }
- .rq-btn-active { border: 1px solid #111111; background: #111111; color: #ffffff; }
+ .rq-btn-active { border: 1px solid #111111 !important; background: #111111 !important; color: #ffffff !important; }
+ .rq-radio-dot { border: 2px solid #111111; background: transparent; }
+ .rq-btn-active .rq-radio-dot { border-color: #ffffff; background: #ffffff; }
+ .rq-back-btn { background: transparent; border: 1px solid #e8e2d9; color: #111111; }
+ .rq-back-btn:hover:not(:disabled) { border-color: #111111; color: #111111; }
+ .rq-next-btn { background: #111111; border: 1px solid #111111; color: #ffffff; }
+ .rq-next-btn:hover:not(:disabled) { background: #333333; }
+ .rq-next-btn:disabled { background: #dddddd; border-color: #dddddd; color: #ffffff; }
  .rq-modal-content { background: #ffffff; border: 1px solid #e8e2d9; color: #111111; }
 
  html.dark .rq-container, .dark .rq-container { background: #0b0f19 !important; }
@@ -313,6 +320,14 @@ export default function RoutineQuiz() {
  html.dark .rq-btn, .dark .rq-btn { border-color: #374151 !important; background: #1f2937 !important; color: #f3f4f6 !important; }
  html.dark .rq-btn:hover, .dark .rq-btn:hover { border-color: #4b5563 !important; background: #374151 !important; }
  html.dark .rq-btn-active, .dark .rq-btn-active { border-color: #fc2779 !important; background: #fc2779 !important; color: #ffffff !important; }
+ html.dark .rq-radio-dot, .dark .rq-radio-dot { border-color: #9ca3af; }
+ html.dark .rq-btn-active .rq-radio-dot, .dark .rq-btn-active .rq-radio-dot { border-color: #ffffff; background: #ffffff; }
+ html.dark .rq-back-btn, .dark .rq-back-btn { border-color: #374151 !important; color: #f3f4f6 !important; }
+ html.dark .rq-back-btn:hover:not(:disabled), .dark .rq-back-btn:hover:not(:disabled) { border-color: #fc2779 !important; color: #fc2779 !important; }
+ html.dark .rq-back-btn:disabled, .dark .rq-back-btn:disabled { color: #4b5563 !important; border-color: #1f2937 !important; }
+ html.dark .rq-next-btn, .dark .rq-next-btn { background: #fc2779 !important; border-color: #fc2779 !important; color: #ffffff !important; }
+ html.dark .rq-next-btn:hover:not(:disabled), .dark .rq-next-btn:hover:not(:disabled) { background: #e01e69 !important; border-color: #e01e69 !important; }
+ html.dark .rq-next-btn:disabled, .dark .rq-next-btn:disabled { background: #1f2937 !important; border-color: #1f2937 !important; color: #4b5563 !important; }
  html.dark .rq-modal-content, .dark .rq-modal-content { background: #111827 !important; border-color: #1f2937 !important; color: #f8fafc !important; }
  `}</style>
  <div style={{ width: '100%', maxWidth: '640px' }}>
@@ -496,9 +511,8 @@ export default function RoutineQuiz() {
 
  {/* Question Card */}
  <div
+ className="rq-card"
  style={{
- background: '#fff',
- border: '1px solid #e8e2d9',
  borderRadius: '16px',
  padding: '48px 32px',
  marginBottom: '40px',
@@ -542,30 +556,13 @@ export default function RoutineQuiz() {
  <button
  key={answer.id}
  onClick={() => handleSelectAnswer(answer.id)}
+ className={isSelected ? "rq-btn rq-btn-active" : "rq-btn"}
  style={{
  padding: '16px 20px',
- border: `1px solid ${isSelected ? '#111' : '#e8e2d9'}`,
- background: isSelected ? '#111' : '#fff',
- color: isSelected ? '#fff' : '#111',
  textAlign: 'left',
- transition: 'all 0.25s cubic-bezier(0.4, 0, 0.2, 1)',
  cursor: 'pointer',
  borderRadius: '8px',
  boxShadow: isSelected ? '0 4px 16px rgba(0,0,0,0.08)' : 'none',
- }}
- onMouseEnter={(e) => {
- if (!isSelected) {
- const btn = e.currentTarget as HTMLButtonElement;
- btn.style.borderColor = '#d6d0c9';
- btn.style.background = '#faf8f5';
- }
- }}
- onMouseLeave={(e) => {
- if (!isSelected) {
- const btn = e.currentTarget as HTMLButtonElement;
- btn.style.borderColor = '#e8e2d9';
- btn.style.background = '#fff';
- }
  }}
  >
  <div
@@ -601,12 +598,11 @@ export default function RoutineQuiz() {
  )}
  </div>
  <div
+ className="rq-radio-dot"
  style={{
  width: '20px',
  height: '20px',
  borderRadius: '50%',
- border: `2px solid ${isSelected ? '#fff' : 'currentColor'}`,
- background: isSelected ? '#fff' : 'transparent',
  flexShrink: 0,
  marginTop: '2px',
  }}
@@ -629,14 +625,12 @@ export default function RoutineQuiz() {
  <button
  onClick={handleBack}
  disabled={currentStep === 0}
+ className="rq-back-btn"
  style={{
  display: 'flex',
  alignItems: 'center',
  gap: '8px',
  padding: '12px 24px',
- background: 'transparent',
- border: '1px solid #e8e2d9',
- color: currentStep === 0 ? '#ddd' : '#111',
  fontSize: '11px',
  letterSpacing: '0.15em',
  textTransform: 'uppercase',
@@ -646,20 +640,6 @@ export default function RoutineQuiz() {
  fontFamily: 'var(--font-mono, monospace)',
  opacity: currentStep === 0 ? 0.5 : 1,
  }}
- onMouseEnter={(e) => {
- if (currentStep > 0) {
- const btn = e.currentTarget as HTMLButtonElement;
- btn.style.borderColor = '#111';
- btn.style.color = '#111';
- }
- }}
- onMouseLeave={(e) => {
- if (currentStep > 0) {
- const btn = e.currentTarget as HTMLButtonElement;
- btn.style.borderColor = '#e8e2d9';
- btn.style.color = '#111';
- }
- }}
  >
  <ChevronLeft size={14} />
  Back
@@ -668,33 +648,19 @@ export default function RoutineQuiz() {
  <button
  onClick={handleNext}
  disabled={!isAnswered}
+ className="rq-next-btn"
  style={{
  display: 'flex',
  alignItems: 'center',
  gap: '8px',
  padding: '12px 24px',
- background: isAnswered ? '#111' : '#ddd',
- color: '#fff',
  fontSize: '11px',
  letterSpacing: '0.15em',
  textTransform: 'uppercase',
  cursor: isAnswered ? 'pointer' : 'not-allowed',
  borderRadius: '8px',
- border: '1px solid #111',
  transition: 'all 0.25s',
  fontFamily: 'var(--font-mono, monospace)',
- }}
- onMouseEnter={(e) => {
- if (isAnswered) {
- const btn = e.currentTarget as HTMLButtonElement;
- btn.style.background = '#333';
- }
- }}
- onMouseLeave={(e) => {
- if (isAnswered) {
- const btn = e.currentTarget as HTMLButtonElement;
- btn.style.background = '#111';
- }
  }}
  >
  {isLastStep ? 'Generate Routine' : 'Next'}

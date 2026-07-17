@@ -399,6 +399,8 @@ export default function RoutineResult({
  .rr-subtitle { color: #888888; }
  .rr-widget { background: rgba(255, 255, 255, 0.8); border: 1px solid #e8e2d9; }
  .rr-step-box { background: #ffffff; border: 1px solid #ede8e0; color: #111111; }
+ .rr-step-header { transition: background 0.2s ease; cursor: pointer; }
+ .rr-step-header:hover { background: #faf8f5; }
  .rr-product-card { background: #faf8f5; border: 1px solid #ede8e0; color: #111111; }
  .rr-img-box { background: #ffffff; border: 1px solid #f0ebe3; }
  .rr-usage-box { background: #111111; color: #ffffff; border: 1px solid #222222; }
@@ -409,6 +411,7 @@ export default function RoutineResult({
  html.dark .rr-widget, .dark .rr-widget { background: #111827 !important; border-color: #1f2937 !important; }
  html.dark .rr-widget h3, .dark .rr-widget h3 { color: #f8fafc !important; }
  html.dark .rr-step-box, .dark .rr-step-box { background: #111827 !important; border-color: #1f2937 !important; color: #f8fafc !important; }
+ html.dark .rr-step-header:hover, .dark .rr-step-header:hover { background: #1f2937 !important; }
  html.dark .rr-step-box h2, .dark .rr-step-box h2 { color: #ffffff !important; }
  html.dark .rr-step-box p, .dark .rr-step-box p { color: #9ca3af !important; }
  html.dark .rr-product-card, .dark .rr-product-card { background: #1f2937 !important; border-color: #374151 !important; color: #f8fafc !important; }
@@ -644,6 +647,7 @@ export default function RoutineResult({
  {/* Step Header */}
  <div
  onClick={() => setExpandedStep(isExpanded ? null : step.key)}
+ className="rr-step-header"
  style={{
  padding: '20px 24px',
  borderBottom: isExpanded ? '1px solid #f0ebe3' : 'none',
@@ -651,13 +655,6 @@ export default function RoutineResult({
  alignItems: 'flex-start',
  gap: '16px',
  cursor: 'pointer',
- transition: 'all 0.25s',
- }}
- onMouseEnter={(e) => {
- (e.currentTarget as HTMLDivElement).style.background = '#faf8f5';
- }}
- onMouseLeave={(e) => {
- (e.currentTarget as HTMLDivElement).style.background = 'transparent';
  }}
  >
  {/* Step Number */}
