@@ -563,11 +563,11 @@ html, body {
 
 .site-header-drawer-content {
  position: relative !important;
- width: 280px !important;
+ width: 290px !important;
  max-width: 85vw !important;
  height: 100% !important;
- background-color: #fcfbf9 !important;
- border-right: 1px solid #ded7cf !important;
+ background-color: #fcfbf9;
+ border-right: 1px solid #ded7cf;
  padding: 1.5rem 1.5rem 2rem !important;
  display: flex !important;
  flex-direction: column !important;
@@ -575,6 +575,24 @@ html, body {
  box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25) !important;
  overflow-y: auto !important;
  z-index: 10000 !important;
+}
+
+html.dark .site-header-drawer-content {
+ background-color: #141312 !important;
+ border-right: 1px solid rgba(255, 255, 255, 0.15) !important;
+ color: #f7f5f2 !important;
+}
+
+html.dark .site-header-drawer-content a {
+ color: #f7f5f2 !important;
+}
+
+html.dark .site-header-drawer-content a:hover {
+ color: #ff4d94 !important;
+}
+
+html.dark .site-header-drawer-content button {
+ color: #f7f5f2 !important;
 }
 
 @media (min-width: 1024px) {

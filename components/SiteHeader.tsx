@@ -47,16 +47,9 @@ export default function SiteHeader() {
   const { t } = useGlobalization();
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const navLinkStyle: React.CSSProperties = {
-    fontSize: "0.75rem", letterSpacing: "0.18em",
-    textTransform: "uppercase", fontWeight: "600",
-    color: "#2b2826", padding: "0.2rem 0",
-    fontFamily: "var(--font-dm-sans), sans-serif",
-  };
-
   return (
-    <header className="site-header relative z-[200] border-b border-[#ded7cf] bg-white">
-      <div className="site-header-container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+    <header className="site-header relative z-[200] border-b border-[#ded7cf] bg-white transition-colors duration-300 dark:border-white/10 dark:bg-[#121110]">
+      <div className="site-header-container mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
 
         {/* Left Nav — Desktop only */}
         <div className="site-header-left relative z-10">
@@ -70,12 +63,14 @@ export default function SiteHeader() {
           </nav>
         </div>
 
-        {/* Mobile spacer */}
-        <div className="lg:hidden flex-1 flex justify-start" />
+        {/* Mobile left area with small theme toggle */}
+        <div className="flex items-center gap-2 lg:hidden">
+          <ThemeToggle iconOnly />
+        </div>
 
         {/* Logo */}
         <div className="site-header-logo-wrapper">
-          <Link href="/" className="site-header-logo">MIRHA &amp; CO.</Link>
+          <Link href="/" className="site-header-logo text-black transition-colors dark:text-white">MIRHA &amp; CO.</Link>
         </div>
 
         {/* Right Nav — Desktop only */}
@@ -110,12 +105,11 @@ export default function SiteHeader() {
           </nav>
         </div>
 
-        {/* Hamburger — Mobile */}
-        <div className="lg:hidden flex-1 flex items-center justify-end">
+        {/* Hamburger 3-lines menu button — Mobile */}
+        <div className="flex items-center justify-end lg:hidden">
           {!menuOpen && (
             <button
-              className="text-black hover:text-[#fc2779] transition-colors cursor-pointer"
-              style={{ background: "transparent", border: "none", outline: "none", boxShadow: "none", padding: "8px", display: "flex", alignItems: "center", justifyContent: "center" }}
+              className="flex cursor-pointer items-center justify-center rounded-lg border border-[#ded7cf] bg-[#fbfaf8] p-2 text-[#2b2826] shadow-sm transition-all hover:border-[#fc2779] hover:text-[#fc2779] dark:border-white/15 dark:bg-[#181716] dark:text-[#f7f5f2] dark:hover:border-[#ff4d94] dark:hover:text-[#ff4d94]"
               onClick={() => setMenuOpen(true)}
               aria-label="Toggle Menu"
             >
@@ -134,52 +128,59 @@ export default function SiteHeader() {
           {/* Backdrop */}
           <div
             className="site-header-drawer-backdrop"
-            style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, width: "100%", height: "100%", backgroundColor: "rgba(0,0,0,0.4)", backdropFilter: "blur(4px)", WebkitBackdropFilter: "blur(4px)" }}
+            style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, width: "100%", height: "100%", backgroundColor: "rgba(0,0,0,0.6)", backdropFilter: "blur(4px)", WebkitBackdropFilter: "blur(4px)" }}
             onClick={() => setMenuOpen(false)}
           />
 
           {/* Drawer panel */}
           <div
-            className="site-header-drawer-content"
-            style={{ position: "relative", width: "280px", maxWidth: "85vw", height: "100%", backgroundColor: "#fcfbf9", borderRight: "1px solid #ded7cf", padding: "1.5rem 1.5rem 2rem", display: "flex", flexDirection: "column", gap: "1.1rem", boxShadow: "0 25px 50px -12px rgba(0,0,0,0.25)", overflowY: "auto", zIndex: 100000 }}
+            className="site-header-drawer-content flex h-full w-[290px] max-w-[85vw] flex-col gap-5 border-r border-[#ded7cf] bg-[#fcfbf9] p-6 shadow-2xl transition-colors duration-300 dark:border-white/15 dark:bg-[#141312] dark:text-[#f7f5f2]"
+            style={{ zIndex: 100000 }}
           >
-            {/* Header */}
-            <div className="flex justify-between items-center mb-2 pb-4 border-b border-[#e5ded6]">
-              <span className="font-bebas text-xl tracking-[0.08em] text-black" style={{ fontFamily: "var(--font-bebas), sans-serif" }}>
+            {/* Drawer Header */}
+            <div className="flex items-center justify-between border-b border-[#e5ded6] pb-4 dark:border-white/10">
+              <span className="font-bebas text-2xl tracking-[0.08em] text-[#11100f] dark:text-white">
                 MIRHA &amp; CO.
               </span>
-              <button onClick={() => setMenuOpen(false)} className="text-black hover:text-[#fc2779] transition-colors -mr-2 p-2 bg-transparent border-none outline-none cursor-pointer" aria-label="Close Menu">
+              <button
+                onClick={() => setMenuOpen(false)}
+                className="cursor-pointer rounded-lg p-1.5 text-[#2b2826] transition-colors hover:text-[#fc2779] dark:text-[#f7f5f2] dark:hover:text-[#ff4d94]"
+                aria-label="Close Menu"
+              >
                 <X size={20} />
               </button>
             </div>
 
             {/* Tools nav */}
-            <Link href="/tools/ingredients" onClick={() => setMenuOpen(false)} className="hover:text-[#fc2779] transition-colors" style={navLinkStyle}>{t("nav.ingredients")}</Link>
-            <Link href="/tools/hard-water"  onClick={() => setMenuOpen(false)} className="hover:text-[#fc2779] transition-colors" style={navLinkStyle}>Hard Water Test</Link>
-            <Link href="/tools/dupes"       onClick={() => setMenuOpen(false)} className="hover:text-[#fc2779] transition-colors" style={navLinkStyle}>Dupe Finder</Link>
-            <Link href="/k-beauty"          onClick={() => setMenuOpen(false)} className="transition-colors" style={{ ...navLinkStyle, color: "#fc2779" }}>K-Beauty ✦</Link>
-            <Link href="/mens-grooming"     onClick={() => setMenuOpen(false)} className="transition-colors" style={{ ...navLinkStyle, color: "#fc2779" }}>Men's Grooming ✦</Link>
+            <div className="flex flex-col gap-3 font-semibold uppercase tracking-[0.16em] text-xs">
+              <Link href="/tools/ingredients" onClick={() => setMenuOpen(false)} className="text-[#2b2826] transition-colors hover:text-[#fc2779] dark:text-[#f7f5f2] dark:hover:text-[#ff4d94]">{t("nav.ingredients")}</Link>
+              <Link href="/tools/hard-water"  onClick={() => setMenuOpen(false)} className="text-[#2b2826] transition-colors hover:text-[#fc2779] dark:text-[#f7f5f2] dark:hover:text-[#ff4d94]">Hard Water Test</Link>
+              <Link href="/tools/dupes"       onClick={() => setMenuOpen(false)} className="text-[#2b2826] transition-colors hover:text-[#fc2779] dark:text-[#f7f5f2] dark:hover:text-[#ff4d94]">Dupe Finder</Link>
+              <Link href="/k-beauty"          onClick={() => setMenuOpen(false)} className="font-extrabold text-[#fc2779] transition-colors dark:text-[#ff4d94]">K-Beauty ✦</Link>
+              <Link href="/mens-grooming"     onClick={() => setMenuOpen(false)} className="font-extrabold text-[#fc2779] transition-colors dark:text-[#ff4d94]">Men's Grooming ✦</Link>
+            </div>
 
-            <div style={{ height: "1px", background: "#e5ded6" }} />
+            <div className="h-px bg-[#e5ded6] dark:bg-white/10" />
 
             {/* Main nav */}
-            <Link href="/blog"      onClick={() => setMenuOpen(false)} className="hover:text-[#fc2779] transition-colors" style={navLinkStyle}>{t("nav.blog")}</Link>
-            <Link href="/b2b"       onClick={() => setMenuOpen(false)} className="hover:text-[#fc2779] transition-colors" style={navLinkStyle}>B2B SaaS</Link>
-            <Link href="/about"     onClick={() => setMenuOpen(false)} className="hover:text-[#fc2779] transition-colors" style={navLinkStyle}>{t("nav.about")}</Link>
-            <Link href="/pricing"   onClick={() => setMenuOpen(false)} className="hover:text-[#fc2779] transition-colors" style={navLinkStyle}>{t("nav.pricing")}</Link>
-            <Link href="/dashboard" onClick={() => setMenuOpen(false)} className="hover:text-[#fc2779] transition-colors" style={navLinkStyle}>{t("nav.dashboard")}</Link>
+            <div className="flex flex-col gap-3 font-semibold uppercase tracking-[0.16em] text-xs">
+              <Link href="/blog"      onClick={() => setMenuOpen(false)} className="text-[#2b2826] transition-colors hover:text-[#fc2779] dark:text-[#f7f5f2] dark:hover:text-[#ff4d94]">{t("nav.blog")}</Link>
+              <Link href="/b2b"       onClick={() => setMenuOpen(false)} className="text-[#2b2826] transition-colors hover:text-[#fc2779] dark:text-[#f7f5f2] dark:hover:text-[#ff4d94]">B2B SaaS</Link>
+              <Link href="/about"     onClick={() => setMenuOpen(false)} className="text-[#2b2826] transition-colors hover:text-[#fc2779] dark:text-[#f7f5f2] dark:hover:text-[#ff4d94]">{t("nav.about")}</Link>
+              <Link href="/pricing"   onClick={() => setMenuOpen(false)} className="text-[#2b2826] transition-colors hover:text-[#fc2779] dark:text-[#f7f5f2] dark:hover:text-[#ff4d94]">{t("nav.pricing")}</Link>
+              <Link href="/dashboard" onClick={() => setMenuOpen(false)} className="text-[#2b2826] transition-colors hover:text-[#fc2779] dark:text-[#f7f5f2] dark:hover:text-[#ff4d94]">{t("nav.dashboard")}</Link>
+            </div>
 
-            <div style={{ height: "1px", background: "#e5ded6" }} />
+            <div className="h-px bg-[#e5ded6] dark:bg-white/10" />
 
             {/* Social links */}
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-3 font-semibold tracking-[0.12em] text-xs">
               <a
                 href="https://www.instagram.com/mirha_andco/"
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setMenuOpen(false)}
-                className="flex items-center gap-2 transition-colors hover:text-[#fc2779]"
-                style={{ ...navLinkStyle, textTransform: "none", display: "flex", alignItems: "center" }}
+                className="flex items-center gap-2 text-[#2b2826] transition-colors hover:text-[#fc2779] dark:text-[#f7f5f2] dark:hover:text-[#ff4d94]"
               >
                 <InstagramIcon size={16} />
                 <span>Instagram</span>
@@ -189,17 +190,16 @@ export default function SiteHeader() {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setMenuOpen(false)}
-                className="flex items-center gap-2 transition-colors hover:text-[#fc2779]"
-                style={{ ...navLinkStyle, textTransform: "none", display: "flex", alignItems: "center" }}
+                className="flex items-center gap-2 text-[#2b2826] transition-colors hover:text-[#fc2779] dark:text-[#f7f5f2] dark:hover:text-[#ff4d94]"
               >
                 <LinkedInIcon size={16} />
                 <span>LinkedIn</span>
               </a>
             </div>
 
-            <div style={{ height: "1px", background: "#e5ded6" }} />
+            <div className="h-px bg-[#e5ded6] dark:bg-white/10" />
 
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingTop: "0.4rem" }}>
+            <div className="flex items-center justify-between pt-2">
               <GlobalizationSwitcher />
               <ThemeToggle />
             </div>

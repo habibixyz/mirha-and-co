@@ -4,7 +4,7 @@ import { useTheme } from "./ThemeProvider";
 import { Moon, Sun } from "lucide-react";
 import { useEffect, useState } from "react";
 
-export function ThemeToggle() {
+export function ThemeToggle({ iconOnly = false }: { iconOnly?: boolean }) {
   const { theme, toggleTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
@@ -16,27 +16,13 @@ export function ThemeToggle() {
     return (
       <button
         type="button"
-        style={{
-          background: "transparent",
-          border: "1px solid var(--rule)",
-          borderRadius: "20px",
-          padding: "5px 12px",
-          cursor: "pointer",
-          color: "var(--ink)",
-          display: "inline-flex",
-          alignItems: "center",
-          gap: "6px",
-          fontSize: "0.72rem",
-          fontWeight: 600,
-          letterSpacing: "0.08em",
-          textTransform: "uppercase",
-          fontFamily: "var(--font-dm-sans), sans-serif",
-          opacity: 0.7,
-        }}
+        className={`inline-flex items-center justify-center gap-1.5 cursor-pointer rounded-full transition-all border border-[#e5ded6] bg-white text-[#2b2826] dark:border-white/15 dark:bg-[#181716] dark:text-[#f7f5f2] ${
+          iconOnly ? "p-2 w-9 h-9" : "px-3 py-1.5 text-xs font-semibold uppercase tracking-wider"
+        }`}
         title="Toggle Theme Mode"
       >
-        <Moon size={13} />
-        <span>Dark</span>
+        <Moon size={15} />
+        {!iconOnly && <span>Dark</span>}
       </button>
     );
   }
@@ -45,38 +31,24 @@ export function ThemeToggle() {
     <button
       onClick={toggleTheme}
       type="button"
-      style={{
-        background: "transparent",
-        border: "1px solid var(--rule)",
-        borderRadius: "20px",
-        padding: "5px 12px",
-        cursor: "pointer",
-        color: "var(--ink)",
-        display: "inline-flex",
-        alignItems: "center",
-        gap: "6px",
-        fontSize: "0.72rem",
-        fontWeight: 600,
-        letterSpacing: "0.08em",
-        textTransform: "uppercase",
-        fontFamily: "var(--font-dm-sans), sans-serif",
-        transition: "all 0.2s ease",
-      }}
-      className="hover:border-[#fc2779] hover:text-[#fc2779]"
+      className={`inline-flex items-center justify-center gap-1.5 cursor-pointer rounded-full transition-all border border-[#ded7cf] bg-white text-[#2b2826] hover:border-[#fc2779] hover:text-[#fc2779] dark:border-white/15 dark:bg-[#181716] dark:text-[#f7f5f2] dark:hover:border-[#ff4d94] dark:hover:text-[#ff4d94] ${
+        iconOnly ? "p-2 w-9 h-9" : "px-3 py-1.5 text-xs font-semibold uppercase tracking-wider"
+      }`}
       title={`Switch to ${theme === "light" ? "dark" : "light"} mode`}
       aria-label="Toggle Theme Mode"
     >
       {theme === "light" ? (
         <>
-          <Moon size={13} className="text-slate-700 dark:text-slate-300" />
-          <span>Dark</span>
+          <Moon size={15} className="text-[#2b2826] dark:text-[#f7f5f2]" />
+          {!iconOnly && <span>Dark</span>}
         </>
       ) : (
         <>
-          <Sun size={13} className="text-amber-400" />
-          <span className="text-amber-300">Light</span>
+          <Sun size={15} className="text-amber-400" />
+          {!iconOnly && <span className="text-amber-300">Light</span>}
         </>
       )}
     </button>
   );
 }
+
