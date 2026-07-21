@@ -134,7 +134,7 @@ export default function SiteHeader() {
 
           {/* Drawer panel */}
           <div
-            className="site-header-drawer-content flex h-full w-[290px] max-w-[85vw] flex-col gap-5 border-r border-[#ded7cf] bg-[#fcfbf9] p-6 shadow-2xl transition-colors duration-300 dark:border-white/15 dark:bg-[#141312] dark:text-[#f7f5f2]"
+            className="site-header-drawer-content flex h-full w-[310px] max-w-[85vw] flex-col gap-4 border-r border-[#ded7cf] bg-[#fcfbf9] px-5 py-6 shadow-2xl transition-colors duration-300 dark:border-white/15 dark:bg-[#141312] dark:text-[#f7f5f2]"
             style={{ zIndex: 100000 }}
           >
             {/* Drawer Header */}
@@ -160,7 +160,7 @@ export default function SiteHeader() {
               <Link href="/mens-grooming"     onClick={() => setMenuOpen(false)} className="font-extrabold text-[#fc2779] transition-colors dark:text-[#ff4d94]">Men's Grooming ✦</Link>
             </div>
 
-            <div className="h-px bg-[#e5ded6] dark:bg-white/10" />
+            <div className="my-1 h-px bg-[#e5ded6] dark:bg-white/10" />
 
             {/* Main nav */}
             <div className="flex flex-col gap-3 font-semibold uppercase tracking-[0.16em] text-xs">
@@ -171,7 +171,7 @@ export default function SiteHeader() {
               <Link href="/dashboard" onClick={() => setMenuOpen(false)} className="text-[#2b2826] transition-colors hover:text-[#fc2779] dark:text-[#f7f5f2] dark:hover:text-[#ff4d94]">{t("nav.dashboard")}</Link>
             </div>
 
-            <div className="h-px bg-[#e5ded6] dark:bg-white/10" />
+            <div className="my-1 h-px bg-[#e5ded6] dark:bg-white/10" />
 
             {/* Social links */}
             <div className="flex flex-col gap-3 font-semibold tracking-[0.12em] text-xs">
@@ -197,9 +197,9 @@ export default function SiteHeader() {
               </a>
             </div>
 
-            <div className="h-px bg-[#e5ded6] dark:bg-white/10" />
+            <div className="my-1 h-px bg-[#e5ded6] dark:bg-white/10" />
 
-            <div className="flex items-center justify-between pt-2">
+            <div className="flex items-center justify-between pt-1">
               <GlobalizationSwitcher />
               <ThemeToggle />
             </div>

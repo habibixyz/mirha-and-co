@@ -17,7 +17,7 @@ export function ThemeToggle({ iconOnly = false }: { iconOnly?: boolean }) {
       <button
         type="button"
         className={`inline-flex items-center justify-center gap-1.5 cursor-pointer rounded-full transition-all border border-[#e5ded6] bg-white text-[#2b2826] dark:border-white/15 dark:bg-[#181716] dark:text-[#f7f5f2] ${
-          iconOnly ? "p-2 w-9 h-9" : "px-3 py-1.5 text-xs font-semibold uppercase tracking-wider"
+          iconOnly ? "p-2 w-9 h-9" : "px-2.5 py-1.5 text-[10px] font-bold uppercase tracking-wider"
         }`}
         title="Toggle Theme Mode"
       >
@@ -32,7 +32,7 @@ export function ThemeToggle({ iconOnly = false }: { iconOnly?: boolean }) {
       onClick={toggleTheme}
       type="button"
       className={`inline-flex items-center justify-center gap-1.5 cursor-pointer rounded-full transition-all border border-[#ded7cf] bg-white text-[#2b2826] hover:border-[#fc2779] hover:text-[#fc2779] dark:border-white/15 dark:bg-[#181716] dark:text-[#f7f5f2] dark:hover:border-[#ff4d94] dark:hover:text-[#ff4d94] ${
-        iconOnly ? "p-2 w-9 h-9" : "px-3 py-1.5 text-xs font-semibold uppercase tracking-wider"
+        iconOnly ? "p-2 w-9 h-9" : "px-2.5 py-1.5 text-[10px] font-bold uppercase tracking-wider"
       }`}
       title={`Switch to ${theme === "light" ? "dark" : "light"} mode`}
       aria-label="Toggle Theme Mode"
