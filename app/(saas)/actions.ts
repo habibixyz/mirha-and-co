@@ -394,13 +394,26 @@ export async function loginAction(_state: AuthState, formData: FormData): Promis
       return { error: "Invalid email or password." };
     }
 
-  await createSession(user.id);
- } catch (error) {
- console.error("Login error:", error);
- return { error: "Unable to sign in right now. Please try again." };
- }
+    // 🔐 TRANSPARENT MIGRATION: upgrade legacy SHA-256 hashes → bcrypt on login
+    if (isLegacyHash(user.passwordHash)) {
+      try {
+        const newHash = await hashPassword(password);
+        await prisma.user.update({
+          where: { id: user.id },
+          data: { passwordHash: newHash },
+        });
+      } catch (upgradeError) {
+        console.error("Hash upgrade error (non-fatal):", upgradeError);
+      }
+    }
 
- redirect("/dashboard");
+    await createSession(user.id);
+  } catch (error) {
+    console.error("Login error:", error);
+    return { error: "Unable to sign in right now. Please try again." };
+  }
+
+  redirect("/dashboard");
 }
 
 export async function registerAction(_state: AuthState, formData: FormData): Promise<AuthState> {

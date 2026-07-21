@@ -1,6 +1,7 @@
 import { cookies } from "next/headers";
 import { prisma } from "./prisma";
 import bcrypt from "bcryptjs";
+import crypto from "crypto";
 
 export async function getSession() {
   const cookieStore = await cookies();
@@ -63,13 +64,20 @@ export async function hashPassword(password: string) {
 }
 
 export async function verifyPassword(password: string, hash: string) {
+  // Try bcrypt first (all new accounts)
   try {
-    return await bcrypt.compare(password, hash);
+    const isBcrypt = await bcrypt.compare(password, hash);
+    if (isBcrypt) return true;
   } catch (e) {
-    return false;
+    // Not a valid bcrypt hash — fall through to legacy check
   }
+
+  // Fallback: legacy SHA-256 check (accounts created before bcrypt migration)
+  const legacyHash = crypto.createHash("sha256").update(password).digest("hex");
+  return legacyHash === hash;
 }
 
-export function isLegacyHash(_hash: string) {
-  return false;
+// SHA-256 hashes are exactly 64 lowercase hex characters
+export function isLegacyHash(hash: string) {
+  return hash.length === 64 && /^[0-9a-f]+$/.test(hash);
 }
