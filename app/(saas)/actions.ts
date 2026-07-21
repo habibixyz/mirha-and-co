@@ -498,13 +498,12 @@ export async function forgotPasswordAction(_state: AuthState, formData: FormData
  }
  });
 
- const resetUrl = `${await getBaseUrl()}/reset-password?token=${token}`;
- console.log("Password reset link generated:", resetUrl);
+  const resetUrl = `${await getBaseUrl()}/reset-password?token=${token}`;
 
-  // ── Diagnostic: log env var presence (never log values)
+  // ── Diagnostic: log env var presence only (never log token values)
   console.log("[forgot-password] RESEND_API_KEY present:", !!process.env.RESEND_API_KEY);
   console.log("[forgot-password] PASSWORD_RESET_FROM present:", !!process.env.PASSWORD_RESET_FROM);
-  console.log("[forgot-password] Reset URL:", resetUrl);
+  console.log("[forgot-password] Reset URL base:", await getBaseUrl());
 
   if (process.env.RESEND_API_KEY && process.env.PASSWORD_RESET_FROM) {
     try {

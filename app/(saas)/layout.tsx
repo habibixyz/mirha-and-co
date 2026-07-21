@@ -356,7 +356,7 @@ export default function SaasLayout({
  }
 
  .dash-main-inner {
- padding: 5rem 1.5rem 3rem;
+ padding: 5.5rem 1.25rem 3rem;
  }
 
  .mobile-menu-btn {
@@ -408,7 +408,7 @@ export default function SaasLayout({
 
  @media (max-width: 480px) {
  .dash-main-inner {
- padding: 4.5rem 1.2rem 5.5rem;
+ padding: 5rem 1rem 5rem;
  }
  
  .dash-shell {
