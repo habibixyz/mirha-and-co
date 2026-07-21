@@ -173,7 +173,7 @@ export function DashboardClient({ user, routines, recentJournal, stats }: any) {
       animate="show"
       variants={containerVariants}
     >
-      {/* MOBILE HEADER WITH LOGO ONLY (Sign out moved to sidebar) */}
+      {/* MOBILE HEADER WITH LOGO AND SIGN OUT */}
       <div className="mobile-only" style={{ 
         display: "none", 
         padding: "1rem 0",
@@ -196,6 +196,27 @@ export function DashboardClient({ user, routines, recentJournal, stats }: any) {
               Mirha <span style={{ color: "var(--dash-accent)" }}>& Co.</span>
             </span>
           </Link>
+          <motion.button
+            whileTap={{ scale: 0.95 }}
+            onClick={() => logoutAction()}
+            style={{
+              background: "white",
+              border: "1px solid var(--dash-border)",
+              borderRadius: "12px",
+              padding: "0.5rem 0.8rem",
+              fontSize: "0.75rem",
+              cursor: "pointer",
+              color: "var(--dash-ink)",
+              fontWeight: 600,
+              display: "flex",
+              alignItems: "center",
+              gap: "0.35rem",
+              transition: "all 0.2s",
+              boxShadow: "0 2px 6px rgba(0,0,0,0.02)"
+            }}
+          >
+            <LogOut size={13} /> Sign Out
+          </motion.button>
         </div>
       </div>
 
