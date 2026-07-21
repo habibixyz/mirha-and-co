@@ -501,20 +501,47 @@ export async function forgotPasswordAction(_state: AuthState, formData: FormData
  const resetUrl = `${await getBaseUrl()}/reset-password?token=${token}`;
  console.log("Password reset link generated:", resetUrl);
 
- if (process.env.RESEND_API_KEY && process.env.PASSWORD_RESET_FROM) {
- try {
- const resend = new Resend(process.env.RESEND_API_KEY);
- const result = await resend.emails.send({
- from: process.env.PASSWORD_RESET_FROM,
- to: email,
- subject: "Reset your Mirha & Co. password",
- html: `<p>Use this link to reset your password. It expires in 1 hour.</p><p><a href="${resetUrl}">Reset password</a></p>`,
- });
- console.log("Resend API response:", result);
- } catch (resendError) {
- console.error("Resend API error:", resendError);
- }
- }
+  // ── Diagnostic: log env var presence (never log values)
+  console.log("[forgot-password] RESEND_API_KEY present:", !!process.env.RESEND_API_KEY);
+  console.log("[forgot-password] PASSWORD_RESET_FROM present:", !!process.env.PASSWORD_RESET_FROM);
+  console.log("[forgot-password] Reset URL:", resetUrl);
+
+  if (process.env.RESEND_API_KEY && process.env.PASSWORD_RESET_FROM) {
+    try {
+      const resend = new Resend(process.env.RESEND_API_KEY);
+      const result = await resend.emails.send({
+        from: process.env.PASSWORD_RESET_FROM,
+        to: email,
+        subject: "Reset your Mirha & Co. password 🌸",
+        html: `
+<div style="font-family: 'DM Sans', Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 40px 24px; background: #fcfbf9;">
+  <h1 style="font-family: Georgia, serif; font-size: 1.75rem; color: #2b2826; margin: 0 0 1rem;">
+    Reset your password
+  </h1>
+  <p style="color: #6b5e57; font-size: 0.95rem; line-height: 1.6; margin: 0 0 1.5rem;">
+    We received a request to reset the password for your Mirha &amp; Co. account.<br>
+    Click the button below to set a new password. This link expires in <strong>1 hour</strong>.
+  </p>
+  <a href="${resetUrl}" style="display: inline-block; background: #fc2779; color: #fff; text-decoration: none; padding: 12px 32px; border-radius: 8px; font-weight: 600; font-size: 0.95rem; margin-bottom: 1.5rem;">
+    Reset Password
+  </a>
+  <p style="color: #9a8a84; font-size: 0.8rem; line-height: 1.6; margin: 0;">
+    If you didn't request this, you can safely ignore this email — your password won't change.<br>
+    Or copy this link: <a href="${resetUrl}" style="color: #fc2779;">${resetUrl}</a>
+  </p>
+</div>`,
+      });
+      if (result.error) {
+        console.error("[forgot-password] Resend rejected email:", result.error);
+      } else {
+        console.log("[forgot-password] Email sent successfully. ID:", result.data?.id);
+      }
+    } catch (resendError) {
+      console.error("[forgot-password] Resend threw exception:", resendError);
+    }
+  } else {
+    console.warn("[forgot-password] Email NOT sent — RESEND_API_KEY or PASSWORD_RESET_FROM env var is missing/empty in this environment.");
+  }
  } catch (error) {
  console.error("Forgot password database/logic error:", error);
  }
