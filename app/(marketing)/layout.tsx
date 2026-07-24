@@ -162,24 +162,10 @@ export default async function RootLayout({
 
  <ThemeProvider>
  <GlobalizationProvider initialLocale={locale} initialCurrency={currency}>
- {/* Top disclosure bar */}
- <div 
- className="top-disclosure-bar"
- style={{
- background: "var(--sand)", // Warm premium sand
- color: "var(--muted)", // Muted editorial taupe
- textAlign: "center",
- padding: "0.55rem 1rem",
- fontSize: "0.62rem",
- letterSpacing: "0.22em",
- textTransform: "uppercase",
- fontWeight: 600,
- fontFamily: "var(--font-dm-sans), sans-serif",
- borderBottom: "1px solid var(--rule)",
- }}
- >
- Independent reviews. Honest opinions. Affiliate links disclosed.
- </div>
+  {/* Top disclosure bar */}
+  <div className="top-disclosure-bar">
+  Independent reviews. Honest opinions. Affiliate links disclosed.
+  </div>
 
  <SiteHeader />
 

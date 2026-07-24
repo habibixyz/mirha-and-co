@@ -49,42 +49,37 @@ export default function SiteHeader() {
 
   return (
     <header className="site-header relative z-[200] border-b border-[#ded7cf] bg-white transition-colors duration-300 dark:border-white/10 dark:bg-[#121110]">
-      <div className="site-header-container mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+      <div className="site-header-container">
 
-        {/* Left Nav — Desktop only */}
-        <div className="site-header-left relative z-10">
-          <nav className="flex items-center gap-3 lg:gap-4">
-            <Link href="/tools/ingredients" className="site-header-nav-link">{t("nav.ingredients")}</Link>
-            <Link href="/tools/hard-water"  className="site-header-nav-link">Hard Water</Link>
-            <Link href="/tools/dupes"       className="site-header-nav-link">Dupe Finder</Link>
-            <Link href="/k-beauty"          className="site-header-nav-link site-header-nav-link--accent">K-Beauty</Link>
-            <Link href="/mens-grooming"     className="site-header-nav-link site-header-nav-link--accent">Men</Link>
-            <Link href="/blog"              className="site-header-nav-link">{t("nav.blog")}</Link>
+        {/* Left Section — Navigation links */}
+        <div className="site-header-left">
+          <nav className="site-header-nav">
+            <Link href="/tools/ingredients" className="site-header-nav-link nav-hide-1024">{t("nav.ingredients")}</Link>
+            <Link href="/tools/hard-water"  className="site-header-nav-link nav-hide-1024">Hard Water</Link>
+            <Link href="/tools/dupes"       className="site-header-nav-link nav-hide-1024">Dupe Finder</Link>
+            <Link href="/k-beauty"          className="site-header-nav-link site-header-nav-link--accent nav-hide-1100">K-Beauty</Link>
+            <Link href="/mens-grooming"     className="site-header-nav-link nav-hide-1100">Men</Link>
+            <Link href="/blog"              className="site-header-nav-link nav-hide-1200">{t("nav.blog")}</Link>
           </nav>
         </div>
 
-        {/* Mobile left area with small theme toggle */}
-        <div className="flex items-center gap-2 lg:hidden">
-          <ThemeToggle iconOnly />
-        </div>
-
-        {/* Logo */}
+        {/* Center Section — Brand Logo */}
         <div className="site-header-logo-wrapper">
           <Link href="/" className="site-header-logo text-black transition-colors dark:text-white">MIRHA &amp; CO.</Link>
         </div>
 
-        {/* Right Nav — Desktop only */}
+        {/* Right Section — Navigation controls */}
         <div className="site-header-right">
-          <nav className="flex items-center gap-5">
-            <Link href="/b2b"       className="site-header-nav-link">B2B SaaS</Link>
-            <Link href="/about"     className="site-header-nav-link">{t("nav.about")}</Link>
-            <Link href="/pricing"   className="site-header-nav-link">{t("nav.pricing")}</Link>
-            <Link href="/dashboard" className="site-header-nav-link">{t("nav.dashboard")}</Link>
+          <nav className="site-header-nav">
+            <Link href="/b2b"       className="site-header-nav-link nav-hide-1200">B2B SaaS</Link>
+            <Link href="/about"     className="site-header-nav-link nav-hide-1200">{t("nav.about")}</Link>
+            <Link href="/pricing"   className="site-header-nav-link nav-hide-1200">{t("nav.pricing")}</Link>
+            <Link href="/dashboard" className="site-header-nav-link nav-hide-1024">{t("nav.dashboard")}</Link>
             <a
               href="https://www.instagram.com/mirha_andco/"
               target="_blank"
               rel="noopener noreferrer"
-              className="site-header-nav-link flex items-center justify-center"
+              className="site-header-nav-link flex items-center justify-center nav-hide-1300"
               aria-label="Instagram"
               style={{ display: "inline-flex", alignItems: "center" }}
             >
@@ -94,28 +89,30 @@ export default function SiteHeader() {
               href="https://www.linkedin.com/company/mirhaandco/"
               target="_blank"
               rel="noopener noreferrer"
-              className="site-header-nav-link flex items-center justify-center"
+              className="site-header-nav-link flex items-center justify-center nav-hide-1300"
               aria-label="LinkedIn"
               style={{ display: "inline-flex", alignItems: "center" }}
             >
               <LinkedInIcon size={15} />
             </a>
-            <GlobalizationSwitcher />
-            <ThemeToggle />
+            <div className="nav-hide-768 flex items-center">
+              <GlobalizationSwitcher />
+            </div>
+            <div className="flex items-center">
+              <ThemeToggle iconOnly />
+            </div>
+            <div className="menu-trigger flex items-center">
+              {!menuOpen && (
+                <button
+                  className="flex cursor-pointer items-center justify-center rounded-lg border border-[#ded7cf] bg-[#fbfaf8] p-2 text-[#2b2826] shadow-sm transition-all hover:border-[#fc2779] hover:text-[#fc2779] dark:border-white/15 dark:bg-[#181716] dark:text-[#f7f5f2] dark:hover:border-[#ff4d94] dark:hover:text-[#ff4d94]"
+                  onClick={() => setMenuOpen(true)}
+                  aria-label="Toggle Menu"
+                >
+                  <Menu size={20} />
+                </button>
+              )}
+            </div>
           </nav>
-        </div>
-
-        {/* Hamburger 3-lines menu button — Mobile */}
-        <div className="flex items-center justify-end lg:hidden">
-          {!menuOpen && (
-            <button
-              className="flex cursor-pointer items-center justify-center rounded-lg border border-[#ded7cf] bg-[#fbfaf8] p-2 text-[#2b2826] shadow-sm transition-all hover:border-[#fc2779] hover:text-[#fc2779] dark:border-white/15 dark:bg-[#181716] dark:text-[#f7f5f2] dark:hover:border-[#ff4d94] dark:hover:text-[#ff4d94]"
-              onClick={() => setMenuOpen(true)}
-              aria-label="Toggle Menu"
-            >
-              <Menu size={20} />
-            </button>
-          )}
         </div>
       </div>
 
