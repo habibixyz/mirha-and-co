@@ -1056,17 +1056,39 @@ export default function HardWaterCalculator() {
  {(regionMode === "in") ? "Quick Select Major Cities" : "Quick Select Global Cities"}
  </div>
  <div className="city-grid">
- {activeCities.map(city => (
- <button
- key={city.name}
- className={`city-btn ${selectedCity === city.name ? "selected" : ""}`}
- onClick={() => { setSelectedCity(city.name); setStateSearch(""); }}
- >
- <MapPin size={18} style={{ color: selectedCity === city.name ? "#fc2779" : "#8c857f" }} />
- <span>{city.name}</span>
- </button>
- ))}
- </div>
+  {activeCities.map(city => {
+    const slug = city.name.toLowerCase().replace(" city", "").replace(/\s+/g, "-");
+    return (
+      <button
+        key={city.name}
+        className={`city-btn ${selectedCity === city.name ? "selected" : ""}`}
+        onClick={() => { setSelectedCity(city.name); setStateSearch(""); }}
+      >
+        <MapPin size={18} style={{ color: selectedCity === city.name ? "#fc2779" : "#8c857f" }} />
+        <span>{city.name}</span>
+      </button>
+    );
+  })}
+  </div>
+
+  {selectedCity && (
+    <div style={{ marginTop: "14px", padding: "10px 14px", background: "#fff5f8", borderRadius: "10px", border: "1px solid #ffd0e0", textAlign: "center" }}>
+      <Link
+        href={`/water-quality/${selectedCity.toLowerCase().replace(" city", "").replace(/\s+/g, "-")}`}
+        style={{
+          display: "inline-flex",
+          alignItems: "center",
+          gap: "6px",
+          fontSize: "0.82rem",
+          fontWeight: 700,
+          color: "#fc2779",
+          textDecoration: "none",
+        }}
+      >
+        <span>🔬 View Full {selectedCity} Geological Water Report &rarr;</span>
+      </Link>
+    </div>
+  )}
 
  {/* Searchable State Selector */}
  <div className="state-autocomplete-wrapper" style={{ marginTop: "24px", position: "relative" }}>
