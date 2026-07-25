@@ -2,7 +2,6 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useGlobalization } from "@/components/GlobalizationContext";
 
@@ -401,15 +400,61 @@ export default function CityWaterQualityPage({ params }: { params: { city?: stri
   };
 
   return (
-    <div style={{ background: "#ffffff", color: "#1a1a1a", minHeight: "100vh", fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif', width: "100%", overflowX: "hidden" }}>
+    <div className="city-page-root" style={{ background: "var(--bg-color)", color: "var(--text-main)", minHeight: "100vh", fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif', width: "100%", overflowX: "hidden" }}>
       {/* ── Google JSON-LD SEO Structured Data ── */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdSchema) }}
       />
       
-      {/* Dynamic Responsive CSS Styles */}
+      {/* Dynamic Responsive & Dark Mode CSS System */}
       <style>{`
+        .city-page-root {
+          --bg-color: #ffffff;
+          --text-main: #1a1a1a;
+          --text-muted: #5f6368;
+          --text-sub: #8a8f98;
+          --card-bg: #ffffff;
+          --card-border: #e2e4e8;
+          --topbar-bg: #fdeef3;
+          --topbar-border: #e2e4e8;
+          --topbar-accent: #c2185b;
+          --callout-bg: #fff8e5;
+          --callout-border: #f3d98b;
+          --callout-head: #7a5b00;
+          --callout-text: #6b5200;
+          --hood-border: #f6f7f9;
+          --ecom-bg: #fdeef3;
+          --ecom-border: #f8c9db;
+          --cta-dark-bg: #1a1a1a;
+          --cta-dark-text: #ffffff;
+          --input-bg: #ffffff;
+        }
+
+        html.dark .city-page-root,
+        .dark .city-page-root,
+        [data-theme="dark"] .city-page-root {
+          --bg-color: #0d0c0b;
+          --text-main: #f5f2ed;
+          --text-muted: #a39e97;
+          --text-sub: #827c75;
+          --card-bg: #161514;
+          --card-border: rgba(255, 255, 255, 0.12);
+          --topbar-bg: #2a121c;
+          --topbar-border: rgba(255, 255, 255, 0.1);
+          --topbar-accent: #f472b6;
+          --callout-bg: #261e08;
+          --callout-border: #5e480d;
+          --callout-head: #fef08a;
+          --callout-text: #fef9c3;
+          --hood-border: rgba(255, 255, 255, 0.06);
+          --ecom-bg: #2a121c;
+          --ecom-border: #4a1b2f;
+          --cta-dark-bg: #ffffff;
+          --cta-dark-text: #0d0c0b;
+          --input-bg: #1c1b1a;
+        }
+
         .page-wrap {
           width: 100%;
           max-width: 1340px;
@@ -418,24 +463,25 @@ export default function CityWaterQualityPage({ params }: { params: { city?: stri
         }
 
         .topbar {
-          background: #fdeef3;
+          background: var(--topbar-bg);
           padding: 9px 28px;
           font-size: 12.5px;
           display: flex; align-items: center; gap: 8px; justify-content: center;
-          border-bottom: 1px solid #e2e4e8;
+          border-bottom: 1px solid var(--topbar-border);
+          color: var(--text-main);
         }
-        .topbar b { color: #c2185b; }
-        .topbar a { color: #1a1a1a; text-decoration: underline; margin-left: 6px; font-weight: 600; }
+        .topbar b { color: var(--topbar-accent); }
+        .topbar a { color: var(--text-main); text-decoration: underline; margin-left: 6px; font-weight: 600; }
 
         .crumbs {
           padding: 14px 28px 0;
-          font-size: 12.5px; color: #8a8f98;
+          font-size: 12.5px; color: var(--text-sub);
           display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
         }
         .crumbs span.sep { margin: 0 2px; }
-        .crumbs .current { color: #1a1a1a; font-weight: 600; }
+        .crumbs .current { color: var(--text-main); font-weight: 600; }
         .loc-pin {
-          margin: 6px 28px 0; font-size: 12px; color: #5f6368;
+          margin: 6px 28px 0; font-size: 12px; color: var(--text-muted);
           display: flex; align-items: center; gap: 6px;
         }
 
@@ -445,10 +491,11 @@ export default function CityWaterQualityPage({ params }: { params: { city?: stri
         }
         .hero h1 {
           font-size: 32px; margin: 0; font-weight: 800; letter-spacing: -0.01em; line-height: 1.15;
+          color: var(--text-main);
         }
         .hero h1 .accent { color: #ec1f6a; }
         .hero p {
-          color: #5f6368; font-size: 13.5px; max-width: 560px; margin-top: 12px; line-height: 1.6;
+          color: var(--text-muted); font-size: 13.5px; max-width: 560px; margin-top: 12px; line-height: 1.6;
         }
         .hero-cta { text-align: right; flex-shrink: 0; }
         .cta-pill {
@@ -458,38 +505,38 @@ export default function CityWaterQualityPage({ params }: { params: { city?: stri
           text-decoration: none; cursor: pointer; transition: background 0.2s;
         }
         .cta-pill:hover { background: #c2185b; }
-        .hero-cta .updated { font-size: 11px; color: #8a8f98; margin-top: 8px; }
+        .hero-cta .updated { font-size: 11px; color: var(--text-sub); margin-top: 8px; }
 
         .stat-row {
           display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px;
           padding: 22px 28px 0;
         }
         .stat-card {
-          border: 1px solid #e2e4e8; border-radius: 10px;
-          padding: 14px 16px; position: relative; background: #ffffff;
+          border: 1px solid var(--card-border); border-radius: 10px;
+          padding: 14px 16px; position: relative; background: var(--card-bg);
         }
         .stat-label {
-          font-size: 11px; font-weight: 700; color: #5f6368; letter-spacing: .03em;
+          font-size: 11px; font-weight: 700; color: var(--text-muted); letter-spacing: .03em;
           display: flex; justify-content: space-between; align-items: center;
         }
-        .stat-value { font-size: 26px; font-weight: 800; margin-top: 8px; display: flex; align-items: baseline; gap: 6px; }
-        .stat-value .unit { font-size: 12px; font-weight: 600; color: #8a8f98; }
+        .stat-value { font-size: 26px; font-weight: 800; margin-top: 8px; display: flex; align-items: baseline; gap: 6px; color: var(--text-main); }
+        .stat-value .unit { font-size: 12px; font-weight: 600; color: var(--text-sub); }
         .stat-value.pink { color: #ec1f6a; }
         .stat-tag {
           display: inline-block; margin-top: 8px; font-size: 11px; font-weight: 700;
           padding: 3px 8px; border-radius: 5px;
         }
-        .stat-tag.hard { background: #fdeef3; color: #c2185b; }
-        .stat-sub { font-size: 11px; color: #8a8f98; margin-top: 6px; line-height: 1.4; }
+        .stat-tag.hard { background: var(--topbar-bg); color: var(--topbar-accent); }
+        .stat-sub { font-size: 11px; color: var(--text-sub); margin-top: 6px; line-height: 1.4; }
         .stat-minis { display: flex; gap: 10px; margin-top: 10px; }
         .mini-box {
-          border: 1px solid #e2e4e8; border-radius: 6px; padding: 6px 9px; font-size: 10.5px; flex: 1;
+          border: 1px solid var(--card-border); border-radius: 6px; padding: 6px 9px; font-size: 10.5px; flex: 1; color: var(--text-muted);
         }
-        .mini-box b { display: block; font-size: 12px; margin-top: 1px; }
-        .stat-climate { font-size: 11px; color: #5f6368; margin-top: 8px; }
-        .stat-climate b { color: #1a1a1a; }
+        .mini-box b { display: block; font-size: 12px; margin-top: 1px; color: var(--text-main); }
+        .stat-climate { font-size: 11px; color: var(--text-muted); margin-top: 8px; }
+        .stat-climate b { color: var(--text-main); }
         .barrier-bar {
-          margin-top: 9px; height: 5px; border-radius: 3px; background: #e2e4e8; overflow: hidden;
+          margin-top: 9px; height: 5px; border-radius: 3px; background: var(--card-border); overflow: hidden;
         }
         .barrier-bar-fill { height: 100%; background: linear-gradient(90deg, #f9a8c9, #ec1f6a); }
 
@@ -499,97 +546,101 @@ export default function CityWaterQualityPage({ params }: { params: { city?: stri
         }
 
         .section-eyebrow {
-          font-size: 11px; font-weight: 800; letter-spacing: .04em; color: #c2185b; margin-bottom: 6px;
+          font-size: 11px; font-weight: 800; letter-spacing: .04em; color: var(--topbar-accent); margin-bottom: 6px;
         }
-        h2.section-title { font-size: 22px; margin: 0 0 12px; font-weight: 800; }
-        .lede { font-size: 13.5px; color: #5f6368; line-height: 1.65; margin-bottom: 16px; }
+        h2.section-title { font-size: 22px; margin: 0 0 12px; font-weight: 800; color: var(--text-main); }
+        .lede { font-size: 13.5px; color: var(--text-muted); line-height: 1.65; margin-bottom: 16px; }
 
         .callout {
-          background: #fff8e5; border: 1px solid #f3d98b; border-radius: 8px;
+          background: var(--callout-bg); border: 1px solid var(--callout-border); border-radius: 8px;
           padding: 12px 14px; margin-bottom: 18px;
         }
-        .callout .head { font-size: 12.5px; font-weight: 700; color: #7a5b00; display: flex; align-items: center; gap: 6px; margin-bottom: 4px; }
-        .callout p { margin: 0; font-size: 12.5px; color: #6b5200; line-height: 1.55; }
+        .callout .head { font-size: 12.5px; font-weight: 700; color: var(--callout-head); display: flex; align-items: center; gap: 6px; margin-bottom: 4px; }
+        .callout p { margin: 0; font-size: 12.5px; color: var(--callout-text); line-height: 1.55; }
 
-        h3.sub-title { font-size: 15.5px; margin: 20px 0 10px; font-weight: 800; }
-        .body-text { font-size: 13.5px; color: #5f6368; line-height: 1.65; margin-bottom: 14px; }
-        .body-text b { color: #1a1a1a; }
+        h3.sub-title { font-size: 15.5px; margin: 20px 0 10px; font-weight: 800; color: var(--text-main); }
+        .body-text { font-size: 13.5px; color: var(--text-muted); line-height: 1.65; margin-bottom: 14px; }
+        .body-text b { color: var(--text-main); }
 
         .two-col-mini { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 14px 0 22px; }
-        .mini-card { border: 1px solid #e2e4e8; border-radius: 8px; padding: 12px 14px; }
-        .mini-card .tag { font-size: 10.5px; font-weight: 800; color: #8a8f98; letter-spacing: .03em; margin-bottom: 6px; }
-        .mini-card p { margin: 0; font-size: 12.5px; color: #5f6368; line-height: 1.55; }
-        .mini-card p b { color: #1a1a1a; }
+        .mini-card { border: 1px solid var(--card-border); border-radius: 8px; padding: 12px 14px; background: var(--card-bg); }
+        .mini-card .tag { font-size: 10.5px; font-weight: 800; color: var(--text-sub); letter-spacing: .03em; margin-bottom: 6px; }
+        .mini-card p { margin: 0; font-size: 12.5px; color: var(--text-muted); line-height: 1.55; }
+        .mini-card p b { color: var(--text-main); }
 
         .ingredient-list { list-style: none; margin: 0 0 24px; padding: 0; display: flex; flex-direction: column; gap: 8px; }
         .ingredient-list li {
-          display: flex; gap: 8px; font-size: 13px; color: #5f6368; line-height: 1.55;
+          display: flex; gap: 8px; font-size: 13px; color: var(--text-muted); line-height: 1.55;
         }
         .ingredient-list .check { color: #1a9c53; flex-shrink: 0; margin-top: 1px; }
-        .ingredient-list b { color: #1a1a1a; }
+        .ingredient-list b { color: var(--text-main); }
 
         /* RIGHT COLUMN */
         .right-col { display: flex; flex-direction: column; gap: 18px; }
-        .panel { border: 1px solid #e2e4e8; border-radius: 10px; padding: 16px; background: #ffffff; }
-        .panel-title { font-size: 14px; font-weight: 800; margin-bottom: 12px; }
+        .panel { border: 1px solid var(--card-border); border-radius: 10px; padding: 16px; background: var(--card-bg); }
+        .panel-title { font-size: 14px; font-weight: 800; margin-bottom: 12px; color: var(--text-main); }
 
         .hood-row {
           display: flex; justify-content: space-between; align-items: center;
-          padding: 7px 0; border-bottom: 1px solid #f6f7f9; font-size: 12.5px;
+          padding: 7px 0; border-bottom: 1px solid var(--hood-border); font-size: 12.5px; color: var(--text-main);
         }
         .hood-row:last-of-type { border-bottom: none; }
         .hood-row .name { font-weight: 600; }
-        .hood-row .zip { color: #8a8f98; font-weight: 400; font-size: 11px; margin-left: 3px; }
-        .hood-row .ppm { font-weight: 700; color: #c2185b; }
+        .hood-row .zip { color: var(--text-sub); font-weight: 400; font-size: 11px; margin-left: 3px; }
+        .hood-row .ppm { font-weight: 700; color: var(--topbar-accent); }
 
         .postal-test {
           margin-top: 10px;
           display: flex; align-items: center; gap: 8px;
-          border: 1px solid #e2e4e8; border-radius: 7px;
+          border: 1px solid var(--card-border); border-radius: 7px;
           padding: 8px 10px;
-          background: #ffffff;
+          background: var(--input-bg);
         }
         .postal-test input {
-          border: none; outline: none; font-size: 12.5px; flex: 1; color: #1a1a1a; background: transparent;
+          border: none; outline: none; font-size: 12.5px; flex: 1; color: var(--text-main); background: transparent;
         }
         .postal-test button {
-          border: none; background: #1a1a1a; color: #fff; border-radius: 5px;
+          border: none; background: var(--cta-dark-bg); color: var(--cta-dark-text); border-radius: 5px;
           width: 28px; height: 28px; display: flex; align-items: center; justify-content: center;
           cursor: pointer; font-size: 14px; flex-shrink: 0; transition: background 0.2s;
         }
-        .postal-test button:hover { background: #ec1f6a; }
+        .postal-test button:hover { background: #ec1f6a; color: #fff; }
 
-        .panel.ecommerce { background: #fdeef3; border-color: #f8c9db; }
-        .panel.ecommerce .tag { font-size: 10.5px; font-weight: 800; color: #c2185b; letter-spacing: .03em; margin-bottom: 6px; }
-        .panel.ecommerce h4 { font-size: 15.5px; margin: 0 0 8px; font-weight: 800; }
-        .panel.ecommerce p { font-size: 12.5px; color: #5f6368; line-height: 1.55; margin: 0 0 14px; }
+        .panel.ecommerce { background: var(--ecom-bg); border-color: var(--ecom-border); }
+        .panel.ecommerce .tag { font-size: 10.5px; font-weight: 800; color: var(--topbar-accent); letter-spacing: .03em; margin-bottom: 6px; }
+        .panel.ecommerce h4 { font-size: 15.5px; margin: 0 0 8px; font-weight: 800; color: var(--text-main); }
+        .panel.ecommerce p { font-size: 12.5px; color: var(--text-muted); line-height: 1.55; margin: 0 0 14px; }
 
         .cta-dark {
-          width: 100%; background: #1a1a1a; color: #fff; border: none; border-radius: 7px;
+          width: 100%; background: var(--cta-dark-bg); color: var(--cta-dark-text); border: none; border-radius: 7px;
           padding: 11px 14px; font-size: 13px; font-weight: 700;
           display: flex; align-items: center; justify-content: center; gap: 8px;
           cursor: pointer; text-decoration: none; box-sizing: border-box;
         }
-        .cta-dark:hover { background: #000; }
+        .cta-dark:hover { opacity: 0.9; }
 
         /* ROUTINE SECTION */
         .routine-wrap {
           margin: 30px 28px 0;
-          border-top: 1px solid #e2e4e8;
+          border-top: 1px solid var(--card-border);
           padding-top: 22px;
         }
         .routine-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 16px; }
-        .routine-card { border: 1px solid #e2e4e8; border-radius: 10px; padding: 16px; background: #ffffff; display: flex; flex-direction: column; justify-content: space-between; }
-        .step-label { font-size: 10.5px; font-weight: 800; color: #c2185b; letter-spacing: .03em; margin-bottom: 8px; }
-        .routine-card h4 { font-size: 15px; margin: 0 0 4px; font-weight: 800; color: #1a1a1a; }
-        .routine-card .brand { font-size: 11px; font-weight: 700; color: #8a8f98; text-transform: uppercase; margin-bottom: 8px; display: block; }
-        .routine-card p { font-size: 12.5px; color: #5f6368; line-height: 1.55; margin: 0 0 14px; }
+        .routine-card { border: 1px solid var(--card-border); border-radius: 10px; padding: 16px; background: var(--card-bg); display: flex; flex-direction: column; justify-content: space-between; }
+        .step-label { font-size: 10.5px; font-weight: 800; color: var(--topbar-accent); letter-spacing: .03em; margin-bottom: 8px; }
+        .routine-card h4 { font-size: 15px; margin: 0 0 4px; font-weight: 800; color: var(--text-main); }
+        .routine-card .brand { font-size: 11px; font-weight: 700; color: var(--text-sub); text-transform: uppercase; margin-bottom: 8px; display: block; }
+        .routine-card p { font-size: 12.5px; color: var(--text-muted); line-height: 1.55; margin: 0 0 14px; }
         .routine-foot { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; }
-        .price { font-weight: 800; font-size: 14px; }
+        .price { font-weight: 800; font-size: 14px; color: var(--text-main); }
         .badge { font-size: 10.5px; font-weight: 700; padding: 3px 8px; border-radius: 5px; }
         .badge.green { background: #e6f6ec; color: #1a9c53; }
         .badge.blue { background: #e8f0fe; color: #2a5bd7; }
         .badge.orange { background: #fff1e0; color: #c9691a; }
+
+        html.dark .badge.green, .dark .badge.green { background: #064e3b; color: #6ee7b7; }
+        html.dark .badge.blue, .dark .badge.blue { background: #1e3a8a; color: #93c5fd; }
+        html.dark .badge.orange, .dark .badge.orange { background: #7c2d12; color: #fdba74; }
 
         .amazon-btn {
           width: 100%;
@@ -614,14 +665,14 @@ export default function CityWaterQualityPage({ params }: { params: { city?: stri
 
         .faq-wrap {
           margin: 36px 28px 40px;
-          border-top: 1px solid #e2e4e8;
+          border-top: 1px solid var(--card-border);
           padding-top: 24px;
         }
-        .faq-wrap h2 { font-size: 20px; margin: 0 0 16px; font-weight: 800; }
+        .faq-wrap h2 { font-size: 20px; margin: 0 0 16px; font-weight: 800; color: var(--text-main); }
         .faq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-        .faq-card { border: 1px solid #e2e4e8; border-radius: 10px; padding: 16px; background: #ffffff; }
-        .faq-card .q { font-size: 13.5px; font-weight: 700; margin-bottom: 8px; }
-        .faq-card .a { font-size: 12.5px; color: #5f6368; line-height: 1.6; margin: 0; }
+        .faq-card { border: 1px solid var(--card-border); border-radius: 10px; padding: 16px; background: var(--card-bg); }
+        .faq-card .q { font-size: 13.5px; font-weight: 700; margin-bottom: 8px; color: var(--text-main); }
+        .faq-card .a { font-size: 12.5px; color: var(--text-muted); line-height: 1.6; margin: 0; }
 
         /* ── RESPONSIVE MEDIA QUERIES ── */
         @media (max-width: 1023px) {
@@ -793,7 +844,7 @@ export default function CityWaterQualityPage({ params }: { params: { city?: stri
           <div className="right-col">
             <div className="panel">
               <div className="panel-title">{data.name} Neighborhood Hardness</div>
-              <div style={{ fontSize: "11px", color: "#8a8f98", marginBottom: "8px" }}>Specific local district PPM variations</div>
+              <div style={{ fontSize: "11px", color: "var(--text-sub)", marginBottom: "8px" }}>Specific local district PPM variations</div>
               
               {data.neighborhoods.map((n, i) => (
                 <div key={i} className="hood-row">
@@ -815,13 +866,13 @@ export default function CityWaterQualityPage({ params }: { params: { city?: stri
 
               {/* Dynamic Pincode Result Card */}
               {searchResult && (
-                <div style={{ marginTop: "12px", padding: "10px 12px", background: "#fdeef3", border: "1px solid #f8c9db", borderRadius: "8px" }}>
-                  <p style={{ margin: 0, fontSize: "11px", fontWeight: 700, color: "#c2185b" }}>
+                <div style={{ marginTop: "12px", padding: "10px 12px", background: "var(--topbar-bg)", border: "1px solid var(--ecom-border)", borderRadius: "8px" }}>
+                  <p style={{ margin: 0, fontSize: "11px", fontWeight: 700, color: "var(--topbar-accent)" }}>
                     📍 {searchResult.zip}
                   </p>
                   <div style={{ display: "flex", alignItems: "baseline", gap: "6px", marginTop: "4px" }}>
-                    <span style={{ fontSize: "18px", fontWeight: 800, color: "#1a1a1a" }}>{searchResult.ppm} PPM</span>
-                    <span style={{ fontSize: "11px", fontWeight: 700, color: "#c2185b" }}>({searchResult.category})</span>
+                    <span style={{ fontSize: "18px", fontWeight: 800, color: "var(--text-main)" }}>{searchResult.ppm} PPM</span>
+                    <span style={{ fontSize: "11px", fontWeight: 700, color: "var(--topbar-accent)" }}>({searchResult.category})</span>
                   </div>
                 </div>
               )}
