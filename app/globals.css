@@ -595,12 +595,12 @@ body.translated-hi h1, body.translated-hi h2, body.translated-hi h3, body.transl
     display: none !important;
   }
 }
-@media (max-width: 1024px) {
-  .nav-hide-1024 {
-    display: none !important;
-  }
-}
-@media (max-width: 768px) {
+@media (max-width: 1200px) {
+  .site-header-left .site-header-nav-link,
+  .site-header-right .site-header-nav-link,
+  .site-header-nav-link,
+  .nav-hide-1100,
+  .nav-hide-1024,
   .nav-hide-768 {
     display: none !important;
   }
