@@ -84,7 +84,7 @@ export default function SiteHeader() {
               <ThemeToggle iconOnly />
             </div>
             
-            <div className="menu-trigger flex items-center">
+            <div className="menu-trigger flex items-center lg:hidden">
               {!menuOpen && (
                 <button
                   className="flex cursor-pointer items-center justify-center p-1.5 text-[#2b2826] transition-colors hover:text-[#fc2779] dark:text-[#f7f5f2] dark:hover:text-[#ff4d94]"

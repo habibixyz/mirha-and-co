@@ -606,9 +606,15 @@ body.translated-hi h1, body.translated-hi h2, body.translated-hi h3, body.transl
   }
 }
 
-/* Menu Trigger Control (Hamburger) — Always visible for easy navigation */
+/* Menu Trigger Control (Hamburger) — Visible on mobile & tablets (<1200px), hidden on wide desktop (>=1200px) */
 .menu-trigger {
   display: flex !important;
+}
+
+@media (min-width: 1200px) {
+  .menu-trigger {
+    display: none !important;
+  }
 }
 
 /* Ensure switcher trigger adapts dynamically without truncation */
