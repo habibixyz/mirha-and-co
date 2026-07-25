@@ -296,21 +296,6 @@ export async function getUserProfile() {
  }
 }
 
-export async function upgradeToPro() {
- const session = await getSession();
- if (!session) throw new Error("Unauthorized");
-
- await prisma.subscription.upsert({
- where: { userId: session.userId },
- update: { tier: "pro", status: "active" },
- create: { userId: session.userId, tier: "pro", status: "active" }
- });
-
- revalidatePath("/dashboard/subscription");
- revalidatePath("/dashboard/search");
- revalidatePath("/dashboard/journal");
-}
-
 
 export async function searchProducts(query: string) {
  if (!query) return [];

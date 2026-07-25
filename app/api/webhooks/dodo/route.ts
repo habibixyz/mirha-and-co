@@ -3,13 +3,9 @@ import { Webhook } from "standardwebhooks";
 import { prisma } from "@/lib/prisma";
 import crypto from "crypto";
 import { Resend } from "resend";
+import { generateB2BKey, nextMonthUTC, quotaForTier } from "@/lib/b2b";
 
 const resend = new Resend(process.env.RESEND_API_KEY || "re_dummy");
-
-function generateB2BKey(tier: string): string {
-  const prefix = tier === "scale" ? "b2b_scale_" : "b2b_live_";
-  return prefix + crypto.randomBytes(20).toString("hex");
-}
 
 export async function POST(req: Request) {
   try {
@@ -79,13 +75,11 @@ export async function POST(req: Request) {
 
         const brandName = data.metadata?.b2b_brand || "Unknown Brand";
         const tier = data.metadata?.b2b_tier || "growth"; // "growth" | "scale"
-        const monthlyQuota = tier === "scale" ? 1000000 : 150000;
+        const billing = data.metadata?.b2b_billing || "monthly"; // "monthly" | "annual"
+        const monthlyQuota = quotaForTier(tier);
         const apiKey = generateB2BKey(tier);
         const keyHash = crypto.createHash("sha256").update(apiKey).digest("hex");
-        const nextMonth = new Date();
-        nextMonth.setDate(1);
-        nextMonth.setMonth(nextMonth.getMonth() + 1);
-        nextMonth.setHours(0, 0, 0, 0);
+        const nextMonth = nextMonthUTC();
 
         if (existing) {
           await prisma.b2BApiKey.update({
@@ -94,6 +88,7 @@ export async function POST(req: Request) {
               key: apiKey,
               keyHash,
               tier,
+              billing,
               monthlyQuota,
               usageThisMonth: 0,
               quotaResetAt: nextMonth,
@@ -109,6 +104,7 @@ export async function POST(req: Request) {
               email: b2bEmail,
               brandName,
               tier,
+              billing,
               monthlyQuota,
               quotaResetAt: nextMonth,
               razorpaySubscriptionId: subscriptionId,
@@ -206,20 +202,34 @@ Content-Type: application/json
 
     // Handle cancellation / expiration
     if (eventType === "subscription.cancelled" || eventType === "subscription.expired") {
-      const user = await prisma.user.findUnique({
-        where: { id: userId },
-        include: { subscription: true },
-      });
+      const subscriptionId = data.subscription_id;
 
-      if (user && user.subscription) {
-        await prisma.subscription.update({
-          where: { id: user.subscription.id },
-          data: {
-            status: "canceled",
-            tier: "free",
-          },
+      // ── B2B key suspension ──
+      if (b2bEmail) {
+        const suspended = await prisma.b2BApiKey.updateMany({
+          where: { email: b2bEmail },
+          data: { status: "suspended" },
         });
-        console.log(`Dodo Webhook: User ${userId} subscription set to canceled/free.`);
+        console.log(`Dodo Webhook: B2B key suspended for ${b2bEmail} (${suspended.count} row(s)).`);
+      }
+
+      // ── Regular user subscription downgrade ──
+      if (userId) {
+        const user = await prisma.user.findUnique({
+          where: { id: userId },
+          include: { subscription: true },
+        });
+
+        if (user && user.subscription) {
+          await prisma.subscription.update({
+            where: { id: user.subscription.id },
+            data: {
+              status: "canceled",
+              tier: "free",
+            },
+          });
+          console.log(`Dodo Webhook: User ${userId} subscription set to canceled/free.`);
+        }
       }
     }
 

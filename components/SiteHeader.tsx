@@ -104,11 +104,11 @@ export default function SiteHeader() {
             <div className="menu-trigger flex items-center">
               {!menuOpen && (
                 <button
-                  className="flex cursor-pointer items-center justify-center rounded-lg border border-[#ded7cf] bg-[#fbfaf8] p-2 text-[#2b2826] shadow-sm transition-all hover:border-[#fc2779] hover:text-[#fc2779] dark:border-white/15 dark:bg-[#181716] dark:text-[#f7f5f2] dark:hover:border-[#ff4d94] dark:hover:text-[#ff4d94]"
+                  className="flex cursor-pointer items-center justify-center p-1.5 text-[#2b2826] transition-colors hover:text-[#fc2779] dark:text-[#f7f5f2] dark:hover:text-[#ff4d94]"
                   onClick={() => setMenuOpen(true)}
                   aria-label="Toggle Menu"
                 >
-                  <Menu size={20} />
+                  <Menu size={22} />
                 </button>
               )}
             </div>

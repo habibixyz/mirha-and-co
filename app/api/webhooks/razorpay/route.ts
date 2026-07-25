@@ -2,13 +2,9 @@ import { NextResponse } from "next/server";
 import crypto from "crypto";
 import { prisma } from "@/lib/prisma";
 import { Resend } from "resend";
+import { generateB2BKey, nextMonthUTC, quotaForTier } from "@/lib/b2b";
 
 const resend = new Resend(process.env.RESEND_API_KEY || "re_dummy");
-
-function generateB2BKey(tier: string): string {
-  const prefix = tier === "scale" ? "b2b_scale_" : "b2b_live_";
-  return prefix + crypto.randomBytes(20).toString("hex");
-}
 
 export async function POST(req: Request) {
   try {
@@ -82,13 +78,10 @@ export async function POST(req: Request) {
         return NextResponse.json({ status: "success", idempotency: "already_processed" });
       }
 
-      const monthlyQuota = tier === "scale" ? 1000000 : 150000;
+      const monthlyQuota = quotaForTier(tier);
       const apiKey = generateB2BKey(tier);
       const keyHash = crypto.createHash("sha256").update(apiKey).digest("hex");
-      const nextMonth = new Date();
-      nextMonth.setDate(1);
-      nextMonth.setMonth(nextMonth.getMonth() + 1);
-      nextMonth.setHours(0, 0, 0, 0);
+      const nextMonth = nextMonthUTC();
 
       let savedKey;
       if (existing) {
