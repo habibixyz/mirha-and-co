@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import Script from "next/script";
 import { 
   ChevronLeft, 
   ChevronRight, 
@@ -1642,7 +1643,7 @@ const { water_hardness, humidity, recommendation_vector } = await response.json(
                 </div>
 
                 {/* Step 2: Billing toggles — and then pick a plan */}
-                <script src="https://checkout.razorpay.com/v1/checkout.js" />
+                <Script src="https://checkout.razorpay.com/v1/checkout.js" strategy="lazyOnload" />
                 <div className="pricing-deck">
                   <div className="tier-card">
                     <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", height: "100%" }}>

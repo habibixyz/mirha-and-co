@@ -988,9 +988,9 @@ export default function HardWaterCalculator() {
  <div className="step-dot"></div>
  <div className="step-dot"></div>
  </div>
- <h2 className="quiz-title">Where in the world do you wash?</h2>
+ <h2 className="quiz-title">Where in the world do you wash your hair &amp; skin?</h2>
  <p className="quiz-subtitle">
- {(regionMode === "in") ? "Water mineral concentration in India varies heavily by geography. Let's find your baseline." : "Water mineral concentration varies heavily by geography. Let's find your baseline."}
+   Enter your city or postal code to calculate mineral hardness (PPM), hair buildup risk, and skin barrier stress.
  </p>
   <div style={{
     display: "inline-flex",

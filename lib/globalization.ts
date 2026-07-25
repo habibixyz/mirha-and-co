@@ -64,7 +64,12 @@ export const CURRENCIES: Record<Currency, CurrencyConfig> = {
 export const DICTIONARY: Record<Locale, Record<string, string>> = {
  en: {
  "nav.ingredients": "Ingredient Checker",
+ "nav.hardwater": "Hard Water",
+ "nav.dupes": "Dupe Finder",
+ "nav.kbeauty": "K-Beauty",
+ "nav.men": "Men",
  "nav.blog": "Blog",
+ "nav.b2b": "B2B SaaS",
  "nav.pricing": "Pricing",
  "nav.about": "About",
  "nav.dashboard": "Dashboard",
@@ -114,8 +119,13 @@ export const DICTIONARY: Record<Locale, Record<string, string>> = {
  "product.disclosure": "Affiliate link. Mirha & Co. may earn commission at no extra cost to you. Prices may change on Amazon.",
  },
  hi: {
- "nav.ingredients": "सामग्री चेकर",
- "nav.blog": "ब्लॉग",
+    "nav.ingredients": "सामग्री चेकर",
+    "nav.hardwater": "हार्ड वाटर टेस्ट",
+    "nav.dupes": "डुप फाइंडर",
+    "nav.kbeauty": "के-ब्यूटी",
+    "nav.men": "पुरुषों की स्किनकेयर",
+    "nav.blog": "ब्लॉग",
+    "nav.b2b": "B2B टेलीमेट्री API",
  "nav.pricing": "मूल्य निर्धारण",
  "nav.about": "हमारे बारे में",
  "nav.dashboard": "डैशबोर्ड",
@@ -493,4 +503,25 @@ export function getLocalizedContent(text: string, currency: string): string {
     .replace(/\bIndian\b/g, "South Asian")
     .replace(/\bindian\b/g, "south asian")
     .replace(/\s+/g, ' ').trim();
+}
+
+/**
+ * Detects visitor's preferred currency based on browser locale / timezone
+ */
+export function detectPreferredCurrency(): Currency {
+  if (typeof window === "undefined") return "USD";
+  
+  try {
+    const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || "";
+    const lang = navigator.language || "";
+
+    if (tz.includes("Asia/Kolkata") || lang.includes("en-IN") || lang.includes("hi")) return "INR";
+    if (tz.includes("Dubai") || tz.includes("Muscat") || lang.includes("ar-AE")) return "AED";
+    if (tz.includes("Riyadh") || lang.includes("ar-SA")) return "SAR";
+    if (tz.includes("London") || lang.includes("en-GB")) return "GBP";
+    if (tz.includes("Europe") || lang.includes("de") || lang.includes("fr") || lang.includes("es")) return "EUR";
+    return "USD";
+  } catch {
+    return "USD";
+  }
 }
