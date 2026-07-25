@@ -222,7 +222,7 @@ export default function SiteHeader() {
             <div className="border-t border-[#e5ded6] pt-4 pb-12 dark:border-white/10">
               <div className="flex items-center justify-between gap-3">
                 {/* Language & Currency Pill */}
-                <GlobalizationSwitcher />
+                <GlobalizationSwitcher align="left" direction="up" />
 
                 {/* Controls & Social Links Toolbar */}
                 <div className="flex items-center gap-2">

@@ -606,12 +606,12 @@ body.translated-hi h1, body.translated-hi h2, body.translated-hi h3, body.transl
   }
 }
 
-/* Menu Trigger Control (Hamburger) — Visible on mobile & tablets (<1200px), hidden on wide desktop (>=1200px) */
+/* Menu Trigger Control (Hamburger) — Visible when any navigation link is hidden (<1400px), hidden on wide desktop (>=1400px) */
 .menu-trigger {
   display: flex !important;
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 1400px) {
   .menu-trigger {
     display: none !important;
   }

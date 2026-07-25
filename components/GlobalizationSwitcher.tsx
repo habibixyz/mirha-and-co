@@ -5,7 +5,15 @@ import { useGlobalization } from "./GlobalizationContext";
 import { Locale, Currency, LANGUAGE_NAMES, CURRENCIES } from "@/lib/globalization";
 import { Globe, ChevronDown, Check } from "lucide-react";
 
-export default function GlobalizationSwitcher() {
+interface GlobalizationSwitcherProps {
+  align?: "left" | "right";
+  direction?: "up" | "down";
+}
+
+export default function GlobalizationSwitcher({
+  align = "right",
+  direction = "down",
+}: GlobalizationSwitcherProps = {}) {
   const { locale, currency, setLocale, setCurrency, isRtl } = useGlobalization();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -66,16 +74,22 @@ export default function GlobalizationSwitcher() {
       </button>
 
       {isOpen && (
-        <div className="switcher-dropdown">
+        <div
+          className="switcher-dropdown"
+          style={{
+            position: "absolute",
+            top: direction === "down" ? "calc(100% + 8px)" : "auto",
+            bottom: direction === "up" ? "calc(100% + 8px)" : "auto",
+            left: align === "left" ? 0 : "auto",
+            right: align === "right" ? 0 : "auto",
+          }}
+        >
           <style>{`
             @keyframes slideDown {
               from { opacity: 0; transform: translateY(-8px); }
               to { opacity: 1; transform: translateY(0); }
             }
             .switcher-dropdown {
-              position: absolute;
-              top: calc(100% + 8px);
-              right: 0;
               background: rgba(255, 255, 255, 0.98);
               backdrop-filter: blur(16px);
               -webkit-backdrop-filter: blur(16px);
