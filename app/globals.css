@@ -722,7 +722,7 @@ html.dark .site-header-drawer-content button {
  color: #f7f5f2 !important;
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 1400px) {
  .site-header-drawer-overlay {
  display: none !important;
  }
