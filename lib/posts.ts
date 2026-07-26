@@ -17,6 +17,17 @@ export type Post = {
 const STATIC_POSTS: Post[] = [
   {
     category: "SKINCARE",
+    title: "How B2B Skincare APIs Help E-Commerce Brands Drive Conversion and Slash Returns",
+    excerpt: "Skincare returns are driven by biology, not fit. Learn how integrating live climate, local water telemetry, and ingredient conflict checking helps brands convert more shoppers and cut returns.",
+    slug: "how-b2b-skincare-apis-cut-returns",
+    readTime: "7 min",
+    date: "July 2026",
+    productCount: 4,
+    thumbnail: "API",
+    tags: ["b2b", "api", "skincare", "saas", "returns", "personalization", "water quality"],
+  },
+  {
+    category: "SKINCARE",
     title: "The American Man's Skincare Playbook: What Your Skin Actually Needs",
     excerpt: "Most American men are either doing nothing for their skin or doing too much. This is what your skin actually needs given where you live, what you eat, and US weather.",
     slug: "american-skin-mens-grooming",
@@ -795,8 +806,9 @@ const mappedHighIntent = HIGH_INTENT_POSTS.map(p => ({
 }));
 
 export const POSTS: Post[] = [
+  STATIC_POSTS[0],
   ...mappedHighIntent.filter(p => NEW_SLUGS.includes(p.slug)),
-  ...STATIC_POSTS,
+  ...STATIC_POSTS.slice(1),
   ...mappedHighIntent.filter(p => !NEW_SLUGS.includes(p.slug))
 ];
 
@@ -811,6 +823,7 @@ const hashString = (str: string) => {
 
 // Complete slug → unique image lookup table (all 34 available images used)
 const SLUG_IMAGE_MAP: Record<string, string> = {
+  "how-b2b-skincare-apis-cut-returns": "/blog-thumbs/b2b_skincare_api.jpg",
   "womens-fragrance-vibe-guide": "/blog-thumbs/photo_beauty.png",
   "expensive-fragrance-budget-hacks": "/blog-thumbs/blog_economics_expensive.png",
   "patchy-beard-growth-guide": "/blog-thumbs/mens_beard_growth.png",
