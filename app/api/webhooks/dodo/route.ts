@@ -183,7 +183,7 @@ Content-Type: application/json
               where: { id: user.subscription.id },
               data: {
                 tier: "pro",
-                stripeSubscriptionId: subscriptionId, // Store Dodo subscription_id
+                stripeSubscriptionId: "dodo_" + subscriptionId, // Store Dodo subscription_id with prefix
                 status: "active",
                 endsAt: endsAtDate,
               },
@@ -193,7 +193,7 @@ Content-Type: application/json
               data: {
                 userId: user.id,
                 tier: "pro",
-                stripeSubscriptionId: subscriptionId,
+                stripeSubscriptionId: "dodo_" + subscriptionId,
                 status: "active",
                 endsAt: endsAtDate,
               },

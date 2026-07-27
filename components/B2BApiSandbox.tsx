@@ -197,6 +197,11 @@ export function B2BApiSandbox({ defaultApiKey = "b2b_trial_key", className = "" 
           transition: border-color 0.2s, background 0.2s;
         }
 
+        .form-select option {
+          background-color: #090e1b;
+          color: #fff;
+        }
+
         .form-select:focus, .form-input:focus {
           border-color: #fc2779;
           background: rgba(252, 39, 121, 0.04);

@@ -218,6 +218,11 @@ export function SkincareRecs({ postalCode }) {
           --code-text: #7ee787;
         }
 
+        .b2b-dashboard-root select option {
+          background-color: var(--card-bg, #ffffff);
+          color: var(--text-main, #1a1a1a);
+        }
+
         @media (max-width: 900px) {
           .layout {
             grid-template-columns: 1fr !important;

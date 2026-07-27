@@ -62,9 +62,9 @@ export default function RegionalGuidesSelector({ currency = "INR" }: { currency?
             fontFamily: "var(--font-dm-sans), sans-serif",
           }}
         >
-          <option value="">Select City</option>
+          <option value="" style={{ background: "var(--dash-bg, #fff)", color: "var(--dash-ink, #111)" }}>Select City</option>
           {citiesList.map((city) => (
-            <option key={city.slug} value={city.slug}>
+            <option key={city.slug} value={city.slug} style={{ background: "var(--dash-bg, #fff)", color: "var(--dash-ink, #111)" }}>
               {city.name}
             </option>
           ))}
@@ -85,9 +85,9 @@ export default function RegionalGuidesSelector({ currency = "INR" }: { currency?
             fontFamily: "var(--font-dm-sans), sans-serif",
           }}
         >
-          <option value="">Select Concern</option>
+          <option value="" style={{ background: "var(--dash-bg, #fff)", color: "var(--dash-ink, #111)" }}>Select Concern</option>
           {CONCERNS.map((concern) => (
-            <option key={concern.slug} value={concern.slug}>
+            <option key={concern.slug} value={concern.slug} style={{ background: "var(--dash-bg, #fff)", color: "var(--dash-ink, #111)" }}>
               {concern.name}
             </option>
           ))}

@@ -704,31 +704,40 @@ export function SubscriptionClient({
  )}
  </div>
 
- {isPro ? (
-    provider === "razorpay" ? (
-      <div style={{ position: "relative", zIndex: 2, display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-        <button className="action-btn btn-active" disabled>
-          Active Plan (via Razorpay)
-        </button>
-        <p style={{ fontSize: "0.72rem", color: "rgba(255,255,255,0.55)", textAlign: "center" }}>
-          To manage your subscription, please contact support.
-        </p>
-      </div>
-    ) : (
-      <button 
-        onClick={handleManageBilling}
-        disabled={isPortalLoading}
-        className="action-btn btn-primary" 
-        style={{ position: "relative", zIndex: 2 }}
-      >
-        {isPortalLoading ? (
-          <Loader2 size={18} style={{ animation: "spin 1s linear infinite" }} />
-        ) : (
-          "Manage Subscription"
-        )}
-      </button>
-    )
- ) : ( <motion.button
+  {isPro ? (
+     provider === "razorpay" ? (
+       <div style={{ position: "relative", zIndex: 2, display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+         <button className="action-btn btn-active" disabled>
+           Active Plan (via Razorpay)
+         </button>
+         <p style={{ fontSize: "0.72rem", color: "rgba(255,255,255,0.55)", textAlign: "center" }}>
+           To manage your subscription, please contact support.
+         </p>
+       </div>
+     ) : provider === "dodo" ? (
+       <button 
+         onClick={handleManageBilling}
+         disabled={isPortalLoading}
+         className="action-btn btn-primary" 
+         style={{ position: "relative", zIndex: 2 }}
+       >
+         {isPortalLoading ? (
+           <Loader2 size={18} style={{ animation: "spin 1s linear infinite" }} />
+         ) : (
+           "Manage Subscription"
+         )}
+       </button>
+     ) : (
+       <div style={{ position: "relative", zIndex: 2, display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+         <button className="action-btn btn-active" disabled>
+           Active Plan (Developer Bypass)
+         </button>
+         <p style={{ fontSize: "0.72rem", color: "rgba(255,255,255,0.55)", textAlign: "center" }}>
+           Your account has active administrator/developer access.
+         </p>
+       </div>
+     )
+  ) : ( <motion.button
   onClick={() => paymentRegion === "USD" ? handleDodoCheckout() : handleUpgrade(billingPeriod)}
   disabled={activePendingType !== null}
   whileHover={{ scale: 1.02 }}

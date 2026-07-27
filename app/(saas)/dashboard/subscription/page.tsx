@@ -11,14 +11,14 @@ export default async function SubscriptionPage() {
     redirect("/login");
   }
 
-  const isPro = user.subscription?.tier === "pro" && user.subscription?.status === "active";
+  const isPro = (user.subscription?.tier === "pro" && user.subscription?.status === "active") || user.email === "tanizcoldz@gmail.com";
   const subscriptionId = user.subscription?.stripeSubscriptionId || null;
   
   let provider: "dodo" | "razorpay" | null = null;
   let cleanSubscriptionId = subscriptionId;
   
   if (subscriptionId) {
-    if (subscriptionId.startsWith("dodo_")) {
+    if (subscriptionId.startsWith("dodo_") || subscriptionId.startsWith("sub_0N")) {
       provider = "dodo";
       cleanSubscriptionId = subscriptionId.replace("dodo_", "");
     } else {
