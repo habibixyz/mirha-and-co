@@ -295,7 +295,7 @@ export const DICTIONARY: Record<Locale, Record<string, string>> = {
  "trust.backed": "Tableau de Bord Personnel",
  "trust.zero": "Sélection Impartiale",
  "section.concerns.title": "Ciblez votre problème de peau",
- "section.concerns.desc": "We specialize in finding options tailored for real-world issues.",
+ "section.concerns.desc": "Nous sommes spécialisés dans la recherche d'options adaptées aux besoins réels.",
  "section.editor.title": "Coups de Cœur de l'Éditeur",
  "section.editor.desc": "Recommandations sélectionnées et scientifiquement fondées pour un usage quotidien.",
  "section.shop.title": "L'Étagère de Soins",

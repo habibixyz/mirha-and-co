@@ -1,0 +1,12 @@
+{
+  "crons": [
+    {
+      "path": "/api/agents/weather-guard",
+      "schedule": "0 6 * * *"
+    },
+    {
+      "path": "/api/agents/catalog-audit",
+      "schedule": "0 0 * * 0"
+    }
+  ]
+}

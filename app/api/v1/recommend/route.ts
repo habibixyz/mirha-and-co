@@ -204,6 +204,14 @@ export async function POST(req: NextRequest) {
 
     const recommendation = generateRoutine(answers, climatePayload);
 
+    // Calculate environmental barrier stress factors
+    const humidity = liveLocation.humidity ?? 50;
+    const temp = liveLocation.temp ?? 22;
+    const ppm = liveLocation.ppm ?? 150;
+
+    const tewlRiskLevel = humidity < 35 ? "High (Severe Barrier Evaporation)" : humidity < 50 ? "Moderate" : "Low (Optimal Moisture Preservation)";
+    const mineralScumRiskLevel = ppm >= 250 ? "Critical Calcium Binding" : ppm >= 180 ? "High Soap Scum Deposition" : ppm >= 120 ? "Moderate Mineral Friction" : "Minimal Mineral Impact";
+
     return NextResponse.json(
       {
         success: true,
@@ -215,6 +223,10 @@ export async function POST(req: NextRequest) {
           temperatureC: liveLocation.temp,
           humidityPercent: liveLocation.humidity,
           dewpointC: liveLocation.dewpoint,
+          environmentalStress: {
+            tewlRiskLevel,
+            mineralScumRiskLevel,
+          },
           coordinates: liveLocation.source === "live"
             ? { lat: liveLocation.lat, lon: liveLocation.lon }
             : null,

@@ -115,21 +115,22 @@ export async function POST(req: Request) {
       }
 
       // ── Email the API key to the client ──
-      await resend.emails.send({
-        from: "Mirha & Co. B2B <noreply@mirhaandco.com>",
-        to: email,
-        subject: `Your Mirha & Co. API Key is Ready — ${tier === "scale" ? "Scale Enterprise" : "Growth"} Tier`,
-        html: `
-          <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 40px 20px; background: #0a0a0a; color: #f1f5f9; border-radius: 12px;">
-            <h1 style="font-size: 1.5rem; color: #fc2779; margin-bottom: 0.5rem;">Welcome to Mirha & Co. B2B</h1>
-            <p style="color: #94a3b8; margin-bottom: 2rem;">Hi ${brandName} team, your subscription is active. Here is your API key:</p>
-            
-            <div style="background: #0f172a; border: 1px solid #1e293b; border-radius: 8px; padding: 20px; margin-bottom: 2rem; font-family: monospace; font-size: 0.9rem; word-break: break-all; color: #38bdf8;">
-              ${apiKey}
-            </div>
+      try {
+        await resend.emails.send({
+          from: "Mirha & Co. B2B <noreply@mirhaandco.com>",
+          to: email,
+          subject: `Your Mirha & Co. API Key is Ready — ${tier === "scale" ? "Scale Enterprise" : "Growth"} Tier`,
+          html: `
+            <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 40px 20px; background: #0a0a0a; color: #f1f5f9; border-radius: 12px;">
+              <h1 style="font-size: 1.5rem; color: #fc2779; margin-bottom: 0.5rem;">Welcome to Mirha & Co. B2B</h1>
+              <p style="color: #94a3b8; margin-bottom: 2rem;">Hi ${brandName} team, your subscription is active. Here is your API key:</p>
+              
+              <div style="background: #0f172a; border: 1px solid #1e293b; border-radius: 8px; padding: 20px; margin-bottom: 2rem; font-family: monospace; font-size: 0.9rem; word-break: break-all; color: #38bdf8;">
+                ${apiKey}
+              </div>
 
-            <h2 style="font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 0.5rem;">How to use it:</h2>
-            <pre style="background: #0f172a; border-radius: 8px; padding: 16px; font-size: 0.8rem; color: #38bdf8; overflow-x: auto; white-space: pre-wrap;">POST https://www.mirhaandco.com/api/v1/recommend
+              <h2 style="font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 0.5rem;">How to use it:</h2>
+              <pre style="background: #0f172a; border-radius: 8px; padding: 16px; font-size: 0.8rem; color: #38bdf8; overflow-x: auto; white-space: pre-wrap;">POST https://www.mirhaandco.com/api/v1/recommend
 Content-Type: application/json
 
 {
@@ -146,21 +147,24 @@ Content-Type: application/json
   }
 }</pre>
 
-            <h2 style="font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 0.5rem; margin-top: 2rem;">Your Plan:</h2>
-            <ul style="color: #94a3b8; font-size: 0.9rem; line-height: 1.8;">
-              <li>Tier: <strong style="color: #fff;">${tier === "scale" ? "Scale Enterprise" : "Growth"}</strong></li>
-              <li>Monthly quota: <strong style="color: #fc2779;">${monthlyQuota.toLocaleString()} API calls</strong></li>
-              <li>Hard Water Matrix: <strong style="color: #10b981;">✓ Enabled — pass <code>ppm</code> in climate object</strong></li>
-              ${tier === "scale" ? '<li>Dewpoint Adjusters: <strong style="color: #10b981;">✓ Enabled — pass <code>dewpoint</code> in climate object</strong></li>' : ""}
-            </ul>
+              <h2 style="font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 0.5rem; margin-top: 2rem;">Your Plan:</h2>
+              <ul style="color: #94a3b8; font-size: 0.9rem; line-height: 1.8;">
+                <li>Tier: <strong style="color: #fff;">${tier === "scale" ? "Scale Enterprise" : "Growth"}</strong></li>
+                <li>Monthly quota: <strong style="color: #fc2779;">${monthlyQuota.toLocaleString()} API calls</strong></li>
+                <li>Hard Water Matrix: <strong style="color: #10b981;">✓ Enabled — pass <code>ppm</code> in climate object</strong></li>
+                ${tier === "scale" ? '<li>Dewpoint Adjusters: <strong style="color: #10b981;">✓ Enabled — pass <code>dewpoint</code> in climate object</strong></li>' : ""}
+              </ul>
 
-            <p style="color: #94a3b8; font-size: 0.85rem; margin-top: 2rem;">
-              Keep this key private. Do not expose it in client-side code. Reply to this email to reach our B2B support team.
-            </p>
-            <p style="color: #fc2779; font-size: 0.85rem;">— Mirha & Co. Team</p>
-          </div>
-        `,
-      });
+              <p style="color: #94a3b8; font-size: 0.85rem; margin-top: 2rem;">
+                Keep this key private. Do not expose it in client-side code. Reply to this email to reach our B2B support team.
+              </p>
+              <p style="color: #fc2779; font-size: 0.85rem;">— Mirha & Co. Team</p>
+            </div>
+          `,
+        });
+      } catch (emailErr) {
+        console.error("Razorpay Webhook: Email dispatch failed, but B2B key provisioned:", emailErr);
+      }
 
       return NextResponse.json({ status: "success", keyProvisioned: true });
     }

@@ -27,6 +27,7 @@ import {
   DollarSign as DollarIcon
 } from "lucide-react";
 import { submitLeadAction } from "../../(saas)/actions";
+import { B2BApiSandbox } from "@/components/B2BApiSandbox";
 
 // Types for Hotspot Demo
 interface CityData {
@@ -187,6 +188,14 @@ export default function B2BPitchDeck() {
       const formEl = document.getElementById("lead-form-section");
       if (formEl) formEl.scrollIntoView({ behavior: "smooth" });
       
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(leadEmail)) {
+      setCheckoutError("Please provide a valid work email address.");
+      const formEl = document.getElementById("lead-form-section");
+      if (formEl) formEl.scrollIntoView({ behavior: "smooth" });
       return;
     }
     setCheckoutLoading(tier);
@@ -1451,90 +1460,18 @@ export default function B2BPitchDeck() {
               </div>
             )}
 
-            {/* SLIDE 5: Technical Scale & Performance */}
+            {/* SLIDE 5: Technical Scale & Interactive API Sandbox */}
             {currentSlide === 5 && (
               <div>
                 <div className="eyebrow-badge">
-                  <Cpu size={11} /> Enterprise Infrastructure
+                  <Cpu size={11} /> Enterprise Developer Hub
                 </div>
-                <h2 className="slide-title">Frictionless Integration & Scale</h2>
+                <h2 className="slide-title">Interactive API Playground</h2>
                 <p className="slide-subtitle">
-                  Guaranteed zero impact on site performance, loading speeds, or core web vitals.
+                  Test live requests against our production edge recommendation engine with real parameters.
                 </p>
 
-                <div className="perf-grid">
-                  <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-                    <div className="code-snippet">
-{`// Fetch climate & tap water diagnostics for shopper
-const response = await fetch('https://api.mirhaandco.com/v1/diagnostics', {
-  method: 'POST',
-  headers: { 'Authorization': 'Bearer <token>' },
-  body: JSON.stringify({ postal_code: "90210", country: "US" })
-});
-
-const { water_hardness, humidity, recommendation_vector } = await response.json();
-// recommendation_vector -> direct catalog SKU mappings`}
-                    </div>
-                    <div style={{ display: "flex", gap: "0.75rem" }}>
-                      <span className="city-pill">Shopify Plus</span>
-                      <span className="city-pill">Salesforce CC</span>
-                      <span className="city-pill">Headless API</span>
-                    </div>
-                  </div>
-
-                  <div className="hotspot-details" style={{ justifyContent: "center" }}>
-                    <h3 style={{ fontSize: "1.1rem", fontWeight: 700, margin: 0 }}>Edge Network Diagnostics</h3>
-                    <p style={{ fontSize: "0.8rem", color: "#94a3b8", margin: 0 }}>
-                      All API queries run on global edge middleware to respond in under 45ms.
-                    </p>
-
-                    <div className="latency-container">
-                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                        <span style={{ fontSize: "0.85rem", fontWeight: 600 }}>API Endpoint Ping Test</span>
-                        {latencyMs && (
-                          <span style={{ color: "#10b981", fontWeight: 700, fontSize: "0.85rem" }}>
-                            {latencyMs}ms
-                          </span>
-                        )}
-                      </div>
-                      
-                      <div className="latency-meter">
-                        <div 
-                          className="latency-pointer" 
-                          style={{ width: latencyMs ? `${(latencyMs / 100) * 100}%` : "0%" }}
-                        />
-                      </div>
-                      
-                      <p style={{ fontSize: "0.75rem", color: "#94a3b8", margin: 0 }}>
-                        {latencyText}
-                      </p>
-
-                      <button 
-                        onClick={simulateLatencyTest} 
-                        disabled={isSimulating}
-                        className="pitch-btn-outline" 
-                        style={{ padding: "0.5rem 1rem", fontSize: "0.8rem", alignSelf: "flex-start" }}
-                      >
-                        {isSimulating ? (
-                          <>
-                            <RefreshCw size={12} className="animate-spin" /> Pinging...
-                          </>
-                        ) : "Test Edge Latency"}
-                      </button>
-                    </div>
-
-                    <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem", fontSize: "0.8rem" }}>
-                      <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                        <CheckCircle2 size={14} color="#10b981" />
-                        <span>Edge CDN caching for instant zip code lookup</span>
-                      </div>
-                      <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                        <CheckCircle2 size={14} color="#10b981" />
-                        <span>Fail-safe fallback returns baseline routines immediately</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <B2BApiSandbox defaultApiKey="b2b_trial_key" />
               </div>
             )}
 
