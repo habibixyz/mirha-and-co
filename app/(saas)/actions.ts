@@ -509,6 +509,8 @@ export async function forgotPasswordAction(_state: AuthState, formData: FormData
     return { error: "Please enter your email address." };
   }
 
+  const success = `Password reset request created! Check your inbox, or log in directly with your email.`;
+
   try {
     let user = await prisma.user.findUnique({ where: { email } });
     
@@ -545,48 +547,19 @@ export async function forgotPasswordAction(_state: AuthState, formData: FormData
 
     const resetUrl = `${await getBaseUrl()}/reset-password?token=${token}`;
 
+    // ── Diagnostic: log env var presence only (never log token values)
+    console.log("[forgot-password] RESEND_API_KEY present:", !!process.env.RESEND_API_KEY);
+    console.log("[forgot-password] PASSWORD_RESET_FROM present:", !!process.env.PASSWORD_RESET_FROM);
+    console.log("[forgot-password] Reset URL base:", await getBaseUrl());
+
     if (process.env.RESEND_API_KEY && process.env.PASSWORD_RESET_FROM) {
       try {
         const resend = new Resend(process.env.RESEND_API_KEY);
-        await resend.emails.send({
+        const result = await resend.emails.send({
           from: process.env.PASSWORD_RESET_FROM,
           to: email,
           subject: "Reset your Mirha & Co. password 🌸",
-          html: `<div style="font-family: sans-serif; padding: 20px;"><h2>Reset your password</h2><p><a href="${resetUrl}">Click here to reset your password</a></p></div>`
-        });
-      } catch (resendError) {
-        console.error("[forgot-password] Resend exception:", resendError);
-      }
-    }
-
-    return { 
-      success: `Password reset request created! Check your inbox, or log in directly with your email.` 
-    };
-  } catch (error) {
-    console.error("Forgot password logic error:", error);
-    return { error: "Unable to process password reset right now." };
-  }
-}
- userId: user.id,
- expiresAt,
- }
- });
-
-  const resetUrl = `${await getBaseUrl()}/reset-password?token=${token}`;
-
-  // ── Diagnostic: log env var presence only (never log token values)
-  console.log("[forgot-password] RESEND_API_KEY present:", !!process.env.RESEND_API_KEY);
-  console.log("[forgot-password] PASSWORD_RESET_FROM present:", !!process.env.PASSWORD_RESET_FROM);
-  console.log("[forgot-password] Reset URL base:", await getBaseUrl());
-
-  if (process.env.RESEND_API_KEY && process.env.PASSWORD_RESET_FROM) {
-    try {
-      const resend = new Resend(process.env.RESEND_API_KEY);
-      const result = await resend.emails.send({
-        from: process.env.PASSWORD_RESET_FROM,
-        to: email,
-        subject: "Reset your Mirha & Co. password 🌸",
-        html: `
+          html: `
 <div style="font-family: 'DM Sans', Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 40px 24px; background: #fcfbf9;">
   <h1 style="font-family: Georgia, serif; font-size: 1.75rem; color: #2b2826; margin: 0 0 1rem;">
     Reset your password
@@ -603,23 +576,24 @@ export async function forgotPasswordAction(_state: AuthState, formData: FormData
     Or copy this link: <a href="${resetUrl}" style="color: #fc2779;">${resetUrl}</a>
   </p>
 </div>`,
-      });
-      if (result.error) {
-        console.error("[forgot-password] Resend rejected email:", result.error);
-      } else {
-        console.log("[forgot-password] Email sent successfully. ID:", result.data?.id);
+        });
+        if (result.error) {
+          console.error("[forgot-password] Resend rejected email:", result.error);
+        } else {
+          console.log("[forgot-password] Email sent successfully. ID:", result.data?.id);
+        }
+      } catch (resendError) {
+        console.error("[forgot-password] Resend threw exception:", resendError);
       }
-    } catch (resendError) {
-      console.error("[forgot-password] Resend threw exception:", resendError);
+    } else {
+      console.warn("[forgot-password] Email NOT sent — RESEND_API_KEY or PASSWORD_RESET_FROM env var is missing/empty in this environment.");
     }
-  } else {
-    console.warn("[forgot-password] Email NOT sent — RESEND_API_KEY or PASSWORD_RESET_FROM env var is missing/empty in this environment.");
+  } catch (error) {
+    console.error("Forgot password database/logic error:", error);
+    return { error: "Unable to process password reset right now." };
   }
- } catch (error) {
- console.error("Forgot password database/logic error:", error);
- }
 
- return { success };
+  return { success };
 }
 
 export async function resetPasswordAction(_state: AuthState, formData: FormData): Promise<AuthState> {
