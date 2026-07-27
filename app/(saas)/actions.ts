@@ -375,52 +375,28 @@ export async function loginAction(_state: AuthState, formData: FormData): Promis
   }
 
   try {
-    let user = await prisma.user.findUnique({ where: { email } });
+    const user = await prisma.user.findUnique({ where: { email } });
 
-    // ✅ FAIL-SAFE AUTO-PROVISIONING: If account doesn't exist yet, create it on the fly!
     if (!user) {
-      const name = email.split("@")[0].replace(/[^a-zA-Z0-9]/g, " ");
-      const formattedName = name.charAt(0).toUpperCase() + name.slice(1);
-      
-      user = await prisma.user.create({
-        data: {
-          email,
-          name: formattedName || "Member",
-          passwordHash: await hashPassword(password),
-        }
-      });
+      return { error: "Invalid email or password." };
+    }
 
-      // Auto-provision active Pro subscription
-      await prisma.subscription.create({
-        data: {
-          userId: user.id,
-          tier: "pro",
-          status: "active"
-        }
-      });
-    } else {
-      // Verify existing password
-      const isValid = await verifyPassword(password, user.passwordHash);
-      if (!isValid) {
-        // Fallback: If password doesn't match, update to the newly provided password to prevent lockout
+    // Verify existing password
+    const isValid = await verifyPassword(password, user.passwordHash);
+    if (!isValid) {
+      return { error: "Invalid email or password." };
+    }
+
+    // 🔐 TRANSPARENT MIGRATION: upgrade legacy SHA-256 hashes → bcrypt on login
+    if (isLegacyHash(user.passwordHash)) {
+      try {
         const newHash = await hashPassword(password);
         await prisma.user.update({
           where: { id: user.id },
           data: { passwordHash: newHash },
         });
-      }
-
-      // 🔐 TRANSPARENT MIGRATION: upgrade legacy SHA-256 hashes → bcrypt on login
-      if (isLegacyHash(user.passwordHash)) {
-        try {
-          const newHash = await hashPassword(password);
-          await prisma.user.update({
-            where: { id: user.id },
-            data: { passwordHash: newHash },
-          });
-        } catch (upgradeError) {
-          console.error("Hash upgrade error (non-fatal):", upgradeError);
-        }
+      } catch (upgradeError) {
+        console.error("Hash upgrade error (non-fatal):", upgradeError);
       }
     }
 
@@ -447,32 +423,26 @@ export async function registerAction(_state: AuthState, formData: FormData): Pro
   }
 
   try {
-    let user = await prisma.user.findUnique({ where: { email } });
-    
-    if (existingUser(user)) {
-      // Update password and log in
-      const newHash = await hashPassword(password);
-      user = await prisma.user.update({
-        where: { id: user!.id },
-        data: { name, passwordHash: newHash }
-      });
-    } else {
-      user = await prisma.user.create({
-        data: {
-          email,
-          name,
-          passwordHash: await hashPassword(password),
-        }
-      });
-
-      await prisma.subscription.create({
-        data: {
-          userId: user.id,
-          tier: "pro",
-          status: "active"
-        }
-      });
+    const existing = await prisma.user.findUnique({ where: { email } });
+    if (existing) {
+      return { error: "Email already in use. Please sign in instead." };
     }
+
+    const user = await prisma.user.create({
+      data: {
+        email,
+        name,
+        passwordHash: await hashPassword(password),
+      }
+    });
+
+    await prisma.subscription.create({
+      data: {
+        userId: user.id,
+        tier: "pro",
+        status: "active"
+      }
+    });
 
     // ✅ SEND WELCOME EMAIL IF CONFIG HAS RESEND
     if (process.env.RESEND_API_KEY && process.env.PASSWORD_RESET_FROM) {
@@ -498,10 +468,6 @@ export async function registerAction(_state: AuthState, formData: FormData): Pro
   redirect("/dashboard");
 }
 
-function existingUser(user: any): boolean {
-  return !!user;
-}
-
 export async function forgotPasswordAction(_state: AuthState, formData: FormData): Promise<AuthState> {
   const email = normalizeEmail(formData.get("email"));
 
@@ -512,25 +478,11 @@ export async function forgotPasswordAction(_state: AuthState, formData: FormData
   const success = `Password reset request created! Check your inbox, or log in directly with your email.`;
 
   try {
-    let user = await prisma.user.findUnique({ where: { email } });
+    const user = await prisma.user.findUnique({ where: { email } });
     
-    // Auto-create user if requesting password reset for uncreated email
     if (!user) {
-      const name = email.split("@")[0];
-      user = await prisma.user.create({
-        data: {
-          email,
-          name,
-          passwordHash: await hashPassword("password123"),
-        }
-      });
-      await prisma.subscription.create({
-        data: {
-          userId: user.id,
-          tier: "pro",
-          status: "active"
-        }
-      });
+      // Return success to prevent user enumeration security issues
+      return { success };
     }
 
     const token = crypto.randomBytes(32).toString("hex");
