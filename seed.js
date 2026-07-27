@@ -73,8 +73,43 @@ async function main() {
   }
   
   console.log(`Successfully synced ${count} products to the database.`);
+
+  // Upsert default demo user for instant login
+  const bcrypt = require('bcryptjs');
+  const demoEmail = 'demo@mirhaandco.com';
+  const demoPasswordHash = await bcrypt.hash('password123', 10);
+
+  const demoUser = await prisma.user.upsert({
+    where: { email: demoEmail },
+    update: {
+      name: 'Mirha Demo User',
+      passwordHash: demoPasswordHash,
+    },
+    create: {
+      email: demoEmail,
+      name: 'Mirha Demo User',
+      passwordHash: demoPasswordHash,
+    }
+  });
+
+  // Ensure demo user has active Pro subscription
+  await prisma.subscription.upsert({
+    where: { userId: demoUser.id },
+    update: {
+      tier: 'pro',
+      status: 'active'
+    },
+    create: {
+      userId: demoUser.id,
+      tier: 'pro',
+      status: 'active'
+    }
+  });
+
+  console.log('Successfully seeded default demo user: demo@mirhaandco.com / password123');
 }
 
 main()
   .catch(e => console.error(e))
   .finally(() => prisma.$disconnect());
+
