@@ -914,8 +914,10 @@ html.dark .product-card:hover {
 }
 
 html.dark .product-image {
-  background: #141312 !important;
-  border-bottom-color: rgba(255, 255, 255, 0.08) !important;
+  background: #ffffff !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+  opacity: 0.92;
+  filter: brightness(0.93) contrast(1.02);
 }
 
 html.dark .product-body h3 {

@@ -620,7 +620,9 @@ export default async function BeautyShopPage() {
           align-items: center;
           justify-content: center;
           overflow: hidden;
-          border-bottom: 1px solid #eee5dd;
+          border-radius: 10px;
+          margin: 12px 12px 0 12px;
+          border: 1px solid #eee5dd;
         }
 
         .product-body {

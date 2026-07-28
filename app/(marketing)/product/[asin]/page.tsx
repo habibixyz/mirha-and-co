@@ -564,8 +564,10 @@ export default async function ProductPage({ params }: { params: Promise<{ asin: 
 
   html.dark .image-panel,
   .dark .image-panel {
-    background: #181716 !important;
-    border-color: rgba(255, 255, 255, 0.12) !important;
+    background: #ffffff !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+    opacity: 0.95;
+    filter: brightness(0.93) contrast(1.02);
   }
 
   html.dark .detail-panel,

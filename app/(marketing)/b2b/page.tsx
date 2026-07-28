@@ -242,6 +242,7 @@ export default function B2BPitchDeck() {
           theme: { color: "#fc2779" },
           handler: () => {
             setLeadSubmitted(true);
+            window.location.href = "/b2b/dashboard?welcome=true";
           },
         });
         rzp.open();
@@ -1167,6 +1168,22 @@ export default function B2BPitchDeck() {
               style={{ padding: "0.45rem 0.85rem", fontSize: "0.75rem", width: "100%", textDecoration: "none" }}
             >
               Enter API Portal <ArrowRight size={12} />
+            </Link>
+          </div>
+
+          <div style={{ padding: "1rem", background: "rgba(255,255,255,0.02)", borderRadius: "12px", border: "1px solid rgba(255,255,255,0.04)", marginTop: "0.75rem" }}>
+            <span style={{ fontSize: "0.65rem", textTransform: "uppercase", letterSpacing: "0.08em", color: "#f59f00", display: "block", marginBottom: "0.5rem", fontWeight: 700 }}>
+              Pitch Deck
+            </span>
+            <p style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.6)", lineHeight: 1.4, margin: "0 0 0.75rem 0" }}>
+              Shareable full-screen investor &amp; partner deck
+            </p>
+            <Link
+              href="/b2b/pitch"
+              className="pitch-btn-outline"
+              style={{ padding: "0.45rem 0.85rem", fontSize: "0.75rem", width: "100%", textDecoration: "none" }}
+            >
+              View Pitch Deck <Play size={12} />
             </Link>
           </div>
         </aside>

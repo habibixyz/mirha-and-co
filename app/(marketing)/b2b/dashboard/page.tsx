@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { Check, Copy, RefreshCw } from "lucide-react";
 
@@ -26,6 +27,14 @@ const STEPS = [
 ];
 
 export default function B2BDashboardPage() {
+  const searchParams = useSearchParams();
+  const isWelcome = searchParams.get("welcome") === "true";
+  const [showWelcome, setShowWelcome] = useState(false);
+
+  useEffect(() => {
+    if (isWelcome) setShowWelcome(true);
+  }, [isWelcome]);
+
   const [apiKey, setApiKey] = useState("b2b_trial_key");
   const [location, setLocation] = useState("London");
   const [skinType, setSkinType] = useState("oily");
@@ -102,7 +111,7 @@ export default function B2BDashboardPage() {
   const getSnippet = () => {
     switch (activeCodeTab) {
       case "cURL":
-        return `curl -X POST "http://localhost:3000/api/v1/recommend" \\
+        return `curl -X POST "https://www.mirhaandco.com/api/v1/recommend" \\
   -H "Content-Type: application/json" \\
   -d '{
     "apiKey": "${apiKey}",
@@ -111,7 +120,7 @@ export default function B2BDashboardPage() {
     "mainConcern": "${mainConcern}"
   }'`;
       case "Fetch":
-        return `const response = await fetch("http://localhost:3000/api/v1/recommend", {
+        return `const response = await fetch("https://www.mirhaandco.com/api/v1/recommend", {
   method: "POST",
   headers: { "Content-Type": "application/json" },
   body: JSON.stringify({
@@ -124,8 +133,8 @@ export default function B2BDashboardPage() {
 const data = await response.json();`;
       case "Python":
         return `import requests
-
-url = "http://localhost:3000/api/v1/recommend"
+ 
+url = "https://www.mirhaandco.com/api/v1/recommend"
 payload = {
     "apiKey": "${apiKey}",
     "postalCode": "${location}",
@@ -136,23 +145,23 @@ res = requests.post(url, json=payload)
 print(res.json())`;
       case "React":
         return `import { useState, useEffect } from 'react';
-
+ 
 export function SkincareRecs({ postalCode }) {
   const [recs, setRecs] = useState(null);
   useEffect(() => {
-    fetch("http://localhost:3000/api/v1/recommend", {
+    fetch("https://www.mirhaandco.com/api/v1/recommend", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ apiKey: "${apiKey}", postalCode, skinType: "${skinType}" })
     }).then(r => r.json()).then(setRecs);
   }, [postalCode]);
-
+ 
   return <div>{recs ? recs.waterTelemetry?.hardnessCategory : "Loading..."}</div>;
 }`;
       case "Shopify":
         return `<!-- Shopify Liquid Integration Snippet -->
 <script>
-  fetch('http://localhost:3000/api/v1/recommend', {
+  fetch('https://www.mirhaandco.com/api/v1/recommend', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
@@ -273,6 +282,26 @@ export function SkincareRecs({ postalCode }) {
           Get a live key &rarr;
         </Link>
       </div>
+
+      {/* ── Welcome Banner (post-payment) ── */}
+      {showWelcome && (
+        <div style={{ margin: "12px 28px 0", background: "linear-gradient(135deg, #0b1f14 0%, #0d2818 100%)", border: "1px solid #22c55e", color: "#86efac", padding: "14px 18px", borderRadius: "8px", fontSize: "13.5px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            <Check size={18} style={{ color: "#22c55e", flexShrink: 0 }} />
+            <div>
+              <strong style={{ color: "#4ade80" }}>Payment successful!</strong>{" "}
+              Your API key has been generated and emailed to you. Paste it in the field below to start making live calls.
+            </div>
+          </div>
+          <button
+            onClick={() => setShowWelcome(false)}
+            style={{ background: "none", border: "none", color: "#86efac", cursor: "pointer", fontSize: "18px", padding: "0 4px", flexShrink: 0 }}
+            aria-label="Dismiss"
+          >
+            ×
+          </button>
+        </div>
+      )}
 
       {/* ── Hero ── */}
       <div className="hero" style={{ padding: "24px 28px 0" }}>

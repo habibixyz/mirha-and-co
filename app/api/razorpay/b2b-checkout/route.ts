@@ -74,6 +74,7 @@ export async function POST(req: Request) {
         b2b_email: email,
         b2b_brand: brandName,
         b2b_tier: tier,
+        b2b_billing: billing,
       },
     });
 

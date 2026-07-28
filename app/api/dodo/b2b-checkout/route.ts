@@ -65,7 +65,7 @@ export async function POST(req: Request) {
       : "https://live.dodopayments.com";
 
     // Where to send them after successful payment
-    const returnUrl = `${process.env.NEXT_PUBLIC_SITE_URL || "https://www.mirhaandco.com"}/b2b`;
+    const returnUrl = `${process.env.NEXT_PUBLIC_SITE_URL || "https://www.mirhaandco.com"}/b2b/dashboard?welcome=true`;
 
     const response = await fetch(`${baseUrl}/checkouts`, {
       method: "POST",
@@ -89,6 +89,7 @@ export async function POST(req: Request) {
           b2b_email: email,
           b2b_brand: brandName,
           b2b_tier: tier,
+          b2b_billing: billing,
         },
       }),
     });

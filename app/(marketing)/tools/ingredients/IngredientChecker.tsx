@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
-import { ArrowLeft, Check, AlertTriangle, AlertOctagon, HelpCircle, ArrowRight, Sun, Moon, Search, X, Trash2, Star } from "lucide-react";
+import { ArrowLeft, Check, AlertTriangle, AlertOctagon, HelpCircle, ArrowRight, Sun, Moon, Search, X, Trash2, Star, Sparkles } from "lucide-react";
 import { PRODUCTS, getProductAffiliateUrl } from "@/lib/products";
 
 // ─── ACTIVE INGREDIENTS DEFINITION ──────────────────────────────────────────
@@ -13,6 +13,8 @@ interface ActiveIngredient {
   description: string;
   skinTypeFit: string;
   tags: string[];
+  concerns?: string[];
+  skinTypes?: string[];
 }
 
 const INGREDIENTS: ActiveIngredient[] = [
@@ -23,7 +25,9 @@ const INGREDIENTS: ActiveIngredient[] = [
     category: "Retinoids & Anti-Aging",
     description: "Speeds up skin cell turnover to reduce fine lines, acne, and pigmentation. Increases sun sensitivity.",
     skinTypeFit: "Mature, Acne-prone, Textured",
-    tags: ["retinol", "retinal"]
+    tags: ["retinol", "retinal"],
+    concerns: ["aging", "acne"],
+    skinTypes: ["dry", "oily"]
   },
   {
     id: "bakuchiol",
@@ -31,7 +35,9 @@ const INGREDIENTS: ActiveIngredient[] = [
     category: "Retinoids & Anti-Aging",
     description: "A plant-based, gentle alternative to retinol that targets fine lines and loss of firmness without the irritation.",
     skinTypeFit: "Sensitive, All Skin Types",
-    tags: ["bakuchiol"]
+    tags: ["bakuchiol"],
+    concerns: ["aging"],
+    skinTypes: ["sensitive", "dry", "oily"]
   },
   {
     id: "copper_peptides",
@@ -39,7 +45,9 @@ const INGREDIENTS: ActiveIngredient[] = [
     category: "Retinoids & Anti-Aging",
     description: "Boosts collagen and elastin production, aiding in skin regeneration and reducing fine lines.",
     skinTypeFit: "Mature, All Skin Types",
-    tags: ["copper peptides", "copper"]
+    tags: ["copper peptides", "copper"],
+    concerns: ["aging"],
+    skinTypes: ["dry", "oily"]
   },
 
   // Antioxidants & Brighteners
@@ -49,7 +57,9 @@ const INGREDIENTS: ActiveIngredient[] = [
     category: "Antioxidants & Brighteners",
     description: "Neutralizes free radicals, boosts collagen, and fades dark spots. Best used in the morning under SPF.",
     skinTypeFit: "All Skin Types, Dull, Hyperpigmented",
-    tags: ["vitamin c", "vit c", "ascorbic"]
+    tags: ["vitamin c", "vit c", "ascorbic"],
+    concerns: ["dullness", "aging"],
+    skinTypes: ["dry", "oily"]
   },
   {
     id: "azelaic_acid",
@@ -57,7 +67,9 @@ const INGREDIENTS: ActiveIngredient[] = [
     category: "Antioxidants & Brighteners",
     description: "Reduces redness, clears acne, and fades hyperpigmentation. Great for rosacea-prone skin.",
     skinTypeFit: "Sensitive, Acne-prone, Rosacea",
-    tags: ["azelaic"]
+    tags: ["azelaic"],
+    concerns: ["redness", "acne", "dullness"],
+    skinTypes: ["sensitive", "dry", "oily"]
   },
   {
     id: "alpha_arbutin",
@@ -65,7 +77,9 @@ const INGREDIENTS: ActiveIngredient[] = [
     category: "Antioxidants & Brighteners",
     description: "A safe brightening ingredient that reduces melanin production to target dark spots and uneven tone.",
     skinTypeFit: "Hyperpigmented, All Skin Types",
-    tags: ["arbutin"]
+    tags: ["arbutin"],
+    concerns: ["dullness"],
+    skinTypes: ["dry", "oily", "sensitive"]
   },
   {
     id: "kojic_acid",
@@ -73,7 +87,9 @@ const INGREDIENTS: ActiveIngredient[] = [
     category: "Antioxidants & Brighteners",
     description: "Derived from fungi, it's a powerful lightening agent for sun damage, scars, and age spots.",
     skinTypeFit: "Hyperpigmented",
-    tags: ["kojic"]
+    tags: ["kojic"],
+    concerns: ["dullness"],
+    skinTypes: ["dry", "oily"]
   },
   {
     id: "tranexamic_acid",
@@ -81,7 +97,9 @@ const INGREDIENTS: ActiveIngredient[] = [
     category: "Antioxidants & Brighteners",
     description: "Reduces melanin synthesis, highly effective against melasma and stubborn post-inflammatory erythema.",
     skinTypeFit: "Hyperpigmented, Melasma",
-    tags: ["tranexamic"]
+    tags: ["tranexamic"],
+    concerns: ["dullness", "redness"],
+    skinTypes: ["dry", "oily", "sensitive"]
   },
 
   // Exfoliants
@@ -91,7 +109,9 @@ const INGREDIENTS: ActiveIngredient[] = [
     category: "Exfoliants",
     description: "Oil-soluble acid that penetrates deep into pores to dissolve excess sebum, blackheads, and dirt.",
     skinTypeFit: "Oily, Acne-prone, Congested",
-    tags: ["salicylic", "bha"]
+    tags: ["salicylic", "bha"],
+    concerns: ["acne"],
+    skinTypes: ["oily"]
   },
   {
     id: "glycolic_acid",
@@ -99,7 +119,9 @@ const INGREDIENTS: ActiveIngredient[] = [
     category: "Exfoliants",
     description: "Water-soluble acid that dissolves dead cells on the skin surface, improving texture and skin tone.",
     skinTypeFit: "Dry, Sun-damaged, Hyperpigmented",
-    tags: ["glycolic", "aha"]
+    tags: ["glycolic", "aha"],
+    concerns: ["dullness", "aging"],
+    skinTypes: ["dry", "oily"]
   },
   {
     id: "lactic_acid",
@@ -107,7 +129,9 @@ const INGREDIENTS: ActiveIngredient[] = [
     category: "Exfoliants",
     description: "A gentler AHA that also draws moisture to the skin. Great for surface exfoliation.",
     skinTypeFit: "Dry, Sensitive",
-    tags: ["lactic"]
+    tags: ["lactic"],
+    concerns: ["dullness", "dryness"],
+    skinTypes: ["dry", "sensitive"]
   },
   {
     id: "mandelic_acid",
@@ -115,7 +139,9 @@ const INGREDIENTS: ActiveIngredient[] = [
     category: "Exfoliants",
     description: "A large-molecule AHA that penetrates slowly, making it extremely gentle for sensitive skin.",
     skinTypeFit: "Sensitive, Acne-prone",
-    tags: ["mandelic"]
+    tags: ["mandelic"],
+    concerns: ["acne", "dullness"],
+    skinTypes: ["sensitive", "dry", "oily"]
   },
   {
     id: "pha",
@@ -123,7 +149,9 @@ const INGREDIENTS: ActiveIngredient[] = [
     category: "Exfoliants",
     description: "The most gentle exfoliants that act on the skin's surface without irritation while providing hydration.",
     skinTypeFit: "Ultra-sensitive, Rosacea",
-    tags: ["pha", "gluconolactone", "lactobionic"]
+    tags: ["pha", "gluconolactone", "lactobionic"],
+    concerns: ["dullness", "dryness"],
+    skinTypes: ["sensitive", "dry"]
   },
 
   // Hydrators & Barrier Repair
@@ -133,7 +161,9 @@ const INGREDIENTS: ActiveIngredient[] = [
     category: "Hydrators & Barrier Repair",
     description: "Strengthens skin barrier, regulates sebum, minimizes pores, and calms redness/irritation.",
     skinTypeFit: "All Skin Types, Sensitive, Oily",
-    tags: ["niacinamide"]
+    tags: ["niacinamide"],
+    concerns: ["redness", "acne", "dullness"],
+    skinTypes: ["sensitive", "dry", "oily"]
   },
   {
     id: "hyaluronic_acid",
@@ -141,7 +171,9 @@ const INGREDIENTS: ActiveIngredient[] = [
     category: "Hydrators & Barrier Repair",
     description: "Humectant that draws moisture into the skin, holding up to 1000x its weight in water.",
     skinTypeFit: "Dry, Dehydrated, All Skin Types",
-    tags: ["hyaluronic", "hydrating"]
+    tags: ["hyaluronic", "hydrating"],
+    concerns: ["dryness"],
+    skinTypes: ["sensitive", "dry", "oily"]
   },
   {
     id: "ceramides",
@@ -149,7 +181,9 @@ const INGREDIENTS: ActiveIngredient[] = [
     category: "Hydrators & Barrier Repair",
     description: "Lipids that make up 50% of the skin barrier, essential for retaining moisture and protecting from damage.",
     skinTypeFit: "Dry, Damaged Barrier",
-    tags: ["ceramide", "ceramides"]
+    tags: ["ceramide", "ceramides"],
+    concerns: ["dryness", "redness"],
+    skinTypes: ["sensitive", "dry", "oily"]
   },
   {
     id: "peptides",
@@ -157,7 +191,9 @@ const INGREDIENTS: ActiveIngredient[] = [
     category: "Hydrators & Barrier Repair",
     description: "Amino acid chains that act as building blocks for collagen and elastin, improving skin firmness.",
     skinTypeFit: "Mature, Damaged Barrier",
-    tags: ["peptide", "peptides"]
+    tags: ["peptide", "peptides"],
+    concerns: ["aging"],
+    skinTypes: ["sensitive", "dry", "oily"]
   },
   {
     id: "panthenol",
@@ -165,7 +201,9 @@ const INGREDIENTS: ActiveIngredient[] = [
     category: "Hydrators & Barrier Repair",
     description: "Deeply soothing and hydrating ingredient that speeds up skin healing and reduces inflammation.",
     skinTypeFit: "Sensitive, Irritated",
-    tags: ["panthenol", "b5"]
+    tags: ["panthenol", "b5"],
+    concerns: ["redness", "dryness"],
+    skinTypes: ["sensitive", "dry", "oily"]
   },
   {
     id: "squalane",
@@ -173,7 +211,9 @@ const INGREDIENTS: ActiveIngredient[] = [
     category: "Hydrators & Barrier Repair",
     description: "A lightweight, non-comedogenic oil that mimics skin's natural sebum to lock in moisture.",
     skinTypeFit: "Dry, All Skin Types",
-    tags: ["squalane"]
+    tags: ["squalane"],
+    concerns: ["dryness"],
+    skinTypes: ["sensitive", "dry", "oily"]
   },
   {
     id: "centella",
@@ -181,7 +221,9 @@ const INGREDIENTS: ActiveIngredient[] = [
     category: "Hydrators & Barrier Repair",
     description: "Powerful wound-healing herb that calms severe irritation, redness, and inflammation.",
     skinTypeFit: "Sensitive, Acne-prone, Rosacea",
-    tags: ["centella", "cica", "madecassoside"]
+    tags: ["centella", "cica", "madecassoside"],
+    concerns: ["redness"],
+    skinTypes: ["sensitive", "dry", "oily"]
   },
   {
     id: "snail_mucin",
@@ -189,7 +231,9 @@ const INGREDIENTS: ActiveIngredient[] = [
     category: "Hydrators & Barrier Repair",
     description: "Rich in glycoproteins, hyaluronic acid, and peptides. Deeply hydrating and reparative.",
     skinTypeFit: "Dehydrated, Acne-prone",
-    tags: ["snail"]
+    tags: ["snail"],
+    concerns: ["dryness", "redness"],
+    skinTypes: ["sensitive", "dry", "oily"]
   },
 
   // Targeted Treatments
@@ -199,9 +243,85 @@ const INGREDIENTS: ActiveIngredient[] = [
     category: "Targeted Treatments",
     description: "Kills acne-causing bacteria and dries out active inflammatory blemishes.",
     skinTypeFit: "Acne-prone, Oily",
-    tags: ["benzoyl", "benzac"]
+    tags: ["benzoyl", "benzac"],
+    concerns: ["acne"],
+    skinTypes: ["oily"]
   }
 ];
+
+interface QuickTemplate {
+  name: string;
+  emoji: string;
+  description: string;
+  ingredients: string[];
+}
+
+const QUICK_TEMPLATES: QuickTemplate[] = [
+  {
+    name: "Glass Skin Glow",
+    emoji: "✨",
+    description: "Brightens, hydrates, and evens skin tone.",
+    ingredients: ["hyaluronic_acid", "niacinamide", "vitamin_c", "snail_mucin"]
+  },
+  {
+    name: "Anti-Aging Starter",
+    emoji: "⏳",
+    description: "Combats fine lines and boosts collagen safely.",
+    ingredients: ["retinol", "hyaluronic_acid", "ceramides", "peptides"]
+  },
+  {
+    name: "Acne-Clear Essentials",
+    emoji: "🛡️",
+    description: "Clears pores and calms redness.",
+    ingredients: ["salicylic_acid", "niacinamide", "centella", "panthenol"]
+  },
+  {
+    name: "Barrier Recovery",
+    emoji: "🩹",
+    description: "Deeply restores irritated or dry skin.",
+    ingredients: ["ceramides", "hyaluronic_acid", "panthenol", "centella"]
+  }
+];
+
+interface SynergyRule {
+  actives: [string, string];
+  message: string;
+  benefit: string;
+}
+
+const SYNERGIES: SynergyRule[] = [
+  {
+    actives: ["retinol", "niacinamide"],
+    message: "Barrier Buffering",
+    benefit: "Niacinamide strengthens the skin barrier and reduces the irritation, flaking, and redness commonly caused by Retinol."
+  },
+  {
+    actives: ["retinol", "hyaluronic_acid"],
+    message: "Hydration Buffer",
+    benefit: "Hyaluronic Acid draws water into skin layers, buffering against Retinol-induced dryness."
+  },
+  {
+    actives: ["vitamin_c", "niacinamide"],
+    message: "Brightening Synergy",
+    benefit: "Vitamin C neutralizes free radicals while Niacinamide prevents transfer of melanin, offering a dual brightening effect."
+  },
+  {
+    actives: ["bakuchiol", "retinol"],
+    message: "Retinoid Boosting",
+    benefit: "Bakuchiol stabilizes Retinol and boosts its anti-aging power, while acting as an anti-inflammatory agent."
+  },
+  {
+    actives: ["glycolic_acid", "centella"],
+    message: "Acid Soothing",
+    benefit: "Centella Asiatica (Cica) deeply calms the skin barrier to minimize stinging or redness from glycolic acid exfoliation."
+  },
+  {
+    actives: ["retinol", "ceramides"],
+    message: "Lipid Replenishment",
+    benefit: "Ceramides patch up dry gaps in the skin barrier, countering the dry/flaky side effects of Retinoids."
+  }
+];
+
 
 // ─── COMPATIBILITY RULES DEFINITION ─────────────────────────────────────────
 interface ConflictRule {
@@ -334,11 +454,289 @@ const CONFLICT_RULES: ConflictRule[] = [
   }
 ];
 
+interface NodeMapProps {
+  selectedIds: string[];
+  ingredients: ActiveIngredient[];
+  conflictRules: ConflictRule[];
+  synergies: SynergyRule[];
+}
+
+function SkincareNodeMap({ selectedIds, ingredients, conflictRules, synergies }: NodeMapProps) {
+  const width = 340;
+  const height = 280;
+  const cx = width / 2;
+  const cy = height / 2;
+  const r = 85; 
+  
+  const [hoveredLink, setHoveredLink] = useState<{
+    text: string;
+    type: "conflict" | "caution" | "synergy" | "neutral";
+    x: number;
+    y: number;
+  } | null>(null);
+
+  if (selectedIds.length === 0) {
+    return (
+      <div className="node-map-placeholder">
+        <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`}>
+          <circle cx={cx} cy={cy} r="60" fill="none" stroke="currentColor" strokeWidth="1.2" strokeDasharray="4 4" className="empty-orbit" />
+          <circle cx={cx} cy={cy} r="4" fill="currentColor" className="empty-dot" />
+        </svg>
+        <span className="placeholder-text">Vanity Shelf Empty</span>
+      </div>
+    );
+  }
+
+  // Calculate coordinates for selected active ingredients
+  const nodes = selectedIds.map((id, index) => {
+    const angle = (index * 2 * Math.PI) / selectedIds.length - Math.PI / 2;
+    const x = cx + r * Math.cos(angle);
+    const y = cy + r * Math.sin(angle);
+    const active = ingredients.find((i) => i.id === id);
+    return {
+      id,
+      name: active ? active.name.split(" ")[0] : id, 
+      fullName: active ? active.name : id,
+      x,
+      y,
+    };
+  });
+
+  // Calculate links between nodes
+  const links: {
+    source: typeof nodes[0];
+    target: typeof nodes[0];
+    type: "conflict" | "caution" | "synergy" | "neutral";
+    message: string;
+  }[] = [];
+
+  for (let i = 0; i < nodes.length; i++) {
+    for (let j = i + 1; j < nodes.length; j++) {
+      const nodeA = nodes[i];
+      const nodeB = nodes[j];
+
+      const conflict = conflictRules.find(
+        (rule) =>
+          (rule.actives[0] === nodeA.id && rule.actives[1] === nodeB.id) ||
+          (rule.actives[0] === nodeB.id && rule.actives[1] === nodeA.id)
+      );
+
+      const synergy = synergies.find(
+        (syn) =>
+          (syn.actives[0] === nodeA.id && syn.actives[1] === nodeB.id) ||
+          (syn.actives[0] === nodeB.id && syn.actives[1] === nodeA.id)
+      );
+
+      let type: "conflict" | "caution" | "synergy" | "neutral" = "neutral";
+      let message = "";
+
+      if (conflict) {
+        type = conflict.severity === "conflict" ? "conflict" : "caution";
+        message = conflict.message;
+      } else if (synergy) {
+        type = "synergy";
+        message = synergy.benefit;
+      }
+
+      links.push({
+        source: nodeA,
+        target: nodeB,
+        type,
+        message,
+      });
+    }
+  }
+
+  return (
+    <div className="node-map-wrapper">
+      <svg width="100%" height={height} viewBox={`0 0 ${width} ${height}`} className="node-map-svg">
+        <defs>
+          <radialGradient id="nodeGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stopColor="#fc2779" stopOpacity="0.15" />
+            <stop offset="100%" stopColor="#fc2779" stopOpacity="0" />
+          </radialGradient>
+          <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="3" result="blur" />
+            <feComposite in="SourceGraphic" in2="blur" operator="over" />
+          </filter>
+        </defs>
+
+        {selectedIds.length > 2 && (
+          <circle cx={cx} cy={cy} r={r} fill="none" stroke="rgba(252, 39, 121, 0.05)" strokeWidth="1.5" />
+        )}
+
+        {links.map((link, idx) => {
+          const midX = (link.source.x + link.target.x) / 2;
+          const midY = (link.source.y + link.target.y) / 2;
+          const isNeutral = link.type === "neutral";
+          
+          let stroke = "rgba(140, 129, 121, 0.15)";
+          let strokeWidth = "1";
+          let strokeDasharray = undefined;
+          let className = "link-line";
+
+          if (link.type === "conflict") {
+            stroke = "#fc2779";
+            strokeWidth = "2.5";
+            className = "link-line link-conflict";
+          } else if (link.type === "caution") {
+            stroke = "#f59f00";
+            strokeWidth = "2";
+            strokeDasharray = "4 3";
+            className = "link-line link-caution";
+          } else if (link.type === "synergy") {
+            stroke = "#10b981";
+            strokeWidth = "2.5";
+            className = "link-line link-synergy";
+          }
+
+          return (
+            <g key={idx} className="link-group">
+              <line
+                x1={link.source.x}
+                y1={link.source.y}
+                x2={link.target.x}
+                y2={link.target.y}
+                stroke={stroke}
+                strokeWidth={strokeWidth}
+                strokeDasharray={strokeDasharray}
+                className={className}
+              />
+              
+              {link.type === "synergy" && (
+                <circle r="3.5" fill="#34d399" filter="url(#glow)">
+                  <animateMotion
+                    dur="3s"
+                    repeatCount="indefinite"
+                    path={`M ${link.source.x} ${link.source.y} L ${link.target.x} ${link.target.y}`}
+                  />
+                </circle>
+              )}
+
+              {link.type === "conflict" && (
+                <g 
+                  transform={`translate(${midX}, ${midY})`}
+                  className="alert-node"
+                  style={{ cursor: "pointer" }}
+                  onMouseEnter={() => setHoveredLink({
+                    text: `Conflict: ${link.source.fullName} + ${link.target.fullName}. ${link.message}`,
+                    type: "conflict",
+                    x: midX,
+                    y: midY - 15
+                  })}
+                  onMouseLeave={() => setHoveredLink(null)}
+                >
+                  <circle r="7.5" fill="#fc2779" />
+                  <text y="3" textAnchor="middle" fill="#fff" fontSize="9" fontWeight="bold">!</text>
+                </g>
+              )}
+
+              {!isNeutral && link.type !== "conflict" && (
+                <circle
+                  cx={midX}
+                  cy={midY}
+                  r="5"
+                  fill={link.type === "synergy" ? "#10b981" : "#f59f00"}
+                  style={{ cursor: "pointer" }}
+                  onMouseEnter={() => setHoveredLink({
+                    text: `${link.type === "synergy" ? "Synergy" : "Caution"}: ${link.message}`,
+                    type: link.type,
+                    x: midX,
+                    y: midY - 15
+                  })}
+                  onMouseLeave={() => setHoveredLink(null)}
+                />
+              )}
+            </g>
+          );
+        })}
+
+        {nodes.map((node) => (
+          <g key={node.id} className="node-group">
+            <circle cx={node.x} cy={node.y} r="25" fill="url(#nodeGlow)" />
+            
+            <circle
+              cx={node.x}
+              cy={node.y}
+              r="18"
+              className="node-circle"
+              filter="url(#glow)"
+            />
+            
+            <text
+              x={node.x}
+              y={node.y + 3}
+              textAnchor="middle"
+              className="node-text"
+            >
+              {node.name.substring(0, 5)}
+            </text>
+
+            <circle
+              cx={node.x}
+              cy={node.y}
+              r="22"
+              fill="transparent"
+              style={{ cursor: "pointer" }}
+              onMouseEnter={() => setHoveredLink({
+                text: node.fullName,
+                type: "neutral",
+                x: node.x,
+                y: node.y - 28
+              })}
+              onMouseLeave={() => setHoveredLink(null)}
+            />
+          </g>
+        ))}
+      </svg>
+
+      {hoveredLink && (
+        <div 
+          className="map-tooltip"
+          style={{
+            position: "absolute",
+            left: `${hoveredLink.x}px`,
+            top: `${hoveredLink.y}px`,
+            transform: "translate(-50%, -100%)",
+            pointerEvents: "none"
+          }}
+        >
+          <div className={`tooltip-content ${hoveredLink.type}`}>
+            {hoveredLink.text}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function ActiveIngredientChecker() {
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const [selectedConcerns, setSelectedConcerns] = useState<string[]>([]);
+  const [selectedSkinTypes, setSelectedSkinTypes] = useState<string[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [analyzedRules, setAnalyzedRules] = useState<ConflictRule[]>([]);
   const [countryCode, setCountryCode] = useState<string>("IN");
+
+  const toggleConcern = (concern: string) => {
+    setSelectedConcerns((prev) =>
+      prev.includes(concern) ? prev.filter((c) => c !== concern) : [...prev, concern]
+    );
+  };
+
+  const toggleSkinType = (skinType: string) => {
+    setSelectedSkinTypes((prev) =>
+      prev.includes(skinType) ? prev.filter((t) => t !== skinType) : [...prev, skinType]
+    );
+  };
+
+  const isRecommended = useMemo(() => {
+    return (item: ActiveIngredient) => {
+      const matchesConcern = selectedConcerns.length > 0 && item.concerns?.some(c => selectedConcerns.includes(c));
+      const matchesSkinType = selectedSkinTypes.length > 0 && item.skinTypes?.some(t => selectedSkinTypes.includes(t));
+      return matchesConcern || matchesSkinType;
+    };
+  }, [selectedConcerns, selectedSkinTypes]);
 
   // Geolocation detection fallback (client-side timezone lookup)
   useEffect(() => {
@@ -422,6 +820,89 @@ export default function ActiveIngredientChecker() {
     }).slice(0, 3);
   };
 
+  const getSafetyScore = () => {
+    if (selectedIds.length < 2) return { score: 100, rating: "Safe & Clean", color: "#2d8a5c", darkColor: "#8ce99a" };
+    
+    let baseScore = 100;
+    let conflicts = 0;
+    let cautions = 0;
+    let synergyBonus = 0;
+    
+    for (let i = 0; i < selectedIds.length; i++) {
+      for (let j = i + 1; j < selectedIds.length; j++) {
+        const idA = selectedIds[i];
+        const idB = selectedIds[j];
+        
+        const rule = CONFLICT_RULES.find(
+          (r) =>
+            (r.actives[0] === idA && r.actives[1] === idB) ||
+            (r.actives[0] === idB && r.actives[1] === idA)
+        );
+        if (rule) {
+          if (rule.severity === "conflict") {
+            baseScore -= 35;
+            conflicts += 1;
+          } else if (rule.severity === "caution") {
+            baseScore -= 15;
+            cautions += 1;
+          }
+        }
+        
+        const syn = SYNERGIES.find(
+          (s) =>
+            (s.actives[0] === idA && s.actives[1] === idB) ||
+            (s.actives[0] === idB && s.actives[1] === idA)
+        );
+        if (syn) {
+          synergyBonus += 10;
+        }
+      }
+    }
+    
+    let finalScore = baseScore + synergyBonus;
+    if (finalScore > 100) finalScore = 100;
+    if (finalScore < 10) finalScore = 10;
+    
+    let rating = "Safe & Clean";
+    let color = "#2d8a5c"; 
+    let darkColor = "#8ce99a";
+    
+    if (conflicts > 0) {
+      rating = "Barrier Risk";
+      color = "#fc2779"; 
+      darkColor = "#ff8787";
+    } else if (cautions > 0) {
+      rating = "Caution Layering";
+      color = "#e67700"; 
+      darkColor = "#ffd43b";
+    } else if (synergyBonus > 0) {
+      rating = "Synergistic & Balanced";
+      color = "#2d8a5c"; 
+      darkColor = "#8ce99a";
+    }
+    
+    return { score: finalScore, rating, color, darkColor };
+  };
+
+  const getMatchingSynergies = () => {
+    const list: SynergyRule[] = [];
+    for (let i = 0; i < selectedIds.length; i++) {
+      for (let j = i + 1; j < selectedIds.length; j++) {
+        const idA = selectedIds[i];
+        const idB = selectedIds[j];
+        const syn = SYNERGIES.find(
+          (s) =>
+            (s.actives[0] === idA && s.actives[1] === idB) ||
+            (s.actives[0] === idB && s.actives[1] === idA)
+        );
+        if (syn && !list.some(item => item.message === syn.message)) {
+          list.push(syn);
+        }
+      }
+    }
+    return list;
+  };
+
   // Schedule logic: AM/PM step timeline with thinnest-to-thickest ordering rules
   const getVisualSchedule = () => {
     const amSteps: { name: string; type: "active" | "base"; desc?: string }[] = [
@@ -479,12 +960,191 @@ export default function ActiveIngredientChecker() {
   };
 
   const { amSteps, pmSteps } = getVisualSchedule();
+  const { score: safetyScore, rating: safetyRating, color: safetyColor } = getSafetyScore();
+  const matchingSynergies = getMatchingSynergies();
   const conflictsCount = analyzedRules.filter((r) => r.severity === "conflict").length;
   const cautionsCount = analyzedRules.filter((r) => r.severity === "caution").length;
 
   return (
     <div className="ingredient-checker-page">
       <style dangerouslySetInnerHTML={{__html: `
+        /* ── Biotech Facelift & Node Map CSS ── */
+        .node-map-placeholder {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          background: rgba(255, 255, 255, 0.02);
+          border: 1.5px dashed rgba(140, 129, 121, 0.18);
+          border-radius: 18px;
+          padding: 20px;
+          text-align: center;
+          color: #756b63;
+          margin-bottom: 20px;
+          min-height: 280px;
+          position: relative;
+        }
+        html.dark .node-map-placeholder {
+          border-color: rgba(255, 255, 255, 0.08);
+          color: #aba49d;
+        }
+        .placeholder-text {
+          font-size: 0.8rem;
+          font-weight: 700;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+          margin-top: 12px;
+          color: #8c8179;
+        }
+        .empty-orbit {
+          stroke: rgba(140, 129, 121, 0.2);
+          animation: spin 20s linear infinite;
+          transform-origin: 50% 50%;
+        }
+        html.dark .empty-orbit {
+          stroke: rgba(255, 255, 255, 0.05);
+        }
+        .empty-dot {
+          fill: rgba(252, 39, 121, 0.3);
+          animation: pulse 2s ease-in-out infinite;
+        }
+
+        .node-map-wrapper {
+          position: relative;
+          background: #fff;
+          border: 1.5px solid #ede5dc;
+          border-radius: 18px;
+          margin-bottom: 24px;
+          overflow: visible;
+          box-shadow: 0 4px 12px rgba(38, 28, 20, 0.02);
+          padding: 10px;
+        }
+        html.dark .node-map-wrapper {
+          background: #181716;
+          border-color: rgba(255, 255, 255, 0.1);
+          box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+        }
+        
+        .node-map-svg {
+          overflow: visible;
+        }
+
+        .node-circle {
+          fill: #fff;
+          stroke: #ede5dc;
+          stroke-width: 2;
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        html.dark .node-circle {
+          fill: #22201e;
+          stroke: rgba(255, 255, 255, 0.15);
+        }
+        .node-group:hover .node-circle {
+          r: 21;
+          stroke: #fc2779;
+          stroke-width: 3;
+        }
+        
+        .node-text {
+          font-size: 8px;
+          font-weight: 800;
+          letter-spacing: -0.02em;
+          text-transform: uppercase;
+          fill: #161412;
+          pointer-events: none;
+          transition: all 0.3s;
+        }
+        html.dark .node-text {
+          fill: #ffffff;
+        }
+        .node-group:hover .node-text {
+          font-size: 9.5px;
+          font-weight: 950;
+          fill: #fc2779;
+        }
+
+        .link-line {
+          transition: stroke-width 0.3s, opacity 0.3s;
+          opacity: 0.8;
+        }
+        .link-conflict {
+          animation: linePulse 2s infinite ease-in-out;
+        }
+        .link-caution {
+          animation: dashMove 30s linear infinite;
+        }
+        .link-synergy {
+          filter: drop-shadow(0px 0px 2px rgba(16, 185, 129, 0.4));
+        }
+
+        @keyframes linePulse {
+          0%, 100% { stroke-width: 2.5; filter: drop-shadow(0px 0px 1px rgba(252, 39, 121, 0.4)); }
+          50% { stroke-width: 4; filter: drop-shadow(0px 0px 4px rgba(252, 39, 121, 0.8)); }
+        }
+        @keyframes dashMove {
+          to { stroke-dashoffset: -20; }
+        }
+
+        .map-tooltip {
+          z-index: 100;
+          width: max-content;
+          max-width: 240px;
+          transition: opacity 0.15s ease-out;
+          filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.15));
+        }
+        .tooltip-content {
+          background: #1e1c1a;
+          color: #f7f5f2;
+          padding: 8px 12px;
+          border-radius: 8px;
+          font-size: 0.72rem;
+          line-height: 1.4;
+          font-weight: 600;
+          border: 1px solid rgba(255,255,255,0.12);
+        }
+        .tooltip-content.conflict {
+          border-color: #fc2779;
+          background: #1f0b0f;
+          color: #ff8787;
+        }
+        .tooltip-content.caution {
+          border-color: #f59f00;
+          background: #211a0b;
+          color: #ffd43b;
+        }
+        .tooltip-content.synergy {
+          border-color: #10b981;
+          background: #0b1f14;
+          color: #8ce99a;
+        }
+
+        /* Ambient Glow in Sidebar */
+        .sticky-sidebar {
+          backdrop-filter: blur(16px);
+          background: rgba(255, 255, 255, 0.75) !important;
+          border: 1px solid rgba(140, 129, 121, 0.15) !important;
+          position: relative;
+        }
+        html.dark .sticky-sidebar {
+          backdrop-filter: blur(16px);
+          background: rgba(24, 23, 22, 0.8) !important;
+          border: 1px solid rgba(255, 255, 255, 0.08) !important;
+        }
+        .sticky-sidebar::before {
+          content: "";
+          position: absolute;
+          width: 280px;
+          height: 280px;
+          background: radial-gradient(circle, rgba(252, 39, 121, 0.03) 0%, transparent 70%);
+          top: -140px;
+          right: -100px;
+          z-index: 0;
+          pointer-events: none;
+        }
+        html.dark .sticky-sidebar::before {
+          background: radial-gradient(circle, rgba(252, 39, 121, 0.07) 0%, transparent 70%);
+        }
+
         .ingredient-checker-page {
           min-height: 100vh;
           background: #fbf7f1;
@@ -555,6 +1215,8 @@ export default function ActiveIngredientChecker() {
           .sticky-sidebar {
             position: static !important;
             width: 100% !important;
+            max-height: none !important;
+            overflow-y: visible !important;
           }
         }
         .search-container {
@@ -698,6 +1360,184 @@ export default function ActiveIngredientChecker() {
           color: #fff;
           box-shadow: 0 4px 12px rgba(252, 39, 121, 0.15);
         }
+        
+        .ingredient-pill.recommended-highlight {
+          border-color: #f59f00;
+          background: #fffbeb;
+          color: #b25e00;
+        }
+        html.dark .ingredient-pill.recommended-highlight {
+          border-color: #f59f00;
+          background: rgba(245, 159, 0, 0.08);
+          color: #ffd43b;
+        }
+        
+        .profile-filters-card {
+          background: #fff;
+          border: 1.5px solid #ede5dc;
+          border-radius: 18px;
+          padding: 20px;
+          margin-bottom: 24px;
+          box-shadow: 0 4px 12px rgba(38, 28, 20, 0.02);
+        }
+        html.dark .profile-filters-card {
+          background: #181716;
+          border-color: rgba(255, 255, 255, 0.12);
+        }
+        .filter-group {
+          display: flex;
+          align-items: center;
+          gap: 16px;
+          flex-wrap: wrap;
+        }
+        .filter-label {
+          font-size: 0.75rem;
+          font-weight: 700;
+          letter-spacing: 0.05em;
+          text-transform: uppercase;
+          color: #756b63;
+          min-width: 110px;
+        }
+        html.dark .filter-label {
+          color: #aba49d;
+        }
+        .filter-buttons {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 8px;
+        }
+        .filter-btn {
+          background: #fbf7f1;
+          border: 1px solid #ede5dc;
+          color: #161412;
+          padding: 6px 14px;
+          border-radius: 99px;
+          font-size: 0.8rem;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.15s ease;
+          display: inline-flex;
+          align-items: center;
+        }
+        .filter-btn:hover {
+          border-color: #fc2779;
+          background: #fff;
+        }
+        .filter-btn.active {
+          background: rgba(252, 39, 121, 0.08);
+          border-color: #fc2779;
+          color: #fc2779;
+        }
+        html.dark .filter-btn {
+          background: #1e1c1a;
+          border-color: rgba(255, 255, 255, 0.12);
+          color: #f7f5f2;
+        }
+        html.dark .filter-btn:hover {
+          border-color: #fc2779;
+          background: #181716;
+        }
+        html.dark .filter-btn.active {
+          background: rgba(252, 39, 121, 0.15);
+          border-color: #fc2779;
+          color: #fc2779;
+        }
+
+        .templates-section {
+          margin-bottom: 24px;
+        }
+        .templates-label {
+          font-size: 0.75rem;
+          font-weight: 700;
+          letter-spacing: 0.05em;
+          text-transform: uppercase;
+          color: #756b63;
+          margin-bottom: 10px;
+        }
+        html.dark .templates-label {
+          color: #aba49d;
+        }
+        .templates-grid {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 12px;
+        }
+        @media (max-width: 580px) {
+          .templates-grid {
+            grid-template-columns: 1fr;
+          }
+        }
+        .template-card {
+          background: #fff;
+          border: 1.5px solid #ede5dc;
+          border-radius: 14px;
+          padding: 12px;
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          cursor: pointer;
+          transition: all 0.2s ease;
+          text-align: left;
+        }
+        .template-card:hover {
+          border-color: #fc2779;
+          box-shadow: 0 4px 12px rgba(252, 39, 121, 0.05);
+        }
+        .template-card.active {
+          border-color: #fc2779;
+          background: rgba(252, 39, 121, 0.02);
+          box-shadow: 0 4px 12px rgba(252, 39, 121, 0.05);
+        }
+        html.dark .template-card {
+          background: #181716;
+          border-color: rgba(255, 255, 255, 0.12);
+        }
+        html.dark .template-card.active {
+          background: rgba(252, 39, 121, 0.05);
+        }
+        .template-emoji {
+          font-size: 1.5rem;
+          background: #fbf7f1;
+          width: 40px;
+          height: 40px;
+          border-radius: 10px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        html.dark .template-emoji {
+          background: #1e1c1a;
+        }
+        .template-info {
+          flex: 1;
+          min-width: 0;
+        }
+        .template-name {
+          font-size: 0.82rem;
+          font-weight: 700;
+          color: #161412;
+        }
+        html.dark .template-name {
+          color: #f7f5f2;
+        }
+        .template-desc {
+          font-size: 0.7rem;
+          color: #756b63;
+          margin-top: 2px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+        html.dark .template-desc {
+          color: #aba49d;
+        }
+
+        .dial-text {
+          color: #161412;
+        }
+        html.dark .dial-text {
+          color: #ffffff !important;
+        }
         .sticky-sidebar {
           background: #fff;
           border: 1.5px solid #ede5dc;
@@ -706,6 +1546,23 @@ export default function ActiveIngredientChecker() {
           box-shadow: 0 16px 48px rgba(38, 28, 20, 0.05);
           position: sticky;
           top: 100px;
+          max-height: calc(100vh - 140px);
+          overflow-y: auto;
+          scrollbar-width: thin;
+          scrollbar-color: rgba(252, 39, 121, 0.25) transparent;
+        }
+        .sticky-sidebar::-webkit-scrollbar {
+          width: 5px;
+        }
+        .sticky-sidebar::-webkit-scrollbar-track {
+          background: transparent;
+        }
+        .sticky-sidebar::-webkit-scrollbar-thumb {
+          background: rgba(252, 39, 121, 0.25);
+          border-radius: 99px;
+        }
+        .sticky-sidebar::-webkit-scrollbar-thumb:hover {
+          background: rgba(252, 39, 121, 0.45);
         }
         .report-header {
           border-bottom: 1px solid #f6f4f2;
@@ -779,14 +1636,22 @@ export default function ActiveIngredientChecker() {
           display: flex;
           align-items: center;
           gap: 12px;
-          background: #fbf7f1;
+          background: #fff;
           border: 1px solid #ede5dc;
+          border-left: 4px solid #ede5dc;
           border-radius: 12px;
-          padding: 8px 12px;
+          padding: 10px 14px;
           position: relative;
+          box-shadow: 0 2px 4px rgba(38, 28, 20, 0.02);
+          transition: all 0.2s ease;
+        }
+        .timeline-step:hover {
+          transform: translateX(2px);
+          box-shadow: 0 4px 8px rgba(38, 28, 20, 0.04);
         }
         .timeline-step.active-step {
           border-color: #fc2779;
+          border-left-color: #fc2779;
           background: #fffaf8;
         }
         .step-num {
@@ -1001,9 +1866,11 @@ export default function ActiveIngredientChecker() {
         html.dark .timeline-step, .dark .timeline-step {
           background: #1e1c1a;
           border-color: rgba(255, 255, 255, 0.12);
+          border-left: 4px solid rgba(255, 255, 255, 0.2);
         }
         html.dark .timeline-step.active-step, .dark .timeline-step.active-step {
           border-color: #fc2779;
+          border-left-color: #fc2779;
           background: rgba(252, 39, 121, 0.05);
         }
         html.dark .step-name, .dark .step-name {
@@ -1025,8 +1892,10 @@ export default function ActiveIngredientChecker() {
           box-shadow: 0 8px 24px rgba(252, 39, 121, 0.1);
         }
         html.dark .product-img-wrap, .dark .product-img-wrap {
-          background: #1e1c1a;
+          background: #ffffff;
           border-color: rgba(255, 255, 255, 0.08);
+          opacity: 0.92;
+          filter: brightness(0.93) contrast(1.02);
         }
         html.dark .product-card-name, .dark .product-card-name {
           color: #ffffff;
@@ -1073,6 +1942,88 @@ export default function ActiveIngredientChecker() {
         {/* Layout grid */}
         <div className="grid-layout">
           <div>
+            {/* Quick Routine Templates */}
+            <div className="templates-section">
+              <div className="templates-label">
+                <span>💡 Quick Routine Templates</span>
+              </div>
+              <div className="templates-grid">
+                {QUICK_TEMPLATES.map((tpl) => {
+                  const isTemplateActive = tpl.ingredients.every((id) => selectedIds.includes(id));
+                  return (
+                    <button
+                      key={tpl.name}
+                      type="button"
+                      className={`template-card ${isTemplateActive ? "active" : ""}`}
+                      onClick={() => {
+                        if (isTemplateActive) {
+                          setSelectedIds(prev => prev.filter(id => !tpl.ingredients.includes(id)));
+                        } else {
+                          setSelectedIds(tpl.ingredients);
+                        }
+                      }}
+                    >
+                      <div className="template-emoji">{tpl.emoji}</div>
+                      <div className="template-info">
+                        <div className="template-name">{tpl.name}</div>
+                        <div className="template-desc">{tpl.description}</div>
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Skin Profile Filters */}
+            <div className="profile-filters-card">
+              <div className="filter-group">
+                <span className="filter-label">Skin Type:</span>
+                <div className="filter-buttons">
+                  {[
+                    { id: "sensitive", label: "Sensitive", emoji: "🧴" },
+                    { id: "dry", label: "Dry", emoji: "🌵" },
+                    { id: "oily", label: "Oily", emoji: "🧪" }
+                  ].map(type => {
+                    const active = selectedSkinTypes.includes(type.id);
+                    return (
+                      <button
+                        key={type.id}
+                        type="button"
+                        className={`filter-btn ${active ? "active" : ""}`}
+                        onClick={() => toggleSkinType(type.id)}
+                      >
+                        <span style={{ marginRight: '4px' }}>{type.emoji}</span> {type.label}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+              <div className="filter-group" style={{ marginTop: '12px' }}>
+                <span className="filter-label">Target Concern:</span>
+                <div className="filter-buttons">
+                  {[
+                    { id: "aging", label: "Anti-Aging", emoji: "⏳" },
+                    { id: "acne", label: "Acne", emoji: "🛡️" },
+                    { id: "dullness", label: "Dullness / Dark Spots", emoji: "✨" },
+                    { id: "redness", label: "Redness / Rosacea", emoji: "🩹" },
+                    { id: "dryness", label: "Dryness", emoji: "💧" }
+                  ].map(concern => {
+                    const active = selectedConcerns.includes(concern.id);
+                    return (
+                      <button
+                        key={concern.id}
+                        type="button"
+                        className={`filter-btn ${active ? "active" : ""}`}
+                        onClick={() => toggleConcern(concern.id)}
+                      >
+                        <span style={{ marginRight: '4px' }}>{concern.emoji}</span> {concern.label}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+
             {/* Search inputs */}
             <div className="search-container">
               <Search className="search-icon" size={18} />
@@ -1134,15 +2085,17 @@ export default function ActiveIngredientChecker() {
                     <div className="pills-grid">
                       {filteredIngredients.filter(i => i.category === category).map((item) => {
                         const isSelected = selectedIds.includes(item.id);
+                        const isRec = isRecommended(item);
                         return (
                           <button
                             key={item.id}
                             type="button"
-                            className={`ingredient-pill ${isSelected ? "selected" : ""}`}
+                            className={`ingredient-pill ${isSelected ? "selected" : ""} ${isRec ? "recommended-highlight" : ""}`}
                             onClick={() => toggleSelect(item.id)}
                             title={item.description}
                           >
                             {item.name}
+                            {isRec && !isSelected && <Sparkles size={12} style={{ color: "#e67700", marginLeft: "4px" }} />}
                             {isSelected ? <Check size={14} /> : null}
                           </button>
                         );
@@ -1177,14 +2130,72 @@ export default function ActiveIngredientChecker() {
               </div>
 
               {selectedIds.length === 0 ? (
-                <div style={{ textAlign: "center", padding: "36px 0", color: "#8c8179" }}>
-                  <HelpCircle size={36} style={{ margin: "0 auto 12px", opacity: 0.5 }} />
-                  <p style={{ fontSize: "0.85rem", margin: 0, lineHeight: 1.5 }}>
-                    Select two or more active ingredients on the left to check for conflicts and structure a safe routine.
-                  </p>
+                <div>
+                  <SkincareNodeMap 
+                    selectedIds={selectedIds}
+                    ingredients={INGREDIENTS}
+                    conflictRules={CONFLICT_RULES}
+                    synergies={SYNERGIES}
+                  />
+                  <div style={{ textAlign: "center", padding: "10px 0 20px", color: "#8c8179" }}>
+                    <HelpCircle size={28} style={{ margin: "0 auto 8px", opacity: 0.5 }} />
+                    <p style={{ fontSize: "0.85rem", margin: 0, lineHeight: 1.5 }}>
+                      Select two or more active ingredients on the left to check for conflicts and structure a safe routine.
+                    </p>
+                  </div>
                 </div>
               ) : (
                 <div>
+                  {/* Safety Score Dial */}
+                  <div className="safety-dial-wrapper" style={{ display: "flex", flexDirection: "column", alignItems: "center", marginBottom: "24px", marginTop: "12px" }}>
+                    <div style={{ position: "relative", width: "100px", height: "100px" }}>
+                      <svg width="100" height="100" viewBox="0 0 100 100" style={{ transform: "rotate(-90deg)" }}>
+                        <circle
+                          cx="50"
+                          cy="50"
+                          r="36"
+                          fill="transparent"
+                          stroke="#f0ebe3"
+                          strokeWidth="8"
+                        />
+                        <circle
+                          cx="50"
+                          cy="50"
+                          r="36"
+                          fill="transparent"
+                          stroke={safetyColor}
+                          strokeWidth="8"
+                          strokeDasharray={226.2}
+                          strokeDashoffset={226.2 - (safetyScore / 100) * 226.2}
+                          strokeLinecap="round"
+                          style={{ transition: "stroke-dashoffset 0.5s ease" }}
+                        />
+                      </svg>
+                      <div style={{
+                        position: "absolute",
+                        top: "50%",
+                        left: "50%",
+                        transform: "translate(-50%, -50%)",
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center"
+                      }}>
+                        <span style={{ fontSize: "1.6rem", fontWeight: 800, fontFamily: "var(--font-bebas), sans-serif", letterSpacing: "0.02em" }} className="dial-text">
+                          {safetyScore}%
+                        </span>
+                      </div>
+                    </div>
+                    <div style={{ textAlign: "center", marginTop: "8px" }}>
+                      <span style={{
+                        fontSize: "0.72rem",
+                        fontWeight: 800,
+                        textTransform: "uppercase",
+                        letterSpacing: "0.08em",
+                        color: safetyColor
+                      }}>{safetyRating}</span>
+                    </div>
+                  </div>
+
                   {/* Badges overview */}
                   <div className="badge-row">
                     <div className={`stat-badge ${conflictsCount > 0 ? "alert" : "safe"}`}>
@@ -1228,6 +2239,37 @@ export default function ActiveIngredientChecker() {
                       <span style={{ fontWeight: 600 }}>All selected actives are safe to layer together!</span>
                     </div>
                   )}
+
+                  {/* Routine Synergies highlights */}
+                  {matchingSynergies.length > 0 && (
+                    <div style={{ marginTop: "20px" }}>
+                      <div className="report-section-title">Routine Synergies</div>
+                      {matchingSynergies.map((syn, idx) => (
+                        <div key={idx} className="visual-rule-card safe" style={{ borderLeft: "4px solid #2d8a5c" }}>
+                          <div style={{ display: "flex", gap: "6px", alignItems: "center", fontWeight: 700, marginBottom: "4px", color: "#2b8a3e" }}>
+                            <Sparkles size={14} />
+                            <span>{syn.message}</span>
+                          </div>
+                          <p style={{ margin: "0 0 4px", fontSize: "0.78rem", color: "#2b8a3e" }}>
+                            <strong>Pairing:</strong> {INGREDIENTS.find(i => i.id === syn.actives[0])?.name} + {INGREDIENTS.find(i => i.id === syn.actives[1])?.name}
+                          </p>
+                          <p style={{ margin: 0, fontSize: "0.75rem", lineHeight: 1.4, color: "#476e52" }} className="synergy-benefit">
+                            {syn.benefit}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+
+                  {/* Skincare Node Map */}
+                  <div className="report-section-title" style={{ marginTop: "20px" }}>Skincare Chemistry Map</div>
+                  <SkincareNodeMap 
+                    selectedIds={selectedIds}
+                    ingredients={INGREDIENTS}
+                    conflictRules={CONFLICT_RULES}
+                    synergies={SYNERGIES}
+                  />
 
                   {/* Visual Step timelines */}
                   <div className="report-section-title" style={{ marginTop: "24px" }}>AM/PM Application Timeline</div>

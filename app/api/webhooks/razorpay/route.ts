@@ -41,6 +41,7 @@ export async function POST(req: Request) {
       const email: string = notes.b2b_email;
       const brandName: string = notes.b2b_brand || "Unknown Brand";
       const tier: string = notes.b2b_tier || "growth"; // "growth" | "scale"
+      const billing: string = notes.b2b_billing || "monthly";
 
       if (!email) {
         // Not a B2B subscription — fall through to regular user logic
@@ -91,6 +92,7 @@ export async function POST(req: Request) {
             key: apiKey,
             keyHash,
             tier,
+            billing,
             monthlyQuota,
             usageThisMonth: 0,
             quotaResetAt: nextMonth,
@@ -106,6 +108,7 @@ export async function POST(req: Request) {
             email,
             brandName,
             tier,
+            billing,
             monthlyQuota,
             quotaResetAt: nextMonth,
             razorpaySubscriptionId: subscription.id,

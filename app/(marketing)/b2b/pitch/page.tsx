@@ -868,7 +868,7 @@ export default function B2BPitchDeck() {
               Targeting Enterprise
             </span>
             <p style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.5)", lineHeight: 1.4, margin: 0 }}>
-              Cult Beauty, Sephora, ASOS, Nykaa
+              Global Retailers &amp; E-Commerce Platforms
             </p>
           </div>
         </aside>
