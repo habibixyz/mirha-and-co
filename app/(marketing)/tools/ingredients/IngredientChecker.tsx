@@ -478,7 +478,10 @@ function SkincareNodeMap({ selectedIds, ingredients, conflictRules, synergies }:
   if (selectedIds.length === 0) {
     return (
       <div className="node-map-placeholder">
-        <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`}>
+        <svg 
+          viewBox={`0 0 ${width} ${height}`}
+          style={{ width: "100%", height: "auto", display: "block", maxHeight: "280px" }}
+        >
           <circle cx={cx} cy={cy} r="60" fill="none" stroke="currentColor" strokeWidth="1.2" strokeDasharray="4 4" className="empty-orbit" />
           <circle cx={cx} cy={cy} r="4" fill="currentColor" className="empty-dot" />
         </svg>
@@ -549,7 +552,11 @@ function SkincareNodeMap({ selectedIds, ingredients, conflictRules, synergies }:
 
   return (
     <div className="node-map-wrapper">
-      <svg width="100%" height={height} viewBox={`0 0 ${width} ${height}`} className="node-map-svg">
+      <svg 
+        viewBox={`0 0 ${width} ${height}`}
+        className="node-map-svg"
+        style={{ width: "100%", height: "auto", display: "block", maxHeight: "280px" }}
+      >
         <defs>
           <radialGradient id="nodeGlow" cx="50%" cy="50%" r="50%">
             <stop offset="0%" stopColor="#fc2779" stopOpacity="0.15" />
@@ -1920,6 +1927,27 @@ export default function ActiveIngredientChecker() {
         html.dark .sun-warning-box, .dark .sun-warning-box {
           background: rgba(245, 159, 0, 0.15);
           color: #ffe066;
+        }
+
+        /* ── Mobile Layout Adjustments ── */
+        @media (max-width: 960px) {
+          .sticky-sidebar {
+            position: static !important;
+            width: 100% !important;
+            max-height: none !important;
+            overflow-y: visible !important;
+            padding: 16px !important;
+            margin-top: 24px;
+          }
+        }
+        @media (max-width: 480px) {
+          .ingredient-checker-page {
+            padding: 24px 12px 80px !important;
+          }
+          .node-map-placeholder,
+          .node-map-wrapper {
+            padding: 8px !important;
+          }
         }
       `}} />
 
