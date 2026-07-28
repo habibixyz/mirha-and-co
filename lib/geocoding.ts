@@ -17,6 +17,7 @@ export interface LiveLocationData {
   humidity: number;
   dewpoint: number;
   waterCategory: 'Very Hard' | 'Hard' | 'Moderately Hard' | 'Soft';
+  uvIndex?: number;
   source: 'live' | 'fallback';
 }
 
@@ -209,9 +210,9 @@ async function geocodeCityName(
 async function getLiveWeather(
   lat: number,
   lon: number
-): Promise<{ temp: number; humidity: number } | null> {
+): Promise<{ temp: number; humidity: number; uvIndex?: number } | null> {
   try {
-    const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m&forecast_days=1&timezone=auto`;
+    const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,uv_index&forecast_days=1&timezone=auto`;
 
     const res = await fetch(url, {
       signal: AbortSignal.timeout(4000),
@@ -222,12 +223,14 @@ async function getLiveWeather(
 
     const temp = data.current?.temperature_2m;
     const humidity = data.current?.relative_humidity_2m;
+    const uvIndex = data.current?.uv_index;
 
     if (temp === undefined || humidity === undefined) return null;
 
     return {
       temp: Math.round(temp),
       humidity: Math.round(humidity),
+      uvIndex: uvIndex !== undefined ? Math.round(uvIndex) : undefined,
     };
   } catch {
     return null;
@@ -270,6 +273,7 @@ export async function resolveLocationDataLive(query: {
     const ppm = query.ppm ?? estimatePpm(geoResult.countryCode);
     const temp = query.temp ?? weather?.temp ?? 24;
     const humidity = query.humidity ?? weather?.humidity ?? 65;
+    const uvIndex = weather?.uvIndex ?? 0;
     const dewpoint = query.dewpoint ?? computeDewpoint(temp, humidity);
     const waterCategory = classifyWaterHardness(ppm);
 
@@ -284,6 +288,7 @@ export async function resolveLocationDataLive(query: {
       humidity,
       dewpoint,
       waterCategory,
+      uvIndex,
       source: 'live',
     };
   }
@@ -305,6 +310,7 @@ export async function resolveLocationDataLive(query: {
     humidity,
     dewpoint,
     waterCategory: classifyWaterHardness(ppm),
+    uvIndex: 0,
     source: 'fallback',
   };
 }

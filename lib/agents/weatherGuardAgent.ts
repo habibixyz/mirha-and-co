@@ -5,7 +5,7 @@ export interface WeatherGuardTrigger {
   temperatureC: number;
   humidityPercent: number;
   ppm: number;
-  triggerType: "COLD_FREEZE" | "DESERT_DRY" | "MONSOON_HUMID" | "HARD_WATER_ALERT" | "OPTIMAL";
+  triggerType: "COLD_FREEZE" | "DESERT_DRY" | "MONSOON_HUMID" | "HARD_WATER_ALERT" | "UV_ALERT" | "OPTIMAL";
   alertHeadline: string;
   actionRequired: string;
   recommendedActiveOverride: string;
@@ -41,6 +41,20 @@ export async function runWeatherGuardAgent(city: string): Promise<WeatherGuardTr
       alertHeadline: `🌵 Low Air Moisture Alert in ${climate.city} (${humidity}% Relative Humidity)`,
       actionRequired: "Extreme trans-epidermal water loss (TEWL) risk detected.",
       recommendedActiveOverride: "Apply Squalane Oil seal over Hyaluronic Acid on damp skin within 60 seconds of washing.",
+    };
+  }
+
+  const uv = climate.uvIndex ?? 0;
+  if (uv >= 6) {
+    return {
+      city: climate.city,
+      temperatureC: temp,
+      humidityPercent: humidity,
+      ppm,
+      triggerType: "UV_ALERT",
+      alertHeadline: `☀️ High UV Index Warning in ${climate.city} (UV Index: ${uv})`,
+      actionRequired: "Severe photo-aging and UV barrier risk detected. High dermal antioxidant support required.",
+      recommendedActiveOverride: "Layer Vitamin C (L-Ascorbic Acid) or Niacinamide under SPF 50+ in the morning. Reapply sunscreen every 2 hours.",
     };
   }
 

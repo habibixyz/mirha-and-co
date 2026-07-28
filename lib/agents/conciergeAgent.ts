@@ -25,6 +25,7 @@ export interface ConciergeAgentResult {
   updatedRoutine: any;
   conflictWarnings: string[];
   recommendedAdjustments: string[];
+  consultationNarrative: string;
 }
 
 /**
@@ -131,6 +132,25 @@ export async function runConciergeAgent(input: ConciergeAgentInput): Promise<Con
     status: "success",
   });
 
+  // Compile consultation narrative
+  const targetSkinType = input.skinType || "oily";
+  const targetConcern = input.mainConcern || "acne";
+  const activeConflictsCount = conflictWarnings.length;
+
+  let consultationNarrative = `Hi! I'm Mirha, your virtual skincare consultant. I've finished analyzing your diagnostic telemetry. Since you are targeting ${targetConcern} on ${targetSkinType} skin, I've designed a highly personalized AM/PM routine for you.`;
+
+  if (climateData.ppm >= 150) {
+    consultationNarrative += ` I detected that your water in ${climateData.city} is in the '${climateData.waterCategory}' category (${climateData.ppm} PPM). This hard water mineral buildup can react with traditional cleansers and leave a film that traps sebum, so I've prioritized a clarifying, chelating cleanser in your morning setup.`;
+  }
+
+  if (activeConflictsCount > 0) {
+    consultationNarrative += ` Very importantly: I identified active layering conflicts on your vanity shelf (specifically Retinol mixed simultaneously with exfoliating acids). To protect your skin barrier from redness and dehydration, I have rescheduled these to be layered on alternating nights.`;
+  } else {
+    consultationNarrative += ` Your current product selections are chemically compatible and safe to layer together.`;
+  }
+
+  consultationNarrative += ` Please check the optimized AM/PM steps below to start your new regimen. Let me know if you have any questions!`;
+
   return {
     agentName: "Ask Mirha Concierge Agent v1.0",
     summary: `Autonomous agent successfully resolved ${conflictWarnings.length} ingredient conflict(s) and optimized your routine for ${climateData.city}'s ${climateData.waterCategory} water (${climateData.ppm} PPM).`,
@@ -138,5 +158,6 @@ export async function runConciergeAgent(input: ConciergeAgentInput): Promise<Con
     updatedRoutine,
     conflictWarnings,
     recommendedAdjustments,
+    consultationNarrative,
   };
 }
