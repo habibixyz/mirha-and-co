@@ -146,30 +146,13 @@ function KProductCard({ asin, section }: { asin: string; section: string }) {
             {product.name}
           </h3>
 
-          {/* Concern chips */}
-          {product.concerns?.length > 0 && (
-            <div style={{ display: "flex", flexWrap: "wrap", gap: "4px", marginBottom: "0.7rem" }}>
-              {(product.concerns as string[]).slice(0, 2).map((c) => (
-                <span key={c} style={{
-                  background: "#f2f7fb", color: "#4576e8",
-                  border: "1px solid #d9e5f8",
-                  padding: "2px 6px", borderRadius: "4px",
-                  fontSize: "0.55rem", fontWeight: 700,
-                  textTransform: "uppercase", letterSpacing: "0.08em",
-                }}>
-                  {c}
-                </span>
-              ))}
-            </div>
-          )}
-
           {/* Description */}
           <p className="kb-card-desc" style={{
             fontSize: "0.75rem",
             lineHeight: 1.6, marginBottom: "0.9rem",
             flex: 1,
           }}>
-            {product.description ? product.description.slice(0, 100) + "…" : ""}
+            {product.description ? product.description.slice(0, 80) + "…" : ""}
           </p>
 
           {/* Price */}
@@ -192,34 +175,20 @@ function KProductCard({ asin, section }: { asin: string; section: string }) {
 
       {/* CTAs */}
       <div style={{ padding: "0 1.1rem 1.1rem 1.1rem" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "7px" }}>
-          <Link
-            href={`/product/${asin}`}
-            style={{
-              display: "flex", alignItems: "center", justifyContent: "center", gap: "5px",
-              fontSize: "0.58rem", letterSpacing: "0.14em", textTransform: "uppercase",
-              fontWeight: 700, color: "#fff", background: "#fc2779",
-              padding: "9px 8px", borderRadius: "6px",
-              textDecoration: "none",
-              boxShadow: "0 3px 10px rgba(252,39,121,0.15)",
-            }}
-          >
-            Buy
-          </Link>
-          <Link
-            href={`/dashboard/analysis?product=${asin}`}
-            className="kb-btn-analyze"
-            style={{
-              display: "flex", alignItems: "center", justifyContent: "center", gap: "5px",
-              fontSize: "0.58rem", letterSpacing: "0.14em", textTransform: "uppercase",
-              fontWeight: 700,
-              padding: "9px 8px", borderRadius: "6px",
-              textDecoration: "none",
-            }}
-          >
-            Analyze
-          </Link>
-        </div>
+        <Link
+          href={`/product/${asin}`}
+          style={{
+            display: "flex", alignItems: "center", justifyContent: "center", gap: "5px",
+            fontSize: "0.58rem", letterSpacing: "0.14em", textTransform: "uppercase",
+            fontWeight: 700, color: "#fff", background: "#fc2779",
+            padding: "9px 8px", borderRadius: "6px",
+            textDecoration: "none",
+            boxShadow: "0 3px 10px rgba(252,39,121,0.15)",
+            textAlign: "center",
+          }}
+        >
+          Buy
+        </Link>
       </div>
     </div>
   );
@@ -250,9 +219,46 @@ export default function KBeautyPage() {
   return (
     <>
       <style>{`
-        .kb-tab { transition: color 0.18s, border-color 0.18s; white-space: nowrap; cursor: pointer; }
-        .kb-tab:hover { color: #fc2779; }
-        .kb-tab.on { color: #fc2779; border-bottom-color: #fc2779; font-weight: 600; }
+        .kb-category-select-wrap {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          margin-bottom: 1.5rem;
+          border-bottom: 1px solid #ebdcd0;
+          padding-bottom: 16px;
+        }
+
+        .kb-category-label {
+          font-size: 11px;
+          letter-spacing: 0.18em;
+          text-transform: uppercase;
+          font-weight: 700;
+          color: #8c857f;
+        }
+
+        .kb-category-select {
+          appearance: none;
+          background: #fff;
+          border: 1px solid #e0d8d0;
+          border-radius: 8px;
+          padding: 8px 36px 8px 16px;
+          font-size: 13.5px;
+          font-family: inherit;
+          color: #2b2826;
+          font-weight: 600;
+          outline: none;
+          cursor: pointer;
+          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23fc2779' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19.5 8.25l-7.5 7.5-7.5-7.5'/%3E%3C/svg%3E");
+          background-repeat: no-repeat;
+          background-position: right 12px center;
+          background-size: 16px;
+          transition: all 0.2s ease;
+        }
+
+        .kb-category-select:focus, .kb-category-select:hover {
+          border-color: #fc2779;
+          box-shadow: 0 4px 12px rgba(252,39,121,0.06);
+        }
         .kb-pill { transition: all 0.18s; cursor: pointer; }
         .kb-pill:hover { border-color: #fc2779; }
         .kb-pill.on { background: #fc2779; color: #fff; border-color: #fc2779; }
@@ -357,7 +363,12 @@ export default function KBeautyPage() {
         html.dark .kb-hero-h1, .dark .kb-hero-h1 { color: #ffffff !important; }
         html.dark .kb-hero-p, .dark .kb-hero-p { color: #aba49d !important; }
         html.dark .kb-card, .dark .kb-card { background: #181716 !important; border-color: rgba(255, 255, 255, 0.12) !important; }
-        html.dark .kb-card-img, .dark .kb-card-img { background: #141312 !important; border-bottom-color: rgba(255, 255, 255, 0.08) !important; }
+        html.dark .kb-card-img, .dark .kb-card-img {
+          background: #ffffff !important;
+          border-color: rgba(255, 255, 255, 0.08) !important;
+          opacity: 0.92;
+          filter: brightness(0.93) contrast(1.02);
+        }
         html.dark .kb-card-name, .dark .kb-card-name { color: #ffffff !important; }
         html.dark .kb-card-desc, .dark .kb-card-desc { color: #aba49d !important; }
         html.dark .kb-card-price, .dark .kb-card-price { color: #ffffff !important; }
@@ -369,9 +380,13 @@ export default function KBeautyPage() {
         html.dark .kb-editorial-inner-card, .dark .kb-editorial-inner-card { background: #1c1a18 !important; border-color: rgba(255, 255, 255, 0.12) !important; }
         html.dark .kb-editorial-inner-card h3, .dark .kb-editorial-inner-card h3 { color: #ffffff !important; }
         html.dark .kb-editorial-inner-card p, .dark .kb-editorial-inner-card p { color: #aba49d !important; }
+        html.dark .kb-step-title, .dark .kb-step-title { color: #ffffff !important; }
         html.dark .kb-tool, .dark .kb-tool { background: #181716 !important; border-color: rgba(255, 255, 255, 0.12) !important; }
         html.dark .kb-tool h3, .dark .kb-tool h3 { color: #ffffff !important; }
         html.dark .kb-tool p, .dark .kb-tool p { color: #aba49d !important; }
+        html.dark .kb-category-select-wrap, .dark .kb-category-select-wrap { border-bottom-color: rgba(255, 255, 255, 0.12) !important; }
+        html.dark .kb-category-select, .dark .kb-category-select { background: #181716 !important; border-color: rgba(255, 255, 255, 0.15) !important; color: #f7f5f2 !important; }
+        html.dark .kb-category-select option, .dark .kb-category-select option { background: #181716 !important; color: #f7f5f2 !important; }
       `}</style>
 
       <main className="kb-main">
@@ -447,36 +462,20 @@ export default function KBeautyPage() {
         <section style={{ maxWidth: "1280px", margin: "0 auto", padding: "2.5rem 1.5rem 0" }}>
 
 
-          {/* Category tabs */}
-          <div
-            className="nobar"
-            style={{
-              display: "flex", gap: "2rem",
-              overflowX: "auto",
-              borderBottom: "1px solid #ebdcd0",
-              paddingBottom: "0",
-              marginBottom: "1.5rem",
-            }}
-          >
-            {SECTIONS.map((s) => (
-              <button
-                key={s.id}
-                onClick={() => setActiveSection(s.id)}
-                className={`kb-tab${activeSection === s.id ? " on" : ""}`}
-                style={{
-                  background: "none", border: "none",
-                  borderBottom: "2px solid transparent",
-                  padding: "0.75rem 0",
-                  fontSize: "0.78rem", letterSpacing: "0.04em",
-                  color: activeSection === s.id ? "#fc2779" : "#8c857f",
-                  fontWeight: activeSection === s.id ? 600 : 500,
-                  fontFamily: "inherit",
-                  borderBottomColor: activeSection === s.id ? "#fc2779" : "transparent",
-                }}
-              >
-                {s.label}
-              </button>
-            ))}
+          {/* Category Dropdown */}
+          <div className="kb-category-select-wrap">
+            <span className="kb-category-label">Routine:</span>
+            <select
+              value={activeSection}
+              onChange={(e) => setActiveSection(e.target.value)}
+              className="kb-category-select"
+            >
+              {SECTIONS.map((s) => (
+                <option key={s.id} value={s.id}>
+                  {s.label}
+                </option>
+              ))}
+            </select>
           </div>
 
           {/* Brand pills + Search */}
@@ -634,7 +633,7 @@ export default function KBeautyPage() {
                       {i + 1}
                     </span>
                     <div>
-                      <p style={{ fontSize: "0.78rem", fontWeight: 600, color: "#2b2826", marginBottom: "2px" }}>{title}</p>
+                      <p className="kb-step-title" style={{ fontSize: "0.78rem", fontWeight: 600, color: "#2b2826", marginBottom: "2px" }}>{title}</p>
                       <p style={{ fontSize: "0.72rem", color: "#8c857f", lineHeight: 1.6 }}>{desc}</p>
                     </div>
                   </div>

@@ -48,8 +48,7 @@ function MProductCard({ product }: { product: any }) {
         </div>
       </Link>
       <div className="mg-card-footer">
-        <Link href={`/product/${product.asin}`} className="mg-btn-primary">Buy</Link>
-        <Link href={`/dashboard/analysis?product=${product.asin}`} className="mg-btn-secondary">Analyse</Link>
+        <Link href={`/product/${product.asin}`} className="mg-btn-primary" style={{ width: "100%" }}>Buy</Link>
       </div>
     </div>
   );
@@ -107,6 +106,110 @@ export default function MensGroomingPage() {
           --ink: #f7f5f2;
           --muted: #aba49d;
           --rose-light: #2b111e;
+        }
+
+        html.dark .mg-card, .dark .mg-card {
+          background: #181716 !important;
+          border-color: rgba(255, 255, 255, 0.12) !important;
+        }
+
+        html.dark .mg-card-img, .dark .mg-card-img {
+          background: #ffffff !important;
+          border-color: rgba(255, 255, 255, 0.08) !important;
+          opacity: 0.92;
+          filter: brightness(0.93) contrast(1.02);
+        }
+
+        html.dark .mg-card-name, .dark .mg-card-name {
+          color: #ffffff !important;
+        }
+
+        html.dark .mg-card-desc, .dark .mg-card-desc {
+          color: #aba49d !important;
+        }
+
+        html.dark .mg-price, .dark .mg-price {
+          color: #ffffff !important;
+        }
+
+        html.dark .mg-card-footer, .dark .mg-card-footer {
+          border-top-color: rgba(255, 255, 255, 0.12) !important;
+        }
+
+        html.dark .mg-btn-secondary, .dark .mg-btn-secondary {
+          border-color: rgba(255, 255, 255, 0.12) !important;
+          color: #ffffff !important;
+          background: rgba(255, 255, 255, 0.08) !important;
+        }
+
+        html.dark .mg-btn-primary, .dark .mg-btn-primary {
+          background: #ffffff !important;
+          color: #0f0e0d !important;
+        }
+
+        html.dark .mg-btn-primary:hover, .dark .mg-btn-primary:hover {
+          background: var(--rose) !important;
+          color: #ffffff !important;
+        }
+
+        html.dark .mg-hero-cta, .dark .mg-hero-cta {
+          background: #ffffff !important;
+          color: #0f0e0d !important;
+        }
+
+        html.dark .mg-hero-cta:hover, .dark .mg-hero-cta:hover {
+          background: var(--rose) !important;
+          color: #ffffff !important;
+        }
+
+        html.dark .mg-search input, .dark .mg-search input {
+          background: #181716 !important;
+          border-color: rgba(255, 255, 255, 0.15) !important;
+          color: #f7f5f2 !important;
+        }
+
+        html.dark .mg-pill, .dark .mg-pill {
+          background: #181716 !important;
+          border-color: rgba(255, 255, 255, 0.12) !important;
+          color: #aba49d !important;
+        }
+
+        html.dark .mg-pill.on, .dark .mg-pill.on {
+          background: var(--rose) !important;
+          color: #ffffff !important;
+          border-color: var(--rose) !important;
+        }
+
+        html.dark .mg-tab, .dark .mg-tab {
+          color: #aba49d !important;
+        }
+
+        html.dark .mg-tab.on, .dark .mg-tab.on {
+          color: var(--rose) !important;
+        }
+
+        html.dark .mg-empty, .dark .mg-empty {
+          background: #181716 !important;
+          border-color: rgba(255, 255, 255, 0.12) !important;
+        }
+
+        html.dark .mg-empty h3, .dark .mg-empty h3 {
+          color: #ffffff !important;
+        }
+
+        html.dark .mg-empty p, .dark .mg-empty p {
+          color: #aba49d !important;
+        }
+
+        html.dark .mg-category-select, .dark .mg-category-select {
+          background-color: #181716 !important;
+          border-color: rgba(255, 255, 255, 0.15) !important;
+          color: #f7f5f2 !important;
+        }
+
+        html.dark .mg-category-select option, .dark .mg-category-select option {
+          background-color: #181716 !important;
+          color: #f7f5f2 !important;
         }
 
         /* ── Page shell ─────────────────────────────── */
@@ -235,33 +338,43 @@ export default function MensGroomingPage() {
           border-bottom: 1px solid var(--border);
         }
 
-        .mg-tabs {
+        .mg-category-select-wrap {
           display: flex;
-          gap: 0;
-          overflow-x: auto;
-          scrollbar-width: none;
-          border-bottom: 1px solid var(--border);
+          align-items: center;
+          gap: 12px;
           margin-bottom: 0;
+          padding: 16px 0;
         }
-        .mg-tabs::-webkit-scrollbar { display: none; }
 
-        .mg-tab {
-          background: none; border: none;
-          border-bottom: 2px solid transparent;
-          padding: 10px 18px;
-          font-size: 12px; letter-spacing: 0.08em;
-          text-transform: uppercase; font-weight: 600;
-          color: #9c9188;
-          cursor: pointer; white-space: nowrap;
-          font-family: inherit;
-          transition: color 0.18s, border-color 0.18s;
-          margin-bottom: -1px;
-        }
-        .mg-tab:hover { color: var(--rose); }
-        .mg-tab.on {
-          color: var(--rose);
-          border-bottom-color: var(--rose);
+        .mg-category-label {
+          font-size: 11px;
+          letter-spacing: 0.18em;
+          text-transform: uppercase;
           font-weight: 700;
+          color: var(--muted);
+        }
+
+        .mg-category-select {
+          appearance: none;
+          background: #fffaf4;
+          border: 1px solid #ded3ca;
+          border-radius: 8px;
+          padding: 8px 36px 8px 16px;
+          font-size: 13.5px;
+          font-family: inherit;
+          color: var(--ink);
+          font-weight: 600;
+          outline: none;
+          cursor: pointer;
+          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23fc2779' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19.5 8.25l-7.5 7.5-7.5-7.5'/%3E%3C/svg%3E");
+          background-repeat: no-repeat;
+          background-position: right 12px center;
+          background-size: 16px;
+          transition: all 0.2s ease;
+        }
+
+        .mg-category-select:focus, .mg-category-select:hover {
+          border-color: var(--rose);
         }
 
         .mg-filter-row {
@@ -402,7 +515,7 @@ export default function MensGroomingPage() {
         .mg-card-footer {
           border-top: 1px solid #eee5dd;
           padding: 10px 14px;
-          display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+          display: flex;
         }
 
         .mg-btn-primary, .mg-btn-secondary {
@@ -441,7 +554,7 @@ export default function MensGroomingPage() {
 
         /* ── Editorial ───────────────────────────────── */
         .mg-editorial {
-          background: var(--ink); color: #fbf7f1;
+          background: #161412; color: #fbf7f1;
           border-radius: 14px;
           padding: 40px;
           display: grid;
@@ -533,17 +646,20 @@ export default function MensGroomingPage() {
         {/* ── CATALOG ── */}
         <div className="mg-shell" id="mg-catalog">
           <div className="mg-filters-wrap">
-            {/* Category tabs */}
-            <div className="mg-tabs">
-              {SECTIONS.map((s) => (
-                <button
-                  key={s.id}
-                  onClick={() => setActiveSection(s.id)}
-                  className={`mg-tab${activeSection === s.id ? " on" : ""}`}
-                >
-                  {s.label}
-                </button>
-              ))}
+            {/* Category Select Dropdown */}
+            <div className="mg-category-select-wrap">
+              <span className="mg-category-label">Routine:</span>
+              <select
+                value={activeSection}
+                onChange={(e) => setActiveSection(e.target.value)}
+                className="mg-category-select"
+              >
+                {SECTIONS.map((s) => (
+                  <option key={s.id} value={s.id}>
+                    {s.label}
+                  </option>
+                ))}
+              </select>
             </div>
 
             {/* Brand pills + search */}

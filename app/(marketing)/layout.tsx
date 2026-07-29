@@ -39,6 +39,7 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 import SiteHeader from "@/components/SiteHeader";
 import NewsletterForm from "@/components/NewsletterForm";
 import BackToTop from "@/components/BackToTop";
+import DashboardPromoModal from "@/components/DashboardPromoModal";
 
 export async function generateMetadata() {
   return {
@@ -88,6 +89,7 @@ export default async function RootLayout({
  
  const locale = (cookieStore.get("mirha_locale")?.value || "en") as Locale;
  const currency = (cookieStore.get("mirha_currency")?.value || headerStore.get("x-default-currency") || "INR") as Currency;
+ const hasSession = !!cookieStore.get("mirha_session")?.value;
  const isRtl = locale === "ar";
  const siteUrl = "https://www.mirhaandco.com";
  const structuredData = [
@@ -170,6 +172,7 @@ export default async function RootLayout({
  <SiteHeader />
 
  {children}
+ <DashboardPromoModal hasSession={hasSession} />
  <BackToTop />
  </GlobalizationProvider>
  </ThemeProvider>
