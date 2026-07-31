@@ -182,6 +182,7 @@ export async function SeoBlogPost({
   date,
   readTime,
   sections,
+  views,
   children,
 }: {
   category: string;
@@ -190,6 +191,7 @@ export async function SeoBlogPost({
   date: string;
   readTime: string;
   sections: Section[];
+  views?: number;
   children?: React.ReactNode;
 }) {
   const cookieStore = await cookies();
@@ -574,7 +576,7 @@ export async function SeoBlogPost({
           <h1>{localizeContent(title)}</h1>
           <p className="post-description">{localizeContent(description)}</p>
           <div className="post-meta">
-            Updated {date} &nbsp;·&nbsp; {readTime} read &nbsp;·&nbsp; Affiliate links disclosed
+            Updated {date} &nbsp;·&nbsp; {readTime} read &nbsp;·&nbsp; {views ? `${views.toLocaleString()} reads · ` : ""}Affiliate links disclosed
           </div>
         </header>
 

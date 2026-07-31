@@ -790,7 +790,11 @@ const NEW_SLUGS = [
   "city-skin-aging-comparison",
   "clean-girl-aesthetic-cost",
   "dopamine-skin-blue-light",
-  "fast-skincare-barrier-damage"
+  "fast-skincare-barrier-damage",
+  "tech-neck-biomechanics-guide",
+  "santal-33-br540-teardown",
+  "skincare-biohacking-audit",
+  "mens-hairline-save-protocol"
 ];
 
 const mappedHighIntent = HIGH_INTENT_POSTS.map(p => ({
@@ -806,8 +810,19 @@ const mappedHighIntent = HIGH_INTENT_POSTS.map(p => ({
 }));
 
 export const POSTS: Post[] = [
+  ...mappedHighIntent.filter(p => [
+    "tech-neck-biomechanics-guide",
+    "santal-33-br540-teardown",
+    "skincare-biohacking-audit",
+    "mens-hairline-save-protocol"
+  ].includes(p.slug)),
   STATIC_POSTS[0],
-  ...mappedHighIntent.filter(p => NEW_SLUGS.includes(p.slug)),
+  ...mappedHighIntent.filter(p => NEW_SLUGS.includes(p.slug) && ![
+    "tech-neck-biomechanics-guide",
+    "santal-33-br540-teardown",
+    "skincare-biohacking-audit",
+    "mens-hairline-save-protocol"
+  ].includes(p.slug)),
   ...STATIC_POSTS.slice(1),
   ...mappedHighIntent.filter(p => !NEW_SLUGS.includes(p.slug))
 ];
@@ -843,12 +858,16 @@ const SLUG_IMAGE_MAP: Record<string, string> = {
  "10-years-sun-damage-indian-skin": "/blog-thumbs/blog_sun_damage.png",
  "hidden-cost-of-being-pretty": "/blog-thumbs/photo_beauty.png",
  "the-founder-face": "/blog-thumbs/blog_founder_wellness.png",
- "la-mer-myth-dupes": "/blog-thumbs/blog_la_mer_dupes.png",
- "skincare-routine-14-hour-day": "/blog-thumbs/blog_14_hour_skincare.png",
- "city-skin-aging-comparison": "/blog-thumbs/blog_city_skin_aging.png",
- "clean-girl-aesthetic-cost": "/blog-thumbs/blog_clean_girl_cost.png",
- "dopamine-skin-blue-light": "/blog-thumbs/blog_blue_light_skin.png",
- "fast-skincare-barrier-damage": "/blog-thumbs/blog_fast_skincare_barrier.png",
+  "la-mer-myth-dupes": "/blog-thumbs/blog_la_mer_dupes.png",
+  "skincare-routine-14-hour-day": "/blog-thumbs/blog_14_hour_skincare.png",
+  "city-skin-aging-comparison": "/blog-thumbs/blog_city_skin_aging.png",
+  "clean-girl-aesthetic-cost": "/blog-thumbs/blog_clean_girl_cost.png",
+  "dopamine-skin-blue-light": "/blog-thumbs/blog_blue_light_skin.png",
+  "fast-skincare-barrier-damage": "/blog-thumbs/blog_fast_skincare_barrier.png",
+  "tech-neck-biomechanics-guide": "/blog-thumbs/blog_tech_neck.png",
+  "santal-33-br540-teardown": "/blog-thumbs/blog_santal_teardown.png",
+  "skincare-biohacking-audit": "/blog-thumbs/blog_biohacking_audit.png",
+  "mens-hairline-save-protocol": "/blog-thumbs/blog_mens_hairline.png",
 
  // SKINCARE — 17 posts
  "why-is-my-face-darker-than-my-body": "/blog-thumbs/blog_face_darker.png",

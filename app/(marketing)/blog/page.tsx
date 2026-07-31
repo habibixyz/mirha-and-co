@@ -5,6 +5,7 @@ import BlogSearchClient from "./BlogSearchClient";
 import RegionalGuidesSelector from "@/components/RegionalGuidesSelector";
 import { cookies, headers } from "next/headers";
 import { getLocalizedContent, Currency } from "@/lib/globalization";
+import { prisma } from "@/lib/prisma";
 
 
 export const dynamic = "force-dynamic";
@@ -50,14 +51,6 @@ const catColors: Record<string, string> = {
 
 
 
-const posts = POSTS.map((p) => {
- return {
- ...p,
- initials: p.thumbnail,
- imageSrc: getRelevantImage(p.slug, p.title, p.category)
- };
-});
-
 const paths = [
  { label: "Search", title: "Ask Mirha by concern", text: "Search oily skin, pigmentation, niacinamide, sunscreen, or budget.", href: "/dashboard/search" },
  { label: "Routine", title: "Build your 4-step routine", text: "Get cleanser, treatment, moisturiser, and sunscreen for your skin profile.", href: "/tools/routine" },
@@ -69,6 +62,24 @@ export default async function BlogIndex() {
   const headerStore = await headers();
   const currency = (cookieStore.get("mirha_currency")?.value || headerStore.get("x-default-currency") || "INR") as Currency;
   const localizeContent = (text: string) => getLocalizedContent(text, currency);
+
+  // Fetch views
+  let viewMap = new Map<string, number>();
+  try {
+    const views = await prisma.blogPostView.findMany();
+    views.forEach((v) => viewMap.set(v.slug, v.views));
+  } catch (e) {
+    console.error("Failed to fetch blog view counts:", e);
+  }
+
+  const posts = POSTS.map((p) => {
+    return {
+      ...p,
+      initials: p.thumbnail,
+      imageSrc: getRelevantImage(p.slug, p.title, p.category),
+      views: viewMap.get(p.slug) || 0
+    };
+  });
  return (
  <main>
  <style>{`

@@ -4,6 +4,7 @@ import { SeoBlogPost } from "@/components/SeoBlogPost";
 import { getProgrammaticPostBySlug, getAllProgrammaticSlugs } from "@/lib/programmatic-posts";
 import { cookies, headers } from "next/headers";
 import { getLocalizedContent, Currency } from "@/lib/globalization";
+import { prisma } from "@/lib/prisma";
 
 interface PageProps {
   params: Promise<{
@@ -53,6 +54,19 @@ export default async function ProgrammaticBlogPost({ params }: PageProps) {
     notFound();
   }
 
+  // Increment and fetch views
+  let views = 0;
+  try {
+    const updated = await prisma.blogPostView.upsert({
+      where: { slug },
+      update: { views: { increment: 1 } },
+      create: { slug, views: 1 },
+    });
+    views = updated.views;
+  } catch (error) {
+    console.error("Error updating view count:", error);
+  }
+
   return (
     <SeoBlogPost
       category={post.category}
@@ -61,6 +75,7 @@ export default async function ProgrammaticBlogPost({ params }: PageProps) {
       date={post.date}
       readTime={post.readTime}
       sections={post.sections}
+      views={views}
     />
   );
 }

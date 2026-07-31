@@ -212,3 +212,8 @@ model B2BUsageLog {
   @@index([keyId])
   @@index([keyId, createdAt])
 }
+
+model BlogPostView {
+  slug  String @id
+  views Int    @default(0)
+}

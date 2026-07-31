@@ -16,6 +16,7 @@ type BlogSearchClientProps = {
  initials: string;
  imageSrc: string;
  tags: string[];
+ views?: number;
  }>;
  catColors: Record<string, string>;
  currency: Currency;
@@ -301,6 +302,9 @@ export default function BlogSearchClient({ initialPosts, catColors, currency }: 
  <span>{post.date}</span>
  <span>{post.readTime}</span>
  <span>{post.productCount} picks</span>
+ {post.views !== undefined && post.views > 0 && (
+   <span>{post.views.toLocaleString()} reads</span>
+ )}
  </div>
  </a>
  ))}
