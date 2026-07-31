@@ -13,6 +13,7 @@ The platform is designed to:
 * Provide instant, hyper-personalized advice via our AI Skincare Consultant ("Ask Mirha").
 * Prevent skin damage using the Cross-Product Ingredient Conflict Checker.
 * Monetize through tiered subscriptions (Pro vs. Free) and curated affiliate recommendations.
+* Keep users engaged using dynamic real-time read counters across the catalog.
 
 ---
 
@@ -27,16 +28,18 @@ The platform is designed to:
 ## Key SaaS Features
 
 * **Secure Authentication:** Custom, secure user accounts with encrypted sessions.
-* **Pro Subscriptions:** Integrated billing (Razorpay & Dodo Payments) to unlock premium features and higher usage limits.
+* **Pro Subscriptions:** Integrated billing (Razorpay, Paddle, & Dodo Payments) to unlock premium features and higher usage limits.
 * **AI Skincare Consultant:** A dynamic RAG (Retrieval-Augmented Generation) search engine powered by Gemini that answers queries based on our specific, verified product catalog.
 * **Skin Journal & Analyzer:** Users can log daily skin progress, upload photos, and receive immediate AI dermatological analysis.
 * **Routine Tracker:** Daily tracking of AM/PM routines to maintain consistency.
 * **Conflict Checker (Pro Feature):** Cross-references ingredient lists between multiple products to warn users about dangerous chemical layerings (e.g., Retinol + AHAs).
-* **Automated Email Workflows:** Resend integrations for welcome emails, password resets, and targeted lead-magnet downloads (e.g., Hard Water Guides, Dupe Sheets).
+* **Automated Email Workflows:** Resend integrations for welcome emails, password resets, and targeted lead-magnet downloads.
 * **Globalized Commerce & Content:** 
   * Region-aware dynamic pricing and currency localization (USD, GBP, INR).
   * Automated Dupe Finder tool that redirects to local Amazon affiliate storefronts.
   * Regional editorial content tailored for diverse global climates and skin types.
+* **Engagement & Analytics:**
+  * **Real-time View Counters**: Dynamically updates and displays read counts on individual articles and catalog cards based on direct server-side tracking (stored in PostgreSQL).
 
 ---
 
@@ -45,7 +48,7 @@ The platform is designed to:
 * **Frontend:** Next.js 16 (App Router), React, TypeScript, Framer Motion
 * **Styling:** Custom CSS design system (Vanilla CSS)
 * **Backend:** Next.js Server Actions & API Routes
-* **Database:** PostgreSQL hosted on Supabase
+* **Database:** PostgreSQL hosted on Railway / Supabase
 * **ORM:** Prisma
 * **AI & Machine Learning:** Google Generative AI (Gemini Vision & Pro), Google Antigravity, OpenAI (Codex / ChatGPT), Anthropic Claude
 * **Email:** Resend
@@ -53,22 +56,15 @@ The platform is designed to:
 
 ---
 
-## AI Development & Codex / GPT-5.6 Integration
+## AI Development & Multi-Agentic Ecosystem
 
-This platform was architected and built with extensive AI pair-programming leveraging **OpenAI Codex** and **GPT-5.6** models:
+This platform is powered by an advanced multi-model AI suite and modern agentic workflows:
 
-* **Full-Stack Architecture & Scaffolding**: Leveraged OpenAI Codex for rapid Next.js 16 App Router structuring, strict TypeScript interfaces, and Prisma ORM relational schema design (`User`, `Routine`, `SkinJournal`, `AiQueryLog`).
-* **Algorithmic Logic & RAG Search**: Engineered core backend algorithms with GPT-5.6, including the **Cross-Product Ingredient Conflict Matrix** (detecting AHA + Retinol layering conflicts), regional climate localization logic, and product vector search retrieval.
-* **Component Synthesis & Refactoring**: Applied Codex to generate responsive, glassmorphic UI components (`RoutineQuiz.tsx`, `IngredientConflictChecker.tsx`, `ShopFilterClient.tsx`) and optimize Next.js Server Actions.
-* **Automated Tooling & Scripts**: Utilized Codex to generate batch optimization scripts (`scratch/optimize_all_assets.py`, `scratch/make_submission_zip.ps1`) to streamline asset management and deployment packaging.
-
-### Multi-Model Ecosystem & Agentic Workflows
-
-In addition to core Codex pair-programming, full-stack development and content synthesis were powered by an integrated multi-model AI suite:
-
-* **Google Antigravity**: Driven by DeepMind's agentic AI coding assistant for end-to-end autonomous debugging, complex refactoring, deployment verification, and build pipeline stabilization.
+* **Catalog Audit Agent**: Automatically audits, validates, and recommends correct skincare, beauty, and posture correction products (e.g., Boldfit High-Density Foam Rollers) dynamically matching the blog content's context.
+* **Weather Guard Agent**: Analyzes localized weather and environmental metrics (UV index, humidity, air quality) to dynamically suggest protective skin routines.
+* **Google Antigravity**: Driven by DeepMind's agentic AI coding assistant for end-to-end autonomous debugging, database migration pipelines, and build stability.
 * **Google Gemini**: Powers the live production RAG engine ("Ask Mirha"), dermatological image diagnostics, and routine generation.
-* **ChatGPT (OpenAI) & Claude (Anthropic)**: Utilized for deep domain research, synthesizing regional skincare guides, refining chemical ingredient rules, and polishing UX copy.
+* **OpenAI & Anthropic**: Used for domain research, chemical conflict rules verification, and synthesizing global skincare guides.
 
 ---
 
@@ -78,7 +74,7 @@ In addition to core Codex pair-programming, full-stack development and content s
 app/
  ├── (marketing)/       # Public pages, blogs, free tools, pricing
  ├── (saas)/            # Protected SaaS dashboard, routines, journals, conflicts
- ├── api/               # API endpoints (Webhooks, Chat, Payments)
+ ├── api/               # API endpoints (Webhooks, Chat, Payments, Agents)
 components/             # Reusable UI elements (Sidebars, Modals, Cards)
 lib/                    # Core logic (Auth, AI, Prisma Client, Search Index)
 prisma/                 # Database schema and migrations
@@ -93,6 +89,7 @@ Our PostgreSQL database efficiently tracks:
 * **Users & Sessions:** Secure authentication.
 * **Subscriptions:** Free and Pro tier management.
 * **Routines & SkinJournals:** User-generated progress tracking.
+* **BlogPostViews:** Real-time view counts for all dynamic routes.
 * **AiQueryLogs:** Background logging of all AI interactions (Queries, Responses, Context) to fine-tune our models.
 * **Products:** The catalog used for AI Retrieval-Augmented Generation.
 
@@ -107,8 +104,9 @@ npm install
 # 2. Set up environment variables (.env)
 # DATABASE_URL, DIRECT_URL, GEMINI_API_KEY, RESEND_API_KEY, etc.
 
-# 3. Sync database
-npx prisma db push
+# 3. Set up database & generate Prisma client
+# (Always use migrations locally to safely sync changes)
+npx prisma migrate dev
 npx prisma generate
 
 # 4. Start the development server
