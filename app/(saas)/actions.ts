@@ -822,6 +822,17 @@ export async function submitLeadAction(email: string, type: string, data?: strin
   try {
     const normalizedEmail = email.trim().toLowerCase();
 
+    // ✅ Bypass rate limiting if this lead already exists in the system
+    const existingLead = await (prisma as any).lead.findFirst({
+      where: {
+        email: normalizedEmail,
+        type
+      }
+    });
+    if (existingLead) {
+      return { success: true, id: existingLead.id };
+    }
+
     // ✅ Rate limiting: 3 per day per email
     const today = new Date();
     today.setHours(0, 0, 0, 0);

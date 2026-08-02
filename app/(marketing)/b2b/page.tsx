@@ -1584,6 +1584,11 @@ export default function B2BPitchDeck() {
                         </h4>
                       </div>
                       <p style={{ fontSize: "0.75rem", color: "#94a3b8", margin: "0 0 0.85rem" }}>Your API key will be sent to this email instantly after payment.</p>
+                      {checkoutError && (
+                        <div style={{ background: "rgba(239,68,68,0.1)", border: "1px solid rgba(239,68,68,0.3)", padding: "0.75rem", borderRadius: "6px", color: "#ef4444", fontSize: "0.8rem", marginBottom: "0.85rem" }}>
+                          {checkoutError}
+                        </div>
+                      )}
                       <form onSubmit={handleLeadSubmit} style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr auto", gap: "0.75rem", alignItems: "center" }}>
                         <input 
                           type="text" 
