@@ -284,6 +284,7 @@ export default function B2BPitchDeck() {
     e.preventDefault();
     if (!leadName || !leadEmail || !leadBrand) return;
     setIsSubmittingLead(true);
+    setCheckoutError(null);
     try {
       const dataStr = JSON.stringify({
         name: leadName,
@@ -295,10 +296,15 @@ export default function B2BPitchDeck() {
           annualImpact: Math.round(totalAnnualImpact)
         }
       });
-      await submitLeadAction(leadEmail, "b2b_api", dataStr);
+      const res = await submitLeadAction(leadEmail, "b2b_api", dataStr);
+      if (res && 'error' in res && res.error) {
+        setCheckoutError(res.error);
+        return;
+      }
       setLeadSubmitted(true);
-    } catch (err) {
+    } catch (err: any) {
       console.error("Lead submission error:", err);
+      setCheckoutError(err.message || "Failed to submit details. Please try again.");
     } finally {
       setIsSubmittingLead(false);
     }
