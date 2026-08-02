@@ -3,8 +3,9 @@ import { generateRoutine, QuizAnswers } from "../../../../lib/routineEngine";
 import { resolveLocationDataLive } from "../../../../lib/geocoding";
 import { prisma } from "@/lib/prisma";
 import crypto from "crypto";
+import { sendQuotaWarningEmail, sendQuotaExhaustedEmail } from "@/lib/b2bEmail";
 
-/* ─── In-memory rate limiter (per-IP burst protection) ─── */
+/* ─── In-memory rate limiter (per-IP burst protection + global trial cap) ─── */
 const rateMap = new Map<string, { count: number; resetAt: number }>();
 const RATE_WINDOW_MS = 60_000;
 
@@ -25,6 +26,11 @@ setInterval(() => {
     if (now > val.resetAt) rateMap.delete(key);
   }
 }, 5 * 60_000);
+
+// Global trial request ceiling — caps all trial-key calls across every IP.
+// Prevents rotating-proxy abuse where many IPs each stay under the per-IP limit
+// but together hammer the geocoding/recommendation pipeline at zero cost.
+const GLOBAL_TRIAL_LIMIT_PER_MIN = 500;
 
 /* ─── Security headers ─── */
 const securityHeaders = {
@@ -65,6 +71,7 @@ export async function POST(req: NextRequest) {
       catalog,
     } = body;
 
+    // ── Step 1: API key required ──────────────────────────────────────────────
     if (!apiKey) {
       return NextResponse.json(
         { success: false, error: "Unauthorized. A valid B2B API Key is required." },
@@ -72,37 +79,25 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // ── Live Global Geocoding Pipeline ──
-    const liveLocation = await resolveLocationDataLive({
-      postalCode: postalCode || climate?.postalCode,
-      city: city || climate?.city,
-      country: country || climate?.country,
-      ppm: climate?.ppm,
-      temp: climate?.temp,
-      humidity: climate?.humidity,
-      dewpoint: climate?.dewpoint,
-    });
-
-    // Build fully-resolved climate payload for the engine
-    const climatePayload = {
-      city: liveLocation.city,
-      country: liveLocation.countryCode,
-      postalCode: postalCode || climate?.postalCode,
-      ppm: liveLocation.ppm,
-      temp: liveLocation.temp,
-      humidity: liveLocation.humidity,
-      dewpoint: liveLocation.dewpoint,
-      catalog: catalog || climate?.catalog,
-    };
-
-    // ── Trial key: bypass DB, use static rate limit ──
+    // ── Step 2: Auth + quota (BEFORE geocoding — fail fast for bad/exhausted keys) ─
+    // Invalid, rate-limited, or quota-exceeded requests are rejected here in
+    // ~5ms (a DB index lookup) without ever touching Nominatim or Open-Meteo.
     const isTrial = apiKey === "b2b_trial_key";
-    let quotaInfo = { remaining: 9999, monthlyQuota: 10000 };
+    let quotaInfo = { remaining: 9999, monthlyQuota: 10000, quotaResetAt: null as string | null };
+    let logKeyId: string | null = null; // captured for deferred usage logging
 
     if (isTrial) {
+      // Per-IP limit (60/min)
       if (isRateLimited(`${ip}:trial`, 60)) {
         return NextResponse.json(
-          { success: false, error: "Rate limit exceeded. Trial keys allow 60 requests per minute." },
+          { success: false, error: "Rate limit exceeded. Trial keys allow 60 requests per minute per IP." },
+          { status: 429, headers: dynamicHeaders }
+        );
+      }
+      // Global ceiling across all IPs — prevents rotating-proxy abuse
+      if (isRateLimited("global:trial", GLOBAL_TRIAL_LIMIT_PER_MIN)) {
+        return NextResponse.json(
+          { success: false, error: "Trial API global limit reached. Please try again shortly or upgrade to a live key." },
           { status: 429, headers: dynamicHeaders }
         );
       }
@@ -135,18 +130,7 @@ export async function POST(req: NextRequest) {
         b2bKey.usageThisMonth = 0;
       }
 
-      // Enforce monthly quota
-      if (b2bKey.usageThisMonth >= b2bKey.monthlyQuota) {
-        return NextResponse.json(
-          {
-            success: false,
-            error: `Monthly quota of ${b2bKey.monthlyQuota.toLocaleString()} API calls exceeded. Upgrade your plan or contact support.`,
-          },
-          { status: 429, headers: dynamicHeaders }
-        );
-      }
-
-      // Per-minute burst limit (1000/min for any live key)
+      // Per-minute burst limit (1000/min for any live key) — cheap in-memory check
       if (isRateLimited(`${ip}:${apiKey}`, 1000)) {
         return NextResponse.json(
           { success: false, error: "Burst rate limit exceeded. Max 1,000 requests per minute per key." },
@@ -154,29 +138,89 @@ export async function POST(req: NextRequest) {
         );
       }
 
-      quotaInfo = {
-        remaining: Math.max(0, b2bKey.monthlyQuota - (b2bKey.usageThisMonth + 1)),
-        monthlyQuota: b2bKey.monthlyQuota,
-      };
-
-      // Increment usage + log (fire-and-forget)
-      prisma.b2BApiKey.update({
-        where: { id: b2bKey.id },
-        data: { usageThisMonth: { increment: 1 } },
-      }).catch(() => {});
-
-      prisma.b2BUsageLog.create({
-        data: {
-          keyId: b2bKey.id,
-          endpoint: "/api/v1/recommend",
-          skinType: skinType || null,
-          city: liveLocation.city || null,
-          ppm: liveLocation.ppm || null,
+      // Atomic quota check-and-increment — prevents race conditions under concurrent load.
+      // updateMany returns count=0 if usageThisMonth already >= monthlyQuota,
+      // meaning no row was updated and the quota is exhausted.
+      const quotaUpdate = await prisma.b2BApiKey.updateMany({
+        where: {
+          id: b2bKey.id,
+          usageThisMonth: { lt: b2bKey.monthlyQuota },
         },
-      }).catch(() => {});
+        data: { usageThisMonth: { increment: 1 } },
+      });
+
+      if (quotaUpdate.count === 0) {
+        // Tell the partner exactly when their quota resets so they can plan
+        const resetAt = b2bKey.quotaResetAt.toISOString();
+        const retryAfterSecs = Math.max(
+          0,
+          Math.ceil((b2bKey.quotaResetAt.getTime() - Date.now()) / 1000)
+        );
+        return NextResponse.json(
+          {
+            success: false,
+            error: `Monthly quota of ${b2bKey.monthlyQuota.toLocaleString()} API calls exceeded.`,
+            quota: {
+              used: b2bKey.usageThisMonth,
+              monthlyQuota: b2bKey.monthlyQuota,
+              quotaResetAt: resetAt,
+              upgradeUrl: "https://www.mirhaandco.com/b2b#pricing",
+            },
+          },
+          {
+            status: 429,
+            headers: {
+              ...dynamicHeaders,
+              "Retry-After": String(retryAfterSecs),
+              "X-Quota-Reset": resetAt,
+            },
+          }
+        );
+      }
+
+      const remaining = Math.max(0, b2bKey.monthlyQuota - (b2bKey.usageThisMonth + 1));
+      quotaInfo = {
+        remaining,
+        monthlyQuota: b2bKey.monthlyQuota,
+        quotaResetAt: b2bKey.quotaResetAt.toISOString(),
+      };
+      logKeyId = b2bKey.id;
+
+      // ── Quota threshold emails (fire-and-forget, non-blocking) ──────────────
+      // Each email fires exactly once per billing cycle by checking whether
+      // the increment just crossed the threshold boundary.
+      if (b2bKey.email) {
+        const usageBefore = b2bKey.usageThisMonth;       // value BEFORE this request
+        const usageAfter  = b2bKey.usageThisMonth + 1;   // value AFTER this request
+        const quota       = b2bKey.monthlyQuota;
+        const threshold80 = Math.floor(quota * 0.8);
+
+        // 80% warning: fires the first time usage crosses the 80% mark
+        if (usageBefore < threshold80 && usageAfter >= threshold80) {
+          sendQuotaWarningEmail({
+            email:        b2bKey.email,
+            brandName:    b2bKey.brandName,
+            tier:         b2bKey.tier,
+            used:         usageAfter,
+            monthlyQuota: quota,
+            quotaResetAt: b2bKey.quotaResetAt,
+          }).catch(() => {});
+        }
+
+        // Exhaustion notice: fires on the very last successful call
+        if (usageAfter === quota) {
+          sendQuotaExhaustedEmail({
+            email:        b2bKey.email,
+            brandName:    b2bKey.brandName,
+            tier:         b2bKey.tier,
+            monthlyQuota: quota,
+            quotaResetAt: b2bKey.quotaResetAt,
+          }).catch(() => {});
+        }
+      }
     }
 
-    /* ── Input Validation ── */
+    // ── Step 3: Input validation (cheap CPU check, before geocoding) ──────────
     const allowedSkinTypes = ["oily", "dry", "combination", "sensitive"];
     const allowedConcerns = ["acne", "pigmentation", "dullness", "dehydration"];
 
@@ -194,7 +238,34 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    /* ── Generate recommendation ── */
+    // ── Step 4: Geocoding (10-min cached — only runs for valid, authed requests) ─
+    const liveLocation = await resolveLocationDataLive({
+      postalCode: postalCode || climate?.postalCode,
+      city: city || climate?.city,
+      country: country || climate?.country,
+      ppm: climate?.ppm,
+      temp: climate?.temp,
+      humidity: climate?.humidity,
+      dewpoint: climate?.dewpoint,
+    });
+
+    // Cap the custom catalog at 100 SKUs to prevent CPU-spike attacks
+    // via arbitrarily large arrays being iterated through classifyClientProduct().
+    const rawCatalog = catalog || climate?.catalog;
+    const safeCatalog = Array.isArray(rawCatalog) ? rawCatalog.slice(0, 100) : rawCatalog;
+
+    const climatePayload = {
+      city: liveLocation.city,
+      country: liveLocation.countryCode,
+      postalCode: postalCode || climate?.postalCode,
+      ppm: liveLocation.ppm,
+      temp: liveLocation.temp,
+      humidity: liveLocation.humidity,
+      dewpoint: liveLocation.dewpoint,
+      catalog: safeCatalog,
+    };
+
+    // ── Step 5: Generate recommendation ───────────────────────────────────────
     const answers: QuizAnswers = {
       skinType,
       mainConcern: mainConcern || "acne",
@@ -204,6 +275,19 @@ export async function POST(req: NextRequest) {
 
     const recommendation = generateRoutine(answers, climatePayload);
 
+    // Fire-and-forget usage log (quota already incremented atomically in step 2)
+    if (logKeyId) {
+      prisma.b2BUsageLog.create({
+        data: {
+          keyId: logKeyId,
+          endpoint: "/api/v1/recommend",
+          skinType: skinType || null,
+          city: liveLocation.city || null,
+          ppm: liveLocation.ppm || null,
+        },
+      }).catch(() => {});
+    }
+
     // Calculate environmental barrier stress factors
     const humidity = liveLocation.humidity ?? 50;
     const temp = liveLocation.temp ?? 22;
@@ -211,6 +295,13 @@ export async function POST(req: NextRequest) {
 
     const tewlRiskLevel = humidity < 35 ? "High (Severe Barrier Evaporation)" : humidity < 50 ? "Moderate" : "Low (Optimal Moisture Preservation)";
     const mineralScumRiskLevel = ppm >= 250 ? "Critical Calcium Binding" : ppm >= 180 ? "High Soap Scum Deposition" : ppm >= 120 ? "Moderate Mineral Friction" : "Minimal Mineral Impact";
+
+    // Quota warning: surface a heads-up when the partner is below 20% remaining
+    // so they can upgrade before hitting a hard stop.
+    const quotaWarning =
+      !isTrial && quotaInfo.remaining < quotaInfo.monthlyQuota * 0.2
+        ? `You have ${quotaInfo.remaining.toLocaleString()} calls remaining this month (${Math.round((quotaInfo.remaining / quotaInfo.monthlyQuota) * 100)}% left). Upgrade at mirhaandco.com/b2b#pricing before your quota resets on ${quotaInfo.quotaResetAt ? new Date(quotaInfo.quotaResetAt).toLocaleDateString("en-GB", { day: "numeric", month: "short" }) : "month end"}.`
+        : undefined;
 
     return NextResponse.json(
       {
@@ -232,14 +323,21 @@ export async function POST(req: NextRequest) {
             : null,
           evaluatedCustomSkus: climatePayload.catalog?.length || 0,
         },
-        quota: quotaInfo,
+        quota: {
+          remaining: quotaInfo.remaining,
+          monthlyQuota: quotaInfo.monthlyQuota,
+          ...(quotaInfo.quotaResetAt ? { quotaResetAt: quotaInfo.quotaResetAt } : {}),
+          ...(quotaWarning ? { quotaWarning } : {}),
+        },
         recommendation,
       },
       { status: 200, headers: dynamicHeaders }
     );
   } catch (error: any) {
+    // Log full error server-side; never expose internal details to the client
+    console.error("[/api/v1/recommend] Unhandled error:", error);
     return NextResponse.json(
-      { success: false, error: error.message || "Internal Server Error" },
+      { success: false, error: "An internal error occurred. Please try again." },
       { status: 500, headers: dynamicHeaders }
     );
   }

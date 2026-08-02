@@ -6,6 +6,32 @@
 //   - Nominatim (OpenStreetMap): https://nominatim.openstreetmap.org
 //   - Open-Meteo:                https://api.open-meteo.com
 
+// ─── RESULT CACHE (10-min TTL) ─────────────────────────────────────────────────
+// Eliminates redundant Nominatim + Open-Meteo calls for the same location.
+// A B2B partner serving many customers in the same city (e.g. London, Mumbai)
+// would otherwise hit the external APIs on every single recommendation request.
+interface GeoCacheEntry { data: LiveLocationData; expiresAt: number; }
+const geoCache = new Map<string, GeoCacheEntry>();
+const GEO_CACHE_TTL_MS = 10 * 60 * 1000; // 10 minutes
+
+// Cleanup stale entries every 15 minutes to prevent memory growth
+setInterval(() => {
+  const now = Date.now();
+  for (const [k, v] of geoCache) {
+    if (now > v.expiresAt) geoCache.delete(k);
+  }
+}, 15 * 60 * 1000);
+
+function buildGeoCacheKey(query: {
+  postalCode?: string; city?: string; country?: string;
+}): string {
+  return [
+    (query.postalCode || "").toLowerCase().trim(),
+    (query.city || "").toLowerCase().trim(),
+    (query.country || "").toLowerCase().trim(),
+  ].join(":");
+}
+
 export interface LiveLocationData {
   city: string;
   country: string;
@@ -253,6 +279,23 @@ export async function resolveLocationDataLive(query: {
   dewpoint?: number;   // manual override still respected
 }): Promise<LiveLocationData> {
 
+  // Manual overrides (partner passes explicit env values) bypass caching
+  // because the overrides ARE the data — no geocoding needed.
+  const hasManualOverrides =
+    query.ppm !== undefined ||
+    query.temp !== undefined ||
+    query.humidity !== undefined ||
+    query.dewpoint !== undefined;
+
+  // ── Cache check (only for requests that need live geocoding) ──
+  const cacheKey = buildGeoCacheKey(query);
+  if (!hasManualOverrides) {
+    const cached = geoCache.get(cacheKey);
+    if (cached && Date.now() < cached.expiresAt) {
+      return cached.data; // Cache hit — no external API calls
+    }
+  }
+
   let geoResult: { lat: number; lon: number; city: string; countryCode: string } | null = null;
 
   // Try postal code first, then city name
@@ -277,7 +320,7 @@ export async function resolveLocationDataLive(query: {
     const dewpoint = query.dewpoint ?? computeDewpoint(temp, humidity);
     const waterCategory = classifyWaterHardness(ppm);
 
-    return {
+    const result: LiveLocationData = {
       city: geoResult.city,
       country: COUNTRY_WATER_PPM[geoResult.countryCode] ? geoResult.countryCode : 'Global',
       countryCode: geoResult.countryCode,
@@ -291,6 +334,13 @@ export async function resolveLocationDataLive(query: {
       uvIndex,
       source: 'live',
     };
+
+    // Cache successful live results (not fallbacks, not manual overrides)
+    if (!hasManualOverrides) {
+      geoCache.set(cacheKey, { data: result, expiresAt: Date.now() + GEO_CACHE_TTL_MS });
+    }
+
+    return result;
   }
 
   // ── Fallback: could not geocode (network issue or unknown postal code) ──

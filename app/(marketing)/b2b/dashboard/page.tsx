@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { Check, Copy, RefreshCw } from "lucide-react";
+import { Check, Copy, RefreshCw, KeyRound, Mail, AlertCircle, ChevronDown, ChevronUp } from "lucide-react";
 
 const CATALOG_PRESETS = {
   clean: [
@@ -26,16 +26,29 @@ const STEPS = [
   { label: "Copy integration code", sub: "Use it in your app" },
 ];
 
+interface KeyDetails {
+  tier: string;
+  monthlyQuota: number;
+  usageThisMonth: number;
+  brandName: string;
+  quotaResetAt: string;
+}
+
 export default function B2BDashboardPage() {
   const searchParams = useSearchParams();
   const isWelcome = searchParams.get("welcome") === "true";
+
   const [showWelcome, setShowWelcome] = useState(false);
-
-  useEffect(() => {
-    if (isWelcome) setShowWelcome(true);
-  }, [isWelcome]);
-
   const [apiKey, setApiKey] = useState("b2b_trial_key");
+  const [keyDetails, setKeyDetails] = useState<KeyDetails | null>(null);
+  const [isLiveKey, setIsLiveKey] = useState(false);
+
+  // Key retrieval state
+  const [lookupEmail, setLookupEmail] = useState("");
+  const [isLookingUp, setIsLookingUp] = useState(false);
+  const [lookupError, setLookupError] = useState<string | null>(null);
+  const [showRetrieveForm, setShowRetrieveForm] = useState(false);
+
   const [location, setLocation] = useState("London");
   const [skinType, setSkinType] = useState("oily");
   const [mainConcern, setMainConcern] = useState("acne");
@@ -60,6 +73,71 @@ export default function B2BDashboardPage() {
       setCopiedCode(true);
       setTimeout(() => setCopiedCode(false), 1500);
     }
+  };
+
+  // ── Key lookup helper ──────────────────────────────────────────────────────
+  const lookupKey = useCallback(async (email: string) => {
+    setIsLookingUp(true);
+    setLookupError(null);
+    try {
+      const res = await fetch("/api/b2b/lookup-key", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+      const data = await res.json();
+      if (data.found) {
+        setApiKey(data.apiKey);
+        setIsLiveKey(true);
+        setKeyDetails({
+          tier: data.tier,
+          monthlyQuota: data.monthlyQuota,
+          usageThisMonth: data.usageThisMonth,
+          brandName: data.brandName,
+          quotaResetAt: data.quotaResetAt,
+        });
+        setLookupError(null);
+        setShowRetrieveForm(false);
+        return true;
+      } else {
+        setLookupError(data.hint || "No active key found. Check your inbox or contact support.");
+        return false;
+      }
+    } catch {
+      setLookupError("Lookup failed. Please try again.");
+      return false;
+    } finally {
+      setIsLookingUp(false);
+    }
+  }, []);
+
+  // ── On mount: restore welcome state & auto-lookup key ──────────────────────
+  useEffect(() => {
+    const storedWelcome = sessionStorage.getItem("b2b_welcome_active");
+
+    if (isWelcome || storedWelcome === "true") {
+      setShowWelcome(true);
+      // Persist so refresh doesn't clear the banner
+      sessionStorage.setItem("b2b_welcome_active", "true");
+    }
+
+    // Auto-retrieve key from email stored before checkout redirect
+    const pendingEmail = sessionStorage.getItem("b2b_checkout_email");
+    if (pendingEmail && (isWelcome || storedWelcome === "true")) {
+      setLookupEmail(pendingEmail);
+      lookupKey(pendingEmail).then((found) => {
+        if (found) {
+          // Consume the stored email only after successful retrieval
+          sessionStorage.removeItem("b2b_checkout_email");
+        }
+      });
+    }
+  }, [isWelcome, lookupKey]);
+
+  const handleManualLookup = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!lookupEmail.trim()) return;
+    await lookupKey(lookupEmail.trim());
   };
 
   let parsedCatalog = [];
@@ -180,6 +258,10 @@ export function SkincareRecs({ postalCode }) {
     }
   };
 
+  const usagePct = keyDetails
+    ? Math.min(100, Math.round((keyDetails.usageThisMonth / keyDetails.monthlyQuota) * 100))
+    : 0;
+
   return (
     <div className="b2b-dashboard-root" style={{ background: "var(--bg-color)", color: "var(--text-main)", minHeight: "100vh", fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif' }}>
       
@@ -256,6 +338,16 @@ export function SkincareRecs({ postalCode }) {
             gap: 6px !important;
           }
         }
+
+        .key-reveal-card {
+          animation: slideIn 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        @keyframes slideIn {
+          from { opacity: 0; transform: translateY(-8px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+        .lookup-btn:hover { opacity: 0.88; }
+        .lookup-btn:disabled { opacity: 0.5; cursor: not-allowed; }
       `}</style>
 
       {/* ── Topbar ── */}
@@ -275,36 +367,157 @@ export function SkincareRecs({ postalCode }) {
         </div>
       </div>
 
-      {/* ── Banner ── */}
-      <div className="banner" style={{ margin: "18px 28px 0", background: "var(--banner-bg)", border: "1px solid var(--banner-border)", color: "var(--banner-text)", padding: "9px 14px", borderRadius: "6px", fontSize: "13px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <span>⚠️ Demo — uses shared <code style={{ fontFamily: "monospace", fontWeight: 700 }}>b2b_trial_key</code></span>
-        <Link href="/b2b#pricing" style={{ color: "#ec1f6a", fontWeight: 600, textDecoration: "none" }}>
-          Get a live key &rarr;
-        </Link>
-      </div>
-
-      {/* ── Welcome Banner (post-payment) ── */}
-      {showWelcome && (
-        <div style={{ margin: "12px 28px 0", background: "linear-gradient(135deg, #0b1f14 0%, #0d2818 100%)", border: "1px solid #22c55e", color: "#86efac", padding: "14px 18px", borderRadius: "8px", fontSize: "13.5px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-            <Check size={18} style={{ color: "#22c55e", flexShrink: 0 }} />
-            <div>
-              <strong style={{ color: "#4ade80" }}>Payment successful!</strong>{" "}
-              Your API key has been generated and emailed to you. Paste it in the field below to start making live calls.
-            </div>
-          </div>
-          <button
-            onClick={() => setShowWelcome(false)}
-            style={{ background: "none", border: "none", color: "#86efac", cursor: "pointer", fontSize: "18px", padding: "0 4px", flexShrink: 0 }}
-            aria-label="Dismiss"
-          >
-            ×
-          </button>
+      {/* ── Trial key banner (only shown when NOT on a live key) ── */}
+      {!isLiveKey && (
+        <div className="banner" style={{ margin: "18px 28px 0", background: "var(--banner-bg)", border: "1px solid var(--banner-border)", color: "var(--banner-text)", padding: "9px 14px", borderRadius: "6px", fontSize: "13px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <span>⚠️ Demo — uses shared <code style={{ fontFamily: "monospace", fontWeight: 700 }}>b2b_trial_key</code></span>
+          <Link href="/b2b#pricing" style={{ color: "#ec1f6a", fontWeight: 600, textDecoration: "none" }}>
+            Get a live key &rarr;
+          </Link>
         </div>
       )}
 
+      {/* ── Welcome + Auto-Retrieved Key Banner ── */}
+      {showWelcome && (
+        <div className="key-reveal-card" style={{ margin: "12px 28px 0", background: "linear-gradient(135deg, #0b1f14 0%, #0d2818 100%)", border: "1px solid #22c55e", borderRadius: "10px", overflow: "hidden" }}>
+          {/* Header row */}
+          <div style={{ padding: "14px 18px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+              <Check size={18} style={{ color: "#22c55e", flexShrink: 0 }} />
+              <div style={{ fontSize: "13.5px" }}>
+                <strong style={{ color: "#4ade80" }}>Payment successful!</strong>{" "}
+                {isLiveKey
+                  ? <span style={{ color: "#86efac" }}>Your API key has been loaded below and is ready to use.</span>
+                  : isLookingUp
+                  ? <span style={{ color: "#86efac" }}>Retrieving your API key…</span>
+                  : <span style={{ color: "#86efac" }}>Your key has been emailed — paste it below or retrieve it here.</span>
+                }
+              </div>
+            </div>
+            <button
+              onClick={() => {
+                setShowWelcome(false);
+                sessionStorage.removeItem("b2b_welcome_active");
+              }}
+              style={{ background: "none", border: "none", color: "#86efac", cursor: "pointer", fontSize: "18px", padding: "0 4px", flexShrink: 0 }}
+              aria-label="Dismiss"
+            >×</button>
+          </div>
+
+          {/* Auto-retrieved live key display */}
+          {isLiveKey && keyDetails && (
+            <div style={{ padding: "0 18px 16px" }}>
+              {/* Key box */}
+              <div style={{ background: "rgba(0,0,0,0.35)", border: "1px solid rgba(34,197,94,0.3)", borderRadius: "8px", padding: "12px 16px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: "12px", marginBottom: "12px" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "10px", minWidth: 0 }}>
+                  <KeyRound size={15} style={{ color: "#4ade80", flexShrink: 0 }} />
+                  <code style={{ fontFamily: "ui-monospace, Menlo, monospace", fontSize: "12.5px", color: "#4ade80", wordBreak: "break-all" }}>
+                    {apiKey}
+                  </code>
+                </div>
+                <button
+                  onClick={() => copy(apiKey, true)}
+                  style={{ background: "rgba(34,197,94,0.15)", border: "1px solid rgba(34,197,94,0.3)", borderRadius: "6px", padding: "6px 12px", color: "#4ade80", cursor: "pointer", fontSize: "12px", fontWeight: 600, flexShrink: 0, display: "flex", alignItems: "center", gap: "5px" }}
+                >
+                  {copiedKey ? <><Check size={12} /> Copied</> : <><Copy size={12} /> Copy Key</>}
+                </button>
+              </div>
+
+              {/* Quota stats */}
+              <div style={{ display: "flex", gap: "20px", flexWrap: "wrap" }}>
+                <div style={{ fontSize: "12px", color: "#86efac" }}>
+                  <span style={{ color: "#6ee7b7", fontWeight: 700 }}>{keyDetails.brandName}</span>
+                  {" · "}
+                  <span style={{ textTransform: "capitalize" }}>{keyDetails.tier}</span> tier
+                </div>
+                <div style={{ fontSize: "12px", color: "#86efac" }}>
+                  Quota: <span style={{ fontWeight: 700, color: "#4ade80" }}>{keyDetails.usageThisMonth.toLocaleString()}</span>
+                  {" / "}
+                  {keyDetails.monthlyQuota.toLocaleString()} calls this month
+                </div>
+                <div style={{ fontSize: "12px", color: "#86efac" }}>
+                  Resets: {new Date(keyDetails.quotaResetAt).toLocaleDateString("en-GB", { day: "numeric", month: "short" })}
+                </div>
+              </div>
+
+              {/* Usage bar */}
+              <div style={{ marginTop: "10px", height: "4px", background: "rgba(0,0,0,0.4)", borderRadius: "99px", overflow: "hidden" }}>
+                <div style={{ height: "100%", width: `${usagePct}%`, background: "linear-gradient(90deg, #22c55e, #4ade80)", borderRadius: "99px", transition: "width 0.6s ease" }} />
+              </div>
+            </div>
+          )}
+
+          {/* Loading state */}
+          {isLookingUp && (
+            <div style={{ padding: "0 18px 16px", display: "flex", alignItems: "center", gap: "8px", color: "#86efac", fontSize: "13px" }}>
+              <RefreshCw size={14} className="animate-spin" />
+              Fetching your API key from our servers…
+            </div>
+          )}
+
+          {/* Lookup error state inside welcome banner */}
+          {!isLookingUp && !isLiveKey && lookupError && (
+            <div style={{ padding: "0 18px 16px" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "8px", color: "#fca5a5", fontSize: "12.5px", marginBottom: "10px" }}>
+                <AlertCircle size={14} style={{ flexShrink: 0 }} />
+                {lookupError}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* ── Retrieve my key section (always visible for returning partners) ── */}
+      <div style={{ margin: "10px 28px 0" }}>
+        <button
+          onClick={() => setShowRetrieveForm(v => !v)}
+          style={{ display: "flex", alignItems: "center", gap: "6px", background: "none", border: "none", color: "var(--text-muted)", fontSize: "12.5px", cursor: "pointer", padding: "4px 0", fontWeight: 500 }}
+        >
+          <KeyRound size={13} />
+          {showRetrieveForm ? "Hide key retrieval" : "Already a partner? Retrieve your live key →"}
+          {showRetrieveForm ? <ChevronUp size={12} /> : <ChevronDown size={12} />}
+        </button>
+
+        {showRetrieveForm && (
+          <form onSubmit={handleManualLookup} style={{ marginTop: "8px", display: "flex", gap: "8px", alignItems: "flex-start", flexWrap: "wrap" }}>
+            <div style={{ position: "relative", flex: "1 1 280px", minWidth: "220px" }}>
+              <Mail size={14} style={{ position: "absolute", left: "10px", top: "50%", transform: "translateY(-50%)", color: "var(--text-sub)", pointerEvents: "none" }} />
+              <input
+                type="email"
+                placeholder="your@company.com"
+                value={lookupEmail}
+                onChange={e => setLookupEmail(e.target.value)}
+                required
+                style={{ width: "100%", padding: "9px 10px 9px 32px", border: "1px solid var(--input-border)", borderRadius: "6px", fontSize: "13px", color: "var(--input-text)", background: "var(--input-bg)", boxSizing: "border-box" }}
+              />
+            </div>
+            <button
+              type="submit"
+              disabled={isLookingUp || !lookupEmail.trim()}
+              className="lookup-btn"
+              style={{ background: "#ec1f6a", color: "#fff", border: "none", borderRadius: "6px", padding: "9px 18px", fontSize: "13px", fontWeight: 700, cursor: "pointer", display: "flex", alignItems: "center", gap: "6px", transition: "opacity 0.15s", flexShrink: 0 }}
+            >
+              {isLookingUp ? <RefreshCw size={13} className="animate-spin" /> : <KeyRound size={13} />}
+              {isLookingUp ? "Retrieving…" : "Retrieve Key"}
+            </button>
+            {lookupError && (
+              <div style={{ width: "100%", display: "flex", alignItems: "center", gap: "6px", color: "#ef4444", fontSize: "12px", marginTop: "2px" }}>
+                <AlertCircle size={13} style={{ flexShrink: 0 }} />
+                {lookupError}
+              </div>
+            )}
+            {isLiveKey && !isLookingUp && (
+              <div style={{ width: "100%", display: "flex", alignItems: "center", gap: "6px", color: "#22c55e", fontSize: "12px", marginTop: "2px" }}>
+                <Check size={13} style={{ flexShrink: 0 }} />
+                Key loaded — it&apos;s now set in the API key field below.
+              </div>
+            )}
+          </form>
+        )}
+      </div>
+
       {/* ── Hero ── */}
-      <div className="hero" style={{ padding: "24px 28px 0" }}>
+      <div className="hero" style={{ padding: "20px 28px 0" }}>
         <h1 style={{ margin: 0, fontSize: "30px", fontWeight: 800, letterSpacing: "-0.01em", color: "var(--text-main)" }}>Skincare Recommendation</h1>
         <h1 style={{ margin: "2px 0 0", fontSize: "30px", fontWeight: 800, letterSpacing: "-0.01em", color: "#ec1f6a" }}>API Playground</h1>
         <p style={{ color: "var(--text-muted)", fontSize: "14.5px", maxWidth: "640px", lineHeight: 1.5, marginTop: "10px" }}>
@@ -350,14 +563,26 @@ export function SkincareRecs({ postalCode }) {
             {/* API Key */}
             <div style={{ marginBottom: "16px" }}>
               <label style={{ fontSize: "12.5px", fontWeight: 600, display: "flex", alignItems: "center", gap: "5px", marginBottom: "6px", color: "var(--text-main)" }}>
-                API Key <span style={{ color: "var(--text-sub)", fontSize: "11px", border: "1px solid var(--card-border)", borderRadius: "50%", width: "13px", height: "13px", display: "inline-flex", alignItems: "center", justifyContent: "center" }}>?</span>
+                API Key
+                {isLiveKey && (
+                  <span style={{ background: "rgba(34,197,94,0.12)", border: "1px solid rgba(34,197,94,0.3)", color: "#22c55e", borderRadius: "99px", padding: "1px 8px", fontSize: "10px", fontWeight: 700 }}>
+                    ✓ LIVE
+                  </span>
+                )}
               </label>
               <div style={{ position: "relative", display: "flex", alignItems: "center" }}>
                 <input
                   type="text"
                   value={apiKey}
-                  onChange={(e) => setApiKey(e.target.value)}
-                  style={{ width: "100%", padding: "9px 10px", border: "1px solid var(--input-border)", borderRadius: "6px", fontSize: "13px", color: "var(--input-text)", background: "var(--input-bg)" }}
+                  onChange={(e) => {
+                    setApiKey(e.target.value);
+                    setIsLiveKey(e.target.value !== "b2b_trial_key" && e.target.value.startsWith("b2b_"));
+                  }}
+                  style={{
+                    width: "100%", padding: "9px 10px", border: `1px solid ${isLiveKey ? "rgba(34,197,94,0.4)" : "var(--input-border)"}`,
+                    borderRadius: "6px", fontSize: "13px", color: "var(--input-text)", background: "var(--input-bg)",
+                    fontFamily: "ui-monospace, Menlo, monospace"
+                  }}
                 />
                 <button
                   onClick={() => copy(apiKey, true)}
@@ -368,7 +593,10 @@ export function SkincareRecs({ postalCode }) {
                 </button>
               </div>
               <div style={{ fontSize: "11.5px", color: "var(--text-sub)", marginTop: "5px", lineHeight: 1.4 }}>
-                Leave as b2b_trial_key to explore for free. Replace with your live key after subscribing.
+                {isLiveKey
+                  ? `Live key active — making real API calls on your quota.`
+                  : "Leave as b2b_trial_key to explore for free. Replace with your live key after subscribing."
+                }
               </div>
             </div>
 

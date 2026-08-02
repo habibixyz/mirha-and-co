@@ -1,5 +1,19 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { getRazorpay } from "@/lib/razorpay";
+
+/* ─── Per-IP rate limiter: max 10 checkout initiations/min ─── */
+const rzpCheckoutRateMap = new Map<string, { count: number; resetAt: number }>();
+
+function isRzpRateLimited(ip: string, limit = 10): boolean {
+  const now = Date.now();
+  const entry = rzpCheckoutRateMap.get(ip);
+  if (!entry || now > entry.resetAt) {
+    rzpCheckoutRateMap.set(ip, { count: 1, resetAt: now + 60_000 });
+    return false;
+  }
+  entry.count++;
+  return entry.count > limit;
+}
 
 // Tier pricing in paise (INR) — or USD cents if using international
 // Growth: $499/mo = ₹41,500/mo approx | Scale: $1,899/mo = ₹1,58,000/mo approx
@@ -16,9 +30,19 @@ const TIER_CONFIG = {
   },
 } as const;
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
   try {
-    const body = await req.json().catch(() => ({}));
+    const forwarded = req.headers.get("x-forwarded-for");
+    const ip = forwarded?.split(",")[0]?.trim() || "unknown";
+
+    if (isRzpRateLimited(ip, 10)) {
+      return NextResponse.json(
+        { error: "Too many checkout requests. Please slow down." },
+        { status: 429 }
+      );
+    }
+
+    const body = await req.json().catch(() => ({}));;
     const { tier = "growth", billing = "monthly", email, brandName } = body;
 
     if (!email || !brandName) {
@@ -87,9 +111,9 @@ export async function POST(req: Request) {
       amount: pricing.amount,
     });
   } catch (error: any) {
-    console.error("B2B Checkout Error:", error);
+    console.error("B2B Razorpay Checkout Error:", error);
     return NextResponse.json(
-      { error: error.message || "Something went wrong" },
+      { error: "Failed to initiate checkout. Please try again or contact support." },
       { status: 500 }
     );
   }

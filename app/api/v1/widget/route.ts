@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { generateRoutine } from "../../../../lib/routineEngine";
 import { resolveLocationDataLive } from "../../../../lib/geocoding";
+import { prisma } from "@/lib/prisma";
+import crypto from "crypto";
 
 const widgetRateMap = new Map<string, { count: number; resetAt: number }>();
 
@@ -15,27 +17,61 @@ function isWidgetRateLimited(ip: string, limit = 30): boolean {
   return entry.count > limit;
 }
 
+const CORS_HEADERS = {
+  "Access-Control-Allow-Origin": "*",
+  "Content-Type": "application/javascript",
+  "Cache-Control": "public, max-age=300",
+};
+
 export async function GET(req: NextRequest) {
   const forwarded = req.headers.get("x-forwarded-for");
   const ip = forwarded?.split(",")[0]?.trim() || "unknown";
 
   if (isWidgetRateLimited(ip, 30)) {
-    return new NextResponse("// Rate limit exceeded", { status: 429 });
+    return new NextResponse("// Rate limit exceeded", { status: 429, headers: CORS_HEADERS });
   }
 
   const { searchParams } = new URL(req.url);
-  const apiKey = searchParams.get("apiKey") || "b2b_trial_key";
+  const apiKey = searchParams.get("apiKey");
   const postalCode = searchParams.get("postalCode") || searchParams.get("city") || "90210";
   const skinType = searchParams.get("skinType") || "oily";
   const mainConcern = searchParams.get("mainConcern") || "acne";
 
+  // ── API Key validation ──────────────────────────────────────────────────────
+  if (!apiKey) {
+    return new NextResponse(
+      "// Mirha Widget Error: Missing apiKey query parameter. Obtain a B2B key at mirhaandco.com/b2b",
+      { status: 401, headers: CORS_HEADERS }
+    );
+  }
+
+  const isTrial = apiKey === "b2b_trial_key";
+  let logKeyId: string | null = null;
+
+  if (!isTrial) {
+    const keyHash = crypto.createHash("sha256").update(apiKey).digest("hex");
+    const b2bKey = await prisma.b2BApiKey.findFirst({
+      where: { OR: [{ keyHash }, { key: apiKey }] },
+    });
+
+    if (!b2bKey || b2bKey.status !== "active") {
+      return new NextResponse(
+        "// Mirha Widget Error: Invalid or suspended API key.",
+        { status: 401, headers: CORS_HEADERS }
+      );
+    }
+
+    logKeyId = b2bKey.id;
+  }
+
+  // ── Resolve location & generate recommendation ──────────────────────────────
   const locationDetails = await resolveLocationDataLive({ postalCode });
   const routine = generateRoutine(
     { skinType, mainConcern, budget: "under_1000", experience: "beginner" },
     {
       city: locationDetails.city,
       country: locationDetails.countryCode,
-      postalCode: postalCode,
+      postalCode,
       ppm: locationDetails.ppm,
       temp: locationDetails.temp,
       humidity: locationDetails.humidity,
@@ -43,6 +79,20 @@ export async function GET(req: NextRequest) {
     }
   );
 
+  // Log widget usage (fire-and-forget, only for verified live keys)
+  if (logKeyId) {
+    prisma.b2BUsageLog.create({
+      data: {
+        keyId: logKeyId,
+        endpoint: "/api/v1/widget",
+        skinType: skinType || null,
+        city: locationDetails.city || null,
+        ppm: locationDetails.ppm || null,
+      },
+    }).catch(() => {});
+  }
+
+  // ── Build embeddable JS widget ──────────────────────────────────────────────
   const jsScript = `
 (function() {
   var container = document.getElementById('mirha-climate-widget');
@@ -76,11 +126,5 @@ export async function GET(req: NextRequest) {
 })();
   `;
 
-  return new NextResponse(jsScript, {
-    headers: {
-      "Content-Type": "application/javascript",
-      "Access-Control-Allow-Origin": "*",
-      "Cache-Control": "public, max-age=300",
-    },
-  });
+  return new NextResponse(jsScript, { headers: CORS_HEADERS });
 }

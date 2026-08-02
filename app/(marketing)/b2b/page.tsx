@@ -215,6 +215,9 @@ export default function B2BPitchDeck() {
         const data = await res.json();
         if (!res.ok) throw new Error(data.error);
         if (data.checkoutUrl) {
+          // Store email so /b2b/dashboard can auto-lookup the provisioned key
+          sessionStorage.setItem("b2b_checkout_email", leadEmail);
+          sessionStorage.setItem("b2b_welcome_active", "true");
           window.location.href = data.checkoutUrl;
         }
       } else {
@@ -242,6 +245,9 @@ export default function B2BPitchDeck() {
           theme: { color: "#fc2779" },
           handler: () => {
             setLeadSubmitted(true);
+            // Store email so /b2b/dashboard can auto-lookup the provisioned key
+            sessionStorage.setItem("b2b_checkout_email", leadEmail);
+            sessionStorage.setItem("b2b_welcome_active", "true");
             window.location.href = "/b2b/dashboard?welcome=true";
           },
         });
