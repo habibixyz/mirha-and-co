@@ -235,6 +235,18 @@ export default function B2BPitchDeck() {
         const data = await res.json();
         if (!res.ok) throw new Error(data.error);
 
+        // Ensure Razorpay script is loaded dynamically if not present
+        if (typeof (window as any).Razorpay === "undefined") {
+          await new Promise<void>((resolve, reject) => {
+            const script = document.createElement("script");
+            script.src = "https://checkout.razorpay.com/v1/checkout.js";
+            script.async = true;
+            script.onload = () => resolve();
+            script.onerror = () => reject(new Error("Failed to load Razorpay checkout SDK. Please check your network."));
+            document.body.appendChild(script);
+          });
+        }
+
         const rzp = new (window as any).Razorpay({
           key: data.keyId,
           subscription_id: data.subscriptionId,
