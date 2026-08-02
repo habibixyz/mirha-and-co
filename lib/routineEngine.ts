@@ -364,7 +364,7 @@ export interface ClientProduct {
   id: string;
   name: string;
   category?: 'cleanser' | 'treatment' | 'moisturiser' | 'sunscreen' | string;
-  ingredients?: string;
+  ingredients?: string | string[];
   tags?: string[];
   price?: number;
   reason?: string;
@@ -462,7 +462,13 @@ export function classifyClientProduct(prod: ClientProduct): {
   isMatte: boolean;
   category: string;
 } {
-  const ing = (prod.ingredients || "").toLowerCase();
+  const rawIngredients = prod.ingredients;
+  const ingredientsStr = Array.isArray(rawIngredients)
+    ? rawIngredients.join(", ")
+    : typeof rawIngredients === "string"
+    ? rawIngredients
+    : "";
+  const ing = ingredientsStr.toLowerCase();
   const name = prod.name.toLowerCase();
   const tags = (prod.tags || []).map(t => t.toLowerCase());
 
