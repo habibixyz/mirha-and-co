@@ -47,7 +47,9 @@ const EDITOR_PICK_ASINS = [
 function EditorPick({ product }: { product: Product }) {
   return (
     <Link href={`/product/${product.asin}`} className="editor-pick">
-      <Image src={product.image} alt={product.name} width={300} height={140} style={{ objectFit: 'contain' }} />
+      <div className="editor-pick-img-box">
+        <Image src={product.image} alt={product.name} width={300} height={140} style={{ objectFit: 'contain' }} />
+      </div>
       <span>{product.badge || product.subcat}</span>
     </Link>
   );
@@ -519,6 +521,24 @@ export default async function BeautyShopPage() {
         .editor-pick:hover {
           transform: translateY(-2px);
           border-color: #fc2779;
+        }
+
+        .editor-pick-img-box {
+          background: #fff;
+          border: 1px solid #e8ded4;
+          border-radius: 8px;
+          padding: 8px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          height: 110px;
+          overflow: hidden;
+        }
+
+        .editor-pick-img-box img {
+          max-width: 100%;
+          max-height: 100%;
+          object-fit: contain;
         }
 
         .editor-pick span {

@@ -902,6 +902,17 @@ html.dark .editor-pick:hover {
   border-color: #ff4d94 !important;
 }
 
+html.dark .editor-pick-img-box {
+  background: #ffffff !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+  opacity: 0.92;
+  filter: brightness(0.93) contrast(1.02);
+}
+
+html.dark .editor-pick span {
+  color: #ff4d94 !important;
+}
+
 html.dark .product-card {
   background: #181716 !important;
   border-color: rgba(255, 255, 255, 0.12) !important;
