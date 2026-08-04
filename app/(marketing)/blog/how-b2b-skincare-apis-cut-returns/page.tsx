@@ -2,10 +2,10 @@ import type { Metadata } from "next";
 import BlogFooterTools from "@/components/BlogFooterTools";
 
 export const metadata: Metadata = {
-  title: "How B2B Skincare APIs Help E-Commerce Brands Drive Conversion and Slash Returns | Mirha & Co.",
-  description: "Skincare returns are driven by biology, not fit. Learn how integrating live climate, local water telemetry, and ingredient conflict checking helps brands convert more shoppers and cut returns.",
+  title: "How Skincare APIs Drive Conversion and Slash Returns | Mirha",
+  description: "Skincare returns are driven by biology, not fit. Learn how climate telemetry and active ingredient checkers at checkout help brands convert and cut returns.",
   openGraph: {
-    title: "How B2B Skincare APIs Help E-Commerce Brands Drive Conversion and Slash Returns",
+    title: "How Skincare APIs Drive Conversion and Slash Returns",
     description: "Squeeze more conversion and lower returns from your beauty store. Use real-time water quality, weather telemetry, and ingredient safety checks at checkout.",
   },
 };

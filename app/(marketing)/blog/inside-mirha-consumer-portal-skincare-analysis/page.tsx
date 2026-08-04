@@ -2,15 +2,15 @@ import type { Metadata } from "next";
 import BlogFooterTools from "@/components/BlogFooterTools";
 
 export const metadata: Metadata = {
-  title: "Water Chemistry & Climate Telemetry in E-Commerce | Mirha",
-  description: "Personalization is shifting to telemetry. Learn how persistent catalogs, CORS whitelisting, and water analysis help brands scale climate retail.",
+  title: "Mirha Skincare Portal: AI Analysis, Trackers & Routines",
+  description: "Access the Mirha & Co. consumer dashboard. Scan your skin with AI, log daily progress in the skin journal, and run formulation compatibility checks.",
   openGraph: {
-    title: "Water Chemistry & Climate Telemetry in E-Commerce",
-    description: "Personalization is shifting to telemetry. Learn how persistent catalogs, CORS whitelisting, and water analysis help brands scale climate retail.",
+    title: "Mirha Skincare Portal: AI Analysis, Trackers & Routines",
+    description: "Access the Mirha & Co. consumer dashboard. Scan your skin with AI, log daily progress in the skin journal, and run formulation compatibility checks.",
   },
 };
 
-export default function B2BTelemetryBlogPage() {
+export default function ConsumerDashboardBlogPage() {
   return (
     <main style={{ background: "var(--bg)", color: "var(--ink)", minHeight: "100vh" }}>
       <style>{`
@@ -162,12 +162,12 @@ export default function B2BTelemetryBlogPage() {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "Article",
-            "headline": "Tap Water Chemistry and Climate Telemetry: The Next E-Commerce Personalization Frontier",
+            "headline": "Inside the Mirha & Co. Portal: AI Skin Analysis, Active Trackers, and Custom Routines",
             "image": [
-              "https://mirha.co/blog-thumbs/b2b_skincare_api.jpg"
+              "https://mirha.co/blog-thumbs/blog_consumer_dashboard.jpg"
             ],
-            "datePublished": "2026-08-04T08:00:00+08:00",
-            "dateModified": "2026-08-04T08:00:00+08:00",
+            "datePublished": "2026-08-04T09:00:00+08:00",
+            "dateModified": "2026-08-04T09:00:00+08:00",
             "author": [{
               "@type": "Organization",
               "name": "Mirha & Co.",
@@ -179,83 +179,92 @@ export default function B2BTelemetryBlogPage() {
 
       <header className="post-hdr">
         <div className="post-hdr-inner">
-          <span className="post-badge">B2B SaaS · Tech & Personalization</span>
+          <span className="post-badge">SaaS · Product Spotlight</span>
           <h1 className="post-headline">
-            Tap Water Chemistry and Climate Telemetry: The Next E-Commerce Personalization Frontier
+            Inside the Mirha & Co. Portal: AI Skin Analysis, Active Trackers, and Custom Routines
           </h1>
           <p className="post-stand">
-            Personalization has evolved past basic quizzes. Learn how persistent catalogs, CORS whitelisting, and real-time usage analytics help brands secure and scale climate-adaptive e-commerce.
+            skincare is a science, not a shopping spree. Take a look inside our consumer companion dashboard designed to track formulation compatibility and score your skin health in real-time.
           </p>
           <div className="post-meta">
             <span>August 2026</span>
-            <span>6 min read</span>
-            <span>Tech & Skincare</span>
-            <span>B2B Platform</span>
+            <span>5 min read</span>
+            <span>Product Feature</span>
+            <span>Consumer Portal</span>
           </div>
         </div>
       </header>
 
       <article className="post-body">
         <p>
-          The beauty industry has a conversion problem. For decades, e-commerce stores have relied on static grids and simple questionnaires to guide buyers. The result? Customers buy cleansers that strip their skin in dry climates, or creams that clog their pores in heavy humidity. Even worse, hard tap water minerals bind with surfactants, leaving a disruptive film that leads to breakouts and high return rates.
+          Getting consistent, healthy skin shouldn't be about buying whatever product is trending on social media. It requires tracking how your face responds to active ingredients, checking for formulation compatibility clashes, and adapting your routine as the seasons change.
         </p>
         <p>
-          At Mirha & Co., we realized that <strong>most skincare issues are not product problems—they are environmental understanding problems</strong>. By introducing climate telemetry and tap water diagnostics into e-commerce checkouts, brands can prevent these mismatches before they occur.
-        </p>
-        <p>
-          Today, we are highlighting a series of developer-focused upgrades to our B2B SaaS platform that make integrating skincare intelligence secure, performant, and packed with analytical insights.
+          To make this scientific approach accessible, we created the **Mirha & Co. Consumer Companion Dashboard**—your central panel for formulation verification, AI-driven diagnostics, and daily tracking.
         </p>
 
-        <h2>1. persistent Merchant Catalogs: Solving Payload Bloat</h2>
+        <h2>The Main Console: Core Features</h2>
         <p>
-          In early iterations of climate-adaptive recommendation APIs, merchant clients had to pass their entire product inventory (up to 100 SKUs) in the HTTP request payload of every recommendation query. This added substantial bandwidth overhead and slowed down checkout times.
-        </p>
-        <p>
-          To solve this, our new **Persistent Merchant Catalog API** allows partners to sync their catalog once to our secure database via a dedicated endpoint. The recommendation engine automatically retrieves this catalog on subsequent requests.
-        </p>
-        <div className="code-container">
-          <span className="code-comment">// Sync catalog once</span><br/>
-          <span className="code-keyword">const</span> syncResponse = <span className="code-keyword">await</span> <span className="code-function">fetch</span>(<span className="code-string">"https://www.mirhaandco.com/api/v1/catalog"</span>, &#123;<br/>
-          &nbsp;&nbsp;method: <span className="code-string">"POST"</span>,<br/>
-          &nbsp;&nbsp;headers: &#123; <span className="code-string">"Content-Type"</span>: <span className="code-string">"application/json"</span> &#125;,<br/>
-          &nbsp;&nbsp;body: JSON.<span className="code-function">stringify</span>(&#123;<br/>
-          &nbsp;&nbsp;&nbsp;&nbsp;apiKey: <span className="code-string">"your_api_key"</span>,<br/>
-          &nbsp;&nbsp;&nbsp;&nbsp;catalog: myStoreProducts<br/>
-          &nbsp;&nbsp;&#125;)<br/>
-          &#125;);
-        </div>
-
-        <h2>2. Enterprise Security: CORS Domain Whitelisting</h2>
-        <p>
-          Skincare API keys are often exposed in client-side widget scripts or frontend React components. To prevent malicious third parties from extracting and abusing these keys on other domains, we built **Domain Locking**.
-        </p>
-        <p>
-          Partners can configure their whitelisted hostnames (e.g., <code>localhost, partner.com</code>) through our developer console. The gateway verifies incoming `Origin` and `Referer` headers on every transaction, returning a `403 Forbidden` for unauthorized domains.
+          When you sign in to your Mirha & Co. account, you are greeted by an intuitive sidebar that provides access to our core diagnostic utilities:
         </p>
 
-        <h2>3. Usage Analytics: Demographics and Water Insights</h2>
+        <h3>1. Overview & My Routines</h3>
         <p>
-          Our B2B platform now turns raw API requests into actionable market intelligence. Using the `GET /api/v1/analytics` endpoint, partners can extract real-time summaries of their customer demographics, skin type breakdowns, and regional tap water profiles.
+          A single dashboard space to review your morning and evening skincare regimens. Your routine is dynamically adjusted based on local weather telemetry (humidity, temperature) and water hardness PPM levels mapped to your city.
         </p>
+
+        <h3>2. Skin Journal</h3>
+        <p>
+          Log your skin's daily progress. Log breakouts, redness, dryness, and barrier changes to isolate exactly which products are moving the needle and which ones are triggering irritation.
+        </p>
+
+        <h3>3. AI Skin Analyst</h3>
+        <p>
+          Perform automated facial analysis using our specialized computer-vision scanner. Receive regular, objective scores on hydration levels, fine lines, skin sensitivity, and barrier strength.
+        </p>
+
+        <h3>4. Search Guide & Curated Catalog</h3>
+        <p>
+          Browse our formulation list with transparent product annotations. See pricing, active ingredients, and suitability summaries without marketing clutter.
+        </p>
+
+        <h3>5. Active Ingredient Conflict Checker</h3>
+        <p>
+          The ultimate safeguard for your skin barrier. Paste the ingredient listings of any two serums or moisturizers, and our engine will cross-check for chemical compatibility (e.g. flagging pH crashes, or warnings against stacking multiple peeling acids like Glycolic and Salicylic acid in the same routine).
+        </p>
+
+        <h2>Unlocking Premium: Why Upgrade to Pro?</h2>
+        <p>
+          While the basic dashboard provides standard routine management and access to our active ingredient checker, upgrading to **Mirha Pro** unlocks the full telemetry engine:
+        </p>
+        <ul>
+          <li>
+            <strong>Unlimited Skin Logs:</strong> Keep a complete, historical journal of your skin barrier progress over months rather than being limited to a 7-day window.
+          </li>
+          <li>
+            <strong>AI Face Scans:</strong> Access detailed face scans and objective skin scores.
+          </li>
+          <li>
+            <strong>Increased AI Consultations:</strong> Grow your daily skin consultations from 3 sessions to 20 sessions for deeper diagnostics.
+          </li>
+          <li>
+            <strong>Advanced Ingredient Diagnostics:</strong> Deep-dives into raw ingredient listings to identify potential allergen triggers.
+          </li>
+        </ul>
+
         <div className="highlight-box">
           <p>
-            <strong>Example Demographic Insights:</strong>
-            <br/><br/>
-            * <strong>Water Hardness:</strong> See exactly what percentage of your users wash their face with hard vs. soft tap water.
-            <br/><br/>
-            * <strong>Regional Concern Mapping:</strong> Uncover whether acne, dryness, or pigmentation is dominating in specific cities.
-            <br/><br/>
-            * <strong>Product Compatibility:</strong> Adjust your stock based on real-time climate telemetry trends.
+            <strong>Pro Tiers:</strong> You can select the monthly Pro subscription or the Annual Pro Plan (saving over 25%) directly from your **Subscription** tab, handled securely using Razorpay.
           </p>
         </div>
 
         <div className="cta-box">
-          <h3 className="cta-title">Build the Future of Skincare Retail</h3>
+          <h3 className="cta-title">Start Your Skincare Companion Today</h3>
           <p className="cta-desc">
-            Equip your e-commerce platform with climate telemetry and local tap water diagnostics. Try our new developer widgets and API endpoints in the Playground.
+            Sign in to start tracking your skin journal and run your first formulation conflict check.
           </p>
-          <a href="/b2b/dashboard" className="cta-btn">
-            Open the B2B Playground
+          <a href="/login" className="cta-btn">
+            Open the Portal
           </a>
         </div>
 

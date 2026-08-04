@@ -17,6 +17,28 @@ export type Post = {
 const STATIC_POSTS: Post[] = [
   {
     category: "SKINCARE",
+    title: "Inside the Mirha & Co. Portal: AI Skin Analysis, Active Trackers, and Custom Routines",
+    excerpt: "Explore the features of the Mirha & Co. consumer dashboard. Discover how to track your skin journal, scan your face with AI, and verify formulation conflicts in real-time.",
+    slug: "inside-mirha-consumer-portal-skincare-analysis",
+    readTime: "5 min",
+    date: "August 2026",
+    productCount: 4,
+    thumbnail: "SaaS",
+    tags: ["dashboard", "ai analysis", "skin logs", "ingredient checks", "consumer", "guide"],
+  },
+  {
+    category: "SKINCARE",
+    title: "Getting Started with the Mirha & Co. B2B Portal: Workflows, Analytics, and Pricing",
+    excerpt: "Learn how to use the Mirha B2B Portal to manage skincare APIs. Understand the entire key lookup flow, security integrations, persistent catalogs, and subscription pricing tiers.",
+    slug: "getting-started-mirha-b2b-dashboard-pricing",
+    readTime: "5 min",
+    date: "August 2026",
+    productCount: 4,
+    thumbnail: "API",
+    tags: ["b2b", "api", "dashboard", "pricing", "integration", "workflows"],
+  },
+  {
+    category: "SKINCARE",
     title: "Tap Water Chemistry and Climate Telemetry: The Next E-Commerce Personalization Frontier",
     excerpt: "Personalization has evolved past basic quizzes. Learn how persistent catalogs, CORS whitelisting, and real-time usage analytics help brands secure and scale climate-adaptive e-commerce.",
     slug: "tap-water-chemistry-climate-telemetry-ecommerce",
@@ -821,7 +843,7 @@ const mappedHighIntent = HIGH_INTENT_POSTS.map(p => ({
 }));
 
 export const POSTS: Post[] = [
-  STATIC_POSTS[0],
+  ...STATIC_POSTS.slice(0, 3),
   ...mappedHighIntent.filter(p => [
     "tech-neck-biomechanics-guide",
     "santal-33-br540-teardown",
@@ -834,7 +856,7 @@ export const POSTS: Post[] = [
     "skincare-biohacking-audit",
     "mens-hairline-save-protocol"
   ].includes(p.slug)),
-  ...STATIC_POSTS.slice(1),
+  ...STATIC_POSTS.slice(3),
   ...mappedHighIntent.filter(p => !NEW_SLUGS.includes(p.slug))
 ];
 
@@ -849,6 +871,8 @@ const hashString = (str: string) => {
 
 // Complete slug → unique image lookup table (all 34 available images used)
 const SLUG_IMAGE_MAP: Record<string, string> = {
+  "inside-mirha-consumer-portal-skincare-analysis": "/blog-thumbs/blog_consumer_dashboard.jpg",
+  "getting-started-mirha-b2b-dashboard-pricing": "/blog-thumbs/blog_b2b_dashboard.jpg",
   "tap-water-chemistry-climate-telemetry-ecommerce": "/blog-thumbs/blog_b2b_telemetry.jpg",
   "how-b2b-skincare-apis-cut-returns": "/blog-thumbs/b2b_skincare_api.jpg",
   "womens-fragrance-vibe-guide": "/blog-thumbs/photo_beauty.png",

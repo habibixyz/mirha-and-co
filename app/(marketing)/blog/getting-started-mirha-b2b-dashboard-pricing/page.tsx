@@ -2,15 +2,15 @@ import type { Metadata } from "next";
 import BlogFooterTools from "@/components/BlogFooterTools";
 
 export const metadata: Metadata = {
-  title: "Water Chemistry & Climate Telemetry in E-Commerce | Mirha",
-  description: "Personalization is shifting to telemetry. Learn how persistent catalogs, CORS whitelisting, and water analysis help brands scale climate retail.",
+  title: "B2B Portal: Workflows, Analytics, and Pricing | Mirha",
+  description: "Explore the Mirha B2B Portal. Step-by-step developer guides for origin whitelisting, database catalog synchronization, and monthly plan pricing.",
   openGraph: {
-    title: "Water Chemistry & Climate Telemetry in E-Commerce",
-    description: "Personalization is shifting to telemetry. Learn how persistent catalogs, CORS whitelisting, and water analysis help brands scale climate retail.",
+    title: "B2B Portal: Workflows, Analytics, and Pricing",
+    description: "Explore the Mirha B2B Portal. Step-by-step developer guides for origin whitelisting, database catalog synchronization, and monthly plan pricing.",
   },
 };
 
-export default function B2BTelemetryBlogPage() {
+export default function B2BDashboardWorkflowBlogPage() {
   return (
     <main style={{ background: "var(--bg)", color: "var(--ink)", minHeight: "100vh" }}>
       <style>{`
@@ -162,12 +162,12 @@ export default function B2BTelemetryBlogPage() {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "Article",
-            "headline": "Tap Water Chemistry and Climate Telemetry: The Next E-Commerce Personalization Frontier",
+            "headline": "Getting Started with the Mirha & Co. B2B Portal: Workflows, Analytics, and Pricing",
             "image": [
-              "https://mirha.co/blog-thumbs/b2b_skincare_api.jpg"
+              "https://mirha.co/blog-thumbs/blog_b2b_dashboard.jpg"
             ],
-            "datePublished": "2026-08-04T08:00:00+08:00",
-            "dateModified": "2026-08-04T08:00:00+08:00",
+            "datePublished": "2026-08-04T09:00:00+08:00",
+            "dateModified": "2026-08-04T09:00:00+08:00",
             "author": [{
               "@type": "Organization",
               "name": "Mirha & Co.",
@@ -179,17 +179,17 @@ export default function B2BTelemetryBlogPage() {
 
       <header className="post-hdr">
         <div className="post-hdr-inner">
-          <span className="post-badge">B2B SaaS · Tech & Personalization</span>
+          <span className="post-badge">B2B SaaS · Documentation</span>
           <h1 className="post-headline">
-            Tap Water Chemistry and Climate Telemetry: The Next E-Commerce Personalization Frontier
+            Getting Started with the Mirha & Co. B2B Portal: Workflows, Analytics, and Pricing
           </h1>
           <p className="post-stand">
-            Personalization has evolved past basic quizzes. Learn how persistent catalogs, CORS whitelisting, and real-time usage analytics help brands secure and scale climate-adaptive e-commerce.
+            Take full control of your climate-aware e-commerce integrations. Learn how our central B2B portal handles API credentials, whitelisting, catalog uploads, and flexible pricing structures.
           </p>
           <div className="post-meta">
             <span>August 2026</span>
-            <span>6 min read</span>
-            <span>Tech & Skincare</span>
+            <span>5 min read</span>
+            <span>Developer Guide</span>
             <span>B2B Platform</span>
           </div>
         </div>
@@ -197,65 +197,71 @@ export default function B2BTelemetryBlogPage() {
 
       <article className="post-body">
         <p>
-          The beauty industry has a conversion problem. For decades, e-commerce stores have relied on static grids and simple questionnaires to guide buyers. The result? Customers buy cleansers that strip their skin in dry climates, or creams that clog their pores in heavy humidity. Even worse, hard tap water minerals bind with surfactants, leaving a disruptive film that leads to breakouts and high return rates.
+          Moving towards an API-first beauty retail business requires more than just excellent recommendation algorithms. It demands stable orchestration, secure key provisioning, and a clear overview of how your customers are interacting with environmental variables.
         </p>
         <p>
-          At Mirha & Co., we realized that <strong>most skincare issues are not product problems—they are environmental understanding problems</strong>. By introducing climate telemetry and tap water diagnostics into e-commerce checkouts, brands can prevent these mismatches before they occur.
-        </p>
-        <p>
-          Today, we are highlighting a series of developer-focused upgrades to our B2B SaaS platform that make integrating skincare intelligence secure, performant, and packed with analytical insights.
+          To make this integration frictionless, we built the **Mirha B2B Portal**—a unified console where developers and e-commerce managers can control their telemetry pipelines, sync custom inventory catalogs, and manage subscription pricing tiers.
         </p>
 
-        <h2>1. persistent Merchant Catalogs: Solving Payload Bloat</h2>
+        <h2>The Unified Workflow: Step-by-Step</h2>
         <p>
-          In early iterations of climate-adaptive recommendation APIs, merchant clients had to pass their entire product inventory (up to 100 SKUs) in the HTTP request payload of every recommendation query. This added substantial bandwidth overhead and slowed down checkout times.
+          Whether you are running a single storefront or managing multiple merchant sub-domains, the B2B portal flow is structured into four main phases:
         </p>
+        
+        <h3>1. Secure Key Retrieval</h3>
         <p>
-          To solve this, our new **Persistent Merchant Catalog API** allows partners to sync their catalog once to our secure database via a dedicated endpoint. The recommendation engine automatically retrieves this catalog on subsequent requests.
-        </p>
-        <div className="code-container">
-          <span className="code-comment">// Sync catalog once</span><br/>
-          <span className="code-keyword">const</span> syncResponse = <span className="code-keyword">await</span> <span className="code-function">fetch</span>(<span className="code-string">"https://www.mirhaandco.com/api/v1/catalog"</span>, &#123;<br/>
-          &nbsp;&nbsp;method: <span className="code-string">"POST"</span>,<br/>
-          &nbsp;&nbsp;headers: &#123; <span className="code-string">"Content-Type"</span>: <span className="code-string">"application/json"</span> &#125;,<br/>
-          &nbsp;&nbsp;body: JSON.<span className="code-function">stringify</span>(&#123;<br/>
-          &nbsp;&nbsp;&nbsp;&nbsp;apiKey: <span className="code-string">"your_api_key"</span>,<br/>
-          &nbsp;&nbsp;&nbsp;&nbsp;catalog: myStoreProducts<br/>
-          &nbsp;&nbsp;&#125;)<br/>
-          &#125;);
-        </div>
-
-        <h2>2. Enterprise Security: CORS Domain Whitelisting</h2>
-        <p>
-          Skincare API keys are often exposed in client-side widget scripts or frontend React components. To prevent malicious third parties from extracting and abusing these keys on other domains, we built **Domain Locking**.
-        </p>
-        <p>
-          Partners can configure their whitelisted hostnames (e.g., <code>localhost, partner.com</code>) through our developer console. The gateway verifies incoming `Origin` and `Referer` headers on every transaction, returning a `403 Forbidden` for unauthorized domains.
+          When you activate your subscription, a unique API key is generated and hashed using SHA-256 for storage. You can securely look up your key in-band within the first 24 hours of creation using your registered subscription email. If you ever lose your credentials, you can trigger a secure re-delivery or contact support at <code>tanizcoldz@gmail.com</code>.
         </p>
 
-        <h2>3. Usage Analytics: Demographics and Water Insights</h2>
+        <h3>2. Domain locking Configuration</h3>
         <p>
-          Our B2B platform now turns raw API requests into actionable market intelligence. Using the `GET /api/v1/analytics` endpoint, partners can extract real-time summaries of their customer demographics, skin type breakdowns, and regional tap water profiles.
+          To prevent competitor sites from copying your API key from client-side script tags, you can restrict key utilization to authorized hostnames. In the Developer Console, enter your whitelisted origins. The Mirha API gateway will automatically inspect CORS headers on incoming requests and block unlisted domains.
         </p>
+
+        <h3>3. Persistent Catalog Synchronization</h3>
+        <p>
+          Save client bandwidth by uploading your inventory catalog directly to the Mirha database. Once synced, you can call the recommendation APIs without transmitting product arrays in every payload.
+        </p>
+
+        <h3>4. Demographic Analytics Monitoring</h3>
+        <p>
+          The analytics widget on the dashboard provides direct access to environmental insights gathered from your customer queries. Track the volume of requests, skin types, and tap water minerals exposure categories.
+        </p>
+
+        <h2>Subscription Plans & Quotas</h2>
+        <p>
+          To accommodate businesses of all sizes, the B2B platform scales dynamically based on request volumes. Every plan is billed monthly and includes unlimited origin locking:
+        </p>
+        <ul>
+          <li>
+            <strong>Trial Sandbox (Free):</strong> Includes access with the trial key <code>b2b_trial_key</code> for developer testing and sandboxing. No live database logging.
+          </li>
+          <li>
+            <strong>Growth Tier ($499/mo or ₹41,500/mo):</strong> Designed for scaling retailers. Supports up to 150,000 API requests/month, live tap water hardness telemetry, climate/humidity adaptation, persistent database catalog storage, and whitelisting configurations. *Annual billing available at $399/mo (or ₹33,200/mo).*
+          </li>
+          <li>
+            <strong>Scale Enterprise ($1,899/mo or ₹1,58,000/mo):</strong> Designed for global beauty marketplaces. Supports up to 1,000,000 API requests/month, advanced mineral matrices, dynamic dewpoint adjustment, and dedicated Slack support. *Annual billing available at $1,499/mo (or ₹1,24,000/mo).*
+          </li>
+          <li>
+            <strong>Global Custom (Volume Pricing):</strong> For custom requirements and volumes exceeding 1,000,000 API calls/month, including SLA guarantees, multi-region CDN routing, and custom formulation logic.
+          </li>
+        </ul>
+
         <div className="highlight-box">
           <p>
-            <strong>Example Demographic Insights:</strong>
+            <strong>Why it matters:</strong>
             <br/><br/>
-            * <strong>Water Hardness:</strong> See exactly what percentage of your users wash their face with hard vs. soft tap water.
-            <br/><br/>
-            * <strong>Regional Concern Mapping:</strong> Uncover whether acne, dryness, or pigmentation is dominating in specific cities.
-            <br/><br/>
-            * <strong>Product Compatibility:</strong> Adjust your stock based on real-time climate telemetry trends.
+            With our transparent quota structures, billing is handled securely through integrated platforms (Razorpay and Dodo Payments), ensuring that your service remains uninterrupted as your storefront scales.
           </p>
         </div>
 
         <div className="cta-box">
-          <h3 className="cta-title">Build the Future of Skincare Retail</h3>
+          <h3 className="cta-title">Start Optimizing Your Storefront</h3>
           <p className="cta-desc">
-            Equip your e-commerce platform with climate telemetry and local tap water diagnostics. Try our new developer widgets and API endpoints in the Playground.
+            Explore the developer widgets and configure your API settings today.
           </p>
           <a href="/b2b/dashboard" className="cta-btn">
-            Open the B2B Playground
+            Open the B2B Dashboard
           </a>
         </div>
 
