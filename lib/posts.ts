@@ -821,13 +821,13 @@ const mappedHighIntent = HIGH_INTENT_POSTS.map(p => ({
 }));
 
 export const POSTS: Post[] = [
+  STATIC_POSTS[0],
   ...mappedHighIntent.filter(p => [
     "tech-neck-biomechanics-guide",
     "santal-33-br540-teardown",
     "skincare-biohacking-audit",
     "mens-hairline-save-protocol"
   ].includes(p.slug)),
-  STATIC_POSTS[0],
   ...mappedHighIntent.filter(p => NEW_SLUGS.includes(p.slug) && ![
     "tech-neck-biomechanics-guide",
     "santal-33-br540-teardown",
@@ -849,6 +849,7 @@ const hashString = (str: string) => {
 
 // Complete slug → unique image lookup table (all 34 available images used)
 const SLUG_IMAGE_MAP: Record<string, string> = {
+  "tap-water-chemistry-climate-telemetry-ecommerce": "/blog-thumbs/blog_b2b_telemetry.jpg",
   "how-b2b-skincare-apis-cut-returns": "/blog-thumbs/b2b_skincare_api.jpg",
   "womens-fragrance-vibe-guide": "/blog-thumbs/photo_beauty.png",
   "expensive-fragrance-budget-hacks": "/blog-thumbs/blog_economics_expensive.png",
