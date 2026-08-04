@@ -189,6 +189,10 @@ model B2BApiKey {
   razorpaySubscriptionId String?
   status        String   @default("active") // "active" | "suspended" | "cancelled"
 
+  // B2B Configuration
+  allowedOrigins String   @default("*")
+  customCatalog  Json?
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 

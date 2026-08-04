@@ -69,7 +69,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(
       {
         found: false,
-        hint: "No active API key found for this email. Check your inbox for the welcome email, or contact b2b@mirhaandco.com.",
+        hint: "No active API key found for this email. Check your inbox for the welcome email, or contact tanizcoldz@gmail.com.",
       },
       { status: 200, headers: HEADERS }
     );
@@ -87,7 +87,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(
       {
         found: false,
-        hint: "Your API key was emailed to you when your subscription activated. Check your inbox (including spam) or contact b2b@mirhaandco.com to have it resent.",
+        hint: "Your API key was emailed to you when your subscription activated. Check your inbox (including spam) or contact tanizcoldz@gmail.com to have it resent.",
       },
       { status: 200, headers: HEADERS }
     );
@@ -102,6 +102,7 @@ export async function POST(req: NextRequest) {
       monthlyQuota: b2bKey.monthlyQuota,
       usageThisMonth: b2bKey.usageThisMonth,
       quotaResetAt: b2bKey.quotaResetAt.toISOString(),
+      allowedOrigins: b2bKey.allowedOrigins,
     },
     { status: 200, headers: HEADERS }
   );

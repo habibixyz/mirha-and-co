@@ -32,6 +32,46 @@ setInterval(() => {
 // but together hammer the geocoding/recommendation pipeline at zero cost.
 const GLOBAL_TRIAL_LIMIT_PER_MIN = 500;
 
+function isOriginAllowed(request: NextRequest, allowedOrigins: string): boolean {
+  if (allowedOrigins === "*") return true;
+
+  const originHeader = request.headers.get("origin");
+  const refererHeader = request.headers.get("referer");
+
+  let requestDomain = "";
+
+  if (originHeader) {
+    try {
+      requestDomain = new URL(originHeader).hostname.toLowerCase();
+    } catch {
+      requestDomain = originHeader.toLowerCase();
+    }
+  } else if (refererHeader) {
+    try {
+      requestDomain = new URL(refererHeader).hostname.toLowerCase();
+    } catch {
+      requestDomain = refererHeader.toLowerCase();
+    }
+  }
+
+  requestDomain = requestDomain.split(":")[0];
+  if (!requestDomain) return false;
+
+  const whitelist = allowedOrigins
+    .split(",")
+    .map((d) => d.trim().toLowerCase())
+    .filter(Boolean);
+
+  return whitelist.some((domain) => {
+    if (requestDomain === domain) return true;
+    if (domain.startsWith("*.")) {
+      const baseDomain = domain.slice(2);
+      return requestDomain === baseDomain || requestDomain.endsWith("." + baseDomain);
+    }
+    return false;
+  });
+}
+
 /* ─── Security headers ─── */
 const securityHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -85,6 +125,7 @@ export async function POST(req: NextRequest) {
     const isTrial = apiKey === "b2b_trial_key";
     let quotaInfo = { remaining: 9999, monthlyQuota: 10000, quotaResetAt: null as string | null };
     let logKeyId: string | null = null; // captured for deferred usage logging
+    let b2bKey: any = null;
 
     if (isTrial) {
       // Per-IP limit (60/min)
@@ -104,7 +145,7 @@ export async function POST(req: NextRequest) {
     } else {
       // ── Live B2B key: look up in DB via SHA-256 hash or fallback plaintext key ──
       const keyHash = crypto.createHash("sha256").update(apiKey).digest("hex");
-      const b2bKey = await prisma.b2BApiKey.findFirst({
+      b2bKey = await prisma.b2BApiKey.findFirst({
         where: {
           OR: [{ keyHash }, { key: apiKey }],
         },
@@ -115,6 +156,16 @@ export async function POST(req: NextRequest) {
           { success: false, error: "Invalid or suspended API key." },
           { status: 401, headers: dynamicHeaders }
         );
+      }
+
+      // ── Domain locking validation ──────────────────────────────────────────
+      if (b2bKey.allowedOrigins && b2bKey.allowedOrigins !== "*") {
+        if (!isOriginAllowed(req, b2bKey.allowedOrigins)) {
+          return NextResponse.json(
+            { success: false, error: "Forbidden: Origin not whitelisted." },
+            { status: 403, headers: dynamicHeaders }
+          );
+        }
       }
 
       // Reset monthly quota if we've rolled into a new month
@@ -252,7 +303,15 @@ export async function POST(req: NextRequest) {
     // Cap the custom catalog at 100 SKUs to prevent CPU-spike attacks
     // via arbitrarily large arrays being iterated through classifyClientProduct().
     const rawCatalog = catalog || climate?.catalog;
-    const safeCatalog = Array.isArray(rawCatalog) ? rawCatalog.slice(0, 100) : rawCatalog;
+    let safeCatalog = Array.isArray(rawCatalog) ? rawCatalog.slice(0, 100) : undefined;
+
+    // Fallback to database customCatalog if request catalog is empty
+    if ((!safeCatalog || safeCatalog.length === 0) && !isTrial && b2bKey?.customCatalog) {
+      const dbCatalog = b2bKey.customCatalog;
+      if (Array.isArray(dbCatalog)) {
+        safeCatalog = dbCatalog.slice(0, 100) as any;
+      }
+    }
 
     const climatePayload = {
       city: liveLocation.city,

@@ -17,6 +17,46 @@ function isWidgetRateLimited(ip: string, limit = 30): boolean {
   return entry.count > limit;
 }
 
+function isOriginAllowed(request: NextRequest, allowedOrigins: string): boolean {
+  if (allowedOrigins === "*") return true;
+
+  const originHeader = request.headers.get("origin");
+  const refererHeader = request.headers.get("referer");
+
+  let requestDomain = "";
+
+  if (originHeader) {
+    try {
+      requestDomain = new URL(originHeader).hostname.toLowerCase();
+    } catch {
+      requestDomain = originHeader.toLowerCase();
+    }
+  } else if (refererHeader) {
+    try {
+      requestDomain = new URL(refererHeader).hostname.toLowerCase();
+    } catch {
+      requestDomain = refererHeader.toLowerCase();
+    }
+  }
+
+  requestDomain = requestDomain.split(":")[0];
+  if (!requestDomain) return false;
+
+  const whitelist = allowedOrigins
+    .split(",")
+    .map((d) => d.trim().toLowerCase())
+    .filter(Boolean);
+
+  return whitelist.some((domain) => {
+    if (requestDomain === domain) return true;
+    if (domain.startsWith("*.")) {
+      const baseDomain = domain.slice(2);
+      return requestDomain === baseDomain || requestDomain.endsWith("." + baseDomain);
+    }
+    return false;
+  });
+}
+
 const CORS_HEADERS = {
   "Access-Control-Allow-Origin": "*",
   "Content-Type": "application/javascript",
@@ -47,18 +87,29 @@ export async function GET(req: NextRequest) {
 
   const isTrial = apiKey === "b2b_trial_key";
   let logKeyId: string | null = null;
-
+  let b2bKey: any = null;
+ 
   if (!isTrial) {
     const keyHash = crypto.createHash("sha256").update(apiKey).digest("hex");
-    const b2bKey = await prisma.b2BApiKey.findFirst({
+    b2bKey = await prisma.b2BApiKey.findFirst({
       where: { OR: [{ keyHash }, { key: apiKey }] },
     });
-
+ 
     if (!b2bKey || b2bKey.status !== "active") {
       return new NextResponse(
         "// Mirha Widget Error: Invalid or suspended API key.",
         { status: 401, headers: CORS_HEADERS }
       );
+    }
+ 
+    // ── Domain locking validation ──────────────────────────────────────────
+    if (b2bKey.allowedOrigins && b2bKey.allowedOrigins !== "*") {
+      if (!isOriginAllowed(req, b2bKey.allowedOrigins)) {
+        return new NextResponse(
+          "// Mirha Widget Error: Forbidden. Origin not whitelisted.",
+          { status: 403, headers: CORS_HEADERS }
+        );
+      }
     }
 
     logKeyId = b2bKey.id;
@@ -66,6 +117,12 @@ export async function GET(req: NextRequest) {
 
   // ── Resolve location & generate recommendation ──────────────────────────────
   const locationDetails = await resolveLocationDataLive({ postalCode });
+  
+  let customCatalog: any[] | undefined = undefined;
+  if (!isTrial && b2bKey?.customCatalog && Array.isArray(b2bKey.customCatalog)) {
+    customCatalog = b2bKey.customCatalog;
+  }
+
   const routine = generateRoutine(
     { skinType, mainConcern, budget: "under_1000", experience: "beginner" },
     {
@@ -76,6 +133,7 @@ export async function GET(req: NextRequest) {
       temp: locationDetails.temp,
       humidity: locationDetails.humidity,
       dewpoint: locationDetails.dewpoint,
+      catalog: customCatalog,
     }
   );
 

@@ -32,6 +32,7 @@ interface KeyDetails {
   usageThisMonth: number;
   brandName: string;
   quotaResetAt: string;
+  allowedOrigins?: string;
 }
 
 export default function B2BDashboardPage() {
@@ -42,6 +43,13 @@ export default function B2BDashboardPage() {
   const [apiKey, setApiKey] = useState("b2b_trial_key");
   const [keyDetails, setKeyDetails] = useState<KeyDetails | null>(null);
   const [isLiveKey, setIsLiveKey] = useState(false);
+
+  // B2B Advanced Features States
+  const [allowedOrigins, setAllowedOrigins] = useState("*");
+  const [updatingOrigins, setUpdatingOrigins] = useState(false);
+  const [updateOriginsSuccess, setUpdateOriginsSuccess] = useState(false);
+  const [analyticsData, setAnalyticsData] = useState<any>(null);
+  const [loadingAnalytics, setLoadingAnalytics] = useState(false);
 
   // Key retrieval state
   const [lookupEmail, setLookupEmail] = useState("");
@@ -95,6 +103,7 @@ export default function B2BDashboardPage() {
           usageThisMonth: data.usageThisMonth,
           brandName: data.brandName,
           quotaResetAt: data.quotaResetAt,
+          allowedOrigins: data.allowedOrigins || "*",
         });
         setLookupError(null);
         setShowRetrieveForm(false);
@@ -110,6 +119,53 @@ export default function B2BDashboardPage() {
       setIsLookingUp(false);
     }
   }, []);
+
+  // Sync allowedOrigins when keyDetails changes
+  useEffect(() => {
+    if (keyDetails?.allowedOrigins) {
+      setAllowedOrigins(keyDetails.allowedOrigins);
+    }
+  }, [keyDetails]);
+
+  // Fetch B2B analytics when apiKey changes
+  useEffect(() => {
+    if (!apiKey) return;
+    setLoadingAnalytics(true);
+    fetch(`/api/v1/analytics?apiKey=${apiKey}`)
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          setAnalyticsData(data.analytics);
+        } else {
+          setAnalyticsData(null);
+        }
+      })
+      .catch(() => setAnalyticsData(null))
+      .finally(() => setLoadingAnalytics(false));
+  }, [apiKey]);
+
+  const handleUpdateOrigins = async () => {
+    if (apiKey === "b2b_trial_key") return;
+    setUpdatingOrigins(true);
+    setUpdateOriginsSuccess(false);
+    try {
+      const res = await fetch("/api/b2b/update-settings", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ apiKey, allowedOrigins }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setUpdateOriginsSuccess(true);
+        setTimeout(() => setUpdateOriginsSuccess(false), 2000);
+        setKeyDetails(prev => prev ? { ...prev, allowedOrigins: data.allowedOrigins } : null);
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setUpdatingOrigins(false);
+    }
+  };
 
   // ── On mount: restore welcome state & auto-lookup key ──────────────────────
   useEffect(() => {
@@ -546,6 +602,126 @@ export function SkincareRecs({ postalCode }) {
           </div>
         ))}
       </div>
+
+      {/* ── Developer Console (Analytics + Domain Whitelisting) ── */}
+      {isLiveKey && (
+        <div style={{ margin: "20px 28px 0px", padding: "20px", border: "1px solid var(--card-border)", borderRadius: "8px", background: "var(--card-bg)" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: "1px solid var(--card-border)", paddingBottom: "12px", marginBottom: "16px" }}>
+            <div>
+              <h2 style={{ margin: 0, fontSize: "15px", fontWeight: 700, color: "var(--text-main)", display: "flex", alignItems: "center", gap: "8px" }}>
+                💻 B2B Developer Console
+              </h2>
+              <p style={{ margin: "2px 0 0", fontSize: "12px", color: "var(--text-muted)" }}>
+                Manage your API key security settings and monitor real-time integration usage metrics.
+              </p>
+            </div>
+            {apiKey !== "b2b_trial_key" && keyDetails && (
+              <span style={{ fontSize: "11px", background: "rgba(236,31,106,0.12)", border: "1px solid rgba(236,31,106,0.3)", color: "#ec1f6a", borderRadius: "99px", padding: "2px 10px", fontWeight: 700 }}>
+                {keyDetails.tier.toUpperCase()} MEMBER
+              </span>
+            )}
+          </div>
+
+          <div style={{ display: "grid", gridTemplateColumns: apiKey === "b2b_trial_key" ? "1fr" : "1fr 1fr", gap: "24px" }}>
+            {/* Whitelisting */}
+            {apiKey !== "b2b_trial_key" && (
+              <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+                <label style={{ fontSize: "12.5px", fontWeight: 700, color: "var(--text-main)", display: "flex", alignItems: "center", gap: "6px" }}>
+                  🔒 Domain Whitelisting (CORS)
+                </label>
+                <p style={{ margin: 0, fontSize: "11.5px", color: "var(--text-sub)", lineHeight: 1.45 }}>
+                  Secure your key. Restrict it to requests initiated from specific hostnames (comma-separated list, e.g. <code>localhost, partner.com</code>). Set to <code>*</code> to disable restrictions.
+                </p>
+                <div style={{ display: "flex", gap: "8px", marginTop: "4px" }}>
+                  <input
+                    type="text"
+                    value={allowedOrigins}
+                    onChange={(e) => setAllowedOrigins(e.target.value)}
+                    placeholder="e.g. localhost, partner-site.com"
+                    style={{
+                      flex: 1, padding: "8px 10px", border: "1px solid var(--input-border)",
+                      borderRadius: "6px", fontSize: "12.5px", color: "var(--input-text)", background: "var(--input-bg)"
+                    }}
+                  />
+                  <button
+                    onClick={handleUpdateOrigins}
+                    disabled={updatingOrigins}
+                    style={{
+                      background: "#ec1f6a", color: "#fff", border: "none", borderRadius: "6px",
+                      padding: "8px 14px", fontSize: "12.5px", fontWeight: 700, cursor: "pointer",
+                      display: "flex", alignItems: "center", gap: "6px"
+                    }}
+                  >
+                    {updatingOrigins ? <RefreshCw size={13} className="animate-spin" /> : "Save"}
+                  </button>
+                </div>
+                {updateOriginsSuccess && (
+                  <span style={{ fontSize: "12px", color: "#22c55e", fontWeight: 600 }}>
+                    ✓ Settings saved successfully.
+                  </span>
+                )}
+              </div>
+            )}
+
+            {/* Analytics Overview */}
+            <div>
+              <label style={{ fontSize: "12.5px", fontWeight: 700, color: "var(--text-main)", display: "flex", alignItems: "center", gap: "6px", marginBottom: "8px" }}>
+                📊 API Usage Insights
+              </label>
+              {loadingAnalytics ? (
+                <div style={{ fontSize: "12px", color: "var(--text-sub)", display: "flex", alignItems: "center", gap: "6px" }}>
+                  <RefreshCw size={12} className="animate-spin" /> Fetching statistics...
+                </div>
+              ) : !analyticsData ? (
+                <div style={{ fontSize: "12px", color: "var(--text-sub)" }}>
+                  No analytics record found for this key yet. Make request calls below to start tracking.
+                </div>
+              ) : (
+                <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", background: "rgba(0,0,0,0.15)", padding: "8px 12px", borderRadius: "6px" }}>
+                    <span style={{ fontSize: "12px", color: "var(--text-muted)" }}>Total API Queries logged:</span>
+                    <span style={{ fontSize: "12px", fontWeight: 700, color: "#ec1f6a" }}>
+                      {analyticsData.totalRequests} requests
+                    </span>
+                  </div>
+
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" }}>
+                    {/* Skin type breakdown */}
+                    <div style={{ border: "1px solid var(--card-border)", borderRadius: "6px", padding: "8px", background: "rgba(0,0,0,0.05)" }}>
+                      <div style={{ fontSize: "10.5px", fontWeight: 700, color: "var(--text-sub)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "6px" }}>Skin Types</div>
+                      {Object.keys(analyticsData.skinTypes || {}).length === 0 ? (
+                        <div style={{ fontSize: "11px", color: "var(--text-sub)" }}>None</div>
+                      ) : (
+                        Object.entries(analyticsData.skinTypes || {}).slice(0, 3).map(([type, val]: any) => (
+                          <div key={type} style={{ display: "flex", justifyContent: "space-between", fontSize: "11.5px", margin: "2px 0" }}>
+                            <span style={{ textTransform: "capitalize", color: "var(--text-main)" }}>{type}</span>
+                            <span style={{ fontWeight: 600, color: "var(--text-muted)" }}>{val}</span>
+                          </div>
+                        ))
+                      )}
+                    </div>
+
+                    {/* Water category breakdown */}
+                    <div style={{ border: "1px solid var(--card-border)", borderRadius: "6px", padding: "8px", background: "rgba(0,0,0,0.05)" }}>
+                      <div style={{ fontSize: "10.5px", fontWeight: 700, color: "var(--text-sub)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "6px" }}>Water Hardness</div>
+                      {Object.entries(analyticsData.waterHardness || {}).filter(([, val]: any) => val > 0).length === 0 ? (
+                        <div style={{ fontSize: "11px", color: "var(--text-sub)" }}>None</div>
+                      ) : (
+                        Object.entries(analyticsData.waterHardness || {}).map(([cat, val]: any) => (
+                          <div key={cat} style={{ display: "flex", justifyContent: "space-between", fontSize: "11.5px", margin: "2px 0" }}>
+                            <span style={{ textTransform: "capitalize", color: "var(--text-main)" }}>{cat}</span>
+                            <span style={{ fontWeight: 600, color: "var(--text-muted)" }}>{val}</span>
+                          </div>
+                        ))
+                      )}
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* ── Main Layout ── */}
       <div className="layout" style={{ display: "grid", gridTemplateColumns: "1.55fr 1fr", gap: "22px", padding: "22px 28px 40px", alignItems: "start" }}>
