@@ -17,6 +17,17 @@ export type Post = {
 const STATIC_POSTS: Post[] = [
   {
     category: "SKINCARE",
+    title: "Tap Water Chemistry and Climate Telemetry: The Next E-Commerce Personalization Frontier",
+    excerpt: "Personalization has evolved past basic quizzes. Learn how persistent catalogs, CORS whitelisting, and real-time usage analytics help brands secure and scale climate-adaptive e-commerce.",
+    slug: "tap-water-chemistry-climate-telemetry-ecommerce",
+    readTime: "6 min",
+    date: "August 2026",
+    productCount: 4,
+    thumbnail: "B2B",
+    tags: ["b2b", "api", "water hardness", "telemetry", "personalization", "e-commerce"],
+  },
+  {
+    category: "SKINCARE",
     title: "How B2B Skincare APIs Help E-Commerce Brands Drive Conversion and Slash Returns",
     excerpt: "Skincare returns are driven by biology, not fit. Learn how integrating live climate, local water telemetry, and ingredient conflict checking helps brands convert more shoppers and cut returns.",
     slug: "how-b2b-skincare-apis-cut-returns",
