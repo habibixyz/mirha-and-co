@@ -2567,5 +2567,112 @@ export const HIGH_INTENT_POSTS: HighIntentPost[] = [
         ]
       }
     ]
+  },
+  {
+    slug: "cetaphil-vs-cerave-cleanser",
+    title: "Cetaphil vs CeraVe Cleanser: Which Gentle Wash Wins for Sensitive Indian Skin?",
+    category: "SKINCARE",
+    excerpt: "We compare Cetaphil Gentle Skin Cleanser and CeraVe Hydrating Cleanser head-to-head on surfactants, pH, lipid restoration, and how they perform in hard water.",
+    readTime: "8 min",
+    date: "August 2026",
+    thumbnail: "VS",
+    tags: ["cleanser", "cetaphil", "cerave", "sensitive skin", "dry skin", "barrier repair"],
+    asins: ["B01CCGW4OE", "B0CTTV91Z6", "B08475HN8L"],
+    sections: [
+      {
+        title: "The Surfactant Showdown: Micelles vs. Ceramides",
+        body: [
+          "If your skin is dry, irritated, or recovering from a ruined barrier (too many active acids), you've likely had someone recommend either Cetaphil Gentle Skin Cleanser or CeraVe Hydrating Cleanser. They look similar — both are milky, non-foaming, lotion-like cleansers that don't lather. But chemically, they are built on completely different ideas.",
+          "Cetaphil relies on a classic, ultra-minimalist micellar formulation. It uses cetyl alcohol and stearyl alcohol to suspend dirt and lipids, allowing them to be wiped or rinsed off without disrupting the stratum corneum. It is designed to do exactly one job: clean without irritating. It doesn't attempt to treat or rebuild.",
+          "CeraVe, on the other hand, is active barrier repair in cleanser form. It is formulated with three essential ceramides (1, 3, and 6-II), hyaluronic acid, and cholesterol. Using CeraVe's proprietary Multivesicular Emulsion (MVE) technology, it deposits these skin-identical lipids onto the skin barrier during the wash, maintaining hydration even after you've rinsed it off."
+        ]
+      },
+      {
+        title: "The Hard Water Performance Gap",
+        body: [
+          "In Indian cities like Bangalore, Mumbai, or Delhi, tap water minerals (calcium and magnesium) present a massive challenge. When hard water hits standard cleansers, it creates a sticky mineral deposit (soap scum) that clings to your pores, leading to dryness and breakouts.",
+          "Cetaphil's minimalist formula is highly liquid and slippery. In hard water, it rinses off easily without leaving a residue, making it a safe choice for highly sensitized skin. CeraVe's lotion texture is slightly richer and more emollient. While it provides excellent hydration, you must ensure you rinse thoroughly with lukewarm water to prevent any ceramide-film buildup in very hard water zones."
+        ]
+      },
+      {
+        title: "Which Gentle Cleanser Should You Choose?",
+        sectionAsins: ["B01CCGW4OE", "B0CTTV91Z6", "B08475HN8L"],
+        body: [
+          "The choice depends on your specific skin condition:",
+          "- Choose Cetaphil Gentle Skin Cleanser (ASIN: B01CCGW4OE) if your skin is actively stinging, damaged, or extremely allergy-prone. Its minimalist ingredient list has virtually zero triggers.",
+          "- Choose CeraVe (ASIN: B0CTTV91Z6) if you have chronic dryness or a compromised skin barrier and want a cleanser that actively leaves your skin feeling plump and hydrated rather than just clean. Pair it with a rich barrier shield like Bioderma Atoderm Intensive Baume for nighttime recovery."
+        ]
+      }
+    ]
+  },
+  {
+    slug: "minimalist-vs-ordinary-salicylic-acid",
+    title: "Minimalist vs The Ordinary Salicylic Acid: The Ultimate BHA Showdown",
+    category: "SKINCARE",
+    excerpt: "BHA is the gold standard for blackheads and congested pores. We compare Minimalist 2% Salicylic Acid and The Ordinary 2% Salicylic Acid on texture, penetration, and breakout control.",
+    readTime: "7 min",
+    date: "August 2026",
+    thumbnail: "VS",
+    tags: ["salicylic acid", "minimalist", "the ordinary", "bha", "pores", "acne"],
+    asins: ["B0DH88LZ11", "B01MDTVZTZ", "B095PRGHDX"],
+    sections: [
+      {
+        title: "How BHA Targets Blackheads and Sebum",
+        body: [
+          "Unlike Alpha Hydroxy Acids (like Glycolic or Lactic acid) which are water-soluble and work on the skin surface, Salicylic Acid is oil-soluble (lipophilic). This unique property allows it to bypass surface oils, penetrate deep into the lining of the pores, and dissolve the sticky mixture of dead skin cells and sebum that forms blackheads and whiteheads.",
+          "For anyone dealing with oily skin, active acne congestion, or strawberry nose in humid climates, a 2% Salicylic Acid (BHA) serum is a vital routine addition. But the formulation base makes a huge difference in how the active behaves."
+        ]
+      },
+      {
+        title: "Formulation Base: Aloe Vera vs. Anhydrous Matrix",
+        body: [
+          "The Ordinary 2% Salicylic Acid is a classic, water-based serum that uses a simple, minimalist delivery system. It absorbs quickly with a slightly tacky finish that dries down matte. It is highly effective, but it can feel drying or sensitizing for those with a delicate skin barrier.",
+          "Minimalist 2% Salicylic Acid takes a gentler approach. Instead of a simple water base, it uses an Aloe Vera juice base combined with a soothing ingredient called Oligopeptide-10. This peptide works synergistically with the BHA to target acne-causing bacteria while the aloe base hydrates and reduces the stinging sensation often associated with chemical exfoliants."
+        ]
+      },
+      {
+        title: "Which 2% BHA Serum Wins?",
+        sectionAsins: ["B0DH88LZ11", "B01MDTVZTZ", "B095PRGHDX"],
+        body: [
+          "- Choose Minimalist 2% Salicylic Acid if you have sensitive or combination skin that gets easily irritated by chemical exfoliants. The aloe vera base provides a cushioned delivery that minimizes peeling and redness.",
+          "- Choose The Ordinary 2% Salicylic Acid (ASIN: B01MDTVZTZ) if you have oily, resilient skin and want a fast-absorbing formula that gets straight to work. Pair it with a lightweight, pore-clearing wash or a soothing barrier recovery moisturizer."
+        ]
+      }
+    ]
+  },
+  {
+    slug: "cosrx-vs-seoulceuticals-snail-mucin",
+    title: "COSRX vs SeoulCeuticals: The Battle of the Snail Mucin Serums",
+    category: "SKINCARE",
+    excerpt: "Snail secretion filtrate is a hydration superstar. We compare the global favorite COSRX Advanced Snail 96 Essence and SeoulCeuticals 97.5% Snail Serum on ingredients, absorption, and value.",
+    readTime: "9 min",
+    date: "August 2026",
+    thumbnail: "SM",
+    tags: ["snail mucin", "cosrx", "seoulceuticals", "glass skin", "hydration", "barrier repair"],
+    asins: ["B00PBX3L7K", "B016NRXO06", "B095PRGHDX"],
+    sections: [
+      {
+        title: "The Power of Snail Secretion Filtrate",
+        body: [
+          "Snail secretion filtrate (mucin) has taken the global skincare community by storm, and for good reason. It is naturally rich in glycoproteins, hyaluronic acid, glycolic acid, and copper peptides. This biological cocktail makes it incredibly effective at repairing the skin barrier, fading post-inflammatory hyperpigmentation (acne scars), and delivering a deep, bouncy 'glass skin' glow.",
+          "However, not all snail mucin products are formulated the same. The choice between an essence and a multi-active serum depends heavily on your skin type and weather."
+        ]
+      },
+      {
+        title: "Formulation Contrast: Pure Essence vs. Multi-Active Serum",
+        body: [
+          "COSRX Advanced Snail 96 Mucin Power Essence (ASIN: B00PBX3L7K) is a highly concentrated, minimalist formula containing 96% pure snail secretion filtrate. It has a thick, stringy, gel-like texture that delivers intense, direct hydration. It has no added fragrance and is designed to act as a pure, soothing hydration layer under your moisturizer.",
+          "SeoulCeuticals Multi-Function Snail Serum takes a different approach, formulating 97.5% snail mucin with active helpers like Vitamin C (Sodium Ascorbyl Phosphate), Hyaluronic Acid, Centella Asiatica, and organic Green Tea. It has a much lighter, water-like consistency that absorbs instantly without the signature sticky, stringy feel of the COSRX essence. This makes it far more comfortable in hot, humid climates."
+        ]
+      },
+      {
+        title: "The Verdict: Which Snail Mucin is Best?",
+        sectionAsins: ["B00PBX3L7K", "B016NRXO06", "B095PRGHDX"],
+        body: [
+          "- Choose COSRX Advanced Snail 96 Mucin Power Essence (ASIN: B00PBX3L7K) if you have dry, dehydrated, or highly sensitive skin and want a pure, soothing hydration shield to restore your barrier.",
+          "- Choose SeoulCeuticals Snail Mucin Serum if you have oily or combination skin, live in a warm, humid region, or want additional brightening benefits from Vitamin C and green tea without layering multiple different serums. Combine it with a gentle cleanser like COSRX Low pH Gel Cleanser for the ultimate glowing baseline."
+        ]
+      }
+    ]
   }
 ];

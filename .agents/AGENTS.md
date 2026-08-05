@@ -77,3 +77,6 @@ Write-Host "Recommend: $($r.StatusCode)"  # Must be 200, success: true
 * The trial key `b2b_trial_key` must **always** bypass DB lookup and work without any DB entry.
 * The `monthlyQuota` enforcement and `usageThisMonth` increment in `recommend/route.ts` must never be removed — paying B2B customers are billed based on this.
 * CORS headers (`Access-Control-Allow-Origin: *`) on all `/api/v1/*` routes are intentional — partner sites embed these from different origins.
+
+## 5. Blog Posts & Content Management
+* **Always ensure new blog posts are placed at the top of the feed.** When adding new entries to `lib/high-intent-posts.ts`, make sure they are mapped at the absolute top of the `POSTS` array in `lib/posts.ts` so they display on top of the feed.

@@ -827,7 +827,10 @@ const NEW_SLUGS = [
   "tech-neck-biomechanics-guide",
   "santal-33-br540-teardown",
   "skincare-biohacking-audit",
-  "mens-hairline-save-protocol"
+  "mens-hairline-save-protocol",
+  "cetaphil-vs-cerave-cleanser",
+  "minimalist-vs-ordinary-salicylic-acid",
+  "cosrx-vs-seoulceuticals-snail-mucin"
 ];
 
 const mappedHighIntent = HIGH_INTENT_POSTS.map(p => ({
@@ -843,6 +846,11 @@ const mappedHighIntent = HIGH_INTENT_POSTS.map(p => ({
 }));
 
 export const POSTS: Post[] = [
+  ...mappedHighIntent.filter(p => [
+    "cetaphil-vs-cerave-cleanser",
+    "minimalist-vs-ordinary-salicylic-acid",
+    "cosrx-vs-seoulceuticals-snail-mucin"
+  ].includes(p.slug)),
   ...STATIC_POSTS.slice(0, 3),
   ...mappedHighIntent.filter(p => [
     "tech-neck-biomechanics-guide",
@@ -854,7 +862,10 @@ export const POSTS: Post[] = [
     "tech-neck-biomechanics-guide",
     "santal-33-br540-teardown",
     "skincare-biohacking-audit",
-    "mens-hairline-save-protocol"
+    "mens-hairline-save-protocol",
+    "cetaphil-vs-cerave-cleanser",
+    "minimalist-vs-ordinary-salicylic-acid",
+    "cosrx-vs-seoulceuticals-snail-mucin"
   ].includes(p.slug)),
   ...STATIC_POSTS.slice(3),
   ...mappedHighIntent.filter(p => !NEW_SLUGS.includes(p.slug))
@@ -904,6 +915,9 @@ const SLUG_IMAGE_MAP: Record<string, string> = {
   "santal-33-br540-teardown": "/blog-thumbs/blog_santal_teardown.png",
   "skincare-biohacking-audit": "/blog-thumbs/blog_biohacking_audit.png",
   "mens-hairline-save-protocol": "/blog-thumbs/blog_mens_hairline.png",
+  "cetaphil-vs-cerave-cleanser": "/blog-thumbs/blog_cetaphil_vs_cerave.png",
+  "minimalist-vs-ordinary-salicylic-acid": "/blog-thumbs/blog_salicylic_showdown.png",
+  "cosrx-vs-seoulceuticals-snail-mucin": "/blog-thumbs/blog_snail_mucin.png",
 
  // SKINCARE — 17 posts
  "why-is-my-face-darker-than-my-body": "/blog-thumbs/blog_face_darker.png",
