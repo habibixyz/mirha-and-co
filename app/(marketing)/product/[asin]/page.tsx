@@ -251,15 +251,26 @@ export default async function ProductPage({ params }: { params: Promise<{ asin: 
     "tranexamic acid","arbutin","bakuchiol","squalane","glycerin",
     "allantoin","panthenol","vitamin e","ferulic acid","egcg","hydrocolloid",
   ];
+  const toCleanActiveName = (str: string) => {
+    const uppercaseSet = new Set(["spf", "aha", "bha", "egcg", "ala", "bpo", "uv"]);
+    return str
+      .toLowerCase()
+      .split(/\s+/)
+      .map((w) => (uppercaseSet.has(w) ? w.toUpperCase() : w.charAt(0).toUpperCase() + w.slice(1)))
+      .join(" ");
+  };
   const ingredients: string[] = [
     ...toList(product.ingredients),
     ...(product.specs?.["Key Ingredient"]
       ? product.specs["Key Ingredient"].split(",").map((s: string) => s.trim())
       : []),
     ...toList(product.tags)
-      .filter((t: string) => KNOWN_ACTIVES.includes(t.toLowerCase()))
-      .map((t: string) => t.charAt(0).toUpperCase() + t.slice(1)),
-  ].filter(Boolean).filter((v, i, a) => a.indexOf(v) === i).slice(0, 6) as string[];
+      .filter((t: string) => KNOWN_ACTIVES.includes(t.toLowerCase())),
+  ]
+    .filter(Boolean)
+    .map((t: string) => toCleanActiveName(t))
+    .filter((v, i, a) => a.indexOf(v) === i)
+    .slice(0, 6);
 
   // ── Smart Usage ──────────────────────────────────────────────────────────────
   const usageText: string = product.usage || product.specs?.["Use"]
