@@ -186,22 +186,126 @@ export default async function ProductPage({ params }: { params: Promise<{ asin: 
  product.link
  );
  const save = discount(product.mrp, product.price);
- 
- const bestFor = [
- ...toList(product.bestFor),
- ...toList(product.concerns),
- product.specs?.["Skin Type"],
- product.specs?.["Best For"],
- ].filter(Boolean).slice(0, 4) as string[];
- 
- const avoidIf = toList(product.notIdealFor);
- 
- const ingredients = [
- ...toList(product.ingredients),
- product.specs?.["Key Ingredient"],
- ].filter(Boolean) as string[];
- 
- const watchOuts = toList(product.watchOuts);
+
+  // ── Smart Best For ──────────────────────────────────────────────────────────
+  const bestFor: string[] = [
+    ...toList(product.bestFor),
+    ...toList(product.concerns).map((c: string) => {
+      const m: Record<string, string> = {
+        "acne": "Acne-prone skin",
+        "dark circles": "Under-eye dark circles",
+        "anti-ageing": "Fine lines & ageing skin",
+        "pigmentation": "Hyperpigmentation & uneven tone",
+        "dryness": "Dry & dehydrated skin",
+        "oiliness": "Oily & combination skin",
+        "sensitivity": "Sensitive or reactive skin",
+        "pores": "Enlarged pores",
+        "barrier": "Damaged skin barrier",
+        "dullness": "Dull, tired-looking skin",
+        "redness": "Redness & irritation",
+        "mens": "Men's skin",
+      };
+      return m[c.toLowerCase()] || c;
+    }),
+    product.specs?.["Skin Type"] ? `${product.specs["Skin Type"]} skin` : null,
+    product.specs?.["Best For"] ?? null,
+    product.specs?.["Use"] ? `${product.specs["Use"]} routine step` : null,
+  ].filter(Boolean).filter((v, i, a) => a.indexOf(v) === i).slice(0, 5) as string[];
+
+  // ── Smart Avoid If ───────────────────────────────────────────────────────────
+  const avoidIfRaw: string[] = [...toList(product.notIdealFor)];
+  if (!avoidIfRaw.length) {
+    const ptags = toList(product.tags).map((t: string) => t.toLowerCase());
+    const pspecs = product.specs || {};
+    if (ptags.includes("retinol") || ptags.includes("retinal") || ptags.includes("retinoid"))
+      avoidIfRaw.push("Pregnant or breastfeeding", "Extremely sensitive or thin skin");
+    if (ptags.some((t: string) => ["aha", "bha", "lactic acid", "glycolic", "salicylic"].includes(t)))
+      avoidIfRaw.push("Active eczema or open wounds", "If already using a prescription acid");
+    if (ptags.includes("benzoyl peroxide") || ptags.includes("bpo"))
+      avoidIfRaw.push("Sensitive or dry skin (start slow)", "Before unprotected sun exposure");
+    if (ptags.includes("vitamin c") || ptags.includes("ascorbic"))
+      avoidIfRaw.push("If layering directly with Niacinamide (use at separate times)");
+    if (ptags.includes("niacinamide"))
+      avoidIfRaw.push("Avoid mixing directly with pure Vitamin C serums");
+    if (ptags.includes("spf") || ptags.includes("sunscreen"))
+      avoidIfRaw.push("As a substitute for reapplication every 2 hours outdoors");
+    if (ptags.some((t: string) => ["snail", "bee venom", "honey"].includes(t)))
+      avoidIfRaw.push("If you have allergies to animal-derived ingredients");
+    if (ptags.some((t: string) => ["fragrance", "perfume", "parfum"].includes(t)))
+      avoidIfRaw.push("Fragrance-sensitive skin or rosacea");
+    if (pspecs["Skin Type"]?.toLowerCase().includes("oily"))
+      avoidIfRaw.push("Very dry or dehydrated skin");
+    if (pspecs["Skin Type"]?.toLowerCase().includes("dry"))
+      avoidIfRaw.push("Very oily or acne-prone skin");
+    if (!avoidIfRaw.length)
+      avoidIfRaw.push("Patch test first if you have a reactive or compromised skin barrier");
+  }
+  const avoidIf = avoidIfRaw.filter((v, i, a) => a.indexOf(v) === i).slice(0, 4);
+
+  // ── Smart Ingredients ────────────────────────────────────────────────────────
+  const KNOWN_ACTIVES = [
+    "niacinamide","hyaluronic acid","retinol","retinal","vitamin c","vitamin k",
+    "caffeine","ceramide","peptide","spf","aha","bha","salicylic acid","lactic acid",
+    "glycolic acid","benzoyl peroxide","azelaic acid","zinc","kojic acid",
+    "snail secretion filtrate","centella asiatica","cica","aloe vera",
+    "tranexamic acid","arbutin","bakuchiol","squalane","glycerin",
+    "allantoin","panthenol","vitamin e","ferulic acid","egcg","hydrocolloid",
+  ];
+  const ingredients: string[] = [
+    ...toList(product.ingredients),
+    ...(product.specs?.["Key Ingredient"]
+      ? product.specs["Key Ingredient"].split(",").map((s: string) => s.trim())
+      : []),
+    ...toList(product.tags)
+      .filter((t: string) => KNOWN_ACTIVES.includes(t.toLowerCase()))
+      .map((t: string) => t.charAt(0).toUpperCase() + t.slice(1)),
+  ].filter(Boolean).filter((v, i, a) => a.indexOf(v) === i).slice(0, 6) as string[];
+
+  // ── Smart Usage ──────────────────────────────────────────────────────────────
+  const usageText: string = product.usage || product.specs?.["Use"]
+    ? `${product.usage || product.specs?.["Use"]}`
+    : (() => {
+        const ptags = toList(product.tags).map((t: string) => t.toLowerCase());
+        const sub = (product.subcat || "").toLowerCase();
+        if (sub.includes("cleanser") || sub.includes("face wash"))
+          return `Wet face, apply a small amount, work into a lather, rinse. Use ${product.specs?.["Use"] || "AM & PM"}.`;
+        if (sub.includes("serum"))
+          return `Apply ${product.specs?.["Use"] || "AM & PM"} post-cleanse. Use 2–3 drops, press in gently. Follow with moisturiser.`;
+        if (sub.includes("moisturiser") || sub.includes("cream") || sub.includes("lotion"))
+          return `Final hydration step ${product.specs?.["Use"] || "AM & PM"} — before SPF in AM, or as last step in PM.`;
+        if (sub.includes("sunscreen") || ptags.includes("spf"))
+          return "Apply generously 15 min before sun exposure. Reapply every 2 hours or after sweating/swimming.";
+        if (sub.includes("eye"))
+          return "Use ring finger to gently pat a rice-grain amount around the orbital bone. Never tug or drag.";
+        if (sub.includes("toner"))
+          return `Apply with a cotton pad or pat into skin post-cleanse. Use ${product.specs?.["Use"] || "AM & PM"}.`;
+        if (sub.includes("mask"))
+          return "Apply a thin, even layer to clean skin. Leave for the recommended time, then rinse thoroughly.";
+        if (ptags.includes("pimple patch") || ptags.includes("hydrocolloid"))
+          return "Cleanse and fully dry area. Apply patch directly on blemish. Leave overnight or for at least 6 hours.";
+        return "Apply to clean skin and patch test first. Introduce one new product at a time.";
+      })();
+
+  // ── Smart Mirha Note ─────────────────────────────────────────────────────────
+  const mirhaNoteText: string = product.notes || (() => {
+    const ptags = toList(product.tags).map((t: string) => t.toLowerCase());
+    const savePct = product.mrp > product.price
+      ? Math.round(((product.mrp - product.price) / product.mrp) * 100) : 0;
+    let note = `${product.brand}'s ${product.subcat} holds a ${product.rating}★ rating`;
+    if (product.reviews) note += ` from ${product.reviews} reviews`;
+    note += ".";
+    if (savePct > 20) note += ` Currently ${savePct}% off MRP — solid value window.`;
+    if (ptags.includes("dermat") || (product.badge || "").toLowerCase().includes("dermat"))
+      note += " Dermatologist-recommended.";
+    if (ptags.includes("fragrance-free") || product.description?.toLowerCase().includes("fragrance-free"))
+      note += " Fragrance-free — safer for sensitive skin types.";
+    if (isCF) note += " Brand is cruelty-free.";
+    if (isVeg) note += " Formula is 100% vegan.";
+    note += " Curated for ingredient quality, review reliability and category value. Not medical advice.";
+    return note;
+  })();
+
+  const watchOuts = toList(product.watchOuts);
  
  const alternatives = PRODUCT_LIST.filter(
  (item) => item.asin !== product.asin && item.category === product.category
@@ -888,15 +992,15 @@ export default async function ProductPage({ params }: { params: Promise<{ asin: 
  </div>
  </div>
 
- <AiProductTranslator
- description={product.description}
- bestFor={bestFor}
- avoidIf={avoidIf}
- usage={product.usage || product.specs?.["Use"] || "Use as directed on the product label. Introduce one new product at a time and patch test first."}
- ingredients={ingredients}
- locale={locale}
- mirhaNotes={product.notes}
- />
+  <AiProductTranslator
+  description={product.description}
+  bestFor={bestFor}
+  avoidIf={avoidIf}
+  usage={usageText}
+  ingredients={ingredients}
+  locale={locale}
+  mirhaNotes={mirhaNoteText}
+  />
 
  <a
  href={affiliateUrl}
