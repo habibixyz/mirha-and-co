@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ExternalLink } from "lucide-react";
+import { ArrowLeft, ExternalLink, BookOpen } from "lucide-react";
 import { cookies } from "next/headers";
 import { PRODUCTS } from "@/lib/products";
 import {
@@ -13,6 +13,7 @@ import {
  RTL_LOCALES,
 } from "@/lib/globalization";
 import AiProductTranslator from "@/components/AiProductTranslator";
+import { getGuidesForProduct } from "@/lib/blog-utils";
 
 function isCrueltyFree(product: any) {
  const cfBrands = ["minimalist", "the ordinary", "cosrx", "wishcare", "pilgrim", "dot & key", "mamaearth", "beardo", "aqualogica", "plum", "deconstruct", "derma co"];
@@ -317,6 +318,7 @@ export default async function ProductPage({ params }: { params: Promise<{ asin: 
   })();
 
   const watchOuts = toList(product.watchOuts);
+  const featuredInGuides = getGuidesForProduct(product.asin);
  
  const alternatives = PRODUCT_LIST.filter(
  (item) => item.asin !== product.asin && item.category === product.category
@@ -1012,6 +1014,101 @@ export default async function ProductPage({ params }: { params: Promise<{ asin: 
   locale={locale}
   mirhaNotes={mirhaNoteText}
   />
+
+  {featuredInGuides.length > 0 && (
+    <section
+      style={{
+        maxWidth: "1120px",
+        margin: "0 auto",
+        padding: "0 24px",
+        marginBottom: "2.5rem",
+      }}
+    >
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: "0.5rem",
+          marginBottom: "1rem",
+        }}
+      >
+        <BookOpen size={15} color="#a27b5c" />
+        <p
+          style={{
+            fontSize: "0.65rem",
+            letterSpacing: "0.22em",
+            textTransform: "uppercase",
+            color: "#a27b5c",
+            fontWeight: 700,
+            margin: 0,
+            fontFamily: "monospace",
+          }}
+        >
+          As Seen In Our Guides
+        </p>
+      </div>
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
+          gap: "0.75rem",
+        }}
+      >
+        {featuredInGuides.map((guide) => (
+          <Link
+            key={guide.slug}
+            href={`/blog/${guide.slug}`}
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              padding: "1rem 1.1rem",
+              background: "#fffaf4",
+              border: "1px solid #e3d8ce",
+              borderRadius: "10px",
+              textDecoration: "none",
+              gap: "0.4rem",
+            }}
+          >
+            <p
+              style={{
+                margin: 0,
+                fontSize: "0.85rem",
+                fontWeight: 600,
+                color: "#161412",
+                lineHeight: 1.3,
+              }}
+            >
+              {guide.title}
+            </p>
+            <p
+              style={{
+                margin: 0,
+                fontSize: "0.76rem",
+                color: "#756b63",
+                lineHeight: 1.5,
+                overflow: "hidden",
+                display: "-webkit-box",
+                WebkitBoxOrient: "vertical",
+                WebkitLineClamp: 2,
+              }}
+            >
+              {guide.excerpt}
+            </p>
+            <span
+              style={{
+                fontSize: "0.68rem",
+                color: "#a27b5c",
+                fontWeight: 600,
+                letterSpacing: "0.08em",
+              }}
+            >
+              Read guide → {guide.readTime}
+            </span>
+          </Link>
+        ))}
+      </div>
+    </section>
+  )}
 
  <a
  href={affiliateUrl}

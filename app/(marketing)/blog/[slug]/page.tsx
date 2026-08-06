@@ -76,6 +76,8 @@ export default async function ProgrammaticBlogPost({ params }: PageProps) {
       readTime={post.readTime}
       sections={post.sections}
       views={views}
+      slug={slug}
+      tags={(post as any).tags}
     />
   );
 }

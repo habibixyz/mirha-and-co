@@ -176,7 +176,8 @@ export function getProgrammaticPostBySlug(slug: string) {
       date: hip.date,
       readTime: hip.readTime,
       sections: hip.sections, // includes sectionAsins where set
-      asins: hip.asins
+      asins: hip.asins,
+      tags: hip.tags,
     };
   }
 

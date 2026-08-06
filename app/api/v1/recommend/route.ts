@@ -4,6 +4,7 @@ import { resolveLocationDataLive } from "../../../../lib/geocoding";
 import { prisma } from "@/lib/prisma";
 import crypto from "crypto";
 import { sendQuotaWarningEmail, sendQuotaExhaustedEmail } from "@/lib/b2bEmail";
+import { getPostsForConcern } from "@/lib/blog-utils";
 
 /* ─── In-memory rate limiter (per-IP burst protection + global trial cap) ─── */
 const rateMap = new Map<string, { count: number; resetAt: number }>();
@@ -362,6 +363,20 @@ export async function POST(req: NextRequest) {
         ? `You have ${quotaInfo.remaining.toLocaleString()} calls remaining this month (${Math.round((quotaInfo.remaining / quotaInfo.monthlyQuota) * 100)}% left). Upgrade at mirhaandco.com/b2b#pricing before your quota resets on ${quotaInfo.quotaResetAt ? new Date(quotaInfo.quotaResetAt).toLocaleDateString("en-GB", { day: "numeric", month: "short" }) : "month end"}.`
         : undefined;
 
+    // Attach educational guides matched to the caller's skin concern.
+    // These are purely informational — partners can render them alongside
+    // the recommendation to reduce returns via customer education.
+    const educationalGuides = getPostsForConcern(
+      mainConcern || "acne",
+      skinType,
+      2
+    ).map((g) => ({
+      title: g.title,
+      excerpt: g.excerpt,
+      url: `https://www.mirhaandco.com/blog/${g.slug}`,
+      readTime: g.readTime,
+    }));
+
     return NextResponse.json(
       {
         success: true,
@@ -389,6 +404,7 @@ export async function POST(req: NextRequest) {
           ...(quotaWarning ? { quotaWarning } : {}),
         },
         recommendation,
+        educationalGuides,
       },
       { status: 200, headers: dynamicHeaders }
     );

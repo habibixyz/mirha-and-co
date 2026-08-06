@@ -1,5 +1,6 @@
 import { generateRoutine, QuizAnswers } from "../routineEngine";
 import { resolveLocationDataLive } from "../geocoding";
+import { queryKnowledgeBase } from "../blog-utils";
 
 export interface AgentStep {
   step: number;
@@ -137,6 +138,13 @@ export async function runConciergeAgent(input: ConciergeAgentInput): Promise<Con
   const targetConcern = input.mainConcern || "acne";
   const activeConflictsCount = conflictWarnings.length;
 
+  // Step 5: Query knowledge base and build editorial citations
+  const knowledgeSnippets = queryKnowledgeBase(
+    targetConcern,
+    targetSkinType,
+    2
+  );
+
   let consultationNarrative = `Hi! I'm Mirha, your virtual skincare consultant. I've finished analyzing your diagnostic telemetry. Since you are targeting ${targetConcern} on ${targetSkinType} skin, I've designed a highly personalized AM/PM routine for you.`;
 
   if (climateData.ppm >= 150) {
@@ -147,6 +155,17 @@ export async function runConciergeAgent(input: ConciergeAgentInput): Promise<Con
     consultationNarrative += ` Very importantly: I identified active layering conflicts on your vanity shelf (specifically Retinol mixed simultaneously with exfoliating acids). To protect your skin barrier from redness and dehydration, I have rescheduled these to be layered on alternating nights.`;
   } else {
     consultationNarrative += ` Your current product selections are chemically compatible and safe to layer together.`;
+  }
+
+  // Inject real editorial citations from our blog knowledge base
+  if (knowledgeSnippets.length > 0) {
+    const primary = knowledgeSnippets[0];
+    consultationNarrative += ` On the topic of ${targetConcern}: in our guide "${primary.blogTitle}", we note that — "${primary.content}" You can read the full breakdown at mirhaandco.com/blog/${primary.blogSlug}.`;
+
+    if (knowledgeSnippets.length > 1) {
+      const secondary = knowledgeSnippets[1];
+      consultationNarrative += ` Another resource worth bookmarking: "${secondary.blogTitle}" covers "${secondary.sectionTitle}" in detail.`;
+    }
   }
 
   consultationNarrative += ` Please check the optimized AM/PM steps below to start your new regimen. Let me know if you have any questions!`;

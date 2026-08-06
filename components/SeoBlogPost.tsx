@@ -3,6 +3,7 @@ import BlogFooterTools from "@/components/BlogFooterTools";
 import { AffiliateCard } from "@/components/AffiliateCard";
 import { cookies, headers } from "next/headers";
 import { getLocalizedContent, Currency } from "@/lib/globalization";
+import { getRelatedPosts } from "@/lib/blog-utils";
 
 type Section = {
   title: string;
@@ -183,6 +184,8 @@ export async function SeoBlogPost({
   readTime,
   sections,
   views,
+  slug,
+  tags,
   children,
 }: {
   category: string;
@@ -192,12 +195,19 @@ export async function SeoBlogPost({
   readTime: string;
   sections: Section[];
   views?: number;
+  slug?: string;
+  tags?: string[];
   children?: React.ReactNode;
 }) {
   const cookieStore = await cookies();
   const headerStore = await headers();
   const currency = (cookieStore.get("mirha_currency")?.value || headerStore.get("x-default-currency") || "INR") as Currency;
   const localizeContent = (text: string) => getLocalizedContent(text, currency);
+
+  // Compute related posts by tag overlap — only if caller passes slug + tags
+  const relatedPosts = slug && tags?.length
+    ? getRelatedPosts(slug, tags, 3)
+    : [];
 
   return (
     <main className="seo-post">
@@ -609,6 +619,95 @@ export async function SeoBlogPost({
         })}
 
         {children}
+
+        {/* ── Related Articles ────────────────────────────────────────────── */}
+        {relatedPosts.length > 0 && (
+          <div style={{
+            marginTop: "3rem",
+            paddingTop: "2.5rem",
+            borderTop: "1px solid #e3d8ce",
+          }}>
+            <p style={{
+              fontSize: "0.65rem",
+              letterSpacing: "0.22em",
+              textTransform: "uppercase",
+              color: "#a27b5c",
+              fontWeight: 700,
+              marginBottom: "1.2rem",
+              fontFamily: "monospace",
+            }}>Further Reading</p>
+            <div style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "0.75rem",
+            }}>
+              {relatedPosts.map((post) => (
+                <Link
+                  key={post.slug}
+                  href={`/blog/${post.slug}`}
+                  style={{
+                    display: "flex",
+                    alignItems: "flex-start",
+                    gap: "1rem",
+                    padding: "1rem 1.1rem",
+                    background: "#fffaf4",
+                    border: "1px solid #e3d8ce",
+                    borderRadius: "10px",
+                    textDecoration: "none",
+                    transition: "border-color 0.2s",
+                  }}
+                >
+                  {/* Category dot */}
+                  <div style={{
+                    width: "8px",
+                    height: "8px",
+                    borderRadius: "50%",
+                    background: "#fc2779",
+                    flexShrink: 0,
+                    marginTop: "6px",
+                  }} />
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <p style={{
+                      margin: "0 0 4px",
+                      fontSize: "0.9rem",
+                      fontWeight: 600,
+                      color: "#161412",
+                      lineHeight: 1.35,
+                    }}>
+                      {post.title}
+                    </p>
+                    <p style={{
+                      margin: "0 0 5px",
+                      fontSize: "0.78rem",
+                      color: "#756b63",
+                      lineHeight: 1.5,
+                      overflow: "hidden",
+                      display: "-webkit-box",
+                      WebkitBoxOrient: "vertical",
+                      WebkitLineClamp: 2,
+                    }}>
+                      {post.excerpt}
+                    </p>
+                    <span style={{
+                      fontSize: "0.68rem",
+                      color: "#9a8f86",
+                      letterSpacing: "0.1em",
+                      textTransform: "uppercase",
+                    }}>
+                      {post.category} · {post.readTime}
+                    </span>
+                  </div>
+                  <span style={{
+                    fontSize: "1rem",
+                    color: "#a27b5c",
+                    flexShrink: 0,
+                    marginTop: "2px",
+                  }}>→</span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
 
         <BlogFooterTools />
 

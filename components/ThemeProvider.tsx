@@ -15,8 +15,16 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setTheme] = useState<Theme>(() => {
     if (typeof window !== "undefined") {
       const savedTheme = localStorage.getItem("theme");
-      if (savedTheme === "dark" || savedTheme === "light") return savedTheme;
-      return document.documentElement.classList.contains("dark") ? "dark" : "light";
+      const resolved: Theme =
+        savedTheme === "dark" || savedTheme === "light"
+          ? savedTheme
+          : window.matchMedia("(prefers-color-scheme: dark)").matches
+          ? "dark"
+          : "light";
+      // Apply immediately to prevent FOUC — runs before first paint
+      document.documentElement.classList.toggle("dark", resolved === "dark");
+      document.documentElement.style.colorScheme = resolved;
+      return resolved;
     }
     return "light";
   });
