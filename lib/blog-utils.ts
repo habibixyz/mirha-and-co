@@ -56,16 +56,18 @@ export function getRelatedPosts(
 // Used in: product/[asin]/page.tsx
 // Logic: Search HIGH_INTENT_POSTS.asins[] for a given ASIN
 
-export function getGuidesForProduct(asin: string): GuideReference[] {
+export function getGuidesForProduct(asin: string, limit = 2): GuideReference[] {
   return HIGH_INTENT_POSTS.filter((post) =>
     post.asins.includes(asin)
-  ).map((post) => ({
-    title: post.title,
-    excerpt: post.excerpt,
-    slug: post.slug,
-    readTime: post.readTime,
-    category: post.category,
-  }));
+  )
+    .slice(0, limit)
+    .map((post) => ({
+      title: post.title,
+      excerpt: post.excerpt,
+      slug: post.slug,
+      readTime: post.readTime,
+      category: post.category,
+    }));
 }
 
 // ─── Feature 3 & 4: Posts Matching a Skin Concern + Skin Type ───────────────

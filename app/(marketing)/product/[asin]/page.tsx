@@ -318,7 +318,7 @@ export default async function ProductPage({ params }: { params: Promise<{ asin: 
   })();
 
   const watchOuts = toList(product.watchOuts);
-  const featuredInGuides = getGuidesForProduct(product.asin);
+  const featuredInGuides = getGuidesForProduct(product.asin, 2);
  
  const alternatives = PRODUCT_LIST.filter(
  (item) => item.asin !== product.asin && item.category === product.category
