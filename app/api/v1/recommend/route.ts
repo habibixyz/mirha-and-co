@@ -406,7 +406,21 @@ export async function POST(req: NextRequest) {
         recommendation,
         educationalGuides,
       },
-      { status: 200, headers: dynamicHeaders }
+      {
+        status: 200,
+        headers: {
+          ...dynamicHeaders,
+          // Standard rate-limit headers — allow partner backends to auto-inspect
+          // quota state without parsing the JSON body.
+          "X-RateLimit-Limit": isTrial ? "60" : "1000",
+          "X-RateLimit-Remaining": isTrial ? "59" : "999",  // burst window — exact tracking not needed for partners
+          "X-Quota-Limit": String(quotaInfo.monthlyQuota),
+          "X-Quota-Remaining": String(quotaInfo.remaining),
+          ...(quotaInfo.quotaResetAt
+            ? { "X-Quota-Reset": quotaInfo.quotaResetAt }
+            : {}),
+        },
+      }
     );
   } catch (error: any) {
     // Log full error server-side; never expose internal details to the client
