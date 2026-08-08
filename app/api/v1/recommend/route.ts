@@ -6,31 +6,17 @@ import crypto from "crypto";
 import { sendQuotaWarningEmail, sendQuotaExhaustedEmail } from "@/lib/b2bEmail";
 import { getPostsForConcern } from "@/lib/blog-utils";
 
-/* ─── In-memory rate limiter (per-IP burst protection + global trial cap) ─── */
-const rateMap = new Map<string, { count: number; resetAt: number }>();
-const RATE_WINDOW_MS = 60_000;
+import { redisCache } from "@/lib/redis";
 
-function isRateLimited(identifier: string, limit: number): boolean {
-  const now = Date.now();
-  const entry = rateMap.get(identifier);
-  if (!entry || now > entry.resetAt) {
-    rateMap.set(identifier, { count: 1, resetAt: now + RATE_WINDOW_MS });
-    return false;
+async function isRateLimited(identifier: string, limit: number): Promise<boolean> {
+  const key = `rate:recommend:id:${identifier}`;
+  const count = await redisCache.incr(key);
+  if (count === 1) {
+    await redisCache.expire(key, 60);
   }
-  entry.count++;
-  return entry.count > limit;
+  return count > limit;
 }
 
-setInterval(() => {
-  const now = Date.now();
-  for (const [key, val] of rateMap) {
-    if (now > val.resetAt) rateMap.delete(key);
-  }
-}, 5 * 60_000);
-
-// Global trial request ceiling — caps all trial-key calls across every IP.
-// Prevents rotating-proxy abuse where many IPs each stay under the per-IP limit
-// but together hammer the geocoding/recommendation pipeline at zero cost.
 const GLOBAL_TRIAL_LIMIT_PER_MIN = 500;
 
 function isOriginAllowed(request: NextRequest, allowedOrigins: string): boolean {
@@ -130,14 +116,14 @@ export async function POST(req: NextRequest) {
 
     if (isTrial) {
       // Per-IP limit (60/min)
-      if (isRateLimited(`${ip}:trial`, 60)) {
+      if (await isRateLimited(`${ip}:trial`, 60)) {
         return NextResponse.json(
           { success: false, error: "Rate limit exceeded. Trial keys allow 60 requests per minute per IP." },
           { status: 429, headers: dynamicHeaders }
         );
       }
       // Global ceiling across all IPs — prevents rotating-proxy abuse
-      if (isRateLimited("global:trial", GLOBAL_TRIAL_LIMIT_PER_MIN)) {
+      if (await isRateLimited("global:trial", GLOBAL_TRIAL_LIMIT_PER_MIN)) {
         return NextResponse.json(
           { success: false, error: "Trial API global limit reached. Please try again shortly or upgrade to a live key." },
           { status: 429, headers: dynamicHeaders }
@@ -183,7 +169,7 @@ export async function POST(req: NextRequest) {
       }
 
       // Per-minute burst limit (1000/min for any live key) — cheap in-memory check
-      if (isRateLimited(`${ip}:${apiKey}`, 1000)) {
+      if (await isRateLimited(`${ip}:${apiKey}`, 1000)) {
         return NextResponse.json(
           { success: false, error: "Burst rate limit exceeded. Max 1,000 requests per minute per key." },
           { status: 429, headers: dynamicHeaders }

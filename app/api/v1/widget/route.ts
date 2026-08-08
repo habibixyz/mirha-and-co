@@ -3,18 +3,15 @@ import { generateRoutine } from "../../../../lib/routineEngine";
 import { resolveLocationDataLive } from "../../../../lib/geocoding";
 import { prisma } from "@/lib/prisma";
 import crypto from "crypto";
+import { redisCache } from "@/lib/redis";
 
-const widgetRateMap = new Map<string, { count: number; resetAt: number }>();
-
-function isWidgetRateLimited(ip: string, limit = 30): boolean {
-  const now = Date.now();
-  const entry = widgetRateMap.get(ip);
-  if (!entry || now > entry.resetAt) {
-    widgetRateMap.set(ip, { count: 1, resetAt: now + 60_000 });
-    return false;
+async function isWidgetRateLimited(ip: string, limit = 30): Promise<boolean> {
+  const key = `rate:widget:ip:${ip}`;
+  const count = await redisCache.incr(key);
+  if (count === 1) {
+    await redisCache.expire(key, 60);
   }
-  entry.count++;
-  return entry.count > limit;
+  return count > limit;
 }
 
 function isOriginAllowed(request: NextRequest, allowedOrigins: string): boolean {
@@ -67,7 +64,7 @@ export async function GET(req: NextRequest) {
   const forwarded = req.headers.get("x-forwarded-for");
   const ip = forwarded?.split(",")[0]?.trim() || "unknown";
 
-  if (isWidgetRateLimited(ip, 30)) {
+  if (await isWidgetRateLimited(ip, 30)) {
     return new NextResponse("// Rate limit exceeded", { status: 429, headers: CORS_HEADERS });
   }
 

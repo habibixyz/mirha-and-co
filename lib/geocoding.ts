@@ -6,21 +6,7 @@
 //   - Nominatim (OpenStreetMap): https://nominatim.openstreetmap.org
 //   - Open-Meteo:                https://api.open-meteo.com
 
-// ─── RESULT CACHE (10-min TTL) ─────────────────────────────────────────────────
-// Eliminates redundant Nominatim + Open-Meteo calls for the same location.
-// A B2B partner serving many customers in the same city (e.g. London, Mumbai)
-// would otherwise hit the external APIs on every single recommendation request.
-interface GeoCacheEntry { data: LiveLocationData; expiresAt: number; }
-const geoCache = new Map<string, GeoCacheEntry>();
-const GEO_CACHE_TTL_MS = 10 * 60 * 1000; // 10 minutes
-
-// Cleanup stale entries every 15 minutes to prevent memory growth
-setInterval(() => {
-  const now = Date.now();
-  for (const [k, v] of geoCache) {
-    if (now > v.expiresAt) geoCache.delete(k);
-  }
-}, 15 * 60 * 1000);
+import { redisCache } from "./redis";
 
 function buildGeoCacheKey(query: {
   postalCode?: string; city?: string; country?: string;
@@ -288,11 +274,11 @@ export async function resolveLocationDataLive(query: {
     query.dewpoint !== undefined;
 
   // ── Cache check (only for requests that need live geocoding) ──
-  const cacheKey = buildGeoCacheKey(query);
+  const cacheKey = `geo:${buildGeoCacheKey(query)}`;
   if (!hasManualOverrides) {
-    const cached = geoCache.get(cacheKey);
-    if (cached && Date.now() < cached.expiresAt) {
-      return cached.data; // Cache hit — no external API calls
+    const cached = await redisCache.get<LiveLocationData>(cacheKey);
+    if (cached) {
+      return cached; // Cache hit — no external API calls
     }
   }
 
@@ -335,9 +321,9 @@ export async function resolveLocationDataLive(query: {
       source: 'live',
     };
 
-    // Cache successful live results (not fallbacks, not manual overrides)
+    // Cache successful live results (not fallbacks, not manual overrides) for 6 hours
     if (!hasManualOverrides) {
-      geoCache.set(cacheKey, { data: result, expiresAt: Date.now() + GEO_CACHE_TTL_MS });
+      await redisCache.set(cacheKey, result, { ex: 21600 });
     }
 
     return result;
