@@ -24,7 +24,7 @@ type BlogSearchClientProps = {
 
 const CATEGORIES = ["ALL", "SKINCARE", "BEAUTY", "WELLNESS", "LIFESTYLE", "HAIR", "MAKEUP"];
 
-const POPULAR_TAGS = ["Sunscreen", "Niacinamide", "Oily Skin", "Hard Water", "Acne", "Cortisol"];
+const POPULAR_TAGS = ["K-Beauty", "Glass Skin", "Sunscreen", "Niacinamide", "Oily Skin", "Hard Water", "Acne", "Cortisol"];
 
 export default function BlogSearchClient({ initialPosts, catColors, currency }: BlogSearchClientProps) {
   const localizeContent = (text: string) => getLocalizedContent(text, currency);

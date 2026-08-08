@@ -854,12 +854,27 @@ export const POSTS: Post[] = [
     "hard-water-hair-fall-map-india",
     "cortisol-skin-barrier-burnout"
   ].includes(p.slug)),
+  // 🌸 K-Beauty & Glass Skin Exposure Stack
   ...mappedHighIntent.filter(p => [
-    "cetaphil-vs-cerave-cleanser",
-    "minimalist-vs-ordinary-salicylic-acid",
+    "korean-glass-skin-routine-india",
+    "korean-skincare-humid-climate",
     "cosrx-vs-seoulceuticals-snail-mucin"
   ].includes(p.slug)),
-  ...STATIC_POSTS.slice(0, 3),
+  ...STATIC_POSTS.filter(p => [
+    "glass-skin-student-budget-k-beauty",
+    "kbeauty-hype-vs-reality",
+    "why-korean-skincare-fails-indian-skin"
+  ].includes(p.slug)),
+  // Other comparison guides & start posts
+  ...mappedHighIntent.filter(p => [
+    "cetaphil-vs-cerave-cleanser",
+    "minimalist-vs-ordinary-salicylic-acid"
+  ].includes(p.slug)),
+  ...STATIC_POSTS.slice(0, 3).filter(p => ![
+    "glass-skin-student-budget-k-beauty",
+    "kbeauty-hype-vs-reality",
+    "why-korean-skincare-fails-indian-skin"
+  ].includes(p.slug)),
   ...mappedHighIntent.filter(p => [
     "tech-neck-biomechanics-guide",
     "santal-33-br540-teardown",
@@ -876,10 +891,20 @@ export const POSTS: Post[] = [
     "mens-hairline-save-protocol",
     "cetaphil-vs-cerave-cleanser",
     "minimalist-vs-ordinary-salicylic-acid",
-    "cosrx-vs-seoulceuticals-snail-mucin"
+    "cosrx-vs-seoulceuticals-snail-mucin",
+    "korean-glass-skin-routine-india",
+    "korean-skincare-humid-climate"
   ].includes(p.slug)),
-  ...STATIC_POSTS.slice(3),
-  ...mappedHighIntent.filter(p => !NEW_SLUGS.includes(p.slug))
+  ...STATIC_POSTS.slice(3).filter(p => ![
+    "glass-skin-student-budget-k-beauty",
+    "kbeauty-hype-vs-reality",
+    "why-korean-skincare-fails-indian-skin"
+  ].includes(p.slug)),
+  ...mappedHighIntent.filter(p => !NEW_SLUGS.includes(p.slug) && ![
+    "korean-glass-skin-routine-india",
+    "korean-skincare-humid-climate",
+    "cosrx-vs-seoulceuticals-snail-mucin"
+  ].includes(p.slug))
 ];
 
 const hashString = (str: string) => {

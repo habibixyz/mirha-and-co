@@ -15,6 +15,8 @@ const CATALOG: { asin: string; section: string }[] = [
   { asin: "B0CYS32W5Q",  section: "hydration" },
   { asin: "B0FPLG687Q",  section: "hydration" },
   { asin: "B0CHVHGTDJ",  section: "hydration" },
+  { asin: "B00PBX3L7K",  section: "hydration" }, // COSRX Advanced Snail Mucin
+  { asin: "B08XV3KZ84",  section: "hydration" }, // SeoulCeuticals Snail Mucin
   { asin: "B0B96L5S3B",  section: "barrier" },
   { asin: "B0966C6TRX",  section: "barrier" },
   { asin: "B09JBJDFHH",  section: "barrier" },
@@ -27,6 +29,7 @@ const CATALOG: { asin: string; section: string }[] = [
   { asin: "B0D1FNB4C2",  section: "pore" },
   { asin: "B0CWNH9SMY",  section: "cleansing" },
   { asin: "B07T5BN3P2",  section: "cleansing" },
+  { asin: "B016NRXO06",  section: "cleansing" }, // COSRX Low pH Gel Cleanser
   { asin: "B08TWHXNCD",  section: "aging" },
   { asin: "B0CFL7LS43",  section: "aging" },
   { asin: "B0B3G73VF5",  section: "sun" },
@@ -34,6 +37,7 @@ const CATALOG: { asin: string; section: string }[] = [
   { asin: "B0DSBYS8ZV",  section: "makeup" },
   { asin: "B08B16MD34",  section: "makeup" },
   { asin: "B0BT1D5J52",  section: "makeup" },
+  { asin: "B0BPC8KG73",  section: "makeup" }, // Laneige Lip Sleeping Mask (Berry)
 ];
 
 const SECTIONS = [
@@ -49,10 +53,16 @@ const SECTIONS = [
 ];
 
 const BRANDS = [
-  { id: "all",     label: "All Brands" },
-  { id: "TIRTIR",  label: "TIRTIR" },
-  { id: "mixsoon", label: "Mixsoon" },
-  { id: "SKIN1004",label: "SKIN1004" },
+  { id: "all",              label: "All Brands" },
+  { id: "Beauty of Joseon", label: "Beauty of Joseon" },
+  { id: "COSRX",            label: "COSRX" },
+  { id: "Laneige",          label: "Laneige" },
+  { id: "SKIN1004",         label: "SKIN1004" },
+  { id: "TIRTIR",           label: "TIRTIR" },
+  { id: "mixsoon",          label: "Mixsoon" },
+  { id: "Anua",             label: "Anua" },
+  { id: "Round Lab",        label: "Round Lab" },
+  { id: "SeoulCeuticals",   label: "SeoulCeuticals" },
 ];
 
 function KProductCard({ asin, section }: { asin: string; section: string }) {
