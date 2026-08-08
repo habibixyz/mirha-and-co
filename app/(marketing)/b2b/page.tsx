@@ -424,6 +424,20 @@ export default function B2BPitchDeck() {
           opacity: 0.5;
         }
 
+        .sidebar-promo-card {
+          padding: 1.25rem;
+          background: rgba(255,255,255,0.02);
+          border-radius: 12px;
+          border: 1px solid rgba(255,255,255,0.04);
+          transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-promo-card:hover {
+          background: rgba(255,255,255,0.04);
+          border-color: rgba(255,255,255,0.08);
+          transform: translateY(-2px);
+        }
+
         /* Slide Container */
         .deck-body {
           padding: 3rem;
@@ -1179,36 +1193,41 @@ export default function B2BPitchDeck() {
             </ul>
           </div>
 
-          <div style={{ padding: "1.25rem", background: "rgba(255,255,255,0.02)", borderRadius: "12px", border: "1px solid rgba(255,255,255,0.04)" }}>
-            <span style={{ fontSize: "0.65rem", textTransform: "uppercase", letterSpacing: "0.08em", color: "#38bdf8", display: "block", marginBottom: "0.5rem", fontWeight: 700 }}>
-              Developer Portal
-            </span>
-            <p style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.6)", lineHeight: 1.4, margin: "0 0 0.75rem 0" }}>
-              Zip Code Geocoding & Custom Store Catalog Sandbox
-            </p>
-            <Link
-              href="/b2b/dashboard"
-              className="pitch-btn-outline"
-              style={{ padding: "0.45rem 0.85rem", fontSize: "0.75rem", width: "100%", textDecoration: "none" }}
-            >
-              Enter API Portal <ArrowRight size={12} />
-            </Link>
-          </div>
+          {/* Bottom Promo Widgets Group */}
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+            {/* Developer Portal */}
+            <div className="sidebar-promo-card">
+              <span style={{ fontSize: "0.65rem", textTransform: "uppercase", letterSpacing: "0.08em", color: "#38bdf8", display: "block", marginBottom: "0.5rem", fontWeight: 700 }}>
+                Developer Portal
+              </span>
+              <p style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.6)", lineHeight: 1.4, margin: "0 0 0.75rem 0" }}>
+                Zip Code Geocoding &amp; Custom Store Catalog Sandbox
+              </p>
+              <Link
+                href="/b2b/dashboard"
+                className="pitch-btn-outline"
+                style={{ padding: "0.45rem 0.85rem", fontSize: "0.75rem", width: "100%", textDecoration: "none" }}
+              >
+                Enter API Portal <ArrowRight size={12} />
+              </Link>
+            </div>
 
-          <div style={{ padding: "1rem", background: "rgba(255,255,255,0.02)", borderRadius: "12px", border: "1px solid rgba(255,255,255,0.04)", marginTop: "0.75rem" }}>
-            <span style={{ fontSize: "0.65rem", textTransform: "uppercase", letterSpacing: "0.08em", color: "#f59f00", display: "block", marginBottom: "0.5rem", fontWeight: 700 }}>
-              Pitch Deck
-            </span>
-            <p style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.6)", lineHeight: 1.4, margin: "0 0 0.75rem 0" }}>
-              Shareable full-screen investor &amp; partner deck
-            </p>
-            <Link
-              href="/b2b/pitch"
-              className="pitch-btn-outline"
-              style={{ padding: "0.45rem 0.85rem", fontSize: "0.75rem", width: "100%", textDecoration: "none" }}
-            >
-              View Pitch Deck <Play size={12} />
-            </Link>
+            {/* Pitch Deck */}
+            <div className="sidebar-promo-card">
+              <span style={{ fontSize: "0.65rem", textTransform: "uppercase", letterSpacing: "0.08em", color: "#f59f00", display: "block", marginBottom: "0.5rem", fontWeight: 700 }}>
+                Pitch Deck
+              </span>
+              <p style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.6)", lineHeight: 1.4, margin: "0 0 0.75rem 0" }}>
+                Shareable full-screen investor &amp; partner deck
+              </p>
+              <Link
+                href="/b2b/pitch"
+                className="pitch-btn-outline"
+                style={{ padding: "0.45rem 0.85rem", fontSize: "0.75rem", width: "100%", textDecoration: "none" }}
+              >
+                View Pitch Deck <Play size={12} />
+              </Link>
+            </div>
           </div>
         </aside>
 
