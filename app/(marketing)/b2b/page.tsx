@@ -1388,6 +1388,36 @@ export default function B2BPitchDeck() {
                     </div>
                   </div>
                 </div>
+
+                {/* AI Agents Promotion */}
+                <div style={{ marginTop: "2rem", padding: "1.5rem", background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: "16px" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "1rem" }}>
+                    <Sparkles size={16} color="#34d399" />
+                    <span style={{ fontSize: "0.85rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", color: "#34d399" }}>
+                      🎁 Included FREE With All Tiers: Mirha AI Skincare Agents
+                    </span>
+                  </div>
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "1rem" }}>
+                    <div style={{ background: "rgba(255,255,255,0.01)", padding: "1rem", borderRadius: "12px", border: "1px solid rgba(255,255,255,0.04)" }}>
+                      <span style={{ fontWeight: 600, fontSize: "0.85rem", color: "#fff", display: "block", marginBottom: "0.25rem" }}>📋 Catalog Audit Agent</span>
+                      <p style={{ margin: 0, fontSize: "0.75rem", color: "#94a3b8", lineHeight: 1.4 }}>
+                        Automatically scans your product ingredients, scores your catalog health, and tags items for climate suitability.
+                      </p>
+                    </div>
+                    <div style={{ background: "rgba(255,255,255,0.01)", padding: "1rem", borderRadius: "12px", border: "1px solid rgba(255,255,255,0.04)" }}>
+                      <span style={{ fontWeight: 600, fontSize: "0.85rem", color: "#fff", display: "block", marginBottom: "0.25rem" }}>🚨 Weather Guard Agent</span>
+                      <p style={{ margin: 0, fontSize: "0.75rem", color: "#94a3b8", lineHeight: 1.4 }}>
+                        Monitors weather shifts dynamically to output warnings and product recommendations based on real-time alerts.
+                      </p>
+                    </div>
+                    <div style={{ background: "rgba(255,255,255,0.01)", padding: "1rem", borderRadius: "12px", border: "1px solid rgba(255,255,255,0.04)" }}>
+                      <span style={{ fontWeight: 600, fontSize: "0.85rem", color: "#fff", display: "block", marginBottom: "0.25rem" }}>💬 AI Concierge Agent</span>
+                      <p style={{ margin: 0, fontSize: "0.75rem", color: "#94a3b8", lineHeight: 1.4 }}>
+                        Audits customers' current routines, highlights active ingredient layering conflicts, and structures optimized AM/PM regimens.
+                      </p>
+                    </div>
+                  </div>
+                </div>
               </div>
             )}
 
@@ -1646,6 +1676,7 @@ export default function B2BPitchDeck() {
                           <li>✓ Up to 150k API calls/mo</li>
                           <li>✓ Hard Water Matrix (ppm)</li>
                           <li>✓ Climate + Humidity Swaps</li>
+                          <li><strong style={{ color: "#34d399" }}>✓ FREE AI Skincare Agents (Catalog, Weather, Concierge)</strong></li>
                           <li>✓ Email support (24h SLA)</li>
                         </ul>
                       </div>
@@ -1678,6 +1709,7 @@ export default function B2BPitchDeck() {
                           <li>✓ Up to 1M API calls/mo</li>
                           <li>✓ Advanced Water Mineral Matrix</li>
                           <li>✓ Dynamic Dewpoint Adjusters</li>
+                          <li><strong style={{ color: "#34d399" }}>✓ FREE AI Skincare Agents (Catalog, Weather, Concierge)</strong></li>
                           <li>✓ Dedicated Slack channel support</li>
                         </ul>
                       </div>
@@ -1705,6 +1737,7 @@ export default function B2BPitchDeck() {
                         <ul style={{ listStyle: "none", padding: 0, fontSize: "0.8rem", color: "#94a3b8", display: "flex", flexDirection: "column", gap: "0.5rem", marginBottom: "1rem" }}>
                           <li>✓ 1M+ custom API calls/mo</li>
                           <li>✓ Tailored formulation parameters</li>
+                          <li><strong style={{ color: "#34d399" }}>✓ FREE AI Skincare Agents (Catalog, Weather, Concierge)</strong></li>
                           <li>✓ Dedicated multi-region edge node</li>
                           <li>✓ 99.9% uptime SLA guarantee</li>
                         </ul>
