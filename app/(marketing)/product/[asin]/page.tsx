@@ -326,32 +326,34 @@ export default async function ProductPage({ params }: { params: Promise<{ asin: 
  const productImageUrl = product.image.startsWith("http")
  ? product.image
  : `https://www.mirhaandco.com${product.image}`;
- const productStructuredData = {
- "@context": "https://schema.org",
- "@type": "Product",
- name: product.name,
- brand: {
- "@type": "Brand",
- name: product.brand,
- },
- image: productImageUrl,
- description: product.description,
- sku: product.asin,
- category: product.category,
- aggregateRating: {
- "@type": "AggregateRating",
- ratingValue: product.rating,
- reviewCount: Number(String(product.reviews || "0").replace(/[^0-9]/g, "")) || 1,
- },
- offers: {
- "@type": "Offer",
- url: `https://www.mirhaandco.com/product/${product.asin}`,
- priceCurrency: "INR",
- price: product.price,
- availability: "https://schema.org/InStock",
- itemCondition: "https://schema.org/NewCondition",
- },
- };
+  const outOfStock = (product as any).outOfStock === true;
+
+  const productStructuredData = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: product.name,
+    brand: {
+      "@type": "Brand",
+      name: product.brand,
+    },
+    image: productImageUrl,
+    description: product.description,
+    sku: product.asin,
+    category: product.category,
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: product.rating,
+      reviewCount: Number(String(product.reviews || "0").replace(/[^0-9]/g, "")) || 1,
+    },
+    offers: {
+      "@type": "Offer",
+      url: `https://www.mirhaandco.com/product/${product.asin}`,
+      priceCurrency: "INR",
+      price: product.price,
+      availability: outOfStock ? "https://schema.org/OutOfStock" : "https://schema.org/InStock",
+      itemCondition: "https://schema.org/NewCondition",
+    },
+  };
 
  return (
  <main className="product-page">
@@ -1110,29 +1112,48 @@ export default async function ProductPage({ params }: { params: Promise<{ asin: 
     </section>
   )}
 
- <a
- href={affiliateUrl}
- className="cta"
- target="_blank"
- rel="noopener noreferrer sponsored"
- style={{
- display: "inline-flex",
- flexDirection: isRtl ? "row-reverse" : "row",
- marginTop: "24px",
- }}
- >
- {t("product.amazon_btn")} ({getAmazonStoreName(currency)}){" "}
- <ExternalLink
- size={14}
- style={{
- marginLeft: isRtl ? 0 : "6px",
- marginRight: isRtl ? "6px" : 0,
- }}
- />
- </a>
- <p className="disclosure">
- {t("product.disclosure")}
- </p>
+  {outOfStock ? (
+    <div
+      className="cta"
+      style={{
+        display: "inline-flex",
+        flexDirection: isRtl ? "row-reverse" : "row",
+        marginTop: "24px",
+        background: "#8c8179",
+        color: "#ffffff",
+        cursor: "not-allowed",
+        opacity: 0.8,
+      }}
+    >
+      {locale === "hi" ? "अस्थायी रूप से अनुपलब्ध / आउट ऑफ स्टॉक" : "Temporarily Out of Stock"}
+    </div>
+  ) : (
+    <a
+      href={affiliateUrl}
+      className="cta"
+      target="_blank"
+      rel="noopener noreferrer sponsored"
+      style={{
+        display: "inline-flex",
+        flexDirection: isRtl ? "row-reverse" : "row",
+        marginTop: "24px",
+      }}
+    >
+      {t("product.amazon_btn")} ({getAmazonStoreName(currency)}){" "}
+      <ExternalLink
+        size={14}
+        style={{
+          marginLeft: isRtl ? 0 : "6px",
+          marginRight: isRtl ? "6px" : 0,
+        }}
+      />
+    </a>
+  )}
+  <p className="disclosure">
+    {outOfStock 
+      ? (locale === "hi" ? "*यह उत्पाद अमेज़न पर स्टॉक से बाहर है। आप आधिकारिक ब्रांड स्टोर पर देख सकते हैं।" : "*This product is temporarily out of stock on Amazon. Try the official brand store.")
+      : t("product.disclosure")}
+  </p>
  </div>
  </section>
 
