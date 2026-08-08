@@ -818,6 +818,9 @@ const STATIC_POSTS: Post[] = [
 ];
 
 const NEW_SLUGS = [
+  "smokers-skincare-audit-dullness-barrier",
+  "hard-water-hair-fall-map-india",
+  "cortisol-skin-barrier-burnout",
   "la-mer-myth-dupes",
   "skincare-routine-14-hour-day",
   "city-skin-aging-comparison",
@@ -847,6 +850,11 @@ const mappedHighIntent = HIGH_INTENT_POSTS.map(p => ({
 
 export const POSTS: Post[] = [
   ...mappedHighIntent.filter(p => [
+    "smokers-skincare-audit-dullness-barrier",
+    "hard-water-hair-fall-map-india",
+    "cortisol-skin-barrier-burnout"
+  ].includes(p.slug)),
+  ...mappedHighIntent.filter(p => [
     "cetaphil-vs-cerave-cleanser",
     "minimalist-vs-ordinary-salicylic-acid",
     "cosrx-vs-seoulceuticals-snail-mucin"
@@ -859,6 +867,9 @@ export const POSTS: Post[] = [
     "mens-hairline-save-protocol"
   ].includes(p.slug)),
   ...mappedHighIntent.filter(p => NEW_SLUGS.includes(p.slug) && ![
+    "smokers-skincare-audit-dullness-barrier",
+    "hard-water-hair-fall-map-india",
+    "cortisol-skin-barrier-burnout",
     "tech-neck-biomechanics-guide",
     "santal-33-br540-teardown",
     "skincare-biohacking-audit",
@@ -882,6 +893,9 @@ const hashString = (str: string) => {
 
 // Complete slug → unique image lookup table (all 34 available images used)
 const SLUG_IMAGE_MAP: Record<string, string> = {
+  "smokers-skincare-audit-dullness-barrier": "/blog-thumbs/blog_smokers_skincare.jpg",
+  "hard-water-hair-fall-map-india": "/blog-thumbs/blog_hard_water_map.jpg",
+  "cortisol-skin-barrier-burnout": "/blog-thumbs/blog_cortisol_burnout.jpg",
   "inside-mirha-consumer-portal-skincare-analysis": "/blog-thumbs/blog_consumer_dashboard.jpg",
   "getting-started-mirha-b2b-dashboard-pricing": "/blog-thumbs/blog_b2b_dashboard.jpg",
   "tap-water-chemistry-climate-telemetry-ecommerce": "/blog-thumbs/blog_b2b_telemetry.jpg",
