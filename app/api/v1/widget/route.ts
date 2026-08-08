@@ -219,7 +219,7 @@ export async function GET(req: NextRequest) {
       </div>
 
       <div style="margin-top: 10px; padding-top: 8px; border-top: 1px solid ${colors.border}; font-size: 10px; color: ${colors.label}; text-align: right;">
-        Powered by <a href="https://www.mirhaandco.com/b2b" target="_blank" rel="noopener" style="color: ${colors.accentColor}; text-decoration: none; font-weight: 600;">Mirha &amp; Co.</a>
+        Powered by <a href="https://www.mirhaandco.com/b2b" target="_blank" rel="noopener" style="color: ${colors.accentColor}; text-decoration: none; font-weight: 600; opacity: 0.85;">Mirha Climate Intelligence</a>
       </div>
     </div>
   \`;
