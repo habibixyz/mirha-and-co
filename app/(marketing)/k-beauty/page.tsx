@@ -87,24 +87,30 @@ function KProductCard({ asin, section }: { asin: string; section: string }) {
         transition: "box-shadow 0.2s ease, transform 0.2s ease",
         width: "100%",
         height: "100%",
+        opacity: product.outOfStock ? 0.75 : 1,
       }}
       onMouseEnter={(e) => {
-        (e.currentTarget as HTMLElement).style.boxShadow = "0 8px 28px rgba(0,0,0,0.09)";
-        (e.currentTarget as HTMLElement).style.transform = "translateY(-2px)";
+        if (!product.outOfStock) {
+          (e.currentTarget as HTMLElement).style.boxShadow = "0 8px 28px rgba(0,0,0,0.09)";
+          (e.currentTarget as HTMLElement).style.transform = "translateY(-2px)";
+        }
       }}
       onMouseLeave={(e) => {
-        (e.currentTarget as HTMLElement).style.boxShadow = "0 2px 12px rgba(0,0,0,0.04)";
-        (e.currentTarget as HTMLElement).style.transform = "translateY(0)";
+        if (!product.outOfStock) {
+          (e.currentTarget as HTMLElement).style.boxShadow = "0 2px 12px rgba(0,0,0,0.04)";
+          (e.currentTarget as HTMLElement).style.transform = "translateY(0)";
+        }
       }}
     >
       <Link
-        href={`/product/${asin}`}
+        href={product.outOfStock ? "#" : `/product/${asin}`}
         style={{
           textDecoration: "none",
           color: "inherit",
           display: "flex",
           flexDirection: "column",
           flex: 1,
+          cursor: product.outOfStock ? "default" : "pointer",
         }}
       >
         {/* Badge */}
@@ -119,6 +125,21 @@ function KProductCard({ asin, section }: { asin: string; section: string }) {
             zIndex: 10,
           }}>
             {product.badge}
+          </div>
+        )}
+
+        {/* Out of Stock Top Right Badge */}
+        {product.outOfStock && (
+          <div style={{
+            position: "absolute",
+            top: 10, right: 10,
+            background: "#8c8179", color: "#fff",
+            fontSize: "0.5rem", fontWeight: 700,
+            letterSpacing: "0.18em", textTransform: "uppercase",
+            padding: "3px 7px", borderRadius: "4px",
+            zIndex: 10,
+          }}>
+            Out of stock
           </div>
         )}
 
@@ -185,20 +206,35 @@ function KProductCard({ asin, section }: { asin: string; section: string }) {
 
       {/* CTAs */}
       <div style={{ padding: "0 1.1rem 1.1rem 1.1rem" }}>
-        <Link
-          href={`/product/${asin}`}
-          style={{
-            display: "flex", alignItems: "center", justifyContent: "center", gap: "5px",
-            fontSize: "0.58rem", letterSpacing: "0.14em", textTransform: "uppercase",
-            fontWeight: 700, color: "#fff", background: "#fc2779",
-            padding: "9px 8px", borderRadius: "6px",
-            textDecoration: "none",
-            boxShadow: "0 3px 10px rgba(252,39,121,0.15)",
-            textAlign: "center",
-          }}
-        >
-          Buy
-        </Link>
+        {product.outOfStock ? (
+          <div
+            style={{
+              display: "flex", alignItems: "center", justifyContent: "center",
+              fontSize: "0.58rem", letterSpacing: "0.14em", textTransform: "uppercase",
+              fontWeight: 700, color: "#fff", background: "#8c8179",
+              padding: "9px 8px", borderRadius: "6px",
+              textAlign: "center",
+              cursor: "not-allowed",
+            }}
+          >
+            Out of Stock
+          </div>
+        ) : (
+          <Link
+            href={`/product/${asin}`}
+            style={{
+              display: "flex", alignItems: "center", justifyContent: "center", gap: "5px",
+              fontSize: "0.58rem", letterSpacing: "0.14em", textTransform: "uppercase",
+              fontWeight: 700, color: "#fff", background: "#fc2779",
+              padding: "9px 8px", borderRadius: "6px",
+              textDecoration: "none",
+              boxShadow: "0 3px 10px rgba(252,39,121,0.15)",
+              textAlign: "center",
+            }}
+          >
+            Buy
+          </Link>
+        )}
       </div>
     </div>
   );

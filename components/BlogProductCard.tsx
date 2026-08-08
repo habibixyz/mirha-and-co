@@ -356,6 +356,21 @@ export default function BlogProductCard({ asin }: { asin: string }) {
                 </span>
               </>
             )}
+            {product.outOfStock && (
+              <span className="editorial-prod-oos" style={{
+                fontSize: "0.58rem",
+                color: "#d9534f",
+                background: "#fdf7f7",
+                border: "1px solid #f5c6cb",
+                padding: "2px 6px",
+                borderRadius: "4px",
+                fontWeight: 700,
+                textTransform: "uppercase",
+                marginLeft: "8px"
+              }}>
+                Out of Stock
+              </span>
+            )}
           </div>
         </div>
       </a>
@@ -378,14 +393,29 @@ export default function BlogProductCard({ asin }: { asin: string }) {
 
       {/* Action Buttons */}
       <div className="editorial-btn-group">
-        <a
-          href={affiliateUrl}
-          target="_blank"
-          rel="noopener noreferrer sponsored"
-          className="editorial-btn-primary"
-        >
-          Check Price &amp; Storefront
-        </a>
+        {product.outOfStock ? (
+          <span
+            className="editorial-btn-primary"
+            style={{
+              background: "#8c8179",
+              borderColor: "#8c8179",
+              color: "#ffffff",
+              cursor: "not-allowed",
+              opacity: 0.8
+            }}
+          >
+            Out of Stock on Amazon
+          </span>
+        ) : (
+          <a
+            href={affiliateUrl}
+            target="_blank"
+            rel="noopener noreferrer sponsored"
+            className="editorial-btn-primary"
+          >
+            Check Price &amp; Storefront
+          </a>
+        )}
 
         <a
           href={global.getBrandStorefrontUrl(product.brand)}

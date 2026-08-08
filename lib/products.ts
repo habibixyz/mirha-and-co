@@ -2650,6 +2650,7 @@ export const PRODUCTS = [
     rating: 4.4,
     reviews: "30k",
     asin: "B016NRXO06",
+    outOfStock: true,
     badge: "Gentle Cleanse",
     description: "A gentle gel cleanser formulated with botanical ingredients and mild acids to balance scalp/face pH and remove debris without stripping the skin's moisture.",
     specs: {
