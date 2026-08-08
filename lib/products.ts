@@ -2600,12 +2600,12 @@ export const PRODUCTS = [
     category: "Skin Care",
     subcat: "Sunscreen",
     mrp: 780,
-    price: 680,
+    price: 569,
     rating: 4.5,
     reviews: "18k",
     asin: "B07VP5JFRB",
     badge: "Ultra Matte",
-    description: "Silicone-gel formulation providing a completely matte, dry-touch finish. Highly water and sweat-resistant, making it perfect for humid climates and sports.",
+    description: "RE' EQUIL Ultra Matte Dry Touch Sunscreen | SPF 50 PA++++ | Water & Sweat Resistant | No White Cast, Non-Greasy & Non-Comedogenic",
     specs: {
       "Skin Type": "Oily, Combination",
       "Key Ingredients": "Uvinul A Plus, Tinosorb S",
@@ -2614,7 +2614,7 @@ export const PRODUCTS = [
     },
     tags: ["sunscreen", "matte sunscreen", "water resistant", "re'equil", "spf 50"],
     image: "/products/B07VP5JFRB.JPG",
-    link: "https://amzn.to/4xs6b3Q"
+    link: "https://link.amazon/B0j9RW0xE"
   },
   {
     id: 1041,
@@ -5072,6 +5072,126 @@ id: 601,
   image: "/products/detoxie-power-cleanse-shampoo.jpg",
   link: "https://amzn.to/3OcD3Xz",
   notes: "Combines chelating agents with clarifying botanicals to refresh mineral-heavy scalps."
+},
+{
+  id: 5005,
+  name: "Dr. Sheth's Ceramide & Vitamin C Sunscreen SPF 50+ PA++++",
+  brand: "Dr. Sheth's",
+  category: "Skincare",
+  subcat: "Sunscreen",
+  mrp: 699,
+  price: 535,
+  rating: 4.4,
+  reviews: "8.6k",
+  asin: "B0C6KBHPZW",
+  badge: "Dewy Finish",
+  description: "Dr. Sheth's Ceramide & Vitamin C Sunscreen SPF 50+ PA++++ | For Healthy & Bright Skin | Lightweight & Non Greasy | UVA/UVB & Blue Light Protection",
+  specs: {
+    "Skin Type": "All Skin Types, Dry, Sensitive",
+    "Key Ingredient": "Ceramides, Vitamin C, Hyaluronic Acid",
+    "Texture": "Cream-Gel",
+    "Use": "AM"
+  },
+  tags: ["sunscreen", "dr sheths", "ceramide", "vitamin c", "dry skin"],
+  concerns: ["sunprotection", "dullness", "barrierdamage"],
+  image: "/products/B0C6KBHPZW.JPG",
+  link: "https://link.amazon/B0fb1rub4"
+},
+{
+  id: 5006,
+  name: "Fixderma Invisible Sunscreen Stick SPF 50 PA+++",
+  brand: "Fixderma",
+  category: "Skincare",
+  subcat: "Sunscreen Stick",
+  mrp: 499,
+  price: 395,
+  rating: 4.2,
+  reviews: "1.2k",
+  asin: "B0FQBCD9SV",
+  badge: "On-the-Go",
+  description: "Fixderma Invisible Sunscreen Stick SPF 50 PA+++ | Natural Finish, No White Cast & Non- Greasy Formula | Easy re-application",
+  specs: {
+    "Skin Type": "All Skin Types",
+    "Key Ingredient": "Chemical UV Filters, Vitamin E",
+    "Texture": "Stick / Balm",
+    "Use": "AM / Reapplication"
+  },
+  tags: ["sunscreen", "sunscreen stick", "fixderma", "on the go", "reapplication"],
+  concerns: ["sunprotection"],
+  image: "/products/B0FQBCD9SV.JPG",
+  link: "https://link.amazon/B0hYNVYOg"
+},
+{
+  id: 5007,
+  name: "Laneige Lip Sleeping Mask (Berry)",
+  brand: "Laneige",
+  category: "Skincare",
+  subcat: "Lip Care",
+  mrp: 600,
+  price: 510,
+  rating: 4.6,
+  reviews: "45k",
+  asin: "B0BPC8KG73",
+  badge: "Best Lip Treatment",
+  description: "Laneige Lip Sleeping Mask | Moisturizing Lip Treatment with Vitamin C + Shea Butter for Soft Hydrated Lips | Overnight Repair Balm",
+  specs: {
+    "Skin Type": "All Skin Types, Dry Lips",
+    "Key Ingredient": "Berry Fruit Complex, Vitamin C, Coconut Oil",
+    "Texture": "Rich Balm",
+    "Use": "PM"
+  },
+  tags: ["lip care", "laneige", "lip mask", "dry lips", "lip balm"],
+  concerns: ["drylips", "pigmentation"],
+  image: "/products/B0BPC8KG73.JPG",
+  link: "https://link.amazon/B0ekQfJ8Z"
+},
+{
+  id: 5008,
+  name: "Matrix Biolage Smoothproof 6-in-1 Hair Serum",
+  brand: "Biolage",
+  category: "Hair Care",
+  subcat: "Hair Serum",
+  mrp: 350,
+  price: 310,
+  rating: 4.4,
+  reviews: "23k",
+  asin: "B01HO9EC94",
+  badge: "Frizz Control",
+  description: "Biolage Smooth Proof 6-in-1 Hair Serum for Deep Smoothening and Frizzy Hair with Avocado and Grape Seed Oil for 72HR Frizz Control",
+  specs: {
+    "Hair Type": "Frizzy, Dry, Unruly Hair",
+    "Key Ingredient": "Avocado Oil, Grape Seed Oil",
+    "Texture": "Lightweight Oil-Serum",
+    "Use": "After Wash / Styling"
+  },
+  tags: ["hair care", "biolage", "matrix", "hair serum", "frizz control"],
+  concerns: ["frizzyhair", "dryhair"],
+  image: "/products/B01HO9EC94.JPG",
+  link: "https://link.amazon/B0gtgmYCn"
+},
+{
+  id: 5009,
+  name: "Chemist At Play Exfoliating Body Wash",
+  brand: "Chemist At Play",
+  category: "Body Care",
+  subcat: "Body Wash",
+  mrp: 399,
+  price: 336,
+  rating: 4.3,
+  reviews: "5.4k",
+  asin: "B09VPM5RP4",
+  badge: "Exfoliating",
+  description: "Chemist At Play Exfoliating Body Wash 236ml | Removes Tan, Fights Body Acne, Strawberry Skin | 4% (Salicylic Acid, Vitamin E & Lactic Acid)",
+  specs: {
+    "Skin Type": "All Skin Types, Acne-Prone Body",
+    "Key Ingredient": "Salicylic Acid, Lactic Acid, Vitamin E",
+    "Texture": "Liquid Gel",
+    "Use": "Daily / Body Cleansing"
+  },
+  tags: ["body care", "chemist at play", "body wash", "exfoliating", "body acne"],
+  concerns: ["bodyacne", "tanning", "roughtexture"],
+  image: "/products/B09VPM5RP4.JPG",
+  link: "https://link.amazon/B0ipAe5BH"
 }
 ];
 

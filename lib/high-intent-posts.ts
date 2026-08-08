@@ -344,7 +344,7 @@ export const HIGH_INTENT_POSTS: HighIntentPost[] = [
     date: "June 2026",
     thumbnail: "SD",
     tags: ["sunscreen", "dry skin", "hydration", "beauty of joseon", "nourishing sunscreen"],
-    asins: ["B0DHY6LQTW", "B09JVNZVH3", "B001COZ48G"],
+    asins: ["B0DHY6LQTW", "B09JVNZVH3", "B001COZ48G", "B0C6KBHPZW"],
     sections: [
       {
         title: "The Double Duty: Protection and Moisture",
@@ -362,7 +362,7 @@ export const HIGH_INTENT_POSTS: HighIntentPost[] = [
       {
         title: "Top Rich Sunscreens in India",
         body: [
-          "Minimalist's Sunscreen SPF 50 provides a hydrating, comfortable cream base. Beauty of Joseon's Relief Sun is a globally loved, rice-extract formula that feeds dry skin while offering broad-spectrum SPF 50 protection. Bioderma's Photoderm is another dermatologist favorite for maximum UV defense on dry, sensitive skin."
+          "Minimalist's Sunscreen SPF 50 provides a hydrating, comfortable cream base. Beauty of Joseon's Relief Sun is a globally loved, rice-extract formula that feeds dry skin while offering broad-spectrum SPF 50 protection. Dr. Sheth's Ceramide & Vitamin C Sunscreen is another fantastic option, formulated specifically with ceramides to nourish the dry skin barrier while preventing sun-induced dullness. Bioderma's Photoderm is another dermatologist favorite for maximum UV defense on dry, sensitive skin."
         ]
       }
     ]
@@ -632,7 +632,7 @@ export const HIGH_INTENT_POSTS: HighIntentPost[] = [
     date: "June 2026",
     thumbnail: "BS",
     tags: ["sunscreen", "budget skincare", "under 500", "spf 50", "aqualogica", "deconstruct"],
-    asins: ["B0C6M3KHXV", "B0C3CP6B5Y", "B0B45RB1RV"],
+    asins: ["B0C6M3KHXV", "B0C3CP6B5Y", "B0B45RB1RV", "B0FQBCD9SV"],
     sections: [
       {
         title: "Why Sunscreen Consistency Requires Affordability",
@@ -650,7 +650,7 @@ export const HIGH_INTENT_POSTS: HighIntentPost[] = [
       {
         title: "Our Top Picks Under ₹500",
         body: [
-          "Deconstruct's Gel Sunscreen (₹281) is a brilliant, zero-residue chemical gel. Aqualogica's Radiance+ Dewy Sunscreen (₹388) offers refreshing hydration with watermelon extracts. Lacto Calamine's SPF 50 Sunscreen (₹299) is a classic, kaolin-clay-based choice that controls excess oil beautifully."
+          "Deconstruct's Gel Sunscreen (₹281) is a brilliant, zero-residue chemical gel. Aqualogica's Radiance+ Dewy Sunscreen (₹388) offers refreshing hydration with watermelon extracts. For on-the-go reapplication, the Fixderma Invisible Sunscreen Stick (₹395) is an exceptional, portable, non-greasy option that glides transparently over makeup or bare skin. Lacto Calamine's SPF 50 Sunscreen (₹299) is a classic, kaolin-clay-based choice that controls excess oil beautifully."
         ]
       }
     ]
@@ -1016,7 +1016,7 @@ export const HIGH_INTENT_POSTS: HighIntentPost[] = [
     date: "June 2026",
     thumbnail: "BW",
     tags: ["body wash", "dry skin", "hydration", "dove", "mcaffeine", "vaseline"],
-    asins: ["B07S7R626P", "B07K4BFQK1", "B0059MUJR8"],
+    asins: ["B07S7R626P", "B07K4BFQK1", "B0059MUJR8", "B09VPM5RP4"],
     sections: [
       {
         title: "Why Bar Soaps Dry Out Your Skin",
@@ -1034,7 +1034,7 @@ export const HIGH_INTENT_POSTS: HighIntentPost[] = [
       {
         title: "Top Moisturizing Body Washes",
         body: [
-          "Dove's Nourishing Bodywash is a classic budget choice that delivers triple hydration. mCaffeine's Exfoliating Coffee Scrub offers a gentle way to buff away dead skin while keeping skin hydrated with coconut oil. Follow with Vaseline's Cocoa Radiant body lotion to seal in moisture."
+          "Dove's Nourishing Bodywash is a classic budget choice that delivers triple hydration. mCaffeine's Exfoliating Coffee Scrub offers a gentle way to buff away dead skin while keeping skin hydrated with coconut oil. For rough, textured skin (strawberry legs) or body breakouts, the Chemist At Play Exfoliating Body Wash (with Lactic Acid & Salicylic Acid) is the perfect exfoliating treatment to smooth the skin barrier. Follow with Vaseline's Cocoa Radiant body lotion to seal in moisture."
         ]
       }
     ]
@@ -1208,7 +1208,7 @@ export const HIGH_INTENT_POSTS: HighIntentPost[] = [
     date: "June 2026",
     thumbnail: "SF",
     tags: ["frizzy hair", "shampoo", "keratin", "dove", "tresemme", "hair care"],
-    asins: ["B0GZ3BQ5C6", "B0G2C635ZF", "B07L3ZCJ53"],
+    asins: ["B0GZ3BQ5C6", "B0G2C635ZF", "B07L3ZCJ53", "B01HO9EC94"],
     sections: [
       {
         title: "Why Hair Frizzes in Indian Humidity",
@@ -1226,7 +1226,7 @@ export const HIGH_INTENT_POSTS: HighIntentPost[] = [
       {
         title: "Top Smoothing Shampoos",
         body: [
-          "TRESemmé's Keratin Smooth shampoo is a classic, salon-quality choice that provides up to 72 hours of frizz control. Dove's Intense Repair shampoo helps restore damaged cuticles, while Minimalist's Maleic Bond Repair mask provides deep, structural repair."
+          "TRESemmé's Keratin Smooth shampoo is a classic, salon-quality choice that provides up to 72 hours of frizz control. Dove's Intense Repair shampoo helps restore damaged cuticles, while Minimalist's Maleic Bond Repair mask provides deep, structural repair. For post-wash styling, layering the Matrix Biolage Smoothproof 6-in-1 Hair Serum (with avocado and grape seed oil) over damp hair blocks humidity and provides long-lasting, deep smoothening without weight."
         ]
       }
     ]
@@ -2781,7 +2781,7 @@ export const HIGH_INTENT_POSTS: HighIntentPost[] = [
     date: "August 2026",
     thumbnail: "CF",
     tags: ["smokers skincare", "skin barrier", "dullness", "antioxidants", "circulation", "wellness"],
-    asins: ["B095PRGHDX", "B099MJH88B"],
+    asins: ["B095PRGHDX", "B099MJH88B", "B0BPC8KG73"],
     sections: [
       {
         title: "The Physiology of Smoke: Free Radicals and Vasoconstriction",
@@ -2810,9 +2810,9 @@ export const HIGH_INTENT_POSTS: HighIntentPost[] = [
       },
       {
         title: "The Protection & Repair Stack",
-        sectionAsins: ["B095PRGHDX", "B099MJH88B"],
+        sectionAsins: ["B095PRGHDX", "B099MJH88B", "B0BPC8KG73"],
         body: [
-          "To execute this protocol, start your morning by applying **Plum 15% Vitamin C Serum** to clean skin. It uses stable Ethyl Ascorbic Acid to neutralize smoke-induced free radicals, protect collagen, and restore brightness to dull, oxygen-starved skin. In the evening, seal and repair your compromised lipid barrier with **Cetaphil Moisturising Cream**. Formulated with rich, non-comedogenic emollients, it repairs the skin's moisture barrier and prevents the trans-epidermal water loss caused by smoke heat and dry environments."
+          "To execute this protocol, start your morning by applying **Plum 15% Vitamin C Serum** to clean skin. It uses stable Ethyl Ascorbic Acid to neutralize smoke-induced free radicals, protect collagen, and restore brightness to dull, oxygen-starved skin. In the evening, seal and repair your compromised lipid barrier with **Cetaphil Moisturising Cream**. Formulated with rich, non-comedogenic emollients, it repairs the skin's moisture barrier and prevents the trans-epidermal water loss caused by smoke heat and dry environments. Finally, address dehydrated, darkened, and dry smoker's lips by applying a generous layer of **Laneige Lip Sleeping Mask** before bed. Formulated with antioxidant Vitamin C and shea butter, it provides deep overnight lip repair and lasting hydration."
         ]
       }
     ]
