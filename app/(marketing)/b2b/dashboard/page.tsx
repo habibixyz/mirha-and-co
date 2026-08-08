@@ -709,6 +709,18 @@ export function SkincareRecs({ postalCode, skinType = "${skinType}" }) {
             <code>{getSnippet()}</code>
           </pre>
         </div>
+        {activeCodeTab === "Shopify" && (
+          <div style={{
+            padding: "12px 16px",
+            background: "rgba(252,39,121,0.06)",
+            borderTop: "1px solid var(--dbd-border)",
+            fontSize: "12.5px",
+            color: "var(--dbd-text-dim)",
+            lineHeight: 1.5
+          }}>
+            💡 <b>Zero-Code Integration Option:</b> To offer your merchants or marketing team a drag-and-drop theme editor installation instead of pasting Liquid code, you can build a native <b>Shopify Theme App Extension</b>. See the complete implementation blueprint in <a href="https://github.com/habibixyz/mirha-and-co/blob/main/SHOPIFY.md" target="_blank" rel="noopener" style={{ color: "var(--dbd-pink)", textDecoration: "none", fontWeight: 600 }}>SHOPIFY.md</a>.
+          </div>
+        )}
       </div>
 
     </div>
