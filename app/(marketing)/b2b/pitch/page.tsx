@@ -839,7 +839,6 @@ export default function B2BPitchDeck() {
         <aside className="deck-sidebar">
           <div>
             <div className="sidebar-title">
-              <Sparkles size={12} color="#fc2779" />
               <span>Pitch Slides</span>
             </div>
             <ul className="slide-nav-list">
