@@ -146,6 +146,30 @@ export default async function RootLayout({
 
  return (
  <html lang={locale} dir={isRtl ? "rtl" : "ltr"} suppressHydrationWarning className={`${dmSans.variable} ${dmSerifDisplay.variable} ${playfairDisplay.variable} ${bebasNeue.variable}`}>
+  <head>
+    <script
+      dangerouslySetInnerHTML={{
+        __html: `
+          (function() {
+            try {
+              var saved = localStorage.getItem('theme');
+              var theme = saved;
+              if (!saved) {
+                theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+              }
+              if (theme === 'dark') {
+                document.documentElement.classList.add('dark');
+                document.documentElement.style.colorScheme = 'dark';
+              } else {
+                document.documentElement.classList.remove('dark');
+                document.documentElement.style.colorScheme = 'light';
+              }
+            } catch (e) {}
+          })();
+        `
+      }}
+    />
+  </head>
  <body suppressHydrationWarning>
  <Script
  id="mirha-site-structured-data"
