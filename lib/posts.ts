@@ -850,6 +850,8 @@ const mappedHighIntent = HIGH_INTENT_POSTS.map(p => ({
 
 export const POSTS: Post[] = [
   ...mappedHighIntent.filter(p => [
+    "india-skincare-trends-2026",
+    "global-skincare-trends-2026",
     "smokers-skincare-audit-dullness-barrier",
     "hard-water-hair-fall-map-india",
     "cortisol-skin-barrier-burnout"
@@ -901,6 +903,8 @@ export const POSTS: Post[] = [
     "why-korean-skincare-fails-indian-skin"
   ].includes(p.slug)),
   ...mappedHighIntent.filter(p => !NEW_SLUGS.includes(p.slug) && ![
+    "india-skincare-trends-2026",
+    "global-skincare-trends-2026",
     "korean-glass-skin-routine-india",
     "korean-skincare-humid-climate",
     "cosrx-vs-seoulceuticals-snail-mucin"
@@ -918,6 +922,9 @@ const hashString = (str: string) => {
 
 // Complete slug → unique image lookup table (all 34 available images used)
 const SLUG_IMAGE_MAP: Record<string, string> = {
+  "india-skincare-trends-2026": "/blog-thumbs/india_skincare_trends_2026.jpg",
+  "global-skincare-trends-2026": "/blog-thumbs/global_skincare_trends_2026.jpg",
+  "korean-skincare-humid-climate": "/blog-thumbs/korean_skincare_humid_climate.jpg",
   "smokers-skincare-audit-dullness-barrier": "/blog-thumbs/blog_smokers_skincare.jpg",
   "hard-water-hair-fall-map-india": "/blog-thumbs/blog_hard_water_map.jpg",
   "cortisol-skin-barrier-burnout": "/blog-thumbs/blog_cortisol_burnout.jpg",
@@ -934,7 +941,7 @@ const SLUG_IMAGE_MAP: Record<string, string> = {
   "asian-skin-mens-grooming": "/blog-thumbs/blog_asian_mens_skin.jpg",
   "uk-skin-mens-grooming": "/blog-thumbs/blog_uk_mens_skin.jpg",
  // NEW PREMIUM EDITORIAL SERIES — June 2026
- "glass-skin-student-budget-k-beauty": "/blog-thumbs/photo_korean.png",
+ "glass-skin-student-budget-k-beauty": "/blog-thumbs/korean_glass_skin_routine.jpg",
  "kbeauty-hype-vs-reality": "/blog-thumbs/kbeauty_hype_reality.png",
  "workout-causing-cortisol-face": "/blog-thumbs/wellness.png",
  "gym-bag-skincare-guide": "/blog-thumbs/blog_gym_skincare.png",
@@ -972,7 +979,7 @@ const SLUG_IMAGE_MAP: Record<string, string> = {
  "best-face-wash-for-glowing-skin-india": "/blog-thumbs/blog_glow_facewash.png",
  "best-moisturizer-for-combination-skin-india": "/blog-thumbs/blog_combination_moisturizer.png",
  "best-benzoyl-peroxide-gel-india": "/blog-thumbs/blog_benzoyl_peroxide.png",
- "korean-glass-skin-routine-india": "/blog-thumbs/photo_korean.png",
+ "korean-glass-skin-routine-india": "/blog-thumbs/korean_glass_skin_india_thumb.png",
  "best-hyaluronic-acid-serum-india": "/blog-thumbs/blog_hyaluronic.png",
  "best-under-eye-cream-dark-circles-india": "/blog-thumbs/blog_dark_circles.png",
  "dark-circles-treatment-india": "/blog-thumbs/blog_dark_circles.png",

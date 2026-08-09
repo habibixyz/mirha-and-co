@@ -80,3 +80,4 @@ Write-Host "Recommend: $($r.StatusCode)"  # Must be 200, success: true
 
 ## 5. Blog Posts & Content Management
 * **Always ensure new blog posts are placed at the top of the feed.** When adding new entries to `lib/high-intent-posts.ts`, make sure they are mapped at the absolute top of the `POSTS` array in `lib/posts.ts` so they display on top of the feed.
+* **NEVER clear, truncate, or run bulk deletes on the `BlogPostView` database table.** View counts in this table represent real production visitor traffic analytics and must be preserved. Any view tracking refactoring must be done purely via code (client-side incrementing) rather than wiping/resetting the database.

@@ -54,17 +54,15 @@ export default async function ProgrammaticBlogPost({ params }: PageProps) {
     notFound();
   }
 
-  // Increment and fetch views
+  // Fetch views (incrementing is handled client-side to prevent double counting)
   let views = 0;
   try {
-    const updated = await prisma.blogPostView.upsert({
+    const record = await prisma.blogPostView.findUnique({
       where: { slug },
-      update: { views: { increment: 1 } },
-      create: { slug, views: 1 },
     });
-    views = updated.views;
+    views = record ? record.views : 0;
   } catch (error) {
-    console.error("Error updating view count:", error);
+    console.error("Error fetching view count:", error);
   }
 
   return (
