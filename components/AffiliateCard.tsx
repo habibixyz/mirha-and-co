@@ -32,7 +32,7 @@ export function AffiliateCard(props: any) {
     product?.link
   );
 
-  return compact ? (
+  return true ? (
     <a
       href={affiliateUrl}
       target="_blank"
@@ -118,7 +118,7 @@ export function AffiliateCard(props: any) {
           border-color: #283044 !important;
         }
         html.dark .aff-compact-img, .dark .aff-compact-img {
-          background: #0f131e !important;
+          background: #ffffff !important;
           border-color: #283044 !important;
         }
         html.dark .aff-compact-name, .dark .aff-compact-name,
@@ -144,7 +144,7 @@ export function AffiliateCard(props: any) {
         .editorial-affiliate-card-wrapper {
           container-type: inline-size;
           width: 100%;
-          margin: 2.5rem 0;
+          margin: 1.75rem 0;
         }
         .editorial-affiliate-card {
           display: flex;
@@ -163,19 +163,19 @@ export function AffiliateCard(props: any) {
           transform: translateY(-2px);
         }
         .editorial-img-container {
-          width: 200px;
+          width: 130px;
           background: #faf8f5;
           display: flex;
           align-items: center;
           justify-content: center;
           border-right: 1px solid #ede8e0;
-          padding: 1.5rem;
+          padding: 1rem;
           flex-shrink: 0;
           position: relative;
         }
         .editorial-img-container img {
-          max-width: 100%;
-          max-height: 100%;
+          max-width: 70px;
+          max-height: 70px;
           object-fit: contain;
           transition: transform 0.3s ease;
         }
@@ -199,7 +199,7 @@ export function AffiliateCard(props: any) {
         }
         .editorial-body {
           flex: 1;
-          padding: 1.5rem 2rem;
+          padding: 1rem 1.25rem;
           display: flex;
           flex-direction: column;
           justify-content: space-between;
@@ -215,24 +215,24 @@ export function AffiliateCard(props: any) {
         }
         .editorial-title {
           font-family: 'DM Serif Display', serif;
-          font-size: 1.25rem;
+          font-size: 1.05rem;
           line-height: 1.3;
           color: #1a1714;
-          margin: 0 0 0.6rem 0;
+          margin: 0 0 0.5rem 0;
           font-weight: 400;
         }
         .editorial-desc {
           font-family: var(--font-dm-sans), sans-serif;
-          font-size: 0.82rem;
+          font-size: 0.78rem;
           color: #6f6963;
-          line-height: 1.65;
-          margin: 0 0 1.2rem 0;
+          line-height: 1.5;
+          margin: 0 0 0.6rem 0;
         }
         .editorial-tag-row {
           display: flex;
           flex-wrap: wrap;
           gap: 6px;
-          margin-bottom: 1.2rem;
+          margin-bottom: 0.6rem;
         }
         .editorial-tag {
           font-size: 0.58rem;
@@ -254,10 +254,10 @@ export function AffiliateCard(props: any) {
         }
         .editorial-specs-box {
           background: #faf8f5;
-          padding: 8px 12px;
+          padding: 6px 10px;
           border-radius: 6px;
           border: 1px solid #ede8e0;
-          margin-bottom: 1.2rem;
+          margin-bottom: 0.6rem;
         }
         .editorial-specs-table {
           width: 100%;
@@ -276,11 +276,11 @@ export function AffiliateCard(props: any) {
           display: flex;
           align-items: baseline;
           gap: 8px;
-          margin-bottom: 1.2rem;
+          margin-bottom: 0.6rem;
         }
         .editorial-price-current {
           font-family: 'DM Serif Display', serif;
-          font-size: 1.4rem;
+          font-size: 1.15rem;
           color: #1a1714;
         }
         .editorial-price-mrp {
@@ -289,9 +289,7 @@ export function AffiliateCard(props: any) {
           text-decoration: line-through;
         }
         .editorial-actions {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 12px;
+          display: block;
         }
         .editorial-btn-buy {
           background: #1a1714;
@@ -301,7 +299,7 @@ export function AffiliateCard(props: any) {
           letter-spacing: 0.15em;
           text-transform: uppercase;
           font-weight: 700;
-          padding: 12px;
+          padding: 10px;
           border-radius: 6px;
           text-decoration: none;
           text-align: center;
@@ -323,7 +321,7 @@ export function AffiliateCard(props: any) {
           letter-spacing: 0.15em;
           text-transform: uppercase;
           font-weight: 700;
-          padding: 12px;
+          padding: 10px;
           border-radius: 6px;
           text-decoration: none;
           text-align: center;
@@ -351,12 +349,12 @@ export function AffiliateCard(props: any) {
           }
           .editorial-img-container {
             width: 100%;
-            height: 180px;
+            height: 140px;
             border-right: none;
             border-bottom: 1px solid #ede8e0;
           }
           .editorial-body {
-            padding: 1.25rem 1.5rem;
+            padding: 1rem 1.25rem;
           }
         }
         @container (max-width: 550px) {
@@ -365,12 +363,12 @@ export function AffiliateCard(props: any) {
           }
           .editorial-img-container {
             width: 100%;
-            height: 180px;
+            height: 140px;
             border-right: none;
             border-bottom: 1px solid #ede8e0;
           }
           .editorial-body {
-            padding: 1.25rem 1.5rem;
+            padding: 1rem 1.25rem;
           }
         }
         html.dark .editorial-affiliate-card, .dark .editorial-affiliate-card {
@@ -378,9 +376,9 @@ export function AffiliateCard(props: any) {
           border-color: #283044 !important;
         }
         html.dark .editorial-img-container, .dark .editorial-img-container {
-          background: #0f131e !important;
-          border-right-color: #283044 !important;
-          border-bottom-color: #283044 !important;
+          background: #ffffff !important;
+          border-right-color: rgba(255, 255, 255, 0.1) !important;
+          border-bottom-color: rgba(255, 255, 255, 0.1) !important;
         }
         html.dark .editorial-title, .dark .editorial-title,
         html.dark .editorial-price-current, .dark .editorial-price-current {
@@ -480,7 +478,7 @@ export function AffiliateCard(props: any) {
           </div>
 
           {/* CTAs */}
-          <div className="editorial-actions" style={isFragrance ? { gridTemplateColumns: "1fr" } : undefined}>
+          <div className="editorial-actions">
             <a
               href={affiliateUrl}
               target="_blank"
@@ -493,15 +491,6 @@ export function AffiliateCard(props: any) {
             >
               Shop Product
             </a>
-
-            {!isFragrance && (
-              <Link
-                href={`/dashboard/analysis?product=${asin}`}
-                className="editorial-btn-analyze"
-              >
-                Analyze Ingredients
-              </Link>
-            )}
           </div>
 
           <div className="editorial-disclosure">
