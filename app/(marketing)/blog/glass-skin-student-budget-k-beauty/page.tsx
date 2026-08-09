@@ -153,8 +153,8 @@ export default function GlassSkinStudentBudgetPage() {
             Here is the realistic upfront cost for the ultimate 100% K-beauty routine:
           </p>
           <div style={{
-            background: "#faf8f5",
-            border: "1px solid #e8e2d9",
+            background: "var(--surface, #faf8f5)",
+            border: "1px solid var(--rule)",
             borderRadius: "12px",
             padding: "1.5rem",
             marginBottom: "2rem",
@@ -168,7 +168,7 @@ export default function GlassSkinStudentBudgetPage() {
               <li style={{ marginBottom: "0.4rem" }}><strong>Step 3:</strong> mixsoon Glacier Water Serum (100ml) — <strong>₹2,499</strong></li>
               <li style={{ marginBottom: "0.4rem" }}><strong>Step 4:</strong> SKIN1004 Madagascar Centella Ampoule (100ml) — <strong>₹1,743</strong></li>
               <li style={{ marginBottom: "0.4rem" }}><strong>Step 5:</strong> SKIN1004 Hyalu-Cica Sun Serum (50ml) — <strong>₹1,699</strong></li>
-              <li style={{ borderTop: "1px solid #ebdcd0", margin: "0.75rem 0", padding: 0, listStyle: "none" }}></li>
+              <li style={{ borderTop: "1px solid var(--rule)", margin: "0.75rem 0", padding: 0, listStyle: "none" }}></li>
               <li style={{ listStyle: "none", fontSize: "1.05rem", fontWeight: 700, color: "var(--rose)" }}>
                 Total Daily Routine Cost: ₹7,867
               </li>

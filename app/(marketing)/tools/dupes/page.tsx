@@ -417,6 +417,202 @@ const DUPES_DATABASE = [
       image: "/products/minimalist-eye.jpg",
       link: "https://www.cerave.com/face-skincare/healing-ointment",
     }
+  },
+  {
+    id: "charlotte-tilbury-flawless-filter",
+    category: "Makeup",
+    luxury: {
+      name: "Hollywood Flawless Filter",
+      brand: "Charlotte Tilbury",
+      price: 4000,
+      size: "30ml",
+      actives: "Finely milled mica, Squalane, Hyaluronic Acid",
+      rating: 4.6,
+    },
+    dupe: {
+      name: "e.l.f. Cosmetics Halo Glow Liquid Filter",
+      brand: "e.l.f. Cosmetics",
+      price: 850,
+      asin: "B0B94P4X82",
+      actives: "Squalane, Hyaluronic Acid, Finely Milled Powder",
+      description: "A viral skin booster that replicates Charlotte Tilbury's glow drop-for-drop. Works as a primer, highlighter, or sheer foundation to give a soft-focus dewy finish.",
+      image: "/products/True-Match.jpg",
+      link: "https://www.amazon.in/dp/B0B94P4X82",
+    }
+  },
+  {
+    id: "glow-recipe-dew-drops",
+    category: "Skincare",
+    luxury: {
+      name: "Watermelon Glow Niacinamide Dew Drops",
+      brand: "Glow Recipe",
+      price: 3400,
+      size: "40ml",
+      actives: "Niacinamide, Hyaluronic Acid, Watermelon Fruit Extract",
+      rating: 4.5,
+    },
+    dupe: {
+      name: "L'Oreal Paris Glycolic Bright Skin Brightening Serum",
+      brand: "L'Oreal Paris",
+      price: 699,
+      asin: "B09RGL7JSP",
+      actives: "1% Glycolic Acid, 2% Niacinamide, Glycerin",
+      description: "Delivers the same intense brightening and glassy reflection. Pairs Niacinamide with Glycolic Acid to simultaneously fade dark spots and leave a glossy skin barrier.",
+      image: "/products/L'Oréal-Paris.jpg",
+      link: "https://amzn.to/3Qw5mN2",
+    },
+    globalDupe: {
+      name: "e.l.f. Jelly Pop Dew Primer",
+      brand: "e.l.f. Cosmetics",
+      price: 1100,
+      asin: "B089DMQQ4B",
+      actives: "Hyaluronic Acid, Niacinamide, Watermelon Extract",
+      description: "An ultra-dewy sticky gel primer that mimics Glow Recipe's signature watermelon glow and glassy texture while locking makeup in place. Available globally at Ulta, Target, and major international retailers.",
+      image: "/products/L'Oréal-Paris.jpg",
+      link: "https://www.elfcosmetics.com/jelly-pop-dew-primer/81577.html",
+    }
+  },
+  {
+    id: "charlotte-tilbury-blush-wand",
+    category: "Makeup",
+    luxury: {
+      name: "Matte Beauty Blush Wand",
+      brand: "Charlotte Tilbury",
+      price: 3800,
+      size: "12ml",
+      actives: "Liquid Blush Pigments, Silica, Squalane",
+      rating: 4.4,
+    },
+    dupe: {
+      name: "e.l.f. Cosmetics Halo Glow Beauty Wand Blush",
+      brand: "e.l.f. Cosmetics",
+      price: 850,
+      asin: "B0BYPF5K4L",
+      actives: "Squalane, Silica, Vitamin E",
+      description: "A cushion-tip liquid blush that matches Charlotte Tilbury's texture, pigment payoff, and easy blendability. Gives a natural flushed look with zero patchiness.",
+      image: "/products/product-43.jpg",
+      link: "https://www.amazon.in/dp/B0BYPF5K4L",
+    }
+  },
+  {
+    id: "too-faced-bts-mascara",
+    category: "Makeup",
+    luxury: {
+      name: "Better Than Sex Mascara",
+      brand: "Too Faced",
+      price: 2450,
+      size: "8ml",
+      actives: "Hourglass Brush, Film-forming Polymers, Acacia Senegal Tree Extract",
+      rating: 4.5,
+    },
+    dupe: {
+      name: "L'Oreal Paris Voluminous Lash Paradise Mascara",
+      brand: "L'Oreal Paris",
+      price: 799,
+      asin: "B071FPMH2H",
+      actives: "Hourglass Fiber Brush, Castor Oil, Carnauba Wax",
+      description: "Replicates the famous hourglass brush and whipped volumizing formula. Thickens and lengths lashes with soft, feather-like volume without any clumping or flaking.",
+      image: "/products/product-42.jpg",
+      link: "https://amzn.to/3vPZ5x9",
+    }
+  },
+  {
+    id: "k18-molecular-hair-mask",
+    category: "Hair Care",
+    luxury: {
+      name: "Leave-In Molecular Repair Hair Mask",
+      brand: "K18",
+      price: 5200,
+      size: "50ml",
+      actives: "K18Peptide, Hydrolyzed Wheat Protein",
+      rating: 4.6,
+    },
+    dupe: {
+      name: "L'Oreal Professionnel Absolut Repair Molecular Mask",
+      brand: "L'Oreal Professionnel",
+      price: 1899,
+      asin: "B0CI2H3XZS",
+      actives: "Peptides Bonder, 5 Amino Acids",
+      description: "A professional molecular mask that repairs hair structure at the peptide link level. Works to restore elasticity and shine to severely heat-damaged and color-processed locks.",
+      image: "/products/TRESemmé-Keratin.jpg",
+      link: "https://amzn.to/4n3Kmqw",
+    },
+    globalDupe: {
+      name: "Elizavecca CER-100 Collagen Coating Hair Protein Treatment",
+      brand: "Elizavecca",
+      price: 950,
+      asin: "B01I2ZQ7A2",
+      actives: "Ceramide NP, Hydrolyzed Collagen, Soy Protein, Allantoin",
+      description: "The viral global hair treatment that repairs protein bonds in damaged hair. Rebuilds cuticle smoothness and elasticity on bleached and color-treated hair at a fifth of the price. Available worldwide on Amazon, iHerb, and YesStyle.",
+      image: "/products/TRESemmé-Keratin.jpg",
+      link: "https://www.iherb.com/pr/elizavecca-cer-100-collagen-coating-hair-protein-treatment-100-ml/72244",
+    }
+  },
+  {
+    id: "la-mer-creme",
+    category: "Skincare",
+    luxury: {
+      name: "Crème de la Mer Moisturizer",
+      brand: "La Mer",
+      price: 18000,
+      size: "30ml",
+      actives: "Fermented Sea Kelp, Mineral Oil, Petrolatum, Glycerin",
+      rating: 4.3,
+    },
+    dupe: {
+      name: "Nivea Crème (Classic Blue Tin)",
+      brand: "Nivea",
+      price: 150,
+      asin: "B00E4MKYCY",
+      actives: "Mineral Oil, Petrolatum, Glycerin, Panthenol",
+      description: "Shares the exact same occlusive, rich base formulation (mineral oil, petrolatum, glycerin, and microcrystalline wax) as the ultra-expensive La Mer. Heals dry skin and creates a protective barrier for a fraction of the price.",
+      image: "/products/Vaseline-cream.jpg",
+      link: "https://amzn.to/3SjM8D7",
+    }
+  },
+  {
+    id: "fenty-beauty-gloss-bomb",
+    category: "Makeup",
+    luxury: {
+      name: "Gloss Bomb Universal Lip Luminizer",
+      brand: "Fenty Beauty",
+      price: 2500,
+      size: "9ml",
+      actives: "Shea Butter, Hyaluronic Acid, Pearlescent Pigments",
+      rating: 4.7,
+    },
+    dupe: {
+      name: "Maybelline New York Lifter Gloss",
+      brand: "Maybelline",
+      price: 699,
+      asin: "B08D6TKLY7",
+      actives: "Hyaluronic Acid, Coconut Oil, Shimmer Waxes",
+      description: "Delivers the same high-shine finish, large wand applicator, and smoothing hydration as Fenty Gloss Bomb. Keeps lips looking plump and glossy without feeling sticky.",
+      image: "/products/product-40.jpg",
+      link: "https://amzn.to/4t7T9G8",
+    }
+  },
+  {
+    id: "laneige-cream-skin",
+    category: "Skincare",
+    luxury: {
+      name: "Cream Skin Cerapeptide Toner & Moisturizer",
+      brand: "Laneige",
+      price: 2000,
+      size: "150ml",
+      actives: "Cerapeptide, White Leaf Tea Water, Meadowfoam Seed Oil",
+      rating: 4.6,
+    },
+    dupe: {
+      name: "TonyMoly Wonder Ceramide Mochi Toner",
+      brand: "TonyMoly",
+      price: 950,
+      asin: "B079F48BKM",
+      actives: "5000ppb Ceramide, Centella Asiatica, Panthenol",
+      description: "A cult K-Beauty toner that matches Laneige's rich, milky hydration. Packed with ceramides and hyaluronic acid to build a bouncy, mochi-like skin barrier. You get 500ml of product — more than triple the Laneige volume.",
+      image: "/products/Simple-Moisturising.jpg",
+      link: "https://amzn.to/4vPZX2j",
+    }
   }
 ];
 
@@ -611,11 +807,12 @@ export default function DupeFinderPage() {
     <main className="dupe-finder-page">
       <style>{`
         .dupe-finder-page {
-          background: #fbf7f1;
-          color: #161412;
+          background: var(--bg);
+          color: var(--ink);
           min-height: 100vh;
           font-family: 'DM Sans', sans-serif;
           padding: 48px 20px 120px;
+          transition: background 0.3s ease, color 0.3s ease;
         }
         .shell {
           max-width: 1160px;
@@ -625,14 +822,15 @@ export default function DupeFinderPage() {
           display: inline-flex;
           align-items: center;
           gap: 8px;
-          color: #756b63;
+          color: var(--muted);
           font-size: 0.85rem;
           margin-bottom: 30px;
           text-decoration: none;
           font-weight: 500;
+          transition: color 0.2s ease;
         }
         .back-link:hover {
-          color: #fc2779;
+          color: var(--rose);
         }
         .header {
           margin-bottom: 48px;
@@ -645,9 +843,10 @@ export default function DupeFinderPage() {
           line-height: 1.1;
           margin-bottom: 14px;
           letter-spacing: -0.02em;
+          color: var(--ink);
         }
         .header p {
-          color: #756b63;
+          color: var(--muted);
           font-size: 1.05rem;
           max-width: 580px;
           margin: 0 auto;
@@ -657,8 +856,8 @@ export default function DupeFinderPage() {
           display: inline-flex;
           align-items: center;
           gap: 6px;
-          background: rgba(252, 39, 121, 0.08);
-          color: #fc2779;
+          background: var(--rose-light, rgba(252, 39, 121, 0.08));
+          color: var(--rose);
           font-size: 0.7rem;
           font-weight: 700;
           letter-spacing: 0.15em;
@@ -691,25 +890,25 @@ export default function DupeFinderPage() {
         .search-input {
           width: 100%;
           padding: 14px 44px 14px 44px;
-          border: 1.5px solid #ede5dc;
+          border: 1.5px solid var(--rule);
           border-radius: 14px;
-          background: #fff;
-          color: #161412;
+          background: var(--surface, #fff);
+          color: var(--ink);
           font-size: 0.95rem;
           font-family: inherit;
           outline: none;
           transition: all 0.2s ease;
         }
         .search-input:focus {
-          border-color: #fc2779;
-          box-shadow: 0 4px 12px rgba(252, 39, 121, 0.05);
+          border-color: var(--rose);
+          box-shadow: 0 4px 12px var(--rose-light, rgba(252, 39, 121, 0.05));
         }
         .search-icon {
           position: absolute;
           left: 16px;
           top: 50%;
           transform: translateY(-50%);
-          color: #8c8179;
+          color: var(--muted);
           pointer-events: none;
         }
         .clear-search-btn {
@@ -719,7 +918,7 @@ export default function DupeFinderPage() {
           transform: translateY(-50%);
           background: none;
           border: none;
-          color: #8c8179;
+          color: var(--muted);
           cursor: pointer;
           font-size: 0.85rem;
           padding: 4px;
@@ -728,7 +927,7 @@ export default function DupeFinderPage() {
           justify-content: center;
         }
         .clear-search-btn:hover {
-          color: #fc2779;
+          color: var(--rose);
         }
         .category-pills {
           display: flex;
@@ -737,9 +936,9 @@ export default function DupeFinderPage() {
           margin-bottom: 24px;
         }
         .category-pill {
-          background: #fff;
-          border: 1.5px solid #ede5dc;
-          color: #756b63;
+          background: var(--surface, #fff);
+          border: 1.5px solid var(--rule);
+          color: var(--muted);
           padding: 8px 16px;
           border-radius: 99px;
           font-size: 0.82rem;
@@ -751,16 +950,17 @@ export default function DupeFinderPage() {
           gap: 6px;
         }
         .category-pill:hover {
-          border-color: #fc2779;
-          color: #fc2779;
+          border-color: var(--rose);
+          color: var(--rose);
         }
         .category-pill.active {
-          background: #fc2779;
-          border-color: #fc2779;
+          background: var(--rose);
+          border-color: var(--rose);
           color: #fff;
         }
         .category-count {
-          background: rgba(117, 107, 99, 0.1);
+          background: rgba(120, 120, 120, 0.12);
+          color: var(--ink);
           padding: 2px 6px;
           border-radius: 99px;
           font-size: 0.7rem;
@@ -780,39 +980,39 @@ export default function DupeFinderPage() {
           font-weight: 700;
           letter-spacing: 0.15em;
           text-transform: uppercase;
-          color: #8c8179;
+          color: var(--muted);
           margin-bottom: 12px;
           padding-bottom: 12px;
-          border-bottom: 1px solid #ede5dc;
+          border-bottom: 1px solid var(--rule);
         }
         .luxury-card {
-          background: #fff;
-          border: 1.5px solid #ede5dc;
+          background: var(--surface, #fff);
+          border: 1.5px solid var(--rule);
           border-radius: 18px;
           padding: 18px 20px;
           cursor: pointer;
-          transition: all 0.18s ease;
+          transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
           display: grid;
           grid-template-columns: 24px 1fr auto;
           align-items: center;
           gap: 14px;
         }
         .luxury-card:hover {
-          border-color: #fc2779;
-          box-shadow: 0 6px 20px rgba(252, 39, 121, 0.06);
-          transform: translateY(-1px);
+          border-color: var(--rose);
+          box-shadow: 0 6px 20px var(--rose-light, rgba(252, 39, 121, 0.06));
+          transform: translateY(-2px);
         }
         .luxury-card.selected {
-          border-color: #fc2779;
-          background: #fffaf8;
-          box-shadow: 0 6px 20px rgba(252, 39, 121, 0.08);
+          border-color: var(--rose);
+          background: var(--rose-light, #fffaf8);
+          box-shadow: 0 6px 20px var(--rose-light, rgba(252, 39, 121, 0.08));
         }
         .luxury-details {
           min-width: 0;
         }
         .luxury-brand {
           font-size: 0.68rem;
-          color: #fc2779;
+          color: var(--rose);
           letter-spacing: 0.18em;
           text-transform: uppercase;
           font-weight: 700;
@@ -823,6 +1023,7 @@ export default function DupeFinderPage() {
           font-size: 1rem;
           margin-bottom: 5px;
           line-height: 1.35;
+          color: var(--ink);
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
@@ -832,7 +1033,7 @@ export default function DupeFinderPage() {
         }
         .luxury-meta {
           font-size: 0.75rem;
-          color: #a89c92;
+          color: var(--muted);
           display: flex;
           gap: 8px;
           flex-wrap: wrap;
@@ -840,7 +1041,7 @@ export default function DupeFinderPage() {
         .luxury-price {
           font-family: 'DM Serif Display', serif;
           font-size: 1.25rem;
-          color: #161412;
+          color: var(--ink);
           white-space: nowrap;
           flex-shrink: 0;
         }
@@ -848,27 +1049,28 @@ export default function DupeFinderPage() {
           width: 22px;
           height: 22px;
           min-width: 22px;
-          border: 2px solid #d8cdc3;
+          border: 2px solid var(--rule);
           border-radius: 7px;
           display: flex;
           align-items: center;
           justify-content: center;
-          background: #fff;
+          background: var(--bg, #fff);
           transition: all 0.18s;
         }
         .luxury-card.selected .checkbox {
-          background: #fc2779;
-          border-color: #fc2779;
+          background: var(--rose);
+          border-color: var(--rose);
           color: #fff;
         }
         .calculator-sidebar {
-          background: #fff;
-          border: 1.5px solid #ede5dc;
+          background: var(--surface, #fff);
+          border: 1.5px solid var(--rule);
           border-radius: 24px;
           padding: 28px;
-          box-shadow: 0 16px 48px rgba(38, 28, 20, 0.06);
+          box-shadow: 0 16px 48px rgba(0, 0, 0, 0.04);
           position: sticky;
           top: 100px;
+          color: var(--ink);
         }
         .mobile-savings-bar {
           display: none;
@@ -876,32 +1078,33 @@ export default function DupeFinderPage() {
           bottom: 0;
           left: 0;
           right: 0;
-          background: #fff;
-          border-top: 1px solid #ede5dc;
+          background: var(--surface, #fff);
+          border-top: 1px solid var(--rule);
           padding: 14px 20px;
           z-index: 50;
           align-items: center;
           justify-content: space-between;
           box-shadow: 0 -8px 24px rgba(0,0,0,0.08);
+          color: var(--ink);
         }
         .mobile-savings-label {
           font-size: 0.75rem;
-          color: #8c8179;
+          color: var(--muted);
           font-weight: 600;
         }
         .mobile-savings-amount {
           font-family: 'DM Serif Display', serif;
           font-size: 1.6rem;
-          color: #fc2779;
+          color: var(--rose);
           line-height: 1;
         }
         .mobile-savings-pct {
           font-size: 0.75rem;
-          color: #2d8a5c;
+          color: #10b981;
           font-weight: 700;
         }
         .calc-header {
-          border-bottom: 1px solid #f6f4f2;
+          border-bottom: 1px solid var(--rule);
           padding-bottom: 20px;
           margin-bottom: 20px;
         }
@@ -913,8 +1116,8 @@ export default function DupeFinderPage() {
         }
         .savings-stat {
           text-align: center;
-          background: #fff0e8;
-          border: 1px dashed rgba(252, 39, 121, 0.3);
+          background: var(--rose-light, #fff0e8);
+          border: 1px dashed var(--rose);
           border-radius: 12px;
           padding: 24px;
           margin-bottom: 24px;
@@ -922,14 +1125,14 @@ export default function DupeFinderPage() {
         .savings-amt {
           font-family: 'DM Serif Display', serif;
           font-size: 44px;
-          color: #fc2779;
+          color: var(--rose);
           line-height: 1.1;
           margin-top: 6px;
         }
         .savings-pct {
           font-size: 0.85rem;
           font-weight: 700;
-          color: #2d8a5c;
+          color: #10b981;
           margin-top: 4px;
         }
         .calc-row {
@@ -937,9 +1140,10 @@ export default function DupeFinderPage() {
           justify-content: space-between;
           font-size: 0.9rem;
           margin-bottom: 12px;
+          color: var(--ink);
         }
         .calc-row.total {
-          border-top: 1px solid #f6f4f2;
+          border-top: 1px solid var(--rule);
           padding-top: 16px;
           font-weight: 700;
           font-size: 1.05rem;
@@ -948,12 +1152,14 @@ export default function DupeFinderPage() {
           margin-top: 48px;
         }
         .dupe-comparison-card {
-          background: #fff;
-          border: 1.5px solid #ede5dc;
+          background: var(--surface, #fff);
+          border: 1.5px solid var(--rule);
           border-radius: 20px;
-          padding: 28px;
-          margin-bottom: 16px;
-          box-shadow: 0 4px 18px rgba(38, 28, 20, 0.03);
+          padding: 0;
+          margin-bottom: 24px;
+          box-shadow: 0 4px 18px rgba(0, 0, 0, 0.02);
+          overflow: hidden;
+          color: var(--ink);
         }
         .comparison-title {
           font-family: 'DM Serif Display', serif;
@@ -961,14 +1167,16 @@ export default function DupeFinderPage() {
           font-weight: 400;
           margin-bottom: 20px;
           margin-top: 52px;
+          color: var(--ink);
         }
         .comparison-header {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          margin-bottom: 20px;
-          padding-bottom: 14px;
-          border-bottom: 1px solid #f6f4f2;
+          margin-bottom: 0;
+          padding: 20px 28px;
+          background: var(--sand, #f6f4f2);
+          border-bottom: 1px solid var(--rule);
           flex-wrap: wrap;
           gap: 10px;
         }
@@ -977,18 +1185,20 @@ export default function DupeFinderPage() {
           letter-spacing: 0.15em;
           text-transform: uppercase;
           font-weight: 700;
-          color: #fc2779;
+          color: var(--rose);
         }
         .purchases-selector {
           display: flex;
           align-items: center;
           gap: 8px;
           font-size: 0.85rem;
-          color: #756b63;
+          color: var(--muted);
         }
         .purchases-selector input {
           width: 52px;
-          border: 1px solid #d8cdc3;
+          border: 1px solid var(--rule);
+          background: var(--surface, #fff);
+          color: var(--ink);
           border-radius: 6px;
           padding: 5px 8px;
           text-align: center;
@@ -998,20 +1208,63 @@ export default function DupeFinderPage() {
         .split-row {
           display: grid;
           grid-template-columns: 1fr 1fr;
-          gap: 28px;
+          gap: 0;
         }
         @media (max-width: 600px) {
           .split-row { grid-template-columns: 1fr; gap: 0; }
-          .split-col.luxury-side { border-right: 0; border-bottom: 1px solid #f0ebe4; padding-right: 0; padding-bottom: 20px; margin-bottom: 20px; }
+          .split-col.luxury-side {
+            border-right: 0 !important;
+            border-bottom: 1px solid var(--rule) !important;
+          }
         }
-        .split-col { display: flex; flex-direction: column; }
-        .split-col.luxury-side { opacity: 0.7; border-right: 1px solid #f0ebe4; padding-right: 24px; }
-        .col-header { font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: #8c8179; margin-bottom: 8px; font-weight: 700; }
-        .split-price { font-family: 'DM Serif Display', serif; font-size: 1.6rem; margin-top: 10px; }
-        .actives-label { font-size: 0.75rem; font-weight: 700; margin-top: 12px; color: #161412; }
-        .actives-list { font-size: 0.8rem; color: #756b63; line-height: 1.5; margin-top: 3px; }
+        .split-col {
+          display: flex;
+          flex-direction: column;
+          padding: 28px;
+        }
+        .split-col.luxury-side {
+          border-right: 1px solid var(--rule);
+          background: rgba(252, 39, 121, 0.015);
+        }
+        .split-col.dupe-side {
+          background: rgba(16, 185, 129, 0.015);
+        }
+        .col-header {
+          font-size: 0.72rem;
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
+          color: var(--muted);
+          margin-bottom: 8px;
+          font-weight: 700;
+        }
+        .split-price {
+          font-family: 'DM Serif Display', serif;
+          font-size: 1.6rem;
+          margin-top: 10px;
+          color: var(--ink);
+        }
+        .actives-label {
+          font-size: 0.75rem;
+          font-weight: 700;
+          margin-top: 12px;
+          color: var(--ink);
+        }
+        .actives-list {
+          font-size: 0.8rem;
+          color: var(--muted);
+          line-height: 1.5;
+          margin-top: 3px;
+        }
+        .dupe-brand {
+          color: #10b981;
+        }
+        .dupe-savings {
+          color: #10b981;
+          font-weight: 700;
+          font-size: 0.95rem;
+        }
         .shop-dupe-btn {
-          background: #161412;
+          background: var(--rose);
           color: #fff;
           border-radius: 10px;
           padding: 11px 18px;
@@ -1022,14 +1275,16 @@ export default function DupeFinderPage() {
           align-items: center;
           gap: 6px;
           align-self: flex-start;
-          margin-top: 16px;
-          transition: background 0.15s;
+          margin-top: 20px;
+          transition: background 0.15s, transform 0.15s;
         }
         .shop-dupe-btn:hover {
-          background: #2b2826;
+          background: var(--rose);
+          opacity: 0.9;
+          transform: scale(1.02);
         }
         .next-btn {
-          background: #fc2779;
+          background: var(--rose);
           color: #fff;
           border: none;
           border-radius: 12px;
@@ -1044,7 +1299,8 @@ export default function DupeFinderPage() {
           gap: 8px;
         }
         .next-btn:hover {
-          background: #e0226c;
+          background: var(--rose);
+          opacity: 0.9;
           transform: translateY(-1px);
         }
         .mobile-lead-panel {
@@ -1057,11 +1313,12 @@ export default function DupeFinderPage() {
           .mobile-lead-panel { display: block !important; }
         }
         .dupe-lead-panel {
-          background: #0c0a09;
+          background: var(--black, #0c0a09);
           border-radius: 16px;
           padding: 24px;
           margin-top: 20px;
           text-align: center;
+          border: 1px solid var(--rule);
         }
         .dupe-lead-panel h4 {
           font-family: 'DM Serif Display', serif;
@@ -1091,10 +1348,10 @@ export default function DupeFinderPage() {
           outline: none;
         }
         .dupe-lead-form input:focus {
-          border-color: #fc2779;
+          border-color: var(--rose);
         }
         .dupe-lead-form button {
-          background: #fc2779;
+          background: var(--rose);
           color: #fff;
           border: none;
           border-radius: 8px;
@@ -1105,7 +1362,8 @@ export default function DupeFinderPage() {
           transition: background 0.2s;
         }
         .dupe-lead-form button:hover {
-          background: #e0226c;
+          background: var(--rose);
+          opacity: 0.9;
         }
         .dupe-lead-success {
           display: flex;
@@ -1117,6 +1375,136 @@ export default function DupeFinderPage() {
           padding: 10px 16px;
           border-radius: 8px;
           font-size: 0.85rem;
+        }
+        /* Inline card expansion styles */
+        .card-expanded-content {
+          grid-column: span 3;
+          margin-top: 16px;
+          padding-top: 16px;
+          border-top: 1px solid var(--rule);
+          display: flex;
+          flex-direction: column;
+          gap: 16px;
+          cursor: default;
+        }
+        .inline-comparison {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 0;
+          border: 1px solid var(--rule);
+          border-radius: 12px;
+          overflow: hidden;
+        }
+        @media (max-width: 600px) {
+          .inline-comparison {
+            grid-template-columns: 1fr;
+          }
+          .inline-col.luxury-side {
+            border-right: none !important;
+            border-bottom: 1px solid var(--rule);
+          }
+        }
+        .inline-col {
+          display: flex;
+          flex-direction: column;
+          padding: 16px;
+          gap: 6px;
+        }
+        .inline-col.luxury-side {
+          border-right: 1px solid var(--rule);
+          background: rgba(252, 39, 121, 0.015);
+        }
+        .inline-col.dupe-side {
+          background: rgba(16, 185, 129, 0.015);
+        }
+        .inline-col-label {
+          font-size: 0.65rem;
+          text-transform: uppercase;
+          letter-spacing: 0.1em;
+          color: var(--muted);
+          font-weight: 700;
+        }
+        .inline-price {
+          font-family: 'DM Serif Display', serif;
+          font-size: 1.25rem;
+          color: var(--ink);
+        }
+        .inline-col.dupe-side .inline-price {
+          color: #10b981;
+        }
+        .inline-actives {
+          font-size: 0.78rem;
+          color: var(--muted);
+          line-height: 1.4;
+        }
+        .inline-footer {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          flex-wrap: wrap;
+          gap: 12px;
+          margin-top: 4px;
+        }
+        .purchases-stepper {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          font-size: 0.8rem;
+          color: var(--muted);
+          font-weight: 600;
+        }
+        .stepper-controls {
+          display: flex;
+          align-items: center;
+          border: 1px solid var(--rule);
+          border-radius: 8px;
+          overflow: hidden;
+          background: var(--surface, #fff);
+        }
+        .stepper-controls button {
+          border: none;
+          background: none;
+          color: var(--ink);
+          padding: 4px 10px;
+          font-size: 0.9rem;
+          cursor: pointer;
+          font-weight: bold;
+          transition: background 0.15s;
+        }
+        .stepper-controls button:disabled {
+          opacity: 0.3;
+          cursor: not-allowed;
+        }
+        .stepper-controls button:hover:not(:disabled) {
+          background: var(--rule);
+        }
+        .stepper-controls span {
+          padding: 0 8px;
+          font-size: 0.85rem;
+          font-weight: 700;
+          color: var(--ink);
+        }
+        .stepper-savings {
+          color: #10b981;
+          font-weight: 700;
+        }
+        .inline-shop-btn {
+          background: var(--rose);
+          color: #fff;
+          border: none;
+          border-radius: 8px;
+          padding: 8px 14px;
+          font-size: 0.8rem;
+          font-weight: 700;
+          text-decoration: none;
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          transition: all 0.15s ease;
+        }
+        .inline-shop-btn:hover {
+          opacity: 0.9;
+          transform: translateY(-1px);
         }
       `}</style>
 
@@ -1183,6 +1571,9 @@ export default function DupeFinderPage() {
               <div className="luxury-list">
                 {filteredDatabase.map(item => {
                   const isSelected = selectedItems.includes(item.id);
+                  const activeDupe = currency !== "INR" && item.globalDupe ? item.globalDupe : item.dupe;
+                  const matchingProduct = PRODUCTS.find(p => p.asin === activeDupe.asin);
+                  const affiliateUrl = getAffiliateUrl(activeDupe.asin, activeDupe.name, activeDupe.brand, matchingProduct?.link || activeDupe.link);
                   return (
                     <div
                       key={item.id}
@@ -1204,6 +1595,63 @@ export default function DupeFinderPage() {
                         </div>
                       </div>
                       <div className="luxury-price">{formatPrice(item.luxury.price)}</div>
+
+                      {isSelected && (
+                        <div className="card-expanded-content" onClick={(e) => e.stopPropagation()}>
+                          <div className="inline-comparison">
+                            <div className="inline-col luxury-side">
+                              <span className="inline-col-label">High-End Luxury</span>
+                              <div className="inline-price">{formatPrice(item.luxury.price)}</div>
+                              <div className="inline-actives"><strong>Actives:</strong> {item.luxury.actives}</div>
+                            </div>
+                            <div className="inline-col dupe-side">
+                              <span className="inline-col-label" style={{ color: "#10b981", display: "inline-flex", alignItems: "center", gap: "4px" }}>
+                                Active Dupe Match <Check size={11} />
+                              </span>
+                              <div style={{ fontWeight: 700, fontSize: "0.85rem", color: "var(--ink)", marginTop: "2px" }}>
+                                {activeDupe.brand} — {activeDupe.name}
+                              </div>
+                              <p style={{ fontSize: "0.78rem", color: "var(--muted)", margin: "4px 0", lineHeight: 1.45 }}>
+                                {activeDupe.description}
+                              </p>
+                              <div className="inline-actives"><strong>Actives:</strong> {activeDupe.actives}</div>
+                              <div className="inline-price" style={{ marginTop: "auto", paddingTop: "8px" }}>
+                                {formatPrice(activeDupe.price)}
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="inline-footer">
+                            <div className="purchases-stepper">
+                              <span>Purchases per year:</span>
+                              <div className="stepper-controls">
+                                <button
+                                  type="button"
+                                  onClick={() => handleCountChange(item.id, (purchasesPerYear[item.id] || 2) - 1)}
+                                  disabled={(purchasesPerYear[item.id] || 2) <= 1}
+                                >-</button>
+                                <span>{purchasesPerYear[item.id] || 2}</span>
+                                <button
+                                  type="button"
+                                  onClick={() => handleCountChange(item.id, (purchasesPerYear[item.id] || 2) + 1)}
+                                >+</button>
+                              </div>
+                              <span className="stepper-savings">
+                                Saves {formatPrice((item.luxury.price - activeDupe.price) * (purchasesPerYear[item.id] || 2))}/yr
+                              </span>
+                            </div>
+
+                            <a
+                              href={affiliateUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-shop-btn"
+                            >
+                              Shop Dupe on {amazonLabel} <ArrowRight size={13} />
+                            </a>
+                          </div>
+                        </div>
+                      )}
                     </div>
                   );
                 })}
@@ -1228,80 +1676,120 @@ export default function DupeFinderPage() {
             )}
           </div>
 
-          <div>
-            <div className="calculator-sidebar">
-              <div className="calc-header">
+          <div className="calculator-sidebar">
+            <div className="calc-header" style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+              <div>
                 <h3 className="calc-title">Savings Summary</h3>
                 <p style={{ fontSize: "0.8rem", color: "#8c8179", margin: 0 }}>Based on your selections</p>
               </div>
-
-              {selectedItems.length > 0 ? (
-                <div>
-                  <div className="savings-stat">
-                    <span style={{ fontSize: "0.75rem", letterSpacing: "0.15em", textTransform: "uppercase", fontWeight: 700, color: "#756b63" }}>Estimated Annual Savings</span>
-                    <div className="savings-amt">{formatPrice(math.savings)}</div>
-                    <div className="savings-pct">Save {math.percentage}% on this routine</div>
-                  </div>
-
-                  <div className="calc-row">
-                    <span>Luxury Total (Annual):</span>
-                    <span>{formatPrice(math.luxuryTotal)}</span>
-                  </div>
-                  <div className="calc-row">
-                    <span>Dupe Total (Annual):</span>
-                    <span>{formatPrice(math.dupeTotal)}</span>
-                  </div>
-                  <div className="calc-row total">
-                    <span>Net Annual Savings:</span>
-                    <span style={{ color: "#fc2779" }}>{formatPrice(math.savings)}</span>
-                  </div>
-
-                  <button
-                    onClick={handleShareWhatsApp}
-                    className="next-btn"
-                    style={{ background: "#25d366", color: "#fff", display: "flex", gap: "8px", justifyContent: "center", width: "100%", padding: "14px", marginTop: "20px" }}
-                  >
-                    <Share2 size={16} /> Share Savings on WhatsApp
-                  </button>
-
-                  {/* Lead Capture */}
-                  <div className="dupe-lead-panel">
-                    <h4>Email Your Savings Report</h4>
-                    <p>Get your personalized dupes catalog and savings breakdown sent to your inbox.</p>
-                    {emailStatus === "success" ? (
-                      <div className="dupe-lead-success">
-                        <Check size={14} /> Check your inbox!
-                      </div>
-                    ) : (
-                      <form onSubmit={handleEmailSubmit} className="dupe-lead-form">
-                        <input
-                          type="email"
-                          placeholder="Enter your email"
-                          value={email}
-                          onChange={(e) => setEmail(e.target.value)}
-                          required
-                        />
-                        <button type="submit" disabled={emailStatus === "submitting"}>
-                          {emailStatus === "submitting" ? "Sending..." : "Send My Report"}
-                        </button>
-                      </form>
-                    )}
-                  </div>
-                </div>
-              ) : (
-                <div style={{ textAlign: "center", padding: "20px 0", color: "#8c8179" }}>
-                  <TrendingDown size={36} style={{ margin: "0 auto 12px", opacity: 0.5 }} />
-                  <p style={{ fontSize: "0.9rem", margin: 0, lineHeight: 1.5 }}>Select at least one luxury product on the left to see comparisons and estimate your annual savings.</p>
-                </div>
+              {selectedItems.length > 0 && (
+                <button
+                  onClick={() => setSelectedItems([])}
+                  style={{
+                    background: "none",
+                    border: "none",
+                    color: "var(--rose)",
+                    fontSize: "0.8rem",
+                    fontWeight: 600,
+                    cursor: "pointer",
+                    padding: "4px 8px",
+                    borderRadius: "6px",
+                    transition: "background 0.2s"
+                  }}
+                  onMouseEnter={(e) => e.currentTarget.style.background = "var(--rose-light)"}
+                  onMouseLeave={(e) => e.currentTarget.style.background = "none"}
+                >
+                  Clear All
+                </button>
               )}
             </div>
+
+            {selectedItems.length > 0 ? (
+              <div>
+                <div className="savings-stat">
+                  <span style={{ fontSize: "0.75rem", letterSpacing: "0.15em", textTransform: "uppercase", fontWeight: 700, color: "#756b63" }}>Estimated Annual Savings</span>
+                  <div className="savings-amt">{formatPrice(math.savings)}</div>
+                  <div className="savings-pct">Save {math.percentage}% on this routine</div>
+                </div>
+
+                <div className="calc-row">
+                  <span>Luxury Total (Annual):</span>
+                  <span>{formatPrice(math.luxuryTotal)}</span>
+                </div>
+                <div className="calc-row">
+                  <span>Dupe Total (Annual):</span>
+                  <span>{formatPrice(math.dupeTotal)}</span>
+                </div>
+                <div className="calc-row total">
+                  <span>Net Annual Savings:</span>
+                  <span style={{ color: "#fc2779" }}>{formatPrice(math.savings)}</span>
+                </div>
+
+                <button
+                  onClick={handleShareWhatsApp}
+                  className="next-btn"
+                  style={{ background: "#25d366", color: "#fff", display: "flex", gap: "8px", justifyContent: "center", width: "100%", padding: "14px", marginTop: "20px" }}
+                >
+                  <Share2 size={16} /> Share Savings on WhatsApp
+                </button>
+
+                {/* Lead Capture */}
+                <div className="dupe-lead-panel">
+                  <h4>Email Your Savings Report</h4>
+                  <p>Get your personalized dupes catalog and savings breakdown sent to your inbox.</p>
+                  {emailStatus === "success" ? (
+                    <div className="dupe-lead-success">
+                      <Check size={14} /> Check your inbox!
+                    </div>
+                  ) : (
+                    <form onSubmit={handleEmailSubmit} className="dupe-lead-form">
+                      <input
+                        type="email"
+                        placeholder="Enter your email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                      />
+                      <button type="submit" disabled={emailStatus === "submitting"}>
+                        {emailStatus === "submitting" ? "Sending..." : "Send My Report"}
+                      </button>
+                    </form>
+                  )}
+                </div>
+              </div>
+            ) : (
+              <div style={{ textAlign: "center", padding: "20px 0", color: "#8c8179" }}>
+                <TrendingDown size={36} style={{ margin: "0 auto 12px", opacity: 0.5 }} />
+                <p style={{ fontSize: "0.9rem", margin: 0, lineHeight: 1.5 }}>Select at least one luxury product on the left to see comparisons and estimate your annual savings.</p>
+              </div>
+            )}
           </div>
         </div>
 
         {/* Mobile sticky savings bar */}
         <div className="mobile-savings-bar">
           <div>
-            <div className="mobile-savings-label">Annual Savings</div>
+            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+              <div className="mobile-savings-label">Annual Savings</div>
+              {selectedItems.length > 0 && (
+                <button
+                  onClick={() => setSelectedItems([])}
+                  style={{
+                    background: "none",
+                    border: "none",
+                    color: "var(--rose)",
+                    fontSize: "0.7rem",
+                    fontWeight: 700,
+                    cursor: "pointer",
+                    padding: "2px 6px",
+                    textTransform: "uppercase",
+                    letterSpacing: "0.05em"
+                  }}
+                >
+                  Clear All
+                </button>
+              )}
+            </div>
             <div className="mobile-savings-amount">{formatPrice(math.savings)}</div>
             {math.percentage > 0 && <div className="mobile-savings-pct">Save {math.percentage}%</div>}
           </div>
@@ -1341,73 +1829,7 @@ export default function DupeFinderPage() {
           </div>
         )}
 
-        {selectedItems.length > 0 && (
-          <div className="comparison-section">
-            <h2 className="comparison-title">Formula Compatibility &amp; Science Breakdown</h2>
-            
-            {selectedItems.map(id => {
-              const item = DUPES_DATABASE.find(d => d.id === id);
-              if (!item) return null;
-              
-              const activeDupe = currency !== "INR" && item.globalDupe ? item.globalDupe : item.dupe;
-              const matchingProduct = PRODUCTS.find(p => p.asin === activeDupe.asin);
-              const affiliateUrl = getAffiliateUrl(activeDupe.asin, activeDupe.name, activeDupe.brand, matchingProduct?.link || activeDupe.link);
 
-              const count = purchasesPerYear[id] || 2;
-              const savings = (item.luxury.price - activeDupe.price) * count;
-
-              return (
-                <div key={item.id} className="dupe-comparison-card">
-                  <div className="comparison-header">
-                    <span className="comparison-label">{item.category} Equivalency Profile</span>
-                    <div className="purchases-selector">
-                      <span>Purchases per year:</span>
-                      <input
-                        type="number"
-                        min="1"
-                        value={count}
-                        onChange={(e) => handleCountChange(item.id, parseInt(e.target.value) || 1)}
-                      />
-                    </div>
-                  </div>
-
-                  <div className="split-row">
-                    <div className="split-col luxury-side">
-                      <span className="col-header">High-End Luxury</span>
-                      <span style={{ fontSize: "0.8rem", color: "#fc2779", fontWeight: 700 }}>{item.luxury.brand}</span>
-                      <h4 style={{ fontSize: "1.05rem", fontWeight: 600, margin: "2px 0 6px" }}>{item.luxury.name}</h4>
-                      <span className="actives-label">Key Actives:</span>
-                      <p className="actives-list">{item.luxury.actives}</p>
-                      <div className="split-price">{formatPrice(item.luxury.price)}</div>
-                    </div>
-
-                    <div className="split-col">
-                      <span className="col-header" style={{ color: "#2d8a5c", display: "flex", alignItems: "center", gap: "4px" }}>
-                        Active Dupe Match <Check size={12} />
-                      </span>
-                      <span className="dupe-brand" style={{ fontSize: "0.8rem", fontWeight: 700 }}>{activeDupe.brand}</span>
-                      <h4 className="dupe-name" style={{ fontSize: "1.05rem", fontWeight: 600, margin: "2px 0 6px" }}>{activeDupe.name}</h4>
-                      <p className="dupe-desc" style={{ fontSize: "0.82rem", lineHeight: 1.5, margin: "8px 0" }}>
-                        {activeDupe.description}
-                      </p>
-                      <span className="actives-label">Dupe Actives:</span>
-                      <p className="actives-list">{activeDupe.actives}</p>
-                      
-                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginTop: "auto" }}>
-                        <div className="split-price dupe-price">{formatPrice(activeDupe.price)}</div>
-                        <span className="dupe-savings">Save {formatPrice(savings)}/yr</span>
-                      </div>
-
-                      <a href={affiliateUrl} target="_blank" rel="noopener noreferrer" className="shop-dupe-btn">
-                        Shop Dupe on {amazonLabel} <ArrowRight size={14} />
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        )}
       </div>
     </main>
   );

@@ -9,14 +9,15 @@
 }
 
 :root {
- --black: #0a0a0a;
- --white: #fcfbf9; /* Shiny pearl base */
- --rose: #fc2779;
- --rose-light: #ffe6f0;
- --sand: #f6f4f2; /* Soft pearl accent */
- --ink: #2b2826;
- --muted: #8c857f;
- --rule: rgba(0, 0, 0, 0.04); /* Very soft invisible line */
+  --black: #0a0a0a;
+  --white: #fcfbf9; /* Shiny pearl base */
+  --rose: #fc2779;
+  --rose-light: #ffe6f0;
+  --sand: #f6f4f2; /* Soft pearl accent */
+  --surface: #faf8f5; /* Light card surface */
+  --ink: #2b2826;
+  --muted: #8c857f;
+  --rule: rgba(0, 0, 0, 0.04); /* Very soft invisible line */
 }
 
 * {
@@ -976,6 +977,7 @@ html.dark .method-grid div {
   --rose: #ff4d94; /* High-contrast bright rose */
   --rose-light: #2b111e; /* Dark pink accent */
   --sand: #181716; /* Dark elevated card backdrop */
+  --surface: #181716; /* Dark card surface */
   --ink: #f7f5f2; /* High-contrast bright text for 100% legibility */
   --muted: #aba49d; /* Clear muted reading text */
   --rule: rgba(255, 255, 255, 0.12); /* Subtle dark border */
