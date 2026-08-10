@@ -1,7 +1,7 @@
 import { MetadataRoute } from "next";
 import { POSTS } from "@/lib/posts";
 import { PRODUCTS } from "@/lib/products";
-import { getAllProgrammaticSlugs } from "@/lib/programmatic-posts";
+import { getAllProgrammaticSlugs, CITIES, GLOBAL_CITIES } from "@/lib/programmatic-posts";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = "https://www.mirhaandco.com";
@@ -67,7 +67,28 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.6,
   }));
 
-  const allRoutes = [...staticRoutes, ...blogRoutes, ...programmaticRoutes, ...productRoutes];
+  // Dynamic water quality pages
+  const citySlugs = [
+    "bengaluru",
+    "delhi",
+    "mumbai",
+    "london",
+    "new-york",
+    "paris",
+    "dubai",
+    "los-angeles",
+    ...CITIES.map((c) => c.slug),
+    ...GLOBAL_CITIES.map((c) => c.slug),
+  ];
+  const uniqueCitySlugs = Array.from(new Set(citySlugs));
+  const waterQualityRoutes = uniqueCitySlugs.map((slug) => ({
+    url: `${baseUrl}/water-quality/${slug}`,
+    lastModified: new Date(),
+    changeFrequency: "weekly" as const,
+    priority: 0.6,
+  }));
+
+  const allRoutes = [...staticRoutes, ...blogRoutes, ...programmaticRoutes, ...productRoutes, ...waterQualityRoutes];
   
   // Deduplicate routes by URL, keeping the one with higher priority
   const uniqueRoutesMap = new Map<string, any>();
