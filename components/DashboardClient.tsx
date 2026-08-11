@@ -12,7 +12,7 @@ export function DashboardClient({ user, routines, recentJournal, stats }: any) {
  
  // Dynamic greeting based on hour
  const [greeting, setGreeting] = useState("Good Morning");
- const [coachInsight, setCoachInsight] = useState<string | null>(null);
+ const [coachInsight, setCoachInsight] = useState<{ trend: string; observation: string; tip: string } | null>(null);
  const [coachStatus, setCoachStatus] = useState<"loading" | "unlocked" | "need_pro" | "need_data">("loading");
  
  useEffect(() => {
@@ -37,7 +37,7 @@ export function DashboardClient({ user, routines, recentJournal, stats }: any) {
  setCoachStatus("need_pro");
  }
  } else {
- setCoachInsight(res as string);
+ setCoachInsight(res as { trend: string; observation: string; tip: string });
  setCoachStatus("unlocked");
  }
  } catch (e) {
@@ -516,12 +516,69 @@ export function DashboardClient({ user, routines, recentJournal, stats }: any) {
           </div>
         )}
 
-        {coachStatus === "unlocked" && (
+        {coachStatus === "unlocked" && coachInsight && (
           <div>
-            <div style={{ fontSize: "1rem", lineHeight: 1.6, color: "#f4f0ec", whiteSpace: "pre-wrap" }}>
-              {coachInsight}
+            <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+              {coachInsight.trend && (
+                <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", flexWrap: "wrap" }}>
+                  <span style={{
+                    fontSize: "0.75rem",
+                    fontWeight: 700,
+                    textTransform: "uppercase",
+                    letterSpacing: "0.05em",
+                    color: "#a89f97"
+                  }}>
+                    Recent Trend:
+                  </span>
+                  <span style={{
+                    background: coachInsight.trend.toLowerCase().includes("improv")
+                      ? "rgba(16, 185, 129, 0.2)"
+                      : coachInsight.trend.toLowerCase().includes("irritat")
+                        ? "rgba(239, 68, 68, 0.2)"
+                        : "rgba(245, 158, 11, 0.2)",
+                    color: coachInsight.trend.toLowerCase().includes("improv")
+                      ? "#34d399"
+                      : coachInsight.trend.toLowerCase().includes("irritat")
+                        ? "#f87171"
+                        : "#fbbf24",
+                    border: coachInsight.trend.toLowerCase().includes("improv")
+                      ? "1px solid rgba(16, 185, 129, 0.3)"
+                      : coachInsight.trend.toLowerCase().includes("irritat")
+                        ? "1px solid rgba(239, 68, 68, 0.3)"
+                        : "1px solid rgba(245, 158, 11, 0.3)",
+                    padding: "4px 12px",
+                    borderRadius: "20px",
+                    fontSize: "0.8rem",
+                    fontWeight: 600
+                  }}>
+                    {coachInsight.trend}
+                  </span>
+                </div>
+              )}
+              {coachInsight.observation && (
+                <div>
+                  <h4 style={{ margin: "0 0 0.35rem 0", fontSize: "0.85rem", color: "#e4e4e7", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.05em" }}>Observation</h4>
+                  <p style={{ margin: 0, fontSize: "0.95rem", lineHeight: 1.6, color: "#d4cfc9" }}>
+                    {coachInsight.observation}
+                  </p>
+                </div>
+              )}
+              {coachInsight.tip && (
+                <div style={{
+                  background: "rgba(252, 39, 121, 0.07)",
+                  border: "1px solid rgba(252, 39, 121, 0.18)",
+                  borderRadius: "16px",
+                  padding: "1rem 1.1rem",
+                  marginTop: "0.2rem"
+                }}>
+                  <h4 style={{ margin: "0 0 0.25rem 0", fontSize: "0.85rem", color: "#fc2779", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.05em" }}>💡 Actionable Tip</h4>
+                  <p style={{ margin: 0, fontSize: "0.92rem", lineHeight: 1.6, color: "#f4f0ec" }}>
+                    {coachInsight.tip}
+                  </p>
+                </div>
+              )}
             </div>
-            <p style={{ margin: "1rem 0 0", fontSize: "0.75rem", color: "#a89f97", borderTop: "1px solid rgba(255,255,255,0.08)", paddingTop: "0.8rem" }}>
+            <p style={{ margin: "1.5rem 0 0", fontSize: "0.75rem", color: "#a89f97", borderTop: "1px solid rgba(255,255,255,0.08)", paddingTop: "0.8rem" }}>
               ✨ Routine recommendations are updated dynamically based on your last 7 days of logs.
             </p>
           </div>
