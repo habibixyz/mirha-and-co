@@ -185,6 +185,26 @@ function ProductCard({ product }: { product: Product }) {
         </div>
         <h3>{product.name}</h3>
         <p className="product-brand">{product.brand}</p>
+        {product.rating > 0 && (
+          <div style={{ display: "flex", alignItems: "center", gap: "5px", margin: "2px 0" }}>
+            <div style={{ position: "relative", display: "inline-block", fontSize: "12px", lineHeight: 1, letterSpacing: "-1px" }}>
+              <span style={{ color: "#e2d7cd" }}>★★★★★</span>
+              <span style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                overflow: "hidden",
+                width: `${(product.rating / 5) * 100}%`,
+                color: "#c8883a",
+                whiteSpace: "nowrap",
+              }}>★★★★★</span>
+            </div>
+            <span style={{ fontSize: "10px", color: "#a29387", letterSpacing: "0.04em" }}>
+              {product.rating.toFixed(1)}
+              {product.reviews ? ` · ${product.reviews}` : ""}
+            </span>
+          </div>
+        )}
         <p className="product-use">
           {t("product.bestfor")}: {productReason(product)}
         </p>

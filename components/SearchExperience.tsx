@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { ArrowRight, Search } from "lucide-react";
 import { searchMirha } from "@/lib/searchIndex";
@@ -42,6 +42,24 @@ function ResultCard({ item }: { item: SearchItem }) {
 
 export default function SearchExperience() {
  const [query, setQuery] = useState("");
+ const inputRef = useRef<HTMLInputElement>(null);
+
+ useEffect(() => {
+   const handleKeyDown = (e: KeyboardEvent) => {
+     const target = e.target as HTMLElement;
+     const isTyping = target.tagName === "INPUT" || target.tagName === "TEXTAREA" || target.isContentEditable;
+     if (e.key === "/" && !isTyping) {
+       e.preventDefault();
+       inputRef.current?.focus();
+     }
+     if (e.key === "Escape" && document.activeElement === inputRef.current) {
+       setQuery("");
+       inputRef.current?.blur();
+     }
+   };
+   window.addEventListener("keydown", handleKeyDown);
+   return () => window.removeEventListener("keydown", handleKeyDown);
+ }, []);
 
  const results = useMemo(() => searchMirha(query), [query]);
  const groups = useMemo(() => {
@@ -266,6 +284,15 @@ export default function SearchExperience() {
  width: 70px;
  height: 70px;
  }
+
+ .search-kbd-hint {
+ display: none;
+ }
+
+ .quick-row button {
+ padding: 10px 14px;
+ font-size: 12.5px;
+ }
  }
  `}</style>
 
@@ -280,12 +307,29 @@ export default function SearchExperience() {
  <div className="search-box">
  <Search size={18} color="#9a8f86" />
  <input
- value={query}
- onChange={(event) => setQuery(event.target.value)}
- placeholder="Try oily skin sunscreen, pigmentation, niacinamide..."
- autoFocus
+   ref={inputRef}
+   value={query}
+   onChange={(event) => setQuery(event.target.value)}
+   placeholder="Try oily skin sunscreen, pigmentation, niacinamide..."
+   autoFocus
  />
- {query ? <button onClick={() => setQuery("")}>x</button> : null}
+ {query ? (
+   <button onClick={() => setQuery("")} style={{ fontSize: "14px", lineHeight: 1 }}>×</button>
+ ) : (
+   <span className="search-kbd-hint" style={{
+     fontSize: "10px",
+     letterSpacing: "0.12em",
+     color: "#c2b8b1",
+     fontFamily: "var(--font-dm-sans, sans-serif)",
+     whiteSpace: "nowrap",
+     userSelect: "none",
+     padding: "3px 7px",
+     border: "1px solid #e2d7cd",
+     borderRadius: "5px",
+   }}>
+     Press /
+   </span>
+ )}
  </div>
 
  <div className="quick-row">

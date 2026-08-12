@@ -5,6 +5,7 @@ import { ChevronRight, ChevronLeft } from 'lucide-react';
 import { QuizAnswers, RoutineRecommendation, generateRoutine } from '@/lib/routineEngine';
 import RoutineResult from './RoutineResult';
 import { useRoutineAnalytics } from '@/lib/hooks/useRoutineAnalytics';
+import { useSearchParams } from 'next/navigation';
 
 const QUIZ_STEPS = [
  {
@@ -148,9 +149,29 @@ export default function RoutineQuiz() {
  }
  };
 
+ const searchParams = useSearchParams();
+
  useEffect(() => {
- trackQuizStart();
- detectClimate();
+  trackQuizStart();
+  detectClimate();
+  // Pre-select concern from URL param (?concern=acne etc.)
+  const urlConcern = searchParams.get('concern');
+  if (urlConcern) {
+   const concernMap: Record<string, string> = {
+    acne: 'acne',
+    pigmentation: 'pigmentation',
+    dullness: 'dullness',
+    dehydration: 'dehydration',
+    dryness: 'dehydration',
+    oily: 'acne',
+   };
+   const mapped = concernMap[urlConcern.toLowerCase()];
+   if (mapped) {
+    setAnswers(prev => ({ ...prev, mainConcern: mapped as QuizAnswers['mainConcern'] }));
+    // Jump to mainConcern step (index 1)
+    setCurrentStep(1);
+   }
+  }
  }, []);
 
  const [currentStep, setCurrentStep] = useState(0);
@@ -392,7 +413,7 @@ export default function RoutineQuiz() {
  borderRadius: '50%',
  opacity: 0.6
  }} />
- 📡 Syncing local climate...
+ Syncing climate
  </div>
  ) : climateError ? (
  <div
@@ -420,7 +441,8 @@ export default function RoutineQuiz() {
  e.currentTarget.style.background = '#faf8f5';
  }}
  >
- 🍃 Climate: Mumbai Default (38°C, 82% RH) <span style={{ fontSize: '10px', opacity: 0.6, marginLeft: '4px' }}>✎</span>
+ Climate: Mumbai Default — 38°C, 82% RH
+  <span style={{ fontSize: '9px', letterSpacing: '0.1em', textTransform: 'uppercase' as const, opacity: 0.5, marginLeft: '6px' }}>edit</span>
  </div>
  ) : climate ? (
  <div
@@ -450,8 +472,9 @@ export default function RoutineQuiz() {
  e.currentTarget.style.borderColor = '#ccead4';
  }}
  >
- <span style={{ fontSize: '12px' }}>🌍</span>
- Climate Synced: {climate.city} ({climate.temp}°C, {climate.humidity}% RH) <span style={{ fontSize: '10px', opacity: 0.6, marginLeft: '4px' }}>✎</span>
+ <span style={{ display: 'inline-block', width: '5px', height: '5px', background: '#2d7a4f', borderRadius: '50%', flexShrink: 0 }} />
+ Climate: {climate.city} — {climate.temp}°C, {climate.humidity}% RH
+  <span style={{ fontSize: '9px', letterSpacing: '0.1em', textTransform: 'uppercase' as const, opacity: 0.5, marginLeft: '6px' }}>edit</span>
  </div>
  ) : null}
  </div>
@@ -501,7 +524,7 @@ export default function RoutineQuiz() {
  <div
  style={{
  height: '1px',
- background: '#111',
+ background: '#fc2779',
  width: `${((currentStep + 1) / QUIZ_STEPS.length) * 100}%`,
  transition: 'width 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
  }}

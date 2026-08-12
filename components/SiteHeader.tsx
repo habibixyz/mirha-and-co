@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import { useGlobalization } from "./GlobalizationContext";
@@ -46,9 +46,40 @@ const LinkedInIcon = ({ size = 18 }: { size?: number }) => (
 export default function SiteHeader() {
   const { t } = useGlobalization();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setIsScrolled(window.scrollY > 30);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const [isDark, setIsDark] = useState(false);
+
+  useEffect(() => {
+    const checkDark = () => setIsDark(document.documentElement.classList.contains("dark"));
+    checkDark();
+    const observer = new MutationObserver(checkDark);
+    observer.observe(document.documentElement, { attributeFilter: ["class"] });
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <header className="site-header relative z-[200] border-b border-[#ded7cf] bg-white transition-colors duration-300 dark:border-white/10 dark:bg-[#121110]">
+    <header
+      className="site-header relative z-[200] border-b border-[#ded7cf] transition-all duration-300 dark:border-white/10"
+      style={{
+        background: isScrolled
+          ? isDark ? "rgba(18,17,16,0.88)" : "rgba(255,255,255,0.88)"
+          : isDark ? "#121110" : "white",
+        backdropFilter: isScrolled ? "blur(18px)" : "none",
+        WebkitBackdropFilter: isScrolled ? "blur(18px)" : "none",
+        boxShadow: isScrolled
+          ? isDark
+            ? "0 1px 28px rgba(0,0,0,0.22)"
+            : "0 1px 28px rgba(22,20,18,0.06)"
+          : "none",
+      }}
+    >
       <div className="site-header-container">
 
         {/* Left Section — Tools, Categories & Content */}

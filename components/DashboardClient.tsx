@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { CheckCircle2, CalendarPlus, ChevronRight, LogOut, BrainCircuit, Lock } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { logoutAction, toggleRoutineStep, getJournalAnalysis } from "@/app/(saas)/actions";
+import { logoutAction, toggleRoutineStep, getJournalAnalysis, saveJournalEntry } from "@/app/(saas)/actions";
 import { DashboardStats } from "./DashboardStats";
 
 export function DashboardClient({ user, routines, recentJournal, stats }: any) {
@@ -49,6 +49,10 @@ export function DashboardClient({ user, routines, recentJournal, stats }: any) {
  }, []);
  
   const [checkedStepsMap, setCheckedStepsMap] = useState<Record<string, number[]>>({});
+ const [quickRating, setQuickRating] = useState<number>(0);
+ const [quickHover, setQuickHover] = useState<number>(0);
+ const [quickSubmitting, setQuickSubmitting] = useState(false);
+ const [quickDone, setQuickDone] = useState(false);
 
   useEffect(() => {
     if (routines && routines.length > 0) {
@@ -263,6 +267,14 @@ export function DashboardClient({ user, routines, recentJournal, stats }: any) {
           .dash-bottom-card {
             padding: 1.2rem !important;
             border-radius: 18px !important;
+          }
+          /* Quick-journal 1-5 buttons on small phones */
+          .dash-quick-rate-row {
+            gap: 5px !important;
+          }
+          .dash-quick-rate-row button {
+            height: 40px !important;
+            font-size: 0.8rem !important;
           }
         }
       `}</style>
@@ -571,7 +583,7 @@ export function DashboardClient({ user, routines, recentJournal, stats }: any) {
                   padding: "1rem 1.1rem",
                   marginTop: "0.2rem"
                 }}>
-                  <h4 style={{ margin: "0 0 0.25rem 0", fontSize: "0.85rem", color: "#fc2779", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.05em" }}>💡 Actionable Tip</h4>
+                  <h4 style={{ margin: "0 0 0.25rem 0", fontSize: "0.85rem", color: "#fc2779", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.05em" }}>Actionable Tip</h4>
                   <p style={{ margin: 0, fontSize: "0.92rem", lineHeight: 1.6, color: "#f4f0ec" }}>
                     {coachInsight.tip}
                   </p>
@@ -579,7 +591,7 @@ export function DashboardClient({ user, routines, recentJournal, stats }: any) {
               )}
             </div>
             <p style={{ margin: "1.5rem 0 0", fontSize: "0.75rem", color: "#a89f97", borderTop: "1px solid rgba(255,255,255,0.08)", paddingTop: "0.8rem" }}>
-              ✨ Routine recommendations are updated dynamically based on your last 7 days of logs.
+              Routine recommendations are updated dynamically based on your last 7 days of logs.
             </p>
           </div>
         )}
@@ -682,7 +694,7 @@ export function DashboardClient({ user, routines, recentJournal, stats }: any) {
  }}>
  <h3 style={{ fontSize: "1.2rem", margin: "0 0 1.5rem", color: "var(--dash-ink)", fontWeight: 600, fontFamily: "var(--dash-font-serif)" }}>Recent Journal</h3>
 
- {recentJournal ? (
+ {hasJournalToday && recentJournal ? (
  <div style={{
  background: 'var(--dash-bg)',
  borderRadius: "22px",
@@ -698,18 +710,92 @@ export function DashboardClient({ user, routines, recentJournal, stats }: any) {
  </div>
  <p style={{ margin: 0, color: "var(--dash-muted)", lineHeight: 1.5, fontSize: "0.9rem" }}>"{recentJournal.entry}"</p>
  </div>
+ ) : !quickDone ? (
+ <div style={{
+  background: 'var(--dash-bg)',
+  borderRadius: '22px',
+  padding: '1.5rem',
+  marginBottom: 'auto',
+  border: '1px solid var(--dash-border)',
+ }}
+ >
+  <p style={{ margin: '0 0 1rem', fontSize: '0.8rem', letterSpacing: '0.12em', textTransform: 'uppercase', fontWeight: 700, color: 'var(--dash-muted)' }}>How is your skin today?</p>
+  <div className="dash-quick-rate-row" style={{ display: 'flex', gap: '8px', marginBottom: '1rem' }}>
+   {[1, 2, 3, 4, 5].map((n) => (
+    <button
+     key={n}
+     onClick={() => setQuickRating(n)}
+     onMouseEnter={() => setQuickHover(n)}
+     onMouseLeave={() => setQuickHover(0)}
+     style={{
+      flex: 1,
+      height: '44px',
+      borderRadius: '12px',
+      border: quickRating === n ? '1px solid var(--dash-accent)' : '1px solid var(--dash-border)',
+      background: quickRating === n ? 'var(--dash-accent)' : (quickHover >= n ? 'var(--dash-accent-soft)' : 'var(--dash-surface)'),
+      color: quickRating === n ? '#fff' : 'var(--dash-ink)',
+      fontSize: '0.85rem',
+      fontWeight: 700,
+      cursor: 'pointer',
+      transition: 'all 0.15s ease',
+     }}
+    >{n}</button>
+   ))}
+  </div>
+  <button
+   disabled={!quickRating || quickSubmitting}
+   onClick={async () => {
+    if (!quickRating) return;
+    setQuickSubmitting(true);
+    try {
+     await saveJournalEntry('', quickRating);
+     setQuickDone(true);
+    } catch (e) {
+     console.error(e);
+    } finally {
+     setQuickSubmitting(false);
+    }
+   }}
+   style={{
+    width: '100%',
+    padding: '0.65rem',
+    borderRadius: '12px',
+    border: 'none',
+    background: quickRating ? 'var(--dash-ink)' : 'var(--dash-border)',
+    color: quickRating ? 'var(--dash-surface)' : 'var(--dash-muted)',
+    fontSize: '0.82rem',
+    fontWeight: 600,
+    cursor: quickRating ? 'pointer' : 'not-allowed',
+    letterSpacing: '0.06em',
+    transition: 'all 0.15s ease',
+   }}
+  >{quickSubmitting ? 'Saving...' : 'Log skin rating'}</button>
+ </div>
+ ) : quickDone ? (
+ <div style={{
+  background: 'var(--dash-bg)',
+  borderRadius: '22px',
+  padding: '1.5rem',
+  marginBottom: 'auto',
+  border: '1px solid var(--dash-border)',
+  textAlign: 'center',
+ }}
+ >
+  <p style={{ margin: 0, fontSize: '0.9rem', color: 'var(--dash-muted)', lineHeight: 1.5 }}>Skin rated {quickRating}/5 for today. Logged.</p>
+ </div>
  ) : (
  <div style={{
- background: 'var(--dash-bg)',
- borderRadius: "22px",
- padding: "2rem",
- color: "var(--dash-muted)",
- fontSize: "0.9rem",
- marginBottom: "auto",
- border: "1px dashed var(--dash-border)",
- textAlign: "center"
- }}>
- <p>No recent journal entries.</p>
+  background: 'var(--dash-bg)',
+  borderRadius: '22px',
+  padding: '2rem',
+  color: 'var(--dash-muted)',
+  fontSize: '0.9rem',
+  marginBottom: 'auto',
+  border: '1px dashed var(--dash-border)',
+  textAlign: 'center',
+ }}
+ >
+  <p>No recent journal entries.</p>
  </div>
  )}
 
