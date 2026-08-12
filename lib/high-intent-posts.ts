@@ -73,6 +73,141 @@ export const HIGH_INTENT_POSTS: HighIntentPost[] = [
     ]
   },
   {
+    slug: "skincare-products-that-changed-my-skin",
+    title: "The 12 Best-Selling Skincare Products in India: An Honest Science-Backed Review",
+    category: "BEAUTY",
+    excerpt: "We break down the science, ingredients, and real-world results of the twelve most popular skincare products on the Indian market to see if they are worth your routine real estate.",
+    readTime: "8 min",
+    date: "March 2026",
+    thumbnail: "PR",
+    tags: ["best products", "skincare", "routine", "review"],
+    asins: [
+      "B01CCGW4OE",
+      "B00V4R0ET0",
+      "B071914GGL",
+      "B00PBX3L7K",
+      "B01MDTVZTZ",
+      "B0DH88LZ11",
+      "B01MUZVE1C",
+      "MINIMALISTK",
+      "BENZAC25",
+      "MIGHTYPATCH",
+      "B0DHY6LQTW",
+      "B0BPC8KG73"
+    ],
+    sections: [
+      {
+        title: "Introduction: My Journey Through Formulation Science",
+        body: [
+          "Understanding skincare requires looking past the branding and focusing entirely on the formulation chemistry. Over the past few years, the Indian beauty market has exploded with hundreds of active serums, cleansers, and treatments. But which ones are backed by genuine science, and which are just good marketing?",
+          "To find out, we analyzed the twelve most popular skincare formulations in the Mirha database—evaluating active concentrations, skin barrier compatibility, and how they perform under local Indian climates and hard water conditions."
+        ]
+      },
+      {
+        title: "1. Cetaphil Gentle Skin Cleanser: The Barrier Savior",
+        body: [
+          "The first rule of healthy skin is: stop stripping it. Cetaphil's classic non-comedogenic cleanser uses a blend of niacinamide, panthenol, and hydrating glycerin to cleanse without compromising the lipid barrier.",
+          "If you struggle with flaking or redness, especially in dry air-conditioned rooms, switching to this gentle cleanser is the single best change you can make."
+        ],
+        sectionAsins: ["B01CCGW4OE"]
+      },
+      {
+        title: "2. Simple Kind To Skin Facial Wash: The Daily Purifier",
+        body: [
+          "When my skin needs a soap-free, foaming rinse, I turn to Simple's gel wash. It is formulated with pro-vitamin B5 and vitamin E, containing zero artificial perfumes or harsh chemicals.",
+          "It cuts through sweat and excess oil cleanly without leaving that tight, squeaky feeling that indicates a stripped skin barrier."
+        ],
+        sectionAsins: ["B00V4R0ET0"]
+      },
+      {
+        title: "3. The Ordinary Glycolic Acid 7%: The Texture Refiner",
+        body: [
+          "For physical smoothness and glowing skin, chemical exfoliation is key. The Ordinary's 7% Glycolic Acid toner breaks down the glue holding dead skin cells together, fading rough patches and dullness.",
+          "I use it twice a week at night, avoiding active breakouts to prevent post-inflammatory hyperpigmentation (PIH)."
+        ],
+        sectionAsins: ["B071914GGL"]
+      },
+      {
+        title: "4. COSRX Snail Mucin 96% Essence: The Dehydration Cure",
+        body: [
+          "This mucin extract has completely solved my dehydrated skin. It delivers deep, lightweight hydration while repairing skin elasticity and accelerating cellular healing.",
+          "It is the perfect buffer to use before applying strong active treatments like retinol or salicylic acid."
+        ],
+        sectionAsins: ["B00PBX3L7K"]
+      },
+      {
+        title: "5. The Ordinary Niacinamide 10% + Zinc 1%: The Sebum Regulator",
+        body: [
+          "This is the gold standard for refining texture and reducing oiliness. It regulates sebaceous activity, reinforces the skin barrier, and visibly brightens tone.",
+          "If your skin feels greasy by noon, adding this to your morning routine will keep your skin balanced and matte."
+        ],
+        sectionAsins: ["B01MDTVZTZ"]
+      },
+      {
+        title: "6. Minimalist 10% Niacinamide: The Multi-Correction Serum",
+        body: [
+          "Minimalist's formulation features Aloe juice for extra soothing, making it a gentler alternative for niacinamide-sensitive skin.",
+          "It targets acne marks, reinforces the lipid barrier, and improves overall skin clarity."
+        ],
+        sectionAsins: ["B0DH88LZ11"]
+      },
+      {
+        title: "7. The Ordinary Caffeine Solution 5% + EGCG: The Eye Energizer",
+        body: [
+          "Late nights and screen fatigue leave my under-eyes puffy. This light serum uses high-strength caffeine and green tea EGCG to constrict capillaries, reducing vascular dark circles.",
+          "A single drop depuffs the eye area instantly in the morning."
+        ],
+        sectionAsins: ["B01MUZVE1C"]
+      },
+      {
+        title: "8. Minimalist Vitamin K + Retinal 0.1%: The Youth Serum",
+        body: [
+          "To target structural aging and fine lines around the eyes, Retinal is 10x faster than traditional retinol. Paired with Vitamin K, it strengthens capillaries to fade dark under-eye circles.",
+          "It is highly stable, lightweight, and shows visible lifting effects within weeks."
+        ],
+        sectionAsins: ["MINIMALISTK"]
+      },
+      {
+        title: "9. Galderma Benzac AC 2.5% Gel: The Spot Destroyer",
+        body: [
+          "When an active, red pimple pops up, Benzoyl Peroxide is the fastest way to kill the acne-causing bacteria inside the pore.",
+          "At 2.5% strength, it is highly effective without causing the severe peeling or irritation associated with 5% or 10% formulas."
+        ],
+        sectionAsins: ["BENZAC25"]
+      },
+      {
+        title: "10. Hero Cosmetics Mighty Patch: The Pus Absorber",
+        body: [
+          "For whiteheads or open blemishes, the Mighty Patch hydrocolloid sticker pulls out impurities overnight.",
+          "It creates a sterile environment that prevents scarring and speeds up skin regeneration."
+        ],
+        sectionAsins: ["MIGHTYPATCH"]
+      },
+      {
+        title: "11. Minimalist Sunscreen SPF 50: The Daily Shield",
+        body: [
+          "No skincare routine works without sun protection. This lightweight, cream-gel sunscreen offers broad-spectrum protection with zero white cast.",
+          "It is packed with soothing vitamins, making it comfortable to wear daily under tropical heat."
+        ],
+        sectionAsins: ["B0DHY6LQTW"]
+      },
+      {
+        title: "12. Laneige Lip Sleeping Mask: The Flake Melter",
+        body: [
+          "Dry lips can ruin your morning. Laneige's berry mask uses a moisture wrap barrier system to soften dry lips overnight.",
+          "By morning, lips are plump, hydrated, and completely free of flakes."
+        ],
+        sectionAsins: ["B0BPC8KG73"]
+      },
+      {
+        title: "Conclusion: Find What Works For You",
+        body: [
+          "Remember that skincare is an individual science. What works for my skin might behave differently on yours depending on your city's hard water levels and local humidity. Verify your own actives in the Mirha Portal to build a compatible routine."
+        ]
+      }
+    ]
+  },
+  {
     slug: "india-skincare-trends-2026",
     title: "The India Skincare Trend Report 2026: Skinimalism, Active Hybrids & Clinic-Grade Home Care",
     category: "SKINCARE",
