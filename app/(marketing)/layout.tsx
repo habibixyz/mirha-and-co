@@ -4,34 +4,6 @@ import Script from "next/script";
 import "../globals.css";
 import Link from "next/link";
 import type { Metadata } from "next";
-import { DM_Sans, DM_Serif_Display, Playfair_Display, Bebas_Neue } from "next/font/google";
-
-const dmSans = DM_Sans({
- subsets: ["latin"],
- weight: ["300", "400", "500", "600", "700"],
- variable: "--font-dm-sans",
-});
-
-const dmSerifDisplay = DM_Serif_Display({
- subsets: ["latin"],
- weight: ["400"],
- style: ["normal", "italic"],
- variable: "--font-dm-serif",
-});
-
-const playfairDisplay = Playfair_Display({
- subsets: ["latin"],
- weight: ["400", "600", "700"],
- style: ["normal", "italic"],
- variable: "--font-playfair",
-});
-
-const bebasNeue = Bebas_Neue({
- subsets: ["latin"],
- weight: ["400"],
- variable: "--font-bebas",
-});
-
 import { cookies, headers } from "next/headers";
 import { Locale, Currency } from "@/lib/globalization";
 import { GlobalizationProvider } from "@/components/GlobalizationContext";
@@ -144,33 +116,44 @@ export default async function RootLayout({
  },
  ];
 
- return (
- <html lang={locale} dir={isRtl ? "rtl" : "ltr"} suppressHydrationWarning className={`${dmSans.variable} ${dmSerifDisplay.variable} ${playfairDisplay.variable} ${bebasNeue.variable}`}>
-  <head>
-    <script
-      dangerouslySetInnerHTML={{
-        __html: `
-          (function() {
-            try {
-              var saved = localStorage.getItem('theme');
-              var theme = saved;
-              if (!saved) {
-                theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-              }
-              if (theme === 'dark') {
-                document.documentElement.classList.add('dark');
-                document.documentElement.style.colorScheme = 'dark';
-              } else {
-                document.documentElement.classList.remove('dark');
-                document.documentElement.style.colorScheme = 'light';
-              }
-            } catch (e) {}
-          })();
-        `
-      }}
-    />
-  </head>
- <body suppressHydrationWarning>
+  return (
+  <html lang={locale} dir={isRtl ? "rtl" : "ltr"} suppressHydrationWarning className="">
+   <head>
+     <link rel="preconnect" href="https://fonts.googleapis.com" />
+     <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=DM+Serif+Display:ital@0;1&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet" />
+     <style dangerouslySetInnerHTML={{ __html: `
+       :root {
+         --font-dm-sans: 'DM Sans', sans-serif;
+         --font-dm-serif: 'DM Serif Display', serif;
+         --font-playfair: 'Playfair Display', serif;
+         --font-bebas: 'Bebas Neue', sans-serif;
+       }
+     `}} />
+     <script
+       dangerouslySetInnerHTML={{
+         __html: `
+           (function() {
+             try {
+               var saved = localStorage.getItem('theme');
+               var theme = saved;
+               if (!saved) {
+                 theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+               }
+               if (theme === 'dark') {
+                 document.documentElement.classList.add('dark');
+                 document.documentElement.style.colorScheme = 'dark';
+               } else {
+                 document.documentElement.classList.remove('dark');
+                 document.documentElement.style.colorScheme = 'light';
+               }
+             } catch (e) {}
+           })();
+         `
+       }}
+     />
+   </head>
+   <body suppressHydrationWarning>
  <Script
  id="mirha-site-structured-data"
  type="application/ld+json"

@@ -2,28 +2,8 @@ import "../globals.css";
 import Script from "next/script";
 import type { Metadata } from "next";
 import { SaasSidebar } from "@/components/SaasSidebar";
-import { DM_Sans, DM_Serif_Display, Bebas_Neue } from "next/font/google";
 import { MobileMenuButton } from "@/components/MobileMenuButton";
 import { ThemeProvider } from "@/components/ThemeProvider";
-
-const dmSans = DM_Sans({
- subsets: ["latin"],
- weight: ["300", "400", "500", "600", "700"],
- variable: "--font-dm-sans",
-});
-
-const dmSerifDisplay = DM_Serif_Display({
- subsets: ["latin"],
- weight: ["400"],
- style: ["normal", "italic"],
- variable: "--font-dm-serif",
-});
-
-const bebasNeue = Bebas_Neue({
- subsets: ["latin"],
- weight: ["400"],
- variable: "--font-bebas",
-});
 
 export const metadata: Metadata = {
  title: "Dashboard — Mirha & Co.",
@@ -58,31 +38,41 @@ export default function SaasLayout({
  children: React.ReactNode;
 }) {
  return (
- <html lang="en" suppressHydrationWarning className={`${dmSans.variable} ${dmSerifDisplay.variable} ${bebasNeue.variable}`}>
-  <head>
-    <script
-      dangerouslySetInnerHTML={{
-        __html: `
-          (function() {
-            try {
-              var saved = localStorage.getItem('theme');
-              var theme = saved;
-              if (!saved) {
-                theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-              }
-              if (theme === 'dark') {
-                document.documentElement.classList.add('dark');
-                document.documentElement.style.colorScheme = 'dark';
-              } else {
-                document.documentElement.classList.remove('dark');
-                document.documentElement.style.colorScheme = 'light';
-              }
-            } catch (e) {}
-          })();
-        `
-      }}
-    />
-  </head>
+  <html lang="en" suppressHydrationWarning className="">
+   <head>
+     <link rel="preconnect" href="https://fonts.googleapis.com" />
+     <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+     <style dangerouslySetInnerHTML={{ __html: `
+       :root {
+         --font-dm-sans: 'DM Sans', sans-serif;
+         --font-dm-serif: 'DM Serif Display', serif;
+         --font-bebas: 'Bebas Neue', sans-serif;
+       }
+     `}} />
+     <script
+       dangerouslySetInnerHTML={{
+         __html: `
+           (function() {
+             try {
+               var saved = localStorage.getItem('theme');
+               var theme = saved;
+               if (!saved) {
+                 theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+               }
+               if (theme === 'dark') {
+                 document.documentElement.classList.add('dark');
+                 document.documentElement.style.colorScheme = 'dark';
+               } else {
+                 document.documentElement.classList.remove('dark');
+                 document.documentElement.style.colorScheme = 'light';
+               }
+             } catch (e) {}
+           })();
+         `
+       }}
+     />
+   </head>
  <body suppressHydrationWarning>
  <Script strategy="afterInteractive" src="https://www.dwin1.com/2904237.js" />
  <style>{`
