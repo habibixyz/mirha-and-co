@@ -850,6 +850,9 @@ const mappedHighIntent = HIGH_INTENT_POSTS.map(p => ({
 
 export const POSTS: Post[] = [
   ...mappedHighIntent.filter(p => [
+    "top-4-selling-skincare-products-india"
+  ].includes(p.slug)),
+  ...mappedHighIntent.filter(p => [
     "india-skincare-trends-2026",
     "global-skincare-trends-2026",
     "smokers-skincare-audit-dullness-barrier",
@@ -922,6 +925,7 @@ const hashString = (str: string) => {
 
 // Complete slug → unique image lookup table (all 34 available images used)
 const SLUG_IMAGE_MAP: Record<string, string> = {
+  "top-4-selling-skincare-products-india": "/blog-thumbs/blog_brand_comparison.png",
   "india-skincare-trends-2026": "/blog-thumbs/india_skincare_trends_2026.jpg",
   "global-skincare-trends-2026": "/blog-thumbs/global_skincare_trends_2026.jpg",
   "korean-skincare-humid-climate": "/blog-thumbs/korean_skincare_humid_climate.jpg",

@@ -15,6 +15,64 @@ export interface HighIntentPost {
 
 export const HIGH_INTENT_POSTS: HighIntentPost[] = [
   {
+    slug: "top-4-selling-skincare-products-india",
+    title: "The 4 Best-Selling Skincare Products in India: Real Hype or Marketing Routine?",
+    category: "SKINCARE",
+    excerpt: "An honest, biology-first breakdown of the four most popular skincare products in India: Hero Cosmetics Mighty Patch, The Ordinary Niacinamide, COSRX Snail Mucin, and Laneige Lip Mask.",
+    readTime: "7 min",
+    date: "August 2026",
+    thumbnail: "IN",
+    tags: ["skincare", "india", "best sellers", "hero cosmetics", "the ordinary", "cosrx", "laneige"],
+    asins: ["MIGHTYPATCH", "B01MDTVZTZ", "B00PBX3L7K", "B0BPC8KG73"],
+    sections: [
+      {
+        title: "Introduction: The Cult Staples of Indian Skincare",
+        body: [
+          "With thousands of beauty products launched every month, a select few rise to absolute cult status, dominating shopping feeds and shelfies across India. But do these best-sellers actually work for South Asian skin under Indian climate conditions, or are they just highly marketed formulations?",
+          "To find out, we analyzed the four most popular skincare products in the Mirha database—spanning acne patches, active serums, soothing essences, and night lip treatments—to see if they are worth your routine real estate."
+        ]
+      },
+      {
+        title: "1. Hero Cosmetics Mighty Patch: The Active Acne Savior",
+        body: [
+          "For targeted spot treatment, the Hero Cosmetics Mighty Patch Hydrocolloid patches are the most popular patches in India with over 125,000 positive reviews. Made of medical-grade hydrocolloid, they act as a physical shield over active acne, absorbing pus and oil while keeping bacteria out.",
+          "Because South Asian skin is highly prone to Post-Inflammatory Hyperpigmentation (PIH), picking at active pimples is the fastest way to create stubborn dark marks. By keeping fingers off and shrinking the bump overnight, these patches are the ultimate dark-spot preventative measure."
+        ],
+        sectionAsins: ["MIGHTYPATCH"]
+      },
+      {
+        title: "2. The Ordinary Niacinamide 10% + Zinc 1%: The Oily Skin Standard",
+        body: [
+          "With 54k+ reviews, this high-strength serum is a staple for controlling excess sebum production and reinforcing the skin barrier. The combination of Niacinamide (Vitamin B3) and Zinc PCA regulates oil, minimizes pore appearance, and evens out skin tone.",
+          "In hot and humid regions of India (such as Mumbai, Chennai, and Kolkata), sebum hyper-secretion is a major trigger for acne breakouts and congested skin. Layering this serum in the AM helps maintain a matte, balanced texture throughout the day."
+        ],
+        sectionAsins: ["B01MDTVZTZ"]
+      },
+      {
+        title: "3. COSRX Advanced Snail 96 Mucin Power Essence: Dehydration Repair",
+        body: [
+          "With 45k+ reviews, the COSRX Snail Mucin Essence is a lightweight, fast-absorbing hydrator containing 96.3% Snail Secretion Filtrate. It repairs skin barrier function, fades hyperpigmentation, and delivers a healthy glow without clogging pores.",
+          "Indian tap water in urban cities is frequently hard water, containing high levels of calcium and magnesium that strip natural skin lipids and leave the barrier dry and compromised. This essence acts as a soothing shield, rebuilding the lipid barrier and plumping parched skin."
+        ],
+        sectionAsins: ["B00PBX3L7K"]
+      },
+      {
+        title: "4. Laneige Lip Sleeping Mask (Berry): The Overnight Repair Treatment",
+        body: [
+          "Racked up over 45k reviews, the Laneige Lip Sleeping Mask uses vitamin C, antioxidants, and a moisture-wrap barrier system to melt away dead skin flakes and restore smooth, soft lips by morning.",
+          "Frequent air-conditioning in modern offices and hot outdoor climates easily dehydrate the thin skin of the lips. Applying a thick layer of this berry mask at night locks in moisture and repairs chapping, outperforming standard chapsticks."
+        ],
+        sectionAsins: ["B0BPC8KG73"]
+      },
+      {
+        title: "Conclusion: Designing Your Climate-Aware Routine",
+        body: [
+          "While these four products are best-sellers for a reason, the best routine is always built around your local environment, your city's hard water severity, and your skin type. Make sure to run your personalized skin analysis in the Mirha Portal to verify compatibility before adding new steps."
+        ]
+      }
+    ]
+  },
+  {
     slug: "india-skincare-trends-2026",
     title: "The India Skincare Trend Report 2026: Skinimalism, Active Hybrids & Clinic-Grade Home Care",
     category: "SKINCARE",
