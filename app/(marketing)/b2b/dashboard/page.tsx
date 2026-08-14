@@ -73,6 +73,13 @@ export default function B2BDashboardPage() {
   const [copiedKey, setCopiedKey] = useState(false);
   const [copiedCode, setCopiedCode] = useState(false);
 
+  // ── Onboarding state ──────────────────────────────────────────────────────
+  const [testedApi, setTestedApi]             = useState(false);
+  const [copiedSnippet, setCopiedSnippet]     = useState(false);
+  const [savedOrigins, setSavedOrigins]       = useState(false);
+  const [onboardingDone, setOnboardingDone]   = useState(false);
+  const [quickSnippetCopied, setQuickSnippetCopied] = useState(false);
+
   const copy = (text: string, isKey = false) => {
     navigator.clipboard.writeText(text);
     if (isKey) {
@@ -80,6 +87,8 @@ export default function B2BDashboardPage() {
       setTimeout(() => setCopiedKey(false), 1500);
     } else {
       setCopiedCode(true);
+      setCopiedSnippet(true); // mark onboarding step 3 done
+      sessionStorage.setItem("b2b_copied_snippet", "true");
       setTimeout(() => setCopiedCode(false), 1500);
     }
   };
@@ -145,6 +154,14 @@ export default function B2BDashboardPage() {
       .finally(() => setLoadingAnalytics(false));
   }, [apiKey]);
 
+  // ── Onboarding completion tracker ───────────────────────────────────────
+  useEffect(() => {
+    if (testedApi && copiedSnippet && savedOrigins && !onboardingDone) {
+      setOnboardingDone(true);
+      sessionStorage.setItem("b2b_onboarding_done", "true");
+    }
+  }, [testedApi, copiedSnippet, savedOrigins, onboardingDone]);
+
   const handleUpdateOrigins = async () => {
     if (apiKey === "b2b_trial_key") return;
     setUpdatingOrigins(true);
@@ -158,6 +175,8 @@ export default function B2BDashboardPage() {
       const data = await res.json();
       if (data.success) {
         setUpdateOriginsSuccess(true);
+        setSavedOrigins(true);
+        sessionStorage.setItem("b2b_saved_origins", "true");
         setTimeout(() => setUpdateOriginsSuccess(false), 2000);
         setKeyDetails(prev => prev ? { ...prev, allowedOrigins: data.allowedOrigins } : null);
       }
@@ -177,6 +196,12 @@ export default function B2BDashboardPage() {
       // Persist so refresh doesn't clear the banner
       sessionStorage.setItem("b2b_welcome_active", "true");
     }
+
+    // Restore onboarding progress across refreshes
+    if (sessionStorage.getItem("b2b_onboarding_done") === "true") setOnboardingDone(true);
+    if (sessionStorage.getItem("b2b_tested_api") === "true") setTestedApi(true);
+    if (sessionStorage.getItem("b2b_copied_snippet") === "true") setCopiedSnippet(true);
+    if (sessionStorage.getItem("b2b_saved_origins") === "true") setSavedOrigins(true);
 
     // Auto-retrieve key from email stored before checkout redirect
     const pendingEmail = sessionStorage.getItem("b2b_checkout_email");
@@ -238,6 +263,10 @@ export default function B2BDashboardPage() {
       const t1 = performance.now();
       setLatency(Math.round(t1 - t0));
       setApiResponse(data);
+      if (data.success !== false && !data.error) {
+        setTestedApi(true);
+        sessionStorage.setItem("b2b_tested_api", "true");
+      }
     } catch (err: any) {
       setApiResponse({ error: err.message || "Failed to call API endpoint" });
     } finally {
@@ -463,6 +492,15 @@ export function SkincareRecs({ postalCode, skinType = "${skinType}" }) {
           .dbd-int-body { font-size: 11px !important; overflow-x: auto !important; }
           .dbd-int-body pre { min-width: 500px; }
         }
+        /* ── Onboarding panel ── */
+        .dbd-onboard { animation: dbd-slide-in 0.3s cubic-bezier(0.16,1,0.3,1); }
+        .dbd-ob-step { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--dbd-border); }
+        .dbd-ob-step:last-child { border-bottom: none; }
+        .dbd-ob-tick { width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; flex-shrink: 0; transition: background 0.2s; }
+        .dbd-ob-tick.done { background: #22c55e; color: #fff; }
+        .dbd-ob-tick.pending { border: 1.5px solid var(--dbd-border); background: transparent; color: var(--dbd-text-faint); }
+        .dbd-ob-pill { margin-left: auto; background: var(--dbd-panel-alt); border: 1px solid var(--dbd-border); color: var(--dbd-text-dim); border-radius: 5px; padding: 3px 10px; font-size: 11px; cursor: pointer; white-space: nowrap; text-decoration: none; flex-shrink: 0; }
+        .dbd-ob-pill:hover { border-color: var(--dbd-pink); color: var(--dbd-pink); }
       `}</style>
 
       {/* ── Crumb / Top Row ── */}
@@ -543,6 +581,96 @@ export function SkincareRecs({ postalCode, skinType = "${skinType}" }) {
             <div style={{ padding: "0 18px 16px", display: "flex", alignItems: "center", gap: "8px", color: "#86efac", fontSize: "13px" }}>
               <RefreshCw size={14} className="animate-spin" />
               Fetching your API key from our servers…
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* ── Onboarding Panel (live key, post-checkout only) ── */}
+      {isLiveKey && showWelcome && (
+        <div className="dbd-onboard" style={{ margin: "12px 28px 0", border: "1px solid var(--dbd-border)", borderRadius: "10px", overflow: "hidden", background: "var(--dbd-panel)" }}>
+          {!onboardingDone ? (
+            <>
+              {/* Header */}
+              <div style={{ padding: "12px 18px", borderBottom: "1px solid var(--dbd-border)", display: "flex", justifyContent: "space-between", alignItems: "center", background: "var(--dbd-panel-alt)" }}>
+                <span style={{ fontWeight: 700, fontSize: "13.5px", color: "var(--dbd-text)" }}>🚀 Get integrated in 4 steps</span>
+                <span style={{ fontSize: "11px", color: "var(--dbd-text-faint)", background: "rgba(0,0,0,0.2)", padding: "2px 8px", borderRadius: "99px" }}>
+                  {[true, testedApi, copiedSnippet, savedOrigins].filter(Boolean).length} / 4
+                </span>
+              </div>
+              {/* Steps */}
+              <div style={{ padding: "4px 18px 8px" }}>
+                {/* Step 1 — auto done */}
+                <div className="dbd-ob-step">
+                  <span className="dbd-ob-tick done">✓</span>
+                  <div>
+                    <div style={{ fontSize: "13px", fontWeight: 600, color: "var(--dbd-text-dim)" }}>API key loaded</div>
+                    <div style={{ fontSize: "11.5px", color: "var(--dbd-text-faint)" }}>Your live key is active and ready</div>
+                  </div>
+                </div>
+                {/* Step 2 — test a recommendation */}
+                <div className="dbd-ob-step">
+                  <span className={`dbd-ob-tick ${testedApi ? "done" : "pending"}`}>{testedApi ? "✓" : "2"}</span>
+                  <div>
+                    <div style={{ fontSize: "13px", fontWeight: 600, color: testedApi ? "var(--dbd-text-dim)" : "var(--dbd-text)" }}>Test a recommendation</div>
+                    <div style={{ fontSize: "11.5px", color: "var(--dbd-text-faint)" }}>Hit "Send Request" in the sandbox below</div>
+                  </div>
+                  {!testedApi && <a href="#b2b-sandbox" className="dbd-ob-pill">Run test ↓</a>}
+                </div>
+                {/* Step 3 — copy snippet */}
+                <div className="dbd-ob-step" style={{ alignItems: "flex-start", paddingTop: "12px", paddingBottom: "12px" }}>
+                  <span className="dbd-ob-tick pending" style={{ marginTop: "2px" }}>
+                    <span className={`dbd-ob-tick ${copiedSnippet ? "done" : "pending"}`} style={{ width: "22px", height: "22px", margin: 0 }}>{copiedSnippet ? "✓" : "3"}</span>
+                  </span>
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <div style={{ fontSize: "13px", fontWeight: 600, color: copiedSnippet ? "var(--dbd-text-dim)" : "var(--dbd-text)", marginBottom: "7px" }}>Copy your integration snippet</div>
+                    <div style={{ display: "flex", alignItems: "center", gap: "10px", background: "var(--dbd-code-bg)", borderRadius: "7px", padding: "10px 14px", border: "1px solid var(--dbd-border)" }}>
+                      <code style={{ fontFamily: "ui-monospace, Menlo, monospace", fontSize: "11px", color: "#7ee787", flex: 1, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                        {`fetch("/api/v1/recommend", { body: JSON.stringify({ apiKey: "${apiKey}", skinType: "oily", city: "Mumbai" }) })`}
+                      </code>
+                      <button onClick={() => {
+                        const snippet = `const res = await fetch("https://www.mirhaandco.com/api/v1/recommend", {\n  method: "POST",\n  headers: { "Content-Type": "application/json" },\n  body: JSON.stringify({\n    apiKey: "${apiKey}",\n    skinType: "oily",\n    mainConcern: "acne",\n    city: "Mumbai",\n  })\n});\nconst { recommendation, diagnostics } = await res.json();\n// recommendation.cleanser.name → top pick for this shopper\n// diagnostics.waterHardnessPpm → local tap water hardness`;
+                        navigator.clipboard.writeText(snippet);
+                        setCopiedSnippet(true);
+                        sessionStorage.setItem("b2b_copied_snippet", "true");
+                        setQuickSnippetCopied(true);
+                        setTimeout(() => setQuickSnippetCopied(false), 1500);
+                      }} style={{ background: copiedSnippet ? "rgba(34,197,94,0.12)" : "rgba(255,255,255,0.06)", border: `1px solid ${copiedSnippet ? "rgba(34,197,94,0.35)" : "rgba(255,255,255,0.1)"}`, color: copiedSnippet ? "#4ade80" : "#aaa", borderRadius: "5px", padding: "5px 12px", fontSize: "11px", cursor: "pointer", flexShrink: 0, display: "flex", alignItems: "center", gap: "4px" }}>
+                        {quickSnippetCopied ? <><Check size={11} /> Copied!</> : <><Copy size={11} /> Copy</>}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                {/* Step 4 — set domain */}
+                <div className="dbd-ob-step" style={{ alignItems: "flex-start", paddingTop: "10px", paddingBottom: "14px" }}>
+                  <span className={`dbd-ob-tick ${savedOrigins ? "done" : "pending"}`} style={{ marginTop: "3px" }}>{savedOrigins ? "✓" : "4"}</span>
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <div style={{ fontSize: "13px", fontWeight: 600, color: savedOrigins ? "var(--dbd-text-dim)" : "var(--dbd-text)", marginBottom: "7px" }}>Set your allowed domain</div>
+                    <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
+                      <input type="text" value={allowedOrigins} onChange={(e) => setAllowedOrigins(e.target.value)}
+                        placeholder="yourstore.com, localhost" disabled={savedOrigins}
+                        style={{ flex: "1 1 200px", padding: "7px 10px", border: "1px solid var(--dbd-border)", borderRadius: "6px", fontSize: "12px", color: "var(--dbd-text)", background: "var(--dbd-panel)", opacity: savedOrigins ? 0.6 : 1 }} />
+                      <button onClick={handleUpdateOrigins} disabled={updatingOrigins || savedOrigins}
+                        style={{ background: savedOrigins ? "rgba(34,197,94,0.12)" : "var(--dbd-pink)", color: savedOrigins ? "#4ade80" : "#fff", border: savedOrigins ? "1px solid rgba(34,197,94,0.3)" : "none", borderRadius: "6px", padding: "7px 16px", fontSize: "12px", fontWeight: 700, cursor: savedOrigins ? "default" : "pointer", display: "flex", alignItems: "center", gap: "5px", opacity: updatingOrigins ? 0.7 : 1 }}>
+                        {updatingOrigins ? <RefreshCw size={12} className="animate-spin" /> : savedOrigins ? <><Check size={12} /> Saved</> : "Save"}
+                      </button>
+                    </div>
+                    <div style={{ fontSize: "11px", color: "var(--dbd-text-faint)", marginTop: "5px" }}>Restrict your key to specific origins. Use <code>*</code> to allow all.</div>
+                  </div>
+                </div>
+              </div>
+            </>
+          ) : (
+            /* Completion state */
+            <div style={{ padding: "16px 20px", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "12px" }}>
+              <div>
+                <div style={{ fontWeight: 700, fontSize: "14px", color: "#4ade80" }}>🎉 You&apos;re integrated!</div>
+                <div style={{ fontSize: "12px", color: "var(--dbd-text-dim)", marginTop: "3px" }}>Your key is live, tested, and secured. Ready to personalise recommendations for your shoppers.</div>
+              </div>
+              <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
+                <a href="#b2b-sandbox" style={{ border: "1px solid var(--dbd-border)", borderRadius: "6px", padding: "6px 14px", fontSize: "12px", color: "var(--dbd-text-dim)", textDecoration: "none" }}>Test again ↓</a>
+                <Link href="/b2b" style={{ background: "var(--dbd-pink)", borderRadius: "6px", padding: "6px 14px", fontSize: "12px", color: "#fff", textDecoration: "none", fontWeight: 600 }}>View pricing →</Link>
+              </div>
             </div>
           )}
         </div>
@@ -683,7 +811,7 @@ export function SkincareRecs({ postalCode, skinType = "${skinType}" }) {
       )}
 
       {/* ── Playground (B2BApiSandbox) ── */}
-      <div className="dbd-sandbox-wrap" style={{ margin: "20px 28px 0" }}>
+      <div id="b2b-sandbox" className="dbd-sandbox-wrap" style={{ margin: "20px 28px 0" }}>
         <B2BApiSandbox defaultApiKey={apiKey} />
       </div>
 
