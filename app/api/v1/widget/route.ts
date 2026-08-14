@@ -149,6 +149,33 @@ export async function GET(req: NextRequest) {
       }
     }
 
+    const now = new Date();
+    if (now > b2bKey.quotaResetAt) {
+      await prisma.b2BApiKey.update({
+        where: { id: b2bKey.id },
+        data: {
+          usageThisMonth: 0,
+          quotaResetAt: new Date(now.getFullYear(), now.getMonth() + 1, 1),
+        },
+      });
+      b2bKey.usageThisMonth = 0;
+    }
+
+    const quotaUpdate = await prisma.b2BApiKey.updateMany({
+      where: {
+        id: b2bKey.id,
+        usageThisMonth: { lt: b2bKey.monthlyQuota },
+      },
+      data: { usageThisMonth: { increment: 1 } },
+    });
+
+    if (quotaUpdate.count === 0) {
+      return new NextResponse(
+        "// Mirha Widget Error: Monthly quota exceeded.",
+        { status: 429, headers: CORS_HEADERS }
+      );
+    }
+
     logKeyId = b2bKey.id;
   }
 

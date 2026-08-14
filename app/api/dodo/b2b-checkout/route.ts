@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { createB2BRetrievalToken } from "@/lib/b2bRetrievalToken";
 
 const b2bCheckoutRateMap = new Map<string, { count: number; resetAt: number }>();
 
@@ -106,6 +107,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json({
       checkoutUrl: data.checkout_url,
+      retrievalToken: createB2BRetrievalToken(email),
     });
   } catch (error: any) {
     console.error("Dodo Payments B2B Checkout Error:", error);

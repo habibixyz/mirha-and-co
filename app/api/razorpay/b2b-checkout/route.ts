@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getRazorpay } from "@/lib/razorpay";
+import { createB2BRetrievalToken } from "@/lib/b2bRetrievalToken";
 
 /* ─── Per-IP rate limiter: max 10 checkout initiations/min ─── */
 const rzpCheckoutRateMap = new Map<string, { count: number; resetAt: number }>();
@@ -105,6 +106,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({
       subscriptionId: subscription.id,
       keyId: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
+      retrievalToken: createB2BRetrievalToken(email),
       tier,
       billing,
       quota: config.quota,

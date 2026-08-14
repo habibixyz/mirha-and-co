@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { verifyB2BRetrievalToken } from "@/lib/b2bRetrievalToken";
 
 /* ─── Per-IP rate limiter: max 5 lookups/min ─── */
 const lookupRateMap = new Map<string, { count: number; resetAt: number }>();
@@ -40,9 +41,11 @@ export async function POST(req: NextRequest) {
   }
 
   let email: string;
+  let retrievalToken: string;
   try {
     const body = await req.json();
     email = (body.email || "").trim().toLowerCase();
+    retrievalToken = String(body.retrievalToken || "");
   } catch {
     return NextResponse.json(
       { found: false, error: "Invalid request body." },
@@ -54,6 +57,16 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(
       { found: false, error: "A valid email address is required." },
       { status: 400, headers: HEADERS }
+    );
+  }
+
+  if (!verifyB2BRetrievalToken(email, retrievalToken)) {
+    return NextResponse.json(
+      {
+        found: false,
+        hint: "For security, automatic key retrieval only works from the checkout success flow. Use the API key that was emailed to you, or contact support to resend it.",
+      },
+      { status: 403, headers: HEADERS }
     );
   }
 

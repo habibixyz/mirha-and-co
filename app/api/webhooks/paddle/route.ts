@@ -23,8 +23,17 @@ export async function POST(req: Request) {
  const ts = tsPart.split("=")[1];
  const h1 = h1Part.split("=")[1];
 
+ const timestampSeconds = Number(ts);
+ if (!Number.isFinite(timestampSeconds) || Math.abs(Date.now() / 1000 - timestampSeconds) > 300) {
+ return NextResponse.json({ error: "Stale or invalid signature timestamp" }, { status: 400 });
+ }
+
  // Compute expected signature
- const secret = process.env.PADDLE_WEBHOOK_SECRET || "";
+ const secret = process.env.PADDLE_WEBHOOK_SECRET;
+ if (!secret) {
+ console.error("Paddle Webhook: PADDLE_WEBHOOK_SECRET is not configured.");
+ return NextResponse.json({ error: "Webhook server misconfigured" }, { status: 500 });
+ }
  const message = `${ts}:${rawBody}`;
  const expectedSignature = crypto
  .createHmac("sha256", secret)

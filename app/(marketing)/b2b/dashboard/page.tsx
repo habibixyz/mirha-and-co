@@ -85,14 +85,14 @@ export default function B2BDashboardPage() {
   };
 
   // ── Key lookup helper ──────────────────────────────────────────────────────
-  const lookupKey = useCallback(async (email: string) => {
+  const lookupKey = useCallback(async (email: string, retrievalToken = "") => {
     setIsLookingUp(true);
     setLookupError(null);
     try {
       const res = await fetch("/api/b2b/lookup-key", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email, retrievalToken }),
       });
       const data = await res.json();
       if (data.found) {
@@ -180,12 +180,14 @@ export default function B2BDashboardPage() {
 
     // Auto-retrieve key from email stored before checkout redirect
     const pendingEmail = sessionStorage.getItem("b2b_checkout_email");
+    const retrievalToken = sessionStorage.getItem("b2b_checkout_retrieval_token") || "";
     if (pendingEmail && (isWelcome || storedWelcome === "true")) {
       setLookupEmail(pendingEmail);
-      lookupKey(pendingEmail).then((found) => {
+      lookupKey(pendingEmail, retrievalToken).then((found) => {
         if (found) {
           // Consume the stored email only after successful retrieval
           sessionStorage.removeItem("b2b_checkout_email");
+          sessionStorage.removeItem("b2b_checkout_retrieval_token");
         }
       });
     }
@@ -726,4 +728,3 @@ export function SkincareRecs({ postalCode, skinType = "${skinType}" }) {
     </div>
   );
 }
-
