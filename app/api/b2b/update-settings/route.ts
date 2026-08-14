@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import crypto from "crypto";
+import { redisRateLimit, getClientIp } from "@/lib/redisRateLimit";
+
+/* ─── Per-IP rate limiter: max 20 updates/min (fixed window, Redis-backed) ─── */
 
 const CORS_HEADERS = {
   "Access-Control-Allow-Origin": "*",
@@ -14,6 +17,14 @@ export async function OPTIONS() {
 
 export async function POST(req: NextRequest) {
   try {
+    const ip = getClientIp(req);
+    if (await redisRateLimit(`rl:b2b-settings:${ip}`, 20, 60)) {
+      return NextResponse.json(
+        { success: false, error: "Too many requests. Please wait a minute and try again." },
+        { status: 429, headers: CORS_HEADERS }
+      );
+    }
+
     const body = await req.json().catch(() => ({}));
     const { apiKey, allowedOrigins } = body;
 

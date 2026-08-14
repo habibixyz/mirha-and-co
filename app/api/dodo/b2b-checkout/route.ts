@@ -1,25 +1,14 @@
 import { NextResponse } from "next/server";
 import { createB2BRetrievalToken } from "@/lib/b2bRetrievalToken";
+import { redisRateLimit, getClientIp } from "@/lib/redisRateLimit";
 
-const b2bCheckoutRateMap = new Map<string, { count: number; resetAt: number }>();
-
-function isB2bCheckoutRateLimited(ip: string, limit = 10): boolean {
-  const now = Date.now();
-  const entry = b2bCheckoutRateMap.get(ip);
-  if (!entry || now > entry.resetAt) {
-    b2bCheckoutRateMap.set(ip, { count: 1, resetAt: now + 60_000 });
-    return false;
-  }
-  entry.count++;
-  return entry.count > limit;
-}
+/* ─── Per-IP rate limiter: max 10 checkout initiations/min (fixed window, Redis-backed) ─── */
 
 export async function POST(req: Request) {
   try {
-    const forwarded = req.headers.get("x-forwarded-for");
-    const ip = forwarded?.split(",")[0]?.trim() || "unknown";
+    const ip = getClientIp(req);
 
-    if (isB2bCheckoutRateLimited(ip, 10)) {
+    if (await redisRateLimit(`rl:dodo-b2b-checkout:${ip}`, 10, 60)) {
       return NextResponse.json(
         { error: "Too many checkout requests. Please slow down." },
         { status: 429 }

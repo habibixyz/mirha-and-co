@@ -1,20 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getRazorpay } from "@/lib/razorpay";
 import { createB2BRetrievalToken } from "@/lib/b2bRetrievalToken";
+import { redisRateLimit, getClientIp } from "@/lib/redisRateLimit";
 
-/* ─── Per-IP rate limiter: max 10 checkout initiations/min ─── */
-const rzpCheckoutRateMap = new Map<string, { count: number; resetAt: number }>();
-
-function isRzpRateLimited(ip: string, limit = 10): boolean {
-  const now = Date.now();
-  const entry = rzpCheckoutRateMap.get(ip);
-  if (!entry || now > entry.resetAt) {
-    rzpCheckoutRateMap.set(ip, { count: 1, resetAt: now + 60_000 });
-    return false;
-  }
-  entry.count++;
-  return entry.count > limit;
-}
+/* ─── Per-IP rate limiter: max 10 checkout initiations/min (fixed window, Redis-backed) ─── */
 
 // Tier pricing in paise (INR) — or USD cents if using international
 // Growth: $499/mo = ₹41,500/mo approx | Scale: $1,899/mo = ₹1,58,000/mo approx
@@ -33,17 +22,16 @@ const TIER_CONFIG = {
 
 export async function POST(req: NextRequest) {
   try {
-    const forwarded = req.headers.get("x-forwarded-for");
-    const ip = forwarded?.split(",")[0]?.trim() || "unknown";
+    const ip = getClientIp(req);
 
-    if (isRzpRateLimited(ip, 10)) {
+    if (await redisRateLimit(`rl:rzp-b2b-checkout:${ip}`, 10, 60)) {
       return NextResponse.json(
         { error: "Too many checkout requests. Please slow down." },
         { status: 429 }
       );
     }
 
-    const body = await req.json().catch(() => ({}));;
+    const body = await req.json().catch(() => ({}));
     const { tier = "growth", billing = "monthly", email, brandName } = body;
 
     if (!email || !brandName) {

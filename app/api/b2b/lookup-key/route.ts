@@ -1,28 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { verifyB2BRetrievalToken } from "@/lib/b2bRetrievalToken";
+import { redisRateLimit, getClientIp } from "@/lib/redisRateLimit";
 
-/* ─── Per-IP rate limiter: max 5 lookups/min ─── */
-const lookupRateMap = new Map<string, { count: number; resetAt: number }>();
-
-function isLookupRateLimited(ip: string): boolean {
-  const now = Date.now();
-  const entry = lookupRateMap.get(ip);
-  if (!entry || now > entry.resetAt) {
-    lookupRateMap.set(ip, { count: 1, resetAt: now + 60_000 });
-    return false;
-  }
-  entry.count++;
-  return entry.count > 5;
-}
-
-// Cleanup old entries every 10 minutes
-setInterval(() => {
-  const now = Date.now();
-  for (const [key, val] of lookupRateMap) {
-    if (now > val.resetAt) lookupRateMap.delete(key);
-  }
-}, 10 * 60_000);
+/* ─── Per-IP rate limiter: max 5 lookups/min (fixed window, Redis-backed) ─── */
 
 const HEADERS = {
   "Access-Control-Allow-Origin": "*",
@@ -30,10 +11,9 @@ const HEADERS = {
 };
 
 export async function POST(req: NextRequest) {
-  const forwarded = req.headers.get("x-forwarded-for");
-  const ip = forwarded?.split(",")[0]?.trim() || "unknown";
+  const ip = getClientIp(req);
 
-  if (isLookupRateLimited(ip)) {
+  if (await redisRateLimit(`rl:b2b-lookup:${ip}`, 5, 60)) {
     return NextResponse.json(
       { found: false, error: "Too many requests. Please wait a minute and try again." },
       { status: 429, headers: HEADERS }
