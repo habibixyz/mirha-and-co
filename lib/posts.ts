@@ -818,6 +818,8 @@ const STATIC_POSTS: Post[] = [
 ];
 
 const NEW_SLUGS = [
+  "genz-mens-acne-congestion-audit",
+  "mid-30s-mens-anti-aging-blueprint",
   "smokers-skincare-audit-dullness-barrier",
   "hard-water-hair-fall-map-india",
   "cortisol-skin-barrier-burnout",
@@ -849,6 +851,10 @@ const mappedHighIntent = HIGH_INTENT_POSTS.map(p => ({
 }));
 
 export const POSTS: Post[] = [
+  ...mappedHighIntent.filter(p => [
+    "genz-mens-acne-congestion-audit",
+    "mid-30s-mens-anti-aging-blueprint"
+  ].includes(p.slug)),
   ...mappedHighIntent.filter(p => [
     "top-4-selling-skincare-products-india"
   ].includes(p.slug)),
@@ -887,6 +893,8 @@ export const POSTS: Post[] = [
     "mens-hairline-save-protocol"
   ].includes(p.slug)),
   ...mappedHighIntent.filter(p => NEW_SLUGS.includes(p.slug) && ![
+    "genz-mens-acne-congestion-audit",
+    "mid-30s-mens-anti-aging-blueprint",
     "smokers-skincare-audit-dullness-barrier",
     "hard-water-hair-fall-map-india",
     "cortisol-skin-barrier-burnout",
@@ -906,13 +914,32 @@ export const POSTS: Post[] = [
     "why-korean-skincare-fails-indian-skin"
   ].includes(p.slug)),
   ...mappedHighIntent.filter(p => !NEW_SLUGS.includes(p.slug) && ![
+    // already pinned at the top of POSTS
+    "genz-mens-acne-congestion-audit",
+    "mid-30s-mens-anti-aging-blueprint",
+    "top-4-selling-skincare-products-india",
     "india-skincare-trends-2026",
     "global-skincare-trends-2026",
+    "smokers-skincare-audit-dullness-barrier",
+    "hard-water-hair-fall-map-india",
+    "cortisol-skin-barrier-burnout",
     "korean-glass-skin-routine-india",
     "korean-skincare-humid-climate",
-    "cosrx-vs-seoulceuticals-snail-mucin"
+    "cosrx-vs-seoulceuticals-snail-mucin",
+    "cetaphil-vs-cerave-cleanser",
+    "minimalist-vs-ordinary-salicylic-acid",
+    "tech-neck-biomechanics-guide",
+    "santal-33-br540-teardown",
+    "skincare-biohacking-audit",
+    "mens-hairline-save-protocol",
+    // also present in STATIC_POSTS — avoid duplication
+    "skincare-products-that-changed-my-skin",
   ].includes(p.slug))
-];
+// Structural deduplication: guarantee no slug appears twice regardless of filter order
+].reduce<Post[]>((acc, post) => {
+  if (!acc.some(p => p.slug === post.slug)) acc.push(post);
+  return acc;
+}, []);
 
 const hashString = (str: string) => {
  let hash = 0;
@@ -925,7 +952,9 @@ const hashString = (str: string) => {
 
 // Complete slug → unique image lookup table (all 34 available images used)
 const SLUG_IMAGE_MAP: Record<string, string> = {
-  "top-4-selling-skincare-products-india": "/blog-thumbs/blog_brand_comparison.png",
+  "genz-mens-acne-congestion-audit": "/blog-thumbs/blog_genz_mens_acne.jpg",
+  "mid-30s-mens-anti-aging-blueprint": "/blog-thumbs/blog_mid30s_mens_skin.jpg",
+  "top-4-selling-skincare-products-india": "/blog-thumbs/blog_top4_best_selling.jpg",
   "india-skincare-trends-2026": "/blog-thumbs/india_skincare_trends_2026.jpg",
   "global-skincare-trends-2026": "/blog-thumbs/global_skincare_trends_2026.jpg",
   "korean-skincare-humid-climate": "/blog-thumbs/korean_skincare_humid_climate.jpg",
