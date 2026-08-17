@@ -203,14 +203,12 @@ export function DashboardClient({ user, routines, recentJournal, stats }: any) {
           <motion.button
             whileTap={{ scale: 0.95 }}
             onClick={() => logoutAction()}
+            className="dash-signout-btn"
             style={{
-              background: "white",
-              border: "1px solid var(--dash-border)",
               borderRadius: "12px",
               padding: "0.5rem 0.8rem",
               fontSize: "0.75rem",
               cursor: "pointer",
-              color: "var(--dash-ink)",
               fontWeight: 600,
               display: "flex",
               alignItems: "center",
@@ -225,6 +223,15 @@ export function DashboardClient({ user, routines, recentJournal, stats }: any) {
       </div>
 
       <style>{`
+        .dash-signout-btn {
+          background: var(--dash-surface);
+          border: 1px solid var(--dash-border);
+          color: var(--dash-ink);
+        }
+        .dash-signout-btn:hover {
+          background: var(--dash-bg);
+          border-color: var(--dash-muted);
+        }
         @media (max-width: 768px) {
           .mobile-only { display: block !important; }
           .desktop-only { display: none !important; }
@@ -320,17 +327,15 @@ export function DashboardClient({ user, routines, recentJournal, stats }: any) {
 
         <div className="desktop-only" style={{ position: "relative", zIndex: 2 }}>
           <motion.button
-            whileHover={{ scale: 1.05, background: "rgba(0,0,0,0.03)" }}
+            whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => logoutAction()}
+            className="dash-signout-btn"
             style={{
-              background: "white",
-              border: "1px solid var(--dash-border)",
               borderRadius: "14px",
               padding: "0.6rem 1rem",
               fontSize: "0.8rem",
               cursor: "pointer",
-              color: "var(--dash-ink)",
               fontWeight: 600,
               display: "flex",
               alignItems: "center",
