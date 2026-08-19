@@ -19,6 +19,7 @@ export default function FreeAnalysisToolClient({ isLoggedIn = false }: { isLogge
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [analyzing, setAnalyzing] = useState(false);
   const [report, setReport] = useState<AnalysisReport | null>(null);
+  const [recommendedProducts, setRecommendedProducts] = useState<any[]>([]);
   const [errorMsg, setErrorMsg] = useState("");
   const [requiresSubscription, setRequiresSubscription] = useState(false);
   const [isCameraActive, setIsCameraActive] = useState(false);
@@ -110,6 +111,7 @@ export default function FreeAnalysisToolClient({ isLoggedIn = false }: { isLogge
 
       const resultReport = data.analysis?.detailedJson || data.analysis;
       setReport(resultReport);
+      setRecommendedProducts(data.recommendedProducts || []);
     } catch (err: any) {
       setErrorMsg(err.message || "Connection error. Please try again.");
     } finally {
@@ -120,6 +122,7 @@ export default function FreeAnalysisToolClient({ isLoggedIn = false }: { isLogge
   const resetPhoto = () => {
     setSelectedImage(null);
     setReport(null);
+    setRecommendedProducts([]);
     setErrorMsg("");
     setIsCameraActive(false);
     if (fileInputRef.current) {
@@ -673,6 +676,159 @@ export default function FreeAnalysisToolClient({ isLoggedIn = false }: { isLogge
               </>
             )}
           </div>
+
+          {/* Targeted Product Recommendations */}
+          {report && recommendedProducts.length > 0 && (
+            <div
+              style={{
+                padding: "24px 20px 24px",
+                borderTop: "1px dashed var(--line-strong)",
+                background: "rgba(255,255,255,0.01)",
+              }}
+            >
+              <h4
+                style={{
+                  fontFamily: "var(--font-playfair), Georgia, serif",
+                  fontSize: "18px",
+                  fontStyle: "italic",
+                  fontWeight: 500,
+                  color: "var(--ink)",
+                  marginBottom: "16px",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "8px",
+                }}
+              >
+                <span style={{ color: "var(--plum)" }}>✦</span> Recommended Products
+              </h4>
+
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+                  gap: "16px",
+                }}
+              >
+                {recommendedProducts.map((prod) => (
+                  <div
+                    key={prod.asin}
+                    style={{
+                      background: "var(--paper)",
+                      border: "1px solid var(--line-strong)",
+                      borderRadius: "8px",
+                      padding: "14px",
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "space-between",
+                      gap: "12px",
+                    }}
+                  >
+                    <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+                      {prod.imageUrl ? (
+                        <div
+                          style={{
+                            width: "100%",
+                            height: "120px",
+                            borderRadius: "6px",
+                            overflow: "hidden",
+                            background: "#fff",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            border: "1px solid rgba(0,0,0,0.05)",
+                          }}
+                        >
+                          <img
+                            src={prod.imageUrl}
+                            alt={prod.name}
+                            style={{
+                              maxWidth: "100%",
+                              maxHeight: "100%",
+                              objectFit: "contain",
+                              padding: "4px",
+                            }}
+                          />
+                        </div>
+                      ) : (
+                        <div
+                          style={{
+                            width: "100%",
+                            height: "120px",
+                            borderRadius: "6px",
+                            background: "var(--paper-2)",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            color: "var(--ink-soft)",
+                            fontSize: "11px",
+                          }}
+                        >
+                          No Image
+                        </div>
+                      )}
+
+                      <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
+                        <span
+                          style={{
+                            fontFamily: "var(--font-ibm-mono), monospace",
+                            fontSize: "9px",
+                            textTransform: "uppercase",
+                            letterSpacing: "0.06em",
+                            color: "var(--gold)",
+                            fontWeight: 600,
+                          }}
+                        >
+                          {prod.brand}
+                        </span>
+                        <h5
+                          style={{
+                            fontSize: "12.5px",
+                            fontWeight: 500,
+                            color: "var(--ink)",
+                            margin: 0,
+                            lineHeight: "1.4",
+                            display: "-webkit-box",
+                            WebkitLineClamp: 2,
+                            WebkitBoxOrient: "vertical",
+                            overflow: "hidden",
+                            height: "35px",
+                          }}
+                          title={prod.name}
+                        >
+                          {prod.name}
+                        </h5>
+                      </div>
+                    </div>
+
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "8px", marginTop: "4px" }}>
+                      <span style={{ fontSize: "14px", fontWeight: 600, color: "var(--ink)" }}>
+                        ₹{prod.price}
+                      </span>
+
+                      {prod.reviewUrl && (
+                        <a
+                          href={prod.reviewUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="btn-editorial primary"
+                          style={{
+                            padding: "6px 12px",
+                            fontSize: "10px",
+                            textDecoration: "none",
+                            borderRadius: "4px",
+                            whiteSpace: "nowrap",
+                          }}
+                        >
+                          View Details
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
           <input
             type="file"
             ref={fileInputRef}

@@ -226,6 +226,65 @@ export async function POST(req: Request) {
       await redisCache.set(userScanKey, "1", { ex: 86400 });
     }
 
+    // 5. Query matching products from Database based on concern
+    let dbQueryConcern = "barrier";
+    const scores = [
+      { name: "barrier", score: analysisData.barrierScore || 100 },
+      { name: "acne", score: analysisData.acneScore || 100 },
+      { name: "redness", score: analysisData.rednessScore || 100 },
+      { name: "oiliness", score: analysisData.oilinessScore || 100 },
+    ];
+    scores.sort((a, b) => a.score - b.score);
+    const lowest = scores[0];
+
+    if (lowest.score < 85) {
+      if (lowest.name === "acne") dbQueryConcern = "acne";
+      else if (lowest.name === "redness") dbQueryConcern = "redness";
+      else if (lowest.name === "oiliness") dbQueryConcern = "oiliness";
+      else dbQueryConcern = "dryness";
+    } else {
+      dbQueryConcern = "cleanser"; // maintenance fallback
+    }
+
+    let recommendedProducts = await prisma.product.findMany({
+      where: {
+        OR: [
+          { concerns: { contains: dbQueryConcern, mode: "insensitive" } },
+          { name: { contains: dbQueryConcern, mode: "insensitive" } },
+        ],
+      },
+      take: 3,
+      select: {
+        asin: true,
+        name: true,
+        brand: true,
+        price: true,
+        discount: true,
+        imageUrl: true,
+        reviewUrl: true,
+        rating: true,
+        category: true,
+      },
+    });
+
+    if (recommendedProducts.length < 3) {
+      const fallbackProducts = await prisma.product.findMany({
+        take: 3,
+        select: {
+          asin: true,
+          name: true,
+          brand: true,
+          price: true,
+          discount: true,
+          imageUrl: true,
+          reviewUrl: true,
+          rating: true,
+          category: true,
+        },
+      });
+      recommendedProducts = [...recommendedProducts, ...fallbackProducts].slice(0, 3);
+    }
+
     // Save to Database if user exists
     let savedAnalysis = null;
     if (user) {
@@ -262,6 +321,7 @@ export async function POST(req: Request) {
         detailedJson: analysisData,
         createdAt: new Date().toISOString(),
       },
+      recommendedProducts,
       isGuest: !user,
       freeScanUsedToday: true,
     });
