@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getSession } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { redisCache } from "@/lib/redis";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
@@ -40,7 +41,6 @@ function isUrlSafeForSsrf(urlString: string): boolean {
   }
 }
 
-// Helper to convert remote image URL to generative part
 async function urlToGenerativePart(url: string) {
   try {
     if (!isUrlSafeForSsrf(url)) {
@@ -65,71 +65,94 @@ async function urlToGenerativePart(url: string) {
 
 export async function POST(req: Request) {
   try {
+    // 1. IP Detection for Rate Limiting & Abuse Prevention
+    const ip =
+      req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+      req.headers.get("x-real-ip") ||
+      "127.0.0.1";
+
+    const { image } = await req.json();
+    if (!image || typeof image !== "string") {
+      return NextResponse.json({ error: "Single image string is required for analysis." }, { status: 400 });
+    }
+
+    // 2. Check Auth Session
     const session = await getSession();
-    if (!session || !session.userId) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
+    const userId = session?.userId || null;
 
-    const { image } = await req.json(); // Accept image as URL or Base64 string
-    if (!image) {
-      return NextResponse.json({ error: "Image data is required" }, { status: 400 });
-    }
-
-    // Fetch user and active subscription
-    const user = await prisma.user.findUnique({
-      where: { id: session.userId },
-      include: { subscription: true },
-    });
-
-    if (!user) {
-      return NextResponse.json({ error: "User not found" }, { status: 404 });
-    }
-
-    const isPro = (user.subscription?.tier === "pro" && user.subscription?.status === "active") || user.isAdmin || user.email === "tanizcoldz@gmail.com";
-    const hasCredits = user.credits > 0;
-
-    if (!isPro && !hasCredits) {
+    if (!userId) {
       return NextResponse.json(
-        { error: "Access denied. Please subscribe or buy a scan pass." },
-        { status: 403 }
+        {
+          error: "Authentication required",
+          message: "Please sign in to run your free daily skin scan.",
+        },
+        { status: 401 }
       );
     }
 
-    // Determine if we should consume a free daily scan or a paid credit
-    let useCredit = false;
+    let user: any = null;
+    let isPro = false;
+    let hasCredits = false;
 
-    if (isPro) {
-      // Check if user has scanned in the last 24 hours (bypassed for admin)
+    if (userId) {
+      user = await prisma.user.findUnique({
+        where: { id: userId },
+        include: { subscription: true },
+      });
+      if (user) {
+        isPro =
+          (user.subscription?.tier === "pro" && user.subscription?.status === "active") ||
+          user.isAdmin ||
+          user.email === "tanizcoldz@gmail.com";
+        hasCredits = user.credits > 0;
+      }
+    }
+
+    // 3. Abuse Guardrail: 1 Free Scan per IP per Calendar Day (24h Window)
+    const todayStr = new Date().toISOString().split("T")[0]; // YYYY-MM-DD
+    const ipScanKey = `free_scan_ip:${ip}:${todayStr}`;
+    const userScanKey = userId ? `free_scan_user:${userId}:${todayStr}` : null;
+
+    const hasIpScannedToday = await redisCache.get<string>(ipScanKey);
+    const hasUserScannedToday = userScanKey ? await redisCache.get<string>(userScanKey) : null;
+
+    let recentDbScan = null;
+    if (userId && !isPro) {
       const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
-      const recentScan = (user.isAdmin || user.email === "tanizcoldz@gmail.com") ? null : await prisma.faceAnalysis.findFirst({
+      recentDbScan = await prisma.faceAnalysis.findFirst({
         where: {
-          userId: user.id,
+          userId,
           createdAt: { gte: twentyFourHoursAgo },
         },
       });
+    }
 
-      if (recentScan) {
-        // Already scanned in the last 24h. If they have credits, consume 1 credit.
+    const freeScanAlreadyUsed = !!(hasIpScannedToday || hasUserScannedToday || recentDbScan);
+    let useCredit = false;
+
+    if (!isPro) {
+      if (freeScanAlreadyUsed) {
+        // Free scan has been used today by this IP or User
         if (hasCredits) {
           useCredit = true;
         } else {
-          const nextAvailableTime = new Date(recentScan.createdAt.getTime() + 24 * 60 * 60 * 1000);
+          const resetTime = new Date();
+          resetTime.setUTCHours(23, 59, 59, 999);
           return NextResponse.json(
-            { 
-              error: "Daily limit reached",
-              message: "You get 1 free scan per day as a Pro subscriber. Please wait or use/buy a single scan pass.",
-              nextAvailableAt: nextAvailableTime.toISOString()
+            {
+              error: "Daily free scan limit reached (1 scan/day per IP).",
+              message:
+                "You have used your 1 free daily skin scan for today. Subscribe to Pro or buy a pass to perform additional scans!",
+              requiresSubscription: true,
+              nextAvailableAt: resetTime.toISOString(),
             },
             { status: 429 }
           );
         }
       }
-    } else {
-      // User is not Pro but has credits, so we must consume a credit.
-      useCredit = true;
     }
 
-    // Call Gemini Vision to analyze the selfie
+    // 4. Run Gemini Vision AI Analysis
     if (!process.env.GEMINI_API_KEY) {
       return NextResponse.json({ error: "Gemini API key is not configured" }, { status: 500 });
     }
@@ -197,32 +220,50 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Failed to parse skin analysis report" }, { status: 500 });
     }
 
-    // Save to PostgreSQL database
-    const dbImageUrl = image.startsWith("data:") ? "base64_uploaded_image" : image;
+    // Record the free daily scan rate limit usage in Redis (24h TTL)
+    await redisCache.set(ipScanKey, "1", { ex: 86400 });
+    if (userScanKey) {
+      await redisCache.set(userScanKey, "1", { ex: 86400 });
+    }
 
-    const savedAnalysis = await prisma.faceAnalysis.create({
-      data: {
-        userId: user.id,
-        imageUrl: dbImageUrl,
+    // Save to Database if user exists
+    let savedAnalysis = null;
+    if (user) {
+      const dbImageUrl = image.startsWith("data:") ? "base64_uploaded_image" : image;
+      savedAnalysis = await prisma.faceAnalysis.create({
+        data: {
+          userId: user.id,
+          imageUrl: dbImageUrl,
+          barrierScore: analysisData.barrierScore || 50,
+          acneScore: analysisData.acneScore || 50,
+          rednessScore: analysisData.rednessScore || 50,
+          oilinessScore: analysisData.oilinessScore || 50,
+          detailedJson: analysisData,
+        },
+      });
+
+      if (useCredit) {
+        await prisma.user.update({
+          where: { id: user.id },
+          data: { credits: { decrement: 1 } },
+        });
+      }
+    }
+
+    return NextResponse.json({
+      status: "success",
+      analysis: savedAnalysis || {
+        id: `guest_${Date.now()}`,
+        imageUrl: image.startsWith("data:") ? "base64_uploaded_image" : image,
         barrierScore: analysisData.barrierScore || 50,
         acneScore: analysisData.acneScore || 50,
         rednessScore: analysisData.rednessScore || 50,
         oilinessScore: analysisData.oilinessScore || 50,
         detailedJson: analysisData,
+        createdAt: new Date().toISOString(),
       },
-    });
-
-    // If we consumed a credit, decrement it
-    if (useCredit) {
-      await prisma.user.update({
-        where: { id: user.id },
-        data: { credits: { decrement: 1 } },
-      });
-    }
-
-    return NextResponse.json({
-      status: "success",
-      analysis: savedAnalysis,
+      isGuest: !user,
+      freeScanUsedToday: true,
     });
   } catch (error: any) {
     console.error("AI Analysis API Error:", error);

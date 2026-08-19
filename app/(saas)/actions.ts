@@ -400,13 +400,14 @@ export async function loginAction(_state: AuthState, formData: FormData): Promis
       }
     }
 
+    const redirectTo = String(formData.get("redirectTo") || "/dashboard");
     await createSession(user.id);
   } catch (error) {
     console.error("Login error:", error);
     return { error: "Unable to sign in right now. Please try again." };
   }
 
-  redirect("/dashboard");
+  redirect(redirectTo);
 }
 
 export async function registerAction(_state: AuthState, formData: FormData): Promise<AuthState> {
@@ -459,13 +460,14 @@ export async function registerAction(_state: AuthState, formData: FormData): Pro
       }
     }
 
+    const redirectTo = String(formData.get("redirectTo") || "/dashboard");
     await createSession(user.id);
   } catch (error) {
     console.error("Register error:", error);
     return { error: "Unable to create your account right now. Please try again." };
   }
 
-  redirect("/dashboard");
+  redirect(redirectTo);
 }
 
 export async function forgotPasswordAction(_state: AuthState, formData: FormData): Promise<AuthState> {

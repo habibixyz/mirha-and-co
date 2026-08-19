@@ -85,10 +85,11 @@ export default function SiteHeader() {
         {/* Left Section — Tools, Categories & Content */}
         <div className="site-header-left">
           <nav className="site-header-nav">
+            <Link href="/tools/analysis"    className="site-header-nav-link hidden lg:inline-flex site-header-nav-link--accent nav-hide-1280">Free Skin Scan</Link>
             <Link href="/tools/ingredients" className="site-header-nav-link hidden lg:inline-flex nav-hide-1280">{t("nav.ingredients")}</Link>
             <Link href="/tools/hard-water"  className="site-header-nav-link hidden lg:inline-flex nav-hide-1280">{t("nav.hardwater")}</Link>
             <Link href="/tools/dupes"       className="site-header-nav-link hidden lg:inline-flex nav-hide-1350">{t("nav.dupes")}</Link>
-            <Link href="/k-beauty"          className="site-header-nav-link hidden lg:inline-flex site-header-nav-link--accent nav-hide-1350">{t("nav.kbeauty")}</Link>
+            <Link href="/k-beauty"          className="site-header-nav-link hidden lg:inline-flex nav-hide-1350">{t("nav.kbeauty")}</Link>
             <Link href="/mens-grooming"     className="site-header-nav-link hidden lg:inline-flex nav-hide-1400">{t("nav.men")}</Link>
             <Link href="/blog"              className="site-header-nav-link hidden lg:inline-flex nav-hide-1400">{t("nav.blog")}</Link>
           </nav>
@@ -167,6 +168,13 @@ export default function SiteHeader() {
               <div className="mb-1.5 text-[11px] font-extrabold uppercase tracking-[0.18em] text-[#fc2779] dark:text-[#ff4d94]">
                 Tools &amp; Intelligence
               </div>
+              <Link
+                href="/tools/analysis"
+                onClick={() => setMenuOpen(false)}
+                className="rounded-xl px-3.5 py-2.5 text-[14px] font-semibold text-[#fc2779] transition-all hover:bg-[#ffe6f0] dark:text-[#ff4d94] dark:hover:bg-white/10"
+              >
+                ✨ Free Daily Skin Scan (1/Day)
+              </Link>
               <Link
                 href="/tools/ingredients"
                 onClick={() => setMenuOpen(false)}

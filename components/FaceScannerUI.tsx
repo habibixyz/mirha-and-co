@@ -132,6 +132,32 @@ export default function FaceScannerUI({
         sizes="(max-width: 768px) 100vw, 50vw"
       />
 
+      {/* Free Daily Scan Pill Badge */}
+      <div
+        style={{
+          position: "absolute",
+          top: "16px",
+          left: "16px",
+          zIndex: 15,
+          background: "rgba(22, 20, 18, 0.85)",
+          backdropFilter: "blur(8px)",
+          border: "1px solid rgba(252, 39, 121, 0.4)",
+          color: "#fff",
+          padding: "6px 14px",
+          borderRadius: "20px",
+          fontSize: "10px",
+          fontWeight: 700,
+          letterSpacing: "0.12em",
+          textTransform: "uppercase",
+          display: "flex",
+          alignItems: "center",
+          gap: "6px",
+        }}
+      >
+        <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#fc2779" }} />
+        1 Free Scan / Day
+      </div>
+
       {/* HUD Frame */}
       {showScanner && (
         <>

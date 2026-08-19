@@ -12,6 +12,44 @@ import SiteHeader from "@/components/SiteHeader";
 import NewsletterForm from "@/components/NewsletterForm";
 import BackToTop from "@/components/BackToTop";
 import DashboardPromoModal from "@/components/DashboardPromoModal";
+import {
+  DM_Sans,
+  DM_Serif_Display,
+  Playfair_Display,
+  Bebas_Neue,
+} from "next/font/google";
+
+// Self-hosted via next/font — eliminates the render-blocking Google Fonts stylesheet
+const dmSans = DM_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  style: ["normal", "italic"],
+  display: "swap",
+  variable: "--font-dm-sans",
+});
+
+const dmSerifDisplay = DM_Serif_Display({
+  subsets: ["latin"],
+  weight: ["400"],
+  style: ["normal", "italic"],
+  display: "swap",
+  variable: "--font-dm-serif",
+});
+
+const playfairDisplay = Playfair_Display({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800", "900"],
+  style: ["normal", "italic"],
+  display: "swap",
+  variable: "--font-playfair",
+});
+
+const bebasNeue = Bebas_Neue({
+  subsets: ["latin"],
+  weight: ["400"],
+  display: "swap",
+  variable: "--font-bebas",
+});
 
 export async function generateMetadata() {
   return {
@@ -117,19 +155,13 @@ export default async function RootLayout({
  ];
 
   return (
-  <html lang={locale} dir={isRtl ? "rtl" : "ltr"} suppressHydrationWarning className="">
+  <html
+    lang={locale}
+    dir={isRtl ? "rtl" : "ltr"}
+    suppressHydrationWarning
+    className={`${dmSans.variable} ${dmSerifDisplay.variable} ${playfairDisplay.variable} ${bebasNeue.variable}`}
+  >
    <head>
-     <link rel="preconnect" href="https://fonts.googleapis.com" />
-     <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=DM+Serif+Display:ital@0;1&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet" />
-     <style dangerouslySetInnerHTML={{ __html: `
-       :root {
-         --font-dm-sans: 'DM Sans', sans-serif;
-         --font-dm-serif: 'DM Serif Display', serif;
-         --font-playfair: 'Playfair Display', serif;
-         --font-bebas: 'Bebas Neue', sans-serif;
-       }
-     `}} />
      <script
        dangerouslySetInnerHTML={{
          __html: `
@@ -312,6 +344,7 @@ export default async function RootLayout({
  <Link href="/b2b" className="footer-link">B2B SaaS API</Link>
  <Link href="/contact" className="footer-link" style={{ color: "#fc2779", fontWeight: 600 }}>Contact &amp; Support</Link>
  <Link href="/blog" className="footer-link">Our Blog</Link>
+ <Link href="/tools/analysis" className="footer-link" style={{ color: "#fc2779", fontWeight: 600 }}>Free Skin Scan (1/Day)</Link>
  <Link href="/tools/ingredients" className="footer-link">Ingredient Checker</Link>
  <Link href="/tools/hard-water" className="footer-link">Hard Water Test</Link>
  <Link href="/tools/dupes" className="footer-link">Dupe Finder</Link>

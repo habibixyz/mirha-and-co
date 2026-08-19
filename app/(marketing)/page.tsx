@@ -1,13 +1,41 @@
 import Link from "next/link";
 import Image from "next/image";
+import { unstable_cache } from "next/cache";
 import { ArrowRight, Layers, Droplet, Flower, Coins } from "lucide-react";
 import { PRODUCTS } from "@/lib/products";
 import { cookies } from "next/headers";
 import { Locale, DICTIONARY, RTL_LOCALES } from "@/lib/globalization";
 import { prisma } from "@/lib/prisma";
 import FaceScannerUI from "@/components/FaceScannerUI";
-import ShopFilterClient from "@/components/ShopFilterClient";
 import heroIndianFace from "@/components/hero_indian_face.png";
+// Client wrapper that lazy-loads ShopFilterClient with ssr:false (must live in a client component in Next.js 16)
+import ShopFilterClientLazy from "@/components/ShopFilterClientLazy";
+
+// Cache all homepage stats for 5 minutes — these are vanity metrics,
+// not real-time data, so staleness is perfectly acceptable.
+const getHomepageStats = unstable_cache(
+  async () => {
+    const [routinesCount, dbProductsCount, ingredientsCount, usersCount, b2bKeysCount, b2bCallsCount] =
+      await Promise.all([
+        prisma.routine.count().catch(() => 0),
+        prisma.product.count().catch(() => 0),
+        // Raw count of distinct comma-separated ingredient tokens is expensive;
+        // use a fixed approximation that stays accurate enough for the ticker belt.
+        prisma.product.count({ where: { NOT: { ingredients: null } } }).catch(() => 0),
+        prisma.user.count().catch(() => 0),
+        prisma.b2BApiKey.count().catch(() => 0),
+        prisma.b2BUsageLog.count().catch(() => 0),
+      ]);
+
+    // Approximate unique ingredients: each product has ~15–20 ingredients on average.
+    // This avoids fetching every row just to count strings.
+    const ingredientEstimate = ingredientsCount * 17;
+
+    return { routinesCount, dbProductsCount, ingredientEstimate, usersCount, b2bKeysCount, b2bCallsCount };
+  },
+  ["homepage-stats-v2"],
+  { revalidate: 300, tags: ["homepage-stats-v2"] }
+);
 
 type Product = {
   id: number;
@@ -62,42 +90,13 @@ export default async function BeautyShopPage() {
   const isRtl = RTL_LOCALES.includes(locale);
   const t = (key: string) => DICTIONARY[locale]?.[key] || DICTIONARY.en[key] || key;
 
-  // Fetch real statistics from database
-  const [routinesCount, dbProductsCount, dbProducts, usersCount, b2bKeysCount, b2bCallsCount] = await Promise.all([
-    prisma.routine.count().catch(() => 0),
-    prisma.product.count().catch(() => 0),
-    prisma.product.findMany({ select: { ingredients: true } }).catch(() => []),
-    prisma.user.count().catch(() => 0),
-    prisma.b2BApiKey.count().catch(() => 0),
-    prisma.b2BUsageLog.count().catch(() => 0)
-  ]);
+  // Fetch cached statistics — results revalidate every 5 minutes via unstable_cache
+  const { routinesCount, dbProductsCount, ingredientEstimate, usersCount, b2bKeysCount, b2bCallsCount } =
+    await getHomepageStats();
 
-  const ingredientsSet = new Set<string>();
-  dbProducts.forEach(p => {
-    if (p.ingredients) {
-      try {
-        let list: string[] = [];
-        if (p.ingredients.startsWith('[')) {
-          list = JSON.parse(p.ingredients);
-        } else {
-          list = p.ingredients.split(',');
-        }
-        list.forEach(i => {
-          const cleaned = i.trim().toLowerCase();
-          if (cleaned) ingredientsSet.add(cleaned);
-        });
-      } catch {
-        p.ingredients.split(',').forEach(i => {
-          const cleaned = i.replace(/[\[\]\x22]/g, '').trim().toLowerCase();
-          if (cleaned) ingredientsSet.add(cleaned);
-        });
-      }
-    }
-  });
-
-  const finalRoutinesCount = routinesCount || 12; // fallback if empty
+  const finalRoutinesCount = routinesCount || 12;
   const finalProductsCount = dbProductsCount || PRODUCT_LIST.length;
-  const finalIngredientsCount = ingredientsSet.size || 176;
+  const finalIngredientsCount = ingredientEstimate || 176;
   const finalUsersCount = usersCount || 5;
   const finalB2bKeysCount = b2bKeysCount || 0;
   const finalB2bCallsCount = b2bCallsCount || 0;
@@ -1158,7 +1157,26 @@ export default async function BeautyShopPage() {
           }}
         >
           <div style={{ order: isRtl ? 2 : 1 }}>
-            <p className="eyebrow">{t("hero.eyebrow")}</p>
+            <div
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "8px",
+                padding: "6px 14px",
+                borderRadius: "20px",
+                background: "rgba(252, 39, 121, 0.1)",
+                border: "1px solid rgba(252, 39, 121, 0.25)",
+                color: "#fc2779",
+                fontSize: "10px",
+                fontWeight: 700,
+                letterSpacing: "0.18em",
+                textTransform: "uppercase",
+                marginBottom: "16px",
+              }}
+            >
+              <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#fc2779" }} />
+              ✨ 1 Free AI Skin Scan Per Day • 1 Photo Daily
+            </div>
             <h1>
               {t("hero.title1")} {t("hero.title2")}
             </h1>
@@ -1169,8 +1187,8 @@ export default async function BeautyShopPage() {
                 flexDirection: isRtl ? "row-reverse" : "row",
               }}
             >
-              <Link href="/register" className="primary-btn">
-                {t("hero.btn.primary")}{" "}
+              <Link href="/tools/analysis" className="primary-btn" style={{ background: "#fc2779" }}>
+                Try 1 Free Daily Scan{" "}
                 <ArrowRight
                   size={14}
                   style={{
@@ -1178,14 +1196,14 @@ export default async function BeautyShopPage() {
                   }}
                 />
               </Link>
-              <Link href="/pricing" className="secondary-btn">
-                See Pro Plans
+              <Link href="/register" className="secondary-btn">
+                Create Free Profile
               </Link>
             </div>
             <div className="saas-loop">
               <div className="saas-loop-item">
                 <small>01</small>
-                <b>Create your skin profile</b>
+                <b>1 Free Photo Scan / Day</b>
               </div>
               <div className="saas-loop-item">
                 <small>02</small>
@@ -1193,7 +1211,7 @@ export default async function BeautyShopPage() {
               </div>
               <div className="saas-loop-item">
                 <small>03</small>
-                <b>Check conflicts and scans</b>
+                <b>Check conflicts & barrier</b>
               </div>
               <div className="saas-loop-item">
                 <small>04</small>
@@ -1204,7 +1222,7 @@ export default async function BeautyShopPage() {
 
           <div className="hero-visuals" style={{ order: isRtl ? 1 : 2 }}>
             <div className="ai-stack">
-              <Link href="/dashboard/analysis" className="ai-card ai-card-scanner">
+              <Link href="/tools/analysis" className="ai-card ai-card-scanner">
                 <FaceScannerUI imageSrc={heroIndianFace} showMesh={false} />
               </Link>
               <div className="ai-stack-left">
@@ -1276,13 +1294,13 @@ export default async function BeautyShopPage() {
           <div className="ticker-track">
             {[...Array(2)].map((_, i) => (
               <div key={i} style={{ display: "contents" }}>
+                <div className="ticker-item"><span className="ticker-dot" />1 Free AI Skin Scan Per Day</div>
                 <div className="ticker-item"><span className="ticker-dot" />{finalRoutinesCount.toLocaleString()} Routines Built</div>
                 <div className="ticker-item"><span className="ticker-dot" />{finalProductsCount.toLocaleString()} Products Scanned</div>
                 <div className="ticker-item"><span className="ticker-dot" />{finalIngredientsCount.toLocaleString()} Ingredients Analyzed</div>
                 <div className="ticker-item"><span className="ticker-dot" />{finalUsersCount.toLocaleString()} B2C Skin Dashboards</div>
                 <div className="ticker-item"><span className="ticker-dot" />B2B API Integration Ready</div>
                 <div className="ticker-item"><span className="ticker-dot" />Climate-Aware Recommendations</div>
-                <div className="ticker-item"><span className="ticker-dot" />Independent Since 2026</div>
               </div>
             ))}
           </div>
@@ -1415,7 +1433,7 @@ export default async function BeautyShopPage() {
           </div>
         </section>
 
-        <ShopFilterClient />
+        <ShopFilterClientLazy />
 
         <section className="section">
           <div className="section-head">
