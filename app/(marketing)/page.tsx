@@ -1175,7 +1175,7 @@ export default async function BeautyShopPage() {
               }}
             >
               <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#fc2779" }} />
-              ✨ 1 Free AI Skin Scan Per Day • 1 Photo Daily
+              1 Free AI Skin Scan Per Day • 1 Photo Daily
             </div>
             <h1>
               {t("hero.title1")} {t("hero.title2")}

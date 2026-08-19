@@ -173,7 +173,7 @@ export default function SiteHeader() {
                 onClick={() => setMenuOpen(false)}
                 className="rounded-xl px-3.5 py-2.5 text-[14px] font-semibold text-[#fc2779] transition-all hover:bg-[#ffe6f0] dark:text-[#ff4d94] dark:hover:bg-white/10"
               >
-                ✨ Free Daily Skin Scan (1/Day)
+                Free Daily Skin Scan (1/Day)
               </Link>
               <Link
                 href="/tools/ingredients"
