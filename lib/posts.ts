@@ -851,6 +851,19 @@ const mappedHighIntent = HIGH_INTENT_POSTS.map(p => ({
 }));
 
 export const POSTS: Post[] = [
+  // 🌟 Trending / Popular Posts (doing well in analytics)
+  ...[
+    "loreal-vs-tresemme-shampoo",
+    "minimalist-vs-ordinary-niacinamide",
+    "best-under-eye-cream-dark-circles-india",
+    "plum-vs-dot-and-key",
+    "budget-skincare-routine-under-2000",
+    "minimalist-vs-the-ordinary"
+  ].map(slug => {
+    const post = mappedHighIntent.find(p => p.slug === slug) || STATIC_POSTS.find(p => p.slug === slug);
+    return post;
+  }).filter((p): p is Post => p !== undefined),
+
   ...mappedHighIntent.filter(p => [
     "genz-mens-acne-congestion-audit",
     "mid-30s-mens-anti-aging-blueprint"
@@ -1066,7 +1079,7 @@ const SLUG_IMAGE_MAP: Record<string, string> = {
  // HAIR — 1 post
  "hard-water-hair": "/blog-thumbs/blog_hard_water.png",
  "hard-water-hair-loss-india": "/blog-thumbs/blog_hard_water.png",
- "minimalist-vs-the-ordinary": "/blog-thumbs/blog_brand_comparison.png",
+ "minimalist-vs-the-ordinary": "/blog-thumbs/blog_minimalist_vs_ordinary.png",
  "best-sunscreen-for-dry-skin-india": "/blog-thumbs/blog_indian_summer.png",
  "best-retinol-serum-for-beginners-india": "/blog-thumbs/blog_morning_routine.png",
  "best-sunscreen-under-500": "/blog-thumbs/blog_budget.png",

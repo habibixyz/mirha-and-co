@@ -21,7 +21,7 @@ const getHomepageStats = unstable_cache(
         prisma.product.count().catch(() => 0),
         // Raw count of distinct comma-separated ingredient tokens is expensive;
         // use a fixed approximation that stays accurate enough for the ticker belt.
-        prisma.product.count({ where: { NOT: { ingredients: null } } }).catch(() => 0),
+        prisma.product.count({ where: { ingredients: { not: "" } } }).catch(() => 0),
         prisma.user.count().catch(() => 0),
         prisma.b2BApiKey.count().catch(() => 0),
         prisma.b2BUsageLog.count().catch(() => 0),

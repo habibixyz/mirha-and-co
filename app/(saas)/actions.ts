@@ -374,6 +374,7 @@ export async function loginAction(_state: AuthState, formData: FormData): Promis
     return { error: "Too many login attempts. Please wait 15 minutes before trying again." };
   }
 
+  let redirectTo = "/dashboard";
   try {
     const user = await prisma.user.findUnique({ where: { email } });
 
@@ -400,7 +401,7 @@ export async function loginAction(_state: AuthState, formData: FormData): Promis
       }
     }
 
-    const redirectTo = String(formData.get("redirectTo") || "/dashboard");
+    redirectTo = String(formData.get("redirectTo") || "/dashboard");
     await createSession(user.id);
   } catch (error) {
     console.error("Login error:", error);
@@ -423,6 +424,7 @@ export async function registerAction(_state: AuthState, formData: FormData): Pro
     return { error: "Password must be at least 8 characters." };
   }
 
+  let redirectTo = "/dashboard";
   try {
     const existing = await prisma.user.findUnique({ where: { email } });
     if (existing) {
@@ -460,7 +462,7 @@ export async function registerAction(_state: AuthState, formData: FormData): Pro
       }
     }
 
-    const redirectTo = String(formData.get("redirectTo") || "/dashboard");
+    redirectTo = String(formData.get("redirectTo") || "/dashboard");
     await createSession(user.id);
   } catch (error) {
     console.error("Register error:", error);
