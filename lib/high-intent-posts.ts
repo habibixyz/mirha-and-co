@@ -307,6 +307,15 @@ export const HIGH_INTENT_POSTS: HighIntentPost[] = [
         title: "Top Niacinamide Serums Compared",
         body: [
           "In India, three main options dominate: Minimalist's 10% Niacinamide with Zinc PCA, The Ordinary's classic 10% Niacinamide + Zinc 1%, and Deconstruct's beginner-friendly 5% Niacinamide + 2% Zinc liquid. Minimalist offers a highly refined, soothing formulation with aloe vera base, whereas The Ordinary focuses on a minimalist, water-based solution that absorbs with a matte finish. Deconstruct is highly recommended for sensitive skin due to its lower concentration and hydrating panthenol addition."
+        ],
+        sectionAsins: ["B0DH88LZ11", "B01MDTVZTZ"]
+      },
+      {
+        title: "Know Your Skin Type & Compatibility",
+        body: [
+          "Using the wrong active concentration is the fastest way to trigger redness or active breakouts. Before buying, run a quick analysis of your skin barrier.",
+          "**Free AI Skin Scan**: Upload a selfie to check your skin barrier, oiliness, and pore congestion in seconds. [Get your free skin scan →](/tools/analysis)",
+          "**Skincare Brands & Retailers**: Looking to integrate clinical personalization or weather-adaptive recommendations into your storefront? Mirha's B2B API makes it simple to personalize shopping at scale. [Learn about Mirha B2B →](/b2b)"
         ]
       }
     ]
@@ -320,7 +329,7 @@ export const HIGH_INTENT_POSTS: HighIntentPost[] = [
     date: "June 2026",
     thumbnail: "OS",
     tags: ["sunscreen", "oily skin", "spf 50", "matte sunscreen", "indian summer", "non-comedogenic"],
-    asins: ["B07VP5JFRB", "B0C6M3KHXV", "B0B45RB1RV"],
+    asins: ["B0B45RB1RV", "B0C9JPWLR4", "B0DHY6LQTW"],
     sections: [
       {
         title: "The Battle Against Noon Shine in Indian Weather",
@@ -339,6 +348,15 @@ export const HIGH_INTENT_POSTS: HighIntentPost[] = [
         title: "Top Dermatologist-Recommended Gel Sunscreens",
         body: [
           "Our top recommendations include Deconstruct's Gel Sunscreen (which contains 4 modern UV filters and absorbs instantly with zero residue), Aqualogica's Radiance+ Dewy Sunscreen (perfect for a slightly dewy but non-sticky glow), and Minimalist's SPF 50 Multi-Vitamin Sunscreen (which provides broad-spectrum protection with a lightweight, lotion-to-matte finish)."
+        ],
+        sectionAsins: ["B0B45RB1RV", "B0C9JPWLR4", "B0DHY6LQTW"]
+      },
+      {
+        title: "Find the Perfect Matte Sunscreen",
+        body: [
+          "Choosing a sunscreen that balances oil-control with modern UV filters requires understanding your skin's exact sebum distribution.",
+          "**Free AI Skin Scanner**: Get a precise breakdown of your skin's oil zones, active breakouts, and redness before picking your sunscreen. [Scan your skin for free →](/tools/analysis)",
+          "**Retailers & Brands**: Help your customers find their perfect sunscreen match using our climate-aware, non-comedogenic recommendations API. [Explore the B2B Portal →](/b2b)"
         ]
       }
     ]
@@ -371,6 +389,15 @@ export const HIGH_INTENT_POSTS: HighIntentPost[] = [
         title: "Our Top Picks Under ₹500",
         body: [
           "For oily and combination skin, Deconstruct's Niacinamide Brightening Face Moisturizer is an exceptional choice at ₹299, delivering lightweight hydration and oil control. Simple's classic Kind To Skin range and Cetaphil's gentle hydrating cleansers also provide unmatched value, focusing on basic barrier health without irritating skin-sensitizing additives."
+        ],
+        sectionAsins: ["B09NDTG1NY", "B00V4R0ET0", "B01CCGW4OE"]
+      },
+      {
+        title: "Restore Your Barrier Without Overspending",
+        body: [
+          "Skincare doesn't need to be expensive to be effective. The key is matching the lipid content of your moisturizer to your environment and skin barrier.",
+          "**Free AI Skin Scanner**: Check your skin barrier status, hydration levels, and redness sensitivity in under 10 seconds. [Start your free scan →](/tools/analysis)",
+          "**E-Commerce Retailers**: Increase customer trust by offering transparent, budget-friendly routine builders powered by Mirha's API. [Explore B2B Solutions →](/b2b)"
         ]
       }
     ]
@@ -403,6 +430,15 @@ export const HIGH_INTENT_POSTS: HighIntentPost[] = [
         title: "Top Ceramide and Lipid Creams in India",
         body: [
           "Cetaphil's classic Moisturising Cream is a dermatologist gold standard for dry, sensitive skin. The Face Shop's Rice & Ceramide Cream offers a luxurious, deeply nourishing texture with additional brightening benefits. CeraVe's Oil Control Gel Cream provides balanced moisture with ceramides, while their rich Moisturizing Cream locks in moisture for 24 hours."
+        ],
+        sectionAsins: ["B099MJH88B", "B08475HN8L", "B0CTTV91Z6"]
+      },
+      {
+        title: "Protect Your Skin Against Constant AC Dehydration",
+        body: [
+          "Dry air conditioning strips moisture constantly. Knowing your skin's moisture level helps you customize hydration.",
+          "**Free AI Skin Scanner**: Get an instant analysis of your skin's barrier integrity and custom product recommendations. [Scan your skin →](/tools/analysis)",
+          "**D2C Skincare Brands**: Build loyalty with your customers by offering science-first hydration diagnostics via Mirha's API. [Explore B2B customization →](/b2b)"
         ]
       }
     ]
@@ -416,7 +452,7 @@ export const HIGH_INTENT_POSTS: HighIntentPost[] = [
     date: "June 2026",
     thumbnail: "KS",
     tags: ["korean skincare", "humid climate", "glass skin", "snail mucin", "lightweight skincare", "clogged pores"],
-    asins: ["B00PBX3L7K", "B016NRXO06", "B09DLFCB69"],
+    asins: ["B08XV3KZ84", "B09JVNZVH3", "B09DLFCB69"],
     sections: [
       {
         title: "The Humidity Mismatch: Seoul vs Mumbai/Chennai",
@@ -435,6 +471,15 @@ export const HIGH_INTENT_POSTS: HighIntentPost[] = [
         title: "Top K-Beauty Formulations for Indian Skin",
         body: [
           "SeoulCeuticals' Korean Snail Mucin Serum delivers exceptional, lightweight cellular repair and moisture. Beauty of Joseon's Relief Sun is globally famous for its weightless, prebiotic-rich sunscreen formula. Beauty of Joseon's Glow Deep Serum leverages rice bran water and alpha arbutin to fade pigmentation, absorbing in seconds with zero residue."
+        ],
+        sectionAsins: ["B08XV3KZ84", "B09JVNZVH3", "B09DLFCB69"]
+      },
+      {
+        title: "Optimize Your Routine for Humid Weather",
+        body: [
+          "Layering heavy products in humid coastal weather is the leading cause of clogged pores and adult acne. Find out exactly what your skin needs.",
+          "**Free AI Skin Analysis**: Take a selfie to get a real-time skin barrier health score and personalized lightweight routine recommendations. [Analyze your skin now →](/tools/analysis)",
+          "**Beauty Brands**: Power your digital storefront with climate-intelligent product recommendations that match your formulations to local weather. [Discover Mirha B2B →](/b2b)"
         ]
       }
     ]
@@ -448,7 +493,7 @@ export const HIGH_INTENT_POSTS: HighIntentPost[] = [
     date: "June 2026",
     thumbnail: "HW",
     tags: ["hard water", "hair loss", "shampoo", "scalp care", "hair fall", "detoxie"],
-    asins: ["B0GZ3BQ5C6", "B0G2C635ZF", "B093LMJFVH"],
+    asins: ["B0CLP4RRPC", "B0H11ZXLMZ", "B093LMJFVH"],
     sections: [
       {
         title: "The Chemistry: How Hard Water Damages Your Hair",
@@ -467,6 +512,15 @@ export const HIGH_INTENT_POSTS: HighIntentPost[] = [
         title: "Best Hard Water Hair Products in India",
         body: [
           "Detoxie is an Indian brand specifically built to tackle urban environmental stress. Their Hard Water Repair Combo and Power Cleanse Shampoos contain high-performance chelating actives that strip mineral buildup without drying out the scalp. Pair this with Minimalist's Hair Growth Actives 18% Serum to stimulate the hair follicles and counteract mineral-induced thinning."
+        ],
+        sectionAsins: ["B0CLP4RRPC", "B0H11ZXLMZ", "B093LMJFVH"]
+      },
+      {
+        title: "Build a Climate-Adaptive Routine",
+        body: [
+          "Water hardness varies widely by city and neighborhood. A routine that works in Delhi can fail in Bangalore due to different mineral densities.",
+          "**Free AI Routine Builder**: Build a personalized 4-step routine tailored to your local water chemistry, climate, and hair goals. [Build your routine →](/tools/routine)",
+          "**E-Commerce Brands & Retailers**: Integrate real-time water quality and climate telemetry directly into your store's search and recommendation experience. [Explore the B2B Developer API →](/b2b)"
         ]
       }
     ]
@@ -499,6 +553,15 @@ export const HIGH_INTENT_POSTS: HighIntentPost[] = [
         title: "The Verdict: Which One Should You Choose?",
         body: [
           "For oily skin and high humidity, The Ordinary's Niacinamide 10% + Zinc 1% remains a global bestseller for oil control. If you have a sensitive skin barrier, Minimalist's 10% Niacinamide with Zinc PCA or their gentle Retinol 0.3% in squalane provides a smoother, less sensitizing introduction to active skincare."
+        ],
+        sectionAsins: ["B0DH88LZ11", "B01MDTVZTZ", "B091JG3GJ5"]
+      },
+      {
+        title: "Check Formulation Conflict & Compatibility",
+        body: [
+          "Mixing active ingredients (like Retinol, Vitamin C, and high-strength Niacinamide) can cause chemical conflicts and compromise your skin barrier.",
+          "**Free Skin Journal & Analyzer**: Check active ingredient conflicts and trace your skin's healing progress over time. [Open your skin journal →](/tools/analysis)",
+          "**Skincare Brands**: Reduce product-mixing irritation complaints and returns by integrating active conflict checkers directly into your product pages. [Learn about B2B integration →](/b2b)"
         ]
       }
     ]
