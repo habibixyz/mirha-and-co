@@ -20,8 +20,9 @@ export const metadata: Metadata = {
 
 export default function SkincareRoutineEveryTypePage() {
  return (
- <main>
+ <main className="every-skin-type-post">
  <style>{`
+ .every-skin-type-post { background: #fbf7f1; color: #161412; transition: background 0.3s, color 0.3s; }
  .post-hero {
  background: var(--black);
  padding: 6rem 2rem 5rem;
@@ -161,6 +162,87 @@ export default function SkincareRoutineEveryTypePage() {
  .price-box { flex-direction: column; }
  .further-reading { padding: 2rem 1.5rem; }
  }
+
+  /* ── Dark Mode Overrides ── */
+  html.dark .every-skin-type-post, .dark .every-skin-type-post {
+    background: #0b0f19 !important;
+    color: #f8fafc !important;
+  }
+  html.dark .every-skin-type-post h1, .dark .every-skin-type-post h1,
+  html.dark .every-skin-type-post h2, .dark .every-skin-type-post h2,
+  html.dark .every-skin-type-post h3, .dark .every-skin-type-post h3,
+  html.dark .every-skin-type-post h1 em, .dark .every-skin-type-post h1 em {
+    color: #ffffff !important;
+  }
+  html.dark .every-skin-type-post p, .dark .every-skin-type-post p,
+  html.dark .every-skin-type-post li, .dark .every-skin-type-post li,
+  html.dark .every-skin-type-post .routine-step-note, .dark .every-skin-type-post .routine-step-note {
+    color: #cbd5e1 !important;
+  }
+  html.dark .every-skin-type-post p strong, .dark .every-skin-type-post p strong,
+  html.dark .every-skin-type-post li strong, .dark .every-skin-type-post li strong {
+    color: #ffffff !important;
+  }
+  html.dark .every-skin-type-post .skin-type-block, .dark .every-skin-type-post .skin-type-block {
+    background: #111827 !important;
+    border: 1px solid #1f2937 !important;
+  }
+  html.dark .every-skin-type-post .routine-steps, .dark .every-skin-type-post .routine-steps {
+    border-color: #1f2937 !important;
+  }
+  html.dark .every-skin-type-post .routine-step, .dark .every-skin-type-post .routine-step {
+    border-bottom-color: #1f2937 !important;
+  }
+  html.dark .every-skin-type-post .routine-step-num, .dark .every-skin-type-post .routine-step-num {
+    background: #1f2937 !important;
+  }
+  html.dark .every-skin-type-post .routine-step-name, .dark .every-skin-type-post .routine-step-name {
+    color: #ffffff !important;
+  }
+  html.dark .every-skin-type-post .price-box, .dark .every-skin-type-post .price-box,
+  html.dark .every-skin-type-post .info-box, .dark .every-skin-type-post .info-box {
+    background: #111827 !important;
+    border-color: #1f2937 !important;
+  }
+  html.dark .every-skin-type-post .price-box-amount, .dark .every-skin-type-post .price-box-amount {
+    color: #ffffff !important;
+  }
+  html.dark .every-skin-type-post .info-box p, .dark .every-skin-type-post .info-box p {
+    color: #cbd5e1 !important;
+  }
+  html.dark .every-skin-type-post .step-table th, .dark .every-skin-type-post .step-table th {
+    background: #111827 !important;
+    color: #ffffff !important;
+  }
+  html.dark .every-skin-type-post .step-table td, .dark .every-skin-type-post .step-table td {
+    color: #cbd5e1 !important;
+    border-color: #1f2937 !important;
+  }
+  html.dark .every-skin-type-post .step-table tr:nth-child(even) td, .dark .every-skin-type-post .step-table tr:nth-child(even) td {
+    background: #0f172a !important;
+  }
+  html.dark .every-skin-type-post .faq-item, .dark .every-skin-type-post .faq-item {
+    border-color: #1f2937 !important;
+  }
+  html.dark .every-skin-type-post .faq-q, .dark .every-skin-type-post .faq-q {
+    color: #ffffff !important;
+  }
+  html.dark .every-skin-type-post .faq-a, .dark .every-skin-type-post .faq-a {
+    color: #cbd5e1 !important;
+  }
+  html.dark .every-skin-type-post .further-reading, .dark .every-skin-type-post .further-reading {
+    background: #111827 !important;
+  }
+  html.dark .every-skin-type-post .sources-section, .dark .every-skin-type-post .sources-section {
+    border-color: #1f2937 !important;
+  }
+  html.dark .every-skin-type-post .sources-list li, .dark .every-skin-type-post .sources-list li {
+    border-color: #1e293b !important;
+    color: #9ca3af !important;
+  }
+  html.dark .every-skin-type-post .disclosure, .dark .every-skin-type-post .disclosure {
+    border-color: #1f2937 !important;
+  }
  `}</style>
 
  {/* HERO */}
@@ -276,7 +358,7 @@ export default function SkincareRoutineEveryTypePage() {
  <div className="price-box">
  <div>
  <div className="price-box-label">Total Routine Cost (approx.)</div>
- <div className="price-box-amount">₹1,957</div>
+ <div className="price-box-amount">₹2,290</div>
  </div>
  <div className="price-box-note">All 4 products last 2–3 months each at daily use. Monthly cost: approx. ₹1500–2000. Under ₹1500 per product on average.</div>
  </div>
@@ -335,9 +417,9 @@ export default function SkincareRoutineEveryTypePage() {
  <div className="price-box">
  <div>
  <div className="price-box-label">Total Routine Cost (approx.)</div>
- <div className="price-box-amount">₹3,124</div>
+ <div className="price-box-amount">₹3,234</div>
  </div>
- <div className="price-box-note">Higher upfront cost, but the Cetaphil Cream 250g works face and body and lasts 3–4 months. Monthly equivalent: approx. ₹780.</div>
+ <div className="price-box-note">Higher upfront cost, but the Cetaphil Cream 250g works face and body and lasts 3–4 months. Monthly equivalent: approx. ₹810.</div>
  </div>
 
  {/* SENSITIVE SKIN */}
@@ -394,7 +476,7 @@ export default function SkincareRoutineEveryTypePage() {
  <div className="price-box">
  <div>
  <div className="price-box-label">Total Routine Cost (approx.)</div>
- <div className="price-box-amount">₹2,633</div>
+ <div className="price-box-amount">₹2,634</div>
  </div>
  <div className="price-box-note">All fragrance-free, all dermatologist-tested. Safe for reactive skin including perioral dermatitis and rosacea-adjacent conditions.</div>
  </div>
@@ -427,14 +509,14 @@ export default function SkincareRoutineEveryTypePage() {
  <div className="routine-step-note">Stable Vitamin C for pigmentation and uneven tone — combination skin's most common complaint. Use mornings before SPF for maximum brightening effect.</div>
  </div>
  </div>
- <div className="routine-step">
- <div className="routine-step-num">3</div>
- <div className="routine-step-body">
- <div className="routine-step-label">Moisturiser · Morning &amp; Evening</div>
- <div className="routine-step-name">Neutrogena Hydro Boost Water Gel</div>
- <div className="routine-step-note">Water gel that hydrates the dry zones without contributing grease to the oily zones. The rare moisturiser that genuinely works across both combination skin profiles.</div>
- </div>
- </div>
+  <div className="routine-step">
+  <div className="routine-step-num">3</div>
+  <div className="routine-step-body">
+  <div className="routine-step-label">Moisturiser · Morning &amp; Evening</div>
+  <div className="routine-step-name">Dot &amp; Key Barrier Repair Ceramides Moisturizer</div>
+  <div className="routine-step-note">Ceramide-rich, fragrance-free gel-cream. Strengthens the skin barrier while balancing moisture levels. Perfect for combo skin under ₹400.</div>
+  </div>
+  </div>
  <div className="routine-step">
  <div className="routine-step-num">4</div>
  <div className="routine-step-body">
@@ -445,18 +527,18 @@ export default function SkincareRoutineEveryTypePage() {
  </div>
  </div>
 
- <BlogProductCard asin="B09VLDY46B" />
- <BlogProductCard asin="B095PRGHDX" />
- <BlogProductCard asin="B00BQFTQW6" />
- <BlogProductCard asin="B0CW1N7QRT" />
+  <BlogProductCard asin="B09VLDY46B" />
+  <BlogProductCard asin="B095PRGHDX" />
+  <BlogProductCard asin="B0BDVG99J5" />
+  <BlogProductCard asin="B0CW1N7QRT" />
 
- <div className="price-box">
- <div>
- <div className="price-box-label">Total Routine Cost (approx.)</div>
- <div className="price-box-amount">₹1,524</div>
- </div>
- <div className="price-box-note">Most budget-friendly complete routine. All products under ₹445. The Plum Vitamin C at ₹445 is the highest-cost item.</div>
- </div>
+  <div className="price-box">
+  <div>
+  <div className="price-box-label">Total Routine Cost (approx.)</div>
+  <div className="price-box-amount">₹1,536</div>
+  </div>
+  <div className="price-box-note">Most budget-friendly complete routine. All products under ₹445. The Plum Vitamin C at ₹445 is the highest-cost item.</div>
+  </div>
 
  {/* ANTI-AGEING */}
  <div className="skin-type-block">
