@@ -228,33 +228,73 @@ export async function POST(req: Request) {
       await redisCache.set(userScanKey, "1", { ex: 86400 });
     }
 
-    // 5. Query matching products from Database based on concern
-    let dbQueryConcern = "barrier";
-    const scores = [
-      { name: "barrier", score: analysisData.barrierScore || 100 },
-      { name: "acne", score: analysisData.acneScore || 100 },
-      { name: "redness", score: analysisData.rednessScore || 100 },
-      { name: "oiliness", score: analysisData.oilinessScore || 100 },
-    ];
-    scores.sort((a, b) => a.score - b.score);
-    const lowest = scores[0];
+    // 5. Query products that match the AI's actual ingredient recommendations
+    // Extract keywords from routineAdjustments text so products align with
+    // what the AI prescribed (e.g. "Niacinamide" → find niacinamide products).
+    const adjustmentsText = (analysisData.routineAdjustments || []).join(" ").toLowerCase();
 
-    if (lowest.score < 85) {
-      if (lowest.name === "acne") dbQueryConcern = "acne";
-      else if (lowest.name === "redness") dbQueryConcern = "redness";
-      else if (lowest.name === "oiliness") dbQueryConcern = "oiliness";
-      else dbQueryConcern = "dryness";
-    } else {
-      dbQueryConcern = "cleanser"; // maintenance fallback
+    // Ingredient / category keyword map — order matters (most specific first)
+    const ingredientKeywords: { keyword: string; dbTerms: string[] }[] = [
+      { keyword: "niacinamide",   dbTerms: ["niacinamide"] },
+      { keyword: "salicylic",     dbTerms: ["salicylic", "bha", "acne"] },
+      { keyword: "retinol",       dbTerms: ["retinol", "retinoid"] },
+      { keyword: "vitamin c",     dbTerms: ["vitamin c", "ascorbic"] },
+      { keyword: "hyaluronic",    dbTerms: ["hyaluronic", "hydration"] },
+      { keyword: "ceramide",      dbTerms: ["ceramide", "barrier"] },
+      { keyword: "spf",           dbTerms: ["sunscreen", "spf"] },
+      { keyword: "sunscreen",     dbTerms: ["sunscreen", "spf"] },
+      { keyword: "aha",           dbTerms: ["aha", "glycolic", "lactic", "mandelic"] },
+      { keyword: "lactic",        dbTerms: ["lactic", "aha"] },
+      { keyword: "mandelic",      dbTerms: ["mandelic", "aha"] },
+      { keyword: "glycolic",      dbTerms: ["glycolic", "aha"] },
+      { keyword: "caffeine",      dbTerms: ["caffeine", "eye"] },
+      { keyword: "peptide",       dbTerms: ["peptide"] },
+      { keyword: "azelaic",       dbTerms: ["azelaic"] },
+      { keyword: "moisturis",     dbTerms: ["moisturizer", "hydration"] },
+      { keyword: "toner",         dbTerms: ["toner"] },
+      { keyword: "serum",         dbTerms: ["serum"] },
+      { keyword: "cleanser",      dbTerms: ["cleanser", "face wash"] },
+    ];
+
+    // Build OR conditions from every matched ingredient keyword
+    const matchedTerms = new Set<string>();
+    for (const { keyword, dbTerms } of ingredientKeywords) {
+      if (adjustmentsText.includes(keyword)) {
+        dbTerms.forEach((t) => matchedTerms.add(t));
+      }
     }
 
+    // Score-based fallback concern if AI text had no recognisable ingredients
+    if (matchedTerms.size === 0) {
+      const scores = [
+        { name: "barrier",  score: analysisData.barrierScore  || 100 },
+        { name: "acne",     score: analysisData.acneScore     || 100 },
+        { name: "redness",  score: analysisData.rednessScore  || 100 },
+        { name: "oiliness", score: analysisData.oilinessScore || 100 },
+      ].sort((a, b) => a.score - b.score);
+      const lowest = scores[0];
+      if (lowest.score < 85) {
+        if (lowest.name === "acne")     matchedTerms.add("acne");
+        else if (lowest.name === "redness")  matchedTerms.add("redness");
+        else if (lowest.name === "oiliness") matchedTerms.add("oiliness");
+        else                                 matchedTerms.add("dryness");
+      } else {
+        // All scores healthy — recommend maintenance staples
+        ["niacinamide", "spf", "sunscreen", "moisturizer"].forEach((t) => matchedTerms.add(t));
+      }
+    }
+
+    const termList = Array.from(matchedTerms);
+    const orConditions = termList.flatMap((term) => [
+      { concerns:    { contains: term, mode: "insensitive" as const } },
+      { name:        { contains: term, mode: "insensitive" as const } },
+      { ingredients: { contains: term, mode: "insensitive" as const } },
+      { tags:        { contains: term, mode: "insensitive" as const } },
+    ]);
+
     let recommendedProducts = await prisma.product.findMany({
-      where: {
-        OR: [
-          { concerns: { contains: dbQueryConcern, mode: "insensitive" } },
-          { name: { contains: dbQueryConcern, mode: "insensitive" } },
-        ],
-      },
+      where: { OR: orConditions },
+      orderBy: { rating: "desc" },
       take: 3,
       select: {
         asin: true,
@@ -270,8 +310,12 @@ export async function POST(req: Request) {
     });
 
     if (recommendedProducts.length < 3) {
+      // Ordered fallback: highest-rated products not already in results
+      const existingAsins = new Set(recommendedProducts.map((p) => p.asin));
       const fallbackProducts = await prisma.product.findMany({
-        take: 3,
+        where: { asin: { notIn: Array.from(existingAsins) } },
+        orderBy: { rating: "desc" },
+        take: 3 - recommendedProducts.length,
         select: {
           asin: true,
           name: true,
@@ -284,7 +328,7 @@ export async function POST(req: Request) {
           category: true,
         },
       });
-      recommendedProducts = [...recommendedProducts, ...fallbackProducts].slice(0, 3);
+      recommendedProducts = [...recommendedProducts, ...fallbackProducts];
     }
 
     // Save to Database if user exists
