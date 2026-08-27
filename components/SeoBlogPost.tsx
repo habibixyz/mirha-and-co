@@ -507,80 +507,6 @@ export async function SeoBlogPost({
           font-weight: 700;
         }
 
-        /* ── Scanner CTA */
-        .scanner-cta {
-          margin: 48px 0 0;
-          padding: 32px 28px;
-          background: linear-gradient(135deg, #fff0f6 0%, #fffaf4 100%);
-          border: 1px solid #f4c6d9;
-          border-radius: 16px;
-          display: flex;
-          align-items: center;
-          gap: 24px;
-          position: relative;
-          overflow: hidden;
-        }
-        .scanner-cta::before {
-          content: '';
-          position: absolute;
-          top: -30px;
-          right: -30px;
-          width: 120px;
-          height: 120px;
-          border-radius: 50%;
-          background: radial-gradient(circle, rgba(252,39,121,0.12) 0%, transparent 70%);
-          pointer-events: none;
-        }
-        .scanner-cta-icon {
-          font-size: 2.4rem;
-          flex-shrink: 0;
-          line-height: 1;
-        }
-        .scanner-cta-body {
-          flex: 1;
-          min-width: 0;
-        }
-        .scanner-cta-eyebrow {
-          font-size: 9px;
-          font-weight: 700;
-          letter-spacing: 0.22em;
-          text-transform: uppercase;
-          color: #fc2779;
-          margin: 0 0 6px;
-          font-family: monospace;
-        }
-        .scanner-cta-heading {
-          font-family: 'Playfair Display', 'DM Serif Display', Georgia, serif;
-          font-size: 18px;
-          font-weight: 700;
-          color: #111;
-          margin: 0 0 6px;
-          line-height: 1.3;
-        }
-        .scanner-cta-sub {
-          font-size: 13px;
-          color: #6f665f;
-          margin: 0 0 16px;
-          line-height: 1.6;
-        }
-        .scanner-cta-btn {
-          display: inline-flex;
-          align-items: center;
-          gap: 7px;
-          background: #fc2779;
-          color: #fff;
-          text-decoration: none;
-          padding: 10px 20px;
-          border-radius: 10px;
-          font-size: 13px;
-          font-weight: 700;
-          letter-spacing: 0.02em;
-          transition: opacity 0.15s, transform 0.15s;
-        }
-        .scanner-cta-btn:hover {
-          opacity: 0.88;
-          transform: translateY(-1px);
-        }
         @media (max-width: 640px) {
           .post-shell { padding: 22px 16px 56px; }
           .post-hero { padding: 36px 0 26px; }
@@ -588,8 +514,6 @@ export async function SeoBlogPost({
           .post-section h2 { font-size: 24px; }
           .post-section p, .post-section li { font-size: 15px; }
           .table-wrap table { font-size: 13px; }
-          .scanner-cta { flex-direction: column; gap: 16px; padding: 24px 20px; }
-          .scanner-cta-icon { font-size: 2rem; }
         }
 
         /* ── Dark Mode Overrides */
@@ -649,16 +573,6 @@ export async function SeoBlogPost({
         }
         html.dark .table-wrap tr:nth-child(even) td, .dark .table-wrap tr:nth-child(even) td {
           background: #0f172a !important;
-        }
-        html.dark .scanner-cta, .dark .scanner-cta {
-          background: linear-gradient(135deg, #1a0d12 0%, #0f1623 100%) !important;
-          border-color: #3d1a28 !important;
-        }
-        html.dark .scanner-cta-heading, .dark .scanner-cta-heading {
-          color: #ffffff !important;
-        }
-        html.dark .scanner-cta-sub, .dark .scanner-cta-sub {
-          color: #9ca3af !important;
         }
       `}</style>
 
@@ -794,26 +708,6 @@ export async function SeoBlogPost({
             </div>
           </div>
         )}
-
-        {/* ── Scanner CTA — converts blog readers into product users ── */}
-        <div className="scanner-cta">
-          <div className="scanner-cta-icon">🧬</div>
-          <div className="scanner-cta-body">
-            <p className="scanner-cta-eyebrow">Free · 1 Per Day · No Guesswork</p>
-            <h3 className="scanner-cta-heading">Not sure what your skin actually needs?</h3>
-            <p className="scanner-cta-sub">
-              Upload a selfie and our AI gives you a clinical barrier score, acne reading,
-              redness map, and a personalised routine — in under 30 seconds.
-            </p>
-            <Link href="/tools/analysis" className="scanner-cta-btn">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
-                <circle cx="12" cy="13" r="4"/>
-              </svg>
-              Scan My Skin Free →
-            </Link>
-          </div>
-        </div>
 
         <BlogFooterTools />
 
