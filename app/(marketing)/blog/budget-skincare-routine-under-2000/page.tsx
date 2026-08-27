@@ -945,7 +945,7 @@ export default function BudgetRoutinePage() {
  <div className="disclosure">
  <div className="disclosure-label">Affiliate Disclosure</div>
  <p>
- This post contains affiliate links to Amazon India (Store ID: skinwithtanvi-21).
+ This post contains affiliate links to Amazon India.
  If you purchase through these links, Mirha &amp; Co. earns a small commission at
  no additional cost to you. This commission does not influence product selection —
  all recommendations are based on ingredient research, dermatologist guidance, and

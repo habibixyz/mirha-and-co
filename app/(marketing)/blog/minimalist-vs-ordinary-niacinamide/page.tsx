@@ -203,7 +203,7 @@ export default function MinimalistVsOrdinaryPage() {
         {/* ── DISCLOSURE ── */}
         <div className="disclosure">
           <div className="disclosure-label">Affiliate Disclosure</div>
-          <p>This post contains affiliate links to Amazon India (Store ID: skinwithtanvi-21). Purchases made through these links earn Mirha & Co. a small commission at no extra cost to you. Product selection is based on ingredient research and price comparison, not sponsorship.</p>
+          <p>This post contains affiliate links to Amazon India. Purchases made through these links earn Mirha & Co. a small commission at no extra cost to you. Product selection is based on ingredient research and price comparison, not sponsorship.</p>
         </div>
 
         <BlogFooterTools />

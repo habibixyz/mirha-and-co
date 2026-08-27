@@ -174,7 +174,7 @@ export default function NiacinamidePriceTierPage() {
 
         <div className="disclosure">
           <div className="disclosure-label">Affiliate Disclosure</div>
-          <p>This post contains affiliate links to Amazon India (Store ID: skinwithtanvi-21). Prices are accurate as of publication and may change on the retailer's site. No products are gifted or sponsored.</p>
+          <p>This post contains affiliate links to Amazon India. Prices are accurate as of publication and may change on the retailer's site. No products are gifted or sponsored.</p>
         </div>
 
         <BlogFooterTools />

@@ -183,7 +183,7 @@ export default function HardWaterShampooPage() {
 
         <div className="disclosure">
           <div className="disclosure-label">Affiliate Disclosure</div>
-          <p>This post contains affiliate links to Amazon India (Store ID: skinwithtanvi-21). Mirha & Co. may earn a commission at no extra cost to you.</p>
+          <p>This post contains affiliate links to Amazon India. Mirha & Co. may earn a commission at no extra cost to you.</p>
         </div>
 
         <BlogFooterTools />
