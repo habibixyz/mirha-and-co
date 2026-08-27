@@ -289,7 +289,6 @@ export async function POST(req: Request) {
       { concerns:    { contains: term, mode: "insensitive" as const } },
       { name:        { contains: term, mode: "insensitive" as const } },
       { ingredients: { contains: term, mode: "insensitive" as const } },
-      { tags:        { contains: term, mode: "insensitive" as const } },
     ]);
 
     let recommendedProducts = await prisma.product.findMany({
