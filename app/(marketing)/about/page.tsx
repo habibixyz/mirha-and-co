@@ -563,7 +563,53 @@ export default function AboutPage() {
  </div>
  </section>
 
- {/* WHY THIS EXISTS */}
+  {/* FREE SKIN ANALYSIS */}
+  <section className="section" style={{ borderTop: "1px solid var(--rule)" }}>
+    <div className="inner two-col">
+      <div className="body-copy">
+        <p className="eyebrow" style={{ color: "var(--rose)" }}><Fingerprint size={14}/> Instant Diagnostics</p>
+        <h2 className="section-title">
+          Free AI Skin Analysis.
+          <span>Understand your skin, instantly.</span>
+        </h2>
+        <p>
+          Skip the guesswork of trial-and-error products. Upload a single selfie to analyze your skin's health across four critical metrics:
+        </p>
+        <ul style={{ listStyle: "none", padding: 0, margin: "1.5rem 0", display: "flex", flexDirection: "column", gap: "0.8rem" }}>
+          <li style={{ display: "flex", alignItems: "center", gap: "10px", fontSize: "0.95rem", color: "var(--muted)" }}>
+            <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "var(--rose)", display: "inline-block", flexShrink: 0 }}></span>
+            <strong style={{ color: "var(--ink)" }}>Moisture Barrier</strong> — detects trans-epidermal water loss and flaking
+          </li>
+          <li style={{ display: "flex", alignItems: "center", gap: "10px", fontSize: "0.95rem", color: "var(--muted)" }}>
+            <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "var(--rose)", display: "inline-block", flexShrink: 0 }}></span>
+            <strong style={{ color: "var(--ink)" }}>Pore Congestion</strong> — identifies blackheads, whiteheads, and clogged zones
+          </li>
+          <li style={{ display: "flex", alignItems: "center", gap: "10px", fontSize: "0.95rem", color: "var(--muted)" }}>
+            <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "var(--rose)", display: "inline-block", flexShrink: 0 }}></span>
+            <strong style={{ color: "var(--ink)" }}>Inflamed Redness</strong> — tracks sensitive areas, flushing, and irritation
+          </li>
+          <li style={{ display: "flex", alignItems: "center", gap: "10px", fontSize: "0.95rem", color: "var(--muted)" }}>
+            <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "var(--rose)", display: "inline-block", flexShrink: 0 }}></span>
+            <strong style={{ color: "var(--ink)" }}>Sebum Levels</strong> — measures hyper-secretion and oily T-zone shine
+          </li>
+        </ul>
+      </div>
+
+      <div style={{ background: "var(--rose-light)", border: "1px solid var(--rule)", borderRadius: "24px", padding: "3rem", display: "flex", flexDirection: "column", height: "100%", justifyContent: "center" }}>
+        <h3 style={{ fontFamily: "var(--font-playfair), serif", fontSize: "1.8rem", fontWeight: 700, marginBottom: "1rem", color: "var(--ink)" }}>
+          How it works
+        </h3>
+        <p style={{ fontSize: "0.98rem", lineHeight: "1.7", color: "var(--muted)", marginBottom: "2rem" }}>
+          Upload a clean photo. The AI diagnoses your concerns, calculates your localized environmental factors (like seasonal humidity and water hardness), and generates a custom, pH-balanced routine instantly.
+        </p>
+        <Link href="/tools/analysis" className="btn primary" style={{ display: "inline-flex", justifyContent: "center" }}>
+          Start Free Skin Scan →
+        </Link>
+      </div>
+    </div>
+  </section>
+
+  {/* WHY THIS EXISTS */}
  <section className="section">
  <div className="inner two-col">
  <div className="body-copy">
