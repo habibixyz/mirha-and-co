@@ -131,6 +131,8 @@ export function generatePostContent(city: City, concern: Concern) {
     skinAction = `Hyperpigmentation is exacerbated by UV exposure and inflammation. The right moisturizer should contain skin-brightening actives like Alpha Arbutin, Vitamin C, or Niacinamide, which work synergistically with your daily sunscreen to fade dark spots, sun damage, and post-acne marks (PIH).`;
   }
 
+  const asins = getAsinsForConcern(concern.slug);
+
   const sections = [
     {
       title: `Understanding ${city.name}'s Climate Impact on Your Skin`,
@@ -147,12 +149,28 @@ export function generatePostContent(city: City, concern: Concern) {
       ]
     },
     {
+      title: `Top Picks for ${concern.name} in ${city.name}`,
+      body: [
+        `These are the formulations that hold up best against ${city.name}'s ${city.region} climate. Each is non-comedogenic, dermatologist-approved, and widely available in India.`
+      ],
+      sectionAsins: asins
+    },
+    {
       title: `The Recommended AM/PM Routine`,
       body: [
         `1. Cleanse: Use a gentle, soap-free cleanser to remove dirt and sweat without stripping the skin's natural lipids.`,
         `2. Treat (Optional): Apply a targeted serum (like Niacinamide for oiliness, Retinol or Retinal for aging, or Vitamin C for brightness) to address specific concerns.`,
         `3. Moisturize: Smooth a pea-sized amount of your chosen moisturizer over your face and neck.`,
-        `4. Protect: In the morning, apply a generous amount of non-comedogenic sunscreen.`
+        `4. Protect: In the morning, apply a generous amount of non-comedogenic sunscreen.`,
+        `**Not sure which routine fits your exact skin?** Mirha's free AI Skin Scanner analyses your barrier health, active breakouts, sebum balance, and redness in one selfie — then builds a routine around your climate and budget. [Try the free scan →](/tools/analysis)`
+      ]
+    },
+    {
+      title: `Know Your Skin Before You Buy`,
+      body: [
+        `Most skincare mistakes happen not from bad products — but from mismatched ones. A cleanser that works for dry skin in Pune actively dehydrates oily-combination skin in Mumbai. Before investing in a new routine, know exactly what your skin needs.`,
+        `**Free AI Skin Analysis** — Upload one selfie. Mirha's scanner reads your moisture barrier health, active breakout zones, sebum distribution, and redness sensitivity in under 10 seconds. Completely free, once per day. [Scan your skin →](/tools/analysis)`,
+        `**Are you a skincare brand or retailer?** Mirha's B2B API delivers real-time, climate-adaptive product recommendations for your customers — personalized by city, skin type, and concern. Used by brands to reduce returns and drive conversions. [Explore the B2B API →](/b2b)`
       ]
     }
   ];
@@ -164,7 +182,7 @@ export function generatePostContent(city: City, concern: Concern) {
     date: `June ${currentYear}`,
     readTime: "6 min",
     sections,
-    asins: getAsinsForConcern(concern.slug)
+    asins
   };
 }
 

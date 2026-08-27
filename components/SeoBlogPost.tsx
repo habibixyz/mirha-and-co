@@ -11,11 +11,11 @@ type Section = {
   sectionAsins?: string[];
 };
 
-// ── Inline markdown: **bold**, *italic*, `code`
+// ── Inline markdown: **bold**, *italic*, `code`, [text](url)
 function renderInline(text: string): React.ReactNode[] {
   const parts: React.ReactNode[] = [];
-  // Pattern: **bold**, *italic*, `code`
-  const pattern = /(\*\*(.+?)\*\*|\*(.+?)\*|`(.+?)`)/g;
+  // Pattern: **bold**, *italic*, `code`, [text](url)
+  const pattern = /(\*\*(.+?)\*\*|\*(.+?)\*|`(.+?)`|\[([^\]]+)\]\(([^)]+)\))/g;
   let last = 0;
   let match: RegExpExecArray | null;
 
@@ -27,6 +27,20 @@ function renderInline(text: string): React.ReactNode[] {
       parts.push(<strong key={match.index}>{match[2]}</strong>);
     } else if (match[0].startsWith("`")) {
       parts.push(<code key={match.index} style={{ background: "#f2ece4", borderRadius: 4, padding: "1px 5px", fontSize: "0.88em", fontFamily: "monospace" }}>{match[4]}</code>);
+    } else if (match[0].startsWith("[")) {
+      const linkText = match[5];
+      const linkHref = match[6];
+      const isExternal = linkHref.startsWith("http");
+      parts.push(
+        <a
+          key={match.index}
+          href={linkHref}
+          style={{ color: "#fc2779", fontWeight: 600, textDecoration: "underline", textUnderlineOffset: "2px" }}
+          {...(isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+        >
+          {linkText}
+        </a>
+      );
     } else {
       parts.push(<em key={match.index}>{match[3]}</em>);
     }
