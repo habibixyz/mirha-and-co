@@ -39,6 +39,9 @@ export default function BlogProductCard({ asin }: { asin: string }) {
           text-decoration: none;
           transition: box-shadow 0.2s, border-color 0.2s;
           width: 100%;
+          box-sizing: border-box;
+          max-width: 100%;
+          min-width: 0;
           margin: 1.25rem 0;
           direction: ${isRtl ? "rtl" : "ltr"};
           text-align: ${isRtl ? "right" : "left"};
@@ -75,10 +78,11 @@ export default function BlogProductCard({ asin }: { asin: string }) {
           font-size: 13px;
           color: #1a1714;
           line-height: 1.3;
-          white-space: nowrap;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
           overflow: hidden;
-          text-overflow: ellipsis;
-          display: block;
+          min-width: 0;
         }
         .aff-compact-price {
           font-size: 12px;
@@ -99,9 +103,11 @@ export default function BlogProductCard({ asin }: { asin: string }) {
           border-radius: 6px;
           white-space: nowrap;
         }
-        @media (max-width: 480px) {
+        @media (max-width: 520px) {
+          .aff-compact { gap: 10px; padding: 9px 12px; }
+          .aff-compact-img { width: 44px; height: 44px; }
           .aff-compact-name { font-size: 12px; }
-          .aff-compact-btn { padding: 7px 10px; font-size: 9px; }
+          .aff-compact-btn { padding: 6px 10px; font-size: 9px; letter-spacing: 0.06em; }
         }
         html.dark .aff-compact, .dark .aff-compact {
           background: #141824 !important;

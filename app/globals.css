@@ -1817,4 +1817,224 @@ html.dark .luxury-card.selected .checkbox,
 }
 
 
+/* ─────────────────────────────────────────
+   BLOG POST DARK MODE CONTRAST OVERRIDES
+───────────────────────────────────────── */
+
+html.dark .post-body,
+.dark .post-body,
+html.dark .post-body p,
+.dark .post-body p,
+html.dark .post-body li,
+.dark .post-body li,
+html.dark .post-body ul,
+.dark .post-body ul,
+html.dark .post-body ol,
+.dark .post-body ol,
+html.dark .versus-side,
+.dark .versus-side {
+  color: #aba49d !important;
+}
+
+html.dark .post-body strong,
+.dark .post-body strong,
+html.dark .post-body p strong,
+.dark .post-body p strong,
+html.dark .post-body li strong,
+.dark .post-body li strong {
+  color: #ffffff !important;
+}
+
+html.dark .post-body h2,
+.dark .post-body h2 {
+  color: #ffffff !important;
+  border-top-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+html.dark .post-body h3,
+.dark .post-body h3,
+html.dark .post-body h4,
+.dark .post-body h4 {
+  color: #ffffff !important;
+}
+
+html.dark .post-rule,
+.dark .post-rule,
+html.dark .post-body hr,
+.dark .post-body hr {
+  border-top-color: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Callout & Routine Boxes */
+html.dark .routine-box,
+.dark .routine-box,
+html.dark .routine-block,
+.dark .routine-block,
+html.dark .callout-box,
+.dark .callout-box,
+html.dark .routine-step,
+.dark .routine-step,
+html.dark .tier-card,
+.dark .tier-card,
+html.dark .fragrance-rule,
+.dark .fragrance-rule {
+  background: #181716 !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+  color: #aba49d !important;
+}
+
+html.dark .routine-box *,
+.dark .routine-box *,
+html.dark .routine-block *,
+.dark .routine-block *,
+html.dark .callout-box *,
+.dark .callout-box *,
+html.dark .routine-step *,
+.dark .routine-step *,
+html.dark .tier-card *,
+.dark .tier-card *,
+html.dark .fragrance-rule *,
+.dark .fragrance-rule * {
+  color: #aba49d !important;
+}
+
+html.dark .routine-box strong,
+.dark .routine-box strong,
+html.dark .routine-block strong,
+.dark .routine-block strong,
+html.dark .callout-box strong,
+.dark .callout-box strong,
+html.dark .routine-step strong,
+.dark .routine-step strong,
+html.dark .tier-card strong,
+.dark .tier-card strong,
+html.dark .fragrance-rule strong,
+.dark .fragrance-rule strong {
+  color: #ffffff !important;
+}
+
+html.dark .routine-box-label,
+.dark .routine-box-label,
+html.dark .callout-box-label,
+.dark .callout-box-label,
+html.dark .routine-box-title,
+.dark .routine-box-title {
+  color: #ff4d94 !important;
+}
+
+/* Product Sections */
+html.dark .product-section,
+.dark .product-section {
+  border-bottom-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+html.dark .product-title,
+.dark .product-title {
+  color: #ffffff !important;
+}
+
+html.dark .product-subtitle,
+.dark .product-subtitle {
+  color: #ff4d94 !important;
+}
+
+html.dark .product-number,
+.dark .product-number {
+  color: rgba(255, 255, 255, 0.12) !important;
+}
+
+html.dark .product-spec-label,
+.dark .product-spec-label {
+  color: #8a8480 !important;
+}
+
+html.dark .product-spec-value,
+.dark .product-spec-value {
+  color: #ffffff !important;
+}
+
+/* Comparison Tables */
+html.dark .comparison-table,
+.dark .comparison-table,
+html.dark .step-table,
+.dark .step-table,
+html.dark .versus-table,
+.dark .versus-table,
+html.dark .week-table,
+.dark .week-table {
+  border-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+html.dark .comparison-table thead,
+.dark .comparison-table thead,
+html.dark .step-table thead,
+.dark .step-table thead,
+html.dark .versus-table thead,
+.dark .versus-table thead,
+html.dark .week-table thead,
+.dark .week-table thead {
+  background: #181716 !important;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+html.dark .comparison-table th,
+.dark .comparison-table th,
+html.dark .step-table th,
+.dark .step-table th,
+html.dark .versus-table th,
+.dark .versus-table th,
+html.dark .week-table th,
+.dark .week-table th {
+  color: #ffffff !important;
+}
+
+html.dark .comparison-table td,
+.dark .comparison-table td,
+html.dark .step-table td,
+.dark .step-table td,
+html.dark .versus-table td,
+.dark .versus-table td,
+html.dark .week-table td,
+.dark .week-table td {
+  color: #aba49d !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+html.dark .comparison-table tr:hover,
+.dark .comparison-table tr:hover,
+html.dark .step-table tr:hover,
+.dark .step-table tr:hover,
+html.dark .versus-table tr:hover,
+.dark .versus-table tr:hover,
+html.dark .week-table tr:hover,
+.dark .week-table tr:hover {
+  background: #1c1a18 !important;
+}
+
+/* Sources & Disclosures */
+html.dark .sources-section,
+.dark .sources-section {
+  border-top-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+html.dark .sources-list li,
+.dark .sources-list li {
+  border-bottom-color: rgba(255, 255, 255, 0.06) !important;
+  color: #8a8480 !important;
+}
+
+html.dark .disclosure,
+.dark .disclosure {
+  border-color: rgba(255, 255, 255, 0.1) !important;
+  background: rgba(255, 255, 255, 0.02) !important;
+}
+
+html.dark .disclosure-label,
+.dark .disclosure-label {
+  color: #8a8480 !important;
+}
+
+
+
 

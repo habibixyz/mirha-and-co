@@ -55,7 +55,7 @@ export default function BlogFooterTools() {
         .bft-ad-title {
           font-family: var(--font-playfair), serif;
           font-size: 1.3rem;
-          color: #ffffff;
+          color: #ffffff !important;
           margin: 0 0 0.4rem;
           font-weight: 600;
           line-height: 1.25;
@@ -63,7 +63,7 @@ export default function BlogFooterTools() {
 
         .bft-ad-desc {
           font-size: 0.82rem;
-          color: rgba(255, 255, 255, 0.7);
+          color: rgba(255, 255, 255, 0.7) !important;
           margin: 0;
           line-height: 1.6;
           max-width: 520px;

@@ -223,24 +223,41 @@ export default function BestNiacinamideSerumsPage() {
  .best-niacinamide-serums-page .product-specs {
  display: flex;
  flex-direction: column;
- gap: 1rem;
+ gap: 0;
+ border: 1px solid #e8e4de;
+ border-radius: 8px;
+ overflow: hidden;
  }
  .best-niacinamide-serums-page .product-spec {
- padding-bottom: 0.8rem;
+ display: flex;
+ align-items: baseline;
+ gap: 0.75rem;
+ padding: 0.6rem 0.9rem;
+ border-bottom: 1px solid #f0ece6;
+ }
+ .best-niacinamide-serums-page .product-spec:last-child {
+ border-bottom: none;
  }
  .best-niacinamide-serums-page .product-spec-label {
  font-family: 'DM Sans', sans-serif;
- font-size: 0.65rem;
- color: #999;
- letter-spacing: 0.15em;
+ font-size: 0.6rem;
+ color: #aaa;
+ letter-spacing: 0.14em;
  text-transform: uppercase;
- margin-bottom: 0.3rem;
+ white-space: nowrap;
+ flex-shrink: 0;
+ width: 5.5rem;
+ line-height: 1.5;
+ padding-top: 2px;
  }
  .best-niacinamide-serums-page .product-spec-value {
- font-family: 'DM Serif Display', serif;
- font-size: 1rem;
+ font-family: 'DM Sans', sans-serif;
+ font-size: 0.875rem;
  color: var(--black);
  font-weight: 500;
+ line-height: 1.4;
+ flex: 1;
+ min-width: 0;
  }
 
  /* COMPARISON TABLE */
@@ -378,11 +395,50 @@ export default function BestNiacinamideSerumsPage() {
  line-height: 1.6 !important;
  }
 
+ /* Key features list inside spec row */
+ .best-niacinamide-serums-page .product-spec-value ul {
+ margin: 0;
+ padding: 0;
+ list-style: none;
+ font-size: inherit;
+ display: flex;
+ flex-wrap: wrap;
+ gap: 0.25rem 0.5rem;
+ }
+ .best-niacinamide-serums-page .product-spec-value ul li {
+ margin: 0;
+ font-size: 0.82rem;
+ color: inherit;
+ }
+ .best-niacinamide-serums-page .product-spec-value ul li::before {
+ content: "·";
+ margin-right: 0.25rem;
+ color: #ccc;
+ }
+ .best-niacinamide-serums-page .product-spec-value ul li:first-child::before { display: none; }
+
+ /* Dark mode */
+ html.dark .best-niacinamide-serums-page .product-specs,
+ .dark .best-niacinamide-serums-page .product-specs {
+ border-color: rgba(255,255,255,0.08) !important;
+ }
+ html.dark .best-niacinamide-serums-page .product-spec,
+ .dark .best-niacinamide-serums-page .product-spec {
+ border-bottom-color: rgba(255,255,255,0.05) !important;
+ }
+ html.dark .best-niacinamide-serums-page .product-spec-value,
+ .dark .best-niacinamide-serums-page .product-spec-value {
+ color: rgba(255,255,255,0.88) !important;
+ }
+
  @media (max-width: 640px) {
  .best-niacinamide-serums-page .post-hero { padding: 4rem 1.5rem 3rem; }
  .best-niacinamide-serums-page .post-body { padding: 3rem 1.5rem 4rem; }
  .best-niacinamide-serums-page .further-reading { padding: 2rem 1.5rem; }
- .best-niacinamide-serums-page .product-grid { grid-template-columns: 1fr; }
+ .best-niacinamide-serums-page .product-grid { grid-template-columns: 1fr; gap: 0.75rem; margin: 1.25rem 0; }
+ .best-niacinamide-serums-page .product-spec-label { width: 5rem; font-size: 0.58rem; }
+ .best-niacinamide-serums-page .product-spec-value { font-size: 0.82rem; }
+ .best-niacinamide-serums-page .product-spec { padding: 0.55rem 0.8rem; }
  }
  `}</style>
 
@@ -486,11 +542,13 @@ export default function BestNiacinamideSerumsPage() {
  </div>
  <div className="product-spec">
  <div className="product-spec-label">Key Features</div>
- <ul style={{margin: "0.5rem 0 0", paddingLeft: "1rem", fontSize: "0.9rem"}}>
+ <div className="product-spec-value">
+ <ul>
  <li>Fragrance-free</li>
  <li>Ingredient transparency</li>
  <li>No filler actives</li>
  </ul>
+ </div>
  </div>
  </div>
  </div>
@@ -527,11 +585,13 @@ export default function BestNiacinamideSerumsPage() {
  </div>
  <div className="product-spec">
  <div className="product-spec-label">Key Features</div>
- <ul style={{margin: "0.5rem 0 0", paddingLeft: "1rem", fontSize: "0.9rem"}}>
+ <div className="product-spec-value">
+ <ul>
  <li>Fragrance-free</li>
  <li>Affordable</li>
  <li>Widely available</li>
  </ul>
+ </div>
  </div>
  </div>
  </div>
@@ -568,11 +628,13 @@ export default function BestNiacinamideSerumsPage() {
  </div>
  <div className="product-spec">
  <div className="product-spec-label">Best For</div>
- <ul style={{margin: "0.5rem 0 0", paddingLeft: "1rem", fontSize: "0.9rem"}}>
+ <div className="product-spec-value">
+ <ul>
  <li>AC-exposed skin</li>
  <li>Barrier repair</li>
  <li>Dehydration concerns</li>
  </ul>
+ </div>
  </div>
  </div>
  </div>
@@ -609,11 +671,13 @@ export default function BestNiacinamideSerumsPage() {
  </div>
  <div className="product-spec">
  <div className="product-spec-label">Why It's Here</div>
- <ul style={{margin: "0.5rem 0 0", paddingLeft: "1rem", fontSize: "0.9rem"}}>
+ <div className="product-spec-value">
+ <ul>
  <li>Best partner to niacinamide</li>
  <li>Niacinamide calms retinol irritation</li>
  <li>Ideal progression</li>
  </ul>
+ </div>
  </div>
  </div>
  </div>
@@ -650,11 +714,13 @@ export default function BestNiacinamideSerumsPage() {
  </div>
  <div className="product-spec">
  <div className="product-spec-label">Why Critical</div>
- <ul style={{margin: "0.5rem 0 0", paddingLeft: "1rem", fontSize: "0.9rem"}}>
+ <div className="product-spec-value">
+ <ul>
  <li>UV causes more pigmentation</li>
  <li>Undoes niacinamide work</li>
  <li>Non-negotiable companion</li>
  </ul>
+ </div>
  </div>
  </div>
  </div>
