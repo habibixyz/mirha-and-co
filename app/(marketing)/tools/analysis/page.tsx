@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Script from "next/script";
 import FreeAnalysisToolClient from "./FreeAnalysisToolClient";
 import { getSession } from "@/lib/auth";
 
@@ -50,10 +49,10 @@ export default async function FreeSkinAnalysisToolPage() {
 
   return (
     <>
-      <Script
+      {/* JSON-LD structured data — plain script tag is correct for App Router */}
+      <script
         id="free-skin-scan-structured-data"
         type="application/ld+json"
-        strategy="beforeInteractive"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
       <main className="mirha-tool-page relative min-h-screen pb-24 bg-[#faf6f0] text-[#161412] dark:bg-[#0c0a09] dark:text-[#f7f5f2]">
