@@ -70,7 +70,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // Dynamic water quality pages
   const citySlugs = [
-    "bengaluru",
     "delhi",
     "mumbai",
     "london",

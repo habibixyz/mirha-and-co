@@ -76,7 +76,11 @@ export const CITIES: City[] = [
   { name: "Guwahati", slug: "guwahati", region: "humid", state: "Assam" },
   { name: "Solapur", slug: "solapur", region: "extreme", state: "Maharashtra" },
   { name: "Hubli", slug: "hubli", region: "moderate", state: "Karnataka" },
-  { name: "Bareilly", slug: "bareilly", region: "extreme", state: "Uttar Pradesh" }
+  { name: "Bareilly", slug: "bareilly", region: "extreme", state: "Uttar Pradesh" },
+  { name: "Mangalore", slug: "mangalore", region: "humid", state: "Karnataka" },
+  { name: "Mysore", slug: "mysore", region: "moderate", state: "Karnataka" },
+  { name: "Thiruvananthapuram", slug: "thiruvananthapuram", region: "humid", state: "Kerala" },
+  { name: "Bhubaneswar", slug: "bhubaneswar", region: "humid", state: "Odisha" }
 ];
 
 export const CONCERNS: Concern[] = [

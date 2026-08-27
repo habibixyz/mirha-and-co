@@ -15,7 +15,7 @@ import ShopFilterClientLazy from "@/components/ShopFilterClientLazy";
 // not real-time data, so staleness is perfectly acceptable.
 const getHomepageStats = unstable_cache(
   async () => {
-    const [routinesCount, dbProductsCount, ingredientsCount, usersCount, b2bKeysCount, b2bCallsCount] =
+    const [routinesCount, dbProductsCount, ingredientsCount, usersCount, b2bKeysCount, b2bCallsCount, scansCount] =
       await Promise.all([
         prisma.routine.count().catch(() => 0),
         prisma.product.count().catch(() => 0),
@@ -25,13 +25,14 @@ const getHomepageStats = unstable_cache(
         prisma.user.count().catch(() => 0),
         prisma.b2BApiKey.count().catch(() => 0),
         prisma.b2BUsageLog.count().catch(() => 0),
+        prisma.faceAnalysis.count().catch(() => 0),
       ]);
 
     // Approximate unique ingredients: each product has ~15–20 ingredients on average.
     // This avoids fetching every row just to count strings.
     const ingredientEstimate = ingredientsCount * 17;
 
-    return { routinesCount, dbProductsCount, ingredientEstimate, usersCount, b2bKeysCount, b2bCallsCount };
+    return { routinesCount, dbProductsCount, ingredientEstimate, usersCount, b2bKeysCount, b2bCallsCount, scansCount };
   },
   ["homepage-stats-v2"],
   { revalidate: 300, tags: ["homepage-stats-v2"] }
@@ -91,7 +92,7 @@ export default async function BeautyShopPage() {
   const t = (key: string) => DICTIONARY[locale]?.[key] || DICTIONARY.en[key] || key;
 
   // Fetch cached statistics — results revalidate every 5 minutes via unstable_cache
-  const { routinesCount, dbProductsCount, ingredientEstimate, usersCount, b2bKeysCount, b2bCallsCount } =
+  const { routinesCount, dbProductsCount, ingredientEstimate, usersCount, b2bKeysCount, b2bCallsCount, scansCount } =
     await getHomepageStats();
 
   const finalRoutinesCount = routinesCount || 12;
@@ -100,6 +101,7 @@ export default async function BeautyShopPage() {
   const finalUsersCount = usersCount || 5;
   const finalB2bKeysCount = b2bKeysCount || 0;
   const finalB2bCallsCount = b2bCallsCount || 0;
+  const finalScansCount = scansCount || 5;
 
 
   const picks = EDITOR_PICK_ASINS.map((asin) => PRODUCT_LIST.find((product) => product.asin === asin))
@@ -1175,7 +1177,7 @@ export default async function BeautyShopPage() {
               }}
             >
               <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#fc2779" }} />
-              1 Free AI Skin Scan Per Day • 1 Photo Daily
+              {finalScansCount.toLocaleString()} AI Skin Scans Done • 1 Free Daily
             </div>
             <h1>
               {t("hero.title1")} {t("hero.title2")}
@@ -1294,7 +1296,7 @@ export default async function BeautyShopPage() {
           <div className="ticker-track">
             {[...Array(2)].map((_, i) => (
               <div key={i} style={{ display: "contents" }}>
-                <div className="ticker-item"><span className="ticker-dot" />1 Free AI Skin Scan Per Day</div>
+                <div className="ticker-item"><span className="ticker-dot" />{finalScansCount.toLocaleString()} AI Skin Scans Done</div>
                 <div className="ticker-item"><span className="ticker-dot" />{finalRoutinesCount.toLocaleString()} Routines Built</div>
                 <div className="ticker-item"><span className="ticker-dot" />{finalProductsCount.toLocaleString()} Products Scanned</div>
                 <div className="ticker-item"><span className="ticker-dot" />{finalIngredientsCount.toLocaleString()} Ingredients Analyzed</div>
