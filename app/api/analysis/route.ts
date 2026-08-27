@@ -71,12 +71,8 @@ export async function POST(req: Request) {
       req.headers.get("x-real-ip") ||
       "127.0.0.1";
 
-    const { image } = await req.json();
-    if (!image || typeof image !== "string") {
-      return NextResponse.json({ error: "Single image string is required for analysis." }, { status: 400 });
-    }
-
-    // 2. Check Auth Session
+    // 2. Check Auth Session — must come before body parse so unauthed
+    //    requests get 401, not 400, regardless of body contents.
     const session = await getSession();
     const userId = session?.userId || null;
 
@@ -88,6 +84,12 @@ export async function POST(req: Request) {
         },
         { status: 401 }
       );
+    }
+
+    // 3. Parse & validate request body (auth confirmed above)
+    const { image } = await req.json();
+    if (!image || typeof image !== "string") {
+      return NextResponse.json({ error: "Single image string is required for analysis." }, { status: 400 });
     }
 
     let user: any = null;

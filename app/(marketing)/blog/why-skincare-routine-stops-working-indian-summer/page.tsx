@@ -296,7 +296,7 @@ export default function SummerSkincareFailPage() {
  {[
  { href: "/blog/niacinamide-for-oily-skin", label: "Niacinamide for Oily Skin in India — How It Actually Controls Oil" },
  { href: "/blog/best-sunscreens-oily-skin-india", label: "Best Sunscreen for Oily Skin in India — No Grease, No White Cast" },
- { href: "/blog/barrier-repair-protocol", label: "How to Repair a Damaged Skin Barrier — The 4-Week Protocol" },
+ { href: "/blog/damaged-skin-barrier-repair", label: "How to Repair a Damaged Skin Barrier — The 4-Week Protocol" },
  { href: "/blog/budget-skincare-routine-under-2000", label: "4-Step Indian Skincare Routine Under ₹2000" },
  { href: "/blog/niacinamide-5-vs-10", label: "Niacinamide 5% vs 10% — Which Concentration?" },
  ].map((link) => (

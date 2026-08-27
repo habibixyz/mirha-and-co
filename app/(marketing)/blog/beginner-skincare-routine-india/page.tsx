@@ -231,7 +231,7 @@ export default function BeginnerRoutinePage() {
  { href: "/blog/what-niacinamide-does-to-your-skin", label: "What Niacinamide Actually Does to Your Skin" },
  { href: "/blog/budget-skincare-routine-under-2000", label: "4-Step Indian Skincare Routine Under ₹2000" },
  { href: "/blog/best-sunscreens-india-2026", label: "Best Sunscreens in India (2026)" },
- { href: "/blog/barrier-repair-protocol", label: "How to Repair a Damaged Skin Barrier" },
+ { href: "/blog/damaged-skin-barrier-repair", label: "How to Repair a Damaged Skin Barrier" },
  { href: "/blog/skincare-layering-order", label: "The Right Order to Apply Your Skincare" },
  ].map((link) => (
  <a key={link.href} href={link.href} style={{ fontSize: "0.9rem", color: "var(--rose)", textDecoration: "none", borderBottom: "1px solid var(--rule)", paddingBottom: "0.6rem" }}>{link.label} →</a>
