@@ -98,7 +98,7 @@ export function getAsinsForConcern(concernSlug: string): string[] {
     case "dry-skin":
       return ["B099MJH88B", "B07DSC6CWP", "B00V4R0ET0"];
     case "acne":
-      return ["BENZAC25", "MIGHTYPATCH", "B00BQFTQW6"];
+      return ["B0CTTV91Z6", "B0966C6TRX", "B00BQFTQW6"];
     case "hyperpigmentation":
       default:
       return ["B09DLFCB69", "B095PRGHDX", "B08F9MF314"];
