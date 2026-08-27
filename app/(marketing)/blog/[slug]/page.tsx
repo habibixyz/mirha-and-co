@@ -76,6 +76,7 @@ export default async function ProgrammaticBlogPost({ params }: PageProps) {
       views={views}
       slug={slug}
       tags={(post as any).tags}
+      asins={post.asins}
     />
   );
 }

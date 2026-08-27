@@ -200,6 +200,7 @@ export async function SeoBlogPost({
   views,
   slug,
   tags,
+  asins,
   children,
 }: {
   category: string;
@@ -211,6 +212,7 @@ export async function SeoBlogPost({
   views?: number;
   slug?: string;
   tags?: string[];
+  asins?: string[];
   children?: React.ReactNode;
 }) {
   const cookieStore = await cookies();
@@ -222,6 +224,9 @@ export async function SeoBlogPost({
   const relatedPosts = slug && tags?.length
     ? getRelatedPosts(slug, tags, 3)
     : [];
+
+  const hasInlinePicks = sections.some(s => s.sectionAsins && s.sectionAsins.length > 0);
+  const showFallbackPicks = !hasInlinePicks && asins && asins.length > 0;
 
   return (
     <main className="seo-post">
@@ -528,6 +533,36 @@ export async function SeoBlogPost({
           .post-section h2 { font-size: 24px; }
           .post-section p, .post-section li { font-size: 15px; }
           .table-wrap table { font-size: 13px; }
+          .bottom-picks-grid {
+            grid-template-columns: 1fr;
+          }
+        }
+
+        /* ── Fallback bottom recommendations */
+        .bottom-recommendations {
+          margin: 48px 0 0;
+          padding-top: 32px;
+          border-top: 1px solid #e3d8ce;
+        }
+        .bottom-recommendations h2 {
+          margin-bottom: 8px !important;
+        }
+        .bottom-recommendations-sub {
+          font-size: 13px;
+          color: #6f6963;
+          margin-bottom: 24px !important;
+          line-height: 1.6;
+        }
+        .bottom-picks-grid {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 16px;
+        }
+        html.dark .bottom-recommendations, .dark .bottom-recommendations {
+          border-top-color: #283044 !important;
+        }
+        html.dark .bottom-recommendations-sub, .dark .bottom-recommendations-sub {
+          color: #9ca3af !important;
         }
 
         /* ── Dark Mode Overrides */
@@ -631,6 +666,21 @@ export async function SeoBlogPost({
             </section>
           );
         })}
+
+        {/* Fallback bottom recommendations section */}
+        {showFallbackPicks && (
+          <section className="post-section bottom-recommendations">
+            <h2>Recommended Formulations</h2>
+            <p className="bottom-recommendations-sub">
+              Dermatologist-recommended formulations analyzed for ingredient quality, climate performance, and skin compatibility.
+            </p>
+            <div className="bottom-picks-grid">
+              {asins.map((asin) => (
+                <AffiliateCard key={asin} asin={asin} compact />
+              ))}
+            </div>
+          </section>
+        )}
 
         {children}
 
