@@ -386,15 +386,7 @@ export function AnalysisClient({
     ] as const;
 
     return (
-      <div style={{
-        background: "rgba(255,255,255,0.75)",
-        backdropFilter: "blur(12px)",
-        border: "1px solid var(--rule)",
-        borderRadius: "20px",
-        padding: "1.5rem",
-        marginBottom: "2.5rem",
-        boxShadow: "0 10px 30px rgba(0,0,0,0.02)"
-      }}>
+      <div className="trend-chart-card">
         {/* Chart Header */}
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.5rem", flexWrap: "wrap", gap: "1rem" }}>
           <div>
@@ -526,6 +518,42 @@ export function AnalysisClient({
  return (
  <div className="analysis-container">
   <style>{`
+    .trend-chart-card {
+      background: rgba(255,255,255,0.75);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--rule);
+      border-radius: 20px;
+      padding: 1.5rem;
+      margin-bottom: 2.5rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.02);
+    }
+    html.dark .trend-chart-card, .dark .trend-chart-card {
+      background: rgba(24, 23, 22, 0.9) !important;
+      border-color: rgba(255, 255, 255, 0.12) !important;
+    }
+
+    .scan-history-item {
+      background: rgba(255,255,255,0.6);
+      border: 1px solid var(--rule);
+      border-radius: 12px;
+      padding: 1rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    html.dark .scan-history-item, .dark .scan-history-item {
+      background: rgba(24, 23, 22, 0.9) !important;
+      border-color: rgba(255, 255, 255, 0.12) !important;
+    }
+
+    .scan-history-item-left {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
     @media (max-width: 600px) {
       .scan-history-item {
         flex-direction: column !important;
@@ -1207,19 +1235,8 @@ export function AnalysisClient({
  }
  ]);
  }}
- style={{
- background: "rgba(255,255,255,0.6)",
- border: "1px solid var(--rule)",
- borderRadius: "12px",
- padding: "1rem 1.5rem",
- display: "flex",
- alignItems: "center",
- justifyContent: "space-between",
- cursor: "pointer",
- transition: "all 0.2s ease"
- }}
  >
-  <div className="scan-history-item-left" style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+ <div className="scan-history-item-left">
  <div style={{ display: "flex", gap: "0.5rem", fontSize: "0.85rem", fontWeight: 600 }}>
  <span style={{ color: getScoreColor(item.barrierScore) }}>Barrier: {item.barrierScore}</span>
  <span style={{ color: "var(--rule)" }}>|</span>
