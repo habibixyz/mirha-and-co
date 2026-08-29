@@ -173,8 +173,6 @@ export async function POST(req: Request) {
       imagePart = await urlToGenerativePart(image);
     }
 
-    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
-
     const prompt = `
     You are an expert dermatological AI skin analysis tool for Mirha & Co., an advanced skincare intelligence platform.
     Analyze the uploaded user selfie with high diagnostic precision and return a strictly formatted JSON response detailing their skin condition.
@@ -210,8 +208,15 @@ export async function POST(req: Request) {
     }
     `;
 
-    const result = await model.generateContent([prompt, imagePart]);
-    const responseText = await result.response.text();
+    let responseText = "";
+    try {
+      const model = genAI.getGenerativeModel({ model: "gemini-3.6-flash" });
+      const result = await model.generateContent([prompt, imagePart]);
+      responseText = await result.response.text();
+    } catch (primaryErr: any) {
+      console.error("Gemini 3.6 Flash generation failed:", primaryErr?.message || primaryErr);
+      throw primaryErr;
+    }
     const cleanText = responseText.replace(/```json|```/g, "").trim();
     
     let analysisData;

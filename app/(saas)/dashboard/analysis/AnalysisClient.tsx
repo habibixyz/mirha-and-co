@@ -101,6 +101,27 @@ function MessageText({ text }: { text: string }) {
   );
 }
 
+function parseReportSafely(json: any, fallbackScores?: { barrier?: number; acne?: number; redness?: number; oiliness?: number }): AnalysisReport {
+  let parsed = json;
+  if (typeof parsed === "string") {
+    try {
+      parsed = JSON.parse(parsed);
+    } catch (e) {
+      console.error("Failed to parse detailedJson string:", e);
+    }
+  }
+  return {
+    barrierScore: typeof parsed?.barrierScore === "number" ? parsed.barrierScore : (fallbackScores?.barrier ?? 50),
+    acneScore: typeof parsed?.acneScore === "number" ? parsed.acneScore : (fallbackScores?.acne ?? 50),
+    rednessScore: typeof parsed?.rednessScore === "number" ? parsed.rednessScore : (fallbackScores?.redness ?? 50),
+    oilinessScore: typeof parsed?.oilinessScore === "number" ? parsed.oilinessScore : (fallbackScores?.oiliness ?? 50),
+    summary: parsed?.summary || "Clinical skin analysis complete.",
+    concerns: Array.isArray(parsed?.concerns) ? parsed.concerns : (parsed?.concerns ? [String(parsed.concerns)] : []),
+    routineAdjustments: Array.isArray(parsed?.routineAdjustments) ? parsed.routineAdjustments : (parsed?.routineAdjustments ? [String(parsed.routineAdjustments)] : []),
+    agentWelcomeMessage: parsed?.agentWelcomeMessage || "Consultation for this skin analysis is active. Feel free to ask any questions!"
+  };
+}
+
 export function AnalysisClient({
  user,
  pastAnalyses,
@@ -116,6 +137,29 @@ export function AnalysisClient({
  const [report, setReport] = useState<AnalysisReport | null>(null);
  const [isPending, setIsPending] = useState(false);
  const [errorMsg, setErrorMsg] = useState("");
+ const reportSectionRef = useRef<HTMLDivElement | null>(null);
+
+ const loadPastReport = (item: PastAnalysis) => {
+   const safeReport = parseReportSafely(item.detailedJson, {
+     barrier: item.barrierScore,
+     acne: item.acneScore,
+     redness: item.rednessScore,
+     oiliness: item.oilinessScore
+   });
+   setReport(safeReport);
+   setMessages([
+     {
+       sender: "bot",
+       text: safeReport.agentWelcomeMessage
+     }
+   ]);
+   setTimeout(() => {
+     reportSectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+     if (typeof window !== "undefined" && !reportSectionRef.current) {
+       window.scrollTo({ top: 0, behavior: "smooth" });
+     }
+   }, 100);
+ };
  
  // Payment States
  const [paymentRegion, setPaymentRegion] = useState<"INR" | "USD">("INR");
@@ -293,16 +337,20 @@ export function AnalysisClient({
  throw new Error(data.message || data.error || "Analysis failed");
  }
 
- setReport(data.analysis.detailedJson);
+ const safeReport = parseReportSafely(data.analysis?.detailedJson || data.analysis);
+ setReport(safeReport);
  
  // Initialize Chat Welcome Message
  setMessages([
  {
  sender: "bot",
- text: data.analysis.detailedJson.agentWelcomeMessage || 
+ text: safeReport.agentWelcomeMessage || 
  `Hello ${user.name}! I have finished scanning your face. Let me know if you want to customize your routine!`,
  },
  ]);
+ setTimeout(() => {
+   reportSectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+ }, 100);
  } catch (err: any) {
  setErrorMsg(err.message || "An unexpected error occurred.");
  } finally {
@@ -498,10 +546,7 @@ export function AnalysisClient({
                     strokeWidth="3"
                     style={{ cursor: "pointer" }}
                     onClick={() => {
-                      setReport(item.detailedJson);
-                      setMessages([
-                        { sender: "bot", text: item.detailedJson.agentWelcomeMessage || "Consultation for this past report is active." }
-                      ]);
+                      loadPastReport(item);
                     }}
                   >
                     <title>{`${m.label}: ${score} (${new Date(item.createdAt).toLocaleDateString()})`}</title>
@@ -869,6 +914,7 @@ export function AnalysisClient({
  {/* Results Report Display */}
  {report && (
  <motion.div
+ ref={reportSectionRef}
  initial={{ opacity: 0, y: 20 }}
  animate={{ opacity: 1, y: 0 }}
  style={{ display: "grid", gridTemplateColumns: "1fr", gap: "2rem" }}
@@ -1225,16 +1271,7 @@ export function AnalysisClient({
  <div 
  key={item.id}
  className="scan-history-item"
- onClick={() => {
- setReport(item.detailedJson);
- // Pre-fill chat
- setMessages([
- {
- sender: "bot",
- text: item.detailedJson.agentWelcomeMessage || "Consultation for this past report is active."
- }
- ]);
- }}
+ onClick={() => loadPastReport(item)}
  >
  <div className="scan-history-item-left">
  <div style={{ display: "flex", gap: "0.5rem", fontSize: "0.85rem", fontWeight: 600 }}>

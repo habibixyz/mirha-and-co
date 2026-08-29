@@ -6,32 +6,21 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
  * Helper to generate content with retries and fallback models.
  */
 export async function generateWithRetry(prompt: string | any[], retries = 3, delay = 1000): Promise<string> {
- // Try gemini-2.5-flash first with retries
- for (let i = 0; i < retries; i++) {
- try {
- const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
- const result = await model.generateContent(prompt);
- const response = await result.response;
- return response.text();
- } catch (error: any) {
- console.warn(`Gemini (gemini-2.5-flash) attempt ${i + 1} failed:`, error.message || error);
- if (i < retries - 1) {
- await new Promise((resolve) => setTimeout(resolve, delay * Math.pow(2, i)));
- }
- }
- }
+  for (let i = 0; i < retries; i++) {
+    try {
+      const model = genAI.getGenerativeModel({ model: "gemini-3.6-flash" });
+      const result = await model.generateContent(prompt);
+      const response = await result.response;
+      return response.text();
+    } catch (error: any) {
+      console.warn(`Gemini (gemini-3.6-flash) attempt ${i + 1} failed:`, error.message || error);
+      if (i < retries - 1) {
+        await new Promise((resolve) => setTimeout(resolve, delay * Math.pow(2, i)));
+      }
+    }
+  }
 
- // Fallback to gemini-2.5-flash-lite
- try {
- console.warn("Attempting fallback to gemini-2.5-flash-lite");
- const modelLite = genAI.getGenerativeModel({ model: "gemini-2.5-flash-lite" });
- const result = await modelLite.generateContent(prompt);
- const response = await result.response;
- return response.text();
- } catch (fallbackError: any) {
- console.error("Fallback to gemini-2.5-flash-lite failed:", fallbackError.message || fallbackError);
- throw fallbackError;
- }
+  throw new Error("Failed to generate content with Gemini 3.6 Flash after retries");
 }
 
 /**
