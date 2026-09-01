@@ -851,6 +851,12 @@ const mappedHighIntent = HIGH_INTENT_POSTS.map(p => ({
 }));
 
 export const POSTS: Post[] = [
+  // 🌟 Fresh & High-Intent Featured Posts
+  ...mappedHighIntent.filter(p => [
+    "indoor-ac-skin-syndrome-barrier-repair",
+    "azelaic-acid-niacinamide-hyperpigmentation-duo"
+  ].includes(p.slug)),
+
   // 🌟 Trending / Popular Posts (doing well in analytics)
   ...[
     "loreal-vs-tresemme-shampoo",
@@ -1117,6 +1123,8 @@ const SLUG_IMAGE_MAP: Record<string, string> = {
  "niacinamide-serum-price-tier-india": "/blog-thumbs/blog_budget.png",
  "hard-water-shampoo-routine-by-severity": "/blog-thumbs/blog_hard_water.png",
  "city-skincare-routine-india-mumbai-delhi": "/blog-thumbs/blog_indian_summer.png",
+ "indoor-ac-skin-syndrome-barrier-repair": "/blog-thumbs/blog_ac_skin_syndrome.jpg",
+ "azelaic-acid-niacinamide-hyperpigmentation-duo": "/blog-thumbs/blog_azelaic_niacinamide.jpg",
 };
 
 export const getRelevantImage = (slug: string, _title: string, category: string): string => {

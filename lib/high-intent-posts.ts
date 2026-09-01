@@ -15,6 +15,110 @@ export interface HighIntentPost {
 
 export const HIGH_INTENT_POSTS: HighIntentPost[] = [
   {
+    slug: "indoor-ac-skin-syndrome-barrier-repair",
+    title: "Air Conditioning Skin Syndrome: Why Indoor AC Silently Wrecks Your Moisture Barrier (And How to Fix It)",
+    category: "SKINCARE",
+    excerpt: "Spending 8+ hours a day in air-conditioned environments strips indoor humidity down to 20%, triggering severe Trans-Epidermal Water Loss (TEWL) and barrier disruption. Here is the climate science behind AC skin syndrome and the humectant-layering routine that restores your natural glow.",
+    readTime: "7 min",
+    date: "September 2026",
+    thumbnail: "AC",
+    tags: ["air conditioning", "skin barrier", "tewl", "dry skin", "dehydration", "hyaluronic acid", "ceramides", "skincare"],
+    asins: ["B00PBX3L7K", "B01MYEZPC8", "B0BDVG99J5", "B00BQFTQW6"],
+    sections: [
+      {
+        title: "Introduction: The Hidden Climate Crisis on Your Desk",
+        body: [
+          "If you step out of a hot 32°C commute into a crisp, 20°C air-conditioned office, your skin immediately registers a biological shock. While air conditioning provides essential relief from heat and humidity, artificial cooling systems function by pulling moisture out of ambient air. In typical office environments, relative indoor humidity plummets from 65% down to a desert-dry 15% to 20%.",
+          "This extreme moisture differential creates an aggressive osmotic gradient between the air and your skin. Water is literally pulled out of your stratum corneum into the dry surrounding air, leading to a condition dermatologists call Air Conditioning Skin Syndrome."
+        ]
+      },
+      {
+        title: "Understanding TEWL: The Biology of AC-Induced Barrier Exhaustion",
+        body: [
+          "Trans-Epidermal Water Loss (TEWL) is the rate at which water evaporates from the internal layers of skin through the epidermis. Under normal humidity conditions, your lipid barrier—composed of ceramides, cholesterol, and free fatty acids—traps moisture in intercellular spaces.",
+          "However, prolonged exposure to refrigerated dry air causes intercellular lipids to stiffen and shrink. Micro-fissures open up between skin cells, accelerating TEWL. By mid-afternoon, skin feels tight, makeup looks cakey, and fine lines appear exaggerated. For oily skin types, this dehydration triggers a rebound mechanism where sebaceous glands overproduce sebum to compensate, resulting in 4 PM forehead shine over parched skin."
+        ],
+        sectionAsins: ["B00PBX3L7K"]
+      },
+      {
+        title: "Why Heavy Oils and Thick Butter Creams Often Fail in Dry AC Air",
+        body: [
+          "When faced with tight AC skin, the instinct is often to slather on heavy facial oils or dense shea butter creams. However, pure occlusives contain no moisture of their own—they merely form a seal over the surface. If applied over already dehydrated skin in a 15% humidity environment, heavy oils trap dryness beneath a greasy film, often clogging pores without repairing the water deficit.",
+          "The solution lies in strategic humectant sandwiching: binding water into the epidermis first using multi-weight Hyaluronic Acid, Glycerin, and Polyglutamic Acid, before sealing it with a breathable lipid-identical ceramide complex."
+        ],
+        sectionAsins: ["B01MYEZPC8"]
+      },
+      {
+        title: "The 4-Step AC Recovery Routine for Office Workers",
+        body: [
+          "Step 1: Hydrate on Damp Skin — Apply a soothing essence containing Snail Mucin or Niacinamide onto slightly damp skin immediately after cleansing in the morning.",
+          "Step 2: Layer Multi-Depth Humectants — Use a hydrating serum that combines low and high molecular weight humectants to hydrate both surface and deeper epidermal layers.",
+          "Step 3: Seal with Ceramide Moisture Locks — Look for light emulsion gels or ceramide moisturizers that reinforce the natural lipid matrix without heavy comedogenic waxes.",
+          "Step 4: Mid-Day Desk Mist & Humidifier — Keep a thermal mist or desk-side mist spray (without drying alcohol) alongside a small personal desk humidifier to maintain a local micro-climate."
+        ],
+        sectionAsins: ["B0BDVG99J5", "B00BQFTQW6"]
+      },
+      {
+        title: "Conclusion: Adapting Your Routine to Your Micro-Climate",
+        body: [
+          "Skincare isn't static—it must adapt to your daily environment. Whether you spend 10 hours under corporate air conditioning or transition frequently between outdoor humidity and indoor cooling, matching your routine to your real-time climate telemetry is essential. Use the Mirha & Co. Portal to run a daily climate-aware skin audit and personalize your barrier defense."
+        ]
+      }
+    ]
+  },
+  {
+    slug: "azelaic-acid-niacinamide-hyperpigmentation-duo",
+    title: "Azelaic Acid + Niacinamide: The Science of Fading Hyperpigmentation Without Skin Purging",
+    category: "SKINCARE",
+    excerpt: "Struggling with stubborn post-acne dark marks, melasma, or redness, but can't tolerate harsh retinoids or AHA peels? Discover why combining Azelaic Acid with Niacinamide is dermatologists' favorite gentle power duo for even, radiant skin.",
+    readTime: "6 min",
+    date: "September 2026",
+    thumbnail: "AZ",
+    tags: ["azelaic acid", "niacinamide", "hyperpigmentation", "dark spots", "pih", "melasma", "sensitive skin", "skincare"],
+    asins: ["B0D45NXZDZ", "B01MDTVZTZ", "B08F9MF314", "B08XC5LQ7B"],
+    sections: [
+      {
+        title: "Introduction: Why High-Strength Exfoliants Backfire on Melanin-Rich Skin",
+        body: [
+          "Post-Inflammatory Hyperpigmentation (PIH) is one of the most persistent skin concerns, especially for South Asian, Hispanic, and Black skin tones. When a pimple resolves or the skin experiences inflammation, melanocytes in the basal layer produce an excess burst of melanin, leaving behind dark brown or dark red spots.",
+          "The conventional response is often aggressive chemical peels or high-concentration Glycolic Acid serums. However, in melanin-rich skin, strong exfoliation can induce secondary micro-inflammation, worsening hyperpigmentation rather than clearing it. Enter Azelaic Acid and Niacinamide—a scientifically proven duo that fades dark marks with zero skin purging or photosensitivity."
+        ]
+      },
+      {
+        title: "The Mechanism: How Azelaic Acid Selectively Targets Hyperactive Pigment Cells",
+        body: [
+          "Azelaic Acid is a naturally occurring dicarboxylic acid produced by yeast on healthy skin. Unlike harsh acids that indiscriminately peel top layers, Azelaic Acid acts as a competitive inhibitor of Tyrosinase—the core enzyme responsible for synthesizing melanin.",
+          "Remarkably, Azelaic Acid exhibits selective cytotoxic behavior: it specifically targets abnormal, hyperactive melanocytes (the ones responsible for dark spots and melasma) while leaving normal, healthy skin pigment completely untouched. Furthermore, its potent anti-inflammatory properties soothe erythema (redness) associated with rosacea and fresh acne scars."
+        ],
+        sectionAsins: ["B0D45NXZDZ"]
+      },
+      {
+        title: "Synergy Unleashed: Why Niacinamide is Azelaic Acid's Perfect Partner",
+        body: [
+          "While Azelaic Acid inhibits the production of new melanin at the cellular base, Niacinamide (Vitamin B3) intervenes at the next step of the pigment pathway. Niacinamide blocks the transfer of melanosomes (pigment packages) from melanocytes into surrounding keratinocyte cells by up to 68%.",
+          "By combining the two, you create a complete double-action trap: Azelaic Acid shuts down excess melanin synthesis at the root, while Niacinamide prevents existing pigment from surfacing to the skin's visible outer layers. Additionally, Niacinamide strengthens the ceramide barrier, reducing any mild dryness Azelaic Acid might initially cause."
+        ],
+        sectionAsins: ["B01MDTVZTZ"]
+      },
+      {
+        title: "How to Layer Azelaic Acid + Niacinamide in Your Daily Routine",
+        body: [
+          "Because neither ingredient increases sun sensitivity or causes purging, this pair is exceptionally versatile for both morning and evening routines:",
+          "1. AM Routine: Cleanse with a gentle pH-balanced cleanser → Apply 5% Niacinamide Serum → Follow with 10% Azelaic Acid cream or gel → Apply broad-spectrum SPF 50 sunscreen.",
+          "2. PM Routine: Double cleanse → Apply Niacinamide → Layer Azelaic Acid → Seal with a barrier-repair moisturizer containing ceramides or squalane.",
+          "Pro Tip: If using prescription 15-20% Azelaic Acid, buffer by applying Niacinamide and moisturizer first to minimize transient tingling."
+        ],
+        sectionAsins: ["B08F9MF314", "B08XC5LQ7B"]
+      },
+      {
+        title: "Conclusion: Gentle, Science-Backed Results That Last",
+        body: [
+          "Fading hyperpigmentation is a marathon, not a sprint. By leveraging the biological synergy of Azelaic Acid and Niacinamide, you can eliminate dark spots and restore even skin tone without breaking your moisture barrier. Check the Mirha & Co. Portal to analyze how ingredient concentrations match your specific skin concern and climate."
+        ]
+      }
+    ]
+  },
+  {
     slug: "top-4-selling-skincare-products-india",
     title: "The 4 Best-Selling Skincare Products in India: Real Hype or Marketing Routine?",
     category: "SKINCARE",
