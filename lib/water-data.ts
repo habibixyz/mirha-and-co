@@ -255,8 +255,8 @@ export const RECOMMENDED_PRODUCTS = [
 ];
 
 export function getCityData(slug: string): CityTelemetry {
-  const normalized = slug.toLowerCase().trim();
-  if (CITY_DATA[normalized]) {
+  const normalized = (slug || "").toLowerCase().trim();
+  if (Object.prototype.hasOwnProperty.call(CITY_DATA, normalized)) {
     return CITY_DATA[normalized];
   }
 

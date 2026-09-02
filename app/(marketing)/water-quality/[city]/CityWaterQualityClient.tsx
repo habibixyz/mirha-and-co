@@ -122,7 +122,7 @@ export default function CityWaterQualityClient({
 
   return (
     <div style={{ background: "#0d0f12", color: "#f3f4f6", minHeight: "100vh", fontFamily: "var(--font-dm-sans), sans-serif" }}>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdSchema).replace(/</g, "\\u003c") }} />
 
       {/* Hero Section */}
       <div style={{ padding: "4rem 1.5rem 3rem", borderBottom: "1px solid #1f2937", background: "radial-gradient(ellipse at top, #1e293b 0%, #0d0f12 70%)" }}>
