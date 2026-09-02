@@ -228,8 +228,74 @@ export async function SeoBlogPost({
   const hasInlinePicks = sections.some(s => s.sectionAsins && s.sectionAsins.length > 0);
   const showFallbackPicks = !hasInlinePicks && asins && asins.length > 0;
 
+  const postUrl = slug ? `https://www.mirhaandco.com/blog/${slug}` : "https://www.mirhaandco.com/blog";
+
+  const articleJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": postUrl,
+    },
+    "headline": title,
+    "description": description,
+    "image": [
+      "https://www.mirhaandco.com/opengraph-image.png"
+    ],
+    "datePublished": date,
+    "dateModified": date,
+    "author": {
+      "@type": "Organization",
+      "name": "Mirha & Co. Skincare Research Lab",
+      "url": "https://www.mirhaandco.com/about"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Mirha & Co.",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://www.mirhaandco.com/icon.png"
+      }
+    },
+    "articleSection": category,
+    "keywords": tags ? tags.join(", ") : category
+  };
+
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://www.mirhaandco.com"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Journal",
+        "item": "https://www.mirhaandco.com/blog"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": title,
+        "item": postUrl
+      }
+    ]
+  };
+
   return (
     <main className="seo-post">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
       <style>{`
         *, *::before, *::after { box-sizing: border-box; }
 

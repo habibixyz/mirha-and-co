@@ -1052,6 +1052,26 @@ export default function HardWaterCalculator() {
 
  {!useCustomTds ? (
  <div>
+  <div style={{ marginBottom: "16px", textAlign: "center" }}>
+    <Link
+      href="/water-quality"
+      style={{
+        display: "inline-flex",
+        alignItems: "center",
+        gap: "8px",
+        padding: "10px 18px",
+        background: "#111827",
+        color: "#38bdf8",
+        borderRadius: "10px",
+        fontSize: "0.85rem",
+        fontWeight: 700,
+        textDecoration: "none",
+        border: "1px solid #1f2937",
+      }}
+    >
+      <span>🌊 Explore Global Water Quality Directory (63+ Cities) &rarr;</span>
+    </Link>
+  </div>
  <div style={{ fontSize: "0.85rem", fontWeight: 700, color: "#756b63", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: "12px" }}>
  {(regionMode === "in") ? "Quick Select Major Cities" : "Quick Select Global Cities"}
  </div>

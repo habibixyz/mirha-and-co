@@ -6,9 +6,14 @@ import { getAllProgrammaticSlugs, CITIES, GLOBAL_CITIES } from "@/lib/programmat
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = "https://www.mirhaandco.com";
 
+  // Stable revision timestamp to prevent fake-freshness penalties from Googlebot
+  const buildRevisionDate = new Date("2026-08-25T00:00:00.000Z");
+  const defaultPostDate = new Date("2026-06-15T00:00:00.000Z");
+
   const staticRoutes = [
     { route: "", changeFrequency: "daily" as const, priority: 1.0 },
     { route: "/pricing", changeFrequency: "weekly" as const, priority: 0.9 },
+    { route: "/water-quality", changeFrequency: "weekly" as const, priority: 0.9 },
     { route: "/tools/analysis", changeFrequency: "daily" as const, priority: 1.0 },
     { route: "/tools/routine", changeFrequency: "weekly" as const, priority: 0.9 },
     { route: "/tools/ingredients", changeFrequency: "weekly" as const, priority: 0.9 },
@@ -23,24 +28,23 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { route: "/refunds", changeFrequency: "monthly" as const, priority: 0.4 },
   ].map(({ route, changeFrequency, priority }) => ({
     url: `${baseUrl}${route}`,
-    lastModified: new Date(),
+    lastModified: buildRevisionDate,
     changeFrequency,
     priority,
   }));
 
-  // Skincare guides & blog posts
+  // Skincare guides & editorial blog posts
   const blogRoutes = POSTS.map((post) => {
-    // Parse the post date (e.g., "May 2026", "March 2026") into a safe Date object
-    let postDate = new Date();
+    let postDate = defaultPostDate;
     try {
       if (post.date) {
-        postDate = new Date(`${post.date} 01:00:00 UTC`);
-        if (isNaN(postDate.getTime())) {
-          postDate = new Date();
+        const parsed = new Date(`${post.date} 01:00:00 UTC`);
+        if (!isNaN(parsed.getTime())) {
+          postDate = parsed;
         }
       }
     } catch {
-      postDate = new Date();
+      postDate = defaultPostDate;
     }
 
     return {
@@ -55,7 +59,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const programmaticSlugs = getAllProgrammaticSlugs();
   const programmaticRoutes = programmaticSlugs.map((slug) => ({
     url: `${baseUrl}/blog/${slug}`,
-    lastModified: new Date(),
+    lastModified: defaultPostDate,
     changeFrequency: "weekly" as const,
     priority: 0.5,
   }));
@@ -63,7 +67,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Dynamic product pages
   const productRoutes = PRODUCTS.filter((product: any) => !product.hideFromShop).map((product) => ({
     url: `${baseUrl}/product/${product.asin}`,
-    lastModified: new Date(),
+    lastModified: buildRevisionDate,
     changeFrequency: "weekly" as const,
     priority: 0.6,
   }));
@@ -77,19 +81,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "paris",
     "dubai",
     "los-angeles",
+    "bengaluru",
     ...CITIES.map((c) => c.slug),
     ...GLOBAL_CITIES.map((c) => c.slug),
   ];
   const uniqueCitySlugs = Array.from(new Set(citySlugs));
   const waterQualityRoutes = uniqueCitySlugs.map((slug) => ({
     url: `${baseUrl}/water-quality/${slug}`,
-    lastModified: new Date(),
+    lastModified: buildRevisionDate,
     changeFrequency: "weekly" as const,
     priority: 0.6,
   }));
 
   const allRoutes = [...staticRoutes, ...blogRoutes, ...programmaticRoutes, ...productRoutes, ...waterQualityRoutes];
-  
+
   // Deduplicate routes by URL, keeping the one with higher priority
   const uniqueRoutesMap = new Map<string, any>();
   for (const route of allRoutes) {

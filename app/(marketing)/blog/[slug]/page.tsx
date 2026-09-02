@@ -1,7 +1,8 @@
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import { SeoBlogPost } from "@/components/SeoBlogPost";
-import { getProgrammaticPostBySlug, getAllProgrammaticSlugs } from "@/lib/programmatic-posts";
+import { POSTS } from "@/lib/posts";
+import { getAllProgrammaticSlugs, getProgrammaticPostBySlug } from "@/lib/programmatic-posts";
 import { cookies, headers } from "next/headers";
 import { getLocalizedContent, Currency } from "@/lib/globalization";
 import { prisma } from "@/lib/prisma";
@@ -12,7 +13,14 @@ interface PageProps {
   }>;
 }
 
-export const dynamic = "force-dynamic";
+export function generateStaticParams() {
+  const editorialSlugs = POSTS.map((p) => p.slug);
+  const programmaticSlugs = getAllProgrammaticSlugs();
+  const allSlugs = Array.from(new Set([...editorialSlugs, ...programmaticSlugs]));
+  return allSlugs.map((slug) => ({ slug }));
+}
+
+export const revalidate = 60;
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
@@ -22,9 +30,14 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     return {};
   }
 
+  const ogImage = "https://www.mirhaandco.com/opengraph-image.png";
+
   return {
     title: `${post.title} | Mirha & Co.`,
     description: post.description,
+    keywords: (post as any).tags ? (post as any).tags.join(", ") : post.category,
+    authors: [{ name: "Mirha & Co. Skincare Research Lab", url: "https://www.mirhaandco.com/about" }],
+    publisher: "Mirha & Co.",
     alternates: {
       canonical: `https://www.mirhaandco.com/blog/${slug}`,
     },
@@ -33,11 +46,21 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       description: post.description,
       url: `https://www.mirhaandco.com/blog/${slug}`,
       type: "article",
+      siteName: "Mirha & Co.",
+      images: [
+        {
+          url: ogImage,
+          width: 1200,
+          height: 630,
+          alt: post.title,
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",
       title: post.title,
       description: post.description,
+      images: [ogImage],
     },
   };
 }

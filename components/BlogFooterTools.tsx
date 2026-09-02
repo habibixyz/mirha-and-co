@@ -230,9 +230,9 @@ export default function BlogFooterTools() {
           <span className="bft-tool-cta">Try free scan →</span>
         </Link>
 
-        <Link href="/tools/hard-water" className="bft-tool">
-          <span className="bft-tool-eyebrow">Free Calculator</span>
-          <span className="bft-tool-name">Hard Water Test</span>
+        <Link href="/water-quality" className="bft-tool">
+          <span className="bft-tool-eyebrow">63+ Cities Index</span>
+          <span className="bft-tool-name">Water Quality Directory</span>
           <span className="bft-tool-cta">Check your city →</span>
         </Link>
 

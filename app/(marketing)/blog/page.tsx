@@ -611,7 +611,7 @@ export default async function BlogIndex() {
   {localizeContent("Guides, comparisons, and routines for Indian skin: clear enough for beginners, useful enough for people who already know their actives.")}
   </p>
  <div className="hero-actions">
- <a href="/dashboard/search" className="primary-btn">Search Mirha</a>
+ <a href="/dashboard/search" rel="nofollow" className="primary-btn">Search Mirha</a>
  <a href="/tools/routine" className="secondary-btn">Build Routine</a>
  </div>
  </div>

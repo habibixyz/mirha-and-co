@@ -1228,7 +1228,7 @@ export default async function BeautyShopPage() {
                 <FaceScannerUI imageSrc={heroIndianFace} showMesh={false} />
               </Link>
               <div className="ai-stack-left">
-                <Link href="/dashboard/routines" className="ai-card ai-card-routine">
+                <Link href="/dashboard/routines" rel="nofollow" className="ai-card ai-card-routine">
                   <div className="ai-card-header">
                     <div className="ai-icon">
                       <Layers size={18} strokeWidth={1.5} />
@@ -1378,6 +1378,7 @@ export default async function BeautyShopPage() {
               </Link>
               <Link
                 href="/dashboard/search"
+                rel="nofollow"
                 style={{
                   flexDirection: isRtl ? "row-reverse" : "row",
                 }}

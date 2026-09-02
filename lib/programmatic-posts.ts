@@ -182,7 +182,8 @@ export function generatePostContent(city: City, concern: Concern) {
     date: `June ${currentYear}`,
     readTime: "6 min",
     sections,
-    asins
+    asins,
+    tags: [concern.slug, city.slug, city.name.toLowerCase(), "moisturizer", "skincare", "climate-skincare"]
   };
 }
 
