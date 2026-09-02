@@ -1,4 +1,4 @@
-import { getDashboardData, getUserProfile } from "../actions";
+import { getDashboardData } from "../actions";
 import { DashboardClient } from "@/components/DashboardClient";
 import { DashboardReadingList } from "@/components/DashboardReadingList";
 import { redirect } from "next/navigation";
@@ -6,12 +6,9 @@ import { redirect } from "next/navigation";
 export const dynamic = "force-dynamic";
 
 export default async function DashboardPage() {
-  const [data, userProfile] = await Promise.all([
-    getDashboardData(),
-    getUserProfile(),
-  ]);
+  const data = await getDashboardData();
 
-  if (data.error === "Unauthorized") {
+  if (data.error === "Unauthorized" || !data.user) {
     redirect("/login");
   }
 
@@ -19,9 +16,9 @@ export default async function DashboardPage() {
   let mainConcern: string | undefined;
   let skinType: string | undefined;
 
-  if (userProfile?.skinProfile) {
+  if (data.user?.skinProfile) {
     try {
-      const profile = JSON.parse(userProfile.skinProfile);
+      const profile = JSON.parse(data.user.skinProfile);
       mainConcern = profile.mainConcern || profile.concern;
       skinType = profile.skinType || profile.skin_type;
     } catch {
