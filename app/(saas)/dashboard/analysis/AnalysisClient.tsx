@@ -500,7 +500,7 @@ export function AnalysisClient({
             {/* Date Ticks */}
             {sorted.map((item, idx) => {
               const x = paddingLeft + (idx * chartWidth) / (sorted.length - 1);
-              const dateStr = new Date(item.createdAt).toLocaleDateString(undefined, { month: "short", day: "numeric" });
+              const dateStr = new Date(item.createdAt).toLocaleDateString("en-US", { month: "short", day: "numeric" });
               return (
                 <g key={item.id}>
                   <line x1={x} y1={paddingTop} x2={x} y2={paddingTop + chartHeight} stroke="var(--rule)" strokeWidth="0.5" />
@@ -549,7 +549,7 @@ export function AnalysisClient({
                       loadPastReport(item);
                     }}
                   >
-                    <title>{`${m.label}: ${score} (${new Date(item.createdAt).toLocaleDateString()})`}</title>
+                    <title>{`${m.label}: ${score} (${new Date(item.createdAt).toLocaleDateString("en-US")})`}</title>
                   </circle>
                 );
               });
@@ -1281,7 +1281,7 @@ export function AnalysisClient({
  </div>
  <span style={{ fontSize: "0.8rem", color: "var(--muted)", display: "flex", alignItems: "center", gap: "0.3rem" }} suppressHydrationWarning>
  <Calendar size={12} />
- {new Date(item.createdAt).toLocaleDateString()}
+ {new Date(item.createdAt).toLocaleDateString("en-US")}
  </span>
  </div>
  

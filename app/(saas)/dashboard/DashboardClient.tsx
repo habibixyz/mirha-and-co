@@ -173,7 +173,7 @@ export function DashboardClient({ user, routines, recentJournal }: any) {
  border: "1px solid rgba(0,0,0,0.05)"
  }}>
  <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.5rem" }}>
- <span style={{ fontWeight: 500 }}>{new Date(recentJournal.date).toLocaleDateString()}</span>
+ <span style={{ fontWeight: 500 }}>{new Date(recentJournal.date).toLocaleDateString("en-US")}</span>
  <span style={{ fontSize: "0.8rem", color: "var(--muted)" }}>★ {recentJournal.rating}/5</span>
  </div>
  <p style={{ margin: 0, color: "var(--muted)", lineHeight: 1.6 }}>"{recentJournal.entry}"</p>

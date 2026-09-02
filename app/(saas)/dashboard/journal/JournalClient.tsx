@@ -652,7 +652,7 @@ export function SkinJournalClient({ initialEntries, isPro }: { initialEntries: a
  {streakInfo.calendarGrid.map((day, idx) => {
  // Color based on rating
  let bg = 'var(--sand)'; // Empty
- let title = `No entry on ${day.date.toLocaleDateString()}`;
+ let title = `No entry on ${day.date.toLocaleDateString("en-US")}`;
  if (day.rating > 0) {
  const ratingColors = [
  '#fbe9e7', // 1 star
@@ -662,7 +662,7 @@ export function SkinJournalClient({ initialEntries, isPro }: { initialEntries: a
  '#fc2779', // 5 star (glowing brand red!)
  ];
  bg = ratingColors[day.rating - 1];
- title = `Rating: ${day.rating} Stars on ${day.date.toLocaleDateString()}${day.hasPhoto ? ' (Photo logged)' : ''}`;
+ title = `Rating: ${day.rating} Stars on ${day.date.toLocaleDateString("en-US")}${day.hasPhoto ? ' (Photo logged)' : ''}`;
  }
 
  return (
