@@ -129,6 +129,7 @@ export default function FaceScannerUI({
         className="portrait-img"
         placeholder={imageSrc === faceImage ? "blur" : undefined}
         priority
+        fetchPriority="high"
         sizes="(max-width: 768px) 100vw, 50vw"
       />
 

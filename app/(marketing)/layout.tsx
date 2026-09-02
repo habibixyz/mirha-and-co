@@ -11,7 +11,9 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 import SiteHeader from "@/components/SiteHeader";
 import NewsletterForm from "@/components/NewsletterForm";
 import BackToTop from "@/components/BackToTop";
-import DashboardPromoModal from "@/components/DashboardPromoModal";
+import dynamic from "next/dynamic";
+
+const DashboardPromoModal = dynamic(() => import("@/components/DashboardPromoModal"));
 import {
   DM_Sans,
   DM_Serif_Display,

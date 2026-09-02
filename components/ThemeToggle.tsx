@@ -20,6 +20,7 @@ export function ThemeToggle({ iconOnly = false }: { iconOnly?: boolean }) {
           iconOnly ? "p-1.5" : "px-2 py-1 text-[11px] font-semibold uppercase tracking-wider"
         }`}
         title="Toggle Theme Mode"
+        aria-label="Toggle Theme Mode"
       >
         <Moon size={iconOnly ? 16 : 14} />
         {!iconOnly && <span>Dark</span>}
