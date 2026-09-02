@@ -21,6 +21,11 @@ export async function getSession() {
   }
 
   if (!session || session.expiresAt < new Date()) {
+    try {
+      cookieStore.delete({ name: "mirha_session", path: "/" });
+    } catch {
+      // Ignore if called in read-only render context
+    }
     return null;
   }
 
@@ -42,6 +47,7 @@ export async function createSession(userId: string) {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "lax",
+    path: "/",
     expires: expiresAt
   });
 
@@ -53,10 +59,18 @@ export async function logout() {
   const sessionId = cookieStore.get("mirha_session")?.value;
 
   if (sessionId) {
-    await prisma.session.delete({ where: { id: sessionId } });
+    try {
+      await prisma.session.delete({ where: { id: sessionId } });
+    } catch (e) {
+      console.error("Session deletion error on logout:", e);
+    }
   }
 
-  cookieStore.delete("mirha_session");
+  try {
+    cookieStore.delete({ name: "mirha_session", path: "/" });
+  } catch {
+    cookieStore.delete("mirha_session");
+  }
 }
 
 export async function hashPassword(password: string) {

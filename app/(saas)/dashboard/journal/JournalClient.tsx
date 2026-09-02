@@ -29,11 +29,13 @@ export function SkinJournalClient({ initialEntries, isPro }: { initialEntries: a
  const today = new Date();
  today.setHours(0, 0, 0, 0);
 
- const entryDates = entries.map(e => {
- const d = new Date(e.date);
- d.setHours(0, 0, 0, 0);
- return d.getTime();
- });
+  const entryDates = (entries || []).map(e => {
+    if (!e || !e.date) return 0;
+    const d = new Date(e.date);
+    if (isNaN(d.getTime())) return 0;
+    d.setHours(0, 0, 0, 0);
+    return d.getTime();
+  }).filter(t => t > 0);
 
  const uniqueEntryDates = Array.from(new Set(entryDates));
 
@@ -58,11 +60,13 @@ export function SkinJournalClient({ initialEntries, isPro }: { initialEntries: a
  date.setDate(date.getDate() - i);
  date.setHours(0, 0, 0, 0);
 
- const dayEntry = entries.find(e => {
- const d = new Date(e.date);
- d.setHours(0, 0, 0, 0);
- return d.getTime() === date.getTime();
- });
+  const dayEntry = (entries || []).find(e => {
+    if (!e || !e.date) return false;
+    const d = new Date(e.date);
+    if (isNaN(d.getTime())) return false;
+    d.setHours(0, 0, 0, 0);
+    return d.getTime() === date.getTime();
+  });
 
  calendarGrid.push({
  date: new Date(date),

@@ -189,96 +189,125 @@ export async function getJournalEntries() {
  });
 }
 
+function safeJsonParse(val: any, fallback: any) {
+  if (!val) return fallback;
+  if (typeof val === "object") return val;
+  try {
+    return JSON.parse(val);
+  } catch {
+    return fallback;
+  }
+}
+
 export async function getDashboardData() {
- try {
- const session = await getSession();
- if (!session) return { routines: [], journal: null, user: null, error: "Unauthorized" };
+  let session = null;
+  try {
+    session = await getSession();
+    if (!session) return { routines: [], journal: null, user: null, error: "Unauthorized" };
 
- // Optimize sequential awaits into parallel execution to eliminate database query water-falling
- const [routines, recentJournal, journalCount, recentEntries] = await Promise.all([
- prisma.routine.findMany({
- where: { userId: session.userId },
- orderBy: { createdAt: "asc" }
- }),
- prisma.skinJournal.findFirst({
- where: { userId: session.userId },
- orderBy: { date: "desc" }
- }),
- prisma.skinJournal.count({
- where: { userId: session.userId }
- }),
- prisma.skinJournal.findMany({
- where: { userId: session.userId },
- take: 5,
- orderBy: { date: "desc" },
- select: { rating: true }
- })
- ]);
+    // Optimize sequential awaits into parallel execution to eliminate database query water-falling
+    const [routines, recentJournal, journalCount, recentEntries] = await Promise.all([
+      prisma.routine.findMany({
+        where: { userId: session.userId },
+        orderBy: { createdAt: "asc" }
+      }),
+      prisma.skinJournal.findFirst({
+        where: { userId: session.userId },
+        orderBy: { date: "desc" }
+      }),
+      prisma.skinJournal.count({
+        where: { userId: session.userId }
+      }),
+      prisma.skinJournal.findMany({
+        where: { userId: session.userId },
+        take: 5,
+        orderBy: { date: "desc" },
+        select: { rating: true }
+      })
+    ]);
 
- // ── STATS LOGIC ──────────────────────────────────────────────────────────
- 
- // Average rating for last 5 entries
- const avgRating = recentEntries.length > 0 
- ? recentEntries.reduce((acc, curr) => acc + (curr.rating || 0), 0) / recentEntries.length 
- : 0;
- const skinScore = Math.round(avgRating * 20);
+    // ── STATS LOGIC ──────────────────────────────────────────────────────────
+    
+    // Average rating for last 5 entries
+    const avgRating = recentEntries.length > 0 
+      ? recentEntries.reduce((acc, curr) => acc + (curr.rating || 0), 0) / recentEntries.length 
+      : 0;
+    const skinScore = Math.round(avgRating * 20);
 
- // 3. Streak (Calculate from metadata logs)
- let routineStreak = 0;
- if (routines.length > 0) {
- const logs = routines[0].metadata ? JSON.parse(routines[0].metadata).logs || {} : {};
- const dates = Object.keys(logs).sort((a, b) => new Date(b).getTime() - new Date(a).getTime());
- 
- const today = new Date().toISOString().split("T")[0];
- const yesterday = new Date(Date.now() - 86400000).toISOString().split("T")[0];
- 
- let current = dates.includes(today) ? today : dates.includes(yesterday) ? yesterday : null;
- 
- if (current) {
- routineStreak = 1;
- let checkDate = new Date(current);
- while (true) {
- checkDate.setDate(checkDate.getDate() - 1);
- const formatted = checkDate.toISOString().split("T")[0];
- if (dates.includes(formatted)) {
- routineStreak++;
- } else {
- break;
- }
- }
- }
- }
+    // 3. Streak (Calculate from metadata logs)
+    let routineStreak = 0;
+    if (routines.length > 0) {
+      const meta = safeJsonParse(routines[0].metadata, { logs: {} });
+      const logs = meta?.logs || {};
+      const dates = Object.keys(logs).sort((a, b) => new Date(b).getTime() - new Date(a).getTime());
+      
+      const today = new Date().toISOString().split("T")[0];
+      const yesterday = new Date(Date.now() - 86400000).toISOString().split("T")[0];
+      
+      let current = dates.includes(today) ? today : dates.includes(yesterday) ? yesterday : null;
+      
+      if (current) {
+        routineStreak = 1;
+        let checkDate = new Date(current);
+        while (true) {
+          checkDate.setDate(checkDate.getDate() - 1);
+          const formatted = checkDate.toISOString().split("T")[0];
+          if (dates.includes(formatted)) {
+            routineStreak++;
+          } else {
+            break;
+          }
+        }
+      }
+    }
 
- // 4. Completed Goals (Total steps completed today)
- const todayStr = new Date().toISOString().split("T")[0];
- let completedGoals = 0;
- routines.forEach((r: any) => {
- const logs = r.metadata ? JSON.parse(r.metadata).logs || {} : {};
- if (logs[todayStr]) {
- completedGoals += logs[todayStr].length;
- }
- });
+    // 4. Completed Goals (Total steps completed today)
+    const todayStr = new Date().toISOString().split("T")[0];
+    let completedGoals = 0;
+    routines.forEach((r: any) => {
+      const meta = safeJsonParse(r.metadata, { logs: {} });
+      const logs = meta?.logs || {};
+      if (logs[todayStr] && Array.isArray(logs[todayStr])) {
+        completedGoals += logs[todayStr].length;
+      }
+    });
 
- return {
- routines: routines.map((r: any) => ({ 
- id: r.id, 
- name: r.name, 
- steps: JSON.parse(r.routine),
- metadata: r.metadata ? JSON.parse(r.metadata) : { logs: {} }
- })),
- journal: recentJournal,
- stats: {
- routineStreak,
- journalCount,
- skinScore,
- completedGoals
- },
- user: session.user
- };
- } catch (error) {
- console.error("Dashboard data error:", error);
- return { error: "Failed to fetch data" };
- }
+    const parsedRoutines = routines.map((r: any) => {
+      let steps = safeJsonParse(r.routine, []);
+      if (!Array.isArray(steps)) steps = typeof steps === "string" ? [steps] : [];
+      const metadata = safeJsonParse(r.metadata, { logs: {} });
+      return {
+        id: r.id,
+        name: r.name,
+        steps,
+        metadata: typeof metadata === "object" && metadata !== null ? metadata : { logs: {} }
+      };
+    });
+
+    return {
+      routines: parsedRoutines,
+      journal: recentJournal,
+      stats: {
+        routineStreak,
+        journalCount,
+        skinScore,
+        completedGoals
+      },
+      user: session.user
+    };
+  } catch (error) {
+    console.error("Dashboard data error:", error);
+    if (session?.user) {
+      return {
+        routines: [],
+        journal: null,
+        stats: { routineStreak: 0, journalCount: 0, skinScore: 0, completedGoals: 0 },
+        user: session.user,
+        error: "FETCH_ERROR"
+      };
+    }
+    return { routines: [], journal: null, user: null, error: "Unauthorized" };
+  }
 }
 
 export async function getUserProfile() {
