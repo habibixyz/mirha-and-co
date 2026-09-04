@@ -191,7 +191,7 @@ export default async function RootLayout({
  <Script
  id="mirha-site-structured-data"
  type="application/ld+json"
- strategy="beforeInteractive"
+ strategy="afterInteractive"
  dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
  />
  <Script strategy="afterInteractive" src="https://www.dwin1.com/2904237.js" />

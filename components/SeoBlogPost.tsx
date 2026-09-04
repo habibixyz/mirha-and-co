@@ -1,7 +1,6 @@
 import Link from "next/link";
 import BlogFooterTools from "@/components/BlogFooterTools";
 import { AffiliateCard } from "@/components/AffiliateCard";
-import { cookies, headers } from "next/headers";
 import { getLocalizedContent, Currency } from "@/lib/globalization";
 import { getRelatedPosts } from "@/lib/blog-utils";
 
@@ -213,11 +212,21 @@ export async function SeoBlogPost({
   slug?: string;
   tags?: string[];
   asins?: string[];
+  currency = "INR",
+}: {
+  category: string;
+  title: string;
+  description: string;
+  date: string;
+  readTime: string;
+  sections: Section[];
+  views?: number;
+  slug?: string;
+  tags?: string[];
+  asins?: string[];
+  currency?: Currency;
   children?: React.ReactNode;
 }) {
-  const cookieStore = await cookies();
-  const headerStore = await headers();
-  const currency = (cookieStore.get("mirha_currency")?.value || headerStore.get("x-default-currency") || "INR") as Currency;
   const localizeContent = (text: string) => getLocalizedContent(text, currency);
 
   // Compute related posts by tag overlap — only if caller passes slug + tags

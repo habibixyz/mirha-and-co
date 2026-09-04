@@ -8,7 +8,7 @@ import { getLocalizedContent, Currency } from "@/lib/globalization";
 import { prisma } from "@/lib/prisma";
 
 
-export const dynamic = "force-dynamic";
+export const revalidate = 300;
 
 export const metadata: Metadata = {
  title: "Skincare Journal, Guides & Reviews | Mirha & Co.",
