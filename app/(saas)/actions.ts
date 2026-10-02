@@ -1,5 +1,7 @@
 "use server";
 
+import { redisCache } from "@/lib/redis";
+
 import { getSession, logout } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
@@ -375,17 +377,18 @@ async function getBaseUrl() {
  return `${protocol}://${host}`;
 }
 
-const loginRateMap = new Map<string, { count: number; resetAt: number }>();
-
-function isLoginRateLimited(identifier: string, limit = 5, windowMs = 15 * 60 * 1000): boolean {
-  const now = Date.now();
-  const entry = loginRateMap.get(identifier);
-  if (!entry || now > entry.resetAt) {
-    loginRateMap.set(identifier, { count: 1, resetAt: now + windowMs });
-    return false;
+/**
+ * Redis-backed login rate limiter — shared across all serverless instances.
+ * Falls back to the in-memory MemoryCache in local development (via redisCache).
+ * Limit: 10 attempts per IP+email combo per 15-minute window.
+ */
+async function isLoginRateLimited(identifier: string, limit = 10, windowSecs = 15 * 60): Promise<boolean> {
+  const key = `login_rate:${identifier}`;
+  const count = await redisCache.incr(key);
+  if (count === 1) {
+    await redisCache.expire(key, windowSecs);
   }
-  entry.count++;
-  return entry.count > limit;
+  return count > limit;
 }
 
 export async function loginAction(_state: AuthState, formData: FormData): Promise<AuthState> {
@@ -398,8 +401,8 @@ export async function loginAction(_state: AuthState, formData: FormData): Promis
   const ip = headerStore.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
   const rateLimitKey = `${ip}:${email}`;
 
-  // Allow up to 50 attempts per 15 minutes to prevent lockouts during testing
-  if (isLoginRateLimited(rateLimitKey, 50)) {
+  // Redis-backed rate limit: 10 attempts per IP+email per 15 minutes
+  if (await isLoginRateLimited(rateLimitKey)) {
     return { error: "Too many login attempts. Please wait 15 minutes before trying again." };
   }
 
@@ -430,7 +433,13 @@ export async function loginAction(_state: AuthState, formData: FormData): Promis
       }
     }
 
-    redirectTo = String(formData.get("redirectTo") || "/dashboard");
+    // 🔐 OPEN REDIRECT FIX: only allow same-origin paths (reject protocol-relative
+    // and absolute URLs that could redirect users off-site after login).
+    const rawRedirect = String(formData.get("redirectTo") || "/dashboard");
+    redirectTo = rawRedirect.startsWith("/") && !rawRedirect.startsWith("//")
+      ? rawRedirect
+      : "/dashboard";
+
     await createSession(user.id);
   } catch (error) {
     console.error("Login error:", error);
@@ -491,7 +500,11 @@ export async function registerAction(_state: AuthState, formData: FormData): Pro
       }
     }
 
-    redirectTo = String(formData.get("redirectTo") || "/dashboard");
+    // 🔐 OPEN REDIRECT FIX: only allow same-origin paths
+    const rawRedirect = String(formData.get("redirectTo") || "/dashboard");
+    redirectTo = rawRedirect.startsWith("/") && !rawRedirect.startsWith("//")
+      ? rawRedirect
+      : "/dashboard";
     await createSession(user.id);
   } catch (error) {
     console.error("Register error:", error);

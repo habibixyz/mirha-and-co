@@ -28,18 +28,13 @@ export async function POST(req: NextRequest) {
     }
 
     const session = await getSession();
-    const isSecretValid = process.env.TRANSLATE_API_SECRET && req.headers.get("x-translate-secret") === process.env.TRANSLATE_API_SECRET;
-    
-    const referer = req.headers.get("referer") || "";
-    const origin = req.headers.get("origin") || "";
-    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.mirhaandco.com";
-    
-    const isSameSite = (origin && siteUrl.includes(origin)) || 
-                       (referer && referer.includes(new URL(siteUrl).hostname)) ||
-                       origin.includes("localhost") || 
-                       referer.includes("localhost");
+    const isSecretValid = !!(process.env.TRANSLATE_API_SECRET &&
+      req.headers.get("x-translate-secret") === process.env.TRANSLATE_API_SECRET);
 
-    if (!session && !isSecretValid && !isSameSite) {
+    // 🔐 SECURITY: Referer/Origin headers are user-controlled and cannot be
+    // trusted for authentication. Only a valid session or the secret header
+    // is accepted — the spoofable isSameSite check has been removed.
+    if (!session && !isSecretValid) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 

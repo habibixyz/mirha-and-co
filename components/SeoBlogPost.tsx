@@ -200,19 +200,8 @@ export async function SeoBlogPost({
   slug,
   tags,
   asins,
-  children,
-}: {
-  category: string;
-  title: string;
-  description: string;
-  date: string;
-  readTime: string;
-  sections: Section[];
-  views?: number;
-  slug?: string;
-  tags?: string[];
-  asins?: string[];
   currency = "INR",
+  children,
 }: {
   category: string;
   title: string;

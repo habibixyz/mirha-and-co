@@ -2,9 +2,35 @@ import crypto from "crypto";
 
 const TOKEN_TTL_MS = 24 * 60 * 60 * 1000;
 
+/**
+ * Returns the HMAC signing secret for B2B key retrieval tokens.
+ *
+ * In production, B2B_KEY_LOOKUP_SECRET MUST be explicitly set.
+ * The fallback chain below is purely for local development convenience —
+ * webhook secrets are shared with payment providers and must NEVER be
+ * used as the token signing key in a live environment.
+ */
 function getLookupSecret() {
+  const dedicated = process.env.B2B_KEY_LOOKUP_SECRET;
+
+  if (!dedicated) {
+    if (process.env.NODE_ENV === "production") {
+      throw new Error(
+        "FATAL: B2B_KEY_LOOKUP_SECRET is not configured. " +
+        "Set this env var to a random 32-byte hex string before deploying. " +
+        "Generate one with: node -e \"console.log(require('crypto').randomBytes(32).toString('hex'))\""
+      );
+    }
+    // Dev-only fallback — logs a warning so the issue is visible locally
+    console.warn(
+      "[b2bRetrievalToken] B2B_KEY_LOOKUP_SECRET is not set. " +
+      "Falling back to webhook secrets for local dev only. " +
+      "This MUST be fixed before going to production."
+    );
+  }
+
   return (
-    process.env.B2B_KEY_LOOKUP_SECRET ||
+    dedicated ||
     process.env.RAZORPAY_WEBHOOK_SECRET ||
     process.env.DODO_WEBHOOK_SECRET ||
     process.env.PADDLE_WEBHOOK_SECRET ||

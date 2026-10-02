@@ -104,8 +104,8 @@ export async function POST(req: Request) {
       if (user) {
         isPro =
           (user.subscription?.tier === "pro" && user.subscription?.status === "active") ||
-          user.isAdmin ||
-          user.email === "tanizcoldz@gmail.com";
+          user.isAdmin;
+        // Note: use user.isAdmin to grant admin bypass — do not hardcode emails here.
         hasCredits = user.credits > 0;
       }
     }

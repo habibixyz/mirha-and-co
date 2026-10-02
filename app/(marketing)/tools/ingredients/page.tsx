@@ -1,13 +1,8 @@
-﻿import type { Metadata } from "next";
-import dynamic from "next/dynamic";
+import type { Metadata } from "next";
+import IngredientCheckerLoader from "./IngredientCheckerLoader";
 
-// Lazy-load: IngredientChecker is 87KB of client-only code.
-// ssr:false keeps it out of the initial HTML payload entirely;
-// it is fetched as a separate chunk after the page is interactive.
-const IngredientChecker = dynamic(() => import("./IngredientChecker"), {
-  ssr: false,
-  loading: () => <div style={{ minHeight: "80vh" }} />,
-});
+// IngredientChecker is loaded lazily via IngredientCheckerLoader (a Client Component).
+// `ssr: false` must live in a Client Component — see IngredientCheckerLoader.tsx.
 
 // --- SEO METADATA ---
 export const metadata: Metadata = {
@@ -131,7 +126,7 @@ export default function IngredientsPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <IngredientChecker />
+      <IngredientCheckerLoader />
     </>
   );
 }
