@@ -2,80 +2,57 @@ import { NextRequest, NextResponse } from "next/server";
 import { generateRoutine } from "../../../../lib/routineEngine";
 import { resolveLocationDataLive } from "../../../../lib/geocoding";
 import { prisma } from "@/lib/prisma";
-import crypto from "crypto";
-import { redisCache } from "@/lib/redis";
+import { validateB2BRequest, isRateLimited } from "@/lib/b2bAuth";
 
-async function isWidgetRateLimited(ip: string, limit = 30): Promise<boolean> {
-  const key = `rate:widget:ip:${ip}`;
-  const count = await redisCache.incr(key);
-  if (count === 1) {
-    await redisCache.expire(key, 60);
-  }
-  return count > limit;
-}
-
-function isOriginAllowed(request: NextRequest, allowedOrigins: string): boolean {
-  if (allowedOrigins === "*") return true;
-
-  const originHeader = request.headers.get("origin");
-  const refererHeader = request.headers.get("referer");
-
-  let requestDomain = "";
-
-  if (originHeader) {
-    try {
-      requestDomain = new URL(originHeader).hostname.toLowerCase();
-    } catch {
-      requestDomain = originHeader.toLowerCase();
-    }
-  } else if (refererHeader) {
-    try {
-      requestDomain = new URL(refererHeader).hostname.toLowerCase();
-    } catch {
-      requestDomain = refererHeader.toLowerCase();
-    }
-  }
-
-  requestDomain = requestDomain.split(":")[0];
-  if (!requestDomain) return false;
-
-  const whitelist = allowedOrigins
-    .split(",")
-    .map((d) => d.trim().toLowerCase())
-    .filter(Boolean);
-
-  return whitelist.some((domain) => {
-    if (requestDomain === domain) return true;
-    if (domain.startsWith("*.")) {
-      const baseDomain = domain.slice(2);
-      return requestDomain === baseDomain || requestDomain.endsWith("." + baseDomain);
-    }
-    return false;
-  });
-}
-
+// Widget responses are always application/javascript — even errors.
+// This is intentional: partner sites embed this via <script src="..."> and
+// a non-JS Content-Type causes browsers to block the script execution.
 const CORS_HEADERS = {
   "Access-Control-Allow-Origin": "*",
   "Content-Type": "application/javascript",
   "Cache-Control": "public, max-age=300",
 };
 
+/** Separate IP-level rate limit for the widget endpoint (30/min/IP).
+ *  Runs BEFORE auth so unauthenticated scrapers are shed cheaply.
+ *  Uses the canonical isRateLimited from lib/b2bAuth — not a local copy. */
+async function isWidgetIpLimited(ip: string): Promise<boolean> {
+  return isRateLimited(`widget:ip:${ip}`, 30);
+}
+
+/** Map a B2B auth error HTTP status to a user-facing JS comment message. */
+function widgetErrorMsg(status: number): string {
+  if (status === 401) return "Invalid or missing API key. Obtain one at mirhaandco.com/b2b";
+  if (status === 403) return "Forbidden. Origin not whitelisted for this API key.";
+  if (status === 429) return "Rate limit or monthly quota exceeded. Please try again later.";
+  return "Authentication failed. Contact support at mirhaandco.com/b2b";
+}
+
 export async function GET(req: NextRequest) {
   const forwarded = req.headers.get("x-forwarded-for");
   const ip = forwarded?.split(",")[0]?.trim() || "unknown";
 
-  if (await isWidgetRateLimited(ip, 30)) {
+  // Shed unauthenticated/scraper traffic cheaply before touching the DB
+  if (await isWidgetIpLimited(ip)) {
     return new NextResponse("// Rate limit exceeded", { status: 429, headers: CORS_HEADERS });
   }
 
   const { searchParams } = new URL(req.url);
-  const apiKey = searchParams.get("apiKey");
-  const postalCode = searchParams.get("postalCode") || searchParams.get("city") || "90210";
-  const skinType = searchParams.get("skinType") || "oily";
+  const apiKey      = searchParams.get("apiKey");
+  const postalCode  = searchParams.get("postalCode") || searchParams.get("city") || "90210";
+  const skinType    = searchParams.get("skinType")    || "oily";
   const mainConcern = searchParams.get("mainConcern") || "acne";
 
+  // ── Missing key — return a descriptive error before DB lookup ──────────────
+  if (!apiKey) {
+    return new NextResponse(
+      "// Mirha Widget Error: Missing apiKey query parameter. Obtain a B2B key at mirhaandco.com/b2b",
+      { status: 401, headers: CORS_HEADERS }
+    );
+  }
+
   // ── Theme & branding params (purely cosmetic — never affect recommendations) ─
-  const theme = searchParams.get("theme") === "light" ? "light" : "dark";
+  const theme    = searchParams.get("theme") === "light" ? "light" : "dark";
   const rawAccent = searchParams.get("accentColor") || "";
   // Accept with or without leading #, validate as hex, fall back to brand pink
   const accentHex = /^[0-9a-fA-F]{3,6}$/.test(rawAccent.replace("#", ""))
@@ -86,118 +63,67 @@ export async function GET(req: NextRequest) {
   const colors =
     theme === "light"
       ? {
-          bg: "linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)",
-          border: "#e2e8f0",
-          shadow: "0 4px 20px -4px rgba(0,0,0,0.10)",
-          text: "#0f172a",
-          subtext: "#64748b",
-          label: "#94a3b8",
-          cardBg: "rgba(248,250,252,0.9)",
-          cardBorder: "#e2e8f0",
-          badgeBg: `rgba(16,185,129,0.10)`,
-          badgeColor: "#059669",
+          bg:          "linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)",
+          border:      "#e2e8f0",
+          shadow:      "0 4px 20px -4px rgba(0,0,0,0.10)",
+          text:        "#0f172a",
+          subtext:     "#64748b",
+          label:       "#94a3b8",
+          cardBg:      "rgba(248,250,252,0.9)",
+          cardBorder:  "#e2e8f0",
+          badgeBg:     `rgba(16,185,129,0.10)`,
+          badgeColor:  "#059669",
           badgeBorder: "rgba(16,185,129,0.25)",
           accentColor: accentHex,
         }
       : {
-          bg: "linear-gradient(135deg, #090d16 0%, #0d1527 100%)",
-          border: "#1e293b",
-          shadow: "0 10px 25px -5px rgba(0,0,0,0.5)",
-          text: "#f8fafc",
-          subtext: "#cbd5e1",
-          label: "#94a3b8",
-          cardBg: "rgba(15,23,42,0.8)",
-          cardBorder: "#334155",
-          badgeBg: "rgba(52,211,153,0.10)",
-          badgeColor: "#34d399",
+          bg:          "linear-gradient(135deg, #090d16 0%, #0d1527 100%)",
+          border:      "#1e293b",
+          shadow:      "0 10px 25px -5px rgba(0,0,0,0.5)",
+          text:        "#f8fafc",
+          subtext:     "#cbd5e1",
+          label:       "#94a3b8",
+          cardBg:      "rgba(15,23,42,0.8)",
+          cardBorder:  "#334155",
+          badgeBg:     "rgba(52,211,153,0.10)",
+          badgeColor:  "#34d399",
           badgeBorder: "rgba(52,211,153,0.20)",
           accentColor: accentHex,
         };
 
-  // ── API Key validation ──────────────────────────────────────────────────────
-  if (!apiKey) {
+  // ── Auth + quota ───────────────────────────────────────────────────────────
+  // validateB2BRequest handles: domain locking, quota reset, burst rate limit,
+  // atomic quota increment, AND quota threshold emails (80% warning + exhaustion).
+  const auth = await validateB2BRequest(req, apiKey, "widget");
+  if (!auth.success) {
+    const status = auth.errorStatus ?? 401;
     return new NextResponse(
-      "// Mirha Widget Error: Missing apiKey query parameter. Obtain a B2B key at mirhaandco.com/b2b",
-      { status: 401, headers: CORS_HEADERS }
+      `// Mirha Widget Error: ${widgetErrorMsg(status)}`,
+      { status, headers: CORS_HEADERS }
     );
   }
 
-  const isTrial = apiKey === "b2b_trial_key";
-  let logKeyId: string | null = null;
-  let b2bKey: any = null;
- 
-  if (!isTrial) {
-    const keyHash = crypto.createHash("sha256").update(apiKey).digest("hex");
-    b2bKey = await prisma.b2BApiKey.findFirst({
-      where: { OR: [{ keyHash }, { key: apiKey }] },
-    });
- 
-    if (!b2bKey || b2bKey.status !== "active") {
-      return new NextResponse(
-        "// Mirha Widget Error: Invalid or suspended API key.",
-        { status: 401, headers: CORS_HEADERS }
-      );
-    }
- 
-    // ── Domain locking validation ──────────────────────────────────────────
-    if (b2bKey.allowedOrigins && b2bKey.allowedOrigins !== "*") {
-      if (!isOriginAllowed(req, b2bKey.allowedOrigins)) {
-        return new NextResponse(
-          "// Mirha Widget Error: Forbidden. Origin not whitelisted.",
-          { status: 403, headers: CORS_HEADERS }
-        );
-      }
-    }
+  const { isTrial, logKeyId } = auth;
 
-    const now = new Date();
-    if (now > b2bKey.quotaResetAt) {
-      await prisma.b2BApiKey.update({
-        where: { id: b2bKey.id },
-        data: {
-          usageThisMonth: 0,
-          quotaResetAt: new Date(now.getFullYear(), now.getMonth() + 1, 1),
-        },
-      });
-      b2bKey.usageThisMonth = 0;
-    }
-
-    const quotaUpdate = await prisma.b2BApiKey.updateMany({
-      where: {
-        id: b2bKey.id,
-        usageThisMonth: { lt: b2bKey.monthlyQuota },
-      },
-      data: { usageThisMonth: { increment: 1 } },
-    });
-
-    if (quotaUpdate.count === 0) {
-      return new NextResponse(
-        "// Mirha Widget Error: Monthly quota exceeded.",
-        { status: 429, headers: CORS_HEADERS }
-      );
-    }
-
-    logKeyId = b2bKey.id;
-  }
-
-  // ── Resolve location & generate recommendation ──────────────────────────────
+  // ── Resolve location & generate recommendation ─────────────────────────────
   const locationDetails = await resolveLocationDataLive({ postalCode });
-  
+
   let customCatalog: any[] | undefined = undefined;
-  if (!isTrial && b2bKey?.customCatalog && Array.isArray(b2bKey.customCatalog)) {
-    customCatalog = b2bKey.customCatalog;
+  if (!isTrial && auth.b2bKey?.customCatalog && Array.isArray(auth.b2bKey.customCatalog)) {
+    customCatalog = auth.b2bKey.customCatalog;
   }
 
   const routine = generateRoutine(
     { skinType, mainConcern, budget: "under_1000", experience: "beginner" },
     {
-      city: locationDetails.city,
-      country: locationDetails.countryCode,
+      city:       locationDetails.city,
+      country:    locationDetails.countryCode,
       postalCode,
-      ppm: locationDetails.ppm,
-      temp: locationDetails.temp,
-      humidity: locationDetails.humidity,
-      dewpoint: locationDetails.dewpoint,
-      catalog: customCatalog,
+      ppm:        locationDetails.ppm,
+      temp:       locationDetails.temp,
+      humidity:   locationDetails.humidity,
+      dewpoint:   locationDetails.dewpoint,
+      catalog:    customCatalog,
     }
   );
 
@@ -205,16 +131,16 @@ export async function GET(req: NextRequest) {
   if (logKeyId) {
     prisma.b2BUsageLog.create({
       data: {
-        keyId: logKeyId,
+        keyId:    logKeyId,
         endpoint: "/api/v1/widget",
         skinType: skinType || null,
-        city: locationDetails.city || null,
-        ppm: locationDetails.ppm || null,
+        city:     locationDetails.city || null,
+        ppm:      locationDetails.ppm  || null,
       },
     }).catch(() => {});
   }
 
-  // ── Build embeddable JS widget ──────────────────────────────────────────────
+  // ── Build embeddable JS widget ─────────────────────────────────────────────
   const jsScript = `
 (function() {
   var container = document.getElementById('mirha-climate-widget');

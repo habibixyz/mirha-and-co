@@ -3,6 +3,8 @@ import { prisma } from "@/lib/prisma";
 import { verifyB2BRetrievalToken } from "@/lib/b2bRetrievalToken";
 import { redisRateLimit, getClientIp } from "@/lib/redisRateLimit";
 
+const SUPPORT_EMAIL = process.env.SUPPORT_EMAIL || "support@mirhaandco.com";
+
 /* ─── Per-IP rate limiter: max 5 lookups/min (fixed window, Redis-backed) ─── */
 
 const HEADERS = {
@@ -62,7 +64,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(
       {
         found: false,
-        hint: "No active API key found for this email. Check your inbox for the welcome email, or contact tanizcoldz@gmail.com.",
+        hint: `No active API key found for this email. Check your inbox for the welcome email, or contact ${SUPPORT_EMAIL}.`,
       },
       { status: 200, headers: HEADERS }
     );
@@ -80,7 +82,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(
       {
         found: false,
-        hint: "Your API key was emailed to you when your subscription activated. Check your inbox (including spam) or contact tanizcoldz@gmail.com to have it resent.",
+        hint: `Your API key was emailed to you when your subscription activated. Check your inbox (including spam) or contact ${SUPPORT_EMAIL} to have it resent.`,
       },
       { status: 200, headers: HEADERS }
     );

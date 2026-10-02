@@ -67,12 +67,26 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const sanitizedOrigins = (allowedOrigins || "").trim();
+
+    const sanitizedOrigins = (allowedOrigins || "").trim().slice(0, 1000);
+
+    // Only allow characters that are valid in domain names, wildcards, ports and commas.
+    // Reject anything that looks like a URL scheme, path, or script injection.
+    if (sanitizedOrigins !== "*" && sanitizedOrigins !== "") {
+      const validPattern = /^[a-zA-Z0-9\s.,*\-:]+$/;
+      if (!validPattern.test(sanitizedOrigins)) {
+        return NextResponse.json(
+          { success: false, error: "Invalid allowedOrigins format. Use comma-separated hostnames (e.g. 'yourstore.com, localhost') or '*' to allow all." },
+          { status: 400, headers: CORS_HEADERS }
+        );
+      }
+    }
 
     await prisma.b2BApiKey.update({
       where: { id: b2bKey.id },
       data: { allowedOrigins: sanitizedOrigins },
     });
+
 
     return NextResponse.json(
       {

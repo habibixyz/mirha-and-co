@@ -66,12 +66,15 @@ export async function POST(req: Request) {
 
       // --- B2B Flow ---
       if (b2bEmail) {
-        // Idempotency check: If key already provisioned and active for this subscription ID, return early
+        // Idempotency check: skip if this exact subscription ID is already active.
+        // We filter on BOTH email AND subscriptionId — email-only would incorrectly
+        // skip a re-subscribe where the partner has a new subscriptionId.
         const existing = await prisma.b2BApiKey.findFirst({ where: { email: b2bEmail } });
         if (existing && existing.razorpaySubscriptionId === subscriptionId && existing.status === "active") {
           console.log(`Dodo Webhook: Subscription ${subscriptionId} key already active. Skipping duplicate email.`);
           return NextResponse.json({ status: "success", idempotency: "already_processed" });
         }
+
 
         const brandName = data.metadata?.b2b_brand || "Unknown Brand";
         const tier = data.metadata?.b2b_tier || "growth"; // "growth" | "scale"

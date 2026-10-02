@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import crypto from "crypto";
+import { isRateLimited } from "@/lib/b2bAuth";
 
 const CORS_HEADERS = {
   "Access-Control-Allow-Origin": "*",
@@ -20,6 +21,15 @@ export async function GET(req: NextRequest) {
     return NextResponse.json(
       { success: false, error: "Unauthorized. apiKey query parameter is required." },
       { status: 401, headers: CORS_HEADERS }
+    );
+  }
+
+  // Rate limit: 60 analytics fetches per minute per API key.
+  // Without this, a valid key can hammer an unbounded DB read on every request.
+  if (await isRateLimited(`analytics:${apiKey}`, 60)) {
+    return NextResponse.json(
+      { success: false, error: "Rate limit exceeded. Max 60 analytics requests per minute." },
+      { status: 429, headers: CORS_HEADERS }
     );
   }
 
@@ -58,15 +68,19 @@ export async function GET(req: NextRequest) {
     );
   }
 
-  // Query actual logs
+  // Query actual logs (capped at 10 000 rows, newest first).
+  // Without a take limit, a key with 1M+ log rows would OOM the server.
   const logs = await prisma.b2BUsageLog.findMany({
     where: { keyId },
     select: {
-      endpoint: true,
-      skinType: true,
-      city: true,
-      ppm: true,
+      endpoint:  true,
+      skinType:  true,
+      city:      true,
+      ppm:       true,
+      createdAt: true,
     },
+    orderBy: { createdAt: "desc" },
+    take: 10_000,
   });
 
   const skinTypes: Record<string, number> = {};
