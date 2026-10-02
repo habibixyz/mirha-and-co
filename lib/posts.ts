@@ -14,8 +14,43 @@ export type Post = {
  tags: string[];
 };
 
+
 const STATIC_POSTS: Post[] = [
   {
+    category: "SKINCARE",
+    title: "Hard Water & Dandruff: Why Your Scalp Keeps Drying Out",
+    excerpt: "Tried four anti-dandruff shampoos and nothing sticks? If you live in Delhi, Bengaluru, or Hyderabad, your tap water may be the real problem. Here is what hard water does to your scalp and the protocol that actually works.",
+    slug: "hard-water-dandruff-scalp",
+    readTime: "8 min",
+    date: "October 2026",
+    productCount: 2,
+    thumbnail: "HW",
+    tags: ["hard water", "dandruff", "scalp", "hair care", "india", "minerals", "chelating shampoo"],
+  },
+  {
+    category: "SKINCARE",
+    title: "Skin Purging vs Breakout — How to Tell the Difference",
+    excerpt: "Started a retinol or salicylic acid and suddenly breaking out everywhere? It might be a purge — not a reaction. Here is the definitive guide to knowing when to push through and when to stop.",
+    slug: "skin-purging-vs-breakout",
+    readTime: "9 min",
+    date: "October 2026",
+    productCount: 3,
+    thumbnail: "SK",
+    tags: ["purging", "breakout", "retinol", "salicylic acid", "acne", "actives", "india"],
+  },
+  {
+    category: "SKINCARE",
+    title: "SPF After Moisturiser or Before? The Sunscreen Layering Debate, Settled",
+    excerpt: "Should you apply SPF after moisturiser, mix it in, or use it as a moisturiser? The research-backed answer — with specific guidance for Indian skin, hard water, and humid weather.",
+    slug: "spf-after-moisturiser-layering-order",
+    readTime: "8 min",
+    date: "October 2026",
+    productCount: 3,
+    thumbnail: "SF",
+    tags: ["spf", "sunscreen", "layering", "moisturiser", "routine order", "india", "uva uvb"],
+  },
+  {
+
     category: "SKINCARE",
     title: "Inside the Mirha & Co. Portal: AI Skin Analysis, Active Trackers, and Custom Routines",
     excerpt: "Explore the features of the Mirha & Co. consumer dashboard. Discover how to track your skin journal, scan your face with AI, and verify formulation conflicts in real-time.",
@@ -851,6 +886,13 @@ const mappedHighIntent = HIGH_INTENT_POSTS.map(p => ({
 }));
 
 export const POSTS: Post[] = [
+  // 🌟 Latest October 2026 Blog Posts (Placed at absolute top per workspace rule)
+  ...STATIC_POSTS.filter(p => [
+    "hard-water-dandruff-scalp",
+    "skin-purging-vs-breakout",
+    "spf-after-moisturiser-layering-order"
+  ].includes(p.slug)),
+
   // 🌟 Fresh & High-Intent Featured Posts
   ...mappedHighIntent.filter(p => [
     "indoor-ac-skin-syndrome-barrier-repair",
@@ -971,6 +1013,9 @@ const hashString = (str: string) => {
 
 // Complete slug → unique image lookup table (all 34 available images used)
 const SLUG_IMAGE_MAP: Record<string, string> = {
+  "hard-water-dandruff-scalp": "/blog-thumbs/hard_water_dandruff_scalp.jpg",
+  "skin-purging-vs-breakout": "/blog-thumbs/skin_purging_vs_breakout.jpg",
+  "spf-after-moisturiser-layering-order": "/blog-thumbs/spf_after_moisturiser_layering.jpg",
   "genz-mens-acne-congestion-audit": "/blog-thumbs/blog_genz_mens_acne.jpg",
   "mid-30s-mens-anti-aging-blueprint": "/blog-thumbs/blog_mid30s_mens_skin.jpg",
   "top-4-selling-skincare-products-india": "/blog-thumbs/blog_top4_best_selling.jpg",
