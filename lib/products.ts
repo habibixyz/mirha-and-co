@@ -1,4 +1,146 @@
 export const PRODUCTS = [
+  {
+    "id": 5012,
+    "name": "Formularx Barrier Relief Lightweight Moisturizer (50g)",
+    "brand": "Formularx",
+    "category": "Skincare",
+    "subcat": "Moisturizer",
+    "mrp": 699,
+    "price": 594,
+    "rating": 4.5,
+    "reviews": "3.2k",
+    "asin": "B0BNLHLGF9",
+    "badge": "Barrier Repair",
+    "description": "Lightweight derm-backed lipid moisturizer formulated with Ceramides, Cholesterol, and Free Fatty Acids in a golden 3:1:1 ratio. Restores compromised skin barrier, calms redness, and hydrates sensitive/acne-prone skin without clogging pores.",
+    "specs": {
+      "Skin Type": "Sensitive, Oily & Barrier-Damaged",
+      "Key Ingredient": "Ceramides, Cholesterol, Fatty Acids, Niacinamide",
+      "Texture": "Lightweight Gel-Cream",
+      "Use": "AM & PM"
+    },
+    "tags": [
+      "formularx",
+      "barrier repair",
+      "ceramides",
+      "moisturizer",
+      "niacinamide",
+      "sensitive skin"
+    ],
+    "concerns": [
+      "barrier repair",
+      "redness",
+      "sensitivity",
+      "dehydration"
+    ],
+    "image": "https://azsofabirbgovazlfzvn.supabase.co/storage/v1/object/public/products/B0BNLHLGF9.JPG",
+    "link": "https://link.amazon/B045eB3lk"
+  },
+  {
+    "id": 5013,
+    "name": "SKIN1004 Madagascar Centella Hyalu-Cica Water-Fit Sun Serum SPF50+ PA++++ (50ml)",
+    "brand": "SKIN1004",
+    "category": "Skincare",
+    "subcat": "Sunscreen",
+    "mrp": 1699,
+    "price": 1499,
+    "rating": 4.3,
+    "reviews": "712",
+    "asin": "B0B881GN1P",
+    "badge": "K-Beauty SPF",
+    "description": "Non-nano chemical sunscreen that deeply hydrates while providing broad-spectrum SPF 50+ PA++++ protection. Formulated with pure Madagascar Centella Asiatica and Hyaluronic Acid to soothe inflamed acne stings and leaves zero white cast.",
+    "specs": {
+      "Skin Type": "All Skin Types, Sensitive & Dehydrated",
+      "Key Ingredient": "Centella Asiatica, Hyaluronic Acid, Niacinamide",
+      "Texture": "Lightweight Water Serum",
+      "Use": "AM"
+    },
+    "tags": [
+      "skin1004",
+      "centella",
+      "sunscreen",
+      "hyalu-cica",
+      "k-beauty",
+      "spf 50"
+    ],
+    "concerns": [
+      "sun protection",
+      "redness",
+      "sensitivity",
+      "dehydration"
+    ],
+    "image": "https://azsofabirbgovazlfzvn.supabase.co/storage/v1/object/public/products/B0B881GN1P.JPG",
+    "link": "https://link.amazon/B0eVEG0kF"
+  },
+  {
+    "id": 5014,
+    "name": "Isntree Hyaluronic Acid Watery Sun Gel SPF 50+ PA++++ (50ml)",
+    "brand": "Isntree",
+    "category": "Skincare",
+    "subcat": "Sunscreen",
+    "mrp": 1350,
+    "price": 1147,
+    "rating": 4.6,
+    "reviews": "1.5k",
+    "asin": "B08D3L4BQP",
+    "badge": "Dewy Finish",
+    "description": "Ultra-hydrating daily sun gel featuring 8 types of Hyaluronic Acid, Centella Asiatica, and Astaxanthin. Blocks harmful UVA/UVB rays with zero white cast and no eye-sting.",
+    "specs": {
+      "Skin Type": "Normal, Dry & Dehydrated Skin",
+      "Key Ingredient": "8 Types Hyaluronic Acid, Centella, Astaxanthin",
+      "Texture": "Watery Gel Lotion",
+      "Use": "AM"
+    },
+    "tags": [
+      "isntree",
+      "hyaluronic acid",
+      "sun gel",
+      "k-beauty",
+      "spf 50",
+      "dewy skin"
+    ],
+    "concerns": [
+      "sun protection",
+      "dehydration",
+      "dryness"
+    ],
+    "image": "https://azsofabirbgovazlfzvn.supabase.co/storage/v1/object/public/products/B08D3L4BQP.JPG",
+    "link": "https://link.amazon/B0cWVMH3X"
+  },
+  {
+    "id": 5015,
+    "name": "Sebamed Clear Face Care Gel (50ml)",
+    "brand": "Sebamed",
+    "category": "Skincare",
+    "subcat": "Moisturizer",
+    "mrp": 476,
+    "price": 464,
+    "rating": 4.6,
+    "reviews": "2.1k",
+    "asin": "B06XSQ879T",
+    "badge": "Derm Approved",
+    "description": "Iconic oil-free, non-comedogenic gel moisturizer engineered at pH 5.5 to prevent acne bacteria proliferation. Enriched with Hyaluronic Acid, Aloe Vera, Panthenol, and Allantoin to soothe active breakouts.",
+    "specs": {
+      "Skin Type": "Oily & Severe Acne-Prone Skin",
+      "Key Ingredient": "pH 5.5, Hyaluronic Acid, Aloe Vera, Panthenol",
+      "Texture": "Oil-Free Water Gel",
+      "Use": "AM & PM"
+    },
+    "tags": [
+      "sebamed",
+      "clear face gel",
+      "ph 5.5",
+      "oil free",
+      "acne prone",
+      "aloe vera"
+    ],
+    "concerns": [
+      "acne",
+      "oiliness",
+      "clogged pores"
+    ],
+    "image": "https://azsofabirbgovazlfzvn.supabase.co/storage/v1/object/public/products/B06XSQ879T.JPG",
+    "link": "https://link.amazon/B09pwZY7I"
+  },
  {
  id: 103,
  name: "The Ordinary Caffeine Solution 5% + EGCG, Depuffing Eye Serum for Dark Circles and Tired Eyes, 30",
@@ -3117,8 +3259,8 @@ export const PRODUCTS = [
   "subcat": "Serum",
   "mrp": 2999,
   "price": 2499,
-  "rating": 4.6,
-  "reviews": "2.5k",
+  "rating": 4.5,
+  "reviews": "4.8k",
   "asin": "B09GP7K353",
   "badge": "Intense Moisture",
   "description": "Lightweight, non-sticky daily serum blending pure Glacier Water with multiple weights of Hyaluronic Acid to plump and hydrate deep skin layers.",

@@ -16,16 +16,72 @@ import AiProductTranslator from "@/components/AiProductTranslator";
 import { getGuidesForProduct } from "@/lib/blog-utils";
 
 function isCrueltyFree(product: any) {
- const cfBrands = ["minimalist", "the ordinary", "cosrx", "wishcare", "pilgrim", "dot & key", "mamaearth", "beardo", "aqualogica", "plum", "deconstruct", "derma co"];
- return cfBrands.includes(product.brand.toLowerCase()) || (product.tags || []).some((t: string) => t.toLowerCase() === "cruelty-free" || t.toLowerCase() === "cruelty free");
+  if (!product || !product.brand) return false;
+  const brand = (product.brand || "").toLowerCase().trim();
+  const name = (product.name || "").toLowerCase();
+  const desc = (product.description || "").toLowerCase();
+  const tags = (product.tags || []).map((t: string) => t.toLowerCase());
+
+  if (
+    tags.some((t: string) => t.includes("cruelty-free") || t.includes("cruelty free") || t.includes("peta")) ||
+    name.includes("cruelty-free") || desc.includes("cruelty-free") || desc.includes("not tested on animals")
+  ) {
+    return true;
+  }
+
+  const cfBrands = [
+    "minimalist", "the ordinary", "cosrx", "wishcare", "pilgrim", 
+    "dot & key", "dot and key", "mamaearth", "beardo", "aqualogica", 
+    "plum", "deconstruct", "derma co", "the derma co", "formularx", 
+    "skin1004", "isntree", "beauty of joseon", "foxtale", "chemist at play", 
+    "bare anatomy", "simple", "biotique", "soulflower", "wow skin science",
+    "forest essentials", "sirona", "mcaffeine", "bella vita", "re'equil"
+  ];
+
+  return cfBrands.some((cfb) => brand.includes(cfb));
 }
 
 function isVegan(product: any) {
- const veganBrands = ["minimalist", "the ordinary", "wishcare", "pilgrim", "aqualogica", "plum", "deconstruct"];
- if (product.name.toLowerCase().includes("snail") || product.description.toLowerCase().includes("snail")) {
-  return false;
- }
- return veganBrands.includes(product.brand.toLowerCase()) || (product.tags || []).some((t: string) => t.toLowerCase() === "vegan" || t.toLowerCase() === "veg");
+  if (!product || !product.brand) return false;
+  const name = (product.name || "").toLowerCase();
+  const desc = (product.description || "").toLowerCase();
+  const ingredientsStr = Array.isArray(product.ingredients)
+    ? product.ingredients.join(" ")
+    : typeof product.ingredients === "string"
+      ? product.ingredients
+      : "";
+  const ingredients = ingredientsStr.toLowerCase();
+  const tags = (product.tags || []).map((t: string) => t.toLowerCase());
+
+  if (
+    name.includes("snail") || desc.includes("snail") || ingredients.includes("snail") ||
+    name.includes("honey") || desc.includes("honey") || ingredients.includes("honey") ||
+    name.includes("propolis") || desc.includes("propolis") || ingredients.includes("propolis") ||
+    name.includes("beeswax") || desc.includes("beeswax") || ingredients.includes("beeswax") ||
+    name.includes("collagen") || desc.includes("collagen") || ingredients.includes("collagen") ||
+    name.includes("carmine") || desc.includes("carmine") || ingredients.includes("carmine") ||
+    name.includes("lanolin") || desc.includes("lanolin") || ingredients.includes("lanolin")
+  ) {
+    return false;
+  }
+
+  if (
+    tags.some((t: string) => t === "vegan" || t === "veg" || t.includes("vegan") || t.includes("vegetarian")) ||
+    name.includes("100% vegan") || desc.includes("100% vegan") || desc.includes("vegan formula")
+  ) {
+    return true;
+  }
+
+  const veganBrands = [
+    "minimalist", "the ordinary", "wishcare", "pilgrim", 
+    "aqualogica", "plum", "deconstruct", "formularx", 
+    "skin1004", "isntree", "foxtale", "chemist at play",
+    "dot & key", "dot and key", "bare anatomy", "earth rhythm",
+    "sebamed", "dr. sheth", "dr sheth"
+  ];
+
+  const brand = (product.brand || "").toLowerCase().trim();
+  return veganBrands.some((vb) => brand.includes(vb));
 }
 
 type Product = {

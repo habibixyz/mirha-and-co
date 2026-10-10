@@ -46,5 +46,7 @@ next-env.d.ts
 .vercel
 /scratch/
 /public/temp_recent/
+/public/products/*.JPG
+/public/products/*.jpg
 .env*.local
 *.zip
