@@ -191,7 +191,7 @@ Content-Type: application/json
       // Also handle regular user subscriptions
       await prisma.subscription.updateMany({
         where: { stripeSubscriptionId: subscription.id },
-        data: { tier: "free", status: "cancelled", endsAt: new Date() },
+        data: { tier: "free", status: "canceled", endsAt: new Date() },
       });
     }
 

@@ -33,7 +33,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     title: `${post.title} | Mirha & Co.`,
     description: post.description,
     keywords: (post as any).tags ? (post as any).tags.join(", ") : post.category,
-    authors: [{ name: "Mirha & Co. Skincare Research Lab", url: "https://www.mirhaandco.com/about" }],
+    authors: [
+      { name: "Mirha & Co.", url: "https://www.mirhaandco.com/about" }
+    ],
     publisher: "Mirha & Co.",
     alternates: {
       canonical: `https://www.mirhaandco.com/blog/${slug}`,
@@ -44,6 +46,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       url: `https://www.mirhaandco.com/blog/${slug}`,
       type: "article",
       siteName: "Mirha & Co.",
+      publishedTime: post.date,
+      modifiedTime: post.date,
+      authors: ["Mirha & Co."],
       images: [
         {
           url: ogImage,

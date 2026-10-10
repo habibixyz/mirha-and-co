@@ -30,15 +30,7 @@ export const metadata: Metadata = {
  },
 };
 
-const featured = {
- category: "BEAUTY" as const,
- title: "What Niacinamide Actually Does to Your Skin",
- excerpt: "The no-fluff India edition: oil control, acne marks, barrier support, and how to use it without overdoing your routine.",
- slug: "what-niacinamide-does-to-your-skin",
- readTime: "10 min",
- date: "March 2026",
- tag: "START HERE",
-};
+
 
 const catColors: Record<string, string> = {
  BEAUTY: "#a27b5c",
@@ -52,9 +44,9 @@ const catColors: Record<string, string> = {
 
 
 const paths = [
- { label: "Search", title: "Ask Mirha by concern", text: "Search oily skin, pigmentation, niacinamide, sunscreen, or budget.", href: "/dashboard/search" },
- { label: "Routine", title: "Build your 4-step routine", text: "Get cleanser, treatment, moisturiser, and sunscreen for your skin profile.", href: "/tools/routine" },
- { label: "Shop", title: "Browse curated picks", text: "See products with price, use case, ingredients, and honest context.", href: "/" },
+ { label: "AI SEARCH", title: "Ask Mirha by Concern", text: "Search oily skin, pigmentation, barrier repair, or budget picks.", href: "/dashboard/search" },
+ { label: "SMART ROUTINE", title: "Build Your 4-Step Routine", text: "Get personalized cleanser, active, moisturizer & SPF for your skin type.", href: "/tools/routine" },
+ { label: "CITY TELEMETRY", title: "City Tap Water & Hardness", text: "Check water mineral hardness in your city to protect your skin barrier.", href: "/saas" },
 ];
 
 export default async function BlogIndex() {
@@ -80,6 +72,8 @@ export default async function BlogIndex() {
       views: viewMap.get(p.slug) || 0
     };
   });
+
+  const topFeatured = posts[0] || POSTS[0];
  return (
  <main>
  <style>{`
@@ -337,86 +331,116 @@ export default async function BlogIndex() {
  .featured-band {
  max-width: 1200px;
  margin: 0 auto;
- padding: 2rem 2.5rem 1rem;
+ padding: 2.5rem 2.5rem 1rem;
  }
  .featured-card {
  display: grid;
- grid-template-columns: 1.3fr 0.7fr;
- border: 1px solid #e8ded6;
- background: #fff;
+ grid-template-columns: 1fr 1fr;
+ border: 1px solid rgba(162, 123, 92, 0.25);
+ background: #141210;
  text-decoration: none;
- color: #111;
- border-radius: 16px;
+ color: #ffffff;
+ border-radius: 20px;
  overflow: hidden;
- transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
- box-shadow: 0 10px 30px rgba(0,0,0,0.01);
+ transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+ box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
  }
  .featured-card:hover {
- transform: translateY(-2px);
- box-shadow: 0 15px 35px rgba(162, 123, 92, 0.04);
- border-color: rgba(162, 123, 92, 0.25);
+ transform: translateY(-4px);
+ box-shadow: 0 24px 50px rgba(162, 123, 92, 0.2);
+ border-color: rgba(162, 123, 92, 0.6);
+ }
+ .featured-image-col {
+ position: relative;
+ width: 100%;
+ min-height: 340px;
+ overflow: hidden;
+ background: #0c0b0a;
+ }
+ .featured-image-col img {
+ width: 100%;
+ height: 100%;
+ object-fit: cover;
+ transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+ }
+ .featured-card:hover .featured-image-col img {
+ transform: scale(1.05);
+ }
+ .featured-badge {
+ position: absolute;
+ top: 1.25rem;
+ left: 1.25rem;
+ background: rgba(20, 18, 16, 0.88);
+ backdrop-filter: blur(10px);
+ color: #d4a373;
+ font-family: var(--font-dm-sans), sans-serif;
+ font-size: 0.62rem;
+ font-weight: 700;
+ letter-spacing: 0.18em;
+ padding: 0.45rem 0.95rem;
+ border-radius: 100px;
+ border: 1px solid rgba(212, 163, 115, 0.3);
  }
  .featured-main { 
- padding: 2.2rem 2.5rem; 
+ padding: 2.8rem 3rem; 
  display: flex;
  flex-direction: column;
  justify-content: center;
+ background: #141210;
+ border-left: 1px solid rgba(255, 255, 255, 0.06);
+ }
+ .featured-meta {
+ display: flex;
+ align-items: center;
+ gap: 0.5rem;
+ font-family: var(--font-dm-sans), sans-serif;
+ font-size: 0.65rem;
+ letter-spacing: 0.18em;
+ text-transform: uppercase;
+ font-weight: 700;
+ color: #d4a373;
+ margin-bottom: 0.9rem;
  }
  .featured-main h2 {
  font-family: var(--font-playfair), serif;
- font-size: clamp(1.4rem, 3vw, 2.2rem);
+ font-size: clamp(1.4rem, 2.4vw, 2.1rem);
  font-weight: 700;
- line-height: 1.2;
- margin: 0 0 0.8rem;
- color: #111;
+ line-height: 1.25;
+ margin: 0 0 0.9rem;
+ color: #ffffff !important;
  }
  .featured-main p {
- color: #6f6963;
- line-height: 1.6;
+ color: #b8ac9e !important;
+ line-height: 1.68;
  font-size: 0.92rem;
- max-width: 620px;
- margin: 0 0 1.5rem;
+ margin: 0 0 1.6rem;
+ }
+ .featured-footer {
+ display: flex;
+ align-items: center;
+ justify-content: space-between;
+ margin-top: auto;
+ padding-top: 1.2rem;
+ border-top: 1px solid rgba(255, 255, 255, 0.08);
  }
  .featured-btn {
  display: inline-flex;
  align-items: center;
- gap: 0.4rem;
+ gap: 0.5rem;
  font-family: var(--font-dm-sans), sans-serif;
- font-size: 0.7rem;
+ font-size: 0.72rem;
  font-weight: 700;
- letter-spacing: 0.15em;
+ letter-spacing: 0.18em;
  text-transform: uppercase;
- color: #111;
+ color: #141210;
+ background: #d4a373;
+ padding: 0.6rem 1.3rem;
+ border-radius: 100px;
  transition: all 0.3s ease;
  }
  .featured-card:hover .featured-btn {
-  color: #a27b5c;
-  }
-  .featured-meta-mobile {
-  display: none;
-  font-size: 0.72rem;
-  color: #9b8e83;
-  margin-top: 1.25rem;
-  padding-top: 0.8rem;
-  border-top: 1px solid #f2ebe4;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  font-weight: 500;
-  }
- .featured-side {
- background: #1c1917;
- color: #fafaf9;
- padding: 2.2rem 2.5rem;
- display: flex;
- flex-direction: column;
- justify-content: center;
- border-left: 1px solid rgba(255,255,255,0.05);
- }
- .featured-side p {
- color: rgba(255,255,255,0.65);
- line-height: 1.6;
- margin: 0;
- font-size: 0.85rem;
+ background: #ffffff;
+ color: #141210;
  }
  .article-section {
  max-width: 1200px;
@@ -546,59 +570,90 @@ export default async function BlogIndex() {
   .trust-strip, .path-grid, .article-grid { grid-template-columns: repeat(2, 1fr); }
   }
  @media (max-width: 640px) {
-  .journal-hero-copy { padding: 2.2rem 1.25rem !important; }
-  .journal-hero-copy .eyebrow { margin: 0 0 0.5rem !important; }
-  .journal-hero-copy .hero-title { font-size: 2.2rem !important; }
-  .journal-hero-copy .hero-copy { font-size: 0.92rem !important; margin: 0.8rem 0 1.5rem !important; line-height: 1.6 !important; }
-  .journal-hero-copy .hero-actions { gap: 0.75rem !important; }
-  .primary-btn, .secondary-btn { min-height: 42px !important; padding: 0 1.5rem !important; font-size: 0.68rem !important; border-radius: 8px !important; }
-  .trust-strip {
-  grid-template-columns: repeat(2, 1fr) !important;
-  gap: 0 !important;
+   .journal-hero-copy { padding: 2.2rem 1.25rem !important; }
+   .journal-hero-copy .eyebrow { margin: 0 0 0.5rem !important; }
+   .journal-hero-copy .hero-title { font-size: 2.2rem !important; }
+   .journal-hero-copy .hero-copy { font-size: 0.92rem !important; margin: 0.8rem 0 1.5rem !important; line-height: 1.6 !important; }
+   .journal-hero-copy .hero-actions { gap: 0.75rem !important; }
+   .primary-btn, .secondary-btn { min-height: 42px !important; padding: 0 1.5rem !important; font-size: 0.68rem !important; border-radius: 8px !important; }
+   .trust-strip {
+   grid-template-columns: repeat(2, 1fr) !important;
+   gap: 0 !important;
+   }
+   .trust-item {
+   padding: 0.8rem 0.5rem !important;
+   border-right: 1px solid rgba(255,255,255,0.05) !important;
+   border-bottom: 1px solid rgba(255,255,255,0.05) !important;
+   font-size: 0.6rem !important;
+   letter-spacing: 0.12em !important;
+   }
+   .trust-item:nth-child(2n) {
+   border-right: none !important;
+   }
+   .trust-item:nth-child(3), .trust-item:nth-child(4) {
+   border-bottom: none !important;
+   }
+   .path-grid, .article-grid { grid-template-columns: 1fr !important; gap: 0.75rem !important; }
+   .path-section, .featured-band, .article-section { padding-left: 0.85rem !important; padding-right: 0.85rem !important; }
+   .article-header { align-items: flex-start; flex-direction: column; }
+   .path-card { padding: 0.9rem !important; }
+   .path-card h3 { font-size: 1rem !important; margin-bottom: 0.2rem !important; }
+   .path-card p { font-size: 0.78rem !important; }
+
+   /* Ultra-Compact Horizontal Featured Card for Mobile */
+   .featured-band { padding-top: 0.75rem !important; padding-bottom: 0.35rem !important; }
+   .featured-card {
+     display: flex !important;
+     flex-direction: row !important;
+     align-items: center !important;
+     padding: 0.75rem !important;
+     gap: 0.75rem !important;
+     border-radius: 16px !important;
+     background: #141210 !important;
+   }
+   .featured-image-col {
+     width: 90px !important;
+     height: 90px !important;
+     min-height: 90px !important;
+     max-height: 90px !important;
+     flex-shrink: 0 !important;
+     border-radius: 12px !important;
+   }
+   .featured-badge { display: none !important; }
+   .featured-main {
+     padding: 0 !important;
+     background: transparent !important;
+     border: none !important;
+   }
+   .featured-meta {
+     font-size: 0.55rem !important;
+     letter-spacing: 0.12em !important;
+     margin-bottom: 0.25rem !important;
+     gap: 0.3rem !important;
+   }
+   .featured-main h2 {
+     font-size: 0.92rem !important;
+     line-height: 1.28 !important;
+     margin: 0 0 0.3rem !important;
+     display: -webkit-box !important;
+     -webkit-line-clamp: 2 !important;
+     -webkit-box-orient: vertical !important;
+     overflow: hidden !important;
+     color: #ffffff !important;
+   }
+   .featured-main p { display: none !important; }
+   .featured-footer {
+     padding-top: 0.15rem !important;
+     border-top: none !important;
+     margin-top: 0 !important;
+   }
+   .featured-btn {
+     padding: 0.3rem 0.7rem !important;
+     font-size: 0.58rem !important;
+     letter-spacing: 0.08em !important;
+   }
   }
-  .trust-item {
-  padding: 0.8rem 0.5rem !important;
-  border-right: 1px solid rgba(255,255,255,0.05) !important;
-  border-bottom: 1px solid rgba(255,255,255,0.05) !important;
-  font-size: 0.6rem !important;
-  letter-spacing: 0.12em !important;
-  }
-  .trust-item:nth-child(2n) {
-  border-right: none !important;
-  }
-  .trust-item:nth-child(3), .trust-item:nth-child(4) {
-  border-bottom: none !important;
-  }
-  .path-grid, .article-grid { grid-template-columns: 1fr !important; gap: 1rem !important; }
-  .path-section, .featured-band, .article-section { padding-left: 1.4rem; padding-right: 1.4rem; }
-  .article-header { align-items: flex-start; flex-direction: column; }
-  .path-card {
-  padding: 1.25rem !important;
-  }
-  .path-card h3 {
-  font-size: 1.1rem !important;
-  }
-  .path-card p {
-  font-size: 0.8rem !important;
-  }
-  .featured-main {
-  padding: 1.5rem !important;
-  }
-  .featured-main h2 {
-  font-size: 1.35rem !important;
-  }
-  .featured-main p {
-  font-size: 0.88rem !important;
-  margin-bottom: 1.25rem !important;
-  }
-  .featured-side {
-  display: none !important;
-  }
-  .featured-meta-mobile {
-  display: block !important;
-  }
-  }
- `}</style>
+  `}</style>
 
  <div className="journal-page">
  <section className="journal-hero">
@@ -655,22 +710,27 @@ export default async function BlogIndex() {
  </section>
 
  <section className="featured-band">
- <a href={`/blog/${featured.slug}`} className="featured-card">
- <div className="featured-main">
-  <p className="section-kicker">{featured.tag} / {featured.category}</p>
-  <h2>{featured.title}</h2>
-  <p>{featured.excerpt}</p>
-  <span className="featured-btn">Read guide &rarr;</span>
-  <div className="featured-meta-mobile">{featured.date} · {featured.readTime}</div>
+  <a href={"/blog/" + topFeatured.slug} className="featured-card">
+  <div className="featured-image-col">
+  <img src={topFeatured.imageSrc} alt={topFeatured.title} loading="eager" />
+  <span className="featured-badge">✨ FEATURED GUIDE</span>
   </div>
- <div className="featured-side">
- <p>{featured.date} / {featured.readTime}</p>
- <p style={{ marginTop: "1rem" }}>
- Best for anyone confused by serum claims, active percentages, acne marks, and oily-skin routines.
- </p>
- </div>
- </a>
- </section>
+  <div className="featured-main">
+  <div className="featured-meta">
+  <span>{topFeatured.category}</span>
+  <span>•</span>
+  <span>{topFeatured.readTime} READ</span>
+  <span>•</span>
+  <span>{topFeatured.date}</span>
+  </div>
+  <h2>{topFeatured.title}</h2>
+  <p>{topFeatured.excerpt}</p>
+  <div className="featured-footer">
+  <span className="featured-btn">Read Full Guide &rarr;</span>
+  </div>
+  </div>
+  </a>
+  </section>
 
  <section className="article-section">
  <BlogSearchClient initialPosts={posts} catColors={catColors} currency={currency} />
@@ -722,7 +782,7 @@ export default async function BlogIndex() {
   ].map((guide) => (
   <a 
   key={guide.slug} 
-  href={`/blog/${guide.slug}`}
+  href={"/blog/" + guide.slug}
   style={{
   display: "flex",
   flexDirection: "column",
@@ -813,8 +873,8 @@ export default async function BlogIndex() {
     { cityName: "Paris", citySlug: "paris", concernName: "Hyperpigmentation", concernSlug: "hyperpigmentation" }
   ]).map((guide) => (
  <a 
- key={`${guide.citySlug}-${guide.concernSlug}`} 
- href={`/blog/best-moisturizer-for-${guide.concernSlug}-in-${guide.citySlug}`}
+ key={guide.citySlug+"-"+guide.concernSlug} 
+ href={"/blog/best-moisturizer-for-"+guide.concernSlug+"-in-"+guide.citySlug}
  style={{
  display: "flex",
  flexDirection: "column",

@@ -19,6 +19,7 @@ import {
   DM_Serif_Display,
   Playfair_Display,
   Bebas_Neue,
+  JetBrains_Mono,
 } from "next/font/google";
 
 // Self-hosted via next/font — eliminates the render-blocking Google Fonts stylesheet
@@ -51,6 +52,13 @@ const bebasNeue = Bebas_Neue({
   weight: ["400"],
   display: "swap",
   variable: "--font-bebas",
+});
+
+const jetBrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  display: "swap",
+  variable: "--font-mono",
 });
 
 export async function generateMetadata() {
@@ -161,7 +169,7 @@ export default async function RootLayout({
     lang={locale}
     dir={isRtl ? "rtl" : "ltr"}
     suppressHydrationWarning
-    className={`${dmSans.variable} ${dmSerifDisplay.variable} ${playfairDisplay.variable} ${bebasNeue.variable}`}
+    className={`${dmSans.variable} ${dmSerifDisplay.variable} ${playfairDisplay.variable} ${bebasNeue.variable} ${jetBrainsMono.variable}`}
   >
    <head>
      <script

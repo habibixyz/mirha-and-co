@@ -13,8 +13,6 @@ export default function HardWaterHairPage() {
  return (
  <>
  <style>{`
- @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap');
-
  .hw-wrap * { box-sizing: border-box; }
 
  /* ── HERO ── */

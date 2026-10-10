@@ -69,7 +69,8 @@ export async function logout() {
   try {
     cookieStore.delete({ name: "mirha_session", path: "/" });
   } catch {
-    cookieStore.delete("mirha_session");
+    // Some read-only render contexts don't support path arg — try bare form
+    try { cookieStore.delete("mirha_session"); } catch { /* ignore */ }
   }
 }
 

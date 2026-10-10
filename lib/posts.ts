@@ -886,7 +886,14 @@ const mappedHighIntent = HIGH_INTENT_POSTS.map(p => ({
 }));
 
 export const POSTS: Post[] = [
-  // 🌟 Latest October 2026 Blog Posts (Placed at absolute top per workspace rule)
+  // 🌟 Latest Layman-Friendly October 2026 Blog Series (Placed at absolute top per workspace rule)
+  ...mappedHighIntent.filter(p => [
+    "why-am-i-suddenly-breaking-out-everyday-causes",
+    "expensive-skincare-not-working-layering-fix",
+    "tight-face-after-washing-tap-water",
+    "3-product-lazy-skincare-routine"
+  ].includes(p.slug)),
+
   ...STATIC_POSTS.filter(p => [
     "hard-water-dandruff-scalp",
     "skin-purging-vs-breakout",
@@ -1013,6 +1020,10 @@ const hashString = (str: string) => {
 
 // Complete slug → unique image lookup table (all 34 available images used)
 const SLUG_IMAGE_MAP: Record<string, string> = {
+  "why-am-i-suddenly-breaking-out-everyday-causes": "/blog-thumbs/why_am_i_suddenly_breaking_out.png",
+  "expensive-skincare-not-working-layering-fix": "/blog-thumbs/expensive_skincare_not_working.png",
+  "tight-face-after-washing-tap-water": "/blog-thumbs/tight_face_after_washing_water.png",
+  "3-product-lazy-skincare-routine": "/blog-thumbs/three_product_lazy_skincare_routine.png",
   "hard-water-dandruff-scalp": "/blog-thumbs/hard_water_dandruff_scalp.jpg",
   "skin-purging-vs-breakout": "/blog-thumbs/skin_purging_vs_breakout.jpg",
   "spf-after-moisturiser-layering-order": "/blog-thumbs/spf_after_moisturiser_layering.jpg",

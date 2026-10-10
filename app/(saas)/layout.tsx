@@ -4,6 +4,51 @@ import type { Metadata } from "next";
 import { SaasSidebar } from "@/components/SaasSidebar";
 import { MobileMenuButton } from "@/components/MobileMenuButton";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import {
+  DM_Sans,
+  DM_Serif_Display,
+  Playfair_Display,
+  Bebas_Neue,
+  JetBrains_Mono,
+} from "next/font/google";
+
+const dmSans = DM_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  style: ["normal", "italic"],
+  display: "swap",
+  variable: "--font-dm-sans",
+});
+
+const dmSerifDisplay = DM_Serif_Display({
+  subsets: ["latin"],
+  weight: ["400"],
+  style: ["normal", "italic"],
+  display: "swap",
+  variable: "--font-dm-serif",
+});
+
+const playfairDisplay = Playfair_Display({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800", "900"],
+  style: ["normal", "italic"],
+  display: "swap",
+  variable: "--font-playfair",
+});
+
+const bebasNeue = Bebas_Neue({
+  subsets: ["latin"],
+  weight: ["400"],
+  display: "swap",
+  variable: "--font-bebas",
+});
+
+const jetBrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  display: "swap",
+  variable: "--font-mono",
+});
 
 export const metadata: Metadata = {
  title: "Dashboard — Mirha & Co.",
@@ -38,18 +83,8 @@ export default function SaasLayout({
  children: React.ReactNode;
 }) {
  return (
-  <html lang="en" suppressHydrationWarning className="">
+  <html lang="en" suppressHydrationWarning className={`${dmSans.variable} ${dmSerifDisplay.variable} ${playfairDisplay.variable} ${bebasNeue.variable} ${jetBrainsMono.variable}`}>
    <head>
-     <link rel="preconnect" href="https://fonts.googleapis.com" />
-     <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
-     <style dangerouslySetInnerHTML={{ __html: `
-       :root {
-         --font-dm-sans: 'DM Sans', sans-serif;
-         --font-dm-serif: 'DM Serif Display', serif;
-         --font-bebas: 'Bebas Neue', sans-serif;
-       }
-     `}} />
      <script
        dangerouslySetInnerHTML={{
          __html: `

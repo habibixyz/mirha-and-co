@@ -2,10 +2,11 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
- --font-bebas: var(--font-dm-sans), sans-serif;
- --font-playfair: var(--font-dm-sans), sans-serif;
- --font-dm-serif: var(--font-dm-sans), sans-serif;
- --font-dm-sans: var(--font-dm-sans), sans-serif;
+  --font-bebas: var(--font-bebas), sans-serif;
+  --font-playfair: var(--font-playfair), serif;
+  --font-dm-serif: var(--font-dm-serif), serif;
+  --font-dm-sans: var(--font-dm-sans), sans-serif;
+  --font-mono: var(--font-mono), monospace;
 }
 
 :root {

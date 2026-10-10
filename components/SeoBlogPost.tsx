@@ -230,7 +230,7 @@ export async function SeoBlogPost({
 
   const articleJsonLd = {
     "@context": "https://schema.org",
-    "@type": "BlogPosting",
+    "@type": "Article",
     "mainEntityOfPage": {
       "@type": "WebPage",
       "@id": postUrl,
@@ -244,7 +244,7 @@ export async function SeoBlogPost({
     "dateModified": date,
     "author": {
       "@type": "Organization",
-      "name": "Mirha & Co. Skincare Research Lab",
+      "name": "Mirha & Co. Research Team",
       "url": "https://www.mirhaandco.com/about"
     },
     "publisher": {
@@ -703,15 +703,6 @@ export async function SeoBlogPost({
           </div>
         </header>
 
-        <div className="trust-box">
-          <h2>How this guide was written</h2>
-          <p>
-            Mirha &amp; Co. reviews product fit by looking at ingredient context,
-            formulation quality, regional climate, price, and real-world review signals.
-            This is beauty guidance, not medical advice.
-          </p>
-        </div>
-
         {sections.map((section) => {
           const blocks = parseBody(section.body);
           return (
@@ -736,7 +727,7 @@ export async function SeoBlogPost({
           <section className="post-section bottom-recommendations">
             <h2>Recommended Formulations</h2>
             <p className="bottom-recommendations-sub">
-              Dermatologist-recommended formulations analyzed for ingredient quality, climate performance, and skin compatibility.
+              Formulations analyzed for ingredient quality, climate performance, and skin compatibility.
             </p>
             <div className="bottom-picks-grid">
               {asins.map((asin) => (
@@ -745,6 +736,34 @@ export async function SeoBlogPost({
             </div>
           </section>
         )}
+
+        {/* 🛡️ Research Disclosures at End of Article */}
+        <div className="trust-box" style={{ marginTop: "3rem" }}>
+          <h2>Editorial Note</h2>
+          <p>
+            Mirha &amp; Co. reviews skincare using ingredient analysis, formulation pH compatibility, and regional tap water hardness data. Simple guides for educational purposes—always patch test new products on your skin.
+          </p>
+          <div style={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: "10px",
+            fontSize: "12px",
+            color: "#5c5249",
+            background: "#f4ede4",
+            padding: "10px 14px",
+            borderRadius: "6px",
+            border: "1px solid #e3d8ce",
+            marginTop: "14px"
+          }}>
+            <span style={{ display: "inline-flex", alignItems: "center", gap: "6px", fontWeight: 600, color: "#161412" }}>
+              <span style={{ color: "#fc2779" }}>✓</span> Independent Formulation Research
+            </span>
+            <span style={{ color: "#c2b5a9" }}>|</span>
+            <span>💧 City Tap Water Telemetry</span>
+            <span style={{ color: "#c2b5a9" }}>|</span>
+            <span>✍️ Mirha &amp; Co.</span>
+          </div>
+        </div>
 
         {children}
 

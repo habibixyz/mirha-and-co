@@ -167,8 +167,8 @@ export async function POST(req: NextRequest) {
         headers: {
           ...dynamicHeaders,
           // Standard rate-limit headers for partner backend auto-inspection
-          "X-RateLimit-Limit":     isTrial ? "60" : "1000",
-          "X-RateLimit-Remaining": isTrial ? "59" : "999",
+          "X-RateLimit-Limit":     isTrial ? "60" : String(quotaInfo.monthlyQuota),
+          "X-RateLimit-Remaining": String(quotaInfo.remaining),
           "X-Quota-Limit":         String(quotaInfo.monthlyQuota),
           "X-Quota-Remaining":     String(quotaInfo.remaining),
           ...(quotaInfo.quotaResetAt ? { "X-Quota-Reset": quotaInfo.quotaResetAt } : {}),
