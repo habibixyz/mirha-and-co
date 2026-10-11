@@ -32,7 +32,7 @@ export const PRODUCTS = [
       "sensitivity",
       "dehydration"
     ],
-    "image": "https://azsofabirbgovazlfzvn.supabase.co/storage/v1/object/public/products/B0BNLHLGF9.JPG",
+    "image": "/products/B0BNLHLGF9.JPG",
     "link": "https://link.amazon/B045eB3lk"
   },
   {
@@ -68,7 +68,7 @@ export const PRODUCTS = [
       "sensitivity",
       "dehydration"
     ],
-    "image": "https://azsofabirbgovazlfzvn.supabase.co/storage/v1/object/public/products/B0B881GN1P.JPG",
+    "image": "/products/B0B881GN1P.JPG",
     "link": "https://link.amazon/B0eVEG0kF"
   },
   {
@@ -103,7 +103,7 @@ export const PRODUCTS = [
       "dehydration",
       "dryness"
     ],
-    "image": "https://azsofabirbgovazlfzvn.supabase.co/storage/v1/object/public/products/B08D3L4BQP.JPG",
+    "image": "/products/B08D3L4BQP.JPG",
     "link": "https://link.amazon/B0cWVMH3X"
   },
   {
@@ -138,7 +138,7 @@ export const PRODUCTS = [
       "oiliness",
       "clogged pores"
     ],
-    "image": "https://azsofabirbgovazlfzvn.supabase.co/storage/v1/object/public/products/B06XSQ879T.JPG",
+    "image": "/products/B06XSQ879T.JPG",
     "link": "https://link.amazon/B09pwZY7I"
   },
  {
