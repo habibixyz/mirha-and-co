@@ -92,6 +92,7 @@ export default async function ProgrammaticBlogPost({ params }: PageProps) {
       slug={slug}
       tags={(post as any).tags}
       asins={post.asins}
+      thumbnail={(post as any).thumbnail}
     />
   );
 }

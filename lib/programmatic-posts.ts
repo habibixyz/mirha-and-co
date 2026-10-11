@@ -201,6 +201,7 @@ export function getProgrammaticPostBySlug(slug: string) {
       sections: hip.sections, // includes sectionAsins where set
       asins: hip.asins,
       tags: hip.tags,
+      thumbnail: hip.thumbnail,
     };
   }
 

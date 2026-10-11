@@ -200,6 +200,7 @@ export async function SeoBlogPost({
   slug,
   tags,
   asins,
+  thumbnail,
   currency = "INR",
   children,
 }: {
@@ -213,6 +214,7 @@ export async function SeoBlogPost({
   slug?: string;
   tags?: string[];
   asins?: string[];
+  thumbnail?: string;
   currency?: Currency;
   children?: React.ReactNode;
 }) {

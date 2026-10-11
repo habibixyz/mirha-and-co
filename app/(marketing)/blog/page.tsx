@@ -713,7 +713,7 @@ export default async function BlogIndex() {
   <a href={"/blog/" + topFeatured.slug} className="featured-card">
   <div className="featured-image-col">
   <img src={topFeatured.imageSrc} alt={topFeatured.title} loading="eager" />
-  <span className="featured-badge">✨ FEATURED GUIDE</span>
+  <span className="featured-badge">FEATURED GUIDE</span>
   </div>
   <div className="featured-main">
   <div className="featured-meta">
