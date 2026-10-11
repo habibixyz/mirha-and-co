@@ -75,21 +75,21 @@ export default function AiProductTranslator({
 
   /* ─── Icon helpers ──────────────────────────────────────────── */
   const TickItem = ({ text }: { text: string }) => (
-    <li style={{ display: "flex", alignItems: "flex-start", gap: "8px", listStyle: "none", marginBottom: "6px" }}>
+    <li style={{ display: "flex", alignItems: "flex-start", gap: "8px", listStyle: "none", marginBottom: "6px", minWidth: 0, width: "100%" }}>
       <span style={{ color: "#2d8a5c", flexShrink: 0, marginTop: "2px" }}>✓</span>
-      <span>{text}</span>
+      <span style={{ minWidth: 0, wordBreak: "break-word", overflowWrap: "break-word" }}>{text}</span>
     </li>
   );
   const WarnItem = ({ text }: { text: string }) => (
-    <li style={{ display: "flex", alignItems: "flex-start", gap: "8px", listStyle: "none", marginBottom: "6px" }}>
+    <li style={{ display: "flex", alignItems: "flex-start", gap: "8px", listStyle: "none", marginBottom: "6px", minWidth: 0, width: "100%" }}>
       <span style={{ color: "#fc2779", flexShrink: 0, marginTop: "2px" }}>✕</span>
-      <span>{text}</span>
+      <span style={{ minWidth: 0, wordBreak: "break-word", overflowWrap: "break-word" }}>{text}</span>
     </li>
   );
   const DotItem = ({ text }: { text: string }) => (
-    <li style={{ display: "flex", alignItems: "flex-start", gap: "8px", listStyle: "none", marginBottom: "6px" }}>
+    <li style={{ display: "flex", alignItems: "flex-start", gap: "8px", listStyle: "none", marginBottom: "6px", minWidth: 0, width: "100%" }}>
       <span style={{ color: "#968a80", flexShrink: 0, marginTop: "3px", fontSize: "10px" }}>●</span>
-      <span style={{ fontFamily: "'DM Mono', monospace", fontSize: "12.5px", letterSpacing: "0.01em" }}>{text}</span>
+      <span style={{ fontFamily: "'DM Mono', monospace", fontSize: "12.5px", letterSpacing: "0.01em", minWidth: 0, wordBreak: "break-word", overflowWrap: "break-word" }}>{text}</span>
     </li>
   );
 
@@ -163,6 +163,9 @@ export default function AiProductTranslator({
           padding: "10px 14px",
           borderRadius: "10px",
           fontSize: "13px",
+          flexWrap: "wrap",
+          width: "100%",
+          boxSizing: "border-box",
         }}
       >
         {!isTranslated ? (
