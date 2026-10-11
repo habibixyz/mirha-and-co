@@ -15,6 +15,70 @@ export interface HighIntentPost {
 
 export const HIGH_INTENT_POSTS: HighIntentPost[] = [
   {
+    slug: "the-4-step-barrier-sun-reset-skincare-guide",
+    title: "The 4-Step Barrier & Sun Reset: Fix Stinging Skin, Oily Breakouts & Sunscreen White Cast",
+    category: "SKINCARE",
+    excerpt: "Stinging moisturizer? Sunscreen leaving a ghost cast or frying your pores? Here is the zero-fluff 4-step reset routine to restore damaged skin barriers and protect oily, sensitive skin.",
+    readTime: "5 min",
+    date: "October 2026",
+    thumbnail: "/blog-thumbs/four_step_barrier_sun_reset.png",
+    tags: ["barrier repair", "sunscreen", "oily skin", "sebamed", "formularx", "skin1004", "isntree"],
+    asins: ["B0BNLHLGF9", "B06XSQ879T", "B0B881GN1P", "B08D3L4BQP"],
+    sections: [
+      {
+        title: "Why Your Skin Is Stinging & Breaking Out Right Now",
+        body: [
+          "If your regular moisturizer suddenly burns on application or your sunscreen feels like heavy spackle that breaks you out by 4 PM, your skin barrier is screaming for help.",
+          "Over-exfoliating with harsh acids, washing with hard municipal tap water, and layering heavy clogged formulas strip your skin's protective lipid mantle. When the barrier breaks, your skin loses hydration rapidly and reacts to every product.",
+          "Here is the zero-fluff, 4-step reset routine to soothe active inflammation, repair your barrier, and protect your skin with zero white cast."
+        ]
+      },
+      {
+        title: "1. Formularx Barrier Relief Lightweight Moisturizer",
+        body: [
+          "When your skin barrier is compromised, basic hydration isn't enough—you need physiological lipids. Formularx Barrier Relief is engineered with a golden 3:1:1 ratio of Ceramides, Cholesterol, and Free Fatty Acids.",
+          "It mimics your skin's natural moisture matrix to seal micro-cracks, reduce redness, and stop that uncomfortable tight feeling after cleansing.",
+          "**Why it works:** Ultra-lightweight gel-cream texture that doesn't feel heavy on oily Indian skin while actively repairing damaged skin walls."
+        ],
+        sectionAsins: ["B0BNLHLGF9"]
+      },
+      {
+        title: "2. Sebamed Clear Face Care Gel",
+        body: [
+          "If you have active acne or severe oiliness, rich cream moisturizers can trap sebum. Sebamed Clear Face Care Gel is an iconic 100% oil-free, non-comedogenic water gel formulated at a strict pH 5.5.",
+          "The pH 5.5 level maintains your acid mantle to naturally inhibit acne-causing bacteria without harsh chemicals, while Hyaluronic Acid, Aloe Vera, and Panthenol soothe raw, irritated patches.",
+          "**Why it works:** Completely weightless water texture that absorbs in 5 seconds with zero sticky residue."
+        ],
+        sectionAsins: ["B06XSQ879T"]
+      },
+      {
+        title: "3. SKIN1004 Madagascar Centella Hyalu-Cica Water-Fit Sun Serum",
+        body: [
+          "Finding a sunscreen that doesn't leave a pasty white cast or feel sticky in heat is a struggle. SKIN1004 Hyalu-Cica Sun Serum is a K-beauty holy grail that feels exactly like a lightweight hydrating serum.",
+          "Infused with pure Madagascar Centella Asiatica extract, it actively calms sun-flushed skin while providing broad-spectrum SPF 50+ PA++++ protection.",
+          "**Why it works:** Zero white cast, zero eye sting, and leaves a breathable, glass-skin finish."
+        ],
+        sectionAsins: ["B0B881GN1P"]
+      },
+      {
+        title: "4. Isntree Hyaluronic Acid Watery Sun Gel",
+        body: [
+          "For skin that feels dehydrated under the sun, Isntree Watery Sun Gel packs 8 different molecular weights of Hyaluronic Acid along with Centella Asiatica and Astaxanthin.",
+          "It drenches skin cells with moisture while blocking UVA/UVB rays. The fluid gel glides on effortlessly and sits perfectly under makeup or on bare skin without pilling.",
+          "**Why it works:** Delivers intense, long-lasting moisture with a radiant, dewy finish and no chalky film."
+        ],
+        sectionAsins: ["B08D3L4BQP"]
+      },
+      {
+        title: "The Bottom Line",
+        body: [
+          "Resetting your skin barrier doesn't mean buying 10 complex steps. Focus on gentle lipid repair, pH balance, and weightless broad-spectrum sun protection.",
+          "💧 City Tap Water Telemetry | ✍️ Mirha & Co. Editorial Team"
+        ]
+      }
+    ]
+  },
+  {
     slug: "why-am-i-suddenly-breaking-out-everyday-causes",
     title: "Why Am I Suddenly Breaking Out? 5 Simple Things Secretly Ruining Your Skin",
     category: "SKINCARE",

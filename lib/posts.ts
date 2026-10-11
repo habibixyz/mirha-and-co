@@ -888,6 +888,7 @@ const mappedHighIntent = HIGH_INTENT_POSTS.map(p => ({
 export const POSTS: Post[] = [
   // 🌟 Latest Layman-Friendly October 2026 Blog Series (Placed at absolute top per workspace rule)
   ...mappedHighIntent.filter(p => [
+    "the-4-step-barrier-sun-reset-skincare-guide",
     "why-am-i-suddenly-breaking-out-everyday-causes",
     "expensive-skincare-not-working-layering-fix",
     "tight-face-after-washing-tap-water",
