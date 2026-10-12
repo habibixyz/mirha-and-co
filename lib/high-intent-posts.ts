@@ -21,7 +21,7 @@ export const HIGH_INTENT_POSTS: HighIntentPost[] = [
     excerpt: "Dancing 4 hours under arena lights in heavy lehengas? Here is the zero-lies, dermatologist-tested guide to surviving sweat acne, melting makeup, jewelry chafing, and morning eye puffiness across all 9 nights.",
     readTime: "6 min",
     date: "October 2026",
-    thumbnail: "/blog-thumbs/navratri_skincare_picks.png",
+    thumbnail: "https://azsofabirbgovazlfzvn.supabase.co/storage/v1/object/public/blog-images/navratri_skincare_picks.png",
     tags: ["navratri", "garba", "festival skincare", "sweat proof", "barrier repair", "kajal", "double cleanse", "acne"],
     asins: ["B00BQFTQW6", "B01BY5KDEC", "B0B881GN1P", "B00V4R0ET0", "B01MUZVE1C", "B0BNLHLGF9", "MIGHTYPATCH"],
     sections: [

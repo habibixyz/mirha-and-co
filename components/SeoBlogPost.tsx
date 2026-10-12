@@ -362,7 +362,8 @@ export async function SeoBlogPost({
           background: #fbf7f1;
           color: #161412;
           min-height: 100vh;
-          font-family: 'DM Sans', sans-serif;
+          font-family: var(--font-dm-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+          -webkit-font-smoothing: antialiased;
         }
 
         .post-shell {
@@ -385,61 +386,47 @@ export async function SeoBlogPost({
 
         /* ── Hero */
         .post-hero {
-          padding: 52px 0 36px;
+          padding: 42px 0 32px;
           border-bottom: 1px solid #e3d8ce;
           margin-bottom: 36px;
         }
 
         .eyebrow {
           color: #fc2779;
-          font-size: 10px;
-          letter-spacing: 0.28em;
+          font-size: 11px;
+          letter-spacing: 0.22em;
           text-transform: uppercase;
           font-weight: 700;
-          margin: 0 0 16px;
+          margin: 0 0 14px;
+          font-family: var(--font-dm-sans), sans-serif;
         }
 
         .post-hero h1 {
-          font-family: 'Playfair Display', 'DM Serif Display', Georgia, serif;
-          font-size: clamp(34px, 6vw, 60px);
-          line-height: 1.06;
-          font-weight: 700;
-          margin: 0 0 18px;
-          letter-spacing: -0.01em;
-          color: #111;
+          font-family: var(--font-dm-serif), 'DM Serif Display', Georgia, serif;
+          font-size: clamp(26px, 4.5vw, 42px);
+          line-height: 1.18;
+          font-weight: 400;
+          margin: 0 0 16px;
+          letter-spacing: -0.015em;
+          color: #161412;
         }
 
         .post-description {
-          color: #6f665f;
-          font-size: 17px;
-          line-height: 1.8;
-          margin: 0 0 22px;
-          max-width: 640px;
+          color: #5c534c;
+          font-size: 16px;
+          line-height: 1.75;
+          margin: 0 0 20px;
+          max-width: 680px;
+          font-family: var(--font-dm-sans), sans-serif;
         }
 
         .post-meta {
-          color: #9a8f86;
-          font-size: 11px;
-          letter-spacing: 0.14em;
+          color: #8c8179;
+          font-size: 11.5px;
+          letter-spacing: 0.12em;
           text-transform: uppercase;
-        }
-
-        .post-hero-image-wrap {
-          width: 100%;
-          margin: 28px 0 0;
-          border-radius: 16px;
-          overflow: hidden;
-          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
-          border: 1px solid #e3d8ce;
-          background: #f5efe6;
-        }
-
-        .post-hero-image {
-          width: 100%;
-          height: auto;
-          max-height: 480px;
-          object-fit: cover;
-          display: block;
+          font-family: var(--font-dm-sans), sans-serif;
+          font-weight: 500;
         }
 
         /* ── Trust box */
@@ -453,9 +440,9 @@ export async function SeoBlogPost({
         }
 
         .trust-box h2 {
-          font-family: 'DM Serif Display', serif;
+          font-family: var(--font-dm-serif), 'DM Serif Display', Georgia, serif;
           font-size: 16px;
-          font-weight: 700;
+          font-weight: 400;
           margin: 0 0 6px;
           color: #a27b5c;
           text-transform: uppercase;
@@ -464,9 +451,10 @@ export async function SeoBlogPost({
 
         .trust-box p {
           color: #756b63;
-          font-size: 13px;
+          font-size: 13.5px;
           line-height: 1.7;
           margin: 0;
+          font-family: var(--font-dm-sans), sans-serif;
         }
 
         /* ── Sections */
@@ -475,12 +463,12 @@ export async function SeoBlogPost({
         }
 
         .post-section h2 {
-          font-family: 'Playfair Display', 'DM Serif Display', Georgia, serif;
-          font-size: clamp(24px, 4vw, 32px);
-          line-height: 1.15;
-          font-weight: 700;
-          margin: 0 0 18px;
-          color: #111;
+          font-family: var(--font-dm-serif), 'DM Serif Display', Georgia, serif;
+          font-size: clamp(21px, 3.5vw, 29px);
+          line-height: 1.25;
+          font-weight: 400;
+          margin: 0 0 16px;
+          color: #161412;
           padding-bottom: 12px;
           border-bottom: 1px solid #e8e2d9;
         }
@@ -633,10 +621,10 @@ export async function SeoBlogPost({
           margin: 0 0 6px;
         }
         .picks-heading {
-          font-family: 'Playfair Display', 'DM Serif Display', Georgia, serif;
+          font-family: var(--font-dm-serif), 'DM Serif Display', Georgia, serif;
           font-size: 20px;
-          font-weight: 700;
-          color: #111;
+          font-weight: 400;
+          color: #161412;
           margin: 0 0 4px;
         }
         .picks-subtext {
@@ -831,16 +819,6 @@ export async function SeoBlogPost({
           <div className="post-meta">
             Updated {date} &nbsp;·&nbsp; {readTime} read &nbsp;·&nbsp; {views ? `${views.toLocaleString()} reads · ` : ""}Affiliate links disclosed
           </div>
-          {thumbnail && (
-            <div className="post-hero-image-wrap">
-              <img
-                src={thumbnail}
-                alt={title}
-                className="post-hero-image"
-                loading="eager"
-              />
-            </div>
-          )}
         </header>
 
         {sections.map((section) => {
