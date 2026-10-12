@@ -85,3 +85,12 @@ Write-Host "Recommend: $($r.StatusCode)"  # Must be 200, success: true
 ## 6. Git Push Protocol
 * **NEVER execute `git push` (to github, gitlab, or any other remote) without explicit user permission or confirmation.**
 * Always ask the user first before pushing any commits or branches.
+
+## 7. Image Asset Preservation & Remote Push Prohibition
+* **NEVER push binary image files (`.png`, `.jpg`, `.jpeg`, `.webp`, `.avif`, `.gif`, `.svg`, etc.) to GitHub, GitLab, or any Git remote.**
+* **Images must NEVER be lost:** All images (blog thumbnails, product images, banners, generated assets) MUST be permanently saved in cloud object storage (Supabase Storage bucket `blog-images`, `products`, or dedicated storage bucket).
+* **Storage & CDN Reference Protocol:**
+  1. Whenever a new image is created, generated, or introduced, immediately upload it to the Supabase Storage bucket using `scripts/upload-to-supabase.mjs` (or via `lib/supabase.ts` with Supabase Service Role credentials).
+  2. Always reference the permanent Supabase public CDN URL (`https://azsofabirbgovazlfzvn.supabase.co/storage/v1/object/public/<bucket>/<file>`) in application code, posts (`lib/posts.ts`), components, or database records.
+  3. Never stage, commit, or push local raw binary images to Git remotes. Local image scratch directories must be kept out of Git tracking to avoid repo bloat and prevent losing assets during git cleans or resets.
+

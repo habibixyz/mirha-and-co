@@ -48,3 +48,5 @@ next-env.d.ts
 /public/temp_recent/
 .env*.local
 *.zip
+/public/blog-thumbs/navratri_skincare_picks.png
+

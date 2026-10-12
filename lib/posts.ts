@@ -1022,7 +1022,7 @@ const hashString = (str: string) => {
 
 // Complete slug → unique image lookup table (all 34 available images used)
 const SLUG_IMAGE_MAP: Record<string, string> = {
-  "navratri-skincare-garba-survival-guide": "/blog-thumbs/navratri_skincare_picks.png",
+  "navratri-skincare-garba-survival-guide": "https://azsofabirbgovazlfzvn.supabase.co/storage/v1/object/public/blog-images/navratri_skincare_picks.png",
   "the-4-step-barrier-sun-reset-skincare-guide": "/blog-thumbs/four_step_barrier_sun_reset.png",
   "why-am-i-suddenly-breaking-out-everyday-causes": "/blog-thumbs/why_am_i_suddenly_breaking_out.png",
   "expensive-skincare-not-working-layering-fix": "/blog-thumbs/expensive_skincare_not_working.png",
