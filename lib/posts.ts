@@ -888,6 +888,7 @@ const mappedHighIntent = HIGH_INTENT_POSTS.map(p => ({
 export const POSTS: Post[] = [
   // 🌟 Latest Layman-Friendly October 2026 Blog Series (Placed at absolute top per workspace rule)
   ...mappedHighIntent.filter(p => [
+    "navratri-skincare-garba-survival-guide",
     "the-4-step-barrier-sun-reset-skincare-guide",
     "why-am-i-suddenly-breaking-out-everyday-causes",
     "expensive-skincare-not-working-layering-fix",
@@ -1021,6 +1022,7 @@ const hashString = (str: string) => {
 
 // Complete slug → unique image lookup table (all 34 available images used)
 const SLUG_IMAGE_MAP: Record<string, string> = {
+  "navratri-skincare-garba-survival-guide": "/blog-thumbs/navratri_skincare_picks.png",
   "the-4-step-barrier-sun-reset-skincare-guide": "/blog-thumbs/four_step_barrier_sun_reset.png",
   "why-am-i-suddenly-breaking-out-everyday-causes": "/blog-thumbs/why_am_i_suddenly_breaking_out.png",
   "expensive-skincare-not-working-layering-fix": "/blog-thumbs/expensive_skincare_not_working.png",

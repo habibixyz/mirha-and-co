@@ -54,6 +54,22 @@ export default function SiteHeader() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Lock scroll when mobile menu is open — lock both html + body for iOS/Android compatibility
+  useEffect(() => {
+    const html = document.documentElement;
+    if (menuOpen) {
+      html.style.overflow = "hidden";
+      document.body.style.overflow = "hidden";
+    } else {
+      html.style.overflow = "";
+      document.body.style.overflow = "";
+    }
+    return () => {
+      html.style.overflow = "";
+      document.body.style.overflow = "";
+    };
+  }, [menuOpen]);
+
   const [isDark, setIsDark] = useState(false);
 
   useEffect(() => {

@@ -230,6 +230,27 @@ export async function SeoBlogPost({
 
   const postUrl = slug ? `https://www.mirhaandco.com/blog/${slug}` : "https://www.mirhaandco.com/blog";
 
+  let isoDate = "2026-10-12T00:00:00.000Z";
+  try {
+    if (date) {
+      const parsed = new Date(`${date} 01:00:00 UTC`);
+      if (!isNaN(parsed.getTime())) {
+        isoDate = parsed.toISOString();
+      }
+    }
+  } catch {
+    // fallback
+  }
+
+  const fullImageUrl = thumbnail
+    ? (thumbnail.startsWith("http") ? thumbnail : `https://www.mirhaandco.com${thumbnail}`)
+    : "https://www.mirhaandco.com/opengraph-image.png";
+
+  const totalWords = sections.reduce(
+    (acc, s) => acc + s.title.split(/\s+/).length + s.body.join(" ").split(/\s+/).length,
+    0
+  );
+
   const articleJsonLd = {
     "@context": "https://schema.org",
     "@type": "Article",
@@ -239,11 +260,11 @@ export async function SeoBlogPost({
     },
     "headline": title,
     "description": description,
-    "image": [
-      "https://www.mirhaandco.com/opengraph-image.png"
-    ],
-    "datePublished": date,
-    "dateModified": date,
+    "image": [fullImageUrl],
+    "datePublished": isoDate,
+    "dateModified": isoDate,
+    "inLanguage": "en-IN",
+    "wordCount": totalWords,
     "author": {
       "@type": "Organization",
       "name": "Mirha & Co. Research Team",
@@ -260,6 +281,38 @@ export async function SeoBlogPost({
     "articleSection": category,
     "keywords": tags ? tags.join(", ") : category
   };
+
+  const faqQuestions = slug === "navratri-skincare-garba-survival-guide" ? [
+    {
+      q: "How can I prevent sweat acne and breakouts during 9 nights of Navratri Garba?",
+      a: "Prep with an oil-free hyaluronic acid water gel rather than heavy cold creams, avoid powdering directly over dried salty sweat, and double cleanse with a 100% soap-free cleanser at 2 AM to clear the follicles without barrier damage."
+    },
+    {
+      q: "Why does kajal smudge during Garba and how do I prevent panda eyes?",
+      a: "Body temperatures exceed 37°C during vigorous dancing, melting traditional wax kohl pencils. Use polymer-bound waterproof kajal and set the lower lash line with a sweep of translucent powder to form an oil-resistant barrier."
+    },
+    {
+      q: "How do I heal jewelry chafing and necklace rashes from heavy festive ornaments?",
+      a: "Apply physiological ceramides, cholesterol, and fatty acids in a 3:1:1 ratio before sleeping to rebuild the intercellular lipid matrix and soothe mechanical friction micro-tears."
+    },
+    {
+      q: "What is the emergency fix for a sudden sweat pimple between Garba nights?",
+      a: "Do not pop or squeeze the pimple. Apply a medical-grade hydrocolloid pimple patch overnight onto clean, dry skin to aseptically extract trapped fluid and flatten the bump without scarring."
+    }
+  ] : [];
+
+  const faqJsonLd = faqQuestions.length > 0 ? {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faqQuestions.map(item => ({
+      "@type": "Question",
+      "name": item.q,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": item.a
+      }
+    }))
+  } : null;
 
   const breadcrumbJsonLd = {
     "@context": "https://schema.org",
@@ -296,6 +349,12 @@ export async function SeoBlogPost({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
+      {faqJsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+        />
+      )}
       <style>{`
         *, *::before, *::after { box-sizing: border-box; }
 
@@ -363,6 +422,24 @@ export async function SeoBlogPost({
           font-size: 11px;
           letter-spacing: 0.14em;
           text-transform: uppercase;
+        }
+
+        .post-hero-image-wrap {
+          width: 100%;
+          margin: 28px 0 0;
+          border-radius: 16px;
+          overflow: hidden;
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+          border: 1px solid #e3d8ce;
+          background: #f5efe6;
+        }
+
+        .post-hero-image {
+          width: 100%;
+          height: auto;
+          max-height: 480px;
+          object-fit: cover;
+          display: block;
         }
 
         /* ── Trust box */
@@ -631,10 +708,61 @@ export async function SeoBlogPost({
           color: #9ca3af !important;
         }
 
+        /* ── Frequently Asked Questions ── */
+        .post-faq {
+          margin: 48px 0 0;
+          padding-top: 32px;
+          border-top: 1px solid #e3d8ce;
+        }
+        .post-faq-list {
+          display: flex;
+          flex-direction: column;
+          gap: 14px;
+          margin-top: 20px;
+        }
+        .post-faq-item {
+          background: #ffffff;
+          border: 1px solid #e3d8ce;
+          border-radius: 12px;
+          padding: 20px 22px;
+          transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+        .post-faq-item:hover {
+          border-color: #c9b9aa;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+        }
+        .post-faq-q {
+          font-size: 16px;
+          font-weight: 700;
+          color: #161412;
+          margin: 0 0 10px;
+          line-height: 1.4;
+          font-family: 'DM Sans', sans-serif;
+        }
+        .post-faq-a {
+          font-size: 14.5px;
+          color: #4a4340;
+          line-height: 1.75;
+          margin: 0;
+        }
+
         /* ── Dark Mode Overrides */
         html.dark .seo-post, .dark .seo-post {
           background: #0b0f19 !important;
           color: #f8fafc !important;
+        }
+        html.dark .post-faq, .dark .post-faq {
+          border-top-color: #283044 !important;
+        }
+        html.dark .post-faq-item, .dark .post-faq-item {
+          background: #111827 !important;
+          border-color: #1f2937 !important;
+        }
+        html.dark .post-faq-q, .dark .post-faq-q {
+          color: #f9fafb !important;
+        }
+        html.dark .post-faq-a, .dark .post-faq-a {
+          color: #cbd5e1 !important;
         }
         html.dark .post-hero h1, .dark .post-hero h1,
         html.dark .post-section h2, .dark .post-section h2,
@@ -703,6 +831,16 @@ export async function SeoBlogPost({
           <div className="post-meta">
             Updated {date} &nbsp;·&nbsp; {readTime} read &nbsp;·&nbsp; {views ? `${views.toLocaleString()} reads · ` : ""}Affiliate links disclosed
           </div>
+          {thumbnail && (
+            <div className="post-hero-image-wrap">
+              <img
+                src={thumbnail}
+                alt={title}
+                className="post-hero-image"
+                loading="eager"
+              />
+            </div>
+          )}
         </header>
 
         {sections.map((section) => {
@@ -734,6 +872,21 @@ export async function SeoBlogPost({
             <div className="bottom-picks-grid">
               {asins.map((asin) => (
                 <AffiliateCard key={asin} asin={asin} compact />
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* ── Frequently Asked Questions (Visible for Search Snippets & Readers) ── */}
+        {faqQuestions.length > 0 && (
+          <section className="post-section post-faq">
+            <h2>Frequently Asked Questions</h2>
+            <div className="post-faq-list">
+              {faqQuestions.map((item, idx) => (
+                <div key={idx} className="post-faq-item">
+                  <h3 className="post-faq-q">{item.q}</h3>
+                  <p className="post-faq-a">{item.a}</p>
+                </div>
               ))}
             </div>
           </section>

@@ -15,6 +15,112 @@ export interface HighIntentPost {
 
 export const HIGH_INTENT_POSTS: HighIntentPost[] = [
   {
+    slug: "navratri-skincare-garba-survival-guide",
+    title: "The 9-Night Navratri & Garba Skincare Blueprint: Sweat-Proof Prep, Smudge-Free Drama & 2 AM Barrier Repair",
+    category: "SKINCARE",
+    excerpt: "Dancing 4 hours under arena lights in heavy lehengas? Here is the zero-lies, dermatologist-tested guide to surviving sweat acne, melting makeup, jewelry chafing, and morning eye puffiness across all 9 nights.",
+    readTime: "6 min",
+    date: "October 2026",
+    thumbnail: "/blog-thumbs/navratri_skincare_picks.png",
+    tags: ["navratri", "garba", "festival skincare", "sweat proof", "barrier repair", "kajal", "double cleanse", "acne"],
+    asins: ["B00BQFTQW6", "B01BY5KDEC", "B0B881GN1P", "B00V4R0ET0", "B01MUZVE1C", "B0BNLHLGF9", "MIGHTYPATCH"],
+    sections: [
+      {
+        title: "The Navratri Skin Trap: Why 9 Nights of Garba Destroy Your Barrier",
+        body: [
+          "Dandiya Raas and Garba are unmatched celebrations of joy, rhythm, and devotion. But for your skin, dancing for 4 consecutive hours under intense halogen arena lights while wearing embroidered lehengas is an extreme endurance test.",
+          "When core body temperature rises, your eccrine glands pump out salty sweat to cool the skin. If that sweat is trapped beneath thick silicone primers, heavy foundation, and ambient dust, it cannot evaporate freely.",
+          "The result isn't just everyday shine. The combination of friction, salt accumulation, and trapped sebum triggers **miliaria rubra (heat rash)** and **pityrosporum folliculitis (sweat acne)**—tiny, itchy pustules that appear overnight.",
+          "The common advice to 'just bake with more powder and douse in setting spray' actually seals bacteria deeper into inflamed pores. Here is the honest, science-backed 6-step blueprint to look radiant on the dance floor and wake up with flawless, calm skin every single morning."
+        ]
+      },
+      {
+        title: "1. Pre-Dance Hydration: Neutrogena Hydro Boost Water Gel",
+        body: [
+          "The biggest mistake before a festival night is slathering on rich, heavy cold creams or face oils to get an instant glow. Heavy occlusives emulsify with sweat, creating a greasy film that causes foundation to slide off within 45 minutes.",
+          "Instead, your skin requires pure humectant hydration that absorbs completely without leaving an oil slick. Neutrogena Hydro Boost Water Gel delivers high-purity Hyaluronic Acid in an oil-free, weightless matrix.",
+          "It locks water into epidermal cells, smooths rough texture, and provides a clean grip for your makeup without clogging a single pore while you spin.",
+          "**Why it works for Garba:** Absorbs in 10 seconds flat with zero tackiness, preventing makeup separation even in humid festival pandals."
+        ],
+        sectionAsins: ["B00BQFTQW6"]
+      },
+      {
+        title: "2. 12-Hour Smudge-Proof Eye Drama: L'Oréal Paris Kajal Magique",
+        body: [
+          "Navratri makeup is defined by bold, expressive eyes. But regular wax-based kohl pencils soften and melt the moment body heat rises above 37°C, leaving you with smeared panda rings beneath your lower lash line by midnight.",
+          "L'Oréal Paris Kajal Magique is formulated with a resilient mineral pigment suspension and water-resistant polymer binders that lock onto the waterline.",
+          "It glides on in one intense jet-black stroke and sets within 30 seconds into a smudge-proof shield that defies perspiration, humidity, and 3 hours of continuous dancing.",
+          "**Pro Garba Tip:** After applying to your waterline, press a tiny sweep of translucent powder directly beneath your lower lash line to create an oil barrier that stops transfer completely."
+        ],
+        sectionAsins: ["B01BY5KDEC"]
+      },
+      {
+        title: "3. Daytime Pandal Visits & Puja Protection: SKIN1004 Centella Hyalu-Cica Sun Serum",
+        body: [
+          "Navratri is not just late nights—daytime Garba rehearsals, temple visits, and family pujas expose your skin to harsh post-monsoon October UV radiation.",
+          "Standard mineral sunscreens leave an unflattering purple-white cast against ethnic wear and sting like fire the second sweat drips into your eyes.",
+          "SKIN1004 Centella Hyalu-Cica Water-Fit Sun Serum provides broad-spectrum SPF 50+ PA++++ protection in an ultra-hydrating, weightless serum texture. Enriched with pure Madagascar Centella Asiatica, it soothes sun-flushed redness while delivering a natural, glass-skin dew.",
+          "**Why it works:** Zero white cast, zero eye sting, and completely undetectable under festive attire."
+        ],
+        sectionAsins: ["B0B881GN1P"]
+      },
+      {
+        title: "4. The Non-Negotiable 2 AM Double Cleanse: Simple Kind To Skin Facial Wash",
+        body: [
+          "It is 2:30 AM, your feet are aching, and collapsing straight into bed sounds tempting. **Do not do it.** Sleeping in waterproof makeup mixed with dried sweat and arena dust guarantees cystic breakouts by Night 4.",
+          "Makeup wipes are not enough—they merely drag abrasive particles across your skin, causing microscopic tears in the stratum corneum.",
+          "First, dissolve stubborn pigments with micellar water or a gentle cleansing oil. Then follow immediately with Simple Kind To Skin Moisturising Facial Wash. Formulated 100% soap-free with Pro-Vitamin B5, Glycerin, and Bisabolol, it gently lifts residual grime without stripping away essential lipids.",
+          "**The Golden Rule:** Never use harsh foaming scrubs after dancing. Your skin is already flushed and irritated; respect its protective acid mantle."
+        ],
+        sectionAsins: ["B00V4R0ET0"]
+      },
+      {
+        title: "5. Next-Morning Eye Depuffing: The Ordinary Caffeine Solution 5% + EGCG",
+        body: [
+          "Dancing until 2 AM and waking up at 8 AM for morning rituals creates immediate fluid retention, swollen eyelids, and dark shadows beneath the periorbital zone.",
+          "The Ordinary Caffeine Solution 5% + EGCG delivers concentrated topical caffeine to rapidly constrict dilated microcapillaries, paired with epigallocatechin gallatyl glucoside (EGCG) from green tea to reduce oxidative stress.",
+          "Gently tap 2 drops across the orbital bone with your ring finger. Within 15 minutes, puffy morning fluid drains away, leaving your eye contour refreshed and ready for the next evening.",
+          "**Quick Hack:** Keep the bottle in the refrigerator door—the cooling thermal shock doubles the lymphatic depuffing speed."
+        ],
+        sectionAsins: ["B01MUZVE1C"]
+      },
+      {
+        title: "6. Chafing Relief & Overnight Barrier Reset: Formularx Barrier Relief",
+        body: [
+          "Heavy oxidised silver necklaces, metallic earrings, and rigid cholis rub continuously against the collarbone, neck, and behind the ears, causing raw mechanical friction dermatitis.",
+          "To repair this damage overnight, apply Formularx Barrier Relief. It delivers physiological Ceramides, Cholesterol, and Free Fatty Acids in the precise golden 3:1:1 ratio necessary to rebuild the intercellular lipid matrix.",
+          "Layer it over your entire face, jawline, and neck before sleeping. It quenches tightness, heals micro-chafing, and ensures your skin barrier remains fortified across all 9 nights.",
+          "**Derm Note:** Formularx's lightweight gel-cream texture allows compromised skin to heal without feeling smothered or sticky on the pillow."
+        ],
+        sectionAsins: ["B0BNLHLGF9"]
+      },
+      {
+        title: "Emergency Protocol: Overnight Sweat Pimple Fix: Hero Cosmetics Mighty Patch",
+        body: [
+          "If a sudden sweat bump or inflamed whitehead emerges on your chin or cheek between nights, never attempt to pop or squeeze it. Squeezing drives bacteria deeper into the dermis and leaves stubborn post-inflammatory hyperpigmentation that lasts months.",
+          "Instead, apply a Hero Cosmetics Mighty Patch hydrocolloid sticker onto clean, dry skin before bed. Medical-grade hydrocolloid gently draws out trapped fluid, pus, and sebum while maintaining a sterile healing environment.",
+          "By morning, peel it off to reveal a flattened, calmed blemish that can be smoothly concealed without crusting or peeling.",
+          "**Festival Essential:** Keep a sheet in your purse for fast overnight triage between Garba nights."
+        ],
+        sectionAsins: ["MIGHTYPATCH"]
+      },
+      {
+        title: "The Navratri Skincare Reality Check: What Works vs What Ruins Your Skin",
+        body: [
+          "Here is the definitive breakdown of what truly protects your skin during 9 nights of high-intensity celebrations versus the viral internet myths that lead to barrier breakdowns:",
+          "| Festival Challenge | What Causes Damage (The Myth) | What Actually Works (The Truth) |",
+          "| :--- | :--- | :--- |",
+          "| Pre-Dance Skin Prep | Heavy cold creams & greasy facial oils (causes foundation slippage) | Lightweight oil-free water gel with Hyaluronic Acid (clean, non-slip grip) |",
+          "| Waterproof Eye Makeup | Traditional wax kajal pencils (melts into messy panda circles by midnight) | Polymer-bound waterproof kajal set with a sweep of translucent powder |",
+          "| Daytime Sun Protection | Thick white-cast sunscreen that burns eyes when sweating | Weightless Centella chemical sun serum with zero white cast |",
+          "| Post-Garba Cleanup | Scrubbing face with cheap makeup wipes and going to sleep | Gentle double cleansing with micellar water + 100% soap-free cleanser |",
+          "| Sudden Sweat Pimple | Squeezing, picking, or applying burning toothpaste | Medical-grade hydrocolloid pimple patch overnight to flatten gently |",
+          "| Morning Exhaustion | Piling on heavy concealer over swollen under-eyes | 5% Caffeine & EGCG serum chilled in the fridge to drain fluid in 15 mins |"
+        ]
+      }
+    ]
+  },
+  {
     slug: "the-4-step-barrier-sun-reset-skincare-guide",
     title: "The 4-Step Barrier & Sun Reset: Fix Stinging Skin, Oily Breakouts & Sunscreen White Cast",
     category: "SKINCARE",

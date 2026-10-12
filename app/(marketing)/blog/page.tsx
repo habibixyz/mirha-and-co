@@ -73,7 +73,10 @@ export default async function BlogIndex() {
     };
   });
 
-  const topFeatured = posts[0] || POSTS[0];
+  const now = new Date();
+  const isNavratri = now >= new Date("2026-10-12T00:00:00+05:30") && now <= new Date("2026-10-20T23:59:59+05:30");
+  const topFeatured = (isNavratri && posts.find(p => p.slug === "navratri-skincare-garba-survival-guide")) || posts.find(p => p.slug === "skin-purging-vs-breakout") || posts[0] || POSTS[0];
+
  return (
  <main>
  <style>{`
@@ -350,6 +353,31 @@ export default async function BlogIndex() {
  box-shadow: 0 24px 50px rgba(162, 123, 92, 0.2);
  border-color: rgba(162, 123, 92, 0.6);
  }
+ .navratri-featured {
+ border: 2px solid transparent !important;
+ background-clip: padding-box !important;
+ position: relative !important;
+ }
+ .navratri-featured::before {
+ content: '';
+ position: absolute;
+ inset: -2px;
+ border-radius: 22px;
+ padding: 2px;
+ background: linear-gradient(135deg, #966f33, #e5bd7a, #f7dfa5, #e5bd7a, #966f33);
+ background-size: 300% auto;
+ animation: navratriCardGlow 4s linear infinite;
+ -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+ -webkit-mask-composite: xor;
+ mask-composite: exclude;
+ z-index: 0;
+ pointer-events: none;
+ }
+ @keyframes navratriCardGlow {
+ 0%   { background-position: 0% center; }
+ 100% { background-position: 300% center; }
+ }
+
  .featured-image-col {
  position: relative;
  width: 100%;
@@ -600,58 +628,67 @@ export default async function BlogIndex() {
    .path-card h3 { font-size: 1rem !important; margin-bottom: 0.2rem !important; }
    .path-card p { font-size: 0.78rem !important; }
 
-   /* Ultra-Compact Horizontal Featured Card for Mobile */
-   .featured-band { padding-top: 0.75rem !important; padding-bottom: 0.35rem !important; }
+   /* Mobile Featured Card — Clean Minimal Editorial */
+   .featured-band { padding-top: 1rem !important; padding-bottom: 0.5rem !important; }
    .featured-card {
      display: flex !important;
-     flex-direction: row !important;
-     align-items: center !important;
-     padding: 0.75rem !important;
-     gap: 0.75rem !important;
+     flex-direction: column !important;
      border-radius: 16px !important;
-     background: #141210 !important;
+     background: #ffffff !important;
+     border: 1px solid #e8e2d9 !important;
+     box-shadow: 0 2px 16px rgba(0,0,0,0.06) !important;
+     overflow: hidden !important;
+     color: #1a1714 !important;
    }
    .featured-image-col {
-     width: 90px !important;
-     height: 90px !important;
-     min-height: 90px !important;
-     max-height: 90px !important;
-     flex-shrink: 0 !important;
-     border-radius: 12px !important;
+     width: 100% !important;
+     height: 190px !important;
+     min-height: 190px !important;
+     max-height: 190px !important;
+     border-radius: 0 !important;
    }
    .featured-badge { display: none !important; }
    .featured-main {
-     padding: 0 !important;
+     padding: 1rem 1rem 1.1rem !important;
      background: transparent !important;
      border: none !important;
    }
    .featured-meta {
-     font-size: 0.55rem !important;
+     font-size: 0.58rem !important;
      letter-spacing: 0.12em !important;
-     margin-bottom: 0.25rem !important;
-     gap: 0.3rem !important;
+     margin-bottom: 0.5rem !important;
+     gap: 0.35rem !important;
+     color: #a27b5c !important;
    }
    .featured-main h2 {
-     font-size: 0.92rem !important;
-     line-height: 1.28 !important;
-     margin: 0 0 0.3rem !important;
+     font-size: 1.1rem !important;
+     line-height: 1.3 !important;
+     margin: 0 0 0.65rem !important;
      display: -webkit-box !important;
-     -webkit-line-clamp: 2 !important;
+     -webkit-line-clamp: 3 !important;
      -webkit-box-orient: vertical !important;
      overflow: hidden !important;
-     color: #ffffff !important;
+     color: #1a1714 !important;
    }
    .featured-main p { display: none !important; }
    .featured-footer {
-     padding-top: 0.15rem !important;
-     border-top: none !important;
+     padding-top: 0.65rem !important;
+     border-top: 1px solid #f0ece6 !important;
      margin-top: 0 !important;
    }
    .featured-btn {
-     padding: 0.3rem 0.7rem !important;
-     font-size: 0.58rem !important;
-     letter-spacing: 0.08em !important;
+     padding: 0 !important;
+     font-size: 0.68rem !important;
+     letter-spacing: 0.1em !important;
+     background: transparent !important;
+     color: #fc2779 !important;
+     border-radius: 0 !important;
    }
+   .featured-card:hover .featured-btn {
+     background: transparent !important;
+     color: #d4006a !important;
+   }
+
   }
   `}</style>
 
@@ -710,10 +747,14 @@ export default async function BlogIndex() {
  </section>
 
  <section className="featured-band">
-  <a href={"/blog/" + topFeatured.slug} className="featured-card">
+  <a href={"/blog/" + topFeatured.slug} className={`featured-card${isNavratri ? " navratri-featured" : ""}`}>
   <div className="featured-image-col">
   <img src={topFeatured.imageSrc} alt={topFeatured.title} loading="eager" />
-  <span className="featured-badge">FEATURED GUIDE</span>
+  {isNavratri ? (
+    <span className="featured-badge" style={{ background: "linear-gradient(135deg, #1b1713, #2a221b)", color: "#e5bd7a", border: "1px solid rgba(229, 189, 122, 0.45)", letterSpacing: "0.14em", textTransform: "uppercase" }}>The 9-Night Edit</span>
+  ) : (
+    <span className="featured-badge">FEATURED GUIDE</span>
+  )}
   </div>
   <div className="featured-main">
   <div className="featured-meta">

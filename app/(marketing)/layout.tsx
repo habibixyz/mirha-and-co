@@ -112,6 +112,11 @@ export default async function RootLayout({
  const hasSession = !!cookieStore.get("mirha_session")?.value;
  const isRtl = locale === "ar";
  const siteUrl = "https://www.mirhaandco.com";
+
+  // 🪔 Navratri 2026 — auto-expires Oct 20
+  const now = new Date();
+  const isNavratri = now >= new Date("2026-10-12T00:00:00+05:30") && now <= new Date("2026-10-20T23:59:59+05:30");
+
  const structuredData = [
  {
  "@context": "https://schema.org",
@@ -214,6 +219,121 @@ export default async function RootLayout({
   </div>
 
  <SiteHeader />
+
+  {/* Navratri Festive Editorial Banner — auto-expires Oct 20 */}
+  {isNavratri && (
+    <>
+      <style>{`
+        .navratri-banner {
+          position: relative;
+          overflow: hidden;
+          background: #14110f;
+          border-bottom: 1px solid rgba(229, 189, 122, 0.25);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.75rem;
+          padding: 0.55rem 1.25rem;
+          font-family: var(--font-dm-sans), sans-serif;
+          color: #f5f2ed;
+          text-decoration: none !important;
+          transition: background 0.25s ease, border-color 0.25s ease;
+          width: 100%;
+        }
+        .navratri-banner::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background: radial-gradient(ellipse 70% 100% at 50% 0%, rgba(212, 163, 89, 0.16), transparent 75%);
+          pointer-events: none;
+        }
+        .navratri-banner:hover {
+          background: #181412;
+          border-bottom-color: rgba(229, 189, 122, 0.45);
+        }
+        .navratri-pill {
+          display: inline-flex;
+          align-items: center;
+          padding: 0.15rem 0.6rem;
+          border-radius: 999px;
+          background: rgba(229, 189, 122, 0.12);
+          border: 1px solid rgba(229, 189, 122, 0.35);
+          color: #e5bd7a;
+          font-size: 0.58rem;
+          font-weight: 700;
+          letter-spacing: 0.16em;
+          text-transform: uppercase;
+          flex-shrink: 0;
+        }
+        .navratri-title-desktop {
+          display: inline;
+          font-size: 0.74rem;
+          font-weight: 500;
+          letter-spacing: 0.02em;
+          color: rgba(255, 255, 255, 0.92);
+        }
+        .navratri-title-mobile {
+          display: none;
+          font-size: 0.72rem;
+          font-weight: 500;
+          letter-spacing: 0.02em;
+          color: rgba(255, 255, 255, 0.92);
+        }
+        .navratri-cta {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.35rem;
+          padding: 0.2rem 0.7rem;
+          border-radius: 999px;
+          background: linear-gradient(135deg, #e5bd7a, #c89658);
+          color: #14110f !important;
+          font-size: 0.62rem;
+          font-weight: 700;
+          letter-spacing: 0.06em;
+          text-transform: uppercase;
+          box-shadow: 0 2px 8px rgba(200, 150, 88, 0.25);
+          flex-shrink: 0;
+          transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .navratri-banner:hover .navratri-cta {
+          transform: translateX(2px);
+          box-shadow: 0 3px 12px rgba(200, 150, 88, 0.4);
+        }
+        @media (max-width: 680px) {
+          .navratri-banner {
+            padding: 0.46rem 0.65rem;
+            gap: 0.4rem;
+          }
+          .navratri-title-desktop {
+            display: none;
+          }
+          .navratri-title-mobile {
+            display: inline;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+          .navratri-pill {
+            font-size: 0.52rem;
+            padding: 0.12rem 0.42rem;
+            letter-spacing: 0.12em;
+          }
+          .navratri-cta {
+            font-size: 0.58rem;
+            padding: 0.18rem 0.5rem;
+          }
+        }
+      `}</style>
+      <a href="/blog/navratri-skincare-garba-survival-guide" className="navratri-banner">
+        <span className="navratri-pill">Navratri 2026</span>
+        <span className="navratri-title-desktop">The 9-Night Garba Skincare Blueprint & Sweat-Proof Protocol</span>
+        <span className="navratri-title-mobile">9-Night Garba Skincare Protocol</span>
+        <span className="navratri-cta">
+          Read Guide &rarr;
+        </span>
+      </a>
+    </>
+  )}
 
  {children}
  <DashboardPromoModal hasSession={hasSession} />

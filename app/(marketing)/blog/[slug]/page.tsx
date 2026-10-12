@@ -27,28 +27,58 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     return {};
   }
 
-  const ogImage = "https://www.mirhaandco.com/opengraph-image.png";
+  const thumb = (post as any).thumbnail;
+  const ogImage = thumb
+    ? (thumb.startsWith("http") ? thumb : `https://www.mirhaandco.com${thumb}`)
+    : "https://www.mirhaandco.com/opengraph-image.png";
+
+  let isoDate = new Date().toISOString();
+  try {
+    if (post.date) {
+      const parsed = new Date(`${post.date} 01:00:00 UTC`);
+      if (!isNaN(parsed.getTime())) {
+        isoDate = parsed.toISOString();
+      }
+    }
+  } catch {
+    // fallback
+  }
 
   return {
     title: `${post.title} | Mirha & Co.`,
     description: post.description,
     keywords: (post as any).tags ? (post as any).tags.join(", ") : post.category,
     authors: [
-      { name: "Mirha & Co.", url: "https://www.mirhaandco.com/about" }
+      { name: "Mirha & Co. Research Team", url: "https://www.mirhaandco.com/about" }
     ],
+    creator: "Mirha & Co.",
     publisher: "Mirha & Co.",
     alternates: {
       canonical: `https://www.mirhaandco.com/blog/${slug}`,
     },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-video-preview": -1,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+      },
+    },
     openGraph: {
-      title: post.title,
+      title: `${post.title} | Mirha & Co.`,
       description: post.description,
       url: `https://www.mirhaandco.com/blog/${slug}`,
       type: "article",
       siteName: "Mirha & Co.",
-      publishedTime: post.date,
-      modifiedTime: post.date,
-      authors: ["Mirha & Co."],
+      locale: "en_IN",
+      publishedTime: isoDate,
+      modifiedTime: isoDate,
+      section: post.category,
+      tags: (post as any).tags || [],
+      authors: ["https://www.mirhaandco.com/about"],
       images: [
         {
           url: ogImage,
@@ -62,6 +92,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       card: "summary_large_image",
       title: post.title,
       description: post.description,
+      site: "@mirhaandco",
+      creator: "@mirhaandco",
       images: [ogImage],
     },
   };
