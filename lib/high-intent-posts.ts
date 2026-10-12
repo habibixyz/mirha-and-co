@@ -15,6 +15,60 @@ export interface HighIntentPost {
 
 export const HIGH_INTENT_POSTS: HighIntentPost[] = [
   {
+    slug: "navratri-fragrance-guide-men-women",
+    title: "The Festive Fragrance Playbook: Sweat-Proof Scents for Men & Women That Last 8+ Hours of Garba",
+    category: "BEAUTY",
+    excerpt: "Heavy embroidery, 4 hours of non-stop Garba, and 30°C arena heat make citrus mists vanish in minutes. Here are the heat-activated, sweat-resistant festive perfumes for men and women engineered to project all night.",
+    readTime: "7 min",
+    date: "October 2026",
+    thumbnail: "https://azsofabirbgovazlfzvn.supabase.co/storage/v1/object/public/blog-images/navratri_fragrance_picks.png",
+    tags: ["navratri", "garba", "fragrance", "perfume", "festive scents", "mens perfume", "womens perfume", "long lasting"],
+    asins: ["B07FQVZR7T", "B096XV4HR4", "B0CC2XFD87", "B09KTNPSZL", "B09TL77RB1", "B08TGY698Y"],
+    sections: [
+      {
+        title: "The Garba Fragrance Trap: Why Most Scents Disappear or Turn Sour by 10 PM",
+        body: [
+          "Navratri Garba is the ultimate endurance test not just for your stamina, but for your fragrance. When dancing under halogen stadium floodlights in layered lehengas or velvet kurtas, skin temperature routinely climbs past 38°C.",
+          "Standard summer perfumes—fresh lemons, bergamot, sea salt, or light eau de colognes—are formulated with highly volatile top-note molecules. At elevated body temperatures, those delicate molecules flash off into the air in under 30 minutes, leaving you smelling of nothing.",
+          "Worse still, cheap synthetic deodorants mixed with salty sweat and skin lipids undergo rapid oxidation, developing an acrid, sour dry-down that clashes terribly with festive incense and celebratory pandal crowds.",
+          "To project a captivating festive aura that genuinely lasts from the first Aarti to the final 2 AM Garba circle, you need high-concentration **Eau De Parfum (EDP)** formulas anchored by heavy, heat-activated base notes: amber, warm sandalwood, resinous woods, smoky vanilla, and dark spices."
+        ]
+      },
+      {
+        title: "Top Festive Scents for Women: Radiant Florals & Warm Ambers That Bloom with Heat",
+        body: [
+          "For women dancing in intricately mirrored chaniya cholis, fragrance should feel opulent, feminine, and gracefully persistent without becoming cloying in close circles.",
+          "**Skinn By Titan Celeste EDP:** The undisputed benchmark festive floral. Combining luscious mandarin and peach with white floral Sambac jasmine, it settles into an intoxicating dry-down of patchouli and creamy Indian sandalwood. It cuts through pandal crowds and projects for 8+ uninterrupted hours.",
+          "**Bella Vita Luxury Date Woman EDP:** A delightfully seductive sweet gourmand blending pink pepper, jasmine, and cozy roasted vanilla. Packaged in a compact 20ml format, it easily slips into any festive clutch or potli for on-the-go resets between dance rounds.",
+          "**Plum BodyLovin' Vanilla Vibes EDP:** Warm, cozy Madagascar vanilla with sweet brown sugar undertones. Applied to pulse points, body heat causes the comforting bakery sweetness to amplify deliciously as the night unfolds.",
+          "**Application Pro-Tip for Women:** Mist the hem of your dupatta and the interior lining of your lehenga. Fabrics do not sweat, allowing perfume oil molecules to anchor onto silk and cotton fibers for up to 24 hours without evaporating."
+        ],
+        sectionAsins: ["B07FQVZR7T", "B0CC2XFD87", "B09TL77RB1"]
+      },
+      {
+        title: "Top Festive Scents for Men: Bold Woody Spices & Smoky Resins for Heavy Kurtas",
+        body: [
+          "Festive men's fragrances need substantial spine: they must hold their own against intense perspiration, dense crowds, and heavy cotton, raw silk, or linen kurtas.",
+          "**Beardo Whisky Smoke EDP:** A masterclass in bold evening projection. Formulated with artisan whiskey notes, cinnamon spice, cured tobacco, and deep smoked oudh. As body heat rises during energetic Dandiya spins, the smoky vanilla and leather base notes bloom with magnetic, masculine warmth.",
+          "**Bombay Shaving Company Mexico Perfume:** A vibrant woody-amber fragrance opening with crisp neroli before deepening into teakwood and rich golden amber. Exceptional sillage that leaves a memorable trail without overwhelming people dancing beside you.",
+          "**Wild Stone Ultra Sensual Perfume:** The high-performance budget powerhouse. Aromatic basil, fresh lavender, and warm spicy patchouli designed specifically for tropical Indian heat and evening celebrations.",
+          "**Men's Kurta Spraying Tip:** Never spray concentrated perfume oils directly onto delicate silk or zari embroidery to avoid staining. Mist generously across the collarbones, chest under your undershirt, and the back of your neck."
+        ],
+        sectionAsins: ["B096XV4HR4", "B09KTNPSZL", "B08TGY698Y"]
+      },
+      {
+        title: "The 4-Step Festive Scent Protocol: How to Make Any Perfume Last Past Midnight",
+        body: [
+          "Even the finest luxury Eau De Parfum will fail if applied incorrectly to parched, sweaty skin. Follow this 4-step protocol to lock your scent into place:",
+          "**1. The Lipid Anchor:** Perfume oils bind to fats, not water. Before applying fragrance, massage an unscented lotion or a thin dab of petroleum jelly over your pulse points (wrists, neck, collarbones). This creates a lipid barrier that slows down evaporation by over 50%.",
+          "**2. Never Rub Your Wrists:** The single most common fragrance mistake. Rubbing wrists creates friction heat that breaks down delicate top-note ester bonds and shears the composition. Spray, and let it air-dry naturally.",
+          "**3. Target Blood Vessel Hotspots:** Focus on the jugular pulse points along both sides of your neck, behind the earlobes, and inside your elbows. The rhythmic pulsing of warm blood continuously diffuses the scent into your surrounding sillage.",
+          "**4. The Hairbrush Mist:** Hair is porous and holds fragrance far longer than skin. Spray your wooden hairbrush or comb with perfume, wait 5 seconds for alcohol to evaporate, then comb through your hair. Every spin in the Garba circle will release a subtle, enchanting trail."
+        ]
+      }
+    ]
+  },
+  {
     slug: "navratri-skincare-garba-survival-guide",
     title: "The 9-Night Navratri & Garba Skincare Blueprint: Sweat-Proof Prep, Smudge-Free Drama & 2 AM Barrier Repair",
     category: "SKINCARE",
