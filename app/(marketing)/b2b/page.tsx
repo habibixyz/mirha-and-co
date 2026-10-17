@@ -332,15 +332,54 @@ export default function B2BPitchDeck() {
   return (
     <main className="pitch-page">
       <style>{`
-        .pitch-page {
-          background: #070a12;
-          color: #f1f5f9;
+                .pitch-page {
+          --b2b-bg: #fcfbf9;
+          --b2b-surface: #ffffff;
+          --b2b-surface-alt: #f6f4f0;
+          --b2b-sidebar-bg: #f8f6f2;
+          --b2b-border: #e6ded4;
+          --b2b-border-subtle: #eee8e0;
+          --b2b-text-main: #0c0a09;
+          --b2b-text-muted: #242220;
+          --b2b-text-faint: #3d3834;
+          --b2b-card-bg: #ffffff;
+          --b2b-card-border: #e6ded4;
+          --b2b-card-shadow: 0 4px 16px rgba(0,0,0,0.03);
+          --b2b-pill-bg: rgba(0,0,0,0.05);
+          --b2b-hover-bg: rgba(0,0,0,0.03);
+          --b2b-input-bg: #ffffff;
+          --b2b-code-bg: #14161f;
+          background: var(--b2b-bg);
+          color: var(--b2b-text-main);
           font-family: var(--font-dm-sans), sans-serif;
           min-height: calc(100vh - 4rem);
           display: flex;
           flex-direction: column;
           position: relative;
           overflow-x: hidden;
+          transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        html.dark .pitch-page,
+        .dark .pitch-page {
+          --b2b-bg: #070a12;
+          --b2b-surface: #0b0f19;
+          --b2b-surface-alt: #0c101d;
+          --b2b-sidebar-bg: #0c101d;
+          --b2b-border: rgba(255,255,255,0.06);
+          --b2b-border-subtle: rgba(255,255,255,0.04);
+          --b2b-text-main: #f1f5f9;
+          --b2b-text-muted: #94a3b8;
+          --b2b-text-faint: rgba(255,255,255,0.4);
+          --b2b-card-bg: #0b0f19;
+          --b2b-card-border: rgba(255,255,255,0.06);
+          --b2b-card-shadow: none;
+          --b2b-pill-bg: rgba(255,255,255,0.1);
+          --b2b-hover-bg: rgba(255,255,255,0.03);
+          --b2b-input-bg: rgba(255,255,255,0.02);
+          --b2b-code-bg: #030712;
+          background: var(--b2b-bg) !important;
+          color: var(--b2b-text-main) !important;
         }
 
         /* ── Deck Framework Layout ── */
@@ -360,8 +399,8 @@ export default function B2BPitchDeck() {
 
         /* Sidebar Navigation */
         .deck-sidebar {
-          background: #0c101d;
-          border-right: 1px solid rgba(255,255,255,0.06);
+          background: var(--b2b-sidebar-bg);
+          border-right: 1px solid var(--b2b-border);
           padding: 2rem 1.5rem;
           display: flex;
           flex-direction: column;
@@ -379,7 +418,7 @@ export default function B2BPitchDeck() {
           font-weight: 700;
           text-transform: uppercase;
           letter-spacing: 0.15em;
-          color: rgba(255, 255, 255, 0.4);
+          color: var(--b2b-text-faint);
           margin-bottom: 1.5rem;
           display: flex;
           align-items: center;
@@ -401,7 +440,7 @@ export default function B2BPitchDeck() {
           cursor: pointer;
           font-size: 0.85rem;
           font-weight: 500;
-          color: rgba(255,255,255,0.6);
+          color: var(--b2b-text-muted);
           transition: all 0.2s ease;
           display: flex;
           align-items: center;
@@ -410,14 +449,14 @@ export default function B2BPitchDeck() {
         }
 
         .slide-nav-item:hover {
-          background: rgba(255,255,255,0.03);
-          color: #fff;
+          background: var(--b2b-hover-bg);
+          color: var(--b2b-text-main);
         }
 
         .slide-nav-item.active {
           background: rgba(252,39,121,0.08);
           color: #fc2779;
-          border-color: rgba(252,39,121,0.2);
+          border-color: rgba(252,39,121,0.25);
           font-weight: 600;
         }
 
@@ -428,15 +467,16 @@ export default function B2BPitchDeck() {
 
         .sidebar-promo-card {
           padding: 1.25rem;
-          background: rgba(255,255,255,0.02);
+          background: var(--b2b-card-bg);
           border-radius: 12px;
-          border: 1px solid rgba(255,255,255,0.04);
+          border: 1px solid var(--b2b-border);
+          box-shadow: var(--b2b-card-shadow);
           transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .sidebar-promo-card:hover {
-          background: rgba(255,255,255,0.04);
-          border-color: rgba(255,255,255,0.08);
+          background: var(--b2b-surface-alt);
+          border-color: var(--b2b-text-muted);
           transform: translateY(-2px);
         }
 
@@ -447,7 +487,7 @@ export default function B2BPitchDeck() {
           flex-direction: column;
           justify-content: center;
           position: relative;
-          background: radial-gradient(circle at 70% 30%, rgba(252,39,121,0.03) 0%, transparent 60%);
+          background: var(--b2b-bg);
         }
 
         @media (max-width: 640px) {
@@ -469,8 +509,8 @@ export default function B2BPitchDeck() {
 
         /* Navigation Bar Bottom */
         .deck-controls {
-          background: #0c101d;
-          border-top: 1px solid rgba(255,255,255,0.06);
+          background: var(--b2b-sidebar-bg);
+          border-top: 1px solid var(--b2b-border);
           padding: 1rem 2.5rem;
           display: flex;
           justify-content: space-between;
@@ -482,7 +522,7 @@ export default function B2BPitchDeck() {
           flex: 1;
           max-width: 300px;
           height: 4px;
-          background: rgba(255,255,255,0.1);
+          background: var(--b2b-border-subtle);
           border-radius: 99px;
           margin: 0 2rem;
           overflow: hidden;
@@ -497,7 +537,7 @@ export default function B2BPitchDeck() {
 
         /* ── Typography & Components ── */
         .eyebrow-badge {
-          background: rgba(252,39,121,0.12);
+          background: rgba(252,39,121,0.1);
           border: 1px solid rgba(252,39,121,0.25);
           color: #fc2779;
           padding: 0.35rem 0.85rem;
@@ -520,12 +560,12 @@ export default function B2BPitchDeck() {
           line-height: 1.15;
           letter-spacing: -0.01em;
           margin-bottom: 1rem;
-          color: #ffffff;
+          color: var(--b2b-text-main);
         }
 
         .slide-subtitle {
           font-size: clamp(1rem, 2.5vw, 1.25rem);
-          color: #94a3b8;
+          color: var(--b2b-text-muted);
           line-height: 1.5;
           margin-bottom: 2.5rem;
           font-weight: 400;
@@ -538,7 +578,7 @@ export default function B2BPitchDeck() {
           top: 10%;
           width: 500px;
           height: 500px;
-          background: radial-gradient(circle, rgba(252,39,121,0.15) 0%, transparent 70%);
+          background: radial-gradient(circle, rgba(252,39,121,0.12) 0%, transparent 70%);
           z-index: 0;
           pointer-events: none;
         }
@@ -559,8 +599,9 @@ export default function B2BPitchDeck() {
         }
 
         .metric-banner {
-          background: rgba(255,255,255,0.02);
-          border: 1px solid rgba(255,255,255,0.06);
+          background: var(--b2b-card-bg);
+          border: 1px solid var(--b2b-border);
+          box-shadow: var(--b2b-card-shadow);
           border-radius: 16px;
           padding: 2rem;
           position: relative;
@@ -586,8 +627,9 @@ export default function B2BPitchDeck() {
         .vs-card {
           padding: 1.25rem;
           border-radius: 12px;
-          background: rgba(255,255,255,0.01);
-          border: 1px solid rgba(255,255,255,0.04);
+          background: var(--b2b-card-bg);
+          border: 1px solid var(--b2b-border);
+          box-shadow: var(--b2b-card-shadow);
         }
 
         .vs-card.bad {
@@ -596,7 +638,7 @@ export default function B2BPitchDeck() {
 
         .vs-card.good {
           border-left: 3px solid #10b981;
-          background: rgba(16,185,129,0.02);
+          background: rgba(16,185,129,0.03);
         }
 
         /* Slide 3: Interactive Hotspot Map */
@@ -613,8 +655,9 @@ export default function B2BPitchDeck() {
         }
 
         .map-selector-box {
-          background: #0b0f19;
-          border: 1px solid rgba(255,255,255,0.06);
+          background: var(--b2b-surface);
+          border: 1px solid var(--b2b-border);
+          box-shadow: var(--b2b-card-shadow);
           border-radius: 16px;
           padding: 1.5rem;
         }
@@ -626,9 +669,9 @@ export default function B2BPitchDeck() {
           width: 100%;
           padding: 1rem;
           border-radius: 10px;
-          background: rgba(255,255,255,0.02);
-          border: 1px solid rgba(255,255,255,0.04);
-          color: #94a3b8;
+          background: var(--b2b-card-bg);
+          border: 1px solid var(--b2b-border-subtle);
+          color: var(--b2b-text-muted);
           font-weight: 600;
           cursor: pointer;
           transition: all 0.2s ease;
@@ -637,14 +680,14 @@ export default function B2BPitchDeck() {
         }
 
         .city-button:hover {
-          background: rgba(255,255,255,0.04);
-          color: #fff;
+          background: var(--b2b-hover-bg);
+          color: var(--b2b-text-main);
         }
 
         .city-button.active {
           background: rgba(252,39,121,0.08);
           border-color: #fc2779;
-          color: #fff;
+          color: var(--b2b-text-main);
         }
 
         .city-pill {
@@ -652,7 +695,8 @@ export default function B2BPitchDeck() {
           padding: 0.25rem 0.5rem;
           border-radius: 4px;
           font-weight: 700;
-          background: rgba(255,255,255,0.1);
+          background: var(--b2b-pill-bg);
+          color: var(--b2b-text-main);
         }
 
         .city-pill.hard {
@@ -666,8 +710,9 @@ export default function B2BPitchDeck() {
         }
 
         .hotspot-details {
-          background: rgba(255,255,255,0.01);
-          border: 1px solid rgba(255,255,255,0.04);
+          background: var(--b2b-card-bg);
+          border: 1px solid var(--b2b-border);
+          box-shadow: var(--b2b-card-shadow);
           border-radius: 16px;
           padding: 2rem;
           display: flex;
@@ -680,7 +725,7 @@ export default function B2BPitchDeck() {
           align-items: center;
           gap: 1.5rem;
           padding-bottom: 1.25rem;
-          border-bottom: 1px solid rgba(255,255,255,0.06);
+          border-bottom: 1px solid var(--b2b-border);
         }
 
         .ppm-circle {
@@ -712,8 +757,9 @@ export default function B2BPitchDeck() {
         }
 
         .roi-sliders {
-          background: #0b0f19;
-          border: 1px solid rgba(255,255,255,0.06);
+          background: var(--b2b-surface);
+          border: 1px solid var(--b2b-border);
+          box-shadow: var(--b2b-card-shadow);
           border-radius: 16px;
           padding: 2rem;
           display: flex;
@@ -732,7 +778,7 @@ export default function B2BPitchDeck() {
           justify-content: space-between;
           font-size: 0.85rem;
           font-weight: 600;
-          color: #94a3b8;
+          color: var(--b2b-text-muted);
         }
 
         .slider-value {
@@ -747,7 +793,7 @@ export default function B2BPitchDeck() {
           width: 100%;
           height: 6px;
           border-radius: 99px;
-          background: rgba(255,255,255,0.1);
+          background: var(--b2b-border);
           outline: none;
           cursor: pointer;
         }
@@ -803,8 +849,9 @@ export default function B2BPitchDeck() {
 
         /* Slide 5: Integration & Latency Benchmarks */
         .latency-container {
-          background: #0b0f19;
-          border: 1px solid rgba(255,255,255,0.06);
+          background: var(--b2b-surface);
+          border: 1px solid var(--b2b-border);
+          box-shadow: var(--b2b-card-shadow);
           border-radius: 16px;
           padding: 1.5rem 2rem;
           display: flex;
@@ -814,7 +861,7 @@ export default function B2BPitchDeck() {
 
         .latency-meter {
           height: 10px;
-          background: rgba(255,255,255,0.06);
+          background: var(--b2b-border-subtle);
           border-radius: 99px;
           overflow: hidden;
           position: relative;
@@ -848,8 +895,9 @@ export default function B2BPitchDeck() {
         }
 
         .tier-card {
-          background: #0b0f19;
-          border: 1px solid rgba(255,255,255,0.06);
+          background: var(--b2b-surface);
+          border: 1px solid var(--b2b-border);
+          box-shadow: var(--b2b-card-shadow);
           border-radius: 16px;
           padding: 2rem;
           display: flex;
@@ -861,7 +909,13 @@ export default function B2BPitchDeck() {
 
         .tier-card.popular {
           border-color: #fc2779;
-          background: linear-gradient(180deg, #0e1424 0%, #0b0f19 100%);
+          background: linear-gradient(180deg, #ffffff 0%, #fff7fa 100%);
+        }
+
+        html.dark .tier-card.popular,
+        .dark .tier-card.popular {
+          border-color: #fc2779 !important;
+          background: linear-gradient(180deg, #0e1424 0%, #0b0f19 100%) !important;
         }
 
         .tier-card.popular::after {
@@ -905,8 +959,8 @@ export default function B2BPitchDeck() {
 
         .pitch-btn-outline {
           background: transparent;
-          color: #fff;
-          border: 1px solid rgba(255,255,255,0.2);
+          color: var(--b2b-text-main);
+          border: 1px solid var(--b2b-border);
           padding: 0.8rem 1.8rem;
           border-radius: 8px;
           font-weight: 600;
@@ -919,28 +973,35 @@ export default function B2BPitchDeck() {
           transition: background 0.2s, border-color 0.2s;
         }
 
+        html.dark .pitch-btn-outline,
+        .dark .pitch-btn-outline {
+          color: #fff !important;
+          border-color: rgba(255,255,255,0.2) !important;
+        }
+
         .pitch-btn-outline:hover {
-          background: rgba(255,255,255,0.03);
-          border-color: rgba(255,255,255,0.4);
+          background: var(--b2b-hover-bg);
+          border-color: var(--b2b-text-muted);
         }
 
         .code-snippet {
-          background: #030712;
+          background: var(--b2b-code-bg);
           padding: 1rem;
           border-radius: 10px;
           font-family: "Courier New", Courier, monospace;
           font-size: 0.75rem;
           color: #38bdf8;
           overflow-x: auto;
-          border: 1px solid rgba(255,255,255,0.04);
+          border: 1px solid var(--b2b-border);
           white-space: pre-wrap;
           word-break: break-all;
         }
 
         /* Lead modal */
         .lead-form-box {
-          background: #0b0f19;
-          border: 1px solid rgba(255,255,255,0.06);
+          background: var(--b2b-surface);
+          border: 1px solid var(--b2b-border);
+          box-shadow: var(--b2b-card-shadow);
           border-radius: 12px;
           padding: 1.5rem;
         }
@@ -949,18 +1010,55 @@ export default function B2BPitchDeck() {
           width: 100%;
           padding: 0.65rem 0.85rem;
           border-radius: 6px;
-          background: rgba(255,255,255,0.02);
-          border: 1px solid rgba(255,255,255,0.08);
-          color: #fff;
+          background: var(--b2b-input-bg);
+          border: 1px solid var(--b2b-border);
+          color: var(--b2b-text-main);
           font-size: 0.85rem;
           margin-bottom: 0.75rem;
           outline: none;
           transition: border-color 0.2s;
         }
 
+        html.dark .pitch-input,
+        .dark .pitch-input {
+          background: rgba(255,255,255,0.02) !important;
+          border-color: rgba(255,255,255,0.08) !important;
+          color: #fff !important;
+        }
+
         .pitch-input:focus {
           border-color: #fc2779;
         }
+
+        /* ── Dynamic text adaptation for slide contents ── */
+        html:not(.dark) .pitch-page [style*="color: #fff"],
+        html:not(.dark) .pitch-page [style*="color: '#fff'"],
+        html:not(.dark) .pitch-page [style*='color: "var(--b2b-text-main)"'],
+        html:not(.dark) .pitch-page [style*="color: rgb(255, 255, 255)"] {
+          color: #0c0a09 !important;
+        }
+        html:not(.dark) .pitch-page [style*="color: #e2e8f0"],
+        html:not(.dark) .pitch-page [style*="color: '#e2e8f0'"],
+        html:not(.dark) .pitch-page [style*='color: "var(--b2b-text-main)"'] {
+          color: #0c0a09 !important;
+        }
+        html:not(.dark) .pitch-page [style*="color: #94a3b8"],
+        html:not(.dark) .pitch-page [style*="color: '#94a3b8'"],
+        html:not(.dark) .pitch-page [style*='color: "var(--b2b-text-muted)"'] {
+          color: #242220 !important;
+        }
+        html:not(.dark) .pitch-page [style*="rgba(255,255,255,0.6)"],
+        html:not(.dark) .pitch-page [style*="rgba(255, 255, 255, 0.6)"],
+        html:not(.dark) .pitch-page [style*="rgba(255,255,255,0.5)"],
+        html:not(.dark) .pitch-page [style*="rgba(255, 255, 255, 0.5)"] {
+          color: #242220 !important;
+        }
+        html:not(.dark) .pitch-page .pitch-btn-primary,
+        html:not(.dark) .pitch-page .pitch-btn-primary *,
+        html:not(.dark) .pitch-page .tier-card.popular::after {
+          color: #ffffff !important;
+        }
+        
         /* ── MOBILE OPTIMIZATIONS ── */
         @media (max-width: 640px) {
 
@@ -1194,41 +1292,26 @@ export default function B2BPitchDeck() {
             </ul>
           </div>
 
-          {/* Bottom Promo Widgets Group */}
-          <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
-            {/* Developer Portal */}
-            <div className="sidebar-promo-card">
-              <span style={{ fontSize: "0.65rem", textTransform: "uppercase", letterSpacing: "0.08em", color: "#38bdf8", display: "block", marginBottom: "0.5rem", fontWeight: 700 }}>
-                Developer Portal
+                    {/* Developer API Portal Card */}
+          <div className="sidebar-promo-card" style={{ marginTop: "auto" }}>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "0.4rem" }}>
+              <span style={{ fontSize: "0.65rem", textTransform: "uppercase", letterSpacing: "0.1em", color: "#0284c7", fontWeight: 700 }}>
+                Developer API Portal
               </span>
-              <p style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.6)", lineHeight: 1.4, margin: "0 0 0.75rem 0" }}>
-                Zip Code Geocoding &amp; Custom Store Catalog Sandbox
-              </p>
-              <Link
-                href="/b2b/dashboard"
-                className="pitch-btn-outline"
-                style={{ padding: "0.45rem 0.85rem", fontSize: "0.75rem", width: "100%", textDecoration: "none" }}
-              >
-                Enter API Portal <ArrowRight size={12} />
-              </Link>
-            </div>
-
-            {/* Pitch Deck */}
-            <div className="sidebar-promo-card">
-              <span style={{ fontSize: "0.65rem", textTransform: "uppercase", letterSpacing: "0.08em", color: "#f59f00", display: "block", marginBottom: "0.5rem", fontWeight: 700 }}>
-                Pitch Deck
+              <span style={{ fontSize: "0.6rem", background: "rgba(2,132,199,0.1)", color: "#0284c7", padding: "0.15rem 0.45rem", borderRadius: "4px", fontWeight: 700 }}>
+                Live Sandbox
               </span>
-              <p style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.6)", lineHeight: 1.4, margin: "0 0 0.75rem 0" }}>
-                Shareable full-screen investor &amp; partner deck
-              </p>
-              <Link
-                href="/b2b/pitch"
-                className="pitch-btn-outline"
-                style={{ padding: "0.45rem 0.85rem", fontSize: "0.75rem", width: "100%", textDecoration: "none" }}
-              >
-                View Pitch Deck <Play size={12} />
-              </Link>
             </div>
+            <p style={{ fontSize: "0.78rem", color: "var(--b2b-text-muted)", lineHeight: 1.45, margin: "0 0 0.85rem 0" }}>
+              Test API keys, simulate localized water hardness, and map custom store SKUs.
+            </p>
+            <Link
+              href="/b2b/dashboard"
+              className="pitch-btn-outline"
+              style={{ padding: "0.55rem 0.9rem", fontSize: "0.78rem", width: "100%", textDecoration: "none", justifyContent: "center", display: "inline-flex" }}
+            >
+              Enter API Portal <ArrowRight size={13} style={{ marginLeft: "4px" }} />
+            </Link>
           </div>
         </aside>
 
@@ -1278,7 +1361,7 @@ export default function B2BPitchDeck() {
                       <h4 style={{ fontWeight: 700, fontSize: "0.95rem", color: "#f87171", marginBottom: "0.25rem" }}>
                         Static Quizzes Are Failing Customers
                       </h4>
-                      <p style={{ fontSize: "0.85rem", color: "#94a3b8", lineHeight: 1.5 }}>
+                      <p style={{ fontSize: "0.85rem", color: "var(--b2b-text-muted)", lineHeight: 1.5 }}>
                         A shopper in London buys an oily-skin moisturizer. It breaks them out because London's hard tap water minerals react with their cleanser, leaving soap scum that clogs pores. The quiz never saw the water.
                       </p>
                     </div>
@@ -1287,7 +1370,7 @@ export default function B2BPitchDeck() {
                       <h4 style={{ fontWeight: 700, fontSize: "0.95rem", color: "#34d399", marginBottom: "0.25rem" }}>
                         The Environmental Telemetry Upgrade
                       </h4>
-                      <p style={{ fontSize: "0.85rem", color: "#94a3b8", lineHeight: 1.5 }}>
+                      <p style={{ fontSize: "0.85rem", color: "var(--b2b-text-muted)", lineHeight: 1.5 }}>
                         By capturing delivery zip codes, the Climate & Hard Water API immediately adapts catalog logic to mineral density, humidity, and dew point variables.
                       </p>
                     </div>
@@ -1297,7 +1380,7 @@ export default function B2BPitchDeck() {
                     <div className="metric-banner">
                       <div className="metric-large">70%</div>
                       <h5 style={{ fontWeight: 700, fontSize: "0.9rem", marginBottom: "0.25rem" }}>Skincare Routines Fail</h5>
-                      <p style={{ fontSize: "0.75rem", color: "#94a3b8", margin: 0 }}>
+                      <p style={{ fontSize: "0.75rem", color: "var(--b2b-text-muted)", margin: 0 }}>
                         Due to unaccounted external friction like calcium carbonates in tap water and sudden weather swings.
                       </p>
                     </div>
@@ -1305,7 +1388,7 @@ export default function B2BPitchDeck() {
                     <div className="metric-banner">
                       <div className="metric-large">22%</div>
                       <h5 style={{ fontWeight: 700, fontSize: "0.9rem", marginBottom: "0.25rem" }}>Average E-Commerce Return Rate</h5>
-                      <p style={{ fontSize: "0.75rem", color: "#94a3b8", margin: 0 }}>
+                      <p style={{ fontSize: "0.75rem", color: "var(--b2b-text-muted)", margin: 0 }}>
                         Driven directly by "unexpected skin breakouts" and poor formulation texture fits.
                       </p>
                     </div>
@@ -1327,7 +1410,7 @@ export default function B2BPitchDeck() {
 
                 <div className="hotspot-container">
                   <div className="map-selector-box">
-                    <span style={{ fontSize: "0.7rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", color: "#94a3b8", display: "block", marginBottom: "1rem" }}>
+                    <span style={{ fontSize: "0.7rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", color: "var(--b2b-text-muted)", display: "block", marginBottom: "1rem" }}>
                       Select Pitch Hotspot City
                     </span>
                     <button 
@@ -1374,10 +1457,10 @@ export default function B2BPitchDeck() {
                         <span style={{ fontSize: "0.55rem", opacity: 0.8 }}>PPM</span>
                       </div>
                       <div>
-                        <h3 style={{ fontSize: "1.1rem", fontWeight: 700, color: "#fff" }}>
+                        <h3 style={{ fontSize: "1.1rem", fontWeight: 700, color: "var(--b2b-text-main)" }}>
                           Water Profile: {activeCityData.type}
                         </h3>
-                        <p style={{ fontSize: "0.8rem", color: "#94a3b8", margin: 0 }}>
+                        <p style={{ fontSize: "0.8rem", color: "var(--b2b-text-muted)", margin: 0 }}>
                           Calcium: {activeCityData.minerals.calcium} mg/L | Magnesium: {activeCityData.minerals.magnesium} mg/L | Humidity: {activeCityData.humidity}%
                         </p>
                       </div>
@@ -1387,7 +1470,7 @@ export default function B2BPitchDeck() {
                       <h4 style={{ fontSize: "0.8rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", color: "#fc2779", marginBottom: "0.25rem" }}>
                         Skin Barrier Friction
                       </h4>
-                      <p style={{ fontSize: "0.85rem", color: "#e2e8f0", lineHeight: 1.5 }}>
+                      <p style={{ fontSize: "0.88rem", color: "var(--b2b-text-main)", lineHeight: 1.6, fontWeight: 500 }}>
                         {activeCityData.friction}
                       </p>
                     </div>
@@ -1398,10 +1481,10 @@ export default function B2BPitchDeck() {
                       </h4>
                       <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem", marginTop: "0.5rem" }}>
                         {activeCityData.recommendedSku.map((sku, idx) => (
-                          <div key={idx} style={{ background: "rgba(255,255,255,0.02)", padding: "0.75rem", borderRadius: "8px", border: "1px solid rgba(255,255,255,0.04)" }}>
+                          <div key={idx} style={{ background: "var(--b2b-hover-bg)", padding: "0.75rem", borderRadius: "8px", border: "1px solid var(--b2b-border)" }}>
                             <span style={{ fontSize: "0.6rem", fontWeight: 700, color: "#fc2779", textTransform: "uppercase" }}>{sku.category}</span>
-                            <div style={{ fontWeight: 600, fontSize: "0.85rem", color: "#fff", margin: "0.1rem 0" }}>{sku.name}</div>
-                            <p style={{ fontSize: "0.75rem", color: "#94a3b8", margin: 0 }}>{sku.reason}</p>
+                            <div style={{ fontWeight: 600, fontSize: "0.85rem", color: "var(--b2b-text-main)", margin: "0.1rem 0" }}>{sku.name}</div>
+                            <p style={{ fontSize: "0.75rem", color: "var(--b2b-text-muted)", margin: 0 }}>{sku.reason}</p>
                           </div>
                         ))}
                       </div>
@@ -1410,29 +1493,29 @@ export default function B2BPitchDeck() {
                 </div>
 
                 {/* AI Agents Promotion */}
-                <div style={{ marginTop: "2rem", padding: "1.5rem", background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: "16px" }}>
+                <div style={{ marginTop: "2rem", padding: "1.5rem", background: "var(--b2b-surface)", border: "1px solid var(--b2b-border)", borderRadius: "16px" }}>
                   <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "1rem" }}>
-                    <Sparkles size={16} color="#34d399" />
+                    <CheckCircle2 size={16} color="#34d399" />
                     <span style={{ fontSize: "0.85rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", color: "#34d399" }}>
                       🎁 Included FREE With All Tiers: Mirha AI Skincare Agents
                     </span>
                   </div>
                   <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "1rem" }}>
-                    <div style={{ background: "rgba(255,255,255,0.01)", padding: "1rem", borderRadius: "12px", border: "1px solid rgba(255,255,255,0.04)" }}>
-                      <span style={{ fontWeight: 600, fontSize: "0.85rem", color: "#fff", display: "block", marginBottom: "0.25rem" }}>📋 Catalog Audit Agent</span>
-                      <p style={{ margin: 0, fontSize: "0.75rem", color: "#94a3b8", lineHeight: 1.4 }}>
+                    <div style={{ background: "var(--b2b-card-bg)", padding: "1rem", borderRadius: "12px", border: "1px solid var(--b2b-border)" }}>
+                      <span style={{ fontWeight: 600, fontSize: "0.85rem", color: "var(--b2b-text-main)", display: "block", marginBottom: "0.25rem" }}>📋 Catalog Audit Agent</span>
+                      <p style={{ margin: 0, fontSize: "0.75rem", color: "var(--b2b-text-muted)", lineHeight: 1.4 }}>
                         Automatically scans your product ingredients, scores your catalog health, and tags items for climate suitability.
                       </p>
                     </div>
-                    <div style={{ background: "rgba(255,255,255,0.01)", padding: "1rem", borderRadius: "12px", border: "1px solid rgba(255,255,255,0.04)" }}>
-                      <span style={{ fontWeight: 600, fontSize: "0.85rem", color: "#fff", display: "block", marginBottom: "0.25rem" }}>🚨 Weather Guard Agent</span>
-                      <p style={{ margin: 0, fontSize: "0.75rem", color: "#94a3b8", lineHeight: 1.4 }}>
+                    <div style={{ background: "var(--b2b-card-bg)", padding: "1rem", borderRadius: "12px", border: "1px solid var(--b2b-border)" }}>
+                      <span style={{ fontWeight: 600, fontSize: "0.85rem", color: "var(--b2b-text-main)", display: "block", marginBottom: "0.25rem" }}>🚨 Weather Guard Agent</span>
+                      <p style={{ margin: 0, fontSize: "0.75rem", color: "var(--b2b-text-muted)", lineHeight: 1.4 }}>
                         Monitors weather shifts dynamically to output warnings and product recommendations based on real-time alerts.
                       </p>
                     </div>
-                    <div style={{ background: "rgba(255,255,255,0.01)", padding: "1rem", borderRadius: "12px", border: "1px solid rgba(255,255,255,0.04)" }}>
-                      <span style={{ fontWeight: 600, fontSize: "0.85rem", color: "#fff", display: "block", marginBottom: "0.25rem" }}>💬 AI Concierge Agent</span>
-                      <p style={{ margin: 0, fontSize: "0.75rem", color: "#94a3b8", lineHeight: 1.4 }}>
+                    <div style={{ background: "var(--b2b-card-bg)", padding: "1rem", borderRadius: "12px", border: "1px solid var(--b2b-border)" }}>
+                      <span style={{ fontWeight: 600, fontSize: "0.85rem", color: "var(--b2b-text-main)", display: "block", marginBottom: "0.25rem" }}>💬 AI Concierge Agent</span>
+                      <p style={{ margin: 0, fontSize: "0.75rem", color: "var(--b2b-text-muted)", lineHeight: 1.4 }}>
                         Audits customers' current routines, highlights active ingredient layering conflicts, and structures optimized AM/PM regimens.
                       </p>
                     </div>
@@ -1506,11 +1589,11 @@ export default function B2BPitchDeck() {
 
                     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginTop: "0.5rem" }}>
                       <div style={{ background: "rgba(255,255,255,0.02)", padding: "0.75rem", borderRadius: "8px" }}>
-                        <span style={{ fontSize: "0.7rem", color: "#94a3b8" }}>AOV Improvement</span>
+                        <span style={{ fontSize: "0.7rem", color: "var(--b2b-text-muted)" }}>AOV Improvement</span>
                         <div style={{ fontSize: "1.1rem", fontWeight: 700, color: "#34d399" }}>+18%</div>
                       </div>
                       <div style={{ background: "rgba(255,255,255,0.02)", padding: "0.75rem", borderRadius: "8px" }}>
-                        <span style={{ fontSize: "0.7rem", color: "#94a3b8" }}>Return Reduction</span>
+                        <span style={{ fontSize: "0.7rem", color: "var(--b2b-text-muted)" }}>Return Reduction</span>
                         <div style={{ fontSize: "1.1rem", fontWeight: 700, color: "#34d399" }}>-34%</div>
                       </div>
                     </div>
@@ -1518,7 +1601,7 @@ export default function B2BPitchDeck() {
 
                   <div className="roi-result-card">
                     <div>
-                      <span style={{ fontSize: "0.75rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", color: "#94a3b8" }}>
+                      <span style={{ fontSize: "0.75rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", color: "var(--b2b-text-muted)" }}>
                         Estimated Annual Value Created
                       </span>
                       <div className="annual-value">
@@ -1528,15 +1611,15 @@ export default function B2BPitchDeck() {
 
                     <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem", textAlign: "left" }}>
                       <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.85rem", borderBottom: "1px solid rgba(255,255,255,0.05)", paddingBottom: "0.5rem" }}>
-                        <span style={{ color: "#94a3b8" }}>Monthly AOV Lift (Bundles):</span>
-                        <span style={{ fontWeight: 600, color: "#fff" }}>+${Math.round(aovLiftRevenue).toLocaleString()}/mo</span>
+                        <span style={{ color: "var(--b2b-text-muted)" }}>Monthly AOV Lift (Bundles):</span>
+                        <span style={{ fontWeight: 600, color: "var(--b2b-text-main)" }}>+${Math.round(aovLiftRevenue).toLocaleString()}/mo</span>
                       </div>
                       <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.85rem", borderBottom: "1px solid rgba(255,255,255,0.05)", paddingBottom: "0.5rem" }}>
-                        <span style={{ color: "#94a3b8" }}>Reduced Return Logistics Savings:</span>
-                        <span style={{ fontWeight: 600, color: "#fff" }}>+${Math.round(returnSavingsUSD).toLocaleString()}/mo</span>
+                        <span style={{ color: "var(--b2b-text-muted)" }}>Reduced Return Logistics Savings:</span>
+                        <span style={{ fontWeight: 600, color: "var(--b2b-text-main)" }}>+${Math.round(returnSavingsUSD).toLocaleString()}/mo</span>
                       </div>
                       <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.85rem" }}>
-                        <span style={{ color: "#94a3b8" }}>Customer Retention Multiplier:</span>
+                        <span style={{ color: "var(--b2b-text-muted)" }}>Customer Retention Multiplier:</span>
                         <span style={{ fontWeight: 600, color: "#fc2779" }}>2.4x</span>
                       </div>
                     </div>
@@ -1621,19 +1704,19 @@ export default function B2BPitchDeck() {
                     <div style={{ background: "rgba(16,185,129,0.08)", border: "1px solid rgba(16,185,129,0.25)", padding: "1.25rem", borderRadius: "12px", display: "flex", alignItems: "center", gap: "1rem" }}>
                       <CheckCircle2 size={24} color="#10b981" style={{ flexShrink: 0 }} />
                       <div>
-                        <h4 style={{ fontWeight: 700, color: "#fff", marginBottom: "0.1rem", fontSize: "0.95rem" }}>Details saved — pick a plan below</h4>
-                        <p style={{ fontSize: "0.78rem", color: "#94a3b8", margin: 0 }}>Your API key will be emailed to <strong style={{ color: "#fff" }}>{leadEmail}</strong> after checkout.</p>
+                        <h4 style={{ fontWeight: 700, color: "var(--b2b-text-main)", marginBottom: "0.1rem", fontSize: "0.95rem" }}>Details saved — pick a plan below</h4>
+                        <p style={{ fontSize: "0.78rem", color: "var(--b2b-text-muted)", margin: 0 }}>Your API key will be emailed to <strong style={{ color: "var(--b2b-text-main)" }}>{leadEmail}</strong> after checkout.</p>
                       </div>
                     </div>
                   ) : (
                     <div className="lead-form-box" style={{ border: "1px solid rgba(252,39,121,0.3)", background: "rgba(252,39,121,0.04)" }}>
                       <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.6rem" }}>
                         <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#fc2779", flexShrink: 0 }} />
-                        <h4 style={{ fontWeight: 700, fontSize: "0.9rem", color: "#fff", margin: 0 }}>
+                        <h4 style={{ fontWeight: 700, fontSize: "0.9rem", color: "var(--b2b-text-main)", margin: 0 }}>
                           Step 1 — Enter your details to unlock checkout
                         </h4>
                       </div>
-                      <p style={{ fontSize: "0.75rem", color: "#94a3b8", margin: "0 0 0.85rem" }}>Your API key will be sent to this email instantly after payment.</p>
+                      <p style={{ fontSize: "0.75rem", color: "var(--b2b-text-muted)", margin: "0 0 0.85rem" }}>Your API key will be sent to this email instantly after payment.</p>
                       {checkoutError && (
                         <div style={{ background: "rgba(239,68,68,0.1)", border: "1px solid rgba(239,68,68,0.3)", padding: "0.75rem", borderRadius: "6px", color: "#ef4444", fontSize: "0.8rem", marginBottom: "0.85rem" }}>
                           {checkoutError}
@@ -1682,17 +1765,17 @@ export default function B2BPitchDeck() {
                     <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", height: "100%" }}>
                       <div>
                         <h3 style={{ fontSize: "1.1rem", fontWeight: 700, margin: 0 }}>Growth Tier</h3>
-                        <p style={{ fontSize: "0.75rem", color: "#94a3b8", marginTop: "0.25rem" }}>
+                        <p style={{ fontSize: "0.75rem", color: "var(--b2b-text-muted)", marginTop: "0.25rem" }}>
                           For scaling niche retailers.
                         </p>
                         <div style={{ margin: "1.5rem 0" }}>
-                          <span style={{ fontSize: "2.25rem", fontWeight: 800, color: "#fff" }}>
+                          <span style={{ fontSize: "2.25rem", fontWeight: 800, color: "var(--b2b-text-main)" }}>
                             {isInternational ? "$" : "₹"}
                             {isInternational ? (annualBilling ? "399" : "499") : (annualBilling ? "33,200" : "41,500")}
                           </span>
-                          <span style={{ fontSize: "0.85rem", color: "#94a3b8" }}>/mo</span>
+                          <span style={{ fontSize: "0.85rem", color: "var(--b2b-text-muted)" }}>/mo</span>
                         </div>
-                        <ul style={{ listStyle: "none", padding: 0, fontSize: "0.8rem", color: "#94a3b8", display: "flex", flexDirection: "column", gap: "0.5rem", marginBottom: "1.5rem" }}>
+                        <ul style={{ listStyle: "none", padding: 0, fontSize: "0.8rem", color: "var(--b2b-text-muted)", display: "flex", flexDirection: "column", gap: "0.5rem", marginBottom: "1.5rem" }}>
                           <li>✓ Up to 150k API calls/mo</li>
                           <li>✓ Hard Water Matrix (ppm)</li>
                           <li>✓ Climate + Humidity Swaps</li>
@@ -1715,17 +1798,17 @@ export default function B2BPitchDeck() {
                     <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", height: "100%" }}>
                       <div>
                         <h3 style={{ fontSize: "1.1rem", fontWeight: 700, margin: 0 }}>Scale Enterprise</h3>
-                        <p style={{ fontSize: "0.75rem", color: "#94a3b8", marginTop: "0.25rem" }}>
+                        <p style={{ fontSize: "0.75rem", color: "var(--b2b-text-muted)", marginTop: "0.25rem" }}>
                           For global beauty marketplaces.
                         </p>
                         <div style={{ margin: "1.5rem 0" }}>
-                          <span style={{ fontSize: "2.25rem", fontWeight: 800, color: "#fff" }}>
+                          <span style={{ fontSize: "2.25rem", fontWeight: 800, color: "var(--b2b-text-main)" }}>
                             {isInternational ? "$" : "₹"}
                             {isInternational ? (annualBilling ? "1,499" : "1,899") : (annualBilling ? "1,24,000" : "1,58,000")}
                           </span>
-                          <span style={{ fontSize: "0.85rem", color: "#94a3b8" }}>/mo</span>
+                          <span style={{ fontSize: "0.85rem", color: "var(--b2b-text-muted)" }}>/mo</span>
                         </div>
-                        <ul style={{ listStyle: "none", padding: 0, fontSize: "0.8rem", color: "#94a3b8", display: "flex", flexDirection: "column", gap: "0.5rem", marginBottom: "1.5rem" }}>
+                        <ul style={{ listStyle: "none", padding: 0, fontSize: "0.8rem", color: "var(--b2b-text-muted)", display: "flex", flexDirection: "column", gap: "0.5rem", marginBottom: "1.5rem" }}>
                           <li>✓ Up to 1M API calls/mo</li>
                           <li>✓ Advanced Water Mineral Matrix</li>
                           <li>✓ Dynamic Dewpoint Adjusters</li>
@@ -1744,17 +1827,17 @@ export default function B2BPitchDeck() {
                     </div>
                   </div>
 
-                  <div className="tier-card" style={{ background: "rgba(255,255,255,0.01)" }}>
+                  <div className="tier-card" style={{ background: "var(--b2b-card-bg)" }}>
                     <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", height: "100%" }}>
                       <div>
                         <h3 style={{ fontSize: "1.1rem", fontWeight: 700, margin: 0 }}>Global Custom</h3>
-                        <p style={{ fontSize: "0.75rem", color: "#94a3b8", marginTop: "0.25rem" }}>
+                        <p style={{ fontSize: "0.75rem", color: "var(--b2b-text-muted)", marginTop: "0.25rem" }}>
                           High volume, tailored SLA integrations.
                         </p>
                         <div style={{ margin: "1.5rem 0" }}>
-                          <span style={{ fontSize: "1.75rem", fontWeight: 800, color: "#fff" }}>Volume Pricing</span>
+                          <span style={{ fontSize: "1.75rem", fontWeight: 800, color: "var(--b2b-text-main)" }}>Volume Pricing</span>
                         </div>
-                        <ul style={{ listStyle: "none", padding: 0, fontSize: "0.8rem", color: "#94a3b8", display: "flex", flexDirection: "column", gap: "0.5rem", marginBottom: "1rem" }}>
+                        <ul style={{ listStyle: "none", padding: 0, fontSize: "0.8rem", color: "var(--b2b-text-muted)", display: "flex", flexDirection: "column", gap: "0.5rem", marginBottom: "1rem" }}>
                           <li>✓ 1M+ custom API calls/mo</li>
                           <li>✓ Tailored formulation parameters</li>
                           <li><strong style={{ color: "#34d399" }}>✓ FREE AI Skincare Agents (Catalog, Weather, Concierge)</strong></li>
@@ -1769,32 +1852,32 @@ export default function B2BPitchDeck() {
                   </div>
                 </div>
 
-                <p style={{ textAlign: "center", fontSize: "0.8rem", color: "#94a3b8", marginTop: "1.5rem" }}>
+                <p style={{ textAlign: "center", fontSize: "0.8rem", color: "var(--b2b-text-muted)", marginTop: "1.5rem" }}>
                   * Overage volume billed dynamically at $0.008 per additional request on Growth, and $0.003 on Scale Enterprise.
                 </p>
 
                 {/* Provisioning Info Box */}
                 <div style={{ marginTop: "2rem", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "12px", padding: "1.5rem" }}>
-                  <h4 style={{ fontWeight: 600, color: "#fff", fontSize: "0.95rem", marginBottom: "1rem", display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                  <h4 style={{ fontWeight: 600, color: "var(--b2b-text-main)", fontSize: "0.95rem", marginBottom: "1rem", display: "flex", alignItems: "center", gap: "0.5rem" }}>
                     <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#10b981" }} />
                     Instant API Provisioning
                   </h4>
                   <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "1.5rem" }}>
                     <div>
                       <span style={{ display: "block", color: "#fc2779", fontWeight: 700, marginBottom: "0.25rem", fontSize: "0.85rem" }}>1. Checkout</span>
-                      <p style={{ margin: 0, fontSize: "0.75rem", color: "#94a3b8", lineHeight: 1.5 }}>
+                      <p style={{ margin: 0, fontSize: "0.75rem", color: "var(--b2b-text-muted)", lineHeight: 1.5 }}>
                         Select your tier and complete the secure payment via our enterprise Merchant of Record.
                       </p>
                     </div>
                     <div>
                       <span style={{ display: "block", color: "#fc2779", fontWeight: 700, marginBottom: "0.25rem", fontSize: "0.85rem" }}>2. Key Generation</span>
-                      <p style={{ margin: 0, fontSize: "0.75rem", color: "#94a3b8", lineHeight: 1.5 }}>
+                      <p style={{ margin: 0, fontSize: "0.75rem", color: "var(--b2b-text-muted)", lineHeight: 1.5 }}>
                         Our system automatically generates your unique <code style={{ color: "#38bdf8" }}>b2b_live_xxx</code> API key with your selected usage quota.
                       </p>
                     </div>
                     <div>
                       <span style={{ display: "block", color: "#fc2779", fontWeight: 700, marginBottom: "0.25rem", fontSize: "0.85rem" }}>3. Instant Delivery</span>
-                      <p style={{ margin: 0, fontSize: "0.75rem", color: "#94a3b8", lineHeight: 1.5 }}>
+                      <p style={{ margin: 0, fontSize: "0.75rem", color: "var(--b2b-text-muted)", lineHeight: 1.5 }}>
                         Your API key and developer documentation are emailed to you instantly. Start integrating within 60 seconds.
                       </p>
                     </div>
@@ -1830,7 +1913,7 @@ export default function B2BPitchDeck() {
         </div>
 
         <div style={{ display: "flex", alignItems: "center" }}>
-          <span style={{ fontSize: "0.75rem", color: "#94a3b8", fontFamily: "monospace" }}>
+          <span style={{ fontSize: "0.75rem", color: "var(--b2b-text-muted)", fontFamily: "monospace" }}>
             Slide {currentSlide} of {totalSlides}
           </span>
           <div className="progress-container">

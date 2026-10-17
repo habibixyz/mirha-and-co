@@ -77,7 +77,7 @@ export async function runWeatherGuardAgent(city: string): Promise<WeatherGuardTr
     humidityPercent: humidity,
     ppm,
     triggerType: "OPTIMAL",
-    alertHeadline: `✨ Climate Conditions Stable in ${climate.city}`,
+    alertHeadline: `Climate Conditions Stable in ${climate.city}`,
     actionRequired: "Environmental barrier stress is currently low.",
     recommendedActiveOverride: "Maintain baseline AM/PM routine as scheduled.",
   };

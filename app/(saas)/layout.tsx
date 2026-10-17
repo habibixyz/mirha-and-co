@@ -6,10 +6,8 @@ import { MobileMenuButton } from "@/components/MobileMenuButton";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import {
   DM_Sans,
-  DM_Serif_Display,
   Playfair_Display,
   Bebas_Neue,
-  JetBrains_Mono,
 } from "next/font/google";
 
 const dmSans = DM_Sans({
@@ -18,14 +16,6 @@ const dmSans = DM_Sans({
   style: ["normal", "italic"],
   display: "swap",
   variable: "--font-dm-sans",
-});
-
-const dmSerifDisplay = DM_Serif_Display({
-  subsets: ["latin"],
-  weight: ["400"],
-  style: ["normal", "italic"],
-  display: "swap",
-  variable: "--font-dm-serif",
 });
 
 const playfairDisplay = Playfair_Display({
@@ -41,13 +31,6 @@ const bebasNeue = Bebas_Neue({
   weight: ["400"],
   display: "swap",
   variable: "--font-bebas",
-});
-
-const jetBrainsMono = JetBrains_Mono({
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  display: "swap",
-  variable: "--font-mono",
 });
 
 export const metadata: Metadata = {
@@ -83,7 +66,7 @@ export default function SaasLayout({
  children: React.ReactNode;
 }) {
  return (
-  <html lang="en" suppressHydrationWarning className={`${dmSans.variable} ${dmSerifDisplay.variable} ${playfairDisplay.variable} ${bebasNeue.variable} ${jetBrainsMono.variable}`}>
+  <html lang="en" suppressHydrationWarning className={`${dmSans.variable} ${playfairDisplay.variable} ${bebasNeue.variable}`}>
    <head>
      <script
        dangerouslySetInnerHTML={{

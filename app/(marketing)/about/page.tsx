@@ -53,17 +53,17 @@ export default function AboutPage() {
  }
 
  .hero-img {
- height: 650px;
+ height: 480px;
  width: 100%;
  grid-column: span 2;
- margin-top: 5rem;
- box-shadow: 0 30px 60px rgba(0,0,0,0.15);
+ margin-top: 2rem;
+ box-shadow: 0 20px 50px rgba(0,0,0,0.12);
  }
 
  .side-img {
- height: 480px;
+ height: 380px;
  width: 100%;
- margin-bottom: 2rem;
+ margin-bottom: 0;
  box-shadow: 0 20px 40px rgba(0,0,0,0.04);
  }
 
@@ -79,18 +79,31 @@ export default function AboutPage() {
  }
 
  .hero {
- background: var(--black);
- color: var(--white);
- padding: 8rem 2.5rem 0rem;
+ background: #faf8f5;
+ color: var(--ink);
+ padding: 5rem 2rem 0rem;
  position: relative;
+ border-bottom: 1px solid var(--rule);
+ }
+
+ html.dark .hero,
+ .dark .hero {
+ background: var(--black) !important;
+ color: var(--white) !important;
+ border-bottom-color: rgba(255, 255, 255, 0.12) !important;
  }
 
  .hero::before {
  content: '';
  position: absolute;
  top: 0; right: 0; width: 50vw; height: 50vw;
- background: radial-gradient(circle, rgba(162,123,92,0.1) 0%, transparent 70%);
+ background: radial-gradient(circle, rgba(162,123,92,0.06) 0%, transparent 70%);
  pointer-events: none;
+ }
+
+ html.dark .hero::before,
+ .dark .hero::before {
+ background: radial-gradient(circle, rgba(162,123,92,0.12) 0%, transparent 70%) !important;
  }
 
  .hero-inner {
@@ -98,9 +111,9 @@ export default function AboutPage() {
  margin: 0 auto;
  display: grid;
  grid-template-columns: 1.2fr 0.8fr;
- gap: 4rem;
+ gap: 2.5rem;
  align-items: start;
- padding-bottom: 4rem;
+ padding-bottom: 2.5rem;
  }
 
  .eyebrow {
@@ -123,15 +136,20 @@ export default function AboutPage() {
  letter-spacing: -0.02em;
  word-break: normal;
  overflow-wrap: break-word;
- background: linear-gradient(135deg, #ffffff 0%, #d99a8f 50%, #e8d3b5 100%);
- background-size: 200% auto;
- -webkit-background-clip: text;
- -webkit-text-fill-color: transparent;
- animation: shine 6s linear infinite;
+ color: #11100f;
+ }
+
+ html.dark .hero h1,
+ .dark .hero h1 {
+ background: linear-gradient(135deg, #ffffff 0%, #d99a8f 50%, #e8d3b5 100%) !important;
+ background-size: 200% auto !important;
+ -webkit-background-clip: text !important;
+ -webkit-text-fill-color: transparent !important;
+ animation: shine 6s linear infinite !important;
  }
 
  .hero h1 span {
- color: #d99a8f;
+ color: var(--rose);
  display: block;
  font-family: var(--font-playfair), serif;
  font-style: normal;
@@ -151,11 +169,16 @@ export default function AboutPage() {
 
  .hero-copy {
  font-family: var(--font-playfair), serif;
- font-size: 1.35rem;
+ font-size: 1.3rem;
  line-height: 1.6;
- color: rgba(255,255,255,0.7);
- margin-bottom: 3rem;
+ color: #4a4542;
+ margin-bottom: 1.5rem;
  font-style: normal;
+ }
+
+ html.dark .hero-copy,
+ .dark .hero-copy {
+ color: rgba(255,255,255,0.7) !important;
  }
 
  .strip {
@@ -172,12 +195,21 @@ export default function AboutPage() {
  }
 
  .section {
- padding: 8rem 2.5rem;
+ padding: 4.5rem 2rem;
  }
 
- .section.dark {
- background: var(--black);
- color: var(--white);
+ .honesty-section {
+ background: #faf8f5;
+ color: var(--ink);
+ border-top: 1px solid var(--rule);
+ border-bottom: 1px solid var(--rule);
+ }
+
+ html.dark .honesty-section,
+ .dark .honesty-section {
+ background: var(--black) !important;
+ color: var(--white) !important;
+ border-color: rgba(255, 255, 255, 0.08) !important;
  }
 
  .section.rose {
@@ -193,7 +225,7 @@ export default function AboutPage() {
  .two-col {
  display: grid;
  grid-template-columns: 1fr 1fr;
- gap: 6rem;
+ gap: 3.5rem;
  align-items: center;
  }
 
@@ -238,22 +270,22 @@ export default function AboutPage() {
  }
 
   .ecosystem-grid {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 2rem;
-    margin-top: 4rem;
-  }
+ display: grid;
+ grid-template-columns: repeat(6, 1fr);
+ gap: 1.25rem;
+ margin-top: 2.5rem;
+ }
 
  .ecosystem-card {
-    background: #fff;
-    border: 1px solid var(--rule);
-    border-radius: 20px;
-    padding: 2.5rem;
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    position: relative;
-    overflow: hidden;
-    grid-column: span 2;
-  }
+ background: #fff;
+ border: 1px solid var(--rule);
+ border-radius: 20px;
+ padding: 2rem 1.75rem;
+ transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+ position: relative;
+ overflow: hidden;
+ grid-column: span 2;
+ }
 
   html.dark .ecosystem-card,
   .dark .ecosystem-card {
@@ -306,40 +338,90 @@ export default function AboutPage() {
  .honesty-list {
  display: flex;
  flex-direction: column;
- gap: 1.5rem;
+ gap: 1rem;
  }
 
- .honesty-row {
- background: rgba(255,255,255,0.02);
- border: 1px solid rgba(255,255,255,0.06);
+ .honesty-card {
+ background: #ffffff;
+ border: 1px solid #e8e2da;
  border-radius: 16px;
- padding: 2rem;
- display: grid;
- grid-template-columns: 0.4fr 1fr;
- gap: 2rem;
- transition: all 0.3s;
+ padding: 1.4rem 1.6rem;
+ transition: all 0.25s ease;
+ box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+ display: flex;
+ flex-direction: column;
+ gap: 0.5rem;
  }
 
- .honesty-row:hover {
- background: rgba(255,255,255,0.04);
- border-color: rgba(255,255,255,0.12);
+ html.dark .honesty-card,
+ .dark .honesty-card {
+ background: #181716 !important;
+ border-color: rgba(255, 255, 255, 0.1) !important;
+ box-shadow: none !important;
  }
 
- .honesty-row h3 {
+ .honesty-card:hover {
+ transform: translateY(-2px);
+ box-shadow: 0 8px 24px rgba(162, 123, 92, 0.08);
+ border-color: #d1c7bc;
+ }
+
+ html.dark .honesty-card:hover,
+ .dark .honesty-card:hover {
+ border-color: rgba(255, 255, 255, 0.2) !important;
+ box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4) !important;
+ }
+
+ .honesty-card-header {
+ display: flex;
+ align-items: center;
+ gap: 0.75rem;
+ }
+
+ .honesty-badge {
+ font-size: 0.72rem;
+ font-weight: 700;
+ letter-spacing: 0.1em;
+ color: var(--rose);
+ background: var(--rose-light);
+ padding: 0.2rem 0.55rem;
+ border-radius: 6px;
+ }
+
+ html.dark .honesty-badge,
+ .dark .honesty-badge {
+ background: rgba(255, 77, 148, 0.15) !important;
+ color: #ff4d94 !important;
+ }
+
+ .honesty-card h3 {
  font-family: var(--font-playfair), serif;
  font-weight: 700;
- font-size: 1.4rem;
- color: var(--white);
+ font-size: 1.22rem;
+ color: #11100f;
+ line-height: 1.3;
+ margin: 0;
  }
 
- .honesty-row p {
- color: rgba(255,255,255,0.6);
- line-height: 1.7;
- font-size: 1rem;
+ html.dark .honesty-card h3,
+ .dark .honesty-card h3 {
+ color: #ffffff !important;
+ }
+
+ .honesty-card p {
+ color: #57534e;
+ line-height: 1.65;
+ font-size: 0.95rem;
+ margin: 0;
+ }
+
+ html.dark .honesty-card p,
+ .dark .honesty-card p {
+ color: #aba49d !important;
  }
 
  .cta {
- padding: 8rem 2.5rem;
+ padding: 4.5rem 2rem;
  background: var(--rose);
  color: white;
  text-align: center;
@@ -360,9 +442,9 @@ export default function AboutPage() {
 
  .cta-box p {
  color: rgba(255,255,255,0.85);
- font-size: 1.25rem;
+ font-size: 1.2rem;
  line-height: 1.6;
- margin-bottom: 3rem;
+ margin-bottom: 2rem;
  font-family: var(--font-playfair), serif;
  font-style: normal;
  }
@@ -430,8 +512,8 @@ export default function AboutPage() {
       gap: 2rem;
     }
 
-    .hero { padding: 6rem 1.5rem 0rem; }
-    .section, .cta { padding: 5rem 1.5rem; }
+    .hero { padding: 3.5rem 1.25rem 0rem; }
+ .section, .cta { padding: 3rem 1.25rem; }
 
     .ecosystem-grid {
       grid-template-columns: repeat(2, 1fr) !important;
@@ -448,15 +530,15 @@ export default function AboutPage() {
     }
 
     .hero-img {
-      grid-column: span 1 !important;
-      height: 400px;
-      margin-top: 2rem;
-    }
+ grid-column: span 1 !important;
+ height: 320px;
+ margin-top: 1.5rem;
+ }
 
     .side-img {
-      height: 300px;
-      margin-top: 2rem;
-    }
+ height: 260px;
+ margin-top: 1.5rem;
+ }
 
     .btn-row {
       flex-direction: column;
@@ -595,7 +677,7 @@ export default function AboutPage() {
         </ul>
       </div>
 
-      <div style={{ background: "var(--rose-light)", border: "1px solid var(--rule)", borderRadius: "24px", padding: "3rem", display: "flex", flexDirection: "column", height: "100%", justifyContent: "center" }}>
+      <div style={{ background: "var(--rose-light)", border: "1px solid var(--rule)", borderRadius: "24px", padding: "2.25rem", display: "flex", flexDirection: "column", height: "100%", justifyContent: "center" }}>
         <h3 style={{ fontFamily: "var(--font-playfair), serif", fontSize: "1.8rem", fontWeight: 700, marginBottom: "1rem", color: "var(--ink)" }}>
           How it works
         </h3>
@@ -640,7 +722,7 @@ export default function AboutPage() {
   </section>
 
   {/* MEET THE FOUNDER */}
-  <section className="section rose" style={{ borderTop: "1px solid var(--rule)", padding: "4rem 2.5rem" }}>
+  <section className="section rose" style={{ borderTop: "1px solid var(--rule)", padding: "3rem 2rem" }}>
   <div className="inner" style={{ maxWidth: "800px", margin: "0 auto" }}>
   <div style={{ display: "flex", gap: "2.5rem", alignItems: "center", flexWrap: "wrap" }}>
   <div style={{ 
@@ -689,15 +771,15 @@ export default function AboutPage() {
   </section>
 
   {/* HONESTY & ETHICS */}
- <section className="section dark">
+ <section className="section honesty-section">
  <div className="inner two-col">
  <div>
- <p className="eyebrow" style={{ color: 'rgba(255,255,255,0.5)' }}>Our Baseline</p>
- <h2 className="section-title" style={{ color: '#fff' }}>
+ <p className="eyebrow">Our Baseline</p>
+ <h2 className="section-title">
  Honest curation.
  <span style={{ color: 'var(--rose)' }}>No pretending.</span>
  </h2>
- <div className="img-wrap side-img" style={{ height: '350px', marginTop: '3rem' }}>
+ <div className="img-wrap side-img" style={{ height: '320px', marginTop: '1.5rem' }}>
  <Image 
  src="/images/about-hand.png" 
  alt="Expertly curated products" 
@@ -708,22 +790,31 @@ export default function AboutPage() {
  </div>
 
  <div className="honesty-list">
- <div className="honesty-row">
+ <div className="honesty-card">
+ <div className="honesty-card-header">
+ <span className="honesty-badge">01</span>
  <h3>Real Curation, Not Fake Testing</h3>
+ </div>
  <p>
  We don't pretend to personally test thousands of bottles in a laboratory. Our picks are based on deep clinical literature, formulation analysis, and aggregate user reviews. We tell you exactly where the facts come from.
  </p>
  </div>
 
- <div className="honesty-row">
+ <div className="honesty-card">
+ <div className="honesty-card-header">
+ <span className="honesty-badge">02</span>
  <h3>Education, Not Medical Advice</h3>
+ </div>
  <p>
  We share skincare science and ingredient analysis to help you understand your products. But serious skin concerns, breakouts, or persistent irritation require a dermatologist. We are here to educate, not to diagnose.
  </p>
  </div>
 
- <div className="honesty-row">
+ <div className="honesty-card">
+ <div className="honesty-card-header">
+ <span className="honesty-badge">03</span>
  <h3>Transparent Affiliation</h3>
+ </div>
  <p>
  We use affiliate links to support the platform's hosting and maintenance costs. But our recommendations are completely unbiased. If a highly-rated sunscreen leaves a visible white cast or breaks people out, we say so.
  </p>
@@ -740,7 +831,7 @@ export default function AboutPage() {
   Integrate the API
   <span style={{ fontSize: "clamp(1.8rem, 4vw, 3rem)" }}>Power your recommendations with Mirha&nbsp;&amp;&nbsp;Co.</span>
  </h2>
- <p style={{ color: "var(--muted)", marginBottom: "3rem", fontSize: "1.05rem", lineHeight: "1.7" }}>
+ <p style={{ color: "var(--muted)", marginBottom: "2rem", fontSize: "1.02rem", lineHeight: "1.7" }}>
   Are you an enterprise beauty brand or marketplace looking to integrate a climate-aware skincare recommendation engine into your platform? We provide a headless B2B API that sends your customers personalised routines based on their local water hardness, humidity and temperature — all via a simple REST call. Interested in a pilot or a custom SLA? Reach out directly at <strong style={{ color: "var(--rose)" }}>tanizcoldz@gmail.com</strong> or submit your details below.
  </p>
  <CollabForm />

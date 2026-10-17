@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { useGlobalization } from "./GlobalizationContext";
 import GlobalizationSwitcher from "./GlobalizationSwitcher";
@@ -47,6 +48,14 @@ export default function SiteHeader() {
   const { t } = useGlobalization();
   const [menuOpen, setMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const pathname = usePathname();
+
+  // Always close drawer and ensure scrolling is unlocked on route transition
+  useEffect(() => {
+    setMenuOpen(false);
+    document.documentElement.style.overflow = "";
+    document.body.style.overflow = "";
+  }, [pathname]);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 30);
@@ -80,6 +89,13 @@ export default function SiteHeader() {
     return () => observer.disconnect();
   }, []);
 
+  const handleNavClick = () => {
+    setMenuOpen(false);
+    document.documentElement.style.overflow = "";
+    document.body.style.overflow = "";
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+  };
+
   return (
     <header
       className="site-header relative z-[200] border-b border-[#ded7cf] transition-all duration-300 dark:border-white/10"
@@ -101,13 +117,11 @@ export default function SiteHeader() {
         {/* Left Section — Tools, Categories & Content */}
         <div className="site-header-left">
           <nav className="site-header-nav">
-            <Link href="/tools/analysis"    className="site-header-nav-link hidden lg:inline-flex site-header-nav-link--accent nav-hide-1280">Free Skin Scan</Link>
-            <Link href="/tools/ingredients" className="site-header-nav-link hidden lg:inline-flex nav-hide-1280">{t("nav.ingredients")}</Link>
-            <Link href="/tools/hard-water"  className="site-header-nav-link hidden lg:inline-flex nav-hide-1280">{t("nav.hardwater")}</Link>
-            <Link href="/tools/dupes"       className="site-header-nav-link hidden lg:inline-flex nav-hide-1350">{t("nav.dupes")}</Link>
-            <Link href="/k-beauty"          className="site-header-nav-link hidden lg:inline-flex nav-hide-1350">{t("nav.kbeauty")}</Link>
-            <Link href="/mens-grooming"     className="site-header-nav-link hidden lg:inline-flex nav-hide-1400">{t("nav.men")}</Link>
-            <Link href="/blog"              className="site-header-nav-link hidden lg:inline-flex nav-hide-1400">{t("nav.blog")}</Link>
+            <Link href="/tools/analysis" className="site-header-nav-link hidden lg:inline-flex site-header-nav-link--accent nav-hide-1280">Free Skin Scan</Link>
+            <Link href="/tools" className="site-header-nav-link hidden lg:inline-flex nav-hide-1280">Diagnostic Tools</Link>
+            <Link href="/k-beauty" className="site-header-nav-link hidden lg:inline-flex nav-hide-1350">{t("nav.kbeauty")}</Link>
+            <Link href="/mens-grooming" className="site-header-nav-link hidden lg:inline-flex nav-hide-1400">{t("nav.men")}</Link>
+            <Link href="/blog" className="site-header-nav-link hidden lg:inline-flex nav-hide-1400">{t("nav.blog")}</Link>
           </nav>
         </div>
 
@@ -119,9 +133,9 @@ export default function SiteHeader() {
         {/* Right Section — Navigation, Portal & Controls */}
         <div className="site-header-right">
           <nav className="site-header-nav">
-            <Link href="/b2b"       className="site-header-nav-link hidden lg:inline-flex nav-hide-1400">{t("nav.b2b")}</Link>
-            <Link href="/about"     className="site-header-nav-link hidden lg:inline-flex nav-hide-1350">{t("nav.about")}</Link>
-            <Link href="/pricing"   className="site-header-nav-link hidden lg:inline-flex nav-hide-1350">{t("nav.pricing")}</Link>
+            <Link href="/b2b" className="site-header-nav-link hidden lg:inline-flex nav-hide-1400">{t("nav.b2b")}</Link>
+            <Link href="/about" className="site-header-nav-link hidden lg:inline-flex nav-hide-1350">{t("nav.about")}</Link>
+            <Link href="/pricing" className="site-header-nav-link hidden lg:inline-flex nav-hide-1350">{t("nav.pricing")}</Link>
             <Link href="/dashboard" className="site-header-nav-link hidden lg:inline-flex nav-hide-1400">{t("nav.dashboard")}</Link>
             
             <div className="nav-hide-768 flex items-center">
@@ -151,13 +165,13 @@ export default function SiteHeader() {
       {menuOpen && (
         <div
           className="site-header-drawer-overlay"
-          style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: 0, width: "100vw", height: "100vh", display: "flex", zIndex: 99999 }}
+          style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: 0, width: "100vw", height: "100vh", zIndex: 99999, display: "flex" }}
         >
           {/* Backdrop */}
           <div
             className="site-header-drawer-backdrop"
             style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, width: "100%", height: "100%", backgroundColor: "rgba(0,0,0,0.65)", backdropFilter: "blur(6px)", WebkitBackdropFilter: "blur(6px)" }}
-            onClick={() => setMenuOpen(false)}
+            onClick={handleNavClick}
           />
 
           {/* Drawer panel */}
@@ -171,7 +185,7 @@ export default function SiteHeader() {
                 MIRHA &amp; CO.
               </span>
               <button
-                onClick={() => setMenuOpen(false)}
+                onClick={handleNavClick}
                 className="cursor-pointer rounded-xl p-2 text-[#2b2826] transition-colors hover:bg-black/5 hover:text-[#fc2779] dark:text-[#f7f5f2] dark:hover:bg-white/10 dark:hover:text-[#ff4d94]"
                 aria-label="Close Menu"
               >
@@ -186,49 +200,35 @@ export default function SiteHeader() {
               </div>
               <Link
                 href="/tools/analysis"
-                onClick={() => setMenuOpen(false)}
+                onClick={handleNavClick}
                 className="rounded-xl px-3.5 py-2.5 text-[14px] font-semibold text-[#fc2779] transition-all hover:bg-[#ffe6f0] dark:text-[#ff4d94] dark:hover:bg-white/10"
               >
                 Free Daily Skin Scan (1/Day)
               </Link>
               <Link
-                href="/tools/ingredients"
-                onClick={() => setMenuOpen(false)}
+                href="/tools"
+                onClick={handleNavClick}
                 className="rounded-xl px-3.5 py-2.5 text-[14px] font-semibold text-[#2b2826] transition-all hover:bg-[#ffe6f0] hover:text-[#fc2779] dark:text-[#f7f5f2] dark:hover:bg-white/10 dark:hover:text-[#ff4d94]"
               >
-                {t("nav.ingredients")}
-              </Link>
-              <Link
-                href="/tools/hard-water"
-                onClick={() => setMenuOpen(false)}
-                className="rounded-xl px-3.5 py-2.5 text-[14px] font-semibold text-[#2b2826] transition-all hover:bg-[#ffe6f0] hover:text-[#fc2779] dark:text-[#f7f5f2] dark:hover:bg-white/10 dark:hover:text-[#ff4d94]"
-              >
-                Hard Water Intelligence
-              </Link>
-              <Link
-                href="/tools/dupes"
-                onClick={() => setMenuOpen(false)}
-                className="rounded-xl px-3.5 py-2.5 text-[14px] font-semibold text-[#2b2826] transition-all hover:bg-[#ffe6f0] hover:text-[#fc2779] dark:text-[#f7f5f2] dark:hover:bg-white/10 dark:hover:text-[#ff4d94]"
-              >
-                Dupe Finder
+                Diagnostic Tools
               </Link>
               <Link
                 href="/k-beauty"
-                onClick={() => setMenuOpen(false)}
+                onClick={handleNavClick}
                 className="rounded-xl px-3.5 py-2.5 text-[14px] font-semibold text-[#fc2779] transition-all hover:bg-[#ffe6f0] dark:text-[#ff4d94] dark:hover:bg-white/10"
               >
                 K-Beauty Picks
               </Link>
               <Link
                 href="/mens-grooming"
-                onClick={() => setMenuOpen(false)}
+                onClick={handleNavClick}
                 className="rounded-xl px-3.5 py-2.5 text-[14px] font-semibold text-[#2b2826] transition-all hover:bg-[#ffe6f0] hover:text-[#fc2779] dark:text-[#f7f5f2] dark:hover:bg-white/10 dark:hover:text-[#ff4d94]"
               >
                 Men&apos;s Grooming
               </Link>
               <Link
                 href="/blog"
-                onClick={() => setMenuOpen(false)}
+                onClick={handleNavClick}
                 className="rounded-xl px-3.5 py-2.5 text-[14px] font-semibold text-[#2b2826] transition-all hover:bg-[#ffe6f0] hover:text-[#fc2779] dark:text-[#f7f5f2] dark:hover:bg-white/10 dark:hover:text-[#ff4d94]"
               >
                 {t("nav.blog")}
@@ -245,35 +245,35 @@ export default function SiteHeader() {
               </div>
               <Link
                 href="/b2b"
-                onClick={() => setMenuOpen(false)}
+                onClick={handleNavClick}
                 className="rounded-xl px-3.5 py-2.5 text-[14px] font-semibold text-[#2b2826] transition-all hover:bg-[#ffe6f0] hover:text-[#fc2779] dark:text-[#f7f5f2] dark:hover:bg-white/10 dark:hover:text-[#ff4d94]"
               >
                 B2B Telemetry API
               </Link>
               <Link
                 href="/about"
-                onClick={() => setMenuOpen(false)}
+                onClick={handleNavClick}
                 className="rounded-xl px-3.5 py-2.5 text-[14px] font-semibold text-[#2b2826] transition-all hover:bg-[#ffe6f0] hover:text-[#fc2779] dark:text-[#f7f5f2] dark:hover:bg-white/10 dark:hover:text-[#ff4d94]"
               >
                 {t("nav.about")}
               </Link>
               <Link
                 href="/pricing"
-                onClick={() => setMenuOpen(false)}
+                onClick={handleNavClick}
                 className="rounded-xl px-3.5 py-2.5 text-[14px] font-semibold text-[#2b2826] transition-all hover:bg-[#ffe6f0] hover:text-[#fc2779] dark:text-[#f7f5f2] dark:hover:bg-white/10 dark:hover:text-[#ff4d94]"
               >
                 {t("nav.pricing")}
               </Link>
               <Link
                 href="/dashboard"
-                onClick={() => setMenuOpen(false)}
+                onClick={handleNavClick}
                 className="rounded-xl px-3.5 py-2.5 text-[14px] font-semibold text-[#2b2826] transition-all hover:bg-[#ffe6f0] hover:text-[#fc2779] dark:text-[#f7f5f2] dark:hover:bg-white/10 dark:hover:text-[#ff4d94]"
               >
                 {t("nav.dashboard")}
               </Link>
             </div>
 
-            {/* Controls Toolbar — Positioned immediately after Company & Developers in upper-middle area */}
+            {/* Controls Toolbar */}
             <div className="border-t border-[#e5ded6] pt-4 pb-12 dark:border-white/10">
               <div className="flex items-center justify-between gap-3">
                 {/* Language & Currency Pill */}

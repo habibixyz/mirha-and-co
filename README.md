@@ -1,4 +1,4 @@
-# Mirha & Co ✨
+# Mirha & Co.
 
 > **AI-powered skincare SaaS platform for Indian & global skin** — built with Next.js 16, Gemini AI, PostgreSQL, and a full B2B partner API.
 

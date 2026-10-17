@@ -2,8 +2,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { unstable_cache } from "next/cache";
 import { ArrowRight, Layers, Droplet, Flower, Coins } from "lucide-react";
-import { PRODUCTS } from "@/lib/products";
 import { cookies } from "next/headers";
+import { PRODUCTS } from "@/lib/products";
 import { Locale, DICTIONARY, RTL_LOCALES } from "@/lib/globalization";
 import { prisma } from "@/lib/prisma";
 import FaceScannerUI from "@/components/FaceScannerUI";
@@ -15,7 +15,7 @@ import ShopFilterClientLazy from "@/components/ShopFilterClientLazy";
 // not real-time data, so staleness is perfectly acceptable.
 const getHomepageStats = unstable_cache(
   async () => {
-    const [routinesCount, dbProductsCount, ingredientsCount, usersCount, b2bKeysCount, b2bCallsCount, scansCount] =
+    const [routinesCount, dbProductsCount, ingredientsCount, usersCount, b2bKeysCount, b2bCallsCount] =
       await Promise.all([
         prisma.routine.count().catch(() => 0),
         prisma.product.count().catch(() => 0),
@@ -25,14 +25,13 @@ const getHomepageStats = unstable_cache(
         prisma.user.count().catch(() => 0),
         prisma.b2BApiKey.count().catch(() => 0),
         prisma.b2BUsageLog.count().catch(() => 0),
-        prisma.faceAnalysis.count().catch(() => 0),
       ]);
 
     // Approximate unique ingredients: each product has ~15–20 ingredients on average.
     // This avoids fetching every row just to count strings.
     const ingredientEstimate = ingredientsCount * 17;
 
-    return { routinesCount, dbProductsCount, ingredientEstimate, usersCount, b2bKeysCount, b2bCallsCount, scansCount };
+    return { routinesCount, dbProductsCount, ingredientEstimate, usersCount, b2bKeysCount, b2bCallsCount };
   },
   ["homepage-stats-v2"],
   { revalidate: 300, tags: ["homepage-stats-v2"] }
@@ -65,18 +64,18 @@ type Product = {
 
 const PRODUCT_LIST = (PRODUCTS as unknown as Product[]).filter((p) => !p.hideFromShop);
 
-const EDITOR_PICK_ASINS = [
-  "B01CCGW4OE",
-  "B09VLDY46B",
-  "B0B45RB1RV",
-  "B0DH88LZ11",
-  "B095PRGHDX",
-  "B00BQFTQW6",
+const EDITOR_PICK_CONFIG = [
+  { asin: "B016NRXO06", badge: "GENTLE RESET" },
+  { asin: "B00PBX3L7K", badge: "GLASS SKIN" },
+  { asin: "B0BNLHLGF9", badge: "BARRIER REPAIR" },
+  { asin: "B0B881GN1P", badge: "VIRAL K-BEAUTY" },
+  { asin: "B08D3L4BQP", badge: "DEWY SHIELD" },
+  { asin: "B0BPC8KG73", badge: "CULT FAVORITE" },
 ];
 
 function EditorPick({ product }: { product: Product }) {
   return (
-    <Link href={`/product/${product.asin}`} className="editor-pick">
+    <Link href={`/product/${product.asin}`} className="editor-pick" title={product.name}>
       <div className="editor-pick-img-box">
         <Image src={product.image} alt={product.name} width={300} height={140} style={{ objectFit: 'contain' }} />
       </div>
@@ -92,7 +91,7 @@ export default async function BeautyShopPage() {
   const t = (key: string) => DICTIONARY[locale]?.[key] || DICTIONARY.en[key] || key;
 
   // Fetch cached statistics — results revalidate every 5 minutes via unstable_cache
-  const { routinesCount, dbProductsCount, ingredientEstimate, usersCount, b2bKeysCount, b2bCallsCount, scansCount } =
+  const { routinesCount, dbProductsCount, ingredientEstimate, usersCount, b2bKeysCount, b2bCallsCount } =
     await getHomepageStats();
 
   const finalRoutinesCount = routinesCount || 12;
@@ -101,11 +100,12 @@ export default async function BeautyShopPage() {
   const finalUsersCount = usersCount || 5;
   const finalB2bKeysCount = b2bKeysCount || 0;
   const finalB2bCallsCount = b2bCallsCount || 0;
-  const finalScansCount = scansCount || 5;
 
 
-  const picks = EDITOR_PICK_ASINS.map((asin) => PRODUCT_LIST.find((product) => product.asin === asin))
-    .filter(Boolean) as Product[];
+  const picks = EDITOR_PICK_CONFIG.map((cfg) => {
+    const product = PRODUCT_LIST.find((p) => p.asin === cfg.asin);
+    return product ? { ...product, badge: cfg.badge || product.badge } : null;
+  }).filter(Boolean) as Product[];
   const editorPicks = picks.length ? picks : PRODUCT_LIST.slice(0, 6);
 
   return (
@@ -1081,7 +1081,27 @@ export default async function BeautyShopPage() {
           }
 
           .desk {
-            padding: 20px;
+            padding: 20px 16px;
+            gap: 20px;
+          }
+
+          .desk h2 {
+            font-size: 26px;
+            margin-bottom: 8px;
+          }
+
+          .desk p {
+            font-size: 13px;
+            line-height: 1.6;
+            margin-bottom: 16px !important;
+          }
+
+          .desk-actions a {
+            padding: 12px 4px;
+          }
+
+          .desk-actions b {
+            font-size: 13.5px;
           }
 
           .editor-grid,
@@ -1159,26 +1179,6 @@ export default async function BeautyShopPage() {
           }}
         >
           <div style={{ order: isRtl ? 2 : 1 }}>
-            <div
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "8px",
-                padding: "6px 14px",
-                borderRadius: "20px",
-                background: "rgba(252, 39, 121, 0.1)",
-                border: "1px solid rgba(252, 39, 121, 0.25)",
-                color: "#fc2779",
-                fontSize: "10px",
-                fontWeight: 700,
-                letterSpacing: "0.18em",
-                textTransform: "uppercase",
-                marginBottom: "16px",
-              }}
-            >
-              <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#fc2779" }} />
-              {finalScansCount.toLocaleString()} AI Skin Scans Done • 1 Free Daily
-            </div>
             <h1>
               {t("hero.title1")} {t("hero.title2")}
             </h1>
@@ -1296,7 +1296,6 @@ export default async function BeautyShopPage() {
           <div className="ticker-track">
             {[...Array(2)].map((_, i) => (
               <div key={i} style={{ display: "contents" }}>
-                <div className="ticker-item"><span className="ticker-dot" />{finalScansCount.toLocaleString()} AI Skin Scans Done</div>
                 <div className="ticker-item"><span className="ticker-dot" />{finalRoutinesCount.toLocaleString()} Routines Built</div>
                 <div className="ticker-item"><span className="ticker-dot" />{finalProductsCount.toLocaleString()} Products Scanned</div>
                 <div className="ticker-item"><span className="ticker-dot" />{finalIngredientsCount.toLocaleString()} Ingredients Analyzed</div>
@@ -1308,32 +1307,53 @@ export default async function BeautyShopPage() {
           </div>
         </div>
 
-        <section className="section">
+        {/* ── Unified Mirha Intelligence Suite: Compact All-in-One Desk ────────────────── */}
+        <section className="section" style={{ paddingTop: "28px", paddingBottom: "24px" }}>
           <div
             className="desk"
             style={{
-              gridTemplateColumns: isRtl ? "minmax(320px, 0.75fr) minmax(0, 1fr)" : undefined,
+              gridTemplateColumns: isRtl ? "minmax(320px, 0.85fr) minmax(0, 1fr)" : undefined,
             }}
           >
             <div style={{ order: isRtl ? 2 : 1 }}>
-              <p className="eyebrow">Mirha Skin Desk</p>
+              <p className="eyebrow" style={{ color: "#fc2779" }}>Mirha Intelligence Suite</p>
               <h2>Your skincare system, not another product list.</h2>
-              <p>
-                Start with a profile, turn it into an AM/PM routine, check every new
-                product against your actives, and keep a journal so your routine improves
-                with evidence instead of guesswork.
+              <p style={{ marginBottom: "22px" }}>
+                From AI camera barrier scans and city water chemistry to 100+ vetted luxury dupes and headless developer APIs. Complete clarity across your routine.
               </p>
+              <Link
+                href="/tools"
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "8px",
+                  padding: "10px 22px",
+                  borderRadius: "99px",
+                  background: "#fc2779",
+                  color: "#ffffff",
+                  fontSize: "12px",
+                  fontWeight: 700,
+                  letterSpacing: "0.03em",
+                  textDecoration: "none",
+                  transition: "all 0.2s ease",
+                  width: "fit-content",
+                }}
+              >
+                <span>Explore All Diagnostic Tools</span>
+                <ArrowRight size={13} />
+              </Link>
             </div>
+
             <div className="desk-actions" style={{ order: isRtl ? 1 : 2 }}>
               <Link
-                href="/tools/routine"
+                href="/tools"
                 style={{
                   flexDirection: isRtl ? "row-reverse" : "row",
                 }}
               >
                 <span style={{ textAlign: isRtl ? "right" : "left" }}>
-                  <small>01 / Routine</small>
-                  <b>Build and save your AM/PM routine</b>
+                  <small>01 / AI Diagnostics &amp; Care</small>
+                  <b>Camera Skin Scan &amp; Hard Water Test</b>
                 </span>
                 <ArrowRight
                   size={15}
@@ -1342,23 +1362,7 @@ export default async function BeautyShopPage() {
                   }}
                 />
               </Link>
-              <Link
-                href="/tools/hard-water"
-                style={{
-                  flexDirection: isRtl ? "row-reverse" : "row",
-                }}
-              >
-                <span style={{ textAlign: isRtl ? "right" : "left" }}>
-                  <small>02 / Diagnostics</small>
-                  <b>Check climate and hard-water risk</b>
-                </span>
-                <ArrowRight
-                  size={15}
-                  style={{
-                    transform: isRtl ? "rotate(180deg)" : "none",
-                  }}
-                />
-              </Link>
+
               <Link
                 href="/tools/dupes"
                 style={{
@@ -1366,8 +1370,8 @@ export default async function BeautyShopPage() {
                 }}
               >
                 <span style={{ textAlign: isRtl ? "right" : "left" }}>
-                  <small>03 / Savings</small>
-                  <b>Find compatible dupes and savings</b>
+                  <small>02 / Curations &amp; Dupes</small>
+                  <b>100+ Science-Backed Formula Dupes</b>
                 </span>
                 <ArrowRight
                   size={15}
@@ -1376,16 +1380,17 @@ export default async function BeautyShopPage() {
                   }}
                 />
               </Link>
+
               <Link
-                href="/dashboard/search"
+                href="/dashboard"
                 rel="nofollow"
                 style={{
                   flexDirection: isRtl ? "row-reverse" : "row",
                 }}
               >
                 <span style={{ textAlign: isRtl ? "right" : "left" }}>
-                  <small>04 / Expert Search</small>
-                  <b>Ask Mirha Search with your context</b>
+                  <small>03 / Member Portal</small>
+                  <b>AM/PM Routine Tracker &amp; Skin Journal</b>
                 </span>
                 <ArrowRight
                   size={15}
@@ -1394,15 +1399,16 @@ export default async function BeautyShopPage() {
                   }}
                 />
               </Link>
+
               <Link
-                href="/blog"
+                href="/b2b"
                 style={{
                   flexDirection: isRtl ? "row-reverse" : "row",
                 }}
               >
                 <span style={{ textAlign: isRtl ? "right" : "left" }}>
-                  <small>05 / Learn</small>
-                  <b>Read the guide behind each choice</b>
+                  <small>04 / For Brands &amp; Developers</small>
+                  <b>Headless Routine API &amp; 1-Line Embed</b>
                 </span>
                 <ArrowRight
                   size={15}

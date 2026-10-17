@@ -13,13 +13,12 @@ import NewsletterForm from "@/components/NewsletterForm";
 import BackToTop from "@/components/BackToTop";
 import dynamic from "next/dynamic";
 
+import ScrollToTopOnNavigate from "@/components/ScrollToTopOnNavigate";
 const DashboardPromoModal = dynamic(() => import("@/components/DashboardPromoModal"));
 import {
   DM_Sans,
-  DM_Serif_Display,
   Playfair_Display,
   Bebas_Neue,
-  JetBrains_Mono,
 } from "next/font/google";
 
 // Self-hosted via next/font — eliminates the render-blocking Google Fonts stylesheet
@@ -29,14 +28,6 @@ const dmSans = DM_Sans({
   style: ["normal", "italic"],
   display: "swap",
   variable: "--font-dm-sans",
-});
-
-const dmSerifDisplay = DM_Serif_Display({
-  subsets: ["latin"],
-  weight: ["400"],
-  style: ["normal", "italic"],
-  display: "swap",
-  variable: "--font-dm-serif",
 });
 
 const playfairDisplay = Playfair_Display({
@@ -52,13 +43,6 @@ const bebasNeue = Bebas_Neue({
   weight: ["400"],
   display: "swap",
   variable: "--font-bebas",
-});
-
-const jetBrainsMono = JetBrains_Mono({
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  display: "swap",
-  variable: "--font-mono",
 });
 
 export async function generateMetadata() {
@@ -174,7 +158,7 @@ export default async function RootLayout({
     lang={locale}
     dir={isRtl ? "rtl" : "ltr"}
     suppressHydrationWarning
-    className={`${dmSans.variable} ${dmSerifDisplay.variable} ${playfairDisplay.variable} ${bebasNeue.variable} ${jetBrainsMono.variable}`}
+    className={`${dmSans.variable} ${playfairDisplay.variable} ${bebasNeue.variable}`}
   >
     <head>
       <Script
@@ -335,8 +319,10 @@ export default async function RootLayout({
     </>
   )}
 
- {children}
- <DashboardPromoModal hasSession={hasSession} />
+  {/* Auto scroll-to-top on route changes so navigation always shows top of page */}
+  <ScrollToTopOnNavigate />
+  {children}
+  <DashboardPromoModal hasSession={hasSession} />
  <BackToTop />
  </GlobalizationProvider>
  </ThemeProvider>
@@ -361,7 +347,7 @@ export default async function RootLayout({
  gap: "2rem",
  }}
  >
- <div style={{ flex: "1 1 450px" }}>
+ <div className="footer-newsletter-text" style={{ flex: "1 1 360px" }}>
  <h3 style={{
  fontFamily: "var(--font-playfair), serif",
  fontSize: "1.6rem",
@@ -376,7 +362,7 @@ export default async function RootLayout({
  lineHeight: 1.6,
  }}>Weekly science-backed skincare breakdowns. No marketing fluff, no sponsored bias.</p>
  </div>
- <div style={{ flex: "1 1 350px", maxWidth: "420px" }}>
+ <div className="footer-newsletter-form-col" style={{ flex: "1 1 320px", maxWidth: "420px", width: "100%" }}>
  <NewsletterForm />
  </div>
  </div>

@@ -4,12 +4,14 @@
 @theme {
   --font-bebas: var(--font-bebas), sans-serif;
   --font-playfair: var(--font-playfair), serif;
-  --font-dm-serif: var(--font-dm-serif), serif;
+  --font-dm-serif: var(--font-playfair), serif;
   --font-dm-sans: var(--font-dm-sans), sans-serif;
-  --font-mono: var(--font-mono), monospace;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
 :root {
+  --font-dm-serif: var(--font-playfair);
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   --black: #0a0a0a;
   --white: #fcfbf9; /* Shiny pearl base */
   --rose: #fc2779;
@@ -28,9 +30,7 @@
 }
 
 html {
-  scroll-behavior: smooth;
-  overflow-y: scroll;
-  overflow-x: hidden;
+  scroll-behavior: auto;
 }
 
 body {
@@ -142,12 +142,21 @@ html.dark footer .newsletter-input::placeholder {
 
 @media (max-width: 768px) {
   footer {
-    padding: 3rem 1.25rem 2rem !important;
+    padding: 2.25rem 1.25rem 2rem !important;
   }
 
   .footer-newsletter-row {
     flex-direction: column !important;
     align-items: stretch !important;
+    gap: 1.25rem !important;
+    margin-bottom: 2rem !important;
+    padding-bottom: 2rem !important;
+  }
+
+  .footer-newsletter-row > div {
+    flex: none !important;
+    max-width: 100% !important;
+    width: 100% !important;
   }
 
   .footer-grid {

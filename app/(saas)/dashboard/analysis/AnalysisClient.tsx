@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Camera, Upload, Check, MessageSquare, History, Mic, MicOff, Calendar, CreditCard, User, Shield, ShieldCheck, Heart, Loader2, Star } from "lucide-react";
+import { Camera, Upload, Check, MessageSquare, History, Mic, MicOff, Calendar, CreditCard, User, Shield, ShieldCheck, Heart, Loader2, Star, Lock, Sparkles, TrendingUp, AlertCircle, ArrowRight, Share2, Zap } from "lucide-react";
 import Script from "next/script";
 
 interface UserProfile {

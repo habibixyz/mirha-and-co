@@ -427,6 +427,22 @@ export function SkincareRecs({ postalCode, skinType = "${skinType}" }) {
         :root {
           --dbd-pink: #ec1f6a;
           --dbd-pink-dark: #ff2d78;
+          --dbd-bg: #fcfbf9;
+          --dbd-panel: #ffffff;
+          --dbd-panel-alt: #f6f4f0;
+          --dbd-border: #e6ded4;
+          --dbd-text: #0a0908;
+          --dbd-text-dim: #262320;
+          --dbd-text-faint: #44403c;
+          --dbd-green: #10b981;
+          --dbd-blue: #0284c7;
+          --dbd-yellow: #d97706;
+          --dbd-amber-bg: #fef3c7;
+          --dbd-amber-border: #fcd34d;
+          --dbd-amber-ink: #92400e;
+          --dbd-code-bg: #1e1e24;
+        }
+        html.dark, [data-theme="dark"], .dark {
           --dbd-bg: #0b0b0e;
           --dbd-panel: #131318;
           --dbd-panel-alt: #0f0f13;
@@ -440,25 +456,6 @@ export function SkincareRecs({ postalCode, skinType = "${skinType}" }) {
           --dbd-amber-bg: #3a2a05;
           --dbd-amber-border: #6b4e08;
           --dbd-amber-ink: #f0b90b;
-          --dbd-code-bg: #0b0b0e;
-        }
-        html.dark, [data-theme="dark"] {
-          --dbd-bg: #0b0b0e;
-          --dbd-panel: #131318;
-          --dbd-panel-alt: #0f0f13;
-          --dbd-border: #26262e;
-          --dbd-text: #e9e9ee;
-          --dbd-text-dim: #9a9aa5;
-          --dbd-text-faint: #5c5c66;
-        }
-        html:not(.dark) {
-          --dbd-bg: #f5f6f8;
-          --dbd-panel: #ffffff;
-          --dbd-panel-alt: #f0f1f3;
-          --dbd-border: #e2e4e8;
-          --dbd-text: #1a1a1a;
-          --dbd-text-dim: #5a5f6e;
-          --dbd-text-faint: #9aa0b0;
           --dbd-code-bg: #0b0b0e;
         }
         .dbd-key-reveal { animation: dbd-slide-in 0.35s cubic-bezier(0.16,1,0.3,1); }

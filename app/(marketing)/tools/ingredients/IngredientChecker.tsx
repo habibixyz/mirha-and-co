@@ -259,7 +259,7 @@ interface QuickTemplate {
 const QUICK_TEMPLATES: QuickTemplate[] = [
   {
     name: "Glass Skin Glow",
-    emoji: "✨",
+    emoji: "💧",
     description: "Brightens, hydrates, and evens skin tone.",
     ingredients: ["hyaluronic_acid", "niacinamide", "vitamin_c", "snail_mucin"]
   },
@@ -2032,7 +2032,7 @@ export default function ActiveIngredientChecker() {
                   {[
                     { id: "aging", label: "Anti-Aging", emoji: "⏳" },
                     { id: "acne", label: "Acne", emoji: "🛡️" },
-                    { id: "dullness", label: "Dullness / Dark Spots", emoji: "✨" },
+                    { id: "dullness", label: "Dullness / Dark Spots", emoji: "☀️" },
                     { id: "redness", label: "Redness / Rosacea", emoji: "🩹" },
                     { id: "dryness", label: "Dryness", emoji: "💧" }
                   ].map(concern => {
@@ -2123,7 +2123,7 @@ export default function ActiveIngredientChecker() {
                             title={item.description}
                           >
                             {item.name}
-                            {isRec && !isSelected && <Sparkles size={12} style={{ color: "#e67700", marginLeft: "4px" }} />}
+                            {isRec && !isSelected && <Star size={12} style={{ color: "#e67700", marginLeft: "4px" }} />}
                             {isSelected ? <Check size={14} /> : null}
                           </button>
                         );
@@ -2275,7 +2275,7 @@ export default function ActiveIngredientChecker() {
                       {matchingSynergies.map((syn, idx) => (
                         <div key={idx} className="visual-rule-card safe" style={{ borderLeft: "4px solid #2d8a5c" }}>
                           <div style={{ display: "flex", gap: "6px", alignItems: "center", fontWeight: 700, marginBottom: "4px", color: "#2b8a3e" }}>
-                            <Sparkles size={14} />
+                            <Check size={14} />
                             <span>{syn.message}</span>
                           </div>
                           <p style={{ margin: "0 0 4px", fontSize: "0.78rem", color: "#2b8a3e" }}>
