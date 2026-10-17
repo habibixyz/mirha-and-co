@@ -23,7 +23,7 @@ export const HIGH_INTENT_POSTS: HighIntentPost[] = [
     date: "October 2026",
     thumbnail: "https://azsofabirbgovazlfzvn.supabase.co/storage/v1/object/public/blog-images/ac_face_banner.jpg",
     tags: ["ac face", "air conditioning", "corporate wellness", "dehydration", "hyaluronic acid", "skin barrier", "office skincare", "ceramides"],
-    asins: ["B01MYEZPC8", "B00PBX3L7K", "B0BNLHLGF9", "B0BDVG99J5", "B0B881GN1P", "B0C6KBHPZW"],
+    asins: ["B06Y15D1LH", "B00PBX3L7K", "B0BNLHLGF9", "B0BDVG99J5", "B0B881GN1P", "B0C6KBHPZW"],
     sections: [
       {
         title: "The 4 PM Mirror Shock: The Biology of 'AC Face'",
@@ -42,20 +42,57 @@ export const HIGH_INTENT_POSTS: HighIntentPost[] = [
           "Hyaluronic acid is a powerful humectant capable of binding up to 1,000 times its molecular weight in water. However, HA does not create moisture out of thin air—it merely redistributes it based on atmospheric humidity gradients.",
           "In tropical or balanced environments (humidity above 50%), HA grabs atmospheric moisture and delivers it directly into your skin. But in an air-conditioned room with 20% humidity, there is **zero water in the air** to bind to.",
           "Under basic laws of osmosis, the HA molecule reverses direction: it pulls water **out of your deep dermis** up to the skin surface, where the constant circulation of chilled HVAC air evaporates it into the room in minutes. You end up dehydrating your skin from the inside out.",
-          "To prevent this reverse-osmosis trap, humectants must always be applied to a soaking wet face and **immediately sealed** with lipid-dense ceramides and occlusives before stepping into climate-controlled environments."
-        ],
-        sectionAsins: ["B01MYEZPC8", "B00PBX3L7K"]
+          "To stop this cycle, follow this chronological 3-step morning sequence, followed by our midday desk protocol and evening reset."
+        ]
       },
       {
-        title: "The 3-Step 'Desk Defense' Protocol: How to Protect Your Barrier from 9 to 6",
+        title: "AM Step 1: The Humidity-Safe Hydration Base (Apply on Damp Skin)",
         body: [
-          "Surviving corporate air conditioning requires shifting from light summer gel hydration to **biomimetic lipid reinforcement**.",
-          "**Step 1: The Pre-Work Humectant Base (On Wet Skin Only):** After cleansing in the morning, do not pat your skin dry. Apply **COSRX Advanced Snail 96 Mucin Power Essence** or **The Ordinary Hyaluronic Acid 2% + B5** directly onto damp skin. Snail mucin's rich glycoproteins create an elastic moisture cushion that resists fast evaporation.",
-          "**Step 2: The Physiological Lipid Seal:** Lock that hydration down with a barrier cream formulated in a 3:1:1 physiological lipid ratio (ceramides, cholesterol, and free fatty acids). **Formularx Barrier Relief Lightweight Moisturizer** or **Dot & Key Barrier Repair Ceramides Moisturizer** provide an impenetrable cellular shield that stops TEWL without feeling heavy or causing breakouts.",
-          "**Step 3: Indoor Blue Light & Glare Shield:** Corporate fluorescent tubes and high-nit dual monitors generate high-energy visible (HEV) blue light that oxidizes barrier lipids over 8-hour shifts. Apply a hydrating, non-greasy sunscreen like **SKIN1004 Madagascar Centella Hyalu-Cica Water-Fit Sun Serum** or **Dr. Sheth's Ceramide & Vitamin C Sunscreen** before heading out.",
-          "**The Midday Office Rule:** Stop spraying pure water or floral face mists at your desk. As water droplets evaporate from bare skin in low-humidity air, they pull your skin's natural moisturizing factors (NMF) along with them, leaving you drier than before. If your face feels parched at 3 PM, dab a pea-sized amount of ceramide cream over your high points instead."
+          "**When to use:** First step in the morning immediately after splashing your face with water. **Do not dry your face completely.**",
+          "Instead of standalone hyaluronic acid in corporate AC, switch to **humidity-independent hydrators** that create an elastic moisture cushion that resists fast evaporation.",
+          "**How to choose:** Pick **ONE** of the following two based on your skin type (do not layer both):",
+          "• **For Normal to Dry Skin:** Choose **COSRX Advanced Snail 96 Mucin Power Essence**. Rich in natural glycoproteins and sodium hyaluronate, snail mucin builds a slow-evaporating moisture reservoir that stays locked in cells.",
+          "• **For Sensitive, Red, or Breakout-Prone Skin:** Choose **SKIN1004 Madagascar Centella Ampoule**. Formulated with 100% pure Centella Asiatica extract, it calms the microscopic redness and stinging triggered by dry airflow."
         ],
-        sectionAsins: ["B0BNLHLGF9", "B0BDVG99J5", "B0B881GN1P", "B0C6KBHPZW"]
+        sectionAsins: ["B00PBX3L7K", "B06Y15D1LH"]
+      },
+      {
+        title: "AM Step 2: The 3:1:1 Physiological Barrier Lock (Apply 60 Seconds Later)",
+        body: [
+          "**When to use:** Exactly 60 seconds after your Step 1 hydration base, while your face still feels slightly dewy.",
+          "This is the most critical step of the entire routine. Without a lipid lock, any hydration you just applied will vanish into your office air within 20 minutes.",
+          "Your skin barrier requires a **3:1:1 physiological ratio** of ceramides, cholesterol, and free fatty acids to form an impenetrable vapor barrier that stops Transepidermal Water Loss (TEWL).",
+          "**How to choose:** Smooth a nickel-sized amount of **ONE** of these two formulas over your face and neck:",
+          "• **For Oily, Combination, or Acne-Prone Skin:** Choose **Formularx Barrier Relief Lightweight Moisturizer**. Formulated with ceramides, cholesterol, and niacinamide in a breathable, non-pore-clogging gel-cream.",
+          "• **For Very Dry, Flaking, or Rough Skin:** Choose **Dot & Key Barrier Repair Ceramides Moisturizer**. Enriched with 5 essential ceramides and fermented rice water for intensive lipid replenishing."
+        ],
+        sectionAsins: ["B0BNLHLGF9", "B0BDVG99J5"]
+      },
+      {
+        title: "AM Step 3: Indoor Blue Light & UV Armor (Final Morning Step)",
+        body: [
+          "**When to use:** The final layer of your morning skincare routine, applied 15 minutes before leaving for work.",
+          "Many corporate workers skip sunscreen because they 'work indoors all day.' This is a major mistake. Corporate fluorescent tubes and high-nit dual monitors generate high-energy visible (HEV) blue light that oxidizes barrier lipids over 8-hour shifts, accelerating cellular dullness.",
+          "**How to choose:** Apply 2 finger lengths of **ONE** of these hydrating, non-greasy sunscreens:",
+          "• **For a Weightless, Natural Finish:** Choose **SKIN1004 Madagascar Centella Hyalu-Cica Water-Fit Sun Serum SPF50+**. Ultra-light chemical UV filters with zero white cast and no eye-sting.",
+          "• **For Tired, Dull Skin Needing a Glow:** Choose **Dr. Sheth's Ceramide & Vitamin C Sunscreen SPF 50+**. Infused with 1% Vitamin C and ceramides to brighten screen fatigue while sealing in moisture."
+        ],
+        sectionAsins: ["B0B881GN1P", "B0C6KBHPZW"]
+      },
+      {
+        title: "Midday Protocol: What to Do at 3 PM When Your Skin Feels Tight",
+        body: [
+          "**The Golden Rule:** Stop spraying pure water or floral face mists at your desk! As water droplets evaporate from bare skin in 20% humidity, they pull your skin's natural moisturizing factors (NMF) along with them, leaving you tighter and drier than before.",
+          "**The Desk Rescue Technique:** If your cheeks feel parched around 3 PM, take a pea-sized dot of your Step 2 ceramide moisturizer, warm it between your fingertips, and gently **pat (do not rub)** over your tight zones. It re-anchors the lipid shield without disturbing makeup or sunscreen."
+        ]
+      },
+      {
+        title: "PM Reset: How to Undo 8 Hours of AC Exposure Tonight",
+        body: [
+          "When you return home, your skin barrier is depleted of lipids and covered in a film of oxidized sebum and dry indoor dust.",
+          "**1. Gentle Double Cleanse:** Wash with a mild, soap-free cleanser using lukewarm (never hot) water. Avoid harsh foaming washes that strip the few remaining natural lipids.",
+          "**2. The Night Cushion:** Re-apply **Step 1 (Snail Mucin or Centella)** onto damp skin, followed by a generous layer of **Step 2 (Ceramide Moisturizer)**. Sleeping in this moisture seal allows intercellular lipids to synthesize while you sleep."
+        ]
       },
       {
         title: "Desk Ergonomics: Engineering Your Immediate Microclimate",
