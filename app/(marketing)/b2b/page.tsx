@@ -387,7 +387,10 @@ export default function B2BPitchDeck() {
           display: grid;
           grid-template-columns: 260px 1fr;
           flex: 1;
+          width: 100%;
           max-width: 100%;
+          min-width: 0;
+          box-sizing: border-box;
           min-height: calc(100vh - 8rem);
         }
 
@@ -488,6 +491,10 @@ export default function B2BPitchDeck() {
           justify-content: center;
           position: relative;
           background: var(--b2b-bg);
+          width: 100%;
+          max-width: 100%;
+          min-width: 0;
+          box-sizing: border-box;
         }
 
         @media (max-width: 640px) {
@@ -501,6 +508,8 @@ export default function B2BPitchDeck() {
           max-width: 1000px;
           margin: 0 auto;
           width: 100%;
+          min-width: 0;
+          box-sizing: border-box;
           min-height: 500px;
           display: flex;
           flex-direction: column;
@@ -574,13 +583,14 @@ export default function B2BPitchDeck() {
         /* Slide 1 Cover Styles */
         .cover-visuals {
           position: absolute;
-          right: -10%;
+          right: 0%;
           top: 10%;
-          width: 500px;
-          height: 500px;
+          width: min(500px, 90vw);
+          height: min(500px, 90vw);
           background: radial-gradient(circle, rgba(252,39,121,0.12) 0%, transparent 70%);
           z-index: 0;
           pointer-events: none;
+          overflow: hidden;
         }
 
         /* Slide 2: Problem Grid */
@@ -718,6 +728,70 @@ export default function B2BPitchDeck() {
           display: flex;
           flex-direction: column;
           gap: 1.25rem;
+          box-sizing: border-box;
+          min-width: 0;
+        }
+
+        .b2b-agents-banner {
+          margin-top: 2rem;
+          padding: 1.5rem;
+          background: var(--b2b-surface);
+          border: 1px solid var(--b2b-border);
+          border-radius: 16px;
+          box-sizing: border-box;
+          width: 100%;
+          max-width: 100%;
+          min-width: 0;
+          overflow-x: hidden;
+        }
+
+        .b2b-agents-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 1rem;
+          width: 100%;
+          box-sizing: border-box;
+        }
+
+        @media (max-width: 860px) {
+          .b2b-agents-grid {
+            grid-template-columns: 1fr !important;
+            gap: 0.75rem;
+          }
+        }
+
+        .lead-form-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr 1fr auto;
+          gap: 0.75rem;
+          align-items: center;
+          width: 100%;
+          box-sizing: border-box;
+        }
+
+        @media (max-width: 768px) {
+          .lead-form-grid {
+            grid-template-columns: 1fr !important;
+            gap: 0.65rem;
+          }
+          .lead-form-grid .pitch-btn-primary {
+            width: 100%;
+          }
+        }
+
+        .provisioning-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr 1fr;
+          gap: 1.5rem;
+          width: 100%;
+          box-sizing: border-box;
+        }
+
+        @media (max-width: 768px) {
+          .provisioning-grid {
+            grid-template-columns: 1fr !important;
+            gap: 1rem;
+          }
         }
 
         .ppm-dial {
@@ -1068,9 +1142,36 @@ export default function B2BPitchDeck() {
             padding-bottom: 1rem;
           }
 
-          /* Deck body tighter padding */
+          /* Deck body tighter padding & overflow safety */
           .deck-body {
-            padding: 1.25rem 1rem 1.5rem;
+            padding: 1.25rem 0.75rem 1.5rem;
+            overflow-x: hidden;
+          }
+
+          .slide-viewport {
+            min-height: unset;
+            padding-bottom: 1rem;
+            width: 100%;
+            max-width: 100%;
+            overflow-x: hidden;
+          }
+
+          .comparison-vs {
+            grid-template-columns: 1fr !important;
+            gap: 0.75rem;
+          }
+
+          .map-selector-box {
+            padding: 1rem;
+          }
+
+          .b2b-agents-banner {
+            padding: 1rem;
+            margin-top: 1.25rem;
+          }
+
+          .deck-controls-brand {
+            display: none !important;
           }
 
           /* Slide title smaller on phones */
@@ -1208,11 +1309,14 @@ export default function B2BPitchDeck() {
             overflow-x: auto;
             gap: 0.4rem;
             padding: 0.75rem 1rem;
-            background: #0c101d;
-            border-bottom: 1px solid rgba(255,255,255,0.06);
+            background: var(--b2b-surface-alt);
+            border-bottom: 1px solid var(--b2b-border);
             scrollbar-width: none;
             -ms-overflow-style: none;
             -webkit-overflow-scrolling: touch;
+            width: 100%;
+            max-width: 100vw;
+            box-sizing: border-box;
           }
 
           .mobile-slide-tabs::-webkit-scrollbar {
@@ -1223,9 +1327,9 @@ export default function B2BPitchDeck() {
             flex-shrink: 0;
             padding: 0.45rem 0.85rem;
             border-radius: 99px;
-            border: 1px solid rgba(255,255,255,0.1);
-            background: transparent;
-            color: rgba(255,255,255,0.5);
+            border: 1px solid var(--b2b-border);
+            background: var(--b2b-card-bg);
+            color: var(--b2b-text-muted);
             font-size: 0.72rem;
             font-weight: 600;
             cursor: pointer;
@@ -1238,6 +1342,26 @@ export default function B2BPitchDeck() {
             background: rgba(252,39,121,0.12);
             border-color: #fc2779;
             color: #fc2779;
+          }
+
+          html.dark .mobile-slide-tabs,
+          .dark .mobile-slide-tabs {
+            background: #0c101d !important;
+            border-bottom: 1px solid rgba(255,255,255,0.06) !important;
+          }
+
+          html.dark .mobile-tab-btn,
+          .dark .mobile-tab-btn {
+            border: 1px solid rgba(255,255,255,0.1) !important;
+            background: transparent !important;
+            color: rgba(255,255,255,0.6) !important;
+          }
+
+          html.dark .mobile-tab-btn.active,
+          .dark .mobile-tab-btn.active {
+            background: rgba(252,39,121,0.12) !important;
+            border-color: #fc2779 !important;
+            color: #fc2779 !important;
           }
         }
       `}</style>
@@ -1493,14 +1617,14 @@ export default function B2BPitchDeck() {
                 </div>
 
                 {/* AI Agents Promotion */}
-                <div style={{ marginTop: "2rem", padding: "1.5rem", background: "var(--b2b-surface)", border: "1px solid var(--b2b-border)", borderRadius: "16px" }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "1rem" }}>
-                    <CheckCircle2 size={16} color="#34d399" />
-                    <span style={{ fontSize: "0.85rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", color: "#34d399" }}>
+                <div className="b2b-agents-banner">
+                  <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "1rem", flexWrap: "wrap" }}>
+                    <CheckCircle2 size={16} color="#34d399" style={{ flexShrink: 0 }} />
+                    <span style={{ fontSize: "0.82rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.05em", color: "#34d399", lineHeight: 1.3 }}>
                       🎁 Included FREE With All Tiers: Mirha AI Skincare Agents
                     </span>
                   </div>
-                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "1rem" }}>
+                  <div className="b2b-agents-grid">
                     <div style={{ background: "var(--b2b-card-bg)", padding: "1rem", borderRadius: "12px", border: "1px solid var(--b2b-border)" }}>
                       <span style={{ fontWeight: 600, fontSize: "0.85rem", color: "var(--b2b-text-main)", display: "block", marginBottom: "0.25rem" }}>📋 Catalog Audit Agent</span>
                       <p style={{ margin: 0, fontSize: "0.75rem", color: "var(--b2b-text-muted)", lineHeight: 1.4 }}>
@@ -1722,7 +1846,7 @@ export default function B2BPitchDeck() {
                           {checkoutError}
                         </div>
                       )}
-                      <form onSubmit={handleLeadSubmit} style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr auto", gap: "0.75rem", alignItems: "center" }}>
+                      <form onSubmit={handleLeadSubmit} className="lead-form-grid">
                         <input 
                           type="text" 
                           required 
@@ -1862,7 +1986,7 @@ export default function B2BPitchDeck() {
                     <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#10b981" }} />
                     Instant API Provisioning
                   </h4>
-                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "1.5rem" }}>
+                  <div className="provisioning-grid">
                     <div>
                       <span style={{ display: "block", color: "#fc2779", fontWeight: 700, marginBottom: "0.25rem", fontSize: "0.85rem" }}>1. Checkout</span>
                       <p style={{ margin: 0, fontSize: "0.75rem", color: "var(--b2b-text-muted)", lineHeight: 1.5 }}>
@@ -1924,7 +2048,7 @@ export default function B2BPitchDeck() {
           </div>
         </div>
 
-        <div>
+        <div className="deck-controls-brand">
           <span style={{ fontSize: "0.75rem", color: "#fc2779", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em" }}>
             Climate &amp; Hard Water API
           </span>
