@@ -299,6 +299,23 @@ export async function SeoBlogPost({
       q: "What is the emergency fix for a sudden sweat pimple between Garba nights?",
       a: "Do not pop or squeeze the pimple. Apply a medical-grade hydrocolloid pimple patch overnight onto clean, dry skin to aseptically extract trapped fluid and flatten the bump without scarring."
     }
+  ] : slug === "ac-face-air-conditioning-dehydration-fix" ? [
+    {
+      q: "Why does office air conditioning cause both dry skin and sudden afternoon oiliness?",
+      a: "Commercial HVAC chillers condense and extract ambient humidity, dropping indoor relative humidity below 20%. This causes rapid Transepidermal Water Loss (TEWL). To protect against microscopic cracking, your sebaceous glands overcompensate by pumping out excess sebum, creating surface shine over dehydrated cells."
+    },
+    {
+      q: "Why does Hyaluronic Acid make my skin drier in an air-conditioned room?",
+      a: "Hyaluronic acid is an atmospheric humectant that draws moisture from its surroundings. In dry AC air with less than 30% humidity, there is no water in the air to bind. Via osmosis, the molecule reverses direction, drawing water out of your deeper dermis up to the surface where it evaporates instantly."
+    },
+    {
+      q: "What is the best way to protect your skin barrier in a corporate office all day?",
+      a: "Apply humectants (like hyaluronic acid or snail mucin) exclusively onto damp skin, and immediately seal them with a physiological ceramide barrier cream (in a 3:1:1 ratio of ceramides, cholesterol, and fatty acids) before stepping into climate-controlled rooms."
+    },
+    {
+      q: "Should I spray a facial mist at my desk when my face feels tight?",
+      a: "No. Pure water or floral mists evaporate rapidly in low-humidity air conditioning, stripping away your skin's natural moisturizing factors (NMF) in the process. If your skin feels tight, gently press a pea-sized amount of barrier cream over dry areas instead."
+    }
   ] : [];
 
   const faqJsonLd = faqQuestions.length > 0 ? {

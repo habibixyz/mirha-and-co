@@ -9,6 +9,7 @@ const withMDX = createMDX({
 });
 
 const nextConfig: NextConfig = {
+  poweredByHeader: false,
   typescript: {
     ignoreBuildErrors: true,
   },
@@ -47,6 +48,10 @@ const nextConfig: NextConfig = {
           { key: "X-Content-Type-Options", value: "nosniff" },
           { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
           { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
+          { key: "Strict-Transport-Security", value: "max-age=63072000; includeSubDomains; preload" },
+          { key: "X-DNS-Prefetch-Control", value: "on" },
+          { key: "Cross-Origin-Opener-Policy", value: "same-origin-allow-popups" },
+          { key: "X-XSS-Protection", value: "1; mode=block" },
         ],
       },
     ];

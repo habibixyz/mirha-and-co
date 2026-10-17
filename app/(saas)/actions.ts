@@ -378,17 +378,42 @@ async function getBaseUrl() {
 }
 
 /**
- * Redis-backed login rate limiter — shared across all serverless instances.
- * Falls back to the in-memory MemoryCache in local development (via redisCache).
- * Limit: 10 attempts per IP+email combo per 15-minute window.
+ * Sanitizes redirect targets to prevent open redirect and CRLF injection vulnerabilities.
+ * Only allows same-origin relative paths (e.g. /dashboard or /tools/analysis).
  */
-async function isLoginRateLimited(identifier: string, limit = 10, windowSecs = 15 * 60): Promise<boolean> {
-  const key = `login_rate:${identifier}`;
+function sanitizeRedirect(url: unknown, fallback = "/dashboard"): string {
+  if (typeof url !== "string") return fallback;
+  const str = url.trim();
+  if (
+    str.startsWith("/") &&
+    !str.startsWith("//") &&
+    !str.startsWith("/\\") &&
+    !str.includes("://") &&
+    !str.includes("\r") &&
+    !str.includes("\n")
+  ) {
+    return str;
+  }
+  return fallback;
+}
+
+/**
+ * Redis-backed rate limiter for auth actions (login, register, forgot-password).
+ * Falls back to the in-memory MemoryCache in local development (via redisCache).
+ */
+async function isAuthRateLimited(key: string, limit: number, windowSecs: number): Promise<boolean> {
   const count = await redisCache.incr(key);
   if (count === 1) {
     await redisCache.expire(key, windowSecs);
   }
   return count > limit;
+}
+
+/**
+ * Limit: 10 attempts per IP+email combo per 15-minute window.
+ */
+async function isLoginRateLimited(identifier: string, limit = 10, windowSecs = 15 * 60): Promise<boolean> {
+  return isAuthRateLimited(`login_rate:${identifier}`, limit, windowSecs);
 }
 
 export async function loginAction(_state: AuthState, formData: FormData): Promise<AuthState> {
@@ -435,10 +460,7 @@ export async function loginAction(_state: AuthState, formData: FormData): Promis
 
     // 🔐 OPEN REDIRECT FIX: only allow same-origin paths (reject protocol-relative
     // and absolute URLs that could redirect users off-site after login).
-    const rawRedirect = String(formData.get("redirectTo") || "/dashboard");
-    redirectTo = rawRedirect.startsWith("/") && !rawRedirect.startsWith("//")
-      ? rawRedirect
-      : "/dashboard";
+    redirectTo = sanitizeRedirect(formData.get("redirectTo"));
 
     await createSession(user.id);
   } catch (error) {
@@ -460,6 +482,14 @@ export async function registerAction(_state: AuthState, formData: FormData): Pro
 
   if (password.length < 8) {
     return { error: "Password must be at least 8 characters." };
+  }
+
+  const headerStore = await headers();
+  const ip = headerStore.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+
+  // Rate limit registration: max 10 accounts per IP per hour to prevent bot account floods
+  if (await isAuthRateLimited(`register_rate:${ip}`, 10, 60 * 60)) {
+    return { error: "Too many accounts created from this network. Please try again later." };
   }
 
   let redirectTo = "/dashboard";
@@ -501,10 +531,7 @@ export async function registerAction(_state: AuthState, formData: FormData): Pro
     }
 
     // 🔐 OPEN REDIRECT FIX: only allow same-origin paths
-    const rawRedirect = String(formData.get("redirectTo") || "/dashboard");
-    redirectTo = rawRedirect.startsWith("/") && !rawRedirect.startsWith("//")
-      ? rawRedirect
-      : "/dashboard";
+    redirectTo = sanitizeRedirect(formData.get("redirectTo"));
     await createSession(user.id);
   } catch (error) {
     console.error("Register error:", error);
@@ -519,6 +546,14 @@ export async function forgotPasswordAction(_state: AuthState, formData: FormData
 
   if (!email) {
     return { error: "Please enter your email address." };
+  }
+
+  const headerStore = await headers();
+  const ip = headerStore.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+
+  // Rate limit password resets: max 5 requests per IP+email per 15 mins to prevent email bombing
+  if (await isAuthRateLimited(`forgot_rate:${ip}:${email}`, 5, 15 * 60)) {
+    return { error: "Too many password reset requests. Please wait 15 minutes before trying again." };
   }
 
   const success = `Password reset request created! Check your inbox, or log in directly with your email.`;

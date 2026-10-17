@@ -888,6 +888,7 @@ const mappedHighIntent = HIGH_INTENT_POSTS.map(p => ({
 export const POSTS: Post[] = [
   // 🌟 Latest Layman-Friendly October 2026 Blog Series (Placed at absolute top per workspace rule)
   ...mappedHighIntent.filter(p => [
+    "ac-face-air-conditioning-dehydration-fix",
     "navratri-fragrance-guide-men-women",
     "navratri-skincare-garba-survival-guide",
     "the-4-step-barrier-sun-reset-skincare-guide",
@@ -1187,6 +1188,7 @@ const SLUG_IMAGE_MAP: Record<string, string> = {
  "city-skincare-routine-india-mumbai-delhi": "/blog-thumbs/blog_indian_summer.png",
  "indoor-ac-skin-syndrome-barrier-repair": "/blog-thumbs/blog_ac_skin_syndrome.jpg",
  "azelaic-acid-niacinamide-hyperpigmentation-duo": "/blog-thumbs/blog_azelaic_niacinamide.jpg",
+ "ac-face-air-conditioning-dehydration-fix": "https://azsofabirbgovazlfzvn.supabase.co/storage/v1/object/public/blog-images/ac_face_banner.jpg",
 };
 
 export const getRelevantImage = (slug: string, _title: string, category: string): string => {

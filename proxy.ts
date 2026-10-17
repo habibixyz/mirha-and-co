@@ -7,8 +7,13 @@ export function proxy(request: NextRequest) {
   // Protect /dashboard routes with session check
   if (path.startsWith('/dashboard')) {
     const sessionCookie = request.cookies.get('mirha_session')?.value;
-    if (!sessionCookie) {
-      return NextResponse.redirect(new URL('/login', request.url));
+    const isValidToken = sessionCookie && sessionCookie.length <= 128 && /^[a-zA-Z0-9_-]+$/.test(sessionCookie);
+    if (!isValidToken) {
+      const response = NextResponse.redirect(new URL('/login', request.url));
+      if (sessionCookie) {
+        response.cookies.delete('mirha_session');
+      }
+      return response;
     }
   }
 

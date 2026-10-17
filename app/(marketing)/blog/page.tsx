@@ -68,7 +68,7 @@ export default async function BlogIndex() {
     return {
       ...p,
       initials: p.thumbnail,
-      imageSrc: getRelevantImage(p.slug, p.title, p.category),
+      imageSrc: p.thumbnail?.startsWith("http") ? p.thumbnail : getRelevantImage(p.slug, p.title, p.category),
       views: viewMap.get(p.slug) || 0
     };
   });

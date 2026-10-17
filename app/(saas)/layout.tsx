@@ -58,6 +58,10 @@ export const metadata: Metadata = {
    description: "Manage your personalized routines and skin journal.",
    images: ["/og-image.png"],
  },
+  robots: {
+    index: false,
+    follow: false,
+  },
 };
 
 export default function SaasLayout({
