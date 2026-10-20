@@ -15,6 +15,83 @@ export interface HighIntentPost {
 
 export const HIGH_INTENT_POSTS: HighIntentPost[] = [
   {
+    slug: "dussehra-skincare-detox-glow-protocol",
+    title: "The Dussehra Skin Detox & Glow Protocol: How to Reverse Post-Navratri Fatigue, Pollution Damage & Heavy Makeup Congestion",
+    category: "SKINCARE",
+    excerpt: "Surviving 9 nights of heavy festival makeup, sweat, and October pollution? Here is the dermatologist-tested Dussehra reset to purge clogged pores, restore your acid mantle, and unlock victorious festive radiance.",
+    readTime: "7 min",
+    date: "October 2026",
+    thumbnail: "https://azsofabirbgovazlfzvn.supabase.co/storage/v1/object/public/blog-images/dussehra_skincare_detox_guide.jpg",
+    tags: ["dussehra", "vijayadashami", "festival skincare", "skin detox", "barrier repair", "salicylic acid", "post festive glow", "pollution shield"],
+    asins: ["B0BNLHLGF9", "B0B881GN1P", "B06XSQ879T", "B00V4R0ET0", "B00PBX3L7K", "B01MUZVE1C"],
+    sections: [
+      {
+        title: "The Post-Navratri Skin Hangover: Slaying the 5 Demons of Festive Congestion",
+        body: [
+          "Dussehra (Vijayadashami) symbolizes the ultimate victory of light over darkness and good over evil. But as the 9 nights of Garba, Dandiya, and late-night festivities wrap up, your skin often feels anything but triumphant.",
+          "Nine consecutive days of heavy high-definition foundation, setting sprays, sweat accumulation under arena lighting, and festive sweets trigger what dermatologists call **Post-Festive Cutaneous Burnout**.",
+          "This presents as five distinct dermatological saboteurs:",
+          "1. **Micro-Comedone Congestion:** Sweat trapped beneath silicone primers oxidizes into stubborn blackheads and texture bumps along the T-zone.",
+          "2. **Oxidative Pollution Stress:** October air quality drops drastically with festive effigy smoke, firework particulates, and road traffic, generating free radicals that accelerate collagen breakdown.",
+          "3. **Dehydration Sallow:** Consecutive 2 AM bedtimes and sugar-heavy diets spike systemic cortisol, depleting epidermal moisture reservoirs and causing morning dullness.",
+          "4. **Mechanical Jewelry Chafing:** Heavy oxidised silver earrings and metallic choli embroidery leave red, irritated friction patches on the jawline and neck.",
+          "5. **Compromised Acid Mantle:** Over-scrubbing with harsh makeup wipes leaves the skin's lipid matrix stripped, stinging, and reactive.",
+          "To celebrate Vijayadashami with true, uncompromised radiance, follow this clinically structured 5-step Dussehra Skin Detox Protocol."
+        ]
+      },
+      {
+        title: "Step 1: The Soap-Free Gentle Purge — Simple Kind to Skin Moisturising Facial Wash",
+        body: [
+          "The most common mistake people make post-festivals is attacking their skin with aggressive physical walnut scrubs or high-foaming charcoal washes. When your skin barrier is already compromised, alkaline sulfates cause microscopic tears and trigger rebound sebum production.",
+          "Instead, start your Dussehra reset with a strictly pH-balanced, non-stripping cleanser. **Simple Kind To Skin Moisturising Facial Wash** is 100% soap-free, utilizing gentle surfactants enriched with Pro-Vitamin B5 (Panthenol), Glycerin, and Bisabolol.",
+          "It lifts stubborn residual festival pigments and microscopic airborne smoke particulates without disrupting your skin's protective moisture barrier.",
+          "**The Detox Technique:** Massage into lukewarm damp skin for a full 60 seconds with circular upward motions. Rinse with tepid—never hot—water to prevent moisture loss."
+        ],
+        sectionAsins: ["B00V4R0ET0"]
+      },
+      {
+        title: "Step 2: Neutralize Acne Bacteria & Calm Irritation — Sebamed Clear Face Care Gel (pH 5.5)",
+        body: [
+          "If the combination of sweat and heavy makeup has left you with angry, red bumps or sweat acne, standard heavy moisturizers will only suffocate the follicles further.",
+          "**Sebamed Clear Face Care Gel** is formulated at the precise physiological acid mantle level of **pH 5.5**. This acidic environment naturally inhibits acne-causing Cutibacterium acnes proliferation while restoring the natural microbial balance of the skin.",
+          "Formulated 100% oil-free and non-comedogenic, it blends high-purity Hyaluronic Acid with Aloe Vera, Panthenol, and Allantoin to extinguish irritation and calm redness in minutes.",
+          "**Why it works for Dussehra:** It quenches the skin's thirst with zero grease, clearing the way for cellular repair without feeding pore congestion."
+        ],
+        sectionAsins: ["B06XSQ879T"]
+      },
+      {
+        title: "Step 3: Replenish Lost Epidermal Water — COSRX Advanced Snail 96 Mucin Power Essence",
+        body: [
+          "Late-night celebrations drain deep hydration from your living epidermal cells, leaving your complexion flat, lifeless, and paper-thin.",
+          "To restore that coveted bounce and inner glow, apply **COSRX Advanced Snail 96 Mucin Power Essence**. Formulated with 96.3% snail secretion filtrate, it delivers natural chondroitin sulfate, glycoproteins, and glycolic acid deep into the stratum spinosum.",
+          "It instantly re-plumps dehydrated cells, accelerates post-friction tissue repair, and creates a lightweight moisture reservoir that locks hydration into your skin throughout the day.",
+          "**Pro Tip:** Pat 2 pumps directly onto slightly damp skin until absorbed. Follow immediately with your barrier repair layer to seal the nutrients in."
+        ],
+        sectionAsins: ["B00PBX3L7K"]
+      },
+      {
+        title: "Step 4: The 3:1:1 Golden Ratio Lipid Rebuild — Formularx Barrier Relief",
+        body: [
+          "Sweat salts, friction from ethnic attire, and frequent cleansing deplete the essential inter-corneocyte lipids that keep irritants out and moisture in. Without a strong lipid matrix, no serum or active can produce long-term radiance.",
+          "**Formularx Barrier Relief** is an elite dermatological treatment delivering Ceramides, Cholesterol, and Free Fatty Acids in the bio-identical **3:1:1 golden ratio**.",
+          "Infused with 3% Niacinamide and soothing Centella, it seals micro-fissures, eliminates post-jewelry neck chafing, and restores your barrier to prime health in less than 48 hours.",
+          "**The Dussehra Verdict:** Your skin wakes up velvety, calm, and supple—completely erasing any evidence of late-night festive fatigue."
+        ],
+        sectionAsins: ["B0BNLHLGF9"]
+      },
+      {
+        title: "Step 5: Daylight Shield & Smog Protection — SKIN1004 Madagascar Centella Hyalu-Cica Sun Serum",
+        body: [
+          "Post-Dussehra daytime pujas, family visits, and autumn gatherings expose vulnerable, newly cleansed skin to intense October UV rays and lingering festive smog.",
+          "Skipping sunscreen after an intensive detox reverses all your progress by triggering UV-induced post-inflammatory hyperpigmentation (PIH).",
+          "**SKIN1004 Madagascar Centella Hyalu-Cica Water-Fit Sun Serum SPF50+ PA++++** delivers broad-spectrum protection in a featherlight, water-burst texture. Powered by pure Centella Asiatica, it actively calms sun-flushed skin while acting as an invisible shield against airborne pollution.",
+          "**Why we love it:** It leaves zero white cast, never stings sensitive eyes, and bestows a clean, lit-from-within golden hour glow that lasts all day."
+        ],
+        sectionAsins: ["B0B881GN1P"]
+      }
+    ]
+  },
+  {
     slug: "ac-face-air-conditioning-dehydration-fix",
     title: "AC Face: Why 8 Hours in Central Air Conditioning Secretly Mummifies Your Skin (And Why Hyaluronic Acid Makes It Worse)",
     category: "SKINCARE",

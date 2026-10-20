@@ -888,6 +888,7 @@ const mappedHighIntent = HIGH_INTENT_POSTS.map(p => ({
 export const POSTS: Post[] = [
   // 🌟 Latest Layman-Friendly October 2026 Blog Series (Placed at absolute top per workspace rule)
   ...mappedHighIntent.filter(p => [
+    "dussehra-skincare-detox-glow-protocol",
     "ac-face-air-conditioning-dehydration-fix",
     "navratri-fragrance-guide-men-women",
     "navratri-skincare-garba-survival-guide",
@@ -1024,6 +1025,7 @@ const hashString = (str: string) => {
 
 // Complete slug → unique image lookup table (all 34 available images used)
 const SLUG_IMAGE_MAP: Record<string, string> = {
+  "dussehra-skincare-detox-glow-protocol": "https://azsofabirbgovazlfzvn.supabase.co/storage/v1/object/public/blog-images/dussehra_skincare_detox_guide.jpg",
   "navratri-fragrance-guide-men-women": "https://azsofabirbgovazlfzvn.supabase.co/storage/v1/object/public/blog-images/navratri_fragrance_picks.png",
   "navratri-skincare-garba-survival-guide": "https://azsofabirbgovazlfzvn.supabase.co/storage/v1/object/public/blog-images/navratri_skincare_picks.png",
   "the-4-step-barrier-sun-reset-skincare-guide": "/blog-thumbs/four_step_barrier_sun_reset.png",

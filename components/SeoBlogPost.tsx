@@ -282,7 +282,24 @@ export async function SeoBlogPost({
     "keywords": tags ? tags.join(", ") : category
   };
 
-  const faqQuestions = slug === "navratri-skincare-garba-survival-guide" ? [
+  const faqQuestions = slug === "dussehra-skincare-detox-glow-protocol" ? [
+    {
+      q: "How do I detox my skin after 9 nights of heavy festive makeup and sweat?",
+      a: "Switch from harsh abrasive scrubs to a gentle, soap-free cleanser. Layer a physiological pH 5.5 care gel to neutralize Cutibacterium acnes, rehydrate with snail mucin or humectants, and seal with a bio-identical 3:1:1 ceramide moisturizer."
+    },
+    {
+      q: "Why is October festive smoke and pollution damaging to the skin barrier?",
+      a: "Dussehra effigy smoke, firework particulates, and autumn smog generate free radicals that induce oxidative stress and degrade dermal collagen. Broad-spectrum SPF with antioxidant Centella Asiatica provides crucial environmental protection."
+    },
+    {
+      q: "How do I soothe redness and chafing caused by heavy festive jewelry?",
+      a: "Avoid exfoliants or acidic actives on irritated zones. Apply a ceramide, cholesterol, and fatty acid barrier repair cream directly over the jawline and neck to accelerate lipid stratum repair."
+    },
+    {
+      q: "Can I use strong chemical peels immediately after Dussehra?",
+      a: "No. After 9 nights of heat, sweat, and makeup friction, your skin barrier is in a sensitized state. Wait 4 to 5 days while using barrier-strengthening ceramides before reintroducing strong AHAs or retinoids."
+    }
+  ] : slug === "navratri-skincare-garba-survival-guide" ? [
     {
       q: "How can I prevent sweat acne and breakouts during 9 nights of Navratri Garba?",
       a: "Prep with an oil-free hyaluronic acid water gel rather than heavy cold creams, avoid powdering directly over dried salty sweat, and double cleanse with a 100% soap-free cleanser at 2 AM to clear the follicles without barrier damage."

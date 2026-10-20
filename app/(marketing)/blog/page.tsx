@@ -75,7 +75,12 @@ export default async function BlogIndex() {
 
   const now = new Date();
   const isNavratri = now >= new Date("2026-10-12T00:00:00+05:30") && now <= new Date("2026-10-20T23:59:59+05:30");
-  const topFeatured = (isNavratri && posts.find(p => p.slug === "navratri-skincare-garba-survival-guide")) || posts.find(p => p.slug === "skin-purging-vs-breakout") || posts[0] || POSTS[0];
+  const topFeatured =
+    posts.find(p => p.slug === "dussehra-skincare-detox-glow-protocol") ||
+    (isNavratri && posts.find(p => p.slug === "navratri-skincare-garba-survival-guide")) ||
+    posts.find(p => p.slug === "skin-purging-vs-breakout") ||
+    posts[0] ||
+    POSTS[0];
 
  return (
  <main>
@@ -376,6 +381,65 @@ export default async function BlogIndex() {
  @keyframes navratriCardGlow {
  0%   { background-position: 0% center; }
  100% { background-position: 300% center; }
+ }
+
+ /* Dussehra 16:9 Full-Width Showcase Banner (Zero Cropped Words) */
+ .dussehra-featured-card {
+   display: flex !important;
+   flex-direction: column !important;
+   max-width: 1100px;
+   margin: 0 auto;
+   border-radius: 20px;
+   overflow: hidden;
+   background: #141210;
+   border: 1px solid rgba(245, 182, 66, 0.45);
+   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 30px rgba(245, 158, 11, 0.15);
+ }
+ .dussehra-featured-card .featured-image-col {
+   width: 100% !important;
+   aspect-ratio: 16 / 9 !important;
+   height: auto !important;
+   min-height: auto !important;
+   max-height: 620px;
+   background: #000;
+ }
+ .dussehra-featured-card .featured-image-col img {
+   width: 100% !important;
+   height: 100% !important;
+   object-fit: contain !important;
+ }
+ .dussehra-featured-card .featured-main {
+   border-left: none !important;
+   border-top: 1px solid rgba(245, 182, 66, 0.25);
+   padding: 1.8rem 2.5rem !important;
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+   justify-content: space-between;
+   gap: 2rem;
+   background: linear-gradient(180deg, #181411 0%, #120f0d 100%);
+ }
+ .dussehra-featured-card .featured-main h2 {
+   display: none !important;
+ }
+ .dussehra-featured-card .featured-main p {
+   font-size: 0.95rem;
+   line-height: 1.65;
+   color: rgba(254, 243, 199, 0.88);
+   margin: 0.4rem 0 0;
+   max-width: 720px;
+ }
+ .dussehra-featured-card .featured-btn {
+   white-space: nowrap;
+   flex-shrink: 0;
+ }
+ @media (max-width: 820px) {
+   .dussehra-featured-card .featured-main {
+     flex-direction: column !important;
+     align-items: flex-start !important;
+     gap: 1.25rem !important;
+     padding: 1.25rem 1.5rem !important;
+   }
  }
 
  .featured-image-col {
@@ -747,10 +811,12 @@ export default async function BlogIndex() {
  </section>
 
  <section className="featured-band">
-  <a href={"/blog/" + topFeatured.slug} className={`featured-card${isNavratri ? " navratri-featured" : ""}`}>
+  <a href={"/blog/" + topFeatured.slug} className={`featured-card${topFeatured.slug === "dussehra-skincare-detox-glow-protocol" ? " dussehra-featured-card" : isNavratri ? " navratri-featured" : ""}`}>
   <div className="featured-image-col">
   <img src={topFeatured.imageSrc} alt={topFeatured.title} loading="eager" />
-  {isNavratri ? (
+  {topFeatured.slug === "dussehra-skincare-detox-glow-protocol" ? (
+    <span className="featured-badge" style={{ background: "linear-gradient(135deg, #1b1713, #2a221b)", color: "#fcd34d", border: "1px solid rgba(245, 182, 66, 0.55)", letterSpacing: "0.14em", textTransform: "uppercase" }}>🏹 Dussehra Special</span>
+  ) : isNavratri ? (
     <span className="featured-badge" style={{ background: "linear-gradient(135deg, #1b1713, #2a221b)", color: "#e5bd7a", border: "1px solid rgba(229, 189, 122, 0.45)", letterSpacing: "0.14em", textTransform: "uppercase" }}>The 9-Night Edit</span>
   ) : (
     <span className="featured-badge">FEATURED GUIDE</span>

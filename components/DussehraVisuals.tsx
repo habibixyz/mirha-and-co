@@ -282,6 +282,7 @@ export function DussehraBanner() {
           padding: 0.25rem;
           border-radius: 4px;
           transition: color 0.15s ease, background 0.15s ease;
+          z-index: 2;
         }
 
         .dussehra-dismiss:hover {
@@ -289,35 +290,60 @@ export function DussehraBanner() {
           background: rgba(255, 255, 255, 0.08);
         }
 
+        .dussehra-banner-mobile {
+          display: none;
+        }
+
         @media (max-width: 768px) {
           .dussehra-banner-inner {
-            padding: 0.45rem 2.2rem 0.45rem 0.75rem;
-            gap: 0.45rem;
-            justify-content: flex-start;
-          }
-          .dussehra-text-desktop {
             display: none;
           }
-          .dussehra-text-mobile {
-            display: inline;
-            font-size: 0.7rem;
+          .dussehra-banner-mobile {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.45rem 2.2rem 0.45rem 0.75rem;
+            position: relative;
+            width: 100%;
+          }
+          .dussehra-banner-mobile-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            text-decoration: none !important;
+            font-size: 0.72rem;
+            color: #fef3c7;
+            font-weight: 500;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            max-width: 100%;
           }
-          .dussehra-pill {
-            font-size: 0.52rem;
+          .dussehra-banner-mobile-tag {
+            background: rgba(245, 158, 11, 0.2);
+            border: 1px solid rgba(245, 182, 66, 0.45);
+            color: #fbbf24;
+            font-size: 0.55rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
             padding: 0.15rem 0.45rem;
+            border-radius: 9999px;
+            flex-shrink: 0;
           }
-          .dussehra-cta {
-            font-size: 0.58rem;
-            padding: 0.18rem 0.55rem;
+          .dussehra-banner-mobile-title {
+            color: #fef3c7;
+            font-weight: 600;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
           }
         }
       `}</style>
 
       <div className="dussehra-banner-shimmer" />
 
+      {/* Desktop view */}
       <div className="dussehra-banner-inner">
         <span className="dussehra-pill">
           <Flame size={12} className="dussehra-flame-icon" />
@@ -325,15 +351,11 @@ export function DussehraBanner() {
         </span>
 
         <span className="dussehra-text-desktop">
-          🏹 <strong>Happy Dussehra!</strong> Triumph of radiant skin over festive burnout & pollution. Slay dull skin with our AI routine.
+          🏹 <strong>Happy Dussehra!</strong> Triumph of radiant skin over festive burnout & pollution.
         </span>
 
-        <span className="dussehra-text-mobile">
-          🏹 <strong>Happy Dussehra!</strong> Slay dull skin & festive burnout.
-        </span>
-
-        <Link href="/tools/analysis" className="dussehra-cta">
-          Get Festive Glow &rarr;
+        <Link href="/blog/dussehra-skincare-detox-glow-protocol" className="dussehra-cta">
+          Read Festive Guide &rarr;
         </Link>
 
         <button
@@ -343,6 +365,22 @@ export function DussehraBanner() {
           title="Dismiss"
         >
           <X size={14} />
+        </button>
+      </div>
+
+      {/* Mobile view: streamlined single-line bar without squished buttons */}
+      <div className="dussehra-banner-mobile">
+        <Link href="/blog/dussehra-skincare-detox-glow-protocol" className="dussehra-banner-mobile-link">
+          <span className="dussehra-banner-mobile-tag">Dussehra</span>
+          <span className="dussehra-banner-mobile-title">🏹 Festive Glow Protocol &rarr;</span>
+        </Link>
+        <button
+          onClick={() => setVisible(false)}
+          className="dussehra-dismiss"
+          aria-label="Close Dussehra Announcement"
+          title="Dismiss"
+        >
+          <X size={13} />
         </button>
       </div>
     </div>
@@ -356,6 +394,13 @@ export function DussehraHeroBadge() {
         .dussehra-hero-badge-container {
           display: inline-flex;
           margin-bottom: 14px;
+        }
+
+        /* Hide duplicate hero badge on mobile to keep screen clean and avoid double-stacking */
+        @media (max-width: 768px) {
+          .dussehra-hero-badge-container {
+            display: none !important;
+          }
         }
 
         .dussehra-hero-badge {
