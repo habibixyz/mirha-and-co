@@ -94,3 +94,7 @@ Write-Host "Recommend: $($r.StatusCode)"  # Must be 200, success: true
   2. Always reference the permanent Supabase public CDN URL (`https://azsofabirbgovazlfzvn.supabase.co/storage/v1/object/public/<bucket>/<file>`) in application code, posts (`lib/posts.ts`), components, or database records.
   3. Never stage, commit, or push local raw binary images to Git remotes. Local image scratch directories must be kept out of Git tracking to avoid repo bloat and prevent losing assets during git cleans or resets.
 
+## 8. Strictly Prohibited Visual Elements
+* **NEVER use the sparkle emoji (`✨`) anywhere on the website, in components, copy, banners, blog titles, or badges.** This is a permanent brand design rule.
+
+

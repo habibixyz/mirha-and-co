@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { unstable_cache } from "next/cache";
-import { ArrowRight, Layers, Droplet, Flower, Coins } from "lucide-react";
+import { ArrowRight, Layers, Droplet, Flower, Coins, Compass } from "lucide-react";
 import { cookies } from "next/headers";
 import { PRODUCTS } from "@/lib/products";
 import { Locale, DICTIONARY, RTL_LOCALES } from "@/lib/globalization";
@@ -1240,14 +1240,14 @@ export default async function BeautyShopPage() {
                     </div>
                   </div>
                 </Link>
-                <Link href="/tools/hard-water" className="ai-card ai-card-water">
+                <Link href="/tools/routine" className="ai-card ai-card-water">
                   <div className="ai-card-header">
                     <div className="ai-icon">
-                      <Droplet size={18} strokeWidth={1.5} />
+                      <Compass size={18} strokeWidth={1.5} />
                     </div>
                     <div>
-                      <h3>Hard Water Test</h3>
-                      <p>City-based analysis</p>
+                      <h3>Routine Quiz</h3>
+                      <p>Personalized 4-Step Regimen</p>
                     </div>
                   </div>
                 </Link>

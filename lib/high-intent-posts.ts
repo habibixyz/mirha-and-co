@@ -15,6 +15,69 @@ export interface HighIntentPost {
 
 export const HIGH_INTENT_POSTS: HighIntentPost[] = [
   {
+    slug: "diwali-skincare-prep-glow-protocol",
+    title: "The 14-Day Pre-Diwali Glass Skin & Detox Protocol: The Unisex Guide to Reversing Post-Festive Congestion & Shaving Burnout",
+    category: "SKINCARE",
+    excerpt: "Struggling with post-festive breakouts, shaving irritation, and October smoke pollution while counting down to Diwali? Here is the dermatologist-backed 14-day unisex protocol for men and women to detox clogged pores, repair your lipid barrier, and achieve clear, luminous festive skin.",
+    readTime: "8 min",
+    date: "October 2026",
+    thumbnail: "https://azsofabirbgovazlfzvn.supabase.co/storage/v1/object/public/blog-images/diwali_unisex_festive_glow.jpg",
+    tags: ["diwali", "festive skincare", "skin detox", "unisex skincare", "mens skincare", "pre diwali prep", "glass skin", "barrier repair", "ceramides", "pollution defense"],
+    asins: ["B016NRXO06", "B00V4R0ET0", "B00PBX3L7K", "B0BNLHLGF9", "B0B881GN1P", "B06XSQ879T"],
+    sections: [
+      {
+        title: "The Festive Crossroads: Why Both Men & Women Suffer 'Post-Festive Barrier Fatigue'",
+        body: [
+          "Every October across India, our skin faces an intense environmental assault. As the festivities of Navratri and Dussehra wind down, the countdown to Diwali cards parties, Dhanteras, and family celebrations begins.",
+          "This season affects everyone equally, regardless of gender:",
+          "• **For Women:** Consecutive nights of heavy high-definition foundation, setting sprays, and sweat create trapped micro-comedones and texture bumps.",
+          "• **For Men:** Pre-festive close shaving, beard line folliculitis, sweat trapped beneath facial hair, and stiff kurta collar friction trigger inflamed red razor patches.",
+          "• **For Everyone:** Firework smoke and effigy particulate smog (PM2.5), 2 AM sleep deprivation, and sugar spikes spike systemic cortisol, stripping the skin's lipid barrier and causing dull, dehydrated skin.",
+          "To achieve true festive radiance that looks clean, healthy, and effortless in photographs, you cannot rely on abrasive scrubs or salon bleaches. Here is the structured, 14-day unisex roadmap: 4 days of decongesting detox, followed by 10 days of targeted barrier rebuilding and deep hydration."
+        ]
+      },
+      {
+        title: "Phase 1 (Days 1–4): The Pollution & Pore Detox Flush",
+        body: [
+          "The first priority is lifting microscopic airborne soot and stubborn makeup or sunscreen polymers without causing micro-tears in sensitized skin.",
+          "Start your evening routine with **Bioderma Sensibio H2O**. Its biomimetic micelles effortlessly capture lipophilic smog residue, excess sebum, and pigments. For men, it lifts particulate soot trapped along the beard and jawline without stinging newly shaved skin.",
+          "Follow immediately with **Simple Kind to Skin Moisturising Facial Wash**—a 100% soap-free, fragrance-free, pH-balanced cleanser enriched with Pro-Vitamin B5 and Bisabolol. It cleanses deeply without leaving that squeaky, tight feeling.",
+          "**Detox Rule for Everyone:** Wash with lukewarm or cool water only. Hot showers melt intercellular ceramides, causing immediate rebound redness and oiliness."
+        ],
+        sectionAsins: ["B016NRXO06", "B00V4R0ET0"]
+      },
+      {
+        title: "Phase 2 (Days 5–8): Acid Mantle Repair & Deep Epidermal Hydration",
+        body: [
+          "Once atmospheric grime is purged, true radiance comes from replenishing cellular hydration. A luminous complexion is not an oily film; it is the optical bounce of light off plump, moisture-dense living cells.",
+          "Apply **COSRX Advanced Snail 96 Mucin Power Essence** directly onto damp skin. Snail secretion filtrate supplies natural chondroitin, glycoproteins, and glycolic acid, rapidly accelerating tissue repair and soothing chafed skin.",
+          "If breakouts, razor bumps, or sweat redness linger, layer **Sebamed Clear Face Care Gel**. Formulated at the biological acid mantle level of **pH 5.5**, its lightweight water-gel texture absorbs instantly with **zero shine or grease**—making it a cult favorite for men who dislike heavy lotions, as well as anyone fighting T-zone shine."
+        ],
+        sectionAsins: ["B00PBX3L7K", "B06XSQ879T"]
+      },
+      {
+        title: "Phase 3 (Days 9–12): The 3:1:1 Lipid Barrier Rebuild",
+        body: [
+          "Hydration without an intact lipid seal evaporates within hours via Transepidermal Water Loss (TEWL). To ensure your skin remains smooth and supple through all-night Diwali celebrations, reinforce the protective stratum corneum.",
+          "**Formularx Barrier Relief** delivers Ceramides, Cholesterol, and Free Fatty Acids in the bio-identical **3:1:1 golden ratio**.",
+          "Infused with 3% calming Niacinamide and Centella Asiatica, it repairs microscopic razor nicks on men, eliminates dry foundation flaking on women, and calms neck friction caused by heavy ethnic sherwanis or sarees.",
+          "**Application Tip:** Warm a pea-sized amount between your palms and gently press onto your face and neck. It dries down to a velvety matte finish that never feels greasy."
+        ],
+        sectionAsins: ["B0BNLHLGF9"]
+      },
+      {
+        title: "Phase 4 (Days 13–14 & Diwali Day): The Glass Skin Shield & Festive Priming",
+        body: [
+          "On Diwali day and festive evenings, airborne firecracker smog and dry autumn air can dull your complexion in hours if left unprotected.",
+          "Shield your skin every morning with **SKIN1004 Madagascar Centella Hyalu-Cica Water-Fit Sun Serum SPF50+ PA++++**. It delivers broad-spectrum UV and blue light defense in a featherlight, water-burst texture.",
+          "**Why It Works for Men:** It leaves absolutely **zero white cast** in beards, mustaches, or stubble, absorbing like a fresh splash of water.",
+          "**Why It Works for Women:** It doubles as a smooth, lit-from-within glow primer that prevents foundation from cracking or oxidising under festive diya lights from sunset to midnight."
+        ],
+        sectionAsins: ["B0B881GN1P"]
+      }
+    ]
+  },
+  {
     slug: "dussehra-skincare-detox-glow-protocol",
     title: "The Dussehra Skin Detox & Glow Protocol: How to Reverse Post-Navratri Fatigue, Pollution Damage & Heavy Makeup Congestion",
     category: "SKINCARE",

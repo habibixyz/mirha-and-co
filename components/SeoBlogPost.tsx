@@ -282,7 +282,28 @@ export async function SeoBlogPost({
     "keywords": tags ? tags.join(", ") : category
   };
 
-  const faqQuestions = slug === "dussehra-skincare-detox-glow-protocol" ? [
+  const faqQuestions = slug === "diwali-skincare-prep-glow-protocol" ? [
+    {
+      q: "How many days before Diwali should I start my skincare prep?",
+      a: "Start 14 days prior. The first 4 days focus on detoxing residual makeup and pollution congestion, followed by 10 days of intensive barrier hydration with snail mucin and 3:1:1 physiological ceramides to ensure a luminous glass skin glow."
+    },
+    {
+      q: "Can I get a chemical peel or bleaching right before Diwali?",
+      a: "Dermatologists strongly advise against aggressive chemical peels or bleach within 7 days of Diwali. These treatments strip the acid mantle, causing rebound erythema, flaking under makeup, and heightened sensitivity to firecracker smoke."
+    },
+    {
+      q: "How can I protect my skin from firecracker smoke and Diwali pollution?",
+      a: "Apply an antioxidant-rich sunscreen with Centella Asiatica each morning, and seal your barrier at night with a ceramide and fatty acid cream. Always double cleanse with a micellar water before washing to lift microscopic PM2.5 particulates."
+    },
+    {
+      q: "How do I make my festive skin look dewy and creaseless for Diwali?",
+      a: "Hydration sandwiching is the secret for both men and women: pat on snail mucin and press in a lightweight ceramide moisturizer on damp skin. For women, it forms a creaseless makeup base; for men, it softens beard stubble and prevents razor bumps without shine."
+    },
+    {
+      q: "Is this 14-day Diwali skincare protocol suitable for men as well?",
+      a: "Yes, 100%. Both men and women face identical October environmental stressors: firecracker smog, micro-particulate pollution, and barrier fatigue from late nights. Every product in this routine is fragrance-free, leaves zero oily residue, and will not cause white cast in beards or facial stubble."
+    }
+  ] : slug === "dussehra-skincare-detox-glow-protocol" ? [
     {
       q: "How do I detox my skin after 9 nights of heavy festive makeup and sweat?",
       a: "Switch from harsh abrasive scrubs to a gentle, soap-free cleanser. Layer a physiological pH 5.5 care gel to neutralize Cutibacterium acnes, rehydrate with snail mucin or humectants, and seal with a bio-identical 3:1:1 ceramide moisturizer."
@@ -420,9 +441,30 @@ export async function SeoBlogPost({
 
         /* ── Hero */
         .post-hero {
-          padding: 42px 0 32px;
-          border-bottom: 1px solid #e3d8ce;
+          padding: 42px 0 0;
           margin-bottom: 36px;
+        }
+
+        .hero-image-wrap {
+          margin-top: 28px;
+          border-radius: 14px;
+          overflow: hidden;
+          border: 1px solid #e3d8ce;
+          line-height: 0;
+        }
+
+        .hero-image-wrap img {
+          width: 100%;
+          height: auto;
+          display: block;
+          object-fit: cover;
+          aspect-ratio: 16 / 7;
+        }
+
+        .hero-meta-sep {
+          border: none;
+          border-bottom: 1px solid #e3d8ce;
+          margin: 28px 0 0;
         }
 
         .eyebrow {
@@ -692,12 +734,14 @@ export async function SeoBlogPost({
         }
 
         @media (max-width: 640px) {
-          .post-shell { padding: 22px 16px 56px; }
-          .post-hero { padding: 36px 0 26px; }
+          .post-shell { padding: 18px 14px 56px; }
+          .post-hero { padding: 24px 0 0; }
           .post-description { font-size: 15px; }
-          .post-section h2 { font-size: 24px; }
+          .post-section h2 { font-size: 22px; }
           .post-section p, .post-section li { font-size: 15px; }
           .table-wrap table { font-size: 13px; }
+          .hero-image-wrap { border-radius: 10px; }
+          .hero-image-wrap img { aspect-ratio: 16 / 9; }
           .bottom-picks-grid {
             grid-template-columns: 1fr;
           }
@@ -853,6 +897,18 @@ export async function SeoBlogPost({
           <div className="post-meta">
             Updated {date} &nbsp;·&nbsp; {readTime} read &nbsp;·&nbsp; {views ? `${views.toLocaleString()} reads · ` : ""}Affiliate links disclosed
           </div>
+          {thumbnail && (
+            <div className="hero-image-wrap">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={fullImageUrl}
+                alt={title}
+                loading="eager"
+                decoding="async"
+              />
+            </div>
+          )}
+          <hr className="hero-meta-sep" />
         </header>
 
         {sections.map((section) => {

@@ -76,6 +76,7 @@ export default async function BlogIndex() {
   const now = new Date();
   const isNavratri = now >= new Date("2026-10-12T00:00:00+05:30") && now <= new Date("2026-10-20T23:59:59+05:30");
   const topFeatured =
+    posts.find(p => p.slug === "diwali-skincare-prep-glow-protocol") ||
     posts.find(p => p.slug === "dussehra-skincare-detox-glow-protocol") ||
     (isNavratri && posts.find(p => p.slug === "navratri-skincare-garba-survival-guide")) ||
     posts.find(p => p.slug === "skin-purging-vs-breakout") ||
@@ -811,11 +812,13 @@ export default async function BlogIndex() {
  </section>
 
  <section className="featured-band">
-  <a href={"/blog/" + topFeatured.slug} className={`featured-card${topFeatured.slug === "dussehra-skincare-detox-glow-protocol" ? " dussehra-featured-card" : isNavratri ? " navratri-featured" : ""}`}>
+  <a href={"/blog/" + topFeatured.slug} className={`featured-card${topFeatured.slug === "diwali-skincare-prep-glow-protocol" || topFeatured.slug === "dussehra-skincare-detox-glow-protocol" ? " dussehra-featured-card" : isNavratri ? " navratri-featured" : ""}`}>
   <div className="featured-image-col">
   <img src={topFeatured.imageSrc} alt={topFeatured.title} loading="eager" />
-  {topFeatured.slug === "dussehra-skincare-detox-glow-protocol" ? (
-    <span className="featured-badge" style={{ background: "linear-gradient(135deg, #1b1713, #2a221b)", color: "#fcd34d", border: "1px solid rgba(245, 182, 66, 0.55)", letterSpacing: "0.14em", textTransform: "uppercase" }}>🏹 Dussehra Special</span>
+  {topFeatured.slug === "diwali-skincare-prep-glow-protocol" ? (
+    <span className="featured-badge" style={{ background: "linear-gradient(135deg, #1b1713, #2a221b)", color: "#fcd34d", border: "1px solid rgba(245, 182, 66, 0.55)", letterSpacing: "0.14em", textTransform: "uppercase" }}>🪔 Pre-Diwali Detox & Glow</span>
+  ) : topFeatured.slug === "dussehra-skincare-detox-glow-protocol" ? (
+    <span className="featured-badge" style={{ background: "linear-gradient(135deg, #1b1713, #2a221b)", color: "#fcd34d", border: "1px solid rgba(245, 182, 66, 0.55)", letterSpacing: "0.14em", textTransform: "uppercase" }}>Festive Reset & Glow</span>
   ) : isNavratri ? (
     <span className="featured-badge" style={{ background: "linear-gradient(135deg, #1b1713, #2a221b)", color: "#e5bd7a", border: "1px solid rgba(229, 189, 122, 0.45)", letterSpacing: "0.14em", textTransform: "uppercase" }}>The 9-Night Edit</span>
   ) : (

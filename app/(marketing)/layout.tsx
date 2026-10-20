@@ -54,13 +54,13 @@ export async function generateMetadata() {
     },
     title: "Mirha & Co. — Beauty, Wellness & The Good Life",
     description:
-      "Honest reviews, curated finds, and the products worth your money. Beauty and wellness for women who know what they want.",
+      "Honest reviews, curated finds, and the products worth your money. Evidence-based skincare, wellness, and beauty routines that actually work.",
     verification: {
       google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || "google-verification-code-here",
     },
     openGraph: {
       title: "Mirha & Co. — Beauty, Wellness & The Good Life",
-      description: "Honest reviews, curated finds, and the products worth your money. Beauty and wellness for women who know what they want.",
+      description: "Honest reviews, curated finds, and the products worth your money. Evidence-based skincare, wellness, and beauty routines that actually work.",
       url: "https://mirhaandco.com",
       siteName: "Mirha & Co.",
       images: [

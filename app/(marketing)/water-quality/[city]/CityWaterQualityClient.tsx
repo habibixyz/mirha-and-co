@@ -78,6 +78,23 @@ export default function CityWaterQualityClient({
         "@type": "Dataset",
         "name": `${data.name} Tap Water Quality & Mineral Hardness Telemetry`,
         "description": `Water hardness telemetry dataset for ${data.name}, ${data.country} including PPM, pH level, Calcium, and Magnesium concentrations.`,
+        "url": `https://www.mirhaandco.com/water-quality/${citySlug}`,
+        "license": "https://creativecommons.org/licenses/by/4.0/",
+        "isAccessibleForFree": true,
+        "creator": {
+          "@type": "Organization",
+          "name": "Mirha & Co.",
+          "url": "https://www.mirhaandco.com",
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "Mirha & Co.",
+          "url": "https://www.mirhaandco.com",
+        },
+        "spatialCoverage": {
+          "@type": "Place",
+          "name": `${data.name}, ${data.country}`,
+        },
         "variableMeasured": [
           { "@type": "PropertyValue", "name": "Water Hardness", "value": `${data.ppm} PPM`, "unitText": "mg/L" },
           { "@type": "PropertyValue", "name": "pH Level", "value": `${data.ph}` },

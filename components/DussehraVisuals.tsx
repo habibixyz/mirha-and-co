@@ -347,21 +347,21 @@ export function DussehraBanner() {
       <div className="dussehra-banner-inner">
         <span className="dussehra-pill">
           <Flame size={12} className="dussehra-flame-icon" />
-          Vijayadashami 2026
+          Festive Skin Reset
         </span>
 
         <span className="dussehra-text-desktop">
-          🏹 <strong>Happy Dussehra!</strong> Triumph of radiant skin over festive burnout & pollution.
+          <strong>Post-Festive Skin Detox:</strong> Reverse smoke &amp; pollution burnout; unisex skin prep for Diwali radiance.
         </span>
 
-        <Link href="/blog/dussehra-skincare-detox-glow-protocol" className="dussehra-cta">
-          Read Festive Guide &rarr;
+        <Link href="/blog/diwali-skincare-prep-glow-protocol" className="dussehra-cta">
+          Read Detox Guide &rarr;
         </Link>
 
         <button
           onClick={() => setVisible(false)}
           className="dussehra-dismiss"
-          aria-label="Close Dussehra Announcement"
+          aria-label="Close Announcement"
           title="Dismiss"
         >
           <X size={14} />
@@ -370,14 +370,14 @@ export function DussehraBanner() {
 
       {/* Mobile view: streamlined single-line bar without squished buttons */}
       <div className="dussehra-banner-mobile">
-        <Link href="/blog/dussehra-skincare-detox-glow-protocol" className="dussehra-banner-mobile-link">
-          <span className="dussehra-banner-mobile-tag">Dussehra</span>
-          <span className="dussehra-banner-mobile-title">🏹 Festive Glow Protocol &rarr;</span>
+        <Link href="/blog/diwali-skincare-prep-glow-protocol" className="dussehra-banner-mobile-link">
+          <span className="dussehra-banner-mobile-tag">Festive Reset</span>
+          <span className="dussehra-banner-mobile-title">Post-Festive Detox &amp; Pre-Diwali Glow &rarr;</span>
         </Link>
         <button
           onClick={() => setVisible(false)}
           className="dussehra-dismiss"
-          aria-label="Close Dussehra Announcement"
+          aria-label="Close Announcement"
           title="Dismiss"
         >
           <X size={13} />
@@ -396,7 +396,7 @@ export function DussehraHeroBadge() {
           margin-bottom: 14px;
         }
 
-        /* Hide duplicate hero badge on mobile to keep screen clean and avoid double-stacking */
+        /* Hide on mobile — the top announcement bar already covers it */
         @media (max-width: 768px) {
           .dussehra-hero-badge-container {
             display: none !important;
@@ -429,14 +429,9 @@ export function DussehraHeroBadge() {
           box-shadow: 0 6px 20px rgba(245, 158, 11, 0.3);
           background: linear-gradient(135deg, #fef3c7, #fde68a);
         }
-
-        .dussehra-hero-badge-arrow {
-          font-size: 0.85rem;
-        }
       `}</style>
-      <Link href="/tools/analysis" className="dussehra-hero-badge" title="Dussehra Radiance Special">
-        <span className="dussehra-hero-badge-arrow">🏹</span>
-        <span>Vijayadashami Radiance · Victory Over Dull Skin</span>
+      <Link href="/tools/routine" className="dussehra-hero-badge" title="Build your personalised AM & PM skincare routine">
+        <span>✦ New · Build Your Festive Skin Routine →</span>
       </Link>
     </div>
   );
@@ -450,11 +445,11 @@ export default function DussehraVisuals() {
     setMounted(true);
   }, []);
 
-  // Auto-activate during Dussehra 2026 week
+  // Auto-activate during post-Dussehra detox and pre-Diwali radiance season
   const now = new Date();
   const isDussehraSeason =
     now >= new Date("2026-10-18T00:00:00+05:30") &&
-    now <= new Date("2026-10-25T23:59:59+05:30");
+    now <= new Date("2026-11-09T23:59:59+05:30");
 
   if (!isDussehraSeason) return null;
 
