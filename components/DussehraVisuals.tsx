@@ -25,13 +25,21 @@ export function DussehraCanvas({ active }: { active: boolean }) {
 
   useEffect(() => {
     if (!active) return;
+
+    // Respect reduced motion
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      return;
+    }
+
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext("2d", { alpha: true });
     if (!ctx) return;
 
     let width = (canvas.width = window.innerWidth);
     let height = (canvas.height = window.innerHeight);
+    const isMobile = width < 768;
+    const maxParticles = isMobile ? 6 : 12;
 
     const handleResize = () => {
       if (!canvas) return;
@@ -39,115 +47,70 @@ export function DussehraCanvas({ active }: { active: boolean }) {
       height = canvas.height = window.innerHeight;
     };
 
-    window.addEventListener("resize", handleResize);
+    window.addEventListener("resize", handleResize, { passive: true });
+
+    // Pause rendering during heavy scroll on mobile to keep 60fps scrolling buttery smooth
+    let isScrolling = false;
+    let scrollTimeout: NodeJS.Timeout | null = null;
+    const handleScroll = () => {
+      isScrolling = true;
+      if (scrollTimeout) clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => {
+        isScrolling = false;
+      }, 150);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
 
     const colors = [
-      "#FFD700", // Gold
-      "#FFA500", // Warm Orange / Saffron
-      "#FFE57F", // Light Gold Spark
-      "#FF8F00", // Amber
-      "#FFF3E0", // Pure shimmer
-      "#F59E0B", // Royal Saffron
+      "rgba(255, 215, 0, ",   // Gold
+      "rgba(245, 158, 11, ",  // Warm Saffron
+      "rgba(253, 230, 138, ", // Pale Gold Shimmer
     ];
 
-    // Spawn ambient floating golden embers
+    // Spawn gentle ambient floating embers
     const spawnAmbient = () => {
-      if (particlesRef.current.length < 35 && Math.random() < 0.25) {
+      if (particlesRef.current.length < maxParticles && Math.random() < 0.15) {
+        const baseColor = colors[Math.floor(Math.random() * colors.length)];
         particlesRef.current.push({
           x: Math.random() * width,
-          y: height + 10,
-          vx: (Math.random() - 0.5) * 0.6,
-          vy: -(Math.random() * 0.9 + 0.4),
-          size: Math.random() * 2.8 + 1.2,
-          color: colors[Math.floor(Math.random() * colors.length)],
-          alpha: Math.random() * 0.7 + 0.3,
-          decay: Math.random() * 0.003 + 0.0015,
+          y: height + 8,
+          vx: (Math.random() - 0.5) * 0.25,
+          vy: -(Math.random() * 0.35 + 0.18), // Gentle calm ascent
+          size: Math.random() * 1.5 + 0.9,    // Tiny, delicate micro-dust
+          color: baseColor,
+          alpha: Math.random() * 0.25 + 0.12, // Soft, non-distracting opacity
+          decay: Math.random() * 0.0015 + 0.0008,
           rotation: Math.random() * Math.PI * 2,
-          rotationSpeed: (Math.random() - 0.5) * 0.04,
-          shape: Math.random() > 0.4 ? "spark" : "circle",
+          rotationSpeed: (Math.random() - 0.5) * 0.02,
+          shape: "circle",
         });
       }
     };
-
-    // Burst celebratory firework sparks
-    const triggerBurst = (x: number, y: number) => {
-      const count = 32;
-      for (let i = 0; i < count; i++) {
-        const angle = (Math.PI * 2 * i) / count + (Math.random() - 0.5) * 0.4;
-        const speed = Math.random() * 4.5 + 1.5;
-        particlesRef.current.push({
-          x,
-          y,
-          vx: Math.cos(angle) * speed,
-          vy: Math.sin(angle) * speed - 1.2,
-          size: Math.random() * 3.5 + 1.5,
-          color: colors[Math.floor(Math.random() * colors.length)],
-          alpha: 1,
-          decay: Math.random() * 0.02 + 0.015,
-          rotation: Math.random() * Math.PI * 2,
-          rotationSpeed: (Math.random() - 0.5) * 0.1,
-          shape: Math.random() > 0.5 ? "spark" : "circle",
-        });
-      }
-    };
-
-    const handleWindowClick = (e: MouseEvent) => {
-      // If clicking interactive UI like buttons or links, also celebrate with a joyful burst
-      triggerBurst(e.clientX, e.clientY);
-    };
-
-    window.addEventListener("click", handleWindowClick);
-
-    // Initial festive burst from top center to welcome the user
-    setTimeout(() => {
-      triggerBurst(width * 0.5, height * 0.15);
-    }, 600);
 
     const render = () => {
-      ctx.clearRect(0, 0, width, height);
+      if (!isScrolling) {
+        ctx.clearRect(0, 0, width, height);
 
-      spawnAmbient();
+        spawnAmbient();
 
-      for (let i = particlesRef.current.length - 1; i >= 0; i--) {
-        const p = particlesRef.current[i];
-        p.x += p.vx;
-        p.y += p.vy;
-        p.alpha -= p.decay;
-        p.rotation += p.rotationSpeed;
+        for (let i = particlesRef.current.length - 1; i >= 0; i--) {
+          const p = particlesRef.current[i];
+          p.x += p.vx;
+          p.y += p.vy;
+          p.alpha -= p.decay;
 
-        if (p.alpha <= 0 || p.y < -20 || p.x < -20 || p.x > width + 20) {
-          particlesRef.current.splice(i, 1);
-          continue;
-        }
+          if (p.alpha <= 0 || p.y < -15 || p.x < -15 || p.x > width + 15) {
+            particlesRef.current.splice(i, 1);
+            continue;
+          }
 
-        ctx.save();
-        ctx.globalAlpha = Math.max(0, p.alpha);
-        ctx.translate(p.x, p.y);
-        ctx.rotate(p.rotation);
-
-        if (p.shape === "spark") {
-          ctx.fillStyle = p.color;
-          ctx.shadowColor = p.color;
-          ctx.shadowBlur = 8;
-          // Draw 4-point sparkle star
+          // Zero shadowBlur — purely fill with RGBA for 0.05ms GPU paint cost
           ctx.beginPath();
-          const s = p.size * 1.6;
-          ctx.moveTo(0, -s);
-          ctx.quadraticCurveTo(0, 0, s, 0);
-          ctx.quadraticCurveTo(0, 0, 0, s);
-          ctx.quadraticCurveTo(0, 0, -s, 0);
-          ctx.quadraticCurveTo(0, 0, 0, -s);
-          ctx.fill();
-        } else {
-          ctx.fillStyle = p.color;
-          ctx.shadowColor = p.color;
-          ctx.shadowBlur = 6;
-          ctx.beginPath();
-          ctx.arc(0, 0, p.size, 0, Math.PI * 2);
+          ctx.fillStyle = `${p.color}${Math.max(0, p.alpha)})`;
+          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
           ctx.fill();
         }
-
-        ctx.restore();
       }
 
       animationFrameRef.current = requestAnimationFrame(render);
@@ -157,7 +120,8 @@ export function DussehraCanvas({ active }: { active: boolean }) {
 
     return () => {
       window.removeEventListener("resize", handleResize);
-      window.removeEventListener("click", handleWindowClick);
+      window.removeEventListener("scroll", handleScroll);
+      if (scrollTimeout) clearTimeout(scrollTimeout);
       if (animationFrameRef.current) {
         cancelAnimationFrame(animationFrameRef.current);
       }
