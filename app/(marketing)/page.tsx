@@ -8,8 +8,8 @@ import { Locale, DICTIONARY, RTL_LOCALES } from "@/lib/globalization";
 import { prisma } from "@/lib/prisma";
 import FaceScannerUI from "@/components/FaceScannerUI";
 import heroIndianFace from "@/components/hero_indian_face.png";
-// Client wrapper that lazy-loads ShopFilterClient with ssr:false (must live in a client component in Next.js 16)
 import ShopFilterClientLazy from "@/components/ShopFilterClientLazy";
+import { DussehraHeroBadge } from "@/components/DussehraVisuals";
 
 // Cache all homepage stats for 5 minutes — these are vanity metrics,
 // not real-time data, so staleness is perfectly acceptable.
@@ -1179,6 +1179,7 @@ export default async function BeautyShopPage() {
           }}
         >
           <div style={{ order: isRtl ? 2 : 1 }}>
+            <DussehraHeroBadge />
             <h1>
               {t("hero.title1")} {t("hero.title2")}
             </h1>
