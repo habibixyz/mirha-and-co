@@ -122,22 +122,47 @@ function parseReportSafely(json: any, fallbackScores?: { barrier?: number; acne?
   };
 }
 
+function formatDateSafe(isoStr: string) {
+  try {
+    const d = new Date(isoStr);
+    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    return `${months[d.getUTCMonth()]} ${d.getUTCDate()}, ${d.getUTCFullYear()}`;
+  } catch {
+    return "";
+  }
+}
+
+function formatChartDateSafe(isoStr: string) {
+  try {
+    const d = new Date(isoStr);
+    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    return `${months[d.getUTCMonth()]} ${d.getUTCDate()}`;
+  } catch {
+    return "";
+  }
+}
+
 export function AnalysisClient({
- user,
- pastAnalyses,
- nextAvailableAt,
+  user,
+  pastAnalyses,
+  nextAvailableAt,
 }: {
- user: UserProfile;
- pastAnalyses: PastAnalysis[];
- nextAvailableAt: string | null;
+  user: UserProfile;
+  pastAnalyses: PastAnalysis[];
+  nextAvailableAt: string | null;
 }) {
- const [selectedFile, setSelectedFile] = useState<string | null>(null);
- const [scanning, setScanning] = useState(false);
- const [scanStep, setScanStep] = useState("");
- const [report, setReport] = useState<AnalysisReport | null>(null);
- const [isPending, setIsPending] = useState(false);
- const [errorMsg, setErrorMsg] = useState("");
- const reportSectionRef = useRef<HTMLDivElement | null>(null);
+  const [isMounted, setIsMounted] = useState(false);
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  const [selectedFile, setSelectedFile] = useState<string | null>(null);
+  const [scanning, setScanning] = useState(false);
+  const [scanStep, setScanStep] = useState("");
+  const [report, setReport] = useState<AnalysisReport | null>(null);
+  const [isPending, setIsPending] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
+  const reportSectionRef = useRef<HTMLDivElement | null>(null);
 
  const loadPastReport = (item: PastAnalysis) => {
    const safeReport = parseReportSafely(item.detailedJson, {
@@ -500,7 +525,7 @@ export function AnalysisClient({
             {/* Date Ticks */}
             {sorted.map((item, idx) => {
               const x = paddingLeft + (idx * chartWidth) / (sorted.length - 1);
-              const dateStr = new Date(item.createdAt).toLocaleDateString("en-US", { month: "short", day: "numeric" });
+              const dateStr = formatChartDateSafe(item.createdAt);
               return (
                 <g key={item.id}>
                   <line x1={x} y1={paddingTop} x2={x} y2={paddingTop + chartHeight} stroke="var(--rule)" strokeWidth="0.5" />
@@ -549,7 +574,7 @@ export function AnalysisClient({
                       loadPastReport(item);
                     }}
                   >
-                    <title>{`${m.label}: ${score} (${new Date(item.createdAt).toLocaleDateString("en-US")})`}</title>
+                    <title>{`${m.label}: ${score} (${formatDateSafe(item.createdAt)})`}</title>
                   </circle>
                 );
               });
@@ -680,7 +705,7 @@ export function AnalysisClient({
  }}>
  <strong>Daily Limit Reached</strong>
  <span>Your next free daily scan becomes available after:</span>
- <span className="font-mono font-semibold" suppressHydrationWarning>{new Date(nextAvailableAt).toLocaleString()}</span>
+ <span className="font-mono font-semibold" suppressHydrationWarning>{nextAvailableAt ? formatDateSafe(nextAvailableAt) : "24 hours"}</span>
  </div>
  )}
 
@@ -1281,7 +1306,7 @@ export function AnalysisClient({
  </div>
  <span style={{ fontSize: "0.8rem", color: "var(--muted)", display: "flex", alignItems: "center", gap: "0.3rem" }} suppressHydrationWarning>
  <Calendar size={12} />
- {new Date(item.createdAt).toLocaleDateString("en-US")}
+ {formatDateSafe(item.createdAt)}
  </span>
  </div>
  
