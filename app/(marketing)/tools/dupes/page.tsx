@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { ArrowRight, Share2, Check, ArrowLeft, TrendingDown, Star, Search, X } from "lucide-react";
+import { ArrowRight, Share2, Check, ArrowLeft, TrendingDown, Star, Search, X, CheckCircle2 } from "lucide-react";
 import { PRODUCTS } from "@/lib/products";
 import { submitLeadAction } from "@/app/(saas)/actions";
 import { useGlobalization } from "@/components/GlobalizationContext";
@@ -616,15 +617,31 @@ const DUPES_DATABASE = [
   }
 ];
 
-export default function DupeFinderPage() {
+const AFFORDABLE_BENCHMARKS = [
+  "cosrx", "the ordinary", "minimalist", "formularx", "re'equil", "reequil",
+  "plum", "dot & key", "neutrogena", "cerave", "cetaphil", "simple",
+  "deconstruct", "foxtale", "derma co", "aqualogica", "sebamed", "skin1004"
+];
+
+function DupeFinderContent() {
+  const searchParams = useSearchParams();
+  const initialQuery = searchParams?.get("query") || searchParams?.get("search") || "";
+
   const { formatPrice, getAffiliateUrl, currency } = useGlobalization();
   const amazonLabel = currency === "INR" ? "Amazon.in" : currency === "GBP" ? "Amazon.co.uk" : currency === "EUR" ? "Amazon.de" : currency === "AED" ? "Amazon.ae" : currency === "SAR" ? "Amazon.sa" : "Amazon.com";
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const [purchasesPerYear, setPurchasesPerYear] = useState<Record<string, number>>({});
   
   // Search and Category states
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState(initialQuery);
   const [selectedCategory, setSelectedCategory] = useState("All");
+  const [requestedDupe, setRequestedDupe] = useState(false);
+
+  useEffect(() => {
+    if (initialQuery) {
+      setSearchQuery(initialQuery);
+    }
+  }, [initialQuery]);
 
   // Lead capture
   const [email, setEmail] = useState("");
@@ -1657,21 +1674,110 @@ export default function DupeFinderPage() {
                 })}
               </div>
             ) : (
-              <div style={{ textAlign: "center", padding: "48px 24px", color: "#8c8179", background: "#fff", border: "1.5px dashed #ede5dc", borderRadius: "18px" }}>
-                <TrendingDown size={36} style={{ margin: "0 auto 12px", opacity: 0.5 }} />
-                <h4 style={{ fontSize: "1.1rem", fontWeight: 600, color: "#161412", marginBottom: "4px" }}>No Matches Found</h4>
-                <p style={{ fontSize: "0.9rem", margin: "0 0 16px", lineHeight: 1.5 }}>We couldn't find any luxury products matching "{searchQuery}" under "{selectedCategory}".</p>
-                <button
-                  type="button"
-                  className="next-btn"
-                  style={{ padding: "8px 16px", fontSize: "0.85rem", background: "#fc2779", color: "#fff", margin: "0 auto" }}
-                  onClick={() => {
-                    setSearchQuery("");
-                    setSelectedCategory("All");
-                  }}
-                >
-                  Clear Filters &amp; Search
-                </button>
+              <div>
+                {searchQuery && AFFORDABLE_BENCHMARKS.some(b => searchQuery.toLowerCase().includes(b)) ? (
+                  <div style={{ textAlign: "center", padding: "40px 24px", color: "var(--ink)", background: "rgba(16, 185, 129, 0.05)", border: "1.5px solid rgba(16, 185, 129, 0.25)", borderRadius: "20px" }}>
+                    <CheckCircle2 size={38} style={{ margin: "0 auto 12px", color: "#10b981" }} />
+                    <h4 style={{ fontSize: "1.2rem", fontWeight: 700, color: "var(--ink)", marginBottom: "6px" }}>
+                      "{searchQuery.toUpperCase()}" is already an accessible value formula!
+                    </h4>
+                    <p style={{ fontSize: "0.92rem", color: "var(--muted)", maxWidth: "520px", margin: "0 auto 20px", lineHeight: 1.6 }}>
+                      You don't need a cheaper dupe for this product. Formulations from {searchQuery} are already priced close to ingredient cost without luxury marketing markups. You are already getting optimal pricing for these active ingredients!
+                    </p>
+                    <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
+                      <Link
+                        href="/tools/routine"
+                        style={{
+                          display: "inline-flex",
+                          alignItems: "center",
+                          gap: "6px",
+                          background: "var(--rose)",
+                          color: "#fff",
+                          padding: "10px 18px",
+                          borderRadius: "10px",
+                          fontWeight: 600,
+                          fontSize: "0.85rem",
+                          textDecoration: "none"
+                        }}
+                      >
+                        Build Matching 4-Step Regimen <ArrowRight size={14} />
+                      </Link>
+                      <button
+                        type="button"
+                        style={{
+                          padding: "10px 18px",
+                          fontSize: "0.85rem",
+                          background: "transparent",
+                          border: "1px solid var(--rule)",
+                          color: "var(--ink)",
+                          borderRadius: "10px",
+                          cursor: "pointer",
+                          fontWeight: 600
+                        }}
+                        onClick={() => {
+                          setSearchQuery("");
+                          setSelectedCategory("All");
+                        }}
+                      >
+                        Browse All Luxury Dupes
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <div style={{ textAlign: "center", padding: "44px 24px", color: "var(--ink)", background: "var(--surface)", border: "1.5px dashed var(--rule)", borderRadius: "20px" }}>
+                    <TrendingDown size={36} style={{ margin: "0 auto 12px", opacity: 0.5, color: "var(--muted)" }} />
+                    <h4 style={{ fontSize: "1.15rem", fontWeight: 700, color: "var(--ink)", marginBottom: "6px" }}>
+                      {searchQuery ? `No Direct Dupe in Vault for "${searchQuery}" Yet` : "No Matches Found"}
+                    </h4>
+                    <p style={{ fontSize: "0.9rem", color: "var(--muted)", maxWidth: "480px", margin: "0 auto 20px", lineHeight: 1.6 }}>
+                      {searchQuery 
+                        ? "Our cosmetic chemists haven't published a direct 1:1 formulation match for this specific product yet. You can request our team to analyze and add it, or build a personalized regimen tailored to your exact skin type."
+                        : `We couldn't find any luxury products under "${selectedCategory}".`}
+                    </p>
+                    <div style={{ display: "flex", gap: "10px", justifyContent: "center", flexWrap: "wrap" }}>
+                      {searchQuery && (
+                        <button
+                          type="button"
+                          style={{
+                            display: "inline-flex",
+                            alignItems: "center",
+                            gap: "6px",
+                            background: requestedDupe ? "#10b981" : "var(--rose)",
+                            color: "#fff",
+                            border: "none",
+                            padding: "10px 18px",
+                            borderRadius: "10px",
+                            fontWeight: 600,
+                            fontSize: "0.85rem",
+                            cursor: "pointer"
+                          }}
+                          onClick={() => setRequestedDupe(true)}
+                          disabled={requestedDupe}
+                        >
+                          {requestedDupe ? <><Check size={14} /> Dupe Request Logged!</> : <>Request Match for "{searchQuery}"</>}
+                        </button>
+                      )}
+                      <button
+                        type="button"
+                        style={{
+                          padding: "10px 16px",
+                          fontSize: "0.85rem",
+                          background: "transparent",
+                          border: "1px solid var(--rule)",
+                          color: "var(--muted)",
+                          borderRadius: "10px",
+                          cursor: "pointer"
+                        }}
+                        onClick={() => {
+                          setSearchQuery("");
+                          setSelectedCategory("All");
+                        }}
+                      >
+                        Clear Filters &amp; Search
+                      </button>
+                    </div>
+                  </div>
+                )}
               </div>
             )}
           </div>
@@ -1832,5 +1938,17 @@ export default function DupeFinderPage() {
 
       </div>
     </main>
+  );
+}
+
+export default function DupeFinderPage() {
+  return (
+    <Suspense fallback={
+      <div style={{ minHeight: "80vh", display: "flex", alignItems: "center", justifyContent: "center", color: "var(--muted)" }}>
+        Loading Dupe Vault...
+      </div>
+    }>
+      <DupeFinderContent />
+    </Suspense>
   );
 }

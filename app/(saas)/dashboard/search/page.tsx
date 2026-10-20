@@ -12,7 +12,7 @@ export default async function SearchGuidePage() {
  redirect("/login");
  }
 
- const isPro = user.subscription?.tier === "pro";
+  const isPro = (user.subscription?.tier === "pro" && user.subscription?.status === "active") || user.isAdmin || user.email === "tanizcoldz@gmail.com";
 
  let blacklist: string[] = [];
  if (user.skinProfile) {

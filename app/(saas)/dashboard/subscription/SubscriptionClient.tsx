@@ -10,13 +10,15 @@ interface SubscriptionClientProps {
   subscriptionId?: string | null;
   provider?: "dodo" | "razorpay" | null;
   userId?: string;
+  isAdmin?: boolean;
 }
 
 export function SubscriptionClient({ 
   isPro, 
   subscriptionId, 
   provider, 
-  userId 
+  userId,
+  isAdmin 
 }: SubscriptionClientProps) {
   const [activePendingType, setActivePendingType] = useState<"monthly" | "yearly" | null>(null);
   const [billingPeriod, setBillingPeriod] = useState<"monthly" | "yearly">("yearly");
@@ -67,46 +69,71 @@ export function SubscriptionClient({
  });
  };
 
- const handleUpgrade = async (planType: "monthly" | "yearly") => {
- setActivePendingType(planType);
- try {
- const isLoaded = await loadRazorpayScript();
- if (!isLoaded) throw new Error("Failed to load Razorpay SDK");
+ const handleUpgrade = async (planType: "onetime" | "monthly" | "yearly") => {
+  setActivePendingType(planType);
+  try {
+   const isLoaded = await loadRazorpayScript();
+   if (!isLoaded) throw new Error("Failed to load Razorpay SDK");
 
- const res = await fetch("/api/razorpay/checkout", {
- method: "POST",
- headers: { "Content-Type": "application/json" },
- body: JSON.stringify({ planType })
- });
- const data = await res.json();
+   const res = await fetch("/api/razorpay/checkout", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ planType })
+   });
+   const data = await res.json();
 
- if (data.error) throw new Error(data.error);
+   if (data.error) throw new Error(data.error);
 
- const options = {
- key: data.keyId,
- subscription_id: data.subscriptionId,
- name: "Mirha & Co.",
- description: planType === "yearly" ? "Pro Yearly Subscription" : "Pro Monthly Subscription",
- handler: function (response: any) {
- alert("Payment successful! Welcome to Pro.");
- window.location.reload();
- },
- theme: {
- color: "#fc2779",
- },
- };
+   const options: any = {
+    key: data.keyId,
+    name: "Mirha & Co.",
+    description: data.isOrder ? "Skin Protocol Pass (Lifetime Access)" : (planType === "yearly" ? "VIP Yearly Access" : "Pro Access"),
+    theme: {
+     color: "#fc2779",
+    },
+    handler: async function (response: any) {
+     try {
+      const verifyRes = await fetch("/api/razorpay/verify", {
+       method: "POST",
+       headers: { "Content-Type": "application/json" },
+       body: JSON.stringify({
+        orderId: response.razorpay_order_id,
+        subscriptionId: response.razorpay_subscription_id,
+        paymentId: response.razorpay_payment_id,
+        signature: response.razorpay_signature
+       })
+      });
+      const verifyData = await verifyRes.json();
+      if (verifyData.success) {
+       alert("Payment successful! Your Mirha Skin Protocol Pass is now active.");
+      }
+     } catch (e) {
+      console.error("Verification callback error:", e);
+     } finally {
+      window.location.reload();
+     }
+    },
+   };
 
- const rzp = new (window as any).Razorpay(options);
- rzp.on("payment.failed", function (response: any) {
- alert("Payment failed. Please try again.");
- });
- rzp.open();
- } catch (error: any) {
- console.error("Razorpay Error:", error);
- alert(`Checkout Error: ${error.message || "Failed to initialize"}`);
- } finally {
- setActivePendingType(null);
- }
+   if (data.isOrder) {
+    options.order_id = data.orderId;
+    options.amount = data.amount;
+    options.currency = data.currency;
+   } else {
+    options.subscription_id = data.subscriptionId;
+   }
+
+   const rzp = new (window as any).Razorpay(options);
+   rzp.on("payment.failed", function (response: any) {
+    alert("Payment was cancelled or failed. Please try again.");
+   });
+   rzp.open();
+  } catch (error: any) {
+   console.error("Razorpay Error:", error);
+   alert(`Checkout Error: ${error.message || "Failed to initialize"}`);
+  } finally {
+   setActivePendingType(null);
+  }
  };
 
  const containerVariants = {
@@ -591,14 +618,14 @@ export function SubscriptionClient({
  className={`toggle-btn ${billingPeriod === "monthly" ? "active" : ""}`}
  onClick={() => setBillingPeriod("monthly")}
  >
- Monthly
+ Protocol Pass (₹199)
  </button>
  <button 
  className={`toggle-btn ${billingPeriod === "yearly" ? "active" : ""}`}
  onClick={() => setBillingPeriod("yearly")}
  >
- Annual
- <span className="discount-pill">Save 37%</span>
+ VIP Annual (₹1,499)
+ <span className="discount-pill">Best Value</span>
  </button>
  <div 
  className="toggle-bg" 
@@ -613,7 +640,7 @@ export function SubscriptionClient({
   <div className="pricing-grid-container">
  {/* FREE PLAN CARD */}
  <motion.div variants={itemVariants} className="plan-card">
- <span className="card-header-label">Basic Access</span>
+ <span className="card-header-label">Standard Access</span>
  <h3 className="plan-name">Free Tier</h3>
  
  <div className="price-block">
@@ -624,15 +651,15 @@ export function SubscriptionClient({
  <div className="feature-list">
  <div className="feature-item">
  <span className="icon-wrap"><Check size={12} /></span>
- <span>Track up to 2 active skincare routines</span>
+ <span>Digital Skincare Vanity (AM & PM Regimens)</span>
  </div>
  <div className="feature-item">
  <span className="icon-wrap"><Check size={12} /></span>
- <span>Basic digital skin journal & history</span>
+ <span>Free Routine Quiz & Tap Water Hardness Check</span>
  </div>
  <div className="feature-item">
  <span className="icon-wrap"><Check size={12} /></span>
- <span>Read-only access to skincare product database</span>
+ <span>100+ Science-Backed Formula Dupe Finder</span>
  </div>
  </div>
 
@@ -656,9 +683,9 @@ export function SubscriptionClient({
 
  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", position: "relative", zIndex: 2 }}>
  <div>
- <span className="card-header-label" style={{ color: "var(--dash-accent)" }}>Recommended</span>
+ <span className="card-header-label" style={{ color: "var(--dash-accent)" }}>High Intent · Instant Activation</span>
  <h3 className="plan-name">
- Mirha Pro
+ {paymentRegion === "USD" ? "Mirha Pro" : (billingPeriod === "monthly" ? "Protocol Pass" : "Mirha VIP Pass")}
  <Star size={16} fill="var(--dash-accent)" color="var(--dash-accent)" />
  </h3>
  </div>
@@ -669,36 +696,36 @@ export function SubscriptionClient({
   {paymentRegion === "USD" ? "$10.99" : (billingPeriod === "monthly" ? "₹199" : "₹1,499")}
   </span>
   <span className="price-period">
-  {paymentRegion === "USD" ? "/ month" : (billingPeriod === "monthly" ? "/ month" : "/ year (save 37%)")}
+  {paymentRegion === "USD" ? "/ month" : (billingPeriod === "monthly" ? "one-time (Instant UPI)" : "/ year (Annual VIP)")}
   </span>
   </div>
 
  <div className="feature-list" style={{ position: "relative", zIndex: 2 }}>
  <div className="feature-item">
  <span className="icon-wrap"><Check size={12} /></span>
- <span><strong>Unlimited</strong> routines, log entries & progress journals</span>
+ <span><strong>Routine Conflict Checker</strong> - auto-detect active compound clashes (Retinol, AHA, Vit C)</span>
  </div>
  <div className="feature-item">
  <span className="icon-wrap"><Check size={12} /></span>
- <span><strong>Routine Conflict Checker</strong> - auto-detect active compound clashes</span>
+ <span><strong>Bespoke Clinical Protocol</strong> - AM/PM formulas calibrated to your city climate & tap water</span>
  </div>
  <div className="feature-item">
  <span className="icon-wrap"><Check size={12} /></span>
- <span><strong>AI Skin Analyst</strong> - instant face scan with hydration & barrier scores</span>
+ <span><strong>AI Skincare Concierge</strong> - full access to personalized routine observations</span>
  </div>
  <div className="feature-item">
  <span className="icon-wrap"><Check size={12} /></span>
- <span><strong>Advanced Search</strong> - 20 daily ingredient & profile lookups</span>
+ <span><strong>Downloadable PDF Dossier</strong> - clinical skincare plan to share with your dermatologist</span>
  </div>
  {(billingPeriod === "yearly" || paymentRegion === "USD") && (
  <>
  <div className="feature-item">
  <span className="icon-wrap"><Check size={12} /></span>
- <span><strong>Shareable Routines</strong> - generate web-links for your doctor/friends</span>
+ <span><strong>Quarterly Seasonal Recalibration</strong> - automatic seasonal shifts (Monsoon, Winter, Summer)</span>
  </div>
  <div className="feature-item">
  <span className="icon-wrap"><Check size={12} /></span>
- <span><strong>Priority consult support</strong> - email access to our formulation desk</span>
+ <span><strong>Priority Formulation Support</strong> - direct consultation desk for tricky reactions</span>
  </div>
  </>
  )}
@@ -711,7 +738,7 @@ export function SubscriptionClient({
            Active Plan (via Razorpay)
          </button>
          <p style={{ fontSize: "0.72rem", color: "rgba(255,255,255,0.55)", textAlign: "center" }}>
-           To manage your subscription, please contact support.
+           Your Mirha Protocol Pass is active.
          </p>
        </div>
      ) : provider === "dodo" ? (
@@ -730,15 +757,33 @@ export function SubscriptionClient({
      ) : (
        <div style={{ position: "relative", zIndex: 2, display: "flex", flexDirection: "column", gap: "0.5rem" }}>
          <button className="action-btn btn-active" disabled>
-           Active Plan (Developer Bypass)
+           Active Plan (Owner &amp; Admin Access)
          </button>
-         <p style={{ fontSize: "0.72rem", color: "rgba(255,255,255,0.55)", textAlign: "center" }}>
-           Your account has active administrator/developer access.
+         <p style={{ fontSize: "0.75rem", color: "#10b981", textAlign: "center", fontWeight: 600 }}>
+           Full Free Lifetime Access to All Pro Tools &amp; Protocols
          </p>
+         {isAdmin && (
+           <button
+             onClick={() => paymentRegion === "USD" ? handleDodoCheckout() : handleUpgrade(billingPeriod === "monthly" ? "onetime" : "yearly")}
+             style={{
+               marginTop: "0.5rem",
+               background: "transparent",
+               border: "1px dashed rgba(255,255,255,0.35)",
+               color: "rgba(255,255,255,0.85)",
+               borderRadius: "10px",
+               padding: "0.45rem 0.8rem",
+               fontSize: "0.75rem",
+               cursor: "pointer",
+               fontWeight: 600
+             }}
+           >
+             Test Live Payment Gateway Modal
+           </button>
+         )}
        </div>
      )
   ) : ( <motion.button
-  onClick={() => paymentRegion === "USD" ? handleDodoCheckout() : handleUpgrade(billingPeriod)}
+  onClick={() => paymentRegion === "USD" ? handleDodoCheckout() : handleUpgrade(billingPeriod === "monthly" ? "onetime" : "yearly")}
   disabled={activePendingType !== null}
   whileHover={{ scale: 1.02 }}
   whileTap={{ scale: 0.98 }}
@@ -750,7 +795,7 @@ export function SubscriptionClient({
   ) : (
   <>
   <Zap size={14} fill="currentColor" />
-  {paymentRegion === "USD" ? "Upgrade for $10.99" : (billingPeriod === "monthly" ? "Upgrade for ₹199" : "Upgrade for ₹1,499")}
+  {paymentRegion === "USD" ? "Unlock for $10.99" : (billingPeriod === "monthly" ? "Unlock Protocol for ₹199 (UPI)" : "Join VIP Annual for ₹1,499")}
   </>
   )}
   </motion.button>

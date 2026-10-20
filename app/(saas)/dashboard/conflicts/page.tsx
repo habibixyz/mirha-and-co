@@ -11,7 +11,7 @@ export default async function ConflictsPage() {
  redirect("/login");
  }
 
- const isPro = user.subscription?.tier === "pro" && user.subscription?.status === "active";
+  const isPro = (user.subscription?.tier === "pro" && user.subscription?.status === "active") || user.isAdmin || user.email === "tanizcoldz@gmail.com";
 
  let blacklist: string[] = [];
  if (user.skinProfile) {

@@ -607,15 +607,24 @@ export function DashboardClient({ user, routines, recentJournal, stats }: any) {
         gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
         gap: "1.5rem"
       }}>
-        {/* Routines */}
-        {routinesToDisplay.map((routine: any, rIdx: number) => {
-          const steps = routine.steps || [];
-          const routineName = routine.name;
-          const routineId = routine.id;
+        {/* Active Regimen Vanity Card */}
+        {(() => {
+          const activeRoutine = routinesToDisplay[0] || {
+            id: "demo",
+            name: "Morning Regimen (AM)",
+            steps: [
+              "Cleanser: COSRX Low pH Good Morning Gel Cleanser",
+              "Serum: COSRX Advanced Snail 96 Mucin Power Essence",
+              "Moisturizer: Sebamed Clear Face Care Gel",
+              "Sunscreen: SKIN1004 Centella Hyalu-Cica Water-Fit SPF50+"
+            ]
+          };
+          const steps = activeRoutine.steps || [];
+          const routineId = activeRoutine.id;
           const checkedSteps = routineId ? (checkedStepsMap[routineId] || []) : [];
 
           return (
-            <motion.div key={routineId || `fallback-${rIdx}`} className="dash-bottom-card" variants={itemVariants} style={{
+            <motion.div key="active-vanity" className="dash-bottom-card" variants={itemVariants} style={{
               background: 'var(--dash-surface)',
               border: "1px solid var(--dash-border)",
               borderRadius: "28px",
@@ -623,10 +632,13 @@ export function DashboardClient({ user, routines, recentJournal, stats }: any) {
               boxShadow: '0 20px 50px rgba(40, 28, 20, 0.05)',
               position: "relative",
               overflow: "hidden"
-            }} id={rIdx === 0 ? "today-routine" : undefined}>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.5rem" }}>
-                <h3 style={{ fontSize: "1.2rem", margin: 0, color: "var(--dash-ink)", fontWeight: 600, fontFamily: "var(--dash-font-serif)" }}>{routineName}</h3>
-                <span style={{ fontSize: "0.8rem", color: "var(--dash-muted)", background: "var(--dash-bg)", padding: "4px 10px", borderRadius: "20px", fontWeight: 600 }}>{checkedSteps.length}/{steps.length} completed</span>
+            }} id="today-routine">
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.5rem", flexWrap: "wrap", gap: "0.5rem" }}>
+                <div>
+                  <span style={{ fontSize: "0.68rem", letterSpacing: "0.14em", textTransform: "uppercase", fontWeight: 700, color: "var(--dash-accent)" }}>Active Vanity</span>
+                  <h3 style={{ fontSize: "1.25rem", margin: "0.2rem 0 0", color: "var(--dash-ink)", fontWeight: 600, fontFamily: "var(--dash-font-serif)" }}>{activeRoutine.name}</h3>
+                </div>
+                <span style={{ fontSize: "0.8rem", color: "var(--dash-muted)", background: "var(--dash-bg)", padding: "4px 12px", borderRadius: "20px", fontWeight: 600 }}>{checkedSteps.length}/{steps.length} completed</span>
               </div>
 
               <div style={{ display: "flex", flexDirection: "column", gap: "0.8rem" }}>
@@ -671,21 +683,27 @@ export function DashboardClient({ user, routines, recentJournal, stats }: any) {
                 })}
               </div>
 
-              <Link href="/dashboard/routines" style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "0.4rem",
-                marginTop: "1.5rem",
-                fontSize: "0.85rem",
-                color: "var(--dash-accent)",
-                textDecoration: "none",
-                fontWeight: 600
-              }}>
-                Manage routines <ChevronRight size={14} />
-              </Link>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "1.5rem" }}>
+                <Link href="/dashboard/routines" style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "0.4rem",
+                  fontSize: "0.85rem",
+                  color: "var(--dash-accent)",
+                  textDecoration: "none",
+                  fontWeight: 600
+                }}>
+                  Open Full Vanity <ChevronRight size={14} />
+                </Link>
+                {Array.isArray(routines) && routines.length > 1 && (
+                  <span style={{ fontSize: "0.78rem", color: "var(--dash-muted)" }}>
+                    +{routines.length - 1} archived in Vanity
+                  </span>
+                )}
+              </div>
             </motion.div>
           );
-        })}
+        })()}
 
  {/* Card 2: Journal */}
  <motion.div className="dash-bottom-card" variants={itemVariants} style={{

@@ -11,7 +11,8 @@ export default async function SubscriptionPage() {
     redirect("/login");
   }
 
-  const isPro = (user.subscription?.tier === "pro" && user.subscription?.status === "active") || user.email === "tanizcoldz@gmail.com";
+  const isAdmin = Boolean(user.isAdmin || user.email === "tanizcoldz@gmail.com");
+  const isPro = Boolean(user.subscription?.tier === "pro" && user.subscription?.status === "active") || isAdmin;
   const subscriptionId = user.subscription?.stripeSubscriptionId || null;
   
   let provider: "dodo" | "razorpay" | null = null;
@@ -21,6 +22,8 @@ export default async function SubscriptionPage() {
     if (subscriptionId.startsWith("dodo_") || subscriptionId.startsWith("sub_0N")) {
       provider = "dodo";
       cleanSubscriptionId = subscriptionId.replace("dodo_", "");
+    } else if (isAdmin && subscriptionId === "admin_lifetime_override") {
+      provider = null;
     } else {
       provider = "razorpay";
     }
@@ -32,6 +35,7 @@ export default async function SubscriptionPage() {
       subscriptionId={cleanSubscriptionId}
       provider={provider}
       userId={user.id}
+      isAdmin={isAdmin}
     />
   );
 }

@@ -1,10 +1,12 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { RotateCcw, ExternalLink, Check, ArrowRight, Zap, Droplets, Target, Shield, Sun } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { RotateCcw, ExternalLink, Check, ArrowRight, Zap, Droplets, Target, Shield, Sun, BookmarkCheck } from 'lucide-react';
 import { RoutineRecommendation } from '@/lib/routineEngine';
 import { PRODUCTS, getProductAffiliateUrl } from '@/lib/products';
 import { useRoutineAnalytics } from '@/lib/hooks/useRoutineAnalytics';
+import { syncQuizRoutineToVanity } from '@/app/(saas)/actions';
 
 const STEPS_ORDER = [
   {
@@ -80,15 +82,9 @@ function ProductCard({
     <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
       {reason && (
         <div
+          className="rr-reason-box"
           style={{
-            background: '#faf8f5',
-            border: `1px solid ${accentColor || '#e3d8ce'}22`,
-            borderLeft: `3px solid ${accentColor || '#9b7e6b'}`,
-            borderRadius: '0 8px 8px 0',
-            padding: '10px 14px',
-            fontSize: '13px',
-            color: '#5c534c',
-            lineHeight: 1.65,
+            borderLeft: `3px solid ${accentColor || '#fc2779'}`,
           }}
         >
           {reason}
@@ -100,44 +96,9 @@ function ProductCard({
         rel="noopener noreferrer sponsored"
         onClick={onClick}
         className="rr-product-card"
-        style={{
-          display: 'flex',
-          gap: '14px',
-          alignItems: 'flex-start',
-          borderRadius: '12px',
-          padding: '16px',
-          textDecoration: 'none',
-          color: 'inherit',
-          transition: 'all 0.25s cubic-bezier(0.4, 0, 0.2, 1)',
-          cursor: 'pointer',
-        }}
-        onMouseEnter={(e) => {
-          const el = e.currentTarget as HTMLAnchorElement;
-          el.style.borderColor = accentColor ? accentColor + '44' : '#d6d0c9';
-          el.style.boxShadow = `0 6px 20px ${accentColor ? accentColor + '18' : 'rgba(0,0,0,0.05)'}`;
-          el.style.transform = 'translateY(-2px)';
-        }}
-        onMouseLeave={(e) => {
-          const el = e.currentTarget as HTMLAnchorElement;
-          el.style.borderColor = '#ede8e0';
-          el.style.boxShadow = 'none';
-          el.style.transform = 'translateY(0)';
-        }}
       >
         {/* Product Image */}
-        <div
-          className="rr-img-box"
-          style={{
-            width: '84px',
-            height: '84px',
-            flexShrink: 0,
-            borderRadius: '10px',
-            overflow: 'hidden',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
+        <div className="rr-img-box">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={product.image}
@@ -155,79 +116,38 @@ function ProductCard({
         <div style={{ flex: 1, minWidth: 0 }}>
           {product.badge && (
             <p
+              className="rr-product-badge"
               style={{
-                fontSize: '9px',
-                letterSpacing: '0.15em',
-                textTransform: 'uppercase',
-                color: accentColor || '#9b7e6b',
-                margin: '0 0 5px',
-                fontFamily: 'var(--font-mono, monospace)',
-                fontWeight: 700,
+                color: accentColor || '#fc2779',
               }}
             >
               {product.badge}
             </p>
           )}
 
-          <p
-            style={{
-              fontFamily: "'DM Serif Display', serif",
-              fontSize: '14.5px',
-              color: '#111',
-              lineHeight: 1.3,
-              margin: '0 0 3px',
-              fontWeight: 400,
-              overflow: 'hidden',
-              display: '-webkit-box',
-              WebkitLineClamp: 2,
-              WebkitBoxOrient: 'vertical' as const,
-            }}
-          >
+          <p className="rr-product-name">
             {product.name}
           </p>
 
-          <p
-            style={{
-              fontSize: '11px',
-              color: '#999',
-              margin: '0 0 8px',
-              letterSpacing: '0.04em',
-            }}
-          >
+          <p className="rr-product-brand">
             {product.brand}
           </p>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
             {affiliateUrl.includes('cultbeauty') ? (
-              <span style={{ fontSize: '13px', color: '#9b7e6b', fontWeight: 500 }}>
+              <span className="rr-cult-beauty-text" style={{ fontSize: '13px', fontWeight: 500 }}>
                 Shop on Cult Beauty
               </span>
             ) : (
               <>
-                <span
-                  style={{
-                    fontFamily: "'DM Serif Display', serif",
-                    fontSize: '17px',
-                    color: '#111',
-                    fontWeight: 400,
-                  }}
-                >
+                <span className="rr-product-price">
                   ₹{product.price.toLocaleString('en-IN')}
                 </span>
                 {disc > 0 && (
                   <>
-                    <span style={{ fontSize: '11px', color: '#bbb', textDecoration: 'line-through' }}>
+                    <span className="rr-product-mrp">
                       ₹{product.mrp.toLocaleString('en-IN')}
                     </span>
-                    <span
-                      style={{
-                        fontSize: '9px',
-                        color: '#2d7a4f',
-                        background: '#edf7f0',
-                        padding: '2px 6px',
-                        borderRadius: '3px',
-                        fontWeight: 700,
-                      }}
-                    >
+                    <span className="rr-discount-badge">
                       {disc}% off
                     </span>
                   </>
@@ -239,30 +159,15 @@ function ProductCard({
 
         {/* CTA arrow */}
         <div
+          className="rr-cta-arrow"
           style={{
-            flexShrink: 0,
-            width: '34px',
-            height: '34px',
-            background: accentColor || '#111',
-            borderRadius: '50%',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            marginTop: '8px',
+            background: accentColor || '#fc2779',
           }}
         >
           <ExternalLink size={12} color="#fff" />
         </div>
       </a>
-      <p
-        style={{
-          fontSize: '9px',
-          color: '#ccc',
-          margin: '0',
-          textAlign: 'right',
-          fontFamily: 'var(--font-mono, monospace)',
-        }}
-      >
+      <p className="rr-affiliate-note">
         Affiliate link · Commission at no extra cost to you
       </p>
     </div>
@@ -407,6 +312,62 @@ export default function RoutineResult({
     }
   };
 
+  const router = useRouter();
+  const [savingVanity, setSavingVanity] = useState(false);
+
+  const handleSaveToVanity = async () => {
+    setSavingVanity(true);
+    try {
+      const cleanserProduct = PRODUCTS.find((p) => p.asin === routine.cleanser?.asin);
+      const treatmentProduct = PRODUCTS.find((p) => p.asin === routine.treatment?.asin);
+      const moisturiserProduct = PRODUCTS.find((p) => p.asin === routine.moisturiser?.asin);
+      const sunscreenProduct = PRODUCTS.find((p) => p.asin === routine.sunscreen?.asin);
+
+      const amSteps = [
+        `Gentle Cleanse: ${cleanserProduct?.name || 'Gentle Cleanser'}`,
+        `Hydrate & Target: ${treatmentProduct?.name || 'Active Serum'}`,
+        `Barrier Restore: ${moisturiserProduct?.name || 'Ceramide Moisturizer'}`,
+        `UV Defense: ${sunscreenProduct?.name || 'Broad Spectrum SPF 50+'}`,
+      ];
+
+      const pmSteps = [
+        `Double Cleanse: ${cleanserProduct?.name || 'Gentle Cleanser'}`,
+        `Active Treatment: ${treatmentProduct?.name || 'Active Serum'}`,
+        `Night Nourish: ${moisturiserProduct?.name || 'Ceramide Moisturizer'}`,
+      ];
+
+      const pending = {
+        amSteps,
+        pmSteps,
+        climateCity: climate?.city || 'Synced',
+      };
+
+      // Always save to localStorage first as safety fallback
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('mirha_pending_routine', JSON.stringify(pending));
+      }
+
+      // Attempt server sync
+      const res = await syncQuizRoutineToVanity(pending);
+      if (res?.unauthorized) {
+        // Redirect to signup with returnUrl
+        router.push('/signup?returnUrl=/dashboard/routines');
+      } else if (res?.success) {
+        if (typeof window !== 'undefined') {
+          localStorage.removeItem('mirha_pending_routine');
+        }
+        router.push('/dashboard/routines');
+      } else {
+        router.push('/signup?returnUrl=/dashboard/routines');
+      }
+    } catch (err) {
+      console.error('Error saving to vanity:', err);
+      router.push('/signup?returnUrl=/dashboard/routines');
+    } finally {
+      setSavingVanity(false);
+    }
+  };
+
   return (
     <div className="rr-container">
       <style>{`
@@ -414,6 +375,7 @@ export default function RoutineResult({
           min-height: 100vh;
           background: linear-gradient(160deg, #fdf9f5 0%, #f8f2ea 40%, #fdf6f0 100%);
           padding: 60px 20px 120px;
+          transition: background 0.3s ease;
         }
         .rr-shell {
           width: 100%;
@@ -467,21 +429,101 @@ export default function RoutineResult({
           align-items: center;
           gap: 5px;
           padding: 5px 12px;
-          background: #fff;
-          border: 1px solid #e3d8ce;
           border-radius: 9999px;
           font-size: 11px;
-          color: #5c534c;
           font-weight: 500;
           font-family: var(--font-mono, monospace);
           letter-spacing: 0.05em;
+          transition: all 0.2s ease;
         }
-        .rr-chip-dot {
+        .rr-chip-climate {
+          cursor: pointer;
+          border: 1px solid #ccead4;
+          background: #edf7f0;
+          color: #2d7a4f;
+        }
+        .rr-chip-climate-dot {
           width: 6px;
           height: 6px;
           border-radius: 50%;
-          background: #fc2779;
+          background: #22c55e;
           flex-shrink: 0;
+          display: inline-block;
+        }
+
+        /* Climate alert */
+        .rr-climate-alert {
+          padding: 14px 18px;
+          border-radius: 0 10px 10px 0;
+          font-size: 13px;
+          line-height: 1.6;
+          margin-bottom: 28px;
+        }
+        .rr-climate-alert-humid_heat {
+          background: #fff9f0;
+          color: #4a4340;
+        }
+        .rr-climate-alert-humid_heat .rr-climate-alert-strong {
+          color: #d97706;
+        }
+        .rr-climate-alert-dry_cold {
+          background: #f0f5ff;
+          color: #4a4340;
+        }
+        .rr-climate-alert-dry_cold .rr-climate-alert-strong {
+          color: #2563eb;
+        }
+
+        /* Vanity Bridge Card */
+        .rr-vanity-bridge-card {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 20px;
+          background: linear-gradient(135deg, #ffffff 0%, #fff7f9 100%);
+          border: 1.5px solid #fc2779;
+          border-radius: 16px;
+          padding: 22px 24px;
+          margin-bottom: 28px;
+          box-shadow: 0 8px 28px rgba(252, 39, 121, 0.08);
+        }
+        .rr-vanity-bridge-badge {
+          font-size: 9px;
+          font-weight: 700;
+          letter-spacing: 0.15em;
+          text-transform: uppercase;
+          background: rgba(252, 39, 121, 0.1);
+          color: #fc2779;
+          padding: 3px 8px;
+          border-radius: 99px;
+          font-family: var(--font-mono, monospace);
+        }
+        .rr-vanity-bridge-btn {
+          flex-shrink: 0;
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          padding: 13px 22px;
+          border-radius: 12px;
+          background: #fc2779;
+          color: #ffffff;
+          font-size: 11px;
+          font-weight: 700;
+          text-transform: uppercase;
+          letter-spacing: 0.1em;
+          border: none;
+          cursor: pointer;
+          font-family: var(--font-mono, monospace);
+          transition: all 0.25s;
+          box-shadow: 0 4px 14px rgba(252, 39, 121, 0.3);
+        }
+        .rr-vanity-bridge-btn:hover {
+          background: #e01e69;
+          transform: translateY(-1px);
+        }
+        .rr-vanity-bridge-btn:disabled {
+          opacity: 0.7;
+          cursor: wait;
         }
 
         /* Climate widget */
@@ -493,6 +535,49 @@ export default function RoutineResult({
           margin-bottom: 36px;
           backdrop-filter: blur(10px);
           box-shadow: 0 4px 20px rgba(155,126,107,0.06);
+          transition: all 0.3s ease;
+        }
+        .rr-climate-widget-title {
+          margin: 0;
+          font-family: 'DM Serif Display', serif;
+          font-size: 17px;
+          color: #111;
+          font-weight: 400;
+        }
+        .rr-climate-widget-subtitle {
+          margin: 3px 0 0;
+          font-size: 11px;
+          color: #9b7e6b;
+          font-family: var(--font-mono, monospace);
+          letter-spacing: 0.04em;
+        }
+        .rr-preset-btn {
+          padding: 7px 12px;
+          font-size: 11px;
+          border-radius: 8px;
+          cursor: pointer;
+          transition: all 0.2s;
+          font-family: var(--font-mono, monospace);
+          font-weight: 400;
+          border: 1px solid #ede8e0;
+          background: #faf8f5;
+          color: #555;
+        }
+        .rr-preset-btn:hover {
+          border-color: #fc2779;
+          color: #fc2779;
+        }
+        .rr-preset-btn-active {
+          border-color: #111;
+          background: #111;
+          color: #fff;
+          font-weight: 700;
+        }
+        .rr-preset-btn-search {
+          border: 1px dashed #9b7e6b;
+          background: #faf8f5;
+          color: #9b7e6b;
+          font-weight: 600;
         }
 
         /* Step cards */
@@ -503,7 +588,7 @@ export default function RoutineResult({
           overflow: hidden;
           margin-bottom: 20px;
           box-shadow: 0 2px 12px rgba(0,0,0,0.03);
-          transition: box-shadow 0.3s;
+          transition: box-shadow 0.3s, background-color 0.3s, border-color 0.3s;
         }
         .rr-step-card:hover {
           box-shadow: 0 6px 24px rgba(0,0,0,0.06);
@@ -525,19 +610,142 @@ export default function RoutineResult({
           font-size: 22px;
           flex-shrink: 0;
         }
+        .rr-step-number {
+          font-size: 9px;
+          letter-spacing: 0.2em;
+          text-transform: uppercase;
+          margin: 0 0 3px;
+          font-family: var(--font-mono, monospace);
+          font-weight: 700;
+        }
+        .rr-step-title {
+          font-family: 'DM Serif Display', serif;
+          fontSize: 20px;
+          font-weight: 400;
+          color: #111;
+          margin: 0 0 4px;
+          line-height: 1.2;
+        }
+        .rr-step-desc {
+          font-size: 12px;
+          color: #888;
+          line-height: 1.5;
+          margin: 0;
+        }
         .rr-step-body {
           padding: 20px 24px 24px;
         }
 
+        /* Reason box */
+        .rr-reason-box {
+          background: #faf8f5;
+          border: 1px solid rgba(227, 216, 206, 0.4);
+          borderRadius: 0 8px 8px 0;
+          padding: 10px 14px;
+          font-size: 13px;
+          color: #5c534c;
+          line-height: 1.65;
+        }
+
         /* Product card */
         .rr-product-card {
+          display: flex;
+          gap: 14px;
+          align-items: flex-start;
+          border-radius: 12px;
+          padding: 16px;
+          text-decoration: none;
+          color: inherit;
+          transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+          cursor: pointer;
           background: #faf8f5;
           border: 1px solid #ede8e0;
-          color: #111;
+        }
+        .rr-product-card:hover {
+          transform: translateY(-2px);
+          border-color: #d6d0c9;
+          box-shadow: 0 6px 20px rgba(0,0,0,0.06);
         }
         .rr-img-box {
-          background: #fff;
+          width: 84px;
+          height: 84px;
+          flex-shrink: 0;
+          border-radius: 10px;
+          overflow: hidden;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: #ffffff;
           border: 1px solid #f0ebe3;
+        }
+        .rr-product-badge {
+          font-size: 9px;
+          letter-spacing: 0.15em;
+          text-transform: uppercase;
+          margin: 0 0 5px;
+          font-family: var(--font-mono, monospace);
+          font-weight: 700;
+        }
+        .rr-product-name {
+          font-family: 'DM Serif Display', serif;
+          font-size: 14.5px;
+          color: #111;
+          line-height: 1.3;
+          margin: 0 0 3px;
+          font-weight: 400;
+          overflow: hidden;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+        }
+        .rr-product-brand {
+          font-size: 11px;
+          color: #999;
+          margin: 0 0 8px;
+          letter-spacing: 0.04em;
+        }
+        .rr-product-price {
+          font-family: 'DM Serif Display', serif;
+          font-size: 17px;
+          color: #111;
+          font-weight: 400;
+        }
+        .rr-product-mrp {
+          font-size: 11px;
+          color: #bbb;
+          text-decoration: line-through;
+        }
+        .rr-discount-badge {
+          font-size: 9px;
+          color: #2d7a4f;
+          background: #edf7f0;
+          padding: 2px 6px;
+          border-radius: 3px;
+          font-weight: 700;
+        }
+        .rr-cult-beauty-text {
+          color: #9b7e6b;
+        }
+        .rr-cta-arrow {
+          flex-shrink: 0;
+          width: 34px;
+          height: 34px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-top: 8px;
+          transition: transform 0.2s;
+        }
+        .rr-product-card:hover .rr-cta-arrow {
+          transform: scale(1.08);
+        }
+        .rr-affiliate-note {
+          font-size: 9px;
+          color: #ccc;
+          margin: 0;
+          text-align: right;
+          font-family: var(--font-mono, monospace);
         }
 
         /* Usage box */
@@ -555,45 +763,427 @@ export default function RoutineResult({
           gap: 12px;
           margin-bottom: 32px;
         }
+        .rr-btn-secondary {
+          flex: 1;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 8px;
+          padding: 13px 24px;
+          background: transparent;
+          border: 1px solid #ddd;
+          color: #666;
+          font-size: 10px;
+          letter-spacing: 0.15em;
+          text-transform: uppercase;
+          cursor: pointer;
+          border-radius: 10px;
+          transition: all 0.25s;
+          font-family: var(--font-mono, monospace);
+        }
+        .rr-btn-secondary:hover {
+          border-color: #fc2779;
+          color: #fc2779;
+        }
+        .rr-btn-primary {
+          flex: 1;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 8px;
+          padding: 13px 24px;
+          background: #fc2779;
+          color: #fff;
+          font-size: 10px;
+          letter-spacing: 0.15em;
+          text-transform: uppercase;
+          text-decoration: none;
+          border-radius: 10px;
+          border: 1px solid #fc2779;
+          transition: all 0.25s;
+          cursor: pointer;
+          font-family: var(--font-mono, monospace);
+        }
+        .rr-btn-primary:hover {
+          background: #e01e69;
+        }
+        .rr-btn-dark {
+          flex: 1;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 8px;
+          padding: 13px 24px;
+          background: #111;
+          color: #fff;
+          font-size: 10px;
+          letter-spacing: 0.15em;
+          text-transform: uppercase;
+          text-decoration: none;
+          border-radius: 10px;
+          border: 1px solid #111;
+          transition: all 0.25s;
+          cursor: pointer;
+          font-family: var(--font-mono, monospace);
+        }
+        .rr-btn-dark:hover {
+          background: #333;
+        }
 
-        /* Dark mode */
+        /* Climate Modal */
+        .rr-modal-backdrop {
+          position: fixed;
+          inset: 0;
+          background: rgba(0,0,0,0.65);
+          backdrop-filter: blur(6px);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          z-index: 1000;
+          padding: 20px;
+        }
+        .rr-modal-card {
+          width: 100%;
+          max-width: 440px;
+          background: #fff;
+          border: 1px solid #e8e2d9;
+          border-radius: 20px;
+          padding: 28px;
+          box-shadow: 0 24px 48px rgba(0,0,0,0.12);
+        }
+        .rr-modal-title {
+          font-family: 'DM Serif Display', serif;
+          font-size: 20px;
+          margin: 0 0 8px;
+          color: #111;
+        }
+        .rr-modal-subtitle {
+          font-size: 12px;
+          color: #888;
+          margin: 0 0 20px;
+          line-height: 1.5;
+        }
+        .rr-modal-section-label {
+          font-size: 10px;
+          text-transform: uppercase;
+          letter-spacing: 0.15em;
+          color: #bbb;
+          margin: 0 0 10px;
+          font-family: var(--font-mono, monospace);
+        }
+        .rr-modal-preset-btn {
+          padding: 8px 12px;
+          font-size: 11px;
+          border: 1px solid #ede8e0;
+          background: #faf8f5;
+          border-radius: 8px;
+          cursor: pointer;
+          font-family: var(--font-mono, monospace);
+          color: #444;
+          transition: all 0.2s;
+        }
+        .rr-modal-preset-btn:hover {
+          border-color: #fc2779;
+          color: #fc2779;
+        }
+        .rr-modal-input {
+          width: 100%;
+          padding: 12px 16px;
+          border: 1px solid #ede8e0;
+          border-radius: 10px;
+          font-size: 13px;
+          outline: none;
+          font-family: inherit;
+          transition: border-color 0.2s;
+          box-sizing: border-box;
+          background: #fff;
+          color: #111;
+        }
+        .rr-modal-input:focus {
+          border-color: #fc2779;
+        }
+        .rr-modal-results {
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+          max-height: 180px;
+          overflow-y: auto;
+          margin-bottom: 20px;
+          border: 1px solid #ede8e0;
+          border-radius: 10px;
+          padding: 6px;
+        }
+        .rr-modal-result-row {
+          padding: 10px 12px;
+          background: none;
+          border: none;
+          border-radius: 7px;
+          text-align: left;
+          font-size: 13px;
+          color: #333;
+          cursor: pointer;
+          width: 100%;
+          transition: background 0.2s;
+        }
+        .rr-modal-result-row:hover {
+          background: #faf8f5;
+        }
+        .rr-modal-footer {
+          display: flex;
+          gap: 8px;
+          border-top: 1px solid #ede8e0;
+          padding-top: 16px;
+        }
+        .rr-modal-auto-btn {
+          flex: 1;
+          padding: 11px;
+          background: #111;
+          color: #fff;
+          border: none;
+          border-radius: 10px;
+          font-size: 11px;
+          font-weight: 600;
+          text-transform: uppercase;
+          letter-spacing: 0.1em;
+          cursor: pointer;
+          font-family: var(--font-mono, monospace);
+          transition: background 0.2s;
+        }
+        .rr-modal-auto-btn:hover {
+          background: #333;
+        }
+        .rr-modal-cancel-btn {
+          padding: 11px 16px;
+          background: none;
+          border: 1px solid #ddd;
+          border-radius: 10px;
+          font-size: 11px;
+          text-transform: uppercase;
+          letter-spacing: 0.1em;
+          cursor: pointer;
+          color: #666;
+          font-family: var(--font-mono, monospace);
+        }
+
+        /* ══════════════════════════════════════════
+           DARK MODE STYLES
+           ══════════════════════════════════════════ */
         html.dark .rr-container, .dark .rr-container {
-          background: linear-gradient(160deg, #0b0f19 0%, #0f1520 60%, #0b0f19 100%) !important;
+          background: linear-gradient(160deg, #090d16 0%, #0d131f 50%, #090d16 100%) !important;
         }
-        html.dark .rr-title, .dark .rr-title { color: #fff !important; }
-        html.dark .rr-subtitle, .dark .rr-subtitle { color: #9ca3af !important; }
-        html.dark .rr-chip, .dark .rr-chip {
-          background: #1f2937 !important;
-          border-color: #374151 !important;
-          color: #d1d5db !important;
+        html.dark .rr-title, .dark .rr-title {
+          color: #ffffff !important;
         }
+        html.dark .rr-subtitle, .dark .rr-subtitle {
+          color: #94a3b8 !important;
+        }
+
+        /* Chips in dark mode */
+        html.dark .rr-chip-climate, .dark .rr-chip-climate {
+          background: rgba(16, 185, 129, 0.12) !important;
+          border-color: rgba(16, 185, 129, 0.3) !important;
+          color: #34d399 !important;
+        }
+
+        /* Climate alert in dark mode */
+        html.dark .rr-climate-alert-humid_heat, .dark .rr-climate-alert-humid_heat {
+          background: rgba(245, 158, 11, 0.1) !important;
+          color: #fde68a !important;
+        }
+        html.dark .rr-climate-alert-humid_heat .rr-climate-alert-strong, .dark .rr-climate-alert-humid_heat .rr-climate-alert-strong {
+          color: #fbbf24 !important;
+        }
+        html.dark .rr-climate-alert-dry_cold, .dark .rr-climate-alert-dry_cold {
+          background: rgba(59, 130, 246, 0.1) !important;
+          color: #bfdbfe !important;
+        }
+        html.dark .rr-climate-alert-dry_cold .rr-climate-alert-strong, .dark .rr-climate-alert-dry_cold .rr-climate-alert-strong {
+          color: #60a5fa !important;
+        }
+
+        /* Climate widget in dark mode */
         html.dark .rr-climate-widget, .dark .rr-climate-widget {
           background: #111827 !important;
-          border-color: #1f2937 !important;
+          border-color: #1f293d !important;
+          box-shadow: 0 4px 24px rgba(0,0,0,0.4) !important;
         }
-        html.dark .rr-climate-widget h3, .dark .rr-climate-widget h3 { color: #f8fafc !important; }
+        html.dark .rr-climate-widget-title, .dark .rr-climate-widget-title {
+          color: #ffffff !important;
+        }
+        html.dark .rr-climate-widget-subtitle, .dark .rr-climate-widget-subtitle {
+          color: #cbd5e1 !important;
+        }
+        html.dark .rr-preset-btn, .dark .rr-preset-btn {
+          background: #1e293b !important;
+          border-color: #334155 !important;
+          color: #cbd5e1 !important;
+        }
+        html.dark .rr-preset-btn:hover, .dark .rr-preset-btn:hover {
+          border-color: #fc2779 !important;
+          color: #ffffff !important;
+        }
+        html.dark .rr-preset-btn-active, .dark .rr-preset-btn-active {
+          background: #fc2779 !important;
+          border-color: #fc2779 !important;
+          color: #ffffff !important;
+        }
+        html.dark .rr-preset-btn-search, .dark .rr-preset-btn-search {
+          border: 1px dashed #fc2779 !important;
+          color: #fda4af !important;
+          background: rgba(252, 39, 121, 0.08) !important;
+        }
+
+        /* Step cards in dark mode */
         html.dark .rr-step-card, .dark .rr-step-card {
           background: #111827 !important;
-          border-color: #1f2937 !important;
+          border-color: #1f293d !important;
+          box-shadow: 0 4px 20px rgba(0,0,0,0.3) !important;
+        }
+        html.dark .rr-step-card:hover, .dark .rr-step-card:hover {
+          border-color: #2e3a52 !important;
         }
         html.dark .rr-step-header, .dark .rr-step-header {
-          border-bottom-color: #1f2937 !important;
+          border-bottom-color: #1f293d !important;
         }
-        html.dark .rr-step-header h2, .dark .rr-step-header h2 { color: #fff !important; }
-        html.dark .rr-step-header p, .dark .rr-step-header p { color: #9ca3af !important; }
+        html.dark .rr-step-emoji, .dark .rr-step-emoji {
+          background: #1a2234 !important;
+        }
+        html.dark .rr-step-title, .dark .rr-step-title {
+          color: #ffffff !important;
+        }
+        html.dark .rr-step-desc, .dark .rr-step-desc {
+          color: #94a3b8 !important;
+        }
+
+        /* Reason box in dark mode */
+        html.dark .rr-reason-box, .dark .rr-reason-box {
+          background: rgba(255, 255, 255, 0.04) !important;
+          border-color: rgba(255, 255, 255, 0.08) !important;
+          color: #cbd5e1 !important;
+        }
+
+        /* Product cards in dark mode */
         html.dark .rr-product-card, .dark .rr-product-card {
-          background: #1f2937 !important;
-          border-color: #374151 !important;
+          background: #141b29 !important;
+          border-color: #222d42 !important;
           color: #f8fafc !important;
         }
-        html.dark .rr-product-card p, .dark .rr-product-card p { color: #f8fafc !important; }
+        html.dark .rr-product-card:hover, .dark .rr-product-card:hover {
+          border-color: #fc2779 !important;
+          box-shadow: 0 6px 24px rgba(252, 39, 121, 0.15) !important;
+        }
         html.dark .rr-img-box, .dark .rr-img-box {
-          background: #111827 !important;
-          border-color: #374151 !important;
+          background: #ffffff !important;
+          border-color: #2a374f !important;
         }
+        html.dark .rr-product-name, .dark .rr-product-name {
+          color: #ffffff !important;
+        }
+        html.dark .rr-product-brand, .dark .rr-product-brand {
+          color: #94a3b8 !important;
+        }
+        html.dark .rr-product-price, .dark .rr-product-price {
+          color: #ffffff !important;
+        }
+        html.dark .rr-product-mrp, .dark .rr-product-mrp {
+          color: #64748b !important;
+        }
+        html.dark .rr-discount-badge, .dark .rr-discount-badge {
+          color: #34d399 !important;
+          background: rgba(16, 185, 129, 0.15) !important;
+        }
+        html.dark .rr-cult-beauty-text, .dark .rr-cult-beauty-text {
+          color: #fda4af !important;
+        }
+        html.dark .rr-affiliate-note, .dark .rr-affiliate-note {
+          color: #64748b !important;
+        }
+
+        /* Usage box in dark mode */
         html.dark .rr-usage-box, .dark .rr-usage-box {
-          background: #1e293b !important;
+          background: #0f1523 !important;
+          border: 1px solid #1f293d !important;
           color: #f8fafc !important;
+        }
+
+        /* Actions in dark mode */
+        html.dark .rr-btn-secondary, .dark .rr-btn-secondary {
+          border-color: #334155 !important;
+          color: #cbd5e1 !important;
+        }
+        html.dark .rr-btn-secondary:hover, .dark .rr-btn-secondary:hover {
+          border-color: #fc2779 !important;
+          color: #fc2779 !important;
+        }
+        html.dark .rr-btn-dark, .dark .rr-btn-dark {
+          background: #1e293b !important;
+          border-color: #334155 !important;
+          color: #ffffff !important;
+        }
+        html.dark .rr-btn-dark:hover, .dark .rr-btn-dark:hover {
+          background: #283548 !important;
+        }
+
+        /* Climate Modal in dark mode */
+        html.dark .rr-modal-card, .dark .rr-modal-card {
+          background: #0f1523 !important;
+          border-color: #243046 !important;
+          color: #ffffff !important;
+          box-shadow: 0 24px 48px rgba(0,0,0,0.6) !important;
+        }
+        html.dark .rr-modal-title, .dark .rr-modal-title {
+          color: #ffffff !important;
+        }
+        html.dark .rr-modal-subtitle, .dark .rr-modal-subtitle {
+          color: #94a3b8 !important;
+        }
+        html.dark .rr-modal-section-label, .dark .rr-modal-section-label {
+          color: #64748b !important;
+        }
+        html.dark .rr-modal-preset-btn, .dark .rr-modal-preset-btn {
+          background: #1e293b !important;
+          border-color: #334155 !important;
+          color: #cbd5e1 !important;
+        }
+        html.dark .rr-modal-preset-btn:hover, .dark .rr-modal-preset-btn:hover {
+          border-color: #fc2779 !important;
+          color: #ffffff !important;
+        }
+        html.dark .rr-modal-input, .dark .rr-modal-input {
+          background: #182234 !important;
+          border-color: #2a3852 !important;
+          color: #ffffff !important;
+        }
+        html.dark .rr-modal-results, .dark .rr-modal-results {
+          border-color: #2a3852 !important;
+          background: #182234 !important;
+        }
+        html.dark .rr-modal-result-row, .dark .rr-modal-result-row {
+          color: #e2e8f0 !important;
+        }
+        html.dark .rr-modal-result-row:hover, .dark .rr-modal-result-row:hover {
+          background: #243046 !important;
+        }
+        html.dark .rr-modal-footer, .dark .rr-modal-footer {
+          border-top-color: #243046 !important;
+        }
+        html.dark .rr-modal-auto-btn, .dark .rr-modal-auto-btn {
+          background: #fc2779 !important;
+          color: #ffffff !important;
+        }
+        html.dark .rr-modal-cancel-btn, .dark .rr-modal-cancel-btn {
+          border-color: #334155 !important;
+          color: #94a3b8 !important;
+        }
+
+        /* Vanity bridge card in dark mode */
+        html.dark .rr-vanity-bridge-card, .dark .rr-vanity-bridge-card {
+          background: linear-gradient(135deg, #131926 0%, #1a2234 100%) !important;
+          border-color: rgba(252, 39, 121, 0.5) !important;
+          box-shadow: 0 8px 30px rgba(0,0,0,0.4) !important;
+        }
+        html.dark .rr-vanity-bridge-card h3, .dark .rr-vanity-bridge-card h3 {
+          color: #ffffff !important;
         }
 
         @media (max-width: 640px) {
@@ -602,6 +1192,16 @@ export default function RoutineResult({
           .rr-step-body { padding: 16px 18px 20px; }
           .rr-usage-box { padding: 24px 20px; }
           .rr-actions { flex-direction: column; }
+          .rr-vanity-bridge-card {
+            flex-direction: column;
+            align-items: stretch;
+            text-align: left;
+            padding: 18px 16px;
+          }
+          .rr-vanity-bridge-btn {
+            width: 100%;
+            justify-content: center;
+          }
         }
       `}</style>
 
@@ -614,7 +1214,7 @@ export default function RoutineResult({
           </div>
           <h1 className="rr-title">
             Your Personalized<br />
-            <em style={{ fontStyle: 'italic', color: '#9b7e6b' }}>4-Step Ritual</em>
+            <em style={{ fontStyle: 'italic', color: '#fc2779' }}>4-Step Ritual</em>
           </h1>
           <p className="rr-subtitle">
             Curated for your skin type, concern, and local climate. All products are verified, reviewed, and available with fast delivery.
@@ -623,36 +1223,62 @@ export default function RoutineResult({
           <div className="rr-profile-chips">
             {climate && (
               <button
-                className="rr-chip"
+                className="rr-chip rr-chip-climate"
                 onClick={() => setShowClimateModal(true)}
-                style={{ cursor: 'pointer', border: '1px solid #ccead4', background: '#edf7f0', color: '#2d7a4f' }}
               >
-                <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#22c55e', flexShrink: 0, display: 'inline-block' }} />
+                <span className="rr-chip-climate-dot" />
                 {climate.city} · {climate.temp}°C, {climate.humidity}% RH
-                <span style={{ fontSize: 9, opacity: 0.6, marginLeft: 4 }}>edit</span>
+                <span style={{ fontSize: 9, opacity: 0.7, marginLeft: 4 }}>edit</span>
               </button>
             )}
           </div>
         </div>
 
+        {/* ── Save to Vanity Callout Card ── */}
+        <div className="rr-vanity-bridge-card">
+          <div style={{ flex: 1 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+              <span className="rr-vanity-bridge-badge">Personalized Regimen</span>
+              <span style={{ fontSize: '11px', color: '#94a3b8' }}>Free Cloud Sync</span>
+            </div>
+            <h3 style={{ margin: '0 0 6px', fontSize: '18px', fontFamily: "'DM Serif Display', serif", color: '#111' }}>
+              Save Routine to Your Digital Vanity
+            </h3>
+            <p style={{ margin: 0, fontSize: '12px', color: '#64748b', lineHeight: 1.5 }}>
+              Sync your calibrated AM &amp; PM regimen directly into your dashboard to track daily progress and prevent formulation clashes.
+            </p>
+          </div>
+          <button
+            onClick={handleSaveToVanity}
+            disabled={savingVanity}
+            className="rr-vanity-bridge-btn"
+          >
+            {savingVanity ? (
+              'Syncing...'
+            ) : (
+              <>
+                <BookmarkCheck size={14} />
+                Save to Vanity
+                <ArrowRight size={14} />
+              </>
+            )}
+          </button>
+        </div>
+
         {/* ── Climate Alert ── */}
         {routine.climateAdjustment && (
           <div
+            className={`rr-climate-alert rr-climate-alert-${routine.climateAdjustment.type}`}
             style={{
-              background: routine.climateAdjustment.type === 'humid_heat' ? '#fff9f0' : '#f0f5ff',
               borderLeft: `4px solid ${routine.climateAdjustment.type === 'humid_heat' ? '#f59e0b' : '#3b82f6'}`,
-              padding: '14px 18px',
-              borderRadius: '0 10px 10px 0',
-              fontSize: '13px',
-              color: '#4a4340',
-              lineHeight: 1.6,
-              marginBottom: '28px',
             }}
           >
-            <strong style={{ color: routine.climateAdjustment.type === 'humid_heat' ? '#d97706' : '#2563eb' }}>
+            <strong className="rr-climate-alert-strong">
               Climate Adaptation Active:{' '}
             </strong>
-            {routine.climateAdjustment.alertText}
+            <span className="rr-climate-alert-text">
+              {routine.climateAdjustment.alertText}
+            </span>
           </div>
         )}
 
@@ -660,10 +1286,10 @@ export default function RoutineResult({
         <div className="rr-climate-widget">
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px', gap: 12, flexWrap: 'wrap' }}>
             <div>
-              <h3 style={{ margin: 0, fontFamily: "'DM Serif Display', serif", fontSize: '17px', color: '#111', fontWeight: 400 }}>
+              <h3 className="rr-climate-widget-title">
                 Adaptive Climate Engine
               </h3>
-              <p style={{ margin: '3px 0 0', fontSize: '11px', color: '#9b7e6b', fontFamily: 'var(--font-mono, monospace)', letterSpacing: '0.04em' }}>
+              <p className="rr-climate-widget-subtitle">
                 Live weather sync adjusts your product picks in real-time
               </p>
             </div>
@@ -675,18 +1301,7 @@ export default function RoutineResult({
                 <button
                   key={preset.city}
                   onClick={() => onClimateChange(preset)}
-                  style={{
-                    padding: '7px 12px',
-                    fontSize: '11px',
-                    border: `1px solid ${isActive ? '#111' : '#ede8e0'}`,
-                    background: isActive ? '#111' : '#faf8f5',
-                    color: isActive ? '#fff' : '#555',
-                    borderRadius: '8px',
-                    cursor: 'pointer',
-                    transition: 'all 0.2s',
-                    fontFamily: 'var(--font-mono, monospace)',
-                    fontWeight: isActive ? 700 : 400,
-                  }}
+                  className={`rr-preset-btn ${isActive ? 'rr-preset-btn-active' : ''}`}
                 >
                   {preset.label}
                 </button>
@@ -694,36 +1309,13 @@ export default function RoutineResult({
             })}
             <button
               onClick={() => onClimateChange(undefined)}
-              style={{
-                padding: '7px 12px',
-                fontSize: '11px',
-                border: `1px solid ${!climate ? '#111' : '#ede8e0'}`,
-                background: !climate ? '#111' : '#faf8f5',
-                color: !climate ? '#fff' : '#555',
-                borderRadius: '8px',
-                cursor: 'pointer',
-                fontFamily: 'var(--font-mono, monospace)',
-                transition: 'all 0.2s',
-              }}
+              className={`rr-preset-btn ${!climate ? 'rr-preset-btn-active' : ''}`}
             >
               🍃 Moderate
             </button>
             <button
               onClick={() => setShowClimateModal(true)}
-              style={{
-                padding: '7px 12px',
-                fontSize: '11px',
-                border: '1px dashed #9b7e6b',
-                background: '#faf8f5',
-                color: '#9b7e6b',
-                borderRadius: '8px',
-                cursor: 'pointer',
-                fontFamily: 'var(--font-mono, monospace)',
-                fontWeight: 600,
-                transition: 'all 0.2s',
-              }}
-              onMouseEnter={(e) => (e.currentTarget.style.background = '#f5ebe6')}
-              onMouseLeave={(e) => (e.currentTarget.style.background = '#faf8f5')}
+              className="rr-preset-btn rr-preset-btn-search"
             >
               🔍 Search City
             </button>
@@ -744,32 +1336,13 @@ export default function RoutineResult({
                     <step.icon size={20} strokeWidth={2.2} />
                   </div>
                   <div style={{ flex: 1 }}>
-                    <p
-                      style={{
-                        fontSize: '9px',
-                        letterSpacing: '0.2em',
-                        textTransform: 'uppercase',
-                        color: step.accentColor,
-                        margin: '0 0 3px',
-                        fontFamily: 'var(--font-mono, monospace)',
-                        fontWeight: 700,
-                      }}
-                    >
+                    <p className="rr-step-number" style={{ color: step.accentColor }}>
                       {step.step}
                     </p>
-                    <h2
-                      style={{
-                        fontFamily: "'DM Serif Display', serif",
-                        fontSize: '20px',
-                        fontWeight: 400,
-                        color: '#111',
-                        margin: '0 0 4px',
-                        lineHeight: 1.2,
-                      }}
-                    >
+                    <h2 className="rr-step-title">
                       {step.label}
                     </h2>
-                    <p style={{ fontSize: '12px', color: '#888', lineHeight: 1.5, margin: 0 }}>
+                    <p className="rr-step-desc">
                       {step.description}
                     </p>
                   </div>
@@ -832,13 +1405,13 @@ export default function RoutineResult({
                   {label}
                 </div>
               ))}
-              <div style={{ marginTop: '10px', paddingTop: '10px', borderTop: '1px solid #222' }}>
-                <p style={{ fontSize: '11px', color: '#555', margin: 0 }}>Skip SPF at night</p>
+              <div style={{ marginTop: '10px', paddingTop: '10px', borderTop: '1px solid rgba(255,255,255,0.1)' }}>
+                <p style={{ fontSize: '11px', color: '#888', margin: 0 }}>Skip SPF at night</p>
               </div>
             </div>
           </div>
 
-          <div style={{ marginTop: '24px', paddingTop: '20px', borderTop: '1px solid #222', fontSize: '12px', color: '#888', lineHeight: 1.65 }}>
+          <div style={{ marginTop: '24px', paddingTop: '20px', borderTop: '1px solid rgba(255,255,255,0.1)', fontSize: '12px', color: '#94a3b8', lineHeight: 1.65 }}>
             Visible results appear in <strong style={{ color: '#f59e0b' }}>4–8 weeks</strong> with consistent daily use. Introduce new actives 2–3x per week, then gradually increase frequency.
           </div>
         </div>
@@ -846,91 +1419,27 @@ export default function RoutineResult({
         {/* ── Actions ── */}
         <div className="rr-actions">
           <button
+            onClick={handleSaveToVanity}
+            disabled={savingVanity}
+            className="rr-btn-primary"
+            style={{ flex: 1.4, fontSize: '11px', padding: '14px 20px', fontWeight: 700 }}
+          >
+            <BookmarkCheck size={14} />
+            {savingVanity ? 'Syncing to Vanity...' : 'Save to Digital Vanity'}
+            <ArrowRight size={13} />
+          </button>
+
+          <button
             onClick={onRestart}
-            style={{
-              flex: 1,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '8px',
-              padding: '13px 24px',
-              background: 'transparent',
-              border: '1px solid #ddd',
-              color: '#666',
-              fontSize: '10px',
-              letterSpacing: '0.15em',
-              textTransform: 'uppercase',
-              cursor: 'pointer',
-              borderRadius: '10px',
-              transition: 'all 0.25s',
-              fontFamily: 'var(--font-mono, monospace)',
-            }}
-            onMouseEnter={(e) => {
-              const btn = e.currentTarget as HTMLButtonElement;
-              btn.style.borderColor = '#fc2779';
-              btn.style.color = '#fc2779';
-            }}
-            onMouseLeave={(e) => {
-              const btn = e.currentTarget as HTMLButtonElement;
-              btn.style.borderColor = '#ddd';
-              btn.style.color = '#666';
-            }}
+            className="rr-btn-secondary"
           >
             <RotateCcw size={12} />
             Retake Quiz
           </button>
 
           <a
-            href="/blog/diwali-skincare-prep-glow-protocol"
-            style={{
-              flex: 1,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              padding: '13px 24px',
-              background: '#fc2779',
-              color: '#fff',
-              fontSize: '10px',
-              letterSpacing: '0.15em',
-              textTransform: 'uppercase',
-              textDecoration: 'none',
-              borderRadius: '10px',
-              border: '1px solid #fc2779',
-              transition: 'all 0.25s',
-              gap: '8px',
-              cursor: 'pointer',
-              fontFamily: 'var(--font-mono, monospace)',
-            }}
-            onMouseEnter={(e) => ((e.currentTarget as HTMLAnchorElement).style.background = '#e01e69')}
-            onMouseLeave={(e) => ((e.currentTarget as HTMLAnchorElement).style.background = '#fc2779')}
-          >
-            Diwali Prep Guide
-            <ArrowRight size={12} />
-          </a>
-
-          <a
             href="/shop"
-            style={{
-              flex: 1,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              padding: '13px 24px',
-              background: '#111',
-              color: '#fff',
-              fontSize: '10px',
-              letterSpacing: '0.15em',
-              textTransform: 'uppercase',
-              textDecoration: 'none',
-              borderRadius: '10px',
-              border: '1px solid #111',
-              transition: 'all 0.25s',
-              gap: '8px',
-              cursor: 'pointer',
-              fontFamily: 'var(--font-mono, monospace)',
-            }}
-            onMouseEnter={(e) => ((e.currentTarget as HTMLAnchorElement).style.background = '#333')}
-            onMouseLeave={(e) => ((e.currentTarget as HTMLAnchorElement).style.background = '#111')}
+            className="rr-btn-dark"
           >
             All Products
             <ArrowRight size={12} />
@@ -941,7 +1450,7 @@ export default function RoutineResult({
         <p
           style={{
             fontSize: '10px',
-            color: '#bbb',
+            color: '#888',
             textAlign: 'center',
             lineHeight: 1.6,
             fontFamily: 'var(--font-mono, monospace)',
@@ -955,38 +1464,20 @@ export default function RoutineResult({
       {showClimateModal && (
         <div
           onClick={() => setShowClimateModal(false)}
-          style={{
-            position: 'fixed',
-            inset: 0,
-            background: 'rgba(0,0,0,0.45)',
-            backdropFilter: 'blur(6px)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            zIndex: 1000,
-            padding: '20px',
-          }}
+          className="rr-modal-backdrop"
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            style={{
-              width: '100%',
-              maxWidth: '440px',
-              background: '#fff',
-              border: '1px solid #e8e2d9',
-              borderRadius: '20px',
-              padding: '28px',
-              boxShadow: '0 24px 48px rgba(0,0,0,0.12)',
-            }}
+            className="rr-modal-card"
           >
-            <h3 style={{ fontFamily: "'DM Serif Display', serif", fontSize: '20px', margin: '0 0 8px', color: '#111' }}>
+            <h3 className="rr-modal-title">
               Select Your Location
             </h3>
-            <p style={{ fontSize: '12px', color: '#888', margin: '0 0 20px', lineHeight: 1.5 }}>
+            <p className="rr-modal-subtitle">
               Climate directly affects which textures and actives work best for your skin.
             </p>
 
-            <p style={{ fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.15em', color: '#bbb', margin: '0 0 10px', fontFamily: 'var(--font-mono, monospace)' }}>
+            <p className="rr-modal-section-label">
               Quick Presets
             </p>
             <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '20px' }}>
@@ -994,26 +1485,14 @@ export default function RoutineResult({
                 <button
                   key={preset.city}
                   onClick={() => { onClimateChange(preset); setShowClimateModal(false); }}
-                  style={{
-                    padding: '8px 12px',
-                    fontSize: '11px',
-                    border: '1px solid #ede8e0',
-                    background: '#faf8f5',
-                    borderRadius: '8px',
-                    cursor: 'pointer',
-                    fontFamily: 'var(--font-mono, monospace)',
-                    color: '#444',
-                    transition: 'all 0.2s',
-                  }}
-                  onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#111'; e.currentTarget.style.background = '#fff'; }}
-                  onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#ede8e0'; e.currentTarget.style.background = '#faf8f5'; }}
+                  className="rr-modal-preset-btn"
                 >
                   {preset.label}
                 </button>
               ))}
             </div>
 
-            <p style={{ fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.15em', color: '#bbb', margin: '0 0 10px', fontFamily: 'var(--font-mono, monospace)' }}>
+            <p className="rr-modal-section-label">
               Search Any City
             </p>
             <div style={{ position: 'relative', marginBottom: '20px' }}>
@@ -1022,19 +1501,7 @@ export default function RoutineResult({
                 value={searchQuery}
                 onChange={(e) => handleSearchCity(e.target.value)}
                 placeholder="Type city name (e.g. Mumbai, London)..."
-                style={{
-                  width: '100%',
-                  padding: '12px 16px',
-                  border: '1px solid #ede8e0',
-                  borderRadius: '10px',
-                  fontSize: '13px',
-                  outline: 'none',
-                  fontFamily: 'inherit',
-                  transition: 'border-color 0.2s',
-                  boxSizing: 'border-box',
-                }}
-                onFocus={(e) => (e.target.style.borderColor = '#fc2779')}
-                onBlur={(e) => (e.target.style.borderColor = '#ede8e0')}
+                className="rr-modal-input"
               />
               {searching && (
                 <div style={{ position: 'absolute', right: '12px', top: '13px', fontSize: '11px', color: '#999' }}>
@@ -1044,14 +1511,12 @@ export default function RoutineResult({
             </div>
 
             {searchResults.length > 0 && (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', maxHeight: '180px', overflowY: 'auto', marginBottom: '20px', border: '1px solid #ede8e0', borderRadius: '10px', padding: '6px' }}>
+              <div className="rr-modal-results">
                 {searchResults.map((result) => (
                   <button
                     key={result.id}
                     onClick={() => handleSelectSearchResult(result)}
-                    style={{ padding: '10px 12px', background: 'none', border: 'none', borderRadius: '7px', textAlign: 'left', fontSize: '13px', color: '#333', cursor: 'pointer', width: '100%', transition: 'background 0.2s' }}
-                    onMouseEnter={(e) => (e.currentTarget.style.background = '#faf8f5')}
-                    onMouseLeave={(e) => (e.currentTarget.style.background = 'none')}
+                    className="rr-modal-result-row"
                   >
                     <span style={{ fontWeight: 500 }}>{result.name}</span>
                     {result.admin1 && <span style={{ color: '#888', fontSize: '11px' }}>, {result.admin1}</span>}
@@ -1061,43 +1526,16 @@ export default function RoutineResult({
               </div>
             )}
 
-            <div style={{ display: 'flex', gap: '8px', borderTop: '1px solid #ede8e0', paddingTop: '16px' }}>
+            <div className="rr-modal-footer">
               <button
                 onClick={() => { detectClimate(); setShowClimateModal(false); }}
-                style={{
-                  flex: 1,
-                  padding: '11px',
-                  background: '#111',
-                  color: '#fff',
-                  border: 'none',
-                  borderRadius: '10px',
-                  fontSize: '11px',
-                  fontWeight: 600,
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.1em',
-                  cursor: 'pointer',
-                  fontFamily: 'var(--font-mono, monospace)',
-                  transition: 'background 0.2s',
-                }}
-                onMouseEnter={(e) => (e.currentTarget.style.background = '#333')}
-                onMouseLeave={(e) => (e.currentTarget.style.background = '#111')}
+                className="rr-modal-auto-btn"
               >
                 📡 Auto-Detect
               </button>
               <button
                 onClick={() => setShowClimateModal(false)}
-                style={{
-                  padding: '11px 16px',
-                  background: 'none',
-                  border: '1px solid #ddd',
-                  borderRadius: '10px',
-                  fontSize: '11px',
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.1em',
-                  cursor: 'pointer',
-                  color: '#666',
-                  fontFamily: 'var(--font-mono, monospace)',
-                }}
+                className="rr-modal-cancel-btn"
               >
                 Cancel
               </button>

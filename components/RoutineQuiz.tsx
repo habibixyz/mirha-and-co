@@ -475,15 +475,82 @@ export default function RoutineQuiz() {
           align-items: center;
           justify-content: center;
           padding: 28px 20px 48px;
+          transition: background 0.3s;
         }
         .rq-title { color: #111111; }
+        .rq-title em { color: #9b7e6b; }
         .rq-subtitle { color: #6b635c; }
         
+        .rq-brand-pill {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          padding: 4px 14px;
+          background: #ffffff;
+          border: 1px solid #e6ded3;
+          border-radius: 9999px;
+          fontSize: 10px;
+          letterSpacing: 0.2em;
+          textTransform: uppercase;
+          color: #8c705f;
+          fontFamily: var(--font-mono, monospace);
+          fontWeight: 600;
+          boxShadow: 0 2px 8px rgba(155, 126, 107, 0.06);
+        }
+
+        .rq-festive-alert {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          background: #fef7ec;
+          border: 1px solid #fae6c6;
+          padding: 6px 14px;
+          border-radius: 10px;
+          font-size: 11px;
+          color: #8a5b18;
+          line-height: 1.4;
+          max-width: 560px;
+          text-align: left;
+        }
+
+        .rq-climate-synced-pill {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          padding: 5px 14px;
+          background: #edf7f0;
+          border: 1px solid #ccead4;
+          border-radius: 20px;
+          font-size: 10.5px;
+          color: #2d7a4f;
+          font-family: var(--font-mono, monospace);
+          font-weight: 500;
+          box-shadow: 0 2px 8px rgba(45, 122, 79, 0.05);
+          cursor: pointer;
+        }
+
         .rq-card { 
           background: #ffffff; 
           border: 1px solid #e8e0d5; 
           border-radius: 24px;
           box-shadow: 0 10px 40px rgba(155, 126, 107, 0.08);
+          transition: background 0.3s, border-color 0.3s;
+        }
+
+        .rq-card-question {
+          font-family: 'DM Serif Display', serif;
+          font-size: clamp(24px, 5vw, 30px);
+          font-weight: 400;
+          color: #111111;
+          margin: 0 0 10px;
+          line-height: 1.25;
+        }
+
+        .rq-card-subtitle {
+          font-size: 13.5px;
+          color: #7a7067;
+          margin: 0 0 28px;
+          line-height: 1.6;
         }
 
         .rq-option-btn {
@@ -510,6 +577,44 @@ export default function RoutineQuiz() {
           border-color: #111111 !important;
           background: #faf8f5 !important;
           box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08) !important;
+        }
+
+        .rq-option-label {
+          font-size: 15px;
+          font-weight: 600;
+          color: #111111;
+          transition: color 0.2s;
+        }
+        .rq-option-btn.active .rq-option-label {
+          color: #111111;
+        }
+
+        .rq-option-badge {
+          font-size: 10px;
+          font-family: var(--font-mono, monospace);
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+          padding: 2px 8px;
+          border-radius: 6px;
+          background: #f2ebe2;
+          color: #7d6d60;
+          font-weight: 600;
+          flex-shrink: 0;
+          border: 1px solid transparent;
+        }
+        .rq-option-btn.active .rq-option-badge {
+          background: #111111;
+          color: #ffffff;
+        }
+
+        .rq-option-desc {
+          font-size: 12.5px;
+          margin: 0;
+          color: #756c64;
+          line-height: 1.5;
+        }
+        .rq-option-btn.active .rq-option-desc {
+          color: #4b433c;
         }
 
         .rq-icon-box {
@@ -599,58 +704,139 @@ export default function RoutineQuiz() {
           cursor: not-allowed;
         }
 
+        /* ── DARK MODE EXPLICIT RULES ── */
         html.dark .rq-container, .dark .rq-container {
-          background: radial-gradient(circle at 50% 0%, #151922 0%, #0c0f16 100%) !important;
+          background: radial-gradient(circle at 50% 0%, #111722 0%, #090d16 100%) !important;
+        }
+        html.dark .rq-brand-pill, .dark .rq-brand-pill {
+          background: #141c2b !important;
+          border-color: #263348 !important;
+          color: #cbd5e1 !important;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.3) !important;
         }
         html.dark .rq-title, .dark .rq-title { color: #ffffff !important; }
-        html.dark .rq-subtitle, .dark .rq-subtitle { color: #a1a1aa !important; }
-        html.dark .rq-card, .dark .rq-card {
-          background: #141923 !important;
-          border-color: #262e3d !important;
-          box-shadow: 0 10px 40px rgba(0,0,0,0.4) !important;
+        html.dark .rq-title em, .dark .rq-title em { color: #fda4af !important; }
+        html.dark .rq-subtitle, .dark .rq-subtitle { color: #94a3b8 !important; }
+        
+        html.dark .rq-festive-alert, .dark .rq-festive-alert {
+          background: rgba(245, 158, 11, 0.12) !important;
+          border-color: rgba(245, 158, 11, 0.3) !important;
+          color: #fcd34d !important;
         }
+        html.dark .rq-climate-synced-pill, .dark .rq-climate-synced-pill {
+          background: rgba(16, 185, 129, 0.12) !important;
+          border-color: rgba(16, 185, 129, 0.25) !important;
+          color: #34d399 !important;
+        }
+
+        html.dark .rq-step-meta-num { color: #e2e8f0 !important; }
+        html.dark .rq-step-meta-badge { color: #94a3b8 !important; }
+        html.dark .rq-progress-track { background: #1e293b !important; }
+
+        html.dark .rq-card, .dark .rq-card {
+          background: #101622 !important;
+          border-color: #1e293b !important;
+          box-shadow: 0 10px 40px rgba(0,0,0,0.5) !important;
+        }
+        html.dark .rq-card-question, .dark .rq-card-question { color: #ffffff !important; }
+        html.dark .rq-card-subtitle, .dark .rq-card-subtitle { color: #94a3b8 !important; }
+
         html.dark .rq-option-btn, .dark .rq-option-btn {
-          background: #19202c !important;
-          border-color: #283344 !important;
-          color: #f4f4f5 !important;
+          background: #141c2a !important;
+          border-color: #232f42 !important;
+          color: #f8fafc !important;
         }
         html.dark .rq-option-btn:hover, .dark .rq-option-btn:hover {
-          background: #202938 !important;
-          border-color: #3b4759 !important;
+          background: #192436 !important;
+          border-color: #384860 !important;
         }
         html.dark .rq-option-btn.active, .dark .rq-option-btn.active {
           border-color: #fc2779 !important;
-          background: #231c28 !important;
+          background: rgba(252, 39, 121, 0.12) !important;
+          box-shadow: 0 0 24px rgba(252, 39, 121, 0.2) !important;
         }
+        html.dark .rq-option-label, .dark .rq-option-label {
+          color: #f8fafc !important;
+        }
+        html.dark .rq-option-btn.active .rq-option-label, .dark .rq-option-btn.active .rq-option-label {
+          color: #ffffff !important;
+        }
+        html.dark .rq-option-badge, .dark .rq-option-badge {
+          background: #1e293b !important;
+          border-color: #334155 !important;
+          color: #cbd5e1 !important;
+        }
+        html.dark .rq-option-btn.active .rq-option-badge, .dark .rq-option-btn.active .rq-option-badge {
+          background: #fc2779 !important;
+          border-color: #fc2779 !important;
+          color: #ffffff !important;
+        }
+        html.dark .rq-option-desc, .dark .rq-option-desc {
+          color: #94a3b8 !important;
+        }
+        html.dark .rq-option-btn.active .rq-option-desc, .dark .rq-option-btn.active .rq-option-desc {
+          color: #e2e8f0 !important;
+        }
+
         html.dark .rq-icon-box, .dark .rq-icon-box {
-          background: #202938 !important;
-          border-color: #2d3848 !important;
+          background: #1a2332 !important;
+          border-color: #2a374c !important;
         }
         html.dark .rq-option-btn.active .rq-icon-box {
           background: #fc2779 !important;
           border-color: #fc2779 !important;
         }
+        html.dark .rq-check-circle, .dark .rq-check-circle {
+          border-color: #334155 !important;
+        }
         html.dark .rq-option-btn.active .rq-check-circle {
           background: #fc2779 !important;
           border-color: #fc2779 !important;
+          color: #ffffff !important;
+        }
+
+        html.dark .rq-back-btn, .dark .rq-back-btn {
+          background: #141c2a !important;
+          border-color: #263348 !important;
+          color: #cbd5e1 !important;
+        }
+        html.dark .rq-back-btn:hover:not(:disabled), .dark .rq-back-btn:hover:not(:disabled) {
+          border-color: #fc2779 !important;
+          color: #ffffff !important;
         }
         html.dark .rq-next-btn, .dark .rq-next-btn {
           background: #fc2779 !important;
           border-color: #fc2779 !important;
           color: #ffffff !important;
+          box-shadow: 0 4px 18px rgba(252, 39, 121, 0.4) !important;
         }
         html.dark .rq-next-btn:hover:not(:disabled), .dark .rq-next-btn:hover:not(:disabled) {
           background: #e01e69 !important;
         }
         html.dark .rq-next-btn:disabled, .dark .rq-next-btn:disabled {
-          background: #202938 !important;
-          border-color: #202938 !important;
-          color: #52525b !important;
+          background: #1e2634 !important;
+          border-color: #1e2634 !important;
+          color: #475569 !important;
+          box-shadow: none !important;
         }
         html.dark .rq-modal-content, .dark .rq-modal-content {
-          background: #141923 !important;
-          border-color: #262e3d !important;
-          color: #f4f4f5 !important;
+          background: #101622 !important;
+          border: 1px solid #1e293b !important;
+          color: #f8fafc !important;
+        }
+        html.dark .rq-modal-content input, .dark .rq-modal-content input {
+          background: #141c2a !important;
+          border-color: #263348 !important;
+          color: #ffffff !important;
+        }
+        html.dark .rq-preset-btn, .dark .rq-preset-btn {
+          background: #141c2a !important;
+          border-color: #263348 !important;
+          color: #cbd5e1 !important;
+        }
+        html.dark .rq-preset-btn:hover, .dark .rq-preset-btn:hover {
+          border-color: #fc2779 !important;
+          color: #ffffff !important;
         }
 
         @media (max-width: 640px) {
@@ -665,26 +851,8 @@ export default function RoutineQuiz() {
         
         {/* Top Header */}
         <div style={{ textAlign: 'center', marginBottom: currentStep === 0 ? '24px' : '14px', transition: 'all 0.3s' }}>
-          <div
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '6px',
-              padding: '4px 14px',
-              background: '#ffffff',
-              border: '1px solid #e6ded3',
-              borderRadius: '9999px',
-              fontSize: '10px',
-              letterSpacing: '0.2em',
-              textTransform: 'uppercase',
-              color: '#8c705f',
-              marginBottom: currentStep === 0 ? '10px' : '6px',
-              fontFamily: 'var(--font-mono, monospace)',
-              fontWeight: 600,
-              boxShadow: '0 2px 8px rgba(155, 126, 107, 0.06)',
-            }}
-          >
-            <Compass size={11} color="#8c705f" />
+          <div className="rq-brand-pill" style={{ marginBottom: currentStep === 0 ? '10px' : '6px' }}>
+            <Compass size={11} color="currentColor" />
             Mirha & Co. · Routine Builder
           </div>
 
@@ -699,7 +867,7 @@ export default function RoutineQuiz() {
             }}
           >
             Your Personalized{' '}
-            <em style={{ fontStyle: 'italic', color: '#9b7e6b' }}>4-Step Routine</em>
+            <em>4-Step Routine</em>
           </h1>
 
           {currentStep === 0 && (
@@ -717,26 +885,10 @@ export default function RoutineQuiz() {
           )}
 
           {currentStep === 0 && (
-            <div
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '8px',
-                background: '#fef7ec',
-                border: '1px solid #fae6c6',
-                padding: '6px 14px',
-                borderRadius: '10px',
-                fontSize: '11px',
-                color: '#8a5b18',
-                marginBottom: '12px',
-                lineHeight: 1.4,
-                maxWidth: '560px',
-                textAlign: 'left',
-              }}
-            >
-              <Calendar size={13} style={{ flexShrink: 0, color: '#b4731a' }} />
+            <div className="rq-festive-alert" style={{ marginBottom: '12px' }}>
+              <Calendar size={13} style={{ flexShrink: 0, color: 'currentColor' }} />
               <span>
-                <strong>Festive Skin Reset:</strong> Weather shifts & festive air affect barrier lipids. Your routine is automatically calibrated.
+                <strong>Festive Skin Reset:</strong> Weather shifts &amp; festive air affect barrier lipids. Your routine is automatically calibrated.
               </span>
             </div>
           )}
@@ -750,11 +902,11 @@ export default function RoutineQuiz() {
                   alignItems: 'center',
                   gap: '8px',
                   padding: '5px 12px',
-                  background: '#ffffff',
-                  border: '1px solid #ede8e0',
+                  background: 'var(--dash-surface, #ffffff)',
+                  border: '1px solid var(--dash-border, #ede8e0)',
                   borderRadius: '20px',
                   fontSize: '10.5px',
-                  color: '#9b7e6b',
+                  color: 'var(--dash-muted, #9b7e6b)',
                   fontFamily: 'var(--font-mono, monospace)',
                 }}
               >
@@ -778,11 +930,11 @@ export default function RoutineQuiz() {
                   alignItems: 'center',
                   gap: '8px',
                   padding: '5px 12px',
-                  background: '#faf8f5',
-                  border: '1px solid #ede8e0',
+                  background: 'var(--dash-surface, #faf8f5)',
+                  border: '1px solid var(--dash-border, #ede8e0)',
                   borderRadius: '20px',
                   fontSize: '10.5px',
-                  color: '#888',
+                  color: 'var(--dash-muted, #888)',
                   fontFamily: 'var(--font-mono, monospace)',
                   cursor: 'pointer',
                 }}
@@ -793,25 +945,11 @@ export default function RoutineQuiz() {
             ) : climate ? (
               <div
                 onClick={() => setShowClimateModal(true)}
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '8px',
-                  padding: '5px 14px',
-                  background: '#edf7f0',
-                  border: '1px solid #ccead4',
-                  borderRadius: '20px',
-                  fontSize: '10.5px',
-                  color: '#2d7a4f',
-                  fontFamily: 'var(--font-mono, monospace)',
-                  fontWeight: 500,
-                  boxShadow: '0 2px 8px rgba(45, 122, 79, 0.05)',
-                  cursor: 'pointer',
-                }}
+                className="rq-climate-synced-pill"
               >
                 <span style={{ display: 'inline-block', width: '6px', height: '6px', background: '#22c55e', borderRadius: '50%', flexShrink: 0 }} />
                 Climate Synced: {climate.city} — {climate.temp}°C, {climate.humidity}% RH
-                <span style={{ fontSize: '9px', letterSpacing: '0.1em', textTransform: 'uppercase', opacity: 0.6, marginLeft: '6px' }}>edit</span>
+                <span style={{ fontSize: '9px', letterSpacing: '0.1em', textTransform: 'uppercase', opacity: 0.7, marginLeft: '6px' }}>edit</span>
               </div>
             ) : null}
           </div>
@@ -831,6 +969,7 @@ export default function RoutineQuiz() {
           >
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
               <span
+                className="rq-step-meta-num"
                 style={{
                   fontFamily: 'var(--font-mono, monospace)',
                   fontSize: '11px',
@@ -843,6 +982,7 @@ export default function RoutineQuiz() {
               </span>
               <span style={{ color: '#d0c6b8' }}>·</span>
               <span
+                className="rq-step-meta-badge"
                 style={{
                   fontSize: '12px',
                   fontWeight: 500,
@@ -867,6 +1007,7 @@ export default function RoutineQuiz() {
 
           {/* Progress Bar Track */}
           <div
+            className="rq-progress-track"
             style={{
               height: '4px',
               background: '#e9e1d6',
@@ -877,7 +1018,7 @@ export default function RoutineQuiz() {
             <div
               style={{
                 height: '100%',
-                background: 'linear-gradient(90deg, #9b7e6b 0%, #111111 100%)',
+                background: 'linear-gradient(90deg, #9b7e6b 0%, #fc2779 100%)',
                 width: `${((currentStep + 1) / QUIZ_STEPS.length) * 100}%`,
                 transition: 'width 0.35s cubic-bezier(0.4, 0, 0.2, 1)',
                 borderRadius: '9999px',
@@ -895,27 +1036,11 @@ export default function RoutineQuiz() {
           }}
         >
           {/* Question Title */}
-          <h2
-            style={{
-              fontFamily: "'DM Serif Display', serif",
-              fontSize: 'clamp(24px, 5vw, 30px)',
-              fontWeight: 400,
-              color: '#111',
-              margin: '0 0 10px',
-              lineHeight: 1.25,
-            }}
-          >
+          <h2 className="rq-card-question">
             {step.question}
           </h2>
 
-          <p
-            style={{
-              fontSize: '13.5px',
-              color: '#7a7067',
-              margin: '0 0 28px',
-              lineHeight: 1.6,
-            }}
-          >
+          <p className="rq-card-subtitle">
             {step.subtitle}
           </p>
 
@@ -937,41 +1062,15 @@ export default function RoutineQuiz() {
                   {/* Option Text */}
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '8px', marginBottom: '4px' }}>
-                      <span
-                        style={{
-                          fontSize: '15px',
-                          fontWeight: 600,
-                          color: isSelected ? '#111' : '#222',
-                        }}
-                      >
+                      <span className="rq-option-label">
                         {answer.label}
                       </span>
-                      <span
-                        style={{
-                          fontSize: '10px',
-                          fontFamily: 'var(--font-mono, monospace)',
-                          letterSpacing: '0.08em',
-                          textTransform: 'uppercase',
-                          padding: '2px 8px',
-                          borderRadius: '6px',
-                          background: isSelected ? '#111111' : '#f2ebe2',
-                          color: isSelected ? '#ffffff' : '#7d6d60',
-                          fontWeight: 600,
-                          flexShrink: 0,
-                        }}
-                      >
+                      <span className="rq-option-badge">
                         {answer.badge}
                       </span>
                     </div>
 
-                    <p
-                      style={{
-                        fontSize: '12.5px',
-                        margin: 0,
-                        color: isSelected ? '#4b433c' : '#756c64',
-                        lineHeight: 1.5,
-                      }}
-                    >
+                    <p className="rq-option-desc">
                       {answer.description}
                     </p>
                   </div>
