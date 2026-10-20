@@ -33,12 +33,12 @@ export default function AuthorBio() {
  ingredient analysis, and consumer trends in the Indian market.
  </p>
 
- <p style={{
+ <p suppressHydrationWarning style={{
  fontSize: "11px",
  color: "#999",
  marginTop: "8px"
  }}>
- Updated: {new Date().toLocaleDateString()}
+ Updated: {new Date().toLocaleDateString("en-US", { year: "numeric", month: "short", timeZone: "UTC" })}
  </p>
  </div>
  );

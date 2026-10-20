@@ -7,6 +7,19 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { toggleRoutineStep } from "../actions";
 
+const MONTHS_SHORT = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+function formatJournalDateSafe(d: Date | string | null | undefined): string {
+  if (!d) return "";
+  try {
+    const date = typeof d === "string" ? new Date(d) : d;
+    if (isNaN(date.getTime())) return "";
+    return `${MONTHS_SHORT[date.getUTCMonth()]} ${date.getUTCDate()}, ${date.getUTCFullYear()}`;
+  } catch {
+    return "";
+  }
+}
+
 export function DashboardClient({ user, routines, recentJournal }: any) {
  const [isPending, startTransition] = React.useTransition();
 
@@ -173,7 +186,7 @@ export function DashboardClient({ user, routines, recentJournal }: any) {
  border: "1px solid rgba(0,0,0,0.05)"
  }}>
  <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.5rem" }}>
- <span style={{ fontWeight: 500 }}>{new Date(recentJournal.date).toLocaleDateString("en-US")}</span>
+ <span suppressHydrationWarning style={{ fontWeight: 500 }}>{formatJournalDateSafe(recentJournal.date)}</span>
  <span style={{ fontSize: "0.8rem", color: "var(--muted)" }}>★ {recentJournal.rating}/5</span>
  </div>
  <p style={{ margin: 0, color: "var(--muted)", lineHeight: 1.6 }}>"{recentJournal.entry}"</p>

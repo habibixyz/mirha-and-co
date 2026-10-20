@@ -5,9 +5,43 @@ import { motion, AnimatePresence } from "framer-motion";
 import { saveJournalEntry, analyzeSkinPhoto, getJournalAnalysis } from "../../actions";
 import { Calendar, Plus, Star, MoreVertical, Upload, X, Brain, TrendingUp, Info, Lightbulb } from "lucide-react";
 
+const MONTHS_SHORT = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+function formatJournalDateSafe(d: Date | string | null | undefined): string {
+  if (!d) return "";
+  try {
+    const date = typeof d === "string" ? new Date(d) : d;
+    if (isNaN(date.getTime())) return "";
+    return `${MONTHS_SHORT[date.getUTCMonth()]} ${date.getUTCDate()}, ${date.getUTCFullYear()}`;
+  } catch {
+    return "";
+  }
+}
+
+function getJournalMonthSafe(d: Date | string | null | undefined): string {
+  if (!d) return "";
+  try {
+    const date = typeof d === "string" ? new Date(d) : d;
+    if (isNaN(date.getTime())) return "";
+    return MONTHS_SHORT[date.getUTCMonth()];
+  } catch {
+    return "";
+  }
+}
+
+function getJournalDaySafe(d: Date | string | null | undefined): string | number {
+  if (!d) return "";
+  try {
+    const date = typeof d === "string" ? new Date(d) : d;
+    if (isNaN(date.getTime())) return "";
+    return date.getUTCDate();
+  } catch {
+    return "";
+  }
+}
 
 export function SkinJournalClient({ initialEntries, isPro }: { initialEntries: any[], isPro: boolean }) {
- const [entries, setEntries] = useState(initialEntries);
+ const [entries, setEntries] = useState(initialEntries || []);
  const [showNewEntry, setShowNewEntry] = useState(false);
  const [note, setNote] = useState("");
  const [rating, setRating] = useState(5);
@@ -20,58 +54,53 @@ export function SkinJournalClient({ initialEntries, isPro }: { initialEntries: a
  const [isAnalyzingHistory, setIsAnalyzingHistory] = useState(false);
  const fileInputRef = useRef<HTMLInputElement>(null);
 
- // Calculate Streaks and Compliance
+ // Calculate Streaks and Compliance (UTC invariant to eliminate hydration mismatch #418)
  const streakInfo = useMemo(() => {
- if (entries.length === 0) return { streak: 0, compliance: 0, calendarGrid: [] };
+ if (!entries || entries.length === 0) return { streak: 0, compliance: 0, calendarGrid: [] };
 
- // Calculate streak
  let streak = 0;
- const today = new Date();
- today.setHours(0, 0, 0, 0);
+ const now = new Date();
+ const todayUtc = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
 
   const entryDates = (entries || []).map(e => {
     if (!e || !e.date) return 0;
     const d = new Date(e.date);
     if (isNaN(d.getTime())) return 0;
-    d.setHours(0, 0, 0, 0);
-    return d.getTime();
+    return Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate());
   }).filter(t => t > 0);
 
  const uniqueEntryDates = Array.from(new Set(entryDates));
 
- const hasToday = uniqueEntryDates.includes(today.getTime());
- 
- const yesterday = new Date(today);
- yesterday.setDate(yesterday.getDate() - 1);
- const hasYesterday = uniqueEntryDates.includes(yesterday.getTime());
+ const ONE_DAY_MS = 24 * 60 * 60 * 1000;
+ const yesterdayUtc = todayUtc - ONE_DAY_MS;
+ const hasToday = uniqueEntryDates.includes(todayUtc);
+ const hasYesterday = uniqueEntryDates.includes(yesterdayUtc);
 
  if (hasToday || hasYesterday) {
- let currentCheck = new Date(hasToday ? today : yesterday);
- while (uniqueEntryDates.includes(currentCheck.getTime())) {
+ let currentCheck = hasToday ? todayUtc : yesterdayUtc;
+ while (uniqueEntryDates.includes(currentCheck)) {
  streak++;
- currentCheck.setDate(currentCheck.getDate() - 1);
+ currentCheck -= ONE_DAY_MS;
  }
  }
 
  // Build past 30 days contribution calendar grid
  const calendarGrid = [];
  for (let i = 29; i >= 0; i--) {
- const date = new Date();
- date.setDate(date.getDate() - i);
- date.setHours(0, 0, 0, 0);
+ const dayUtcTime = todayUtc - (i * ONE_DAY_MS);
+ const dayDate = new Date(dayUtcTime);
 
   const dayEntry = (entries || []).find(e => {
     if (!e || !e.date) return false;
     const d = new Date(e.date);
     if (isNaN(d.getTime())) return false;
-    d.setHours(0, 0, 0, 0);
-    return d.getTime() === date.getTime();
+    return Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate()) === dayUtcTime;
   });
 
  calendarGrid.push({
- date: new Date(date),
+ date: dayDate,
  rating: dayEntry ? dayEntry.rating : 0,
- hasPhoto: dayEntry && dayEntry.photos && dayEntry.photos !== "[]" && dayEntry.photos.length > 5
+ hasPhoto: Boolean(dayEntry && dayEntry.photos && dayEntry.photos !== "[]" && dayEntry.photos.length > 5)
  });
  }
 
@@ -652,11 +681,12 @@ export function SkinJournalClient({ initialEntries, isPro }: { initialEntries: a
  <p style={{ margin: '0 0 14px', fontSize: '12px', color: 'var(--muted)', display: 'flex', alignItems: 'center', gap: '6px', textAlign: 'left' }}>
  <Calendar size={14} /> Skin Consistency Heatmap (Last 30 Days)
  </p>
- <div style={{ display: 'flex', gap: '6px', overflowX: 'auto', paddingBottom: '8px' }}>
+ <div style={{ display: 'flex', gap: '6px', overflowX: 'auto', paddingBottom: '8px' }} suppressHydrationWarning>
  {streakInfo.calendarGrid.map((day, idx) => {
  // Color based on rating
  let bg = 'var(--sand)'; // Empty
- let title = `No entry on ${day.date.toLocaleDateString("en-US")}`;
+ const safeDateStr = formatJournalDateSafe(day.date);
+ let title = `No entry on ${safeDateStr}`;
  if (day.rating > 0) {
  const ratingColors = [
  '#fbe9e7', // 1 star
@@ -666,13 +696,14 @@ export function SkinJournalClient({ initialEntries, isPro }: { initialEntries: a
  '#fc2779', // 5 star (glowing brand red!)
  ];
  bg = ratingColors[day.rating - 1];
- title = `Rating: ${day.rating} Stars on ${day.date.toLocaleDateString("en-US")}${day.hasPhoto ? ' (Photo logged)' : ''}`;
+ title = `Rating: ${day.rating} Stars on ${safeDateStr}${day.hasPhoto ? ' (Photo logged)' : ''}`;
  }
 
  return (
  <div
  key={idx}
  title={title}
+ suppressHydrationWarning
  style={{
  width: '18px',
  height: '18px',
@@ -724,9 +755,8 @@ export function SkinJournalClient({ initialEntries, isPro }: { initialEntries: a
  <div style={{ padding: "2rem", textAlign: "center", color: "var(--muted)" }}>No journal entries yet. Add one!</div>
  )}
  {entries.map(entry => {
- const dateObj = new Date(entry.date);
- const month = dateObj.toLocaleString('en-US', { month: 'short' });
- const day = dateObj.getDate();
+ const month = getJournalMonthSafe(entry.date);
+ const day = getJournalDaySafe(entry.date);
 
  return (
  <motion.div
@@ -737,11 +767,11 @@ export function SkinJournalClient({ initialEntries, isPro }: { initialEntries: a
  whileHover={{ scale: 1.01 }}
  className="journal-card"
  >
- <div className="journal-date-col">
- <span className="journal-date-month" style={{ display: "block", color: "var(--rose)", fontSize: "0.8rem", textTransform: "uppercase", letterSpacing: "0.1em", fontWeight: 700 }}>
+ <div className="journal-date-col" suppressHydrationWarning>
+ <span className="journal-date-month" suppressHydrationWarning style={{ display: "block", color: "var(--rose)", fontSize: "0.8rem", textTransform: "uppercase", letterSpacing: "0.1em", fontWeight: 700 }}>
  {month}
  </span>
- <span className="journal-date-day" style={{ display: "block", fontFamily: "'Bebas Neue', sans-serif", fontSize: "2rem", color: "var(--ink)", lineHeight: 1.2 }}>
+ <span className="journal-date-day" suppressHydrationWarning style={{ display: "block", fontFamily: "'Bebas Neue', sans-serif", fontSize: "2rem", color: "var(--ink)", lineHeight: 1.2 }}>
  {day}
  </span>
  </div>

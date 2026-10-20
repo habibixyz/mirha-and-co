@@ -7,6 +7,19 @@ import { useEffect, useState } from "react";
 import { logoutAction, toggleRoutineStep, getJournalAnalysis, saveJournalEntry } from "@/app/(saas)/actions";
 import { DashboardStats } from "./DashboardStats";
 
+const MONTHS_SHORT = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+function formatJournalDateSafe(d: Date | string | null | undefined): string {
+  if (!d) return "";
+  try {
+    const date = typeof d === "string" ? new Date(d) : d;
+    if (isNaN(date.getTime())) return "";
+    return `${MONTHS_SHORT[date.getUTCMonth()]} ${date.getUTCDate()}`;
+  } catch {
+    return "";
+  }
+}
+
 export function DashboardClient({ user, routines, recentJournal, stats }: any) {
  const today = new Date().toISOString().split("T")[0];
  
@@ -728,7 +741,7 @@ export function DashboardClient({ user, routines, recentJournal, stats }: any) {
  border: "1px solid var(--dash-border)"
  }}>
  <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.6rem", alignItems: "center" }}>
- <span style={{ fontWeight: 600, fontSize: "0.85rem", opacity: 0.7 }}>{new Date(recentJournal.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</span>
+ <span suppressHydrationWarning style={{ fontWeight: 600, fontSize: "0.85rem", opacity: 0.7 }}>{formatJournalDateSafe(recentJournal.date)}</span>
  <span style={{ fontSize: "0.8rem", color: "white", background: "var(--dash-ink)", padding: "2px 8px", borderRadius: "8px" }}>★ {recentJournal.rating}/5</span>
  </div>
  <p style={{ margin: 0, color: "var(--dash-muted)", lineHeight: 1.5, fontSize: "0.9rem" }}>"{recentJournal.entry}"</p>
