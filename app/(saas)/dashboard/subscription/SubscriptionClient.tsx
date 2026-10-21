@@ -20,7 +20,7 @@ export function SubscriptionClient({
   userId,
   isAdmin 
 }: SubscriptionClientProps) {
-  const [activePendingType, setActivePendingType] = useState<"monthly" | "yearly" | null>(null);
+  const [activePendingType, setActivePendingType] = useState<"monthly" | "yearly" | "onetime" | null>(null);
   const [billingPeriod, setBillingPeriod] = useState<"monthly" | "yearly">("yearly");
   const [paymentRegion, setPaymentRegion] = useState<"INR" | "USD">("INR");
   const [isPortalLoading, setIsPortalLoading] = useState(false);

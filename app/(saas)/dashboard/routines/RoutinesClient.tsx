@@ -173,13 +173,24 @@ export function RoutinesClient({ initialRoutines }: RoutinesClientProps) {
     const updatedSteps = [...activeSteps];
     updatedSteps[stepIdx] = editStepText.trim();
 
+    // Optimistic update
+    setRoutines((prev: any[]) =>
+      prev.map((r: any) =>
+        r.id === activeRoutine.id ? { ...r, steps: updatedSteps } : r
+      )
+    );
+    setEditingStepIdx(null);
+
     startTransition(async () => {
       try {
         await updateRoutine(activeRoutine.id, activeRoutine.name, updatedSteps);
-        const refreshed = await getDashboardData();
-        if (refreshed.routines) setRoutines(refreshed.routines);
-        setEditingStepIdx(null);
       } catch (e: any) {
+        // Roll back optimistic update on failure
+        setRoutines((prev: any[]) =>
+          prev.map((r: any) =>
+            r.id === activeRoutine.id ? { ...r, steps: activeSteps } : r
+          )
+        );
         setError(e.message || "Failed to update step.");
       }
     });
@@ -187,19 +198,28 @@ export function RoutinesClient({ initialRoutines }: RoutinesClientProps) {
 
   const handleAddNewStep = async () => {
     if (!newStepInput.trim()) return;
-    const updatedSteps = [...activeSteps, newStepInput.trim()];
+    const newStep = newStepInput.trim();
+    const updatedSteps = [...activeSteps, newStep];
+
+    setNewStepInput("");
+    setShowAddStep(false);
 
     startTransition(async () => {
       try {
         if (activeRoutine?.id) {
+          // Optimistic update for existing routine
+          setRoutines((prev: any[]) =>
+            prev.map((r: any) =>
+              r.id === activeRoutine.id ? { ...r, steps: updatedSteps } : r
+            )
+          );
           await updateRoutine(activeRoutine.id, activeRoutine.name, updatedSteps);
         } else {
+          // Create new routine and refresh to get the DB-assigned id
           await saveRoutine(activeTab === "am" ? "Morning Regimen (AM)" : "Evening Regimen (PM)", updatedSteps);
+          const refreshed = await getDashboardData();
+          if (refreshed?.routines) setRoutines(refreshed.routines);
         }
-        const refreshed = await getDashboardData();
-        if (refreshed.routines) setRoutines(refreshed.routines);
-        setNewStepInput("");
-        setShowAddStep(false);
       } catch (e: any) {
         setError(e.message || "Failed to add step.");
       }
@@ -207,27 +227,47 @@ export function RoutinesClient({ initialRoutines }: RoutinesClientProps) {
   };
 
   const handleDeleteStep = async (stepIdx: number) => {
-    if (!activeRoutine?.id) return;
+    if (!activeRoutine?.id) {
+      setError("Save your routine first before deleting steps.");
+      return;
+    }
     const updatedSteps = activeSteps.filter((_, idx) => idx !== stepIdx);
+
+    // Optimistic update immediately
+    setRoutines((prev: any[]) =>
+      prev.map((r: any) =>
+        r.id === activeRoutine.id ? { ...r, steps: updatedSteps } : r
+      )
+    );
 
     startTransition(async () => {
       try {
         await updateRoutine(activeRoutine.id, activeRoutine.name, updatedSteps);
-        const refreshed = await getDashboardData();
-        if (refreshed.routines) setRoutines(refreshed.routines);
       } catch (e: any) {
+        // Roll back on failure
+        setRoutines((prev: any[]) =>
+          prev.map((r: any) =>
+            r.id === activeRoutine.id ? { ...r, steps: activeSteps } : r
+          )
+        );
         setError(e.message || "Failed to remove step.");
       }
     });
   };
 
   const handleDeleteArchiveRoutine = async (id: string) => {
+    // Optimistic removal from local state
+    setRoutines((prev: any[]) => prev.filter((r: any) => r.id !== id));
+
     startTransition(async () => {
       try {
         await deleteRoutine(id);
-        const refreshed = await getDashboardData();
-        if (refreshed.routines) setRoutines(refreshed.routines);
       } catch (e: any) {
+        // Refresh state on failure since optimistic removal may be wrong
+        try {
+          const refreshed = await getDashboardData();
+          if (refreshed?.routines) setRoutines(refreshed.routines);
+        } catch {}
         setError(e.message || "Failed to delete routine.");
       }
     });
