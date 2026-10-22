@@ -425,7 +425,7 @@ export default async function ProductPage({ params }: { params: Promise<{ asin: 
     font-family: 'DM Sans', sans-serif;
     width: 100%;
     max-width: 100vw;
-    overflow-x: hidden;
+    overflow-x: clip;
   }
 
   .product-shell {
@@ -466,11 +466,12 @@ export default async function ProductPage({ params }: { params: Promise<{ asin: 
     justify-content: center;
     min-height: 480px;
     position: sticky;
-    top: 88px;
+    top: 32px;
     align-self: start;
     min-width: 0;
     max-width: 100%;
     box-sizing: border-box;
+    z-index: 10;
   }
 
   .image-panel img {

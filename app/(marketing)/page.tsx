@@ -1199,7 +1199,7 @@ export default async function BeautyShopPage() {
                   }}
                 />
               </Link>
-              <Link href="/register" className="secondary-btn">
+              <Link href="/register" rel="nofollow" className="secondary-btn">
                 Create Free Profile
               </Link>
             </div>

@@ -39,6 +39,54 @@ const nextConfig: NextConfig = {
       bodySizeLimit: '10mb',
     },
   },
+  async redirects() {
+    return [
+      // 404 Blog Slugs (Renamed / Consolidated)
+      {
+        source: "/blog/barrier-repair-protocol",
+        destination: "/blog/damaged-skin-barrier-repair",
+        permanent: true,
+      },
+      {
+        source: "/blog/beginner-retinol-guide-india",
+        destination: "/blog/best-retinol-serum-for-beginners-india",
+        permanent: true,
+      },
+      {
+        source: "/blog/niacinamide-benefits",
+        destination: "/blog/best-niacinamide-serums-india",
+        permanent: true,
+      },
+      // 404 Product ASINs (Corrected / Fallback)
+      {
+        source: "/product/B07G7N9B7N",
+        destination: "/product/B07VP5JFRB",
+        permanent: true,
+      },
+      {
+        source: "/product/B08GG9M863",
+        destination: "/product/B01MDTVZTZ",
+        permanent: true,
+      },
+      {
+        source: "/product/B087H8S7H1",
+        destination: "/#shop",
+        permanent: true,
+      },
+      // Old generic search path
+      {
+        source: "/search",
+        destination: "/blog",
+        permanent: true,
+      },
+      // City Water Quality Duplicate Consolidation (Google chose bengaluru)
+      {
+        source: "/water-quality/bangalore",
+        destination: "/water-quality/bengaluru",
+        permanent: true,
+      },
+    ];
+  },
   async headers() {
     return [
       {

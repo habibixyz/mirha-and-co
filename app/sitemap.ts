@@ -85,7 +85,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...CITIES.map((c) => c.slug),
     ...GLOBAL_CITIES.map((c) => c.slug),
   ];
-  const uniqueCitySlugs = Array.from(new Set(citySlugs));
+  const uniqueCitySlugs = Array.from(new Set(citySlugs)).filter(
+    (slug) => slug !== "bangalore"
+  );
   const waterQualityRoutes = uniqueCitySlugs.map((slug) => ({
     url: `${baseUrl}/water-quality/${slug}`,
     lastModified: buildRevisionDate,

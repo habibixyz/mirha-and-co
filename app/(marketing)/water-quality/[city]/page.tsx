@@ -25,7 +25,9 @@ export function generateStaticParams() {
     ...CITIES.map((c) => c.slug),
     ...GLOBAL_CITIES.map((c) => c.slug),
   ];
-  const uniqueCitySlugs = Array.from(new Set(citySlugs));
+  const uniqueCitySlugs = Array.from(new Set(citySlugs)).filter(
+    (slug) => slug !== "bangalore"
+  );
   return uniqueCitySlugs.map((slug) => ({ city: slug }));
 }
 

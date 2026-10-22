@@ -595,6 +595,7 @@ export default function FreeAnalysisToolClient({ isLoggedIn = false }: { isLogge
                 <div className="dz-actions-row" style={{ marginTop: "8px" }}>
                   <Link
                     href="/login?redirect=/tools/analysis"
+                    rel="nofollow"
                     className="btn-editorial primary"
                     style={{ textDecoration: "none", display: "inline-flex", alignItems: "center", justifyContent: "center" }}
                   >
@@ -602,6 +603,7 @@ export default function FreeAnalysisToolClient({ isLoggedIn = false }: { isLogge
                   </Link>
                   <Link
                     href="/register?redirect=/tools/analysis"
+                    rel="nofollow"
                     className="btn-editorial"
                     style={{ textDecoration: "none", display: "inline-flex", alignItems: "center", justifyContent: "center" }}
                   >
