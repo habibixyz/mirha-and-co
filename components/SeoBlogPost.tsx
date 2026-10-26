@@ -354,6 +354,57 @@ export async function SeoBlogPost({
       q: "Should I spray a facial mist at my desk when my face feels tight?",
       a: "No. Pure water or floral mists evaporate rapidly in low-humidity air conditioning, stripping away your skin's natural moisturizing factors (NMF) in the process. If your skin feels tight, gently press a pea-sized amount of barrier cream over dry areas instead."
     }
+  ] : slug === "non-comedogenic-makeup-acne-prone-skin-india" ? [
+    {
+      q: "Can I wear foundation if I have active acne breakouts?",
+      a: "Yes, provided you choose lightweight, oil-free liquid foundations or water gels rather than heavy cream sticks or thick compacts. Spot-concealing red marks while leaving the rest of your skin bare allows your barrier to breathe and heal faster."
+    },
+    {
+      q: "Why does makeup cause more breakouts in hot Indian humidity?",
+      a: "High tropical heat triggers sweat and sebum secretion. When heavy cosmetic esters mix with sweat and ambient dust, they form dense impactions at the pore mouth, creating the ideal warm environment for acne bacteria to thrive."
+    },
+    {
+      q: "What is the safest way to prep skin before putting on foundation?",
+      a: "Never apply pigments directly to dehydrated skin. Layer an oil-free, water-based gel moisturizer with aloe or hyaluronic acid, followed by an oil-controlling matte sunscreen gel to create a protective barrier between your pores and the makeup."
+    },
+    {
+      q: "How should I remove long-wear foundation without damaging my skin barrier?",
+      a: "Always double cleanse in the evening. Begin with a gentle cleansing balm or micellar water to break down waterproof pigments and SPF without aggressive rubbing, followed by a mild, soap-free foaming gel wash."
+    }
+  ] : slug === "pore-clogging-ingredients-in-foundation-concealer" ? [
+    {
+      q: "Does 'dermatologist tested' guarantee a foundation won't clog pores?",
+      a: "No. 'Dermatologist tested' and 'non-comedogenic' are unregulated marketing claims with no standardized legal definition. Always check the actual INCI ingredients list on the packaging for heavy synthetic esters and waxy thickeners."
+    },
+    {
+      q: "Are silicones like Dimethicone safe for acne-prone skin?",
+      a: "Yes. Cosmetic-grade silicones like Dimethicone and Silica are rated 0/5 on the comedogenicity scale. Their molecular size is too large to enter human pores, forming a breathable, porous grid that lets sweat evaporate."
+    },
+    {
+      q: "Why are natural oils like coconut oil risky in facial makeup?",
+      a: "Coconut oil, cocoa butter, and wheat germ oil are high in dense saturated fatty acids that solidify at skin temperature, making them highly comedogenic (rated 4/5 to 5/5) for facial pores in humid weather."
+    },
+    {
+      q: "How can I test a new foundation before wearing it on my whole face?",
+      a: "Patch test a dime-sized amount along your lower jawline or side of the neck for 3 consecutive days. Check for flesh-colored bumps or redness before applying all over."
+    }
+  ] : slug === "makeup-breakouts-vs-purging-treatment" ? [
+    {
+      q: "Can a foundation or concealer cause my skin to 'purge'?",
+      a: "No. Makeup cannot cause skin purging. Purging only occurs with active chemical exfoliants like Salicylic Acid (BHA), Glycolic Acid (AHA), or Retinoids that accelerate cellular turnover. Any bump from makeup is acne cosmetica or irritation."
+    },
+    {
+      q: "How do I know if my breakouts are from makeup or regular acne?",
+      a: "Post-makeup bumps (acne cosmetica) typically appear within 12 to 36 hours strictly in areas where base makeup was applied, presenting as uniform flesh-colored closed bumps rather than cyclical hormonal cysts."
+    },
+    {
+      q: "How often should I clean my makeup sponges and brushes?",
+      a: "Wash sponges after every single use with mild antibacterial soap and warm water, allowing them to dry in a well-ventilated area. Damp sponges stored in dark makeup bags rapidly breed Cutibacterium acnes bacteria."
+    },
+    {
+      q: "What is the best immediate reset if makeup caused sudden breakouts?",
+      a: "Take a 48-hour break from base makeup, apply a gentle 2% Salicylic Acid solution directly onto congested spots at night, and soothe the barrier with a lightweight ceramide moisturizer. Never pick or scrub inflamed skin."
+    }
   ] : [];
 
   const faqJsonLd = faqQuestions.length > 0 ? {

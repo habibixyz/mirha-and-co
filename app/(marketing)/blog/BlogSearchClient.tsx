@@ -302,8 +302,8 @@ export default function BlogSearchClient({ initialPosts, catColors, currency }: 
  <span>{post.date}</span>
  <span>{post.readTime}</span>
  <span>{post.productCount} picks</span>
- {post.views !== undefined && post.views > 0 && (
-   <span>{post.views.toLocaleString()} reads</span>
+ {typeof post.views === "number" && (
+   <span>{post.views.toLocaleString()} {post.views === 1 ? "read" : "reads"}</span>
  )}
  </div>
  </a>

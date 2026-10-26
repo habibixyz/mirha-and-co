@@ -1,41 +1,26 @@
 import Link from "next/link";
 import Image from "next/image";
-import { unstable_cache } from "next/cache";
 import { ArrowRight, Layers, Droplet, Flower, Coins, Compass } from "lucide-react";
 import { cookies } from "next/headers";
 import { PRODUCTS } from "@/lib/products";
 import { Locale, DICTIONARY, RTL_LOCALES } from "@/lib/globalization";
-import { prisma } from "@/lib/prisma";
 import FaceScannerUI from "@/components/FaceScannerUI";
 import heroIndianFace from "@/components/hero_indian_face.png";
 import ShopFilterClientLazy from "@/components/ShopFilterClientLazy";
 import { DussehraHeroBadge } from "@/components/DussehraVisuals";
 
-// Cache all homepage stats for 5 minutes — these are vanity metrics,
-// not real-time data, so staleness is perfectly acceptable.
-const getHomepageStats = unstable_cache(
-  async () => {
-    const [routinesCount, dbProductsCount, ingredientsCount, usersCount, b2bKeysCount, b2bCallsCount] =
-      await Promise.all([
-        prisma.routine.count().catch(() => 0),
-        prisma.product.count().catch(() => 0),
-        // Raw count of distinct comma-separated ingredient tokens is expensive;
-        // use a fixed approximation that stays accurate enough for the ticker belt.
-        prisma.product.count({ where: { ingredients: { not: "" } } }).catch(() => 0),
-        prisma.user.count().catch(() => 0),
-        prisma.b2BApiKey.count().catch(() => 0),
-        prisma.b2BUsageLog.count().catch(() => 0),
-      ]);
-
-    // Approximate unique ingredients: each product has ~15–20 ingredients on average.
-    // This avoids fetching every row just to count strings.
-    const ingredientEstimate = ingredientsCount * 17;
-
-    return { routinesCount, dbProductsCount, ingredientEstimate, usersCount, b2bKeysCount, b2bCallsCount };
-  },
-  ["homepage-stats-v2"],
-  { revalidate: 300, tags: ["homepage-stats-v2"] }
-);
+const TICKER_HIGHLIGHTS = [
+  { label: "AI Camera Skin & Barrier Scanner", href: "/tools/analysis" },
+  { label: "Makeup Lab & Real-Time Vibe Check", href: "/makeup" },
+  { label: "Batch Expiry & Authenticity Checker", href: "/tools/batch-checker" },
+  { label: "Climate & City Water Hardness Telemetry", href: "/tools/hard-water" },
+  { label: "Luxury Skincare Dupe Finder", href: "/tools/dupes" },
+  { label: "AM & PM AI Routine Builder", href: "/tools/routine" },
+  { label: "Formulation & Ingredient Safety Decoder", href: "/tools/ingredients" },
+  { label: "Headless B2B Intelligence API & Widgets", href: "/b2b" },
+  { label: "Curated K-Beauty Collection", href: "/k-beauty" },
+  { label: "100% Independent & Science-Backed", href: "/about" },
+];
 
 type Product = {
   id: number;
@@ -90,16 +75,7 @@ export default async function BeautyShopPage() {
   const isRtl = RTL_LOCALES.includes(locale);
   const t = (key: string) => DICTIONARY[locale]?.[key] || DICTIONARY.en[key] || key;
 
-  // Fetch cached statistics — results revalidate every 5 minutes via unstable_cache
-  const { routinesCount, dbProductsCount, ingredientEstimate, usersCount, b2bKeysCount, b2bCallsCount } =
-    await getHomepageStats();
 
-  const finalRoutinesCount = routinesCount || 12;
-  const finalProductsCount = dbProductsCount || PRODUCT_LIST.length;
-  const finalIngredientsCount = ingredientEstimate || 176;
-  const finalUsersCount = usersCount || 5;
-  const finalB2bKeysCount = b2bKeysCount || 0;
-  const finalB2bCallsCount = b2bCallsCount || 0;
 
 
   const picks = EDITOR_PICK_CONFIG.map((cfg) => {
@@ -384,17 +360,21 @@ export default async function BeautyShopPage() {
           border-top: 1px solid #e6dcd2;
           border-bottom: 1px solid #e6dcd2;
           overflow: hidden;
-          background: #faf5ef;
+          background: #faf6f0;
           padding: 0;
-          height: 38px;
+          height: 40px;
           display: flex;
           align-items: center;
+        }
+
+        .ticker-belt:hover .ticker-track {
+          animation-play-state: paused;
         }
 
         .ticker-track {
           display: flex;
           gap: 0;
-          animation: ticker-scroll 32s linear infinite;
+          animation: ticker-scroll 45s linear infinite;
           white-space: nowrap;
           will-change: transform;
         }
@@ -402,20 +382,26 @@ export default async function BeautyShopPage() {
         .ticker-item {
           display: inline-flex;
           align-items: center;
-          gap: 18px;
-          padding: 0 32px;
-          font-size: 9px;
-          letter-spacing: 0.22em;
+          gap: 16px;
+          padding: 0 28px;
+          font-size: 9.5px;
+          letter-spacing: 0.2em;
           text-transform: uppercase;
           font-weight: 700;
-          color: #9b8f85;
+          color: #8c8075;
           font-family: 'DM Sans', sans-serif;
           flex-shrink: 0;
+          text-decoration: none;
+          transition: color 0.2s ease;
+        }
+
+        .ticker-item:hover {
+          color: #fc2779;
         }
 
         .ticker-dot {
-          width: 3px;
-          height: 3px;
+          width: 4px;
+          height: 4px;
           border-radius: 50%;
           background: #fc2779;
           flex-shrink: 0;
@@ -429,8 +415,8 @@ export default async function BeautyShopPage() {
         /* Mobile ticker bleed correction */
         @media (max-width: 640px) {
           .ticker-belt-wrapper { margin: 0 -16px; }
-          .ticker-item { padding: 0 20px; gap: 14px; }
-          .ticker-belt { animation-duration: 22s; }
+          .ticker-item { padding: 0 18px; gap: 12px; font-size: 9px; }
+          .ticker-track { animation-duration: 30s; }
         }
 
         .section {
@@ -1297,12 +1283,12 @@ export default async function BeautyShopPage() {
           <div className="ticker-track">
             {[...Array(2)].map((_, i) => (
               <div key={i} style={{ display: "contents" }}>
-                <div className="ticker-item"><span className="ticker-dot" />{finalRoutinesCount.toLocaleString()} Routines Built</div>
-                <div className="ticker-item"><span className="ticker-dot" />{finalProductsCount.toLocaleString()} Products Scanned</div>
-                <div className="ticker-item"><span className="ticker-dot" />{finalIngredientsCount.toLocaleString()} Ingredients Analyzed</div>
-                <div className="ticker-item"><span className="ticker-dot" />{finalUsersCount.toLocaleString()} B2C Skin Dashboards</div>
-                <div className="ticker-item"><span className="ticker-dot" />B2B API Integration Ready</div>
-                <div className="ticker-item"><span className="ticker-dot" />Climate-Aware Recommendations</div>
+                {TICKER_HIGHLIGHTS.map((item, idx) => (
+                  <Link key={idx} href={item.href} className="ticker-item">
+                    <span className="ticker-dot" />
+                    <span>{item.label}</span>
+                  </Link>
+                ))}
               </div>
             ))}
           </div>

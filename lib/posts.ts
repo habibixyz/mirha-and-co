@@ -1029,9 +1029,9 @@ const hashString = (str: string) => {
 
 // Complete slug → unique image lookup table (all 34 available images used)
 const SLUG_IMAGE_MAP: Record<string, string> = {
-  "non-comedogenic-makeup-acne-prone-skin-india": "https://azsofabirbgovazlfzvn.supabase.co/storage/v1/object/public/blog-images/diwali_unisex_festive_glow.jpg",
-  "pore-clogging-ingredients-in-foundation-concealer": "https://azsofabirbgovazlfzvn.supabase.co/storage/v1/object/public/blog-images/ac_face_banner.jpg",
-  "makeup-breakouts-vs-purging-treatment": "https://azsofabirbgovazlfzvn.supabase.co/storage/v1/object/public/blog-images/dussehra_skincare_detox_guide.jpg",
+  "non-comedogenic-makeup-acne-prone-skin-india": "https://azsofabirbgovazlfzvn.supabase.co/storage/v1/object/public/blog-images/acne_safe_foundation_guide.jpg",
+  "pore-clogging-ingredients-in-foundation-concealer": "https://azsofabirbgovazlfzvn.supabase.co/storage/v1/object/public/blog-images/pore_clogging_foundation_blacklist.jpg",
+  "makeup-breakouts-vs-purging-treatment": "https://azsofabirbgovazlfzvn.supabase.co/storage/v1/object/public/blog-images/makeup_breakouts_vs_purging.jpg",
   "diwali-skincare-prep-glow-protocol": "https://azsofabirbgovazlfzvn.supabase.co/storage/v1/object/public/blog-images/diwali_unisex_festive_glow.jpg",
   "dussehra-skincare-detox-glow-protocol": "https://azsofabirbgovazlfzvn.supabase.co/storage/v1/object/public/blog-images/dussehra_skincare_detox_guide.jpg",
   "navratri-fragrance-guide-men-women": "https://azsofabirbgovazlfzvn.supabase.co/storage/v1/object/public/blog-images/navratri_fragrance_picks.png",
