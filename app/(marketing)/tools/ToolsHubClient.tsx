@@ -14,6 +14,8 @@ import {
   CheckCircle2,
   BookOpen,
   Flower,
+  ShieldCheck,
+  Palette,
 } from "lucide-react";
 
 type ToolCategory = "all" | "ai" | "shop" | "b2b";
@@ -33,6 +35,48 @@ interface ToolItem {
 }
 
 const TOOLS: ToolItem[] = [
+  {
+    id: "batch-checker",
+    category: "ai",
+    badge: "40+ Brands",
+    title: "Cosmetic Batch & Expiry Lab",
+    subtitle: "Decode production dates, shelf life & PAO freshness",
+    description:
+      "Never put expired or oxidized actives on your barrier. Decode batch codes, calculate period after opening (PAO), and verify product freshness for MAC, Dior, Maybelline, and 40+ brands.",
+    highlights: ["40+ Luxury & drugstore brands", "PAO period-after-opening calculator", "Preservative degradation risk guide"],
+    ctaText: "Check Batch Code",
+    href: "/tools/batch-checker",
+    icon: ShieldCheck,
+    isPopular: true,
+  },
+  {
+    id: "color-studio",
+    category: "shop",
+    badge: "Color Theory",
+    title: "Color Analysis & Harmony Studio",
+    subtitle: "Seasonal palettes, lip/blush harmonies & shade converter",
+    description:
+      "Determine your seasonal color identity (Deep Autumn, Cool Winter, etc.), explore curated lip and cheek color swatches, and convert your foundation shade across MAC, Fenty, Huda, and L'Oréal.",
+    highlights: ["Seasonal contrast & color identity", "Harmonious lip & blush swatches", "Universal cross-brand shade matrix"],
+    ctaText: "Open Color Studio",
+    href: "/tools/color-studio",
+    icon: Palette,
+    isPopular: true,
+  },
+  {
+    id: "makeup",
+    category: "ai",
+    badge: "All-in-One Lab",
+    title: "All-in-One Makeup Lab",
+    subtitle: "Batch code expiry, AI look rater & 3-step routine",
+    description:
+      "Decode cosmetic batch codes for 70+ brands, audit your makeup look with private on-device AI vision, and get customized 3-step routines matched to your skin depth and undertone.",
+    highlights: ["70+ Brand batch expiry decoder", "On-device AI look & harmony rater", "Custom 3-step daily routine"],
+    ctaText: "Launch Makeup Lab",
+    href: "/makeup",
+    icon: Palette,
+    isPopular: true,
+  },
   {
     id: "scan",
     category: "ai",

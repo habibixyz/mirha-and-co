@@ -886,8 +886,11 @@ const mappedHighIntent = HIGH_INTENT_POSTS.map(p => ({
 }));
 
 export const POSTS: Post[] = [
-  // 🌟 Latest Layman-Friendly October 2026 Blog Series (Placed at absolute top per workspace rule)
+  // Clean & Non-Comedogenic Makeup Series (Placed at absolute top per workspace rule 5)
   ...mappedHighIntent.filter(p => [
+    "non-comedogenic-makeup-acne-prone-skin-india",
+    "pore-clogging-ingredients-in-foundation-concealer",
+    "makeup-breakouts-vs-purging-treatment",
     "diwali-skincare-prep-glow-protocol",
     "dussehra-skincare-detox-glow-protocol",
     "ac-face-air-conditioning-dehydration-fix",
@@ -1026,6 +1029,9 @@ const hashString = (str: string) => {
 
 // Complete slug → unique image lookup table (all 34 available images used)
 const SLUG_IMAGE_MAP: Record<string, string> = {
+  "non-comedogenic-makeup-acne-prone-skin-india": "https://azsofabirbgovazlfzvn.supabase.co/storage/v1/object/public/blog-images/diwali_unisex_festive_glow.jpg",
+  "pore-clogging-ingredients-in-foundation-concealer": "https://azsofabirbgovazlfzvn.supabase.co/storage/v1/object/public/blog-images/ac_face_banner.jpg",
+  "makeup-breakouts-vs-purging-treatment": "https://azsofabirbgovazlfzvn.supabase.co/storage/v1/object/public/blog-images/dussehra_skincare_detox_guide.jpg",
   "diwali-skincare-prep-glow-protocol": "https://azsofabirbgovazlfzvn.supabase.co/storage/v1/object/public/blog-images/diwali_unisex_festive_glow.jpg",
   "dussehra-skincare-detox-glow-protocol": "https://azsofabirbgovazlfzvn.supabase.co/storage/v1/object/public/blog-images/dussehra_skincare_detox_guide.jpg",
   "navratri-fragrance-guide-men-women": "https://azsofabirbgovazlfzvn.supabase.co/storage/v1/object/public/blog-images/navratri_fragrance_picks.png",

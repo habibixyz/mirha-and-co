@@ -15,6 +15,185 @@ export interface HighIntentPost {
 
 export const HIGH_INTENT_POSTS: HighIntentPost[] = [
   {
+    slug: "non-comedogenic-makeup-acne-prone-skin-india",
+    title: "The Acne-Safe Makeup Guide: How to Wear Foundation Without Clogging Pores in Indian Humidity",
+    category: "MAKEUP",
+    excerpt: "Tired of paying for flawless evening makeup with five new cystic bumps the next morning? Here is the clinical formulation guide to wearing base makeup safely in Indian heat, sweat, and hard water.",
+    readTime: "9 min",
+    date: "October 2026",
+    thumbnail: "https://azsofabirbgovazlfzvn.supabase.co/storage/v1/object/public/blog-images/diwali_unisex_festive_glow.jpg",
+    tags: ["makeup", "acne", "non comedogenic", "foundation", "oily skin", "concealer", "india", "clogged pores"],
+    asins: ["B087XFYCDQ", "B0046VGJJA", "B08QSQ8T7B", "B07VP5JFRB", "B06XSQ879T", "B0BNLHLGF9"],
+    sections: [
+      {
+        title: "The High-Humidity Dilemma: Why Foundation Breeds Breakouts in India",
+        body: [
+          "For anyone with acne-prone, oily, or sensitive skin, applying foundation often feels like making a devil's bargain: eight hours of blurred, even-toned confidence in exchange for three days of inflamed cystic bumps and closed comedones.",
+          "In tropical and subtropical climates like India, this is not a coincidence. The problem is rarely the pigments alone. When high outdoor heat and ambient humidity mix with endogenous sebum, your skin becomes a warm, occluded incubator. If your liquid foundation contains heavy synthetic esters (like Isopropyl Myristate or Ethylhexyl Palmitate), these oils mix with sweat and trap dead keratinocytes inside follicular canals.",
+          "Worse, hard tap water with high calcium/magnesium PPM binds with the foundation emulsifiers on your face, creating an alkaline surface layer that destroys the skin's acidic barrier and triggers rapid bacterial proliferation.",
+          "The solution is not abandoning makeup. It is understanding cosmetic base chemistry and building a 3-tier barrier defense."
+        ]
+      },
+      {
+        title: "The INCI Blacklist: 5 Esters That Guarantee Clogged Pores",
+        body: [
+          "Before buying any new foundation, primer, or concealer, flip the bottle and scan the ingredients list against these five aggressive comedogenic triggers:",
+          "• **Isopropyl Myristate & Isopropyl Isostearate (5/5 Comedogenic):** Synthetic esters that give creams a silky glide, but rapidly penetrate and swell pore linings, creating microcomedones within hours.",
+          "• **Ethylhexyl Palmitate (4/5 Comedogenic):** Frequently used as a 'clean silicone replacement' in drugstore foundations. Under sweat, it solidifies into dense follicular plugs.",
+          "• **Coconut Alkanes & Coconut Oil (4/5 Comedogenic):** Heavily saturated lipids that lack the breathability required for acne-prone skin.",
+          "• **Myristyl Myristate (5/5 Comedogenic):** A waxy texturizer that causes immediate follicular hyperkeratosis in sebum-dense zones.",
+          "• **Bismuth Oxychloride (3/5 Irritancy):** Used for pearlescent shimmer, but its microscopic crystalline edges cause mechanical micro-abrasions inside pores when you sweat, triggering cystic flares."
+        ],
+        sectionAsins: ["B087XFYCDQ", "B0046VGJJA"]
+      },
+      {
+        title: "The Breathable Silicone vs. Water-Gel Base Rule",
+        body: [
+          "Contrary to clean-beauty myths, pharmaceutical-grade silicones like Dimethicone, Cyclopentasiloxane, and Silica are **non-comedogenic (0/5)**. Because silicone molecular structures are too large to fit inside human pores, they form a breathable, porous grid across the stratum corneum.",
+          "For daily wear, benchmark products like **Maybelline Fit Me Matte + Poreless Foundation** utilize volatile carrier fluids and silica spheres. They blur skin and absorb sebum without depositing heavy fats into the pore opening.",
+          "For targeted coverage, pair it with **Maybelline Fit Me Concealer**—an oil-free, fragrance-free formula that camouflages active red blemishes without suffocating healing tissue."
+        ],
+        sectionAsins: ["B087XFYCDQ", "B0046VGJJA"]
+      },
+      {
+        title: "The Pre-Makeup Barrier Shield Protocol",
+        body: [
+          "Never apply liquid pigments directly onto unshielded, inflamed skin. You need an intermediate barrier that prevents iron oxides from sinking into open pores:",
+          "1. **Prep with Oil-Free Water Gel:** Smooth a thin layer of **Sebamed Clear Face Care Gel**. At pH 5.5, its hyaluronic acid and allantoin hydrate skin while maintaining the acid mantle that kills C. acnes bacteria.",
+          "2. **Lock with Non-Comedogenic Sunscreen Primer:** Layer **RE' EQUIL Ultra Matte Dry Touch Sunscreen**. Its silicone polymer gel creates a velvet barrier that doubles as an oil-controlling primer.",
+          "3. **Tap, Never Rub:** Use a clean synthetic brush or clean fingertips to tap concealer directly over blemishes. Swiping with dirty sponges forces foundation deep into the pore canal."
+        ],
+        sectionAsins: ["B06XSQ879T", "B07VP5JFRB", "B0BNLHLGF9"]
+      },
+      {
+        title: "Safe Removal: The Zero-Scum Evening Double Cleanse",
+        body: [
+          "Leaving even 5% of foundation residue on your pillow will undo all your skincare efforts. Water-resistant polymers require a two-stage removal process:",
+          "First, soak a soft cotton pad with **Bioderma Sensibio H2O Micellar Water** and gently hold it against the skin for 10 seconds to dissolve polymers without rubbing.",
+          "Follow immediately with a lukewarm rinse using **Simple Kind to Skin Facial Wash** to wash away dissolved micellar micelles and sebum. Pat dry with a fresh face towel."
+        ]
+      }
+    ]
+  },
+  {
+    slug: "pore-clogging-ingredients-in-foundation-concealer",
+    title: "15 Hidden Pore-Clogging Ingredients in Your Foundation & Concealer (The 2026 Blacklist)",
+    category: "MAKEUP",
+    excerpt: "Just because a foundation says 'dermatologist tested' does not mean it is acne-safe. Check your vanity against these 15 aggressive comedogenic esters, waxy binders, and fungal acne triggers.",
+    readTime: "10 min",
+    date: "October 2026",
+    thumbnail: "https://azsofabirbgovazlfzvn.supabase.co/storage/v1/object/public/blog-images/ac_face_banner.jpg",
+    tags: ["comedogenic ingredients", "pore clogging makeup", "inci scanner", "acne safe foundation", "fungal acne", "makeup blacklist"],
+    asins: ["B087XFYCDQ", "B0046VGJJA", "B07WTNH18L", "B00112HQIU", "B06XSQ879T"],
+    sections: [
+      {
+        title: "The Marketing Illusion of 'Dermatologist Tested'",
+        body: [
+          "Walk into any beauty store in India, and 90% of foundations and concealers carry claims like 'non-comedogenic', 'clean', or 'dermatologist approved'. Yet millions of women continue to wake up with painful jawline bumps every time they attend a wedding or wear base makeup.",
+          "Here is the regulatory truth: The term 'non-comedogenic' has no standardized clinical legal definition. A brand can conduct an arbitrary patch test on three individuals, observe no immediate allergic swelling, and print 'non-comedogenic' on the packaging.",
+          "To truly protect your skin, you must become your own cosmetic chemist. Below are the 15 most common comedogenic ingredients hidden in popular foundations, concealers, and setting powders."
+        ]
+      },
+      {
+        title: "Tier 1: The Severe Comedogenic Esters (Rating 5/5)",
+        body: [
+          "These ingredients have the highest demonstrated ability to form dense sebaceous plugs within the infundibulum of the hair follicle:",
+          "1. **Isopropyl Myristate (IPM):** A fast-spreading synthetic ester used to create a silky, dry touch. In acne-prone skin, it alters sebum viscosity and sparks microcomedones within 48 hours.",
+          "2. **Isopropyl Isostearate:** A heavier variant that tenaciously resists facial sweat, locking dead skin cells against the pore opening.",
+          "3. **Myristyl Myristate:** Often used in hydrating foundations to give richness. It triggers rapid follicular hyperkeratinization.",
+          "4. **Laureth-4:** A heavy non-ionic emulsifier that binds skin oils into thick impactions while disrupting pore barrier function.",
+          "5. **Wheat Germ Oil (Triticum Vulgare):** Marketed as a nourishing natural oil, its high lipid density starves pores of oxygen, enabling C. acnes bacteria to multiply."
+        ],
+        sectionAsins: ["B087XFYCDQ", "B0046VGJJA"]
+      },
+      {
+        title: "Tier 2: High-Risk Natural Oils & Clean Waxes (Rating 4/5)",
+        body: [
+          "Natural cosmetics often replace silicones with botanical waxes and oils, creating a disaster for oily and acne-prone skin:",
+          "6. **Coconut Alkanes & Cocos Nucifera Oil:** Contains high levels of lauric and myristic saturated fats that solidify at skin temperature.",
+          "7. **Cocoa Butter (Theobroma Cacao):** Fantastic for body eczema, but devastating on facial pores.",
+          "8. **Ethylhexyl Palmitate:** The most common palm oil derivative in budget cosmetics; binds with dead skin to form blackheads.",
+          "9. **Acetylated Lanolin Alcohol:** Chemically altered sheep wool wax that forms an airtight film.",
+          "10. **Polyglyceryl-3 Diisostearate:** Multi-ester thickener commonly used in dewy cushion foundations that congests oily skin in humid weather."
+        ],
+        sectionAsins: ["B07WTNH18L", "B00112HQIU"]
+      },
+      {
+        title: "Tier 3: Hidden Irritants & Fungal Acne Triggers (Rating 3/5)",
+        body: [
+          "11. **Bismuth Oxychloride:** The shimmer additive responsible for post-makeup cystic itching.",
+          "12. **Algae Extract / Carrageenan:** High marine mineral concentrations that trigger inflammatory papules.",
+          "13. **Polysorbate-20 / Polysorbate-60:** Emulsifiers that feed Malassezia yeast, causing uniform forehead fungal breakouts.",
+          "14. **Stearic Acid:** Saturated fatty acid that provides nourishment for acne-causing bacteria.",
+          "15. **Triethanolamine (TEA):** High-pH amine stabilizer that sensitizes skin barrier lipids."
+        ],
+        sectionAsins: ["B06XSQ879T", "B087XFYCDQ"]
+      },
+      {
+        title: "How to Build a 100% Pore-Safe Base Routine",
+        body: [
+          "Look for base formulas anchored by **Dimethicone**, **Isododecane**, **Nylon-12**, and **Silica**. These lightweight polymers provide full-day coverage without melting into pores.",
+          "Always test your product's complete ingredients list on our free **Clean & Non-Comedogenic Makeup Lab** scanner before making a purchase."
+        ]
+      }
+    ]
+  },
+  {
+    slug: "makeup-breakouts-vs-purging-treatment",
+    title: "Why You Break Out Every Time You Wear Makeup: Cosmetic Acne vs Mechanical Purging Explained",
+    category: "MAKEUP",
+    excerpt: "Is your new base makeup causing a temporary adjustment purge or triggering true acne cosmetica? How to identify follicular obstruction, sanitize beauty blenders, and wear makeup with zero flare-ups.",
+    readTime: "8 min",
+    date: "October 2026",
+    thumbnail: "https://azsofabirbgovazlfzvn.supabase.co/storage/v1/object/public/blog-images/dussehra_skincare_detox_guide.jpg",
+    tags: ["cosmetic acne", "acne cosmetica", "purging vs breakout", "sponge hygiene", "double cleansing", "makeup removal"],
+    asins: ["B016NRXO06", "B00V4R0ET0", "B07VP5JFRB", "B0BNLHLGF9", "B08QSQ8T7B"],
+    sections: [
+      {
+        title: "Can Makeup Ever Cause 'Purging'? The Dermatology Truth",
+        body: [
+          "There is a pervasive myth on beauty forums that when you start using a new foundation or CC cream and break out, your skin is simply 'purging toxins' or 'adjusting to the formula'.",
+          "Let us state the clinical reality unequivocally: **Makeup cannot cause purging.**",
+          "Purging only occurs when an active ingredient accelerates cellular turnover rate—specifically chemical exfoliants like Salicylic Acid (BHA), Glycolic Acid (AHA), or retinoids. These bring pre-existing microcomedones to the surface faster.",
+          "Foundations, primers, and setting powders do not accelerate cell turnover. If a cosmetic product gives you bumps, whiteheads, or cysts within 24 to 72 hours, you are experiencing **Acne Cosmetica**—pure follicular occlusion and inflammatory irritation."
+        ]
+      },
+      {
+        title: "Diagnostic Checklist: Identifying Acne Cosmetica",
+        body: [
+          "How can you be certain your makeup is the culprit? Look for these distinct diagnostic signatures:",
+          "• **Location:** Breakouts appear precisely where makeup was concentrated (cheeks, bridge of nose, jawline), rather than your usual hormonal breakout zones.",
+          "• **Texture:** You notice sudden clusters of uniform, closed flesh-colored bumps (microcomedones) that don't develop into whiteheads.",
+          "• **Timing:** Bumps appear within 12 to 36 hours after wearing base makeup for an extended period (>6 hours) in heat or air conditioning.",
+          "• **Resolution:** When you take a 4-day makeup-free break and stick to gentle hydration, the bumps stop multiplying immediately."
+        ]
+      },
+      {
+        title: "The Sponge Trap: Bacterial Load vs Synthetic Brushes",
+        body: [
+          "Often, the foundation formula itself is innocent—the applicator is the true biological culprit.",
+          "Damp beauty sponges are the ideal petri dish for bacterial colonization. The combination of porous hydrophilic foam, trapped skin flakes, water, and dark storage inside makeup pouches breeds colonies of Staphylococcus epidermidis and Cutibacterium acnes.",
+          "When you bounce a damp sponge across your face, you are physically stamping concentrated bacteria into open pores.",
+          "**Hygiene Rules:**",
+          "1. Wash sponges after every single use with an antibacterial, fragrance-free soap.",
+          "2. Microwave your damp sponge for 30 seconds once a week to sterilize bacterial biofilm.",
+          "3. For active acne, transition to flat synthetic foundation brushes that dry quickly and don't retain water inside an inner core."
+        ],
+        sectionAsins: ["B07VP5JFRB", "B08QSQ8T7B"]
+      },
+      {
+        title: "The Emergency Recovery Protocol for Post-Makeup Breakouts",
+        body: [
+          "If you wore heavy makeup over the weekend and woke up with textured congestion, follow this 48-hour reset:",
+          "• **Night 1:** Double cleanse with **Bioderma Sensibio H2O** followed by **COSRX Low pH Good Morning Gel Cleanser**. Apply a soothing layer of **Formularx Barrier Relief Moisturizer** to calm micro-inflammation.",
+          "• **Morning:** Skip all base makeup. Apply **RE' EQUIL Ultra Matte Dry Touch Sunscreen** for breathable UV protection.",
+          "• **Night 2:** Spot treat inflamed lesions with a 2% Salicylic Acid solution or mild Benzoyl Peroxide gel directly on the head of the pimple. Do not scrub."
+        ],
+        sectionAsins: ["B016NRXO06", "B0BNLHLGF9", "B07VP5JFRB"]
+      }
+    ]
+  },
+  {
     slug: "diwali-skincare-prep-glow-protocol",
     title: "The 14-Day Pre-Diwali Glass Skin & Detox Protocol: The Unisex Guide to Reversing Post-Festive Congestion & Shaving Burnout",
     category: "SKINCARE",

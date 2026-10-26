@@ -68,6 +68,7 @@ export const DICTIONARY: Record<Locale, Record<string, string>> = {
  "nav.dupes": "Dupe Finder",
  "nav.kbeauty": "K-Beauty",
  "nav.men": "Men",
+ "nav.makeup": "Makeup Lab",
  "nav.blog": "Blog",
  "nav.b2b": "B2B SaaS",
  "nav.pricing": "Pricing",

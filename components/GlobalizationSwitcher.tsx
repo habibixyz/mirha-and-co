@@ -42,11 +42,11 @@ export default function GlobalizationSwitcher({
         style={{
           display: "inline-flex",
           alignItems: "center",
-          gap: "6px",
+          gap: "5px",
           background: "rgba(255, 255, 255, 0.4)",
           border: "1px solid var(--rule, rgba(0, 0, 0, 0.08))",
           borderRadius: "999px",
-          padding: "6px 14px",
+          padding: "5px 10px",
           fontSize: "11px",
           fontWeight: 600,
           color: "var(--ink)",

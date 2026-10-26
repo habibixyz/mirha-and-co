@@ -352,6 +352,7 @@ export default async function RootLayout({
  <Link href="/contact" className="footer-link" style={{ color: "#fc2779", fontWeight: 600 }}>Contact &amp; Support</Link>
  <Link href="/blog" className="footer-link">Our Blog</Link>
  <Link href="/tools/analysis" className="footer-link" style={{ color: "#fc2779", fontWeight: 600 }}>Free Skin Scan (1/Day)</Link>
+ <Link href="/makeup" className="footer-link" style={{ color: "#fc2779", fontWeight: 600 }}>Clean Makeup Lab</Link>
  <Link href="/tools/ingredients" className="footer-link">Ingredient Checker</Link>
  <Link href="/tools/hard-water" className="footer-link">Hard Water Test</Link>
  <Link href="/tools/dupes" className="footer-link">Dupe Finder</Link>

@@ -121,6 +121,7 @@ export default function SiteHeader() {
             <Link href="/tools" className="site-header-nav-link hidden lg:inline-flex nav-hide-1280">Diagnostic Tools</Link>
             <Link href="/k-beauty" className="site-header-nav-link hidden lg:inline-flex nav-hide-1350">{t("nav.kbeauty")}</Link>
             <Link href="/mens-grooming" className="site-header-nav-link hidden lg:inline-flex nav-hide-1400">{t("nav.men")}</Link>
+            <Link href="/makeup" className="site-header-nav-link hidden lg:inline-flex nav-hide-1400">{t("nav.makeup")}</Link>
             <Link href="/blog" className="site-header-nav-link hidden lg:inline-flex nav-hide-1400">{t("nav.blog")}</Link>
           </nav>
         </div>
@@ -176,130 +177,139 @@ export default function SiteHeader() {
 
           {/* Drawer panel */}
           <div
-            className="site-header-drawer-content flex h-full w-[340px] sm:w-[380px] max-w-[88vw] flex-col gap-6 border-r border-[#ded7cf] bg-[#fcfbf9] px-6 py-6 shadow-2xl transition-colors duration-300 dark:border-white/15 dark:bg-[#141312] dark:text-[#f7f5f2]"
-            style={{ zIndex: 100000, overflowY: "auto" }}
+            className="site-header-drawer-content flex h-full w-[340px] sm:w-[380px] max-w-[92vw] flex-col gap-3.5 border-r border-[#ded7cf] bg-[#fcfbf9] px-4.5 py-4.5 shadow-2xl transition-colors duration-300 sm:gap-5 sm:px-6 sm:py-6 dark:border-white/15 dark:bg-[#141312] dark:text-[#f7f5f2]"
+            style={{ zIndex: 100000, overflowY: "auto", overflowX: "hidden" }}
           >
             {/* Drawer Header */}
-            <div className="flex items-center justify-between border-b border-[#e5ded6] pb-4 dark:border-white/10">
+            <div className="flex items-center justify-between border-b border-[#e5ded6] pb-3 dark:border-white/10 shrink-0">
               <span className="font-bebas notranslate text-2xl tracking-[0.12em] text-[#11100f] dark:text-white">
                 MIRHA &amp; CO.
               </span>
               <button
                 onClick={handleNavClick}
-                className="cursor-pointer rounded-xl p-2 text-[#2b2826] transition-colors hover:bg-black/5 hover:text-[#fc2779] dark:text-[#f7f5f2] dark:hover:bg-white/10 dark:hover:text-[#ff4d94]"
+                className="cursor-pointer rounded-xl p-1.5 text-[#2b2826] transition-colors hover:bg-black/5 hover:text-[#fc2779] dark:text-[#f7f5f2] dark:hover:bg-white/10 dark:hover:text-[#ff4d94]"
                 aria-label="Close Menu"
               >
-                <X size={22} />
+                <X size={20} />
               </button>
             </div>
 
             {/* Section 1: Tools & Intelligence */}
-            <div className="flex flex-col gap-1.5">
-              <div className="mb-1.5 text-[11px] font-extrabold uppercase tracking-[0.18em] text-[#fc2779] dark:text-[#ff4d94]">
+            <div className="flex flex-col gap-0.5">
+              <div className="mb-1 text-[10px] font-extrabold uppercase tracking-[0.16em] text-[#fc2779] sm:text-[11px] dark:text-[#ff4d94]">
                 Tools &amp; Intelligence
               </div>
               <Link
                 href="/tools/analysis"
                 onClick={handleNavClick}
-                className="rounded-xl px-3.5 py-2.5 text-[14px] font-semibold text-[#fc2779] transition-all hover:bg-[#ffe6f0] dark:text-[#ff4d94] dark:hover:bg-white/10"
+                className="rounded-lg px-3 py-1.5 text-[13.5px] font-semibold text-[#fc2779] transition-all hover:bg-[#ffe6f0] dark:text-[#ff4d94] dark:hover:bg-white/10"
               >
                 Free Daily Skin Scan (1/Day)
               </Link>
               <Link
                 href="/tools"
                 onClick={handleNavClick}
-                className="rounded-xl px-3.5 py-2.5 text-[14px] font-semibold text-[#2b2826] transition-all hover:bg-[#ffe6f0] hover:text-[#fc2779] dark:text-[#f7f5f2] dark:hover:bg-white/10 dark:hover:text-[#ff4d94]"
+                className="rounded-lg px-3 py-1.5 text-[13.5px] font-semibold text-[#2b2826] transition-all hover:bg-[#ffe6f0] hover:text-[#fc2779] dark:text-[#f7f5f2] dark:hover:bg-white/10 dark:hover:text-[#ff4d94]"
               >
                 Diagnostic Tools
               </Link>
               <Link
                 href="/k-beauty"
                 onClick={handleNavClick}
-                className="rounded-xl px-3.5 py-2.5 text-[14px] font-semibold text-[#fc2779] transition-all hover:bg-[#ffe6f0] dark:text-[#ff4d94] dark:hover:bg-white/10"
+                className="rounded-lg px-3 py-1.5 text-[13.5px] font-semibold text-[#fc2779] transition-all hover:bg-[#ffe6f0] dark:text-[#ff4d94] dark:hover:bg-white/10"
               >
                 K-Beauty Picks
               </Link>
               <Link
                 href="/mens-grooming"
                 onClick={handleNavClick}
-                className="rounded-xl px-3.5 py-2.5 text-[14px] font-semibold text-[#2b2826] transition-all hover:bg-[#ffe6f0] hover:text-[#fc2779] dark:text-[#f7f5f2] dark:hover:bg-white/10 dark:hover:text-[#ff4d94]"
+                className="rounded-lg px-3 py-1.5 text-[13.5px] font-semibold text-[#2b2826] transition-all hover:bg-[#ffe6f0] hover:text-[#fc2779] dark:text-[#f7f5f2] dark:hover:bg-white/10 dark:hover:text-[#ff4d94]"
               >
                 Men&apos;s Grooming
               </Link>
               <Link
+                href="/makeup"
+                onClick={handleNavClick}
+                className="rounded-lg px-3 py-1.5 text-[13.5px] font-semibold text-[#fc2779] transition-all hover:bg-[#ffe6f0] dark:text-[#ff4d94] dark:hover:bg-white/10"
+              >
+                Clean Makeup Lab
+              </Link>
+              <Link
                 href="/blog"
                 onClick={handleNavClick}
-                className="rounded-xl px-3.5 py-2.5 text-[14px] font-semibold text-[#2b2826] transition-all hover:bg-[#ffe6f0] hover:text-[#fc2779] dark:text-[#f7f5f2] dark:hover:bg-white/10 dark:hover:text-[#ff4d94]"
+                className="rounded-lg px-3 py-1.5 text-[13.5px] font-semibold text-[#2b2826] transition-all hover:bg-[#ffe6f0] hover:text-[#fc2779] dark:text-[#f7f5f2] dark:hover:bg-white/10 dark:hover:text-[#ff4d94]"
               >
                 {t("nav.blog")}
               </Link>
             </div>
 
             {/* Separator */}
-            <div className="border-t border-[#e5ded6] dark:border-white/10" />
+            <div className="border-t border-[#e5ded6] dark:border-white/10 shrink-0" />
 
             {/* Section 2: Company & Developers */}
-            <div className="flex flex-col gap-1.5">
-              <div className="mb-1.5 text-[11px] font-extrabold uppercase tracking-[0.18em] text-[#fc2779] dark:text-[#ff4d94]">
+            <div className="flex flex-col gap-0.5">
+              <div className="mb-1 text-[10px] font-extrabold uppercase tracking-[0.16em] text-[#fc2779] sm:text-[11px] dark:text-[#ff4d94]">
                 Company &amp; Developers
               </div>
               <Link
                 href="/b2b"
                 onClick={handleNavClick}
-                className="rounded-xl px-3.5 py-2.5 text-[14px] font-semibold text-[#2b2826] transition-all hover:bg-[#ffe6f0] hover:text-[#fc2779] dark:text-[#f7f5f2] dark:hover:bg-white/10 dark:hover:text-[#ff4d94]"
+                className="rounded-lg px-3 py-1.5 text-[13.5px] font-semibold text-[#2b2826] transition-all hover:bg-[#ffe6f0] hover:text-[#fc2779] dark:text-[#f7f5f2] dark:hover:bg-white/10 dark:hover:text-[#ff4d94]"
               >
                 B2B Telemetry API
               </Link>
               <Link
                 href="/about"
                 onClick={handleNavClick}
-                className="rounded-xl px-3.5 py-2.5 text-[14px] font-semibold text-[#2b2826] transition-all hover:bg-[#ffe6f0] hover:text-[#fc2779] dark:text-[#f7f5f2] dark:hover:bg-white/10 dark:hover:text-[#ff4d94]"
+                className="rounded-lg px-3 py-1.5 text-[13.5px] font-semibold text-[#2b2826] transition-all hover:bg-[#ffe6f0] hover:text-[#fc2779] dark:text-[#f7f5f2] dark:hover:bg-white/10 dark:hover:text-[#ff4d94]"
               >
                 {t("nav.about")}
               </Link>
               <Link
                 href="/pricing"
                 onClick={handleNavClick}
-                className="rounded-xl px-3.5 py-2.5 text-[14px] font-semibold text-[#2b2826] transition-all hover:bg-[#ffe6f0] hover:text-[#fc2779] dark:text-[#f7f5f2] dark:hover:bg-white/10 dark:hover:text-[#ff4d94]"
+                className="rounded-lg px-3 py-1.5 text-[13.5px] font-semibold text-[#2b2826] transition-all hover:bg-[#ffe6f0] hover:text-[#fc2779] dark:text-[#f7f5f2] dark:hover:bg-white/10 dark:hover:text-[#ff4d94]"
               >
                 {t("nav.pricing")}
               </Link>
               <Link
                 href="/dashboard"
                 onClick={handleNavClick}
-                className="rounded-xl px-3.5 py-2.5 text-[14px] font-semibold text-[#2b2826] transition-all hover:bg-[#ffe6f0] hover:text-[#fc2779] dark:text-[#f7f5f2] dark:hover:bg-white/10 dark:hover:text-[#ff4d94]"
+                className="rounded-lg px-3 py-1.5 text-[13.5px] font-semibold text-[#2b2826] transition-all hover:bg-[#ffe6f0] hover:text-[#fc2779] dark:text-[#f7f5f2] dark:hover:bg-white/10 dark:hover:text-[#ff4d94]"
               >
                 {t("nav.dashboard")}
               </Link>
             </div>
 
             {/* Controls Toolbar */}
-            <div className="border-t border-[#e5ded6] pt-4 pb-12 dark:border-white/10">
-              <div className="flex items-center justify-between gap-3">
+            <div className="mt-auto border-t border-[#e5ded6] pt-3.5 pb-8 sm:pb-10 dark:border-white/10 shrink-0">
+              <div className="flex items-center justify-between gap-1.5">
                 {/* Language & Currency Pill */}
-                <GlobalizationSwitcher align="left" direction="up" />
+                <div className="shrink min-w-0">
+                  <GlobalizationSwitcher align="left" direction="up" />
+                </div>
 
                 {/* Controls & Social Links Toolbar */}
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1 shrink-0 pr-0.5">
                   <ThemeToggle iconOnly />
-                  <div className="mx-1 h-4 w-[1px] bg-[#e5ded6] dark:bg-white/15" />
+                  <div className="mx-0.5 h-3.5 w-[1px] bg-[#e5ded6] dark:bg-white/15" />
                   <a
                     href="https://www.instagram.com/mirha_andco/"
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="Instagram"
-                    className="rounded-lg p-1.5 text-[#8c857f] transition-colors hover:text-[#fc2779] dark:text-[#827c75] dark:hover:text-[#ff4d94]"
+                    className="flex h-7 w-7 items-center justify-center rounded-lg text-[#8c857f] transition-colors hover:text-[#fc2779] dark:text-[#827c75] dark:hover:text-[#ff4d94]"
                   >
-                    <InstagramIcon size={19} />
+                    <InstagramIcon size={16} />
                   </a>
                   <a
                     href="https://www.linkedin.com/company/mirhaandco/"
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="LinkedIn"
-                    className="rounded-lg p-1.5 text-[#8c857f] transition-colors hover:text-[#fc2779] dark:text-[#827c75] dark:hover:text-[#ff4d94]"
+                    className="flex h-7 w-7 items-center justify-center rounded-lg text-[#8c857f] transition-colors hover:text-[#fc2779] dark:text-[#827c75] dark:hover:text-[#ff4d94]"
                   >
-                    <LinkedInIcon size={19} />
+                    <LinkedInIcon size={16} />
                   </a>
                 </div>
               </div>
