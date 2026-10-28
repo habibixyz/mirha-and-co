@@ -512,8 +512,8 @@ export function SkincareRecs({ postalCode, skinType = "${skinType}" }) {
             <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "var(--dbd-green)", display: "inline-block" }} />
             Live
           </span>
-          <Link href="/b2b" style={{ border: "1px solid var(--dbd-border)", borderRadius: "6px", padding: "5px 12px", fontSize: "11.5px", color: "var(--dbd-text-dim)", textDecoration: "none" }}>
-            Pricing ⌄
+          <Link href="/b2b#pricing" style={{ border: "1px solid var(--dbd-pink)", background: "rgba(236,31,106,0.1)", borderRadius: "6px", padding: "5px 12px", fontSize: "11.5px", color: "var(--dbd-pink)", fontWeight: 600, textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "4px" }}>
+            Upgrade / Plans ↗
           </Link>
         </div>
       </div>
@@ -568,6 +568,11 @@ export function SkincareRecs({ postalCode, skinType = "${skinType}" }) {
                 <div style={{ fontSize: "12px", color: "#86efac" }}>
                   Resets: {new Date(keyDetails.quotaResetAt).toLocaleDateString("en-GB", { day: "numeric", month: "short" })}
                 </div>
+                {keyDetails.tier !== "scale" && (
+                  <Link href="/b2b#pricing" style={{ marginLeft: "auto", fontSize: "11.5px", color: "#fbcfe8", background: "rgba(236,31,106,0.25)", border: "1px solid rgba(236,31,106,0.5)", borderRadius: "4px", padding: "2px 8px", textDecoration: "none", fontWeight: 700, display: "inline-flex", alignItems: "center", gap: "4px" }}>
+                    Upgrade to Scale (1M calls) →
+                  </Link>
+                )}
               </div>
               <div style={{ marginTop: "10px", height: "4px", background: "rgba(0,0,0,0.4)", borderRadius: "99px", overflow: "hidden" }}>
                 <div style={{ height: "100%", width: `${usagePct}%`, background: "linear-gradient(90deg, #22c55e, #4ade80)", borderRadius: "99px", transition: "width 0.6s ease" }} />
@@ -745,9 +750,30 @@ export function SkincareRecs({ postalCode, skinType = "${skinType}" }) {
               <p style={{ margin: "2px 0 0", fontSize: "12px", color: "var(--dbd-text-dim)" }}>Manage your API key security settings and monitor real-time integration usage metrics.</p>
             </div>
             {apiKey !== "b2b_trial_key" && keyDetails && (
-              <span style={{ fontSize: "11px", background: "rgba(236,31,106,0.12)", border: "1px solid rgba(236,31,106,0.3)", color: "var(--dbd-pink)", borderRadius: "99px", padding: "2px 10px", fontWeight: 700 }}>
-                {keyDetails.tier.toUpperCase()} MEMBER
-              </span>
+              <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                <span style={{ fontSize: "11px", background: "rgba(236,31,106,0.12)", border: "1px solid rgba(236,31,106,0.3)", color: "var(--dbd-pink)", borderRadius: "99px", padding: "2px 10px", fontWeight: 700 }}>
+                  {keyDetails.tier.toUpperCase()} MEMBER
+                </span>
+                {keyDetails.tier !== "scale" && (
+                  <Link
+                    href="/b2b#pricing"
+                    style={{
+                      fontSize: "11.5px",
+                      background: "var(--dbd-pink)",
+                      color: "#fff",
+                      borderRadius: "6px",
+                      padding: "4px 10px",
+                      fontWeight: 700,
+                      textDecoration: "none",
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: "4px",
+                    }}
+                  >
+                    Upgrade Plan →
+                  </Link>
+                )}
+              </div>
             )}
           </div>
           <div style={{ display: "grid", gridTemplateColumns: apiKey === "b2b_trial_key" ? "1fr" : "1fr 1fr", gap: "24px" }}>

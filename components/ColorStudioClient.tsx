@@ -539,7 +539,7 @@ export default function ColorStudioClient() {
           <div className="rounded-3xl border border-neutral-200/80 bg-white p-6 md:p-8 shadow-sm dark:border-white/10 dark:bg-neutral-900 space-y-4">
             <div className="flex items-center justify-between border-b border-neutral-100 pb-3 dark:border-white/5">
               <div className="flex items-center gap-2">
-                <span className="text-xl">✨</span>
+                <span className="w-2.5 h-2.5 rounded-full bg-[#fc2779] inline-block"></span>
                 <h3 className="font-serif text-2xl font-normal text-[#161412] dark:text-white">
                   Cheek &amp; Blush Harmonies
                 </h3>
