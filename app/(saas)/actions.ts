@@ -12,91 +12,200 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 
 
 export async function saveRoutine(name: string, steps: string[]) {
- const session = await getSession();
- if (!session) throw new Error("Unauthorized");
+  const session = await getSession();
+  if (!session) throw new Error("Unauthorized");
 
- // ✅ CHECK SUBSCRIPTION STATUS
- const [subscription, user] = await Promise.all([
- prisma.subscription.findUnique({ where: { userId: session.userId } }),
- prisma.user.findUnique({ where: { id: session.userId }, select: { isAdmin: true, email: true } })
- ]);
+  // ✅ CHECK SUBSCRIPTION STATUS
+  const [subscription, user] = await Promise.all([
+    prisma.subscription.findUnique({ where: { userId: session.userId } }),
+    prisma.user.findUnique({ where: { id: session.userId }, select: { isAdmin: true, email: true } })
+  ]);
 
- const isPaid = (subscription?.tier === "pro" && subscription?.status === "active") || user?.isAdmin || user?.email === "tanizcoldz@gmail.com";
- const maxRoutinesPerDay = isPaid ? 10 : 2;
+  const isPaid = (subscription?.tier === "pro" && subscription?.status === "active") || user?.isAdmin || user?.email === "tanizcoldz@gmail.com";
+  const maxRoutines = isPaid ? 25 : 6;
 
- // ✅ RATE LIMITING
- const today = new Date();
- today.setHours(0, 0, 0, 0);
+  // Rate limiting based on total active routines (allows users to delete and recreate freely)
+  const totalRoutines = await prisma.routine.count({
+    where: {
+      userId: session.userId,
+    }
+  });
 
- const routineCountToday = await prisma.routine.count({
- where: {
- userId: session.userId,
- createdAt: { gte: today }
- }
- });
+  if (totalRoutines >= maxRoutines) {
+    if (isPaid) {
+      throw new Error(`You've reached your limit of ${maxRoutines} saved routines.`);
+    } else {
+      throw new Error("You've reached the free limit of 6 saved routines. Upgrade to Pro for unlimited routines.");
+    }
+  }
 
- if (routineCountToday >= maxRoutinesPerDay) {
- if (isPaid) {
- throw new Error(`You've reached your daily limit of ${maxRoutinesPerDay} routines. Please try again tomorrow.`);
- } else {
- throw new Error("UPGRADE_ROUTINE");
- }
- }
+  const cleanSteps = Array.isArray(steps) ? steps.filter(s => typeof s === "string" && s.trim().length > 0) : [];
 
- await prisma.routine.create({
- data: {
- userId: session.userId,
- name,
- routine: JSON.stringify(steps),
- }
- });
+  const created = await prisma.routine.create({
+    data: {
+      userId: session.userId,
+      name: name?.trim() || "My Skincare Regimen",
+      routine: JSON.stringify(cleanSteps),
+      metadata: JSON.stringify({ logs: {} }),
+    }
+  });
 
- revalidatePath("/dashboard/routines");
+  revalidatePath("/dashboard/routines");
+  revalidatePath("/dashboard");
+
+  return {
+    success: true,
+    routine: {
+      id: created.id,
+      name: created.name,
+      steps: cleanSteps,
+      metadata: { logs: {} }
+    }
+  };
+}
+
+export async function getRoutines() {
+  const session = await getSession();
+  if (!session) return [];
+
+  const rows = await prisma.routine.findMany({
+    where: { userId: session.userId },
+    orderBy: { createdAt: "asc" }
+  });
+
+  // Return only plain serializable primitives — no Date objects, no BigInt
+  return rows.map(r => ({
+    id: r.id,
+    name: r.name,
+    steps: (() => {
+      try {
+        const parsed = typeof r.routine === "string" ? JSON.parse(r.routine) : r.routine;
+        return Array.isArray(parsed) ? parsed.filter((s: any) => typeof s === "string") : [];
+      } catch { return []; }
+    })(),
+    metadata: (() => {
+      try {
+        const parsed = typeof r.metadata === "string" ? JSON.parse(r.metadata as string) : r.metadata;
+        return (parsed && typeof parsed === "object") ? parsed : { logs: {} };
+      } catch { return { logs: {} }; }
+    })()
+  }));
 }
 
 export async function deleteRoutine(id: string) {
- const session = await getSession();
- if (!session) throw new Error("Unauthorized");
+  const session = await getSession();
+  if (!session) throw new Error("Unauthorized");
 
- // ✅ CHECK IF ROUTINE BELONGS TO THIS USER
- const existingRoutine = await prisma.routine.findFirst({
- where: {
- id,
- userId: session.userId
- }
- });
+  // ✅ CHECK IF ROUTINE BELONGS TO THIS USER
+  const existingRoutine = await prisma.routine.findFirst({
+    where: {
+      id,
+      userId: session.userId
+    }
+  });
 
- if (!existingRoutine) {
- throw new Error("Routine not found");
- }
+  if (!existingRoutine) {
+    throw new Error("Routine not found");
+  }
 
- // ✅ DELETE THE ROUTINE
- await prisma.routine.delete({
- where: { id }
- });
+  // ✅ DELETE THE ROUTINE
+  await prisma.routine.delete({
+    where: { id }
+  });
 
- revalidatePath("/dashboard/routines");
+  revalidatePath("/dashboard/routines");
+  revalidatePath("/dashboard");
+  return { success: true };
 }
 
 export async function updateRoutine(id: string, name: string, steps: string[]) {
- const session = await getSession();
- if (!session) throw new Error("Unauthorized");
+  const session = await getSession();
+  if (!session) throw new Error("Unauthorized");
 
- const existingRoutine = await prisma.routine.findFirst({
- where: { id, userId: session.userId }
- });
+  const existingRoutine = await prisma.routine.findFirst({
+    where: { id, userId: session.userId }
+  });
 
- if (!existingRoutine) throw new Error("Routine not found");
+  if (!existingRoutine) throw new Error("Routine not found");
 
- await prisma.routine.update({
- where: { id },
- data: {
- name,
- routine: JSON.stringify(steps)
- }
- });
+  const cleanSteps = Array.isArray(steps) ? steps.filter(s => typeof s === "string" && s.trim().length > 0) : [];
 
- revalidatePath("/dashboard/routines");
+  await prisma.routine.update({
+    where: { id },
+    data: {
+      name: name?.trim() || existingRoutine.name,
+      routine: JSON.stringify(cleanSteps)
+    }
+  });
+
+  revalidatePath("/dashboard/routines");
+  revalidatePath("/dashboard");
+  return { success: true };
+}
+
+export async function loadDefaultRoutines() {
+  const session = await getSession();
+  if (!session) throw new Error("Unauthorized");
+
+  const DEFAULT_AM = [
+    "Cleanser: COSRX Low pH Good Morning Gel Cleanser",
+    "Serum: COSRX Advanced Snail 96 Mucin Power Essence",
+    "Moisturizer: Sebamed Clear Face Care Gel (Hydrating & Non-comedogenic)",
+    "Sunscreen: SKIN1004 Madagascar Centella Hyalu-Cica Water-Fit Sun Serum SPF50+"
+  ];
+
+  const DEFAULT_PM = [
+    "Double Cleanse: Bioderma Sensibio H2O Micellar Water + Gentle Cleanser",
+    "Active Treatment: Minimalist 2% Salicylic Acid (BHA) Serum",
+    "Nourish: Formularx Barrier Relief Peptide & Ceramide Lightweight Cream"
+  ];
+
+  const existing = await prisma.routine.findMany({
+    where: { userId: session.userId }
+  });
+
+  const amExists = existing.some(r => r.name.toLowerCase().includes("morning") || r.name.toLowerCase().includes("am"));
+  const pmExists = existing.some(r => r.name.toLowerCase().includes("evening") || r.name.toLowerCase().includes("night") || r.name.toLowerCase().includes("pm"));
+
+  if (!amExists) {
+    await prisma.routine.create({
+      data: {
+        userId: session.userId,
+        name: "Morning Regimen (AM)",
+        routine: JSON.stringify(DEFAULT_AM),
+        metadata: JSON.stringify({ logs: {} })
+      }
+    });
+  }
+
+  if (!pmExists) {
+    await prisma.routine.create({
+      data: {
+        userId: session.userId,
+        name: "Evening Regimen (PM)",
+        routine: JSON.stringify(DEFAULT_PM),
+        metadata: JSON.stringify({ logs: {} })
+      }
+    });
+  }
+
+  revalidatePath("/dashboard/routines");
+  revalidatePath("/dashboard");
+
+  const refreshed = await prisma.routine.findMany({
+    where: { userId: session.userId },
+    orderBy: { createdAt: "asc" }
+  });
+
+  return {
+    success: true,
+    routines: refreshed.map(r => ({
+      id: r.id,
+      name: r.name,
+      steps: safeJsonParse(r.routine, []),
+      metadata: safeJsonParse(r.metadata, { logs: {} })
+    }))
+  };
 }
 
 export async function syncQuizRoutineToVanity(data: {

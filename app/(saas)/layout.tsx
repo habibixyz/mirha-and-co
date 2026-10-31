@@ -96,7 +96,6 @@ export default function SaasLayout({
      />
    </head>
  <body suppressHydrationWarning>
- <Script strategy="afterInteractive" src="https://www.dwin1.com/2904237.js" />
  <style>{`
  *, *::before, *::after { 
  box-sizing: border-box; 
@@ -355,15 +354,63 @@ export default function SaasLayout({
  }
 
  @media (max-width: 768px) {
+ html, body {
+ height: auto !important;
+ min-height: 100% !important;
+ overflow-y: auto !important;
+ overflow-x: hidden !important;
+ -webkit-overflow-scrolling: touch !important;
+ }
+
  body {
- padding: 0;
+ padding: 0 !important;
+ }
+
+ body.sidebar-open {
+ overflow: hidden !important;
  }
 
  .dash-shell {
- grid-template-columns: 1fr;
- height: 100vh;
+ grid-template-columns: minmax(0, 1fr) !important;
+ width: 100% !important;
+ max-width: 100vw !important;
+ overflow-x: hidden !important;
+ height: auto !important;
+ min-height: 100vh;
+ min-height: 100dvh;
  border-radius: 0;
  border: none;
+ box-shadow: none !important;
+ }
+
+ .dash-main {
+ width: 100% !important;
+ max-width: 100% !important;
+ height: auto !important;
+ overflow-x: hidden !important;
+ overflow-y: visible !important;
+ -webkit-overflow-scrolling: touch !important;
+ }
+
+ .dash-main-inner {
+ width: 100% !important;
+ max-width: 100% !important;
+ box-sizing: border-box !important;
+ padding: 4.8rem 1rem 3rem !important;
+ overflow-x: hidden;
+ }
+
+ /* Performance: tame heavy shadows on mobile devices and enable content-visibility */
+ .dash-header-card,
+ .dash-plan-section,
+ .dash-coach-card,
+ .dash-bottom-card,
+ .product-step-card,
+ .stat-card-item,
+ .protocol-banner {
+ box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04) !important;
+ content-visibility: auto;
+ contain-intrinsic-size: 0 120px;
  }
 
  .dash-sidebar {
@@ -376,16 +423,12 @@ export default function SaasLayout({
  background: white;
  z-index: 9998;
  transition: left 0.4s cubic-bezier(0.19, 1, 0.22, 1);
- box-shadow: 30px 0 80px rgba(0, 0, 0, 0.1);
- border-radius: 0 40px 40px 0;
+ box-shadow: 20px 0 50px rgba(0, 0, 0, 0.1);
+ border-radius: 0 32px 32px 0;
  }
 
  body.sidebar-open .dash-sidebar {
  left: 0;
- }
-
- .dash-main-inner {
- padding: 5.5rem 1.25rem 3rem;
  }
 
  .mobile-menu-btn {
