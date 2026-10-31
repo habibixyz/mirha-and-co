@@ -378,13 +378,30 @@ export async function saveJournalEntry(note: string, rating: number, photos: str
 }
 
 export async function getJournalEntries() {
- const session = await getSession();
- if (!session) return [];
+  try {
+    const session = await getSession();
+    if (!session) return [];
 
- return prisma.skinJournal.findMany({
- where: { userId: session.userId },
- orderBy: { date: "desc" }
- });
+    const entries = await prisma.skinJournal.findMany({
+      where: { userId: session.userId },
+      orderBy: { date: "desc" }
+    });
+
+    return entries.map(e => ({
+      id: e.id,
+      userId: e.userId,
+      date: e.date instanceof Date ? e.date.toISOString() : (e.date ? String(e.date) : new Date().toISOString()),
+      entry: e.entry || "",
+      photos: e.photos || "[]",
+      concerns: e.concerns || "[]",
+      aiAnalysis: e.aiAnalysis || null,
+      rating: typeof e.rating === "number" ? e.rating : 5,
+      createdAt: e.createdAt instanceof Date ? e.createdAt.toISOString() : (e.createdAt ? String(e.createdAt) : new Date().toISOString())
+    }));
+  } catch (error) {
+    console.error("Error fetching journal entries:", error);
+    return [];
+  }
 }
 
 function safeJsonParse(val: any, fallback: any) {

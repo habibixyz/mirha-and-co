@@ -169,24 +169,27 @@ export function SkinJournalClient({ initialEntries, isPro }: { initialEntries: a
  }
  };
 
- const handleAnalyzeHistory = async () => {
- if (!isPro) {
- setError("UPGRADE_PRO");
- return;
- }
- setIsAnalyzingHistory(true);
- try {
- const result: any = await getJournalAnalysis();
- if (result?.error) {
- if (result.error === "NOT_ENOUGH_DATA") setError("Please add at least 3 entries to unlock AI Trends.");
- else setError("Upgrade to Pro to unlock Mirha Brain analysis.");
- } else {
- setHistoryAnalysis(result);
- }
- } finally {
- setIsAnalyzingHistory(false);
- }
- };
+  const handleAnalyzeHistory = async () => {
+    if (!isPro) {
+      setError("UPGRADE_PRO");
+      return;
+    }
+    setIsAnalyzingHistory(true);
+    try {
+      const result: any = await getJournalAnalysis();
+      if (result?.error) {
+        if (result.error === "NOT_ENOUGH_DATA") setError("Please add at least 3 entries to unlock AI Trends.");
+        else setError("Upgrade to Pro to unlock Mirha Brain analysis.");
+      } else {
+        setHistoryAnalysis(result);
+      }
+    } catch (e: any) {
+      console.error("AI Trends error:", e);
+      setError("Unable to analyze journal at this moment. Please try again later.");
+    } finally {
+      setIsAnalyzingHistory(false);
+    }
+  };
 
  const handleSave = () => {
  setError(null);
@@ -695,7 +698,8 @@ export function SkinJournalClient({ initialEntries, isPro }: { initialEntries: a
  '#ff8a65', // 4 star
  '#fc2779', // 5 star (glowing brand red!)
  ];
- bg = ratingColors[day.rating - 1];
+ const safeIdx = Math.max(0, Math.min(4, Math.round(Number(day.rating)) - 1));
+ bg = ratingColors[safeIdx] || '#fc2779';
  title = `Rating: ${day.rating} Stars on ${safeDateStr}${day.hasPhoto ? ' (Photo logged)' : ''}`;
  }
 
@@ -777,9 +781,11 @@ export function SkinJournalClient({ initialEntries, isPro }: { initialEntries: a
  </div>
 
  <div>
- <p style={{ margin: "0 0 0.8rem", color: "var(--ink)", fontSize: "1rem", lineHeight: 1.6 }}>"{entry.entry}"</p>
+ <p style={{ margin: "0 0 0.8rem", color: "var(--ink)", fontSize: "1rem", lineHeight: 1.6 }}>
+ {entry.entry && entry.entry.trim().length > 0 ? `"${entry.entry}"` : <span style={{ color: "var(--muted)", fontStyle: "italic" }}>No notes added</span>}
+ </p>
 
- {entry.photos && entry.photos !== "[]" && (
+ {entry.photos && entry.photos !== "[]" && typeof entry.photos === "string" && (entry.photos.startsWith("data:image") || entry.photos.startsWith("http")) && (
  <img src={entry.photos} alt="Photo" style={{ maxHeight: "80px", borderRadius: "8px", marginBottom: "0.8rem" }} />
  )}
 
@@ -801,9 +807,12 @@ export function SkinJournalClient({ initialEntries, isPro }: { initialEntries: a
  )}
 
  <div style={{ display: "flex", gap: "2px" }}>
- {[...Array(5)].map((_: any, i: number) => (
- <Star key={i} size={14} fill={i < entry.rating ? "var(--rose)" : "transparent"} color={i < entry.rating ? "var(--rose)" : "var(--rule)"} />
- ))}
+ {[...Array(5)].map((_: any, i: number) => {
+ const starRating = typeof entry.rating === "number" ? entry.rating : 5;
+ return (
+ <Star key={i} size={14} fill={i < starRating ? "var(--rose)" : "transparent"} color={i < starRating ? "var(--rose)" : "var(--rule)"} />
+ );
+ })}
  </div>
  </div>
 
