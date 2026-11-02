@@ -242,8 +242,14 @@ export async function SeoBlogPost({
     // fallback
   }
 
-  const fullImageUrl = thumbnail
-    ? (thumbnail.startsWith("http") ? thumbnail : `https://www.mirhaandco.com${thumbnail}`)
+  const hasValidThumb = Boolean(
+    thumbnail &&
+    (thumbnail.startsWith("http://") ||
+     thumbnail.startsWith("https://") ||
+     (thumbnail.startsWith("/") && /\.(png|jpe?g|webp|avif|svg)$/i.test(thumbnail)))
+  );
+  const fullImageUrl = hasValidThumb
+    ? (thumbnail!.startsWith("http") ? thumbnail! : `https://www.mirhaandco.com${thumbnail}`)
     : "https://www.mirhaandco.com/opengraph-image.png";
 
   const totalWords = sections.reduce(
@@ -494,22 +500,6 @@ export async function SeoBlogPost({
         .post-hero {
           padding: 42px 0 0;
           margin-bottom: 36px;
-        }
-
-        .hero-image-wrap {
-          margin-top: 28px;
-          border-radius: 14px;
-          overflow: hidden;
-          border: 1px solid #e3d8ce;
-          line-height: 0;
-        }
-
-        .hero-image-wrap img {
-          width: 100%;
-          height: auto;
-          display: block;
-          object-fit: cover;
-          aspect-ratio: 16 / 7;
         }
 
         .hero-meta-sep {
@@ -791,8 +781,6 @@ export async function SeoBlogPost({
           .post-section h2 { font-size: 22px; }
           .post-section p, .post-section li { font-size: 15px; }
           .table-wrap table { font-size: 13px; }
-          .hero-image-wrap { border-radius: 10px; }
-          .hero-image-wrap img { aspect-ratio: 16 / 9; }
           .bottom-picks-grid {
             grid-template-columns: 1fr;
           }
@@ -867,6 +855,9 @@ export async function SeoBlogPost({
         html.dark .seo-post, .dark .seo-post {
           background: #0b0f19 !important;
           color: #f8fafc !important;
+        }
+        html.dark .hero-meta-sep, .dark .hero-meta-sep {
+          border-bottom-color: #283044 !important;
         }
         html.dark .post-faq, .dark .post-faq {
           border-top-color: #283044 !important;
@@ -948,17 +939,6 @@ export async function SeoBlogPost({
           <div className="post-meta">
             Updated {date} &nbsp;·&nbsp; {readTime} read &nbsp;·&nbsp; {views ? `${views.toLocaleString()} reads · ` : ""}Affiliate links disclosed
           </div>
-          {thumbnail && (
-            <div className="hero-image-wrap">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={fullImageUrl}
-                alt={title}
-                loading="eager"
-                decoding="async"
-              />
-            </div>
-          )}
           <hr className="hero-meta-sep" />
         </header>
 

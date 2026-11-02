@@ -61,7 +61,7 @@ export async function generateMetadata() {
     openGraph: {
       title: "Mirha & Co. — Beauty, Wellness & The Good Life",
       description: "Honest reviews, curated finds, and the products worth your money. Evidence-based skincare, wellness, and beauty routines that actually work.",
-      url: "https://mirhaandco.com",
+      url: "https://www.mirhaandco.com",
       siteName: "Mirha & Co.",
       images: [
         {

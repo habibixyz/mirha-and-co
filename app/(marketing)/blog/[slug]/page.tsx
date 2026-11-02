@@ -28,7 +28,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 
   const thumb = (post as any).thumbnail;
-  const ogImage = thumb
+  const hasValidThumb = Boolean(
+    thumb &&
+    (thumb.startsWith("http://") ||
+     thumb.startsWith("https://") ||
+     (thumb.startsWith("/") && /\.(png|jpe?g|webp|avif|svg)$/i.test(thumb)))
+  );
+  const ogImage = hasValidThumb
     ? (thumb.startsWith("http") ? thumb : `https://www.mirhaandco.com${thumb}`)
     : "https://www.mirhaandco.com/opengraph-image.png";
 
