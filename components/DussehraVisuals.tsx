@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { X, Flame } from "lucide-react";
+import { X, ShieldCheck } from "lucide-react";
 
 interface Particle {
   x: number;
@@ -156,20 +156,20 @@ export function DussehraBanner() {
       <style>{`
         .dussehra-banner-root {
           position: relative;
-          background: linear-gradient(90deg, #120d08 0%, #23160a 35%, #2a1b0d 50%, #23160a 65%, #120d08 100%);
-          border-bottom: 1px solid rgba(245, 182, 66, 0.38);
-          color: #fbf5eb;
+          background: linear-gradient(90deg, #0b1118 0%, #111a24 35%, #162230 50%, #111a24 65%, #0b1118 100%);
+          border-bottom: 1px solid rgba(56, 189, 248, 0.32);
+          color: #f0f9ff;
           font-family: var(--font-dm-sans), sans-serif;
           z-index: 50;
           overflow: hidden;
-          box-shadow: 0 4px 20px rgba(245, 158, 11, 0.12);
+          box-shadow: 0 4px 20px rgba(14, 165, 233, 0.12);
         }
 
         .dussehra-banner-root::before {
           content: "";
           position: absolute;
           inset: 0;
-          background: radial-gradient(ellipse 60% 120% at 50% -20%, rgba(251, 191, 36, 0.22), transparent 75%);
+          background: radial-gradient(ellipse 60% 120% at 50% -20%, rgba(56, 189, 248, 0.18), transparent 75%);
           pointer-events: none;
         }
 
@@ -179,7 +179,7 @@ export function DussehraBanner() {
           left: -100%;
           width: 50%;
           height: 100%;
-          background: linear-gradient(90deg, transparent, rgba(255, 223, 130, 0.15), transparent);
+          background: linear-gradient(90deg, transparent, rgba(224, 242, 254, 0.15), transparent);
           transform: skewX(-20deg);
           animation: bannerShimmer 6s infinite ease-in-out;
           pointer-events: none;
@@ -207,9 +207,9 @@ export function DussehraBanner() {
           display: inline-flex;
           align-items: center;
           gap: 0.35rem;
-          background: linear-gradient(135deg, rgba(245, 158, 11, 0.22), rgba(217, 119, 6, 0.12));
-          border: 1px solid rgba(245, 182, 66, 0.5);
-          color: #fcd34d;
+          background: linear-gradient(135deg, rgba(14, 165, 233, 0.22), rgba(2, 132, 199, 0.15));
+          border: 1px solid rgba(56, 189, 248, 0.5);
+          color: #7dd3fc;
           font-weight: 700;
           font-size: 0.62rem;
           letter-spacing: 0.14em;
@@ -217,38 +217,39 @@ export function DussehraBanner() {
           padding: 0.2rem 0.65rem;
           border-radius: 9999px;
           flex-shrink: 0;
-          box-shadow: 0 0 12px rgba(245, 158, 11, 0.25);
+          box-shadow: 0 0 12px rgba(14, 165, 233, 0.25);
         }
 
-        .dussehra-flame-icon {
-          animation: flamePulse 1.8s ease-in-out infinite alternate;
-          color: #fbbf24;
-        }
-
-        @keyframes flamePulse {
-          0% { transform: scale(0.95); opacity: 0.85; filter: drop-shadow(0 0 2px #f59e0b); }
-          100% { transform: scale(1.15); opacity: 1; filter: drop-shadow(0 0 6px #fbbf24); }
+        .dussehra-shield-icon {
+          color: #38bdf8;
         }
 
         .dussehra-text-desktop {
           display: inline;
           font-weight: 500;
-          color: rgba(254, 243, 199, 0.95);
+          color: rgba(240, 249, 255, 0.95);
           letter-spacing: 0.015em;
         }
 
-        .dussehra-text-mobile {
-          display: none;
-          font-weight: 500;
-          color: rgba(254, 243, 199, 0.95);
+        .dussehra-secondary-guide-link {
+          color: #7dd3fc;
+          text-decoration: underline;
+          text-underline-offset: 3px;
+          margin-left: 0.45rem;
+          font-weight: 600;
+          transition: color 0.15s ease;
+        }
+
+        .dussehra-secondary-guide-link:hover {
+          color: #ffffff;
         }
 
         .dussehra-cta {
           display: inline-flex;
           align-items: center;
           gap: 0.35rem;
-          background: linear-gradient(135deg, #f59e0b, #d97706);
-          color: #120d08 !important;
+          background: linear-gradient(135deg, #38bdf8, #0284c7);
+          color: #0c151d !important;
           font-weight: 700;
           font-size: 0.65rem;
           letter-spacing: 0.06em;
@@ -258,13 +259,13 @@ export function DussehraBanner() {
           text-decoration: none;
           flex-shrink: 0;
           transition: all 0.2s ease;
-          box-shadow: 0 2px 10px rgba(217, 119, 6, 0.35);
+          box-shadow: 0 2px 10px rgba(2, 132, 199, 0.35);
         }
 
         .dussehra-cta:hover {
           transform: translateY(-1px) scale(1.02);
-          box-shadow: 0 4px 16px rgba(245, 158, 11, 0.5);
-          background: linear-gradient(135deg, #fbbf24, #f59e0b);
+          box-shadow: 0 4px 16px rgba(56, 189, 248, 0.5);
+          background: linear-gradient(135deg, #7dd3fc, #38bdf8);
         }
 
         .dussehra-dismiss {
@@ -274,7 +275,7 @@ export function DussehraBanner() {
           transform: translateY(-50%);
           background: transparent;
           border: none;
-          color: rgba(254, 243, 199, 0.55);
+          color: rgba(240, 249, 255, 0.55);
           cursor: pointer;
           display: flex;
           align-items: center;
@@ -301,42 +302,46 @@ export function DussehraBanner() {
           .dussehra-banner-mobile {
             display: flex;
             align-items: center;
-            justify-content: center;
-            padding: 0.45rem 2.2rem 0.45rem 0.75rem;
+            justify-content: flex-start;
+            padding: 0.45rem 2.2rem 0.75rem 0.75rem;
             position: relative;
             width: 100%;
+            max-width: 100vw;
+            box-sizing: border-box;
+            overflow: hidden;
           }
           .dussehra-banner-mobile-link {
-            display: inline-flex;
+            display: flex;
             align-items: center;
             gap: 0.45rem;
             text-decoration: none !important;
-            font-size: 0.72rem;
-            color: #fef3c7;
+            font-size: 0.7rem;
+            color: #f0f9ff;
             font-weight: 500;
-            white-space: nowrap;
             overflow: hidden;
-            text-overflow: ellipsis;
-            max-width: 100%;
+            min-width: 0;
+            flex: 1 1 auto;
           }
           .dussehra-banner-mobile-tag {
-            background: rgba(245, 158, 11, 0.2);
-            border: 1px solid rgba(245, 182, 66, 0.45);
-            color: #fbbf24;
+            background: rgba(14, 165, 233, 0.2);
+            border: 1px solid rgba(56, 189, 248, 0.45);
+            color: #7dd3fc;
             font-size: 0.55rem;
             font-weight: 700;
-            letter-spacing: 0.12em;
+            letter-spacing: 0.08em;
             text-transform: uppercase;
             padding: 0.15rem 0.45rem;
             border-radius: 9999px;
             flex-shrink: 0;
           }
           .dussehra-banner-mobile-title {
-            color: #fef3c7;
+            color: #f0f9ff;
             font-weight: 600;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
+            min-width: 0;
+            flex: 1 1 auto;
           }
         }
       `}</style>
@@ -346,16 +351,19 @@ export function DussehraBanner() {
       {/* Desktop view */}
       <div className="dussehra-banner-inner">
         <span className="dussehra-pill">
-          <Flame size={12} className="dussehra-flame-icon" />
-          Festive Skin Reset
+          <ShieldCheck size={12} className="dussehra-shield-icon" />
+          Winter &amp; Smog Defense
         </span>
 
         <span className="dussehra-text-desktop">
-          <strong>Post-Festive Skin Detox:</strong> Reverse smoke &amp; pollution burnout; unisex skin prep for Diwali radiance.
+          <strong>Peak Winter Dryness &amp; Smog:</strong> Protect your barrier against pollution spikes &amp; TEWL.
+          <Link href="/blog/the-4-step-barrier-sun-reset-skincare-guide" className="dussehra-secondary-guide-link">
+            Read 4-Step Reset Guide &rarr;
+          </Link>
         </span>
 
-        <Link href="/blog/diwali-skincare-prep-glow-protocol" className="dussehra-cta">
-          Read Detox Guide &rarr;
+        <Link href="/tools/routine" className="dussehra-cta">
+          Build Routine &rarr;
         </Link>
 
         <button
@@ -368,11 +376,11 @@ export function DussehraBanner() {
         </button>
       </div>
 
-      {/* Mobile view: streamlined single-line bar without squished buttons */}
+      {/* Mobile view */}
       <div className="dussehra-banner-mobile">
-        <Link href="/blog/diwali-skincare-prep-glow-protocol" className="dussehra-banner-mobile-link">
-          <span className="dussehra-banner-mobile-tag">Festive Reset</span>
-          <span className="dussehra-banner-mobile-title">Post-Festive Detox &amp; Pre-Diwali Glow &rarr;</span>
+        <Link href="/tools/routine" className="dussehra-banner-mobile-link">
+          <span className="dussehra-banner-mobile-tag">Winter Reset</span>
+          <span className="dussehra-banner-mobile-title">Build Your Barrier Routine &rarr;</span>
         </Link>
         <button
           onClick={() => setVisible(false)}
@@ -409,15 +417,15 @@ export function DussehraHeroBadge() {
           gap: 0.5rem;
           padding: 0.35rem 0.95rem;
           border-radius: 9999px;
-          background: linear-gradient(135deg, rgba(254, 243, 199, 0.9), rgba(253, 230, 138, 0.65));
-          border: 1px solid rgba(217, 119, 6, 0.4);
-          color: #78350f;
+          background: linear-gradient(135deg, rgba(240, 249, 255, 0.95), rgba(224, 242, 254, 0.8));
+          border: 1px solid rgba(56, 189, 248, 0.45);
+          color: #0369a1;
           font-size: 0.72rem;
           font-weight: 700;
           letter-spacing: 0.12em;
           text-transform: uppercase;
           text-decoration: none;
-          box-shadow: 0 2px 14px rgba(245, 158, 11, 0.18);
+          box-shadow: 0 2px 14px rgba(14, 165, 233, 0.18);
           transition: all 0.25s ease;
           position: relative;
           overflow: hidden;
@@ -425,13 +433,13 @@ export function DussehraHeroBadge() {
 
         .dussehra-hero-badge:hover {
           transform: translateY(-2px);
-          border-color: rgba(217, 119, 6, 0.7);
-          box-shadow: 0 6px 20px rgba(245, 158, 11, 0.3);
-          background: linear-gradient(135deg, #fef3c7, #fde68a);
+          border-color: rgba(2, 132, 199, 0.8);
+          box-shadow: 0 6px 20px rgba(14, 165, 233, 0.3);
+          background: linear-gradient(135deg, #e0f2fe, #bae6fd);
         }
       `}</style>
       <Link href="/tools/routine" className="dussehra-hero-badge" title="Build your personalised AM & PM skincare routine">
-        <span>✦ New · Build Your Festive Skin Routine →</span>
+        <span>✦ Build Your Winter AM &amp; PM Routine &rarr;</span>
       </Link>
     </div>
   );
@@ -445,18 +453,17 @@ export default function DussehraVisuals() {
     setMounted(true);
   }, []);
 
-  // Auto-activate during post-Dussehra detox and pre-Diwali radiance season
+  // Active through winter & smog season (November 2026 - February 2027)
   const now = new Date();
-  const isDussehraSeason =
-    now >= new Date("2026-10-18T00:00:00+05:30") &&
-    now <= new Date("2026-11-09T23:59:59+05:30");
+  const isWinterSeason =
+    now >= new Date("2026-11-01T00:00:00+05:30") &&
+    now <= new Date("2027-02-28T23:59:59+05:30");
 
-  if (!isDussehraSeason) return null;
+  if (!isWinterSeason) return null;
 
   return (
     <>
       <DussehraBanner />
-      {mounted && <DussehraCanvas active={true} />}
     </>
   );
 }

@@ -121,7 +121,6 @@ export default function SiteHeader() {
             <Link href="/tools" className="site-header-nav-link hidden lg:inline-flex nav-hide-1280">Diagnostic Tools</Link>
             <Link href="/k-beauty" className="site-header-nav-link hidden lg:inline-flex nav-hide-1350">{t("nav.kbeauty")}</Link>
             <Link href="/mens-grooming" className="site-header-nav-link hidden lg:inline-flex nav-hide-1400">{t("nav.men")}</Link>
-            <Link href="/makeup" className="site-header-nav-link hidden lg:inline-flex nav-hide-1400">{t("nav.makeup")}</Link>
             <Link href="/blog" className="site-header-nav-link hidden lg:inline-flex nav-hide-1400">{t("nav.blog")}</Link>
           </nav>
         </div>
@@ -226,13 +225,6 @@ export default function SiteHeader() {
                 className="rounded-lg px-3 py-1.5 text-[13.5px] font-semibold text-[#2b2826] transition-all hover:bg-[#ffe6f0] hover:text-[#fc2779] dark:text-[#f7f5f2] dark:hover:bg-white/10 dark:hover:text-[#ff4d94]"
               >
                 Men&apos;s Grooming
-              </Link>
-              <Link
-                href="/makeup"
-                onClick={handleNavClick}
-                className="rounded-lg px-3 py-1.5 text-[13.5px] font-semibold text-[#fc2779] transition-all hover:bg-[#ffe6f0] dark:text-[#ff4d94] dark:hover:bg-white/10"
-              >
-                Clean Makeup Lab
               </Link>
               <Link
                 href="/blog"

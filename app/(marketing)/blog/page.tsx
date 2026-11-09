@@ -73,13 +73,9 @@ export default async function BlogIndex() {
     };
   });
 
-  const now = new Date();
-  const isNavratri = now >= new Date("2026-10-12T00:00:00+05:30") && now <= new Date("2026-10-20T23:59:59+05:30");
   const topFeatured =
-    posts.find(p => p.slug === "diwali-skincare-prep-glow-protocol") ||
-    posts.find(p => p.slug === "dussehra-skincare-detox-glow-protocol") ||
-    (isNavratri && posts.find(p => p.slug === "navratri-skincare-garba-survival-guide")) ||
-    posts.find(p => p.slug === "skin-purging-vs-breakout") ||
+    posts.find(p => p.slug === "the-4-step-barrier-sun-reset-skincare-guide") ||
+    posts.find(p => p.slug === "tight-face-after-washing-tap-water") ||
     posts[0] ||
     POSTS[0];
 
@@ -94,12 +90,18 @@ export default async function BlogIndex() {
  radial-gradient(circle at 85% 30%, rgba(162,123,92,0.03) 0%, transparent 55%);
  color: #2b2826; 
  min-height: 100vh; 
+ width: 100%;
+ max-width: 100vw;
+ overflow-x: hidden;
  }
  .journal-hero {
  min-height: 620px;
  display: grid;
  grid-template-columns: minmax(0, 1.08fr) minmax(360px, 0.92fr);
  border-bottom: 1px solid #ded7cf;
+ width: 100%;
+ max-width: 100vw;
+ overflow-x: hidden;
  }
  .journal-hero-copy {
  padding: 6rem 4.5rem 5rem;
@@ -655,105 +657,171 @@ export default async function BlogIndex() {
  border-color: rgba(162, 123, 92, 0.35) !important;
  box-shadow: 0 15px 30px rgba(162, 123, 92, 0.06) !important;
  }
- @media (max-width: 980px) {
-  .journal-hero { min-height: auto !important; }
-  .journal-hero, .featured-card { grid-template-columns: 1fr; }
-  .journal-hero-copy { padding: 4rem 2rem; }
-  .journal-hero-visual { display: none !important; }
-  .trust-strip, .path-grid, .article-grid { grid-template-columns: repeat(2, 1fr); }
+  @media (max-width: 980px) {
+   .journal-hero { min-height: auto !important; }
+   .journal-hero, .featured-card { grid-template-columns: 1fr; }
+   .journal-hero-copy { padding: 3rem 1.75rem; }
+   .journal-hero-visual { display: none !important; }
+   .trust-strip, .path-grid, .article-grid { grid-template-columns: repeat(2, 1fr); }
   }
- @media (max-width: 640px) {
-   .journal-hero-copy { padding: 2.2rem 1.25rem !important; }
-   .journal-hero-copy .eyebrow { margin: 0 0 0.5rem !important; }
-   .journal-hero-copy .hero-title { font-size: 2.2rem !important; }
-   .journal-hero-copy .hero-copy { font-size: 0.92rem !important; margin: 0.8rem 0 1.5rem !important; line-height: 1.6 !important; }
-   .journal-hero-copy .hero-actions { gap: 0.75rem !important; }
-   .primary-btn, .secondary-btn { min-height: 42px !important; padding: 0 1.5rem !important; font-size: 0.68rem !important; border-radius: 8px !important; }
-   .trust-strip {
-   grid-template-columns: repeat(2, 1fr) !important;
-   gap: 0 !important;
-   }
-   .trust-item {
-   padding: 0.8rem 0.5rem !important;
-   border-right: 1px solid rgba(255,255,255,0.05) !important;
-   border-bottom: 1px solid rgba(255,255,255,0.05) !important;
-   font-size: 0.6rem !important;
-   letter-spacing: 0.12em !important;
-   }
-   .trust-item:nth-child(2n) {
-   border-right: none !important;
-   }
-   .trust-item:nth-child(3), .trust-item:nth-child(4) {
-   border-bottom: none !important;
-   }
-   .path-grid, .article-grid { grid-template-columns: 1fr !important; gap: 0.75rem !important; }
-   .path-section, .featured-band, .article-section { padding-left: 0.85rem !important; padding-right: 0.85rem !important; }
-   .article-header { align-items: flex-start; flex-direction: column; }
-   .path-card { padding: 0.9rem !important; }
-   .path-card h3 { font-size: 1rem !important; margin-bottom: 0.2rem !important; }
-   .path-card p { font-size: 0.78rem !important; }
+  @media (max-width: 768px) {
+    .journal-hero {
+      min-height: auto !important;
+      grid-template-columns: 100% !important;
+      width: 100% !important;
+      max-width: 100vw !important;
+    }
+    .journal-hero-visual { display: none !important; }
+    .journal-hero-copy {
+      padding: 1.85rem 1rem !important;
+      width: 100% !important;
+      max-width: 100vw !important;
+      box-sizing: border-box !important;
+    }
+    .journal-hero-copy .eyebrow {
+      margin: 0 0 0.45rem !important;
+      font-size: 0.58rem !important;
+      letter-spacing: 0.2em !important;
+    }
+    .journal-hero-copy .hero-title {
+      font-size: clamp(1.8rem, 7.5vw, 2.25rem) !important;
+      line-height: 1.15 !important;
+      word-break: break-word !important;
+      overflow-wrap: break-word !important;
+      max-width: 100% !important;
+    }
+    .journal-hero-copy .hero-copy {
+      font-size: 0.88rem !important;
+      margin: 0.75rem 0 1.25rem !important;
+      line-height: 1.55 !important;
+      max-width: 100% !important;
+    }
+    .journal-hero-copy .hero-actions {
+      display: flex !important;
+      flex-direction: row !important;
+      flex-wrap: wrap !important;
+      gap: 0.6rem !important;
+      width: 100% !important;
+      box-sizing: border-box !important;
+    }
+    .primary-btn, .secondary-btn {
+      flex: 1 1 130px !important;
+      min-width: 0 !important;
+      min-height: 42px !important;
+      padding: 0 0.75rem !important;
+      font-size: 0.66rem !important;
+      border-radius: 8px !important;
+      text-align: center !important;
+      justify-content: center !important;
+      box-sizing: border-box !important;
+    }
+    .trust-strip {
+      display: grid !important;
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+      width: 100% !important;
+      max-width: 100vw !important;
+      gap: 0 !important;
+      box-sizing: border-box !important;
+      overflow: hidden !important;
+    }
+    .trust-item {
+      padding: 0.7rem 0.35rem !important;
+      border-right: 1px solid rgba(255,255,255,0.08) !important;
+      border-bottom: 1px solid rgba(255,255,255,0.08) !important;
+      font-size: 0.55rem !important;
+      letter-spacing: 0.05em !important;
+      white-space: normal !important;
+      word-break: break-word !important;
+      overflow-wrap: break-word !important;
+      text-align: center !important;
+      min-width: 0 !important;
+      box-sizing: border-box !important;
+    }
+    .trust-item:nth-child(2n) {
+      border-right: none !important;
+    }
+    .trust-item:nth-child(3), .trust-item:nth-child(4) {
+      border-bottom: none !important;
+    }
+    .path-grid, .article-grid { grid-template-columns: 1fr !important; gap: 0.75rem !important; }
+    .path-section, .featured-band, .article-section {
+      padding-left: 0.85rem !important;
+      padding-right: 0.85rem !important;
+      width: 100% !important;
+      box-sizing: border-box !important;
+    }
+    .article-header { align-items: flex-start; flex-direction: column; }
+    .path-card { padding: 0.9rem !important; }
+    .path-card h3 { font-size: 1rem !important; margin-bottom: 0.2rem !important; }
+    .path-card p { font-size: 0.78rem !important; }
 
-   /* Mobile Featured Card — Clean Minimal Editorial */
-   .featured-band { padding-top: 1rem !important; padding-bottom: 0.5rem !important; }
-   .featured-card {
-     display: flex !important;
-     flex-direction: column !important;
-     border-radius: 16px !important;
-     background: #ffffff !important;
-     border: 1px solid #e8e2d9 !important;
-     box-shadow: 0 2px 16px rgba(0,0,0,0.06) !important;
-     overflow: hidden !important;
-     color: #1a1714 !important;
-   }
-   .featured-image-col {
-     width: 100% !important;
-     height: 190px !important;
-     min-height: 190px !important;
-     max-height: 190px !important;
-     border-radius: 0 !important;
-   }
-   .featured-badge { display: none !important; }
-   .featured-main {
-     padding: 1rem 1rem 1.1rem !important;
-     background: transparent !important;
-     border: none !important;
-   }
-   .featured-meta {
-     font-size: 0.58rem !important;
-     letter-spacing: 0.12em !important;
-     margin-bottom: 0.5rem !important;
-     gap: 0.35rem !important;
-     color: #a27b5c !important;
-   }
-   .featured-main h2 {
-     font-size: 1.1rem !important;
-     line-height: 1.3 !important;
-     margin: 0 0 0.65rem !important;
-     display: -webkit-box !important;
-     -webkit-line-clamp: 3 !important;
-     -webkit-box-orient: vertical !important;
-     overflow: hidden !important;
-     color: #1a1714 !important;
-   }
-   .featured-main p { display: none !important; }
-   .featured-footer {
-     padding-top: 0.65rem !important;
-     border-top: 1px solid #f0ece6 !important;
-     margin-top: 0 !important;
-   }
-   .featured-btn {
-     padding: 0 !important;
-     font-size: 0.68rem !important;
-     letter-spacing: 0.1em !important;
-     background: transparent !important;
-     color: #fc2779 !important;
-     border-radius: 0 !important;
-   }
-   .featured-card:hover .featured-btn {
-     background: transparent !important;
-     color: #d4006a !important;
-   }
+    .expert-guides-section,
+    .regional-guides-section {
+      padding: 3rem 0.85rem 3.5rem !important;
+      width: 100% !important;
+      box-sizing: border-box !important;
+    }
 
+    /* Mobile Featured Card — Clean Minimal Editorial */
+    .featured-band { padding-top: 1rem !important; padding-bottom: 0.5rem !important; }
+    .featured-card {
+      display: flex !important;
+      flex-direction: column !important;
+      border-radius: 16px !important;
+      background: #ffffff !important;
+      border: 1px solid #e8e2d9 !important;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.06) !important;
+      overflow: hidden !important;
+      color: #1a1714 !important;
+    }
+    .featured-image-col {
+      width: 100% !important;
+      height: 190px !important;
+      min-height: 190px !important;
+      max-height: 190px !important;
+      border-radius: 0 !important;
+    }
+    .featured-badge { display: none !important; }
+    .featured-main {
+      padding: 1rem 1rem 1.1rem !important;
+      background: transparent !important;
+      border: none !important;
+    }
+    .featured-meta {
+      font-size: 0.58rem !important;
+      letter-spacing: 0.12em !important;
+      margin-bottom: 0.5rem !important;
+      gap: 0.35rem !important;
+      color: #a27b5c !important;
+    }
+    .featured-main h2 {
+      font-size: 1.1rem !important;
+      line-height: 1.3 !important;
+      margin: 0 0 0.65rem !important;
+      display: -webkit-box !important;
+      -webkit-line-clamp: 3 !important;
+      -webkit-box-orient: vertical !important;
+      overflow: hidden !important;
+      color: #1a1714 !important;
+    }
+    .featured-main p { display: none !important; }
+    .featured-footer {
+      padding-top: 0.65rem !important;
+      border-top: 1px solid #f0ece6 !important;
+      margin-top: 0 !important;
+    }
+    .featured-btn {
+      padding: 0 !important;
+      font-size: 0.68rem !important;
+      letter-spacing: 0.1em !important;
+      background: transparent !important;
+      color: #fc2779 !important;
+      border-radius: 0 !important;
+    }
+    .featured-card:hover .featured-btn {
+      background: transparent !important;
+      color: #d4006a !important;
+    }
   }
   `}</style>
 
@@ -812,15 +880,11 @@ export default async function BlogIndex() {
  </section>
 
  <section className="featured-band">
-  <a href={"/blog/" + topFeatured.slug} className={`featured-card${topFeatured.slug === "diwali-skincare-prep-glow-protocol" || topFeatured.slug === "dussehra-skincare-detox-glow-protocol" ? " dussehra-featured-card" : isNavratri ? " navratri-featured" : ""}`}>
+  <a href={"/blog/" + topFeatured.slug} className="featured-card">
   <div className="featured-image-col">
   <img src={topFeatured.imageSrc} alt={topFeatured.title} loading="eager" />
-  {topFeatured.slug === "diwali-skincare-prep-glow-protocol" ? (
-    <span className="featured-badge" style={{ background: "linear-gradient(135deg, #1b1713, #2a221b)", color: "#fcd34d", border: "1px solid rgba(245, 182, 66, 0.55)", letterSpacing: "0.14em", textTransform: "uppercase" }}>🪔 Pre-Diwali Detox & Glow</span>
-  ) : topFeatured.slug === "dussehra-skincare-detox-glow-protocol" ? (
-    <span className="featured-badge" style={{ background: "linear-gradient(135deg, #1b1713, #2a221b)", color: "#fcd34d", border: "1px solid rgba(245, 182, 66, 0.55)", letterSpacing: "0.14em", textTransform: "uppercase" }}>Festive Reset & Glow</span>
-  ) : isNavratri ? (
-    <span className="featured-badge" style={{ background: "linear-gradient(135deg, #1b1713, #2a221b)", color: "#e5bd7a", border: "1px solid rgba(229, 189, 122, 0.45)", letterSpacing: "0.14em", textTransform: "uppercase" }}>The 9-Night Edit</span>
+  {topFeatured.slug === "the-4-step-barrier-sun-reset-skincare-guide" ? (
+    <span className="featured-badge" style={{ background: "rgba(20, 18, 16, 0.9)", color: "#93c5fd", border: "1px solid rgba(147, 197, 253, 0.4)", letterSpacing: "0.14em", textTransform: "uppercase" }}>✦ Winter &amp; Smog Barrier Reset</span>
   ) : (
     <span className="featured-badge">FEATURED GUIDE</span>
   )}

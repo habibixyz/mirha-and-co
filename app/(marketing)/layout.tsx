@@ -162,9 +162,8 @@ export default async function RootLayout({
     className={`${dmSans.variable} ${playfairDisplay.variable} ${bebasNeue.variable}`}
   >
     <head>
-      <Script
+      <script
         id="theme-init"
-        strategy="beforeInteractive"
         dangerouslySetInnerHTML={{
           __html: `
             (function() {
@@ -187,14 +186,13 @@ export default async function RootLayout({
         }}
       />
     </head>
-   <body suppressHydrationWarning>
- <Script
- id="mirha-site-structured-data"
- type="application/ld+json"
- strategy="afterInteractive"
- dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
- />
- <Script strategy="afterInteractive" src="https://www.dwin1.com/2904237.js" />
+    <body suppressHydrationWarning>
+      <script
+        id="mirha-site-structured-data"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
+      <Script strategy="afterInteractive" src="https://www.dwin1.com/2904237.js" />
 
  <ThemeProvider>
  <GlobalizationProvider initialLocale={locale} initialCurrency={currency}>
