@@ -1,8 +1,7 @@
 "use client";
 
-import Link from "next/link";
 import { BookOpen, Clock, ArrowRight } from "lucide-react";
-import { getPostsForConcern } from "@/lib/blog-utils";
+import type { GuideReference } from "@/lib/blog-utils";
 
 const CATEGORY_COLORS: Record<string, string> = {
   SKINCARE: "#fc2779",
@@ -14,19 +13,17 @@ const CATEGORY_COLORS: Record<string, string> = {
 };
 
 interface Props {
+  posts: GuideReference[];
   skinType?: string;
   mainConcern?: string;
   userName?: string;
 }
 
-export function DashboardReadingList({ skinType, mainConcern, userName }: Props) {
-  // If no profile data yet, default to a broadly useful concern
+export function DashboardReadingList({ posts, skinType, mainConcern, userName }: Props) {
   const concern = mainConcern || "acne";
   const skin = skinType || "oily";
 
-  const posts = getPostsForConcern(concern, skin, 3);
-
-  if (!posts.length) return null;
+  if (!posts?.length) return null;
 
   const firstName = userName?.split(" ")[0] || "";
 
@@ -88,7 +85,7 @@ export function DashboardReadingList({ skinType, mainConcern, userName }: Props)
             </p>
           </div>
         </div>
-        <Link
+        <a
           href="/blog"
           style={{
             fontSize: "0.8rem",
@@ -101,7 +98,7 @@ export function DashboardReadingList({ skinType, mainConcern, userName }: Props)
           }}
         >
           All guides <ArrowRight size={13} />
-        </Link>
+        </a>
       </div>
 
       {/* Guide Cards */}
@@ -112,7 +109,7 @@ export function DashboardReadingList({ skinType, mainConcern, userName }: Props)
             "#fc2779";
 
           return (
-            <Link
+            <a
               key={post.slug}
               href={`/blog/${post.slug}`}
               style={{ textDecoration: "none" }}
@@ -210,7 +207,7 @@ export function DashboardReadingList({ skinType, mainConcern, userName }: Props)
                   style={{ flexShrink: 0, marginTop: "4px" }}
                 />
               </div>
-            </Link>
+            </a>
           );
         })}
       </div>

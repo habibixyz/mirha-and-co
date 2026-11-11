@@ -20,13 +20,15 @@ function formatJournalDateSafe(d: Date | string | null | undefined): string {
   }
 }
 
-export function DashboardClient({ user, routines, recentJournal, stats }: any) {
+export function DashboardClient({ user, routines, recentJournal, stats, isPro = false }: any) {
  const today = new Date().toISOString().split("T")[0];
  
  // Dynamic greeting based on hour
  const [greeting, setGreeting] = useState("Good Morning");
  const [coachInsight, setCoachInsight] = useState<{ trend: string; observation: string; tip: string } | null>(null);
- const [coachStatus, setCoachStatus] = useState<"loading" | "unlocked" | "need_pro" | "need_data">("loading");
+ const [coachStatus, setCoachStatus] = useState<"loading" | "unlocked" | "need_pro" | "need_data">(
+   isPro ? "loading" : "need_pro"
+ );
  
  useEffect(() => {
  const hour = new Date().getHours();
@@ -36,6 +38,11 @@ export function DashboardClient({ user, routines, recentJournal, stats }: any) {
  }, []);
 
  useEffect(() => {
+ // Skip redundant server action round-trip for free accounts
+ if (!isPro) {
+ setCoachStatus("need_pro");
+ return;
+ }
  async function loadCoach() {
  try {
  const res = await getJournalAnalysis();
@@ -59,7 +66,7 @@ export function DashboardClient({ user, routines, recentJournal, stats }: any) {
  }
  }
  loadCoach();
- }, []);
+ }, [isPro]);
  
   const [localRoutines, setLocalRoutines] = useState<any[]>(Array.isArray(routines) ? routines : []);
   const [activeRoutineIdx, setActiveRoutineIdx] = useState<number>(() => {

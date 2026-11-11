@@ -47,15 +47,29 @@ const LinkedInIcon = ({ size = 18 }: { size?: number }) => (
 export default function SiteHeader() {
   const { t } = useGlobalization();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [isLaunching, setIsLaunching] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
 
-  // Always close drawer and ensure scrolling is unlocked on route transition
+  // Always close drawer, clear launching state, and ensure scrolling is unlocked on route transition
   useEffect(() => {
     setMenuOpen(false);
+    setIsLaunching(false);
     document.documentElement.style.overflow = "";
     document.body.style.overflow = "";
   }, [pathname]);
+
+  // Reset mobile drawer & launch state if restored via mobile browser Back button (BFCache)
+  useEffect(() => {
+    const handlePageShow = () => {
+      setMenuOpen(false);
+      setIsLaunching(false);
+      document.documentElement.style.overflow = "";
+      document.body.style.overflow = "";
+    };
+    window.addEventListener("pageshow", handlePageShow);
+    return () => window.removeEventListener("pageshow", handlePageShow);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 30);
@@ -89,11 +103,25 @@ export default function SiteHeader() {
     return () => observer.disconnect();
   }, []);
 
-  const handleNavClick = () => {
+  const closeMenu = () => {
     setMenuOpen(false);
     document.documentElement.style.overflow = "";
     document.body.style.overflow = "";
+  };
+
+  // Defer unmounting drawer links slightly so mobile tap/Next Link navigation isn't cancelled mid-click
+  const handleNavClick = () => {
+    document.documentElement.style.overflow = "";
+    document.body.style.overflow = "";
     window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+    setTimeout(() => setMenuOpen(false), 80);
+  };
+
+  // Native hard navigation across (marketing) -> (saas) root layouts avoids stale pre-auth Router Cache & RSC double-fetch
+  const handleLaunchClick = () => {
+    setIsLaunching(true);
+    document.documentElement.style.overflow = "";
+    document.body.style.overflow = "";
   };
 
   return (
@@ -136,14 +164,15 @@ export default function SiteHeader() {
             <Link href="/b2b" className="site-header-nav-link hidden lg:inline-flex">B2B API</Link>
             <Link href="/about" className="site-header-nav-link hidden lg:inline-flex">{t("nav.about")}</Link>
 
-            {/* Launch App / Dashboard CTA */}
-            <Link
+            {/* Launch App / Dashboard CTA — native anchor avoids cross-layout RSC double-fetch & stale pre-login cache */}
+            <a
               href="/dashboard"
               rel="nofollow"
+              onClick={handleLaunchClick}
               className="hidden lg:inline-flex items-center gap-1 rounded-full bg-[#fc2779] px-3.5 py-1.5 text-[10.5px] font-bold uppercase tracking-[0.1em] text-white transition-all hover:bg-[#e01f69] hover:shadow-[0_4px_16px_rgba(252,39,121,0.3)]"
             >
-              Launch App &rarr;
-            </Link>
+              {isLaunching ? "Launching..." : "Launch App →"}
+            </a>
 
             <div className="flex items-center">
               <ThemeToggle iconOnly />
@@ -175,7 +204,7 @@ export default function SiteHeader() {
           <div
             className="site-header-drawer-backdrop"
             style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, width: "100%", height: "100%", backgroundColor: "rgba(0,0,0,0.65)", backdropFilter: "blur(6px)", WebkitBackdropFilter: "blur(6px)" }}
-            onClick={handleNavClick}
+            onClick={closeMenu}
           />
 
           {/* Drawer panel */}
@@ -189,7 +218,7 @@ export default function SiteHeader() {
                 MIRHA &amp; CO.
               </span>
               <button
-                onClick={handleNavClick}
+                onClick={closeMenu}
                 className="cursor-pointer rounded-xl p-1.5 text-[#2b2826] transition-colors hover:bg-black/5 hover:text-[#fc2779] dark:text-[#f7f5f2] dark:hover:bg-white/10 dark:hover:text-[#ff4d94]"
                 aria-label="Close Menu"
               >
@@ -280,15 +309,15 @@ export default function SiteHeader() {
               </Link>
             </div>
 
-            {/* Launch App CTA */}
-            <Link
+            {/* Launch App CTA — native anchor avoids cross-layout RSC double-fetch & stale pre-login cache */}
+            <a
               href="/dashboard"
               rel="nofollow"
-              onClick={handleNavClick}
+              onClick={handleLaunchClick}
               className="mt-1 flex items-center justify-center gap-2 rounded-xl bg-[#fc2779] px-4 py-3 text-[13px] font-bold uppercase tracking-[0.1em] text-white transition-all hover:bg-[#e01f69] active:scale-[0.98]"
             >
-              Launch App →
-            </Link>
+              {isLaunching ? "Launching App..." : "Launch App →"}
+            </a>
 
             {/* Controls Toolbar */}
             <div className="mt-auto border-t border-[#e5ded6] pt-3.5 pb-8 sm:pb-10 dark:border-white/10 shrink-0">

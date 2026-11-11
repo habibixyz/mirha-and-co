@@ -44,12 +44,12 @@ export function SaasSidebar() {
         <Link href="/dashboard" className="dash-sidebar-brand-name" prefetch={true}>
           MIRHA &amp; CO.
         </Link>
-        <Link href="/" className="dash-back-link" prefetch={true}>
+        <a href="/" className="dash-back-link">
           <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
             <path d="M6.5 1.5L3 5l3.5 3.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
           Back to Shop
-        </Link>
+        </a>
       </div>
 
       {/* Nav */}

@@ -1204,9 +1204,9 @@ export default async function BeautyShopPage() {
                   }}
                 />
               </Link>
-              <Link href="/register" rel="nofollow" className="secondary-btn">
+              <a href="/register" rel="nofollow" className="secondary-btn">
                 Create Free Profile
-              </Link>
+              </a>
             </div>
             <div className="saas-loop">
               <div className="saas-loop-item">
@@ -1234,7 +1234,7 @@ export default async function BeautyShopPage() {
                 <FaceScannerUI imageSrc={heroIndianFace} showMesh={false} />
               </Link>
               <div className="ai-stack-left">
-                <Link href="/dashboard/routines" rel="nofollow" className="ai-card ai-card-routine">
+                <a href="/dashboard/routines" rel="nofollow" className="ai-card ai-card-routine">
                   <div className="ai-card-header">
                     <div className="ai-icon">
                       <Layers size={18} strokeWidth={1.5} />
@@ -1244,7 +1244,7 @@ export default async function BeautyShopPage() {
                       <p>AM & PM Regimens</p>
                     </div>
                   </div>
-                </Link>
+                </a>
                 <Link href="/tools/routine" className="ai-card ai-card-water">
                   <div className="ai-card-header">
                     <div className="ai-icon">
@@ -1425,7 +1425,7 @@ export default async function BeautyShopPage() {
                 />
               </Link>
 
-              <Link
+              <a
                 href="/dashboard"
                 rel="nofollow"
                 style={{
@@ -1442,7 +1442,7 @@ export default async function BeautyShopPage() {
                     transform: isRtl ? "rotate(180deg)" : "none",
                   }}
                 />
-              </Link>
+              </a>
 
               <Link
                 href="/b2b"

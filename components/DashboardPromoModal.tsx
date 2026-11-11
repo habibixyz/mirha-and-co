@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Link from "next/link";
 import { X, ArrowRight, Layers } from "lucide-react";
 
 export default function DashboardPromoModal({ hasSession }: { hasSession: boolean }) {
@@ -198,9 +197,9 @@ export default function DashboardPromoModal({ hasSession }: { hasSession: boolea
           </div>
         </div>
 
-        <Link href="/register" onClick={handleClose} className="promo-cta-btn">
+        <a href="/register" className="promo-cta-btn">
           Get Started Free <ArrowRight size={14} />
-        </Link>
+        </a>
       </div>
     </div>
   );

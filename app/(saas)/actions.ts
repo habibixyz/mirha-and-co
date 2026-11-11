@@ -421,7 +421,7 @@ export async function getDashboardData() {
     if (!session) return { routines: [], journal: null, user: null, error: "Unauthorized" };
 
     // Optimize sequential awaits into parallel execution to eliminate database query water-falling
-    const [routines, recentJournal, journalCount, recentEntries] = await Promise.all([
+    const [routines, recentJournal, journalCount, recentEntries, subscription] = await Promise.all([
       prisma.routine.findMany({
         where: { userId: session.userId },
         orderBy: { createdAt: "asc" }
@@ -438,8 +438,13 @@ export async function getDashboardData() {
         take: 5,
         orderBy: { date: "desc" },
         select: { rating: true }
+      }),
+      prisma.subscription.findUnique({
+        where: { userId: session.userId },
+        select: { tier: true, status: true }
       })
     ]);
+    const isPro = subscription?.tier === "pro" && subscription?.status === "active";
 
     // ── STATS LOGIC ──────────────────────────────────────────────────────────
     
@@ -508,6 +513,7 @@ export async function getDashboardData() {
         skinScore,
         completedGoals
       },
+      isPro,
       user: session.user
     };
   } catch (error) {
@@ -517,11 +523,12 @@ export async function getDashboardData() {
         routines: [],
         journal: null,
         stats: { routineStreak: 0, journalCount: 0, skinScore: 0, completedGoals: 0 },
+        isPro: false,
         user: session.user,
         error: "FETCH_ERROR"
       };
     }
-    return { routines: [], journal: null, user: null, error: "Unauthorized" };
+    return { routines: [], journal: null, user: null, isPro: false, error: "Unauthorized" };
   }
 }
 
@@ -728,16 +735,19 @@ export async function registerAction(_state: AuthState, formData: FormData): Pro
       }
     });
 
-    // ✅ SEND WELCOME EMAIL IF CONFIG HAS RESEND
+    // ✅ SEND WELCOME EMAIL IF CONFIG HAS RESEND (capped at 2s so slow email API never stalls signup redirect)
     if (process.env.RESEND_API_KEY && process.env.PASSWORD_RESET_FROM) {
       try {
         const resend = new Resend(process.env.RESEND_API_KEY);
-        await resend.emails.send({
-          from: process.env.PASSWORD_RESET_FROM,
-          to: email,
-          subject: "Welcome to Mirha & Co! 🌸",
-          html: `<div style="font-family: sans-serif; padding: 20px;"><h1>Welcome to Mirha & Co, ${name}!</h1></div>`
-        });
+        await Promise.race([
+          resend.emails.send({
+            from: process.env.PASSWORD_RESET_FROM,
+            to: email,
+            subject: "Welcome to Mirha & Co! 🌸",
+            html: `<div style="font-family: sans-serif; padding: 20px;"><h1>Welcome to Mirha & Co, ${name}!</h1></div>`
+          }),
+          new Promise((resolve) => setTimeout(resolve, 2000))
+        ]);
       } catch (emailError) {
         console.error("Welcome email error:", emailError);
       }

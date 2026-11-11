@@ -1,6 +1,7 @@
 import { getDashboardData } from "../actions";
 import { DashboardClient } from "@/components/DashboardClient";
 import { DashboardReadingList } from "@/components/DashboardReadingList";
+import { getPostsForConcern } from "@/lib/blog-utils";
 import { redirect } from "next/navigation";
 
 export const dynamic = "force-dynamic";
@@ -26,6 +27,8 @@ export default async function DashboardPage() {
     }
   }
 
+  const readingPosts = getPostsForConcern(mainConcern || "acne", skinType || "oily", 3);
+
   return (
     <>
       <DashboardClient
@@ -33,8 +36,10 @@ export default async function DashboardPage() {
         routines={data.routines}
         recentJournal={data.journal}
         stats={data.stats}
+        isPro={Boolean(data.isPro)}
       />
       <DashboardReadingList
+        posts={readingPosts}
         skinType={skinType}
         mainConcern={mainConcern}
         userName={data.user?.name}
