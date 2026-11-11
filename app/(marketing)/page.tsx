@@ -419,6 +419,14 @@ export default async function BeautyShopPage() {
           .ticker-track { animation-duration: 30s; }
         }
 
+        /* SaaS Flow Strip hover */
+        .saas-flow-step {
+          transition: background 0.2s ease;
+        }
+        .saas-flow-step:hover {
+          background: #fffaf4;
+        }
+
         .section {
           padding: 46px 0;
           border-top: 1px solid #e6dcd2;
@@ -909,6 +917,17 @@ export default async function BeautyShopPage() {
         }
 
         @media (max-width: 640px) {
+          .saas-flow-strip {
+            grid-template-columns: 1fr !important;
+          }
+          .saas-flow-step {
+            border-right: none !important;
+            border-bottom: 1px solid #e6dcd2 !important;
+          }
+          .saas-flow-step:last-child {
+            border-bottom: none !important;
+          }
+
           .concern-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -1292,6 +1311,44 @@ export default async function BeautyShopPage() {
               </div>
             ))}
           </div>
+        </div>
+
+        {/* ── SaaS Flow Strip: How it works ──────────────────────── */}
+        <div className="saas-flow-strip" style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
+          border: "1px solid #e6dcd2",
+          borderRadius: "16px",
+          overflow: "hidden",
+          margin: "32px 0 0",
+          background: "#fff",
+        }}>
+          {[
+            { step: "01", label: "Scan", title: "Scan Your Skin Free", desc: "On-device AI camera reads your barrier, hydration & redness. 1 scan per day, zero photos stored.", href: "/tools/analysis", cta: "Try Free Scan", border: true },
+            { step: "02", label: "Build", title: "Build Your AM/PM Routine", desc: "Tell us your skin type, city & concerns. Get a science-matched morning and evening routine instantly.", href: "/tools/routine", cta: "Build Routine", border: true },
+            { step: "03", label: "Track", title: "Track & Go Pro", desc: "Save your routine, journal daily compliance, and unlock deeper diagnostics with a Pro membership.", href: "/pricing", cta: "See Pricing", border: false },
+          ].map((item, i) => (
+            <a
+              key={i}
+              href={item.href}
+              className="saas-flow-step"
+              style={{
+                padding: "28px 24px",
+                borderRight: item.border ? "1px solid #e6dcd2" : "none",
+                display: "flex",
+                flexDirection: "column",
+                gap: "10px",
+                textDecoration: "none",
+              }}
+            >
+              <span style={{ fontSize: "9px", fontWeight: 800, letterSpacing: "0.22em", textTransform: "uppercase", color: "#fc2779" }}>{item.step} / {item.label}</span>
+              <div style={{ fontFamily: "var(--font-playfair), serif", fontSize: "17px", fontWeight: 600, color: "#161412", lineHeight: 1.2 }}>{item.title}</div>
+              <p style={{ fontSize: "13px", color: "#756b63", lineHeight: 1.65, margin: 0 }}>{item.desc}</p>
+              <span style={{ marginTop: "4px", fontSize: "11px", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "#fc2779", display: "inline-flex", alignItems: "center", gap: "4px" }}>
+                {item.cta} &rarr;
+              </span>
+            </a>
+          ))}
         </div>
 
         {/* ── Unified Mirha Intelligence Suite: Compact All-in-One Desk ────────────────── */}

@@ -196,9 +196,14 @@ export default async function RootLayout({
 
  <ThemeProvider>
  <GlobalizationProvider initialLocale={locale} initialCurrency={currency}>
-  {/* Top disclosure bar */}
+  {/* Top announcement bar — slim, single line */}
   <div className="top-disclosure-bar">
-  Independent reviews. Honest opinions. Affiliate links disclosed.
+    <span className="top-bar-saas-hook">
+      <span className="top-bar-dot" />
+      AI Skincare Intelligence — Barrier Scanner · Routine Builder · Hard Water Telemetry
+    </span>
+    <span className="top-bar-sep">·</span>
+    <span className="top-bar-disclosure">Affiliate links disclosed</span>
   </div>
 
  <SiteHeader />

@@ -114,38 +114,42 @@ export default function SiteHeader() {
     >
       <div className="site-header-container">
 
-        {/* Left Section — Tools, Categories & Content */}
+        {/* Left — 4 balanced nav links: Diagnostics, K-Beauty, Men's Grooming, Blog */}
         <div className="site-header-left">
           <nav className="site-header-nav">
-            <Link href="/tools/analysis" className="site-header-nav-link hidden lg:inline-flex site-header-nav-link--accent nav-hide-1280">Free Skin Scan</Link>
-            <Link href="/tools" className="site-header-nav-link hidden lg:inline-flex nav-hide-1280">Diagnostic Tools</Link>
-            <Link href="/k-beauty" className="site-header-nav-link hidden lg:inline-flex nav-hide-1350">{t("nav.kbeauty")}</Link>
-            <Link href="/mens-grooming" className="site-header-nav-link hidden lg:inline-flex nav-hide-1400">{t("nav.men")}</Link>
-            <Link href="/blog" className="site-header-nav-link hidden lg:inline-flex nav-hide-1400">{t("nav.blog")}</Link>
+            <Link href="/tools" className="site-header-nav-link hidden lg:inline-flex">Diagnostics</Link>
+            <Link href="/k-beauty" className="site-header-nav-link hidden lg:inline-flex">{t("nav.kbeauty")}</Link>
+            <Link href="/mens-grooming" className="site-header-nav-link hidden lg:inline-flex">{t("nav.men")}</Link>
+            <Link href="/blog" className="site-header-nav-link hidden lg:inline-flex">{t("nav.blog")}</Link>
           </nav>
         </div>
 
-        {/* Center Section — Brand Logo (Protected) */}
+        {/* Center — Brand Logo (untouched) */}
         <div className="site-header-logo-wrapper notranslate">
           <Link href="/" className="site-header-logo notranslate text-black transition-colors dark:text-white">MIRHA &amp; CO.</Link>
         </div>
 
-        {/* Right Section — Navigation, Portal & Controls */}
+        {/* Right — 4 balanced items: Pricing, B2B API, About, Launch App CTA + Theme */}
         <div className="site-header-right">
           <nav className="site-header-nav">
-            <Link href="/b2b" className="site-header-nav-link hidden lg:inline-flex nav-hide-1400">{t("nav.b2b")}</Link>
-            <Link href="/about" className="site-header-nav-link hidden lg:inline-flex nav-hide-1350">{t("nav.about")}</Link>
-            <Link href="/pricing" className="site-header-nav-link hidden lg:inline-flex nav-hide-1350">{t("nav.pricing")}</Link>
-            <Link href="/dashboard" className="site-header-nav-link hidden lg:inline-flex nav-hide-1400">{t("nav.dashboard")}</Link>
-            
-            <div className="nav-hide-768 flex items-center">
-              <GlobalizationSwitcher />
-            </div>
-            
+            <Link href="/pricing" className="site-header-nav-link hidden lg:inline-flex">{t("nav.pricing")}</Link>
+            <Link href="/b2b" className="site-header-nav-link hidden lg:inline-flex">B2B API</Link>
+            <Link href="/about" className="site-header-nav-link hidden lg:inline-flex">{t("nav.about")}</Link>
+
+            {/* Launch App / Dashboard CTA */}
+            <Link
+              href="/dashboard"
+              rel="nofollow"
+              className="hidden lg:inline-flex items-center gap-1 rounded-full bg-[#fc2779] px-3.5 py-1.5 text-[10.5px] font-bold uppercase tracking-[0.1em] text-white transition-all hover:bg-[#e01f69] hover:shadow-[0_4px_16px_rgba(252,39,121,0.3)]"
+            >
+              Launch App &rarr;
+            </Link>
+
             <div className="flex items-center">
               <ThemeToggle iconOnly />
             </div>
-            
+
+            {/* Mobile hamburger */}
             <div className="menu-trigger flex items-center lg:hidden">
               {!menuOpen && (
                 <button
@@ -213,20 +217,6 @@ export default function SiteHeader() {
                 Diagnostic Tools
               </Link>
               <Link
-                href="/k-beauty"
-                onClick={handleNavClick}
-                className="rounded-lg px-3 py-1.5 text-[13.5px] font-semibold text-[#fc2779] transition-all hover:bg-[#ffe6f0] dark:text-[#ff4d94] dark:hover:bg-white/10"
-              >
-                K-Beauty Picks
-              </Link>
-              <Link
-                href="/mens-grooming"
-                onClick={handleNavClick}
-                className="rounded-lg px-3 py-1.5 text-[13.5px] font-semibold text-[#2b2826] transition-all hover:bg-[#ffe6f0] hover:text-[#fc2779] dark:text-[#f7f5f2] dark:hover:bg-white/10 dark:hover:text-[#ff4d94]"
-              >
-                Men&apos;s Grooming
-              </Link>
-              <Link
                 href="/blog"
                 onClick={handleNavClick}
                 className="rounded-lg px-3 py-1.5 text-[13.5px] font-semibold text-[#2b2826] transition-all hover:bg-[#ffe6f0] hover:text-[#fc2779] dark:text-[#f7f5f2] dark:hover:bg-white/10 dark:hover:text-[#ff4d94]"
@@ -238,11 +228,42 @@ export default function SiteHeader() {
             {/* Separator */}
             <div className="border-t border-[#e5ded6] dark:border-white/10 shrink-0" />
 
-            {/* Section 2: Company & Developers */}
+            {/* Section 2: Curated Picks */}
             <div className="flex flex-col gap-0.5">
               <div className="mb-1 text-[10px] font-extrabold uppercase tracking-[0.16em] text-[#fc2779] sm:text-[11px] dark:text-[#ff4d94]">
-                Company &amp; Developers
+                Curated Picks
               </div>
+              <Link
+                href="/k-beauty"
+                onClick={handleNavClick}
+                className="rounded-lg px-3 py-1.5 text-[13.5px] font-semibold text-[#2b2826] transition-all hover:bg-[#ffe6f0] hover:text-[#fc2779] dark:text-[#f7f5f2] dark:hover:bg-white/10 dark:hover:text-[#ff4d94]"
+              >
+                K-Beauty Picks
+              </Link>
+              <Link
+                href="/mens-grooming"
+                onClick={handleNavClick}
+                className="rounded-lg px-3 py-1.5 text-[13.5px] font-semibold text-[#2b2826] transition-all hover:bg-[#ffe6f0] hover:text-[#fc2779] dark:text-[#f7f5f2] dark:hover:bg-white/10 dark:hover:text-[#ff4d94]"
+              >
+                Men&apos;s Grooming
+              </Link>
+            </div>
+
+            {/* Separator */}
+            <div className="border-t border-[#e5ded6] dark:border-white/10 shrink-0" />
+
+            {/* Section 3: Company & Platform */}
+            <div className="flex flex-col gap-0.5">
+              <div className="mb-1 text-[10px] font-extrabold uppercase tracking-[0.16em] text-[#fc2779] sm:text-[11px] dark:text-[#ff4d94]">
+                Platform
+              </div>
+              <Link
+                href="/pricing"
+                onClick={handleNavClick}
+                className="rounded-lg px-3 py-1.5 text-[13.5px] font-semibold text-[#2b2826] transition-all hover:bg-[#ffe6f0] hover:text-[#fc2779] dark:text-[#f7f5f2] dark:hover:bg-white/10 dark:hover:text-[#ff4d94]"
+              >
+                {t("nav.pricing")}
+              </Link>
               <Link
                 href="/b2b"
                 onClick={handleNavClick}
@@ -257,21 +278,17 @@ export default function SiteHeader() {
               >
                 {t("nav.about")}
               </Link>
-              <Link
-                href="/pricing"
-                onClick={handleNavClick}
-                className="rounded-lg px-3 py-1.5 text-[13.5px] font-semibold text-[#2b2826] transition-all hover:bg-[#ffe6f0] hover:text-[#fc2779] dark:text-[#f7f5f2] dark:hover:bg-white/10 dark:hover:text-[#ff4d94]"
-              >
-                {t("nav.pricing")}
-              </Link>
-              <Link
-                href="/dashboard"
-                onClick={handleNavClick}
-                className="rounded-lg px-3 py-1.5 text-[13.5px] font-semibold text-[#2b2826] transition-all hover:bg-[#ffe6f0] hover:text-[#fc2779] dark:text-[#f7f5f2] dark:hover:bg-white/10 dark:hover:text-[#ff4d94]"
-              >
-                {t("nav.dashboard")}
-              </Link>
             </div>
+
+            {/* Launch App CTA */}
+            <Link
+              href="/dashboard"
+              rel="nofollow"
+              onClick={handleNavClick}
+              className="mt-1 flex items-center justify-center gap-2 rounded-xl bg-[#fc2779] px-4 py-3 text-[13px] font-bold uppercase tracking-[0.1em] text-white transition-all hover:bg-[#e01f69] active:scale-[0.98]"
+            >
+              Launch App →
+            </Link>
 
             {/* Controls Toolbar */}
             <div className="mt-auto border-t border-[#e5ded6] pt-3.5 pb-8 sm:pb-10 dark:border-white/10 shrink-0">
