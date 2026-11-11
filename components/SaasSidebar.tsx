@@ -41,7 +41,7 @@ export function SaasSidebar() {
     <aside className="dash-sidebar">
       {/* Brand */}
       <div className="dash-sidebar-brand">
-        <Link href="/dashboard" className="dash-sidebar-brand-name" prefetch={true}>
+        <Link href="/dashboard" className="dash-sidebar-brand-name" prefetch={false}>
           MIRHA &amp; CO.
         </Link>
         <a href="/" className="dash-back-link">
@@ -66,7 +66,7 @@ export function SaasSidebar() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  prefetch={true}
+                  prefetch={false}
                   onClick={() => setPendingHref(item.href)}
                   className={`dash-nav-link${isActive ? " active" : ""}`}
                 >
@@ -86,7 +86,7 @@ export function SaasSidebar() {
         flexDirection: 'column',
         gap: '1rem'
       }}>
-        <Link href="/dashboard/subscription" prefetch={true} style={{
+        <Link href="/dashboard/subscription" prefetch={false} style={{
           display: "block",
           background: "var(--dash-accent)",
           color: "white",

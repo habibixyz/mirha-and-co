@@ -240,7 +240,7 @@ export function DashboardClient({ user, routines, recentJournal, stats, isPro = 
 
   return (
     <motion.div
-      initial="hidden"
+      initial={false}
       animate="show"
       variants={containerVariants}
     >
@@ -256,7 +256,7 @@ export function DashboardClient({ user, routines, recentJournal, stats, isPro = 
           alignItems: "center",
           marginBottom: "1rem"
         }}>
-          <Link href="/" style={{ textDecoration: "none" }}>
+          <a href="/" style={{ textDecoration: "none" }}>
             <span style={{ 
               fontFamily: "var(--dash-font-serif)", 
               fontSize: "1.2rem", 
@@ -266,7 +266,7 @@ export function DashboardClient({ user, routines, recentJournal, stats, isPro = 
             }}>
               Mirha <span style={{ color: "var(--dash-accent)" }}>& Co.</span>
             </span>
-          </Link>
+          </a>
           <motion.button
             whileTap={{ scale: 0.95 }}
             onClick={() => logoutAction()}
@@ -477,7 +477,7 @@ export function DashboardClient({ user, routines, recentJournal, stats, isPro = 
             </h2>
           </div>
 
-          <Link href="/dashboard/routines" style={{ textDecoration: "none", flexShrink: 0 }}>
+          <Link href="/dashboard/routines" prefetch={false} style={{ textDecoration: "none", flexShrink: 0 }}>
             <button
               style={{
                 display: "inline-flex",
@@ -623,7 +623,7 @@ export function DashboardClient({ user, routines, recentJournal, stats, isPro = 
                 <RefreshCw size={15} className={isLoadingDefaults ? "animate-spin" : ""} />
                 {isLoadingDefaults ? "Loading Templates..." : "Load Recommended AM & PM"}
               </button>
-              <Link href="/dashboard/routines" style={{ textDecoration: "none" }}>
+              <Link href="/dashboard/routines" prefetch={false} style={{ textDecoration: "none" }}>
                 <button
                   style={{
                     background: "var(--dash-surface)",
@@ -691,7 +691,7 @@ export function DashboardClient({ user, routines, recentJournal, stats, isPro = 
                   >
                     <RefreshCw size={14} /> Load Recommended Steps
                   </button>
-                  <Link href="/dashboard/routines" style={{
+                  <Link href="/dashboard/routines" prefetch={false} style={{
                     display: "inline-flex",
                     alignItems: "center",
                     gap: "0.4rem",
@@ -832,10 +832,10 @@ export function DashboardClient({ user, routines, recentJournal, stats, isPro = 
                   <span>Tip: Click any step to check off as you apply products.</span>
                 </div>
                 <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-                  <Link href="/dashboard/conflicts" style={{ color: "var(--dash-accent)", textDecoration: "none", fontWeight: 600, display: "inline-flex", alignItems: "center", gap: "0.3rem" }}>
+                  <Link href="/dashboard/conflicts" prefetch={false} style={{ color: "var(--dash-accent)", textDecoration: "none", fontWeight: 600, display: "inline-flex", alignItems: "center", gap: "0.3rem" }}>
                     Scan for ingredient clashes <ArrowRight size={12} />
                   </Link>
-                  <Link href="/dashboard/routines" style={{ color: "var(--dash-ink)", textDecoration: "none", fontWeight: 600, display: "inline-flex", alignItems: "center", gap: "0.3rem" }}>
+                  <Link href="/dashboard/routines" prefetch={false} style={{ color: "var(--dash-ink)", textDecoration: "none", fontWeight: 600, display: "inline-flex", alignItems: "center", gap: "0.3rem" }}>
                     Edit steps <ArrowRight size={12} />
                   </Link>
                 </div>
@@ -883,7 +883,7 @@ export function DashboardClient({ user, routines, recentJournal, stats, isPro = 
                 Get automated routines optimizations, checklist compliance insights, and personalized advice powered by Gemini.
               </p>
             </div>
-            <Link href="/dashboard/subscription" style={{ textDecoration: "none" }}>
+            <Link href="/dashboard/subscription" prefetch={false} style={{ textDecoration: "none" }}>
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -914,7 +914,7 @@ export function DashboardClient({ user, routines, recentJournal, stats, isPro = 
             <p style={{ margin: "0.4rem 0 0", color: "#a89f97", fontSize: "0.85rem", lineHeight: 1.5 }}>
               Please add at least <strong>3 daily entries</strong> in your Skin Journal so the coach can analyze your skin trends and checklist compliance.
             </p>
-            <Link href="/dashboard/journal" style={{ textDecoration: "none", display: "inline-block", marginTop: "1rem" }}>
+            <Link href="/dashboard/journal" prefetch={false} style={{ textDecoration: "none", display: "inline-block", marginTop: "1rem" }}>
               <span style={{ color: "#fc2779", fontSize: "0.85rem", fontWeight: 600, display: "flex", alignItems: "center", gap: "0.2rem" }}>
                 Go to Journal &rarr;
               </span>
@@ -1013,7 +1013,7 @@ export function DashboardClient({ user, routines, recentJournal, stats, isPro = 
               <h3 style={{ fontSize: "1.25rem", margin: "0.2rem 0 0", color: "var(--dash-ink)", fontWeight: 600, fontFamily: "var(--dash-font-serif)" }}>Diagnostics &amp; Tools</h3>
             </div>
             <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
-              <Link href="/dashboard/conflicts" style={{ textDecoration: "none" }}>
+              <Link href="/dashboard/conflicts" prefetch={false} style={{ textDecoration: "none" }}>
                 <div style={{
                   display: "flex",
                   alignItems: "center",
@@ -1046,7 +1046,7 @@ export function DashboardClient({ user, routines, recentJournal, stats, isPro = 
                 </div>
               </Link>
 
-              <Link href="/dashboard/analysis" style={{ textDecoration: "none" }}>
+              <Link href="/dashboard/analysis" prefetch={false} style={{ textDecoration: "none" }}>
                 <div style={{
                   display: "flex",
                   alignItems: "center",
@@ -1079,7 +1079,7 @@ export function DashboardClient({ user, routines, recentJournal, stats, isPro = 
                 </div>
               </Link>
 
-              <Link href="/dashboard/routines" style={{ textDecoration: "none" }}>
+              <Link href="/dashboard/routines" prefetch={false} style={{ textDecoration: "none" }}>
                 <div style={{
                   display: "flex",
                   alignItems: "center",
@@ -1232,7 +1232,7 @@ export function DashboardClient({ user, routines, recentJournal, stats, isPro = 
  </div>
  )}
 
- <Link href="/dashboard/journal" style={{ textDecoration: "none", width: "100%" }}>
+ <Link href="/dashboard/journal" prefetch={false} style={{ textDecoration: "none", width: "100%" }}>
  <motion.button
  whileHover={{ scale: 1.02, background: "var(--dash-accent)", filter: "brightness(1.1)" }}
  whileTap={{ scale: 0.98 }}

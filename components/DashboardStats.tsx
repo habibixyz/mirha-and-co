@@ -95,7 +95,7 @@ export function DashboardStats({ stats }: any) {
  `}</style>
 
  <motion.div
- initial="hidden"
+ initial={false}
  animate="show"
  variants={containerVariants}
  className="stats-grid-container"
