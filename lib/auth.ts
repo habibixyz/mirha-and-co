@@ -1,5 +1,6 @@
 import { cookies } from "next/headers";
 import { prisma } from "./prisma";
+import { redisCache } from "./redis";
 import bcrypt from "bcryptjs";
 import crypto from "crypto";
 
@@ -9,11 +10,28 @@ export async function getSession() {
 
   if (!sessionId) return null;
 
+  // 1. Fast cache check (memory / redis) — eliminates 1,000ms remote DB round-trip on tab navigation
+  const cacheKey = `sess:${sessionId}`;
+  try {
+    const cached = await redisCache.get<any>(cacheKey);
+    if (cached && cached.expiresAt && new Date(cached.expiresAt) > new Date()) {
+      return cached;
+    }
+  } catch {
+    // Cache miss or error — fallback to DB
+  }
+
   let session;
   try {
     session = await prisma.session.findUnique({
       where: { id: sessionId },
-      include: { user: true }
+      include: {
+        user: {
+          include: {
+            subscription: true,
+          },
+        },
+      },
     });
   } catch (error) {
     console.error("Session lookup error:", error);
@@ -29,6 +47,13 @@ export async function getSession() {
     return null;
   }
 
+  // 2. Cache valid session for 5 minutes (300 seconds)
+  try {
+    await redisCache.set(cacheKey, session, { ex: 300 });
+  } catch {
+    // Non-fatal cache write error
+  }
+
   return session;
 }
 
@@ -38,8 +63,15 @@ export async function createSession(userId: string) {
   const session = await prisma.session.create({
     data: {
       userId,
-      expiresAt
-    }
+      expiresAt,
+    },
+    include: {
+      user: {
+        include: {
+          subscription: true,
+        },
+      },
+    },
   });
 
   const cookieStore = await cookies();
@@ -48,10 +80,27 @@ export async function createSession(userId: string) {
     secure: process.env.NODE_ENV === "production",
     sameSite: "lax",
     path: "/",
-    expires: expiresAt
+    expires: expiresAt,
   });
 
+  // Pre-seed cache so first redirect is instant
+  try {
+    await redisCache.set(`sess:${session.id}`, session, { ex: 300 });
+  } catch {}
+
   return session;
+}
+
+export async function invalidateSession(sessionId?: string) {
+  try {
+    if (!sessionId) {
+      const cookieStore = await cookies();
+      sessionId = cookieStore.get("mirha_session")?.value;
+    }
+    if (sessionId) {
+      await redisCache.del(`sess:${sessionId}`);
+    }
+  } catch {}
 }
 
 export async function logout() {
@@ -59,6 +108,9 @@ export async function logout() {
   const sessionId = cookieStore.get("mirha_session")?.value;
 
   if (sessionId) {
+    try {
+      await redisCache.del(`sess:${sessionId}`);
+    } catch {}
     try {
       await prisma.session.delete({ where: { id: sessionId } });
     } catch (e) {

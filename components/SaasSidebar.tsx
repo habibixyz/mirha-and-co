@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { logoutAction } from "@/app/(saas)/actions";
 import { LogOut } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
@@ -29,6 +29,7 @@ const NAV = [
 
 export function SaasSidebar() {
   const pathname = usePathname();
+  const router = useRouter();
   const [pendingHref, setPendingHref] = useState<string | null>(null);
 
   useEffect(() => {
@@ -41,7 +42,17 @@ export function SaasSidebar() {
     <aside className="dash-sidebar">
       {/* Brand */}
       <div className="dash-sidebar-brand">
-        <Link href="/dashboard" className="dash-sidebar-brand-name" prefetch={false}>
+        <Link
+          href="/dashboard"
+          className="dash-sidebar-brand-name"
+          prefetch={false}
+          onMouseEnter={() => router.prefetch("/dashboard")}
+          onTouchStart={() => router.prefetch("/dashboard")}
+          onClick={() => {
+            setPendingHref("/dashboard");
+            document.body.classList.remove("sidebar-open");
+          }}
+        >
           MIRHA &amp; CO.
         </Link>
         <a href="/" className="dash-back-link">
@@ -67,7 +78,12 @@ export function SaasSidebar() {
                   key={item.href}
                   href={item.href}
                   prefetch={false}
-                  onClick={() => setPendingHref(item.href)}
+                  onMouseEnter={() => router.prefetch(item.href)}
+                  onTouchStart={() => router.prefetch(item.href)}
+                  onClick={() => {
+                    setPendingHref(item.href);
+                    document.body.classList.remove("sidebar-open");
+                  }}
                   className={`dash-nav-link${isActive ? " active" : ""}`}
                 >
                   <span className="dash-nav-icon">{item.icon}</span>
@@ -86,7 +102,16 @@ export function SaasSidebar() {
         flexDirection: 'column',
         gap: '1rem'
       }}>
-        <Link href="/dashboard/subscription" prefetch={false} style={{
+        <Link
+          href="/dashboard/subscription"
+          prefetch={false}
+          onMouseEnter={() => router.prefetch("/dashboard/subscription")}
+          onTouchStart={() => router.prefetch("/dashboard/subscription")}
+          onClick={() => {
+            setPendingHref("/dashboard/subscription");
+            document.body.classList.remove("sidebar-open");
+          }}
+          style={{
           display: "block",
           background: "var(--dash-accent)",
           color: "white",

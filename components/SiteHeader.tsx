@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { useGlobalization } from "./GlobalizationContext";
 import GlobalizationSwitcher from "./GlobalizationSwitcher";
@@ -50,6 +50,7 @@ export default function SiteHeader() {
   const [isLaunching, setIsLaunching] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
+  const router = useRouter();
 
   // Always close drawer, clear launching state, and ensure scrolling is unlocked on route transition
   useEffect(() => {
@@ -164,15 +165,17 @@ export default function SiteHeader() {
             <Link href="/b2b" className="site-header-nav-link hidden lg:inline-flex">B2B API</Link>
             <Link href="/about" className="site-header-nav-link hidden lg:inline-flex">{t("nav.about")}</Link>
 
-            {/* Launch App / Dashboard CTA — native anchor avoids cross-layout RSC double-fetch & stale pre-login cache */}
-            <a
+            {/* Launch App / Dashboard CTA — fast client navigation with touch/hover prefetch */}
+            <Link
               href="/dashboard"
-              rel="nofollow"
+              prefetch={false}
+              onMouseEnter={() => router.prefetch("/dashboard")}
+              onTouchStart={() => router.prefetch("/dashboard")}
               onClick={handleLaunchClick}
               className="hidden lg:inline-flex items-center gap-1 rounded-full bg-[#fc2779] px-3.5 py-1.5 text-[10.5px] font-bold uppercase tracking-[0.1em] text-white transition-all hover:bg-[#e01f69] hover:shadow-[0_4px_16px_rgba(252,39,121,0.3)]"
             >
               {isLaunching ? "Launching..." : "Launch App →"}
-            </a>
+            </Link>
 
             <div className="flex items-center">
               <ThemeToggle iconOnly />
@@ -309,15 +312,20 @@ export default function SiteHeader() {
               </Link>
             </div>
 
-            {/* Launch App CTA — native anchor avoids cross-layout RSC double-fetch & stale pre-login cache */}
-            <a
+            {/* Launch App CTA — fast client navigation with touch/hover prefetch */}
+            <Link
               href="/dashboard"
-              rel="nofollow"
-              onClick={handleLaunchClick}
+              prefetch={false}
+              onMouseEnter={() => router.prefetch("/dashboard")}
+              onTouchStart={() => router.prefetch("/dashboard")}
+              onClick={() => {
+                handleLaunchClick();
+                handleNavClick();
+              }}
               className="mt-1 flex items-center justify-center gap-2 rounded-xl bg-[#fc2779] px-4 py-3 text-[13px] font-bold uppercase tracking-[0.1em] text-white transition-all hover:bg-[#e01f69] active:scale-[0.98]"
             >
               {isLaunching ? "Launching App..." : "Launch App →"}
-            </a>
+            </Link>
 
             {/* Controls Toolbar */}
             <div className="mt-auto border-t border-[#e5ded6] pt-3.5 pb-8 sm:pb-10 dark:border-white/10 shrink-0">

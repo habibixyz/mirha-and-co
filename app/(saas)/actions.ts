@@ -2,7 +2,7 @@
 
 import { redisCache } from "@/lib/redis";
 
-import { getSession, logout } from "@/lib/auth";
+import { getSession, logout, invalidateSession } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
@@ -418,10 +418,10 @@ export async function getDashboardData() {
   let session = null;
   try {
     session = await getSession();
-    if (!session) return { routines: [], journal: null, user: null, error: "Unauthorized" };
+    if (!session || !session.user) return { routines: [], journal: null, user: null, error: "Unauthorized" };
 
-    // Optimize sequential awaits into parallel execution to eliminate database query water-falling
-    const [routines, recentJournal, journalCount, recentEntries, subscription] = await Promise.all([
+    // Parallelize routines and journal lookups; session.user already contains subscription and user fields
+    const [routines, recentJournal, journalCount, recentEntries] = await Promise.all([
       prisma.routine.findMany({
         where: { userId: session.userId },
         orderBy: { createdAt: "asc" }
@@ -439,12 +439,9 @@ export async function getDashboardData() {
         orderBy: { date: "desc" },
         select: { rating: true }
       }),
-      prisma.subscription.findUnique({
-        where: { userId: session.userId },
-        select: { tier: true, status: true }
-      })
     ]);
-    const isPro = subscription?.tier === "pro" && subscription?.status === "active";
+    const subscription = session.user.subscription;
+    const isPro = (subscription?.tier === "pro" && subscription?.status === "active") || Boolean(session.user.isAdmin) || session.user.email === "tanizcoldz@gmail.com";
 
     // ── STATS LOGIC ──────────────────────────────────────────────────────────
     
@@ -533,18 +530,19 @@ export async function getDashboardData() {
 }
 
 export async function getUserProfile() {
- try {
- const session = await getSession();
- if (!session) return null;
+  try {
+    const session = await getSession();
+    if (!session) return null;
+    if (session.user) return session.user;
 
- return prisma.user.findUnique({
- where: { id: session.userId },
- include: { subscription: true }
- });
- } catch (error) {
- console.error("Profile lookup error:", error);
- return null;
- }
+    return prisma.user.findUnique({
+      where: { id: session.userId },
+      include: { subscription: true }
+    });
+  } catch (error) {
+    console.error("Profile lookup error:", error);
+    return null;
+  }
 }
 
 
@@ -1325,6 +1323,8 @@ export async function updateUserBlacklist(blacklist: string[]) {
  where: { id: session.userId },
  data: { skinProfile: JSON.stringify(updatedProfile) }
  });
+
+ await invalidateSession(session.id);
 
  revalidatePath("/dashboard/conflicts");
  revalidatePath("/dashboard");

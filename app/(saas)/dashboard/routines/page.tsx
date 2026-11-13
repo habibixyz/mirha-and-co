@@ -1,16 +1,19 @@
-import { getDashboardData } from "../../actions";
+import { getSession } from "@/lib/auth";
+import { getRoutines } from "../../actions";
 import { RoutinesClient } from "./RoutinesClient";
 import { redirect } from "next/navigation";
 
 export const dynamic = "force-dynamic";
 
 export default async function RoutinesPage() {
- const data = await getDashboardData();
+  const [session, routines] = await Promise.all([
+    getSession(),
+    getRoutines()
+  ]);
 
-  if (data.error === "Unauthorized" || !data.user) {
+  if (!session || !session.user) {
     redirect("/login");
   }
- const routines = Array.isArray(data?.routines) ? data.routines : [];
 
- return <RoutinesClient initialRoutines={routines} />;
+  return <RoutinesClient initialRoutines={Array.isArray(routines) ? routines : []} />;
 }

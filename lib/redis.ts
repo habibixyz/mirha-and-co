@@ -42,6 +42,11 @@ class MemoryCache {
   async expire(key: string, seconds: number): Promise<void> {
     this.expiries.set(key, Date.now() + seconds * 1000);
   }
+
+  async del(key: string): Promise<void> {
+    this.cache.delete(key);
+    this.expiries.delete(key);
+  }
 }
 
 let redis: Redis | null = null;
@@ -131,5 +136,16 @@ export const redisCache = {
       }
     }
     await memory.expire(key, seconds);
+  },
+
+  async del(key: string): Promise<void> {
+    if (redis) {
+      try {
+        await redis.del(key);
+      } catch (err) {
+        console.error(`Redis DEL error for key [${key}]:`, err);
+      }
+    }
+    await memory.del(key);
   }
 };

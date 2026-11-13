@@ -7,18 +7,15 @@ export const dynamic = "force-dynamic";
 
 export default async function AnalysisPage() {
   const session = await getSession();
-  if (!session || !session.userId) {
+  if (!session || !session.userId || !session.user) {
     redirect("/login");
   }
 
+  const user = session.user;
   const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
 
-  // Parallelize user lookup, past analyses, and 24h scan check to eliminate DB water-falling
-  const [user, pastAnalyses, recentScan] = await Promise.all([
-    prisma.user.findUnique({
-      where: { id: session.userId },
-      include: { subscription: true },
-    }),
+  // Parallelize past analyses and 24h scan check; user and subscription are already in session.user
+  const [pastAnalyses, recentScan] = await Promise.all([
     prisma.faceAnalysis.findMany({
       where: { userId: session.userId },
       orderBy: { createdAt: "desc" },
@@ -31,10 +28,6 @@ export default async function AnalysisPage() {
       },
     }),
   ]);
-
-  if (!user) {
-    redirect("/login");
-  }
 
   const nextAvailableAt = recentScan
     ? new Date(recentScan.createdAt.getTime() + 24 * 60 * 60 * 1000).toISOString()
