@@ -39,36 +39,40 @@ export function DashboardClient({ user, routines, recentJournal, stats, isPro = 
  else setGreeting("Good Morning");
  }, []);
 
- useEffect(() => {
- // Skip redundant server action round-trip for free accounts
- if (!isPro) {
- setCoachStatus("need_pro");
- return;
- }
- async function loadCoach() {
- try {
- const res = await getJournalAnalysis();
- if (!res) {
- setCoachStatus("need_pro");
- } else if ("error" in res) {
- if (res.error === "UPGRADE_PRO") {
- setCoachStatus("need_pro");
- } else if (res.error === "NOT_ENOUGH_DATA") {
- setCoachStatus("need_data");
- } else {
- setCoachStatus("need_pro");
- }
- } else {
- setCoachInsight(res as { trend: string; observation: string; tip: string });
- setCoachStatus("unlocked");
- }
- } catch (e) {
- console.error("Failed to load coach insights", e);
- setCoachStatus("need_pro");
- }
- }
- loadCoach();
- }, [isPro]);
+  useEffect(() => {
+    if (!isPro) {
+      setCoachStatus("need_pro");
+      return;
+    }
+    let cancelled = false;
+    const timer = setTimeout(async () => {
+      try {
+        const res = await getJournalAnalysis();
+        if (cancelled) return;
+        if (!res) {
+          setCoachStatus("need_pro");
+        } else if ("error" in res) {
+          if (res.error === "UPGRADE_PRO") {
+            setCoachStatus("need_pro");
+          } else if (res.error === "NOT_ENOUGH_DATA") {
+            setCoachStatus("need_data");
+          } else {
+            setCoachStatus("need_pro");
+          }
+        } else {
+          setCoachInsight(res as { trend: string; observation: string; tip: string });
+          setCoachStatus("unlocked");
+        }
+      } catch (e) {
+        if (!cancelled) setCoachStatus("need_pro");
+      }
+    }, 500);
+
+    return () => {
+      cancelled = true;
+      clearTimeout(timer);
+    };
+  }, [isPro]);
  
   const [localRoutines, setLocalRoutines] = useState<any[]>(Array.isArray(routines) ? routines : []);
   const [activeRoutineIdx, setActiveRoutineIdx] = useState<number>(() => {
