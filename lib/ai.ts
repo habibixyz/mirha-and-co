@@ -5,22 +5,33 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
 /**
  * Helper to generate content with retries and fallback models.
  */
-export async function generateWithRetry(prompt: string | any[], retries = 3, delay = 1000): Promise<string> {
-  for (let i = 0; i < retries; i++) {
+export async function generateWithRetry(prompt: string | any[]): Promise<string> {
+  const apiKey = process.env.GEMINI_API_KEY;
+  if (!apiKey) {
+    throw new Error("GEMINI_API_KEY is not configured");
+  }
+
+  const candidateModels = ["gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-flash"];
+  let lastError: any = null;
+
+  for (const modelName of candidateModels) {
     try {
-      const model = genAI.getGenerativeModel({ model: "gemini-3.6-flash" });
+      const model = genAI.getGenerativeModel({ model: modelName });
       const result = await model.generateContent(prompt);
       const response = await result.response;
       return response.text();
     } catch (error: any) {
-      console.warn(`Gemini (gemini-3.6-flash) attempt ${i + 1} failed:`, error.message || error);
-      if (i < retries - 1) {
-        await new Promise((resolve) => setTimeout(resolve, delay * Math.pow(2, i)));
+      lastError = error;
+      const msg = error?.message || String(error);
+      // Immediately fail fast on invalid credentials instead of stalling
+      if (msg.includes("API_KEY_INVALID") || msg.includes("API key not valid") || msg.includes("400")) {
+        throw error;
       }
+      console.warn(`Gemini (${modelName}) failed:`, msg);
     }
   }
 
-  throw new Error("Failed to generate content with Gemini 3.6 Flash after retries");
+  throw lastError || new Error("Failed to generate content with Gemini after model fallback");
 }
 
 /**
@@ -92,7 +103,19 @@ export async function analyzeSkinJournal(entries: any[]) {
  const text = await generateWithRetry(prompt);
  return JSON.parse(text.replace(/```json|```/g, ""));
  } catch (error) {
- console.error("Journal Analysis Error:", error);
+ console.warn("Journal Analysis AI fallback to heuristic:", error);
+ if (Array.isArray(entries) && entries.length > 0) {
+ const avg = entries.reduce((s: number, e: any) => s + (typeof e?.rating === "number" ? e.rating : 4), 0) / entries.length;
+ return {
+ trend: avg >= 4 ? "Improving" : avg >= 3 ? "Stable" : "Sensitive",
+ observation: avg >= 4
+ ? "Your barrier response has remained consistently steady across recent entries."
+ : "Recent entries show minor sensitivity. Keep routines mild and prioritize barrier hydration.",
+ tip: avg >= 4
+ ? "Maintain your current routine steps and ensure sunscreen reapplication."
+ : "Avoid introducing new high-percentage active exfoliants until irritation subsides.",
+ };
+ }
  return null;
  }
 }

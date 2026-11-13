@@ -182,23 +182,48 @@ export function SearchClient({ isPro, blacklist = [] }: { isPro: boolean; blackl
  }
  }, [searchParams]);
 
- // Reset AI state when query changes
- useEffect(() => {
- setHasTriggeredAi(false);
- setAiAdvice(null);
- setError(null);
- }, [query]);
-
  const handleQueryChange = (val: string) => {
  setLocalQuery(val);
  };
 
- const handleSearch = () => {
- setQuery(localQuery);
+ const handleSearch = (targetQuery?: string) => {
+ const q = (targetQuery !== undefined ? targetQuery : localQuery).trim();
+ setQuery(q);
+ setLocalQuery(q);
+ setHasTriggeredAi(false);
+ setAiAdvice(null);
+ setError(null);
  const params = new URLSearchParams(searchParams.toString());
- if (localQuery) params.set("q", localQuery);
+ if (q) params.set("q", q);
  else params.delete("q");
  router.replace(`/dashboard/search?${params.toString()}`, { scroll: false });
+ };
+
+ const triggerBrainSearch = (targetQuery?: string) => {
+ const q = (targetQuery !== undefined ? targetQuery : localQuery).trim();
+ if (!q) return;
+
+ setQuery(q);
+ setLocalQuery(q);
+ setHasTriggeredAi(true);
+ setIsAiLoading(true);
+ setError(null);
+
+ const params = new URLSearchParams(searchParams.toString());
+ params.set("q", q);
+ router.replace(`/dashboard/search?${params.toString()}`, { scroll: false });
+
+ getAISearchAdvice(q)
+ .then((advice) => {
+ setAiAdvice(advice);
+ })
+ .catch((err) => {
+ console.error("AI Advice failed", err);
+ setError(err instanceof Error ? err.message : String(err));
+ })
+ .finally(() => {
+ setIsAiLoading(false);
+ });
  };
 
  const results = useMemo(() => searchMirha(query), [query]);
@@ -229,27 +254,6 @@ export function SearchClient({ isPro, blacklist = [] }: { isPro: boolean; blackl
  
  return sorted;
  }, [groups, aiAdvice]);
-
- useEffect(() => {
- if (!hasTriggeredAi || query.length < 5) {
- setAiAdvice(null);
- return;
- }
-
- setIsAiLoading(true);
- setError(null);
- getAISearchAdvice(query)
- .then((advice) => {
- setAiAdvice(advice);
- })
- .catch((err) => {
- console.error("AI Advice failed", err);
- setError(err instanceof Error ? err.message : String(err));
- })
- .finally(() => {
- setIsAiLoading(false);
- });
- }, [query, hasTriggeredAi, isPro]);
 
  return (
  <main style={{ minHeight: '100%' }}>
@@ -780,19 +784,18 @@ export function SearchClient({ isPro, blacklist = [] }: { isPro: boolean; blackl
  onChange={(event) => handleQueryChange(event.target.value)}
  onKeyDown={(e) => {
  if (e.key === 'Enter') {
- handleSearch();
- setHasTriggeredAi(false);
+ triggerBrainSearch();
  }
  }}
  placeholder="Try oily skin sunscreen, pigmentation, niacinamide..."
  autoFocus
  />
- {localQuery ? <button className="clear-btn" onClick={() => { setLocalQuery(""); setQuery(""); router.replace('/dashboard/search', { scroll: false }); }}>x</button> : null}
+ {localQuery ? <button className="clear-btn" onClick={() => { setLocalQuery(""); setQuery(""); setAiAdvice(null); setHasTriggeredAi(false); router.replace('/dashboard/search', { scroll: false }); }}>x</button> : null}
  <div className="search-box-buttons">
- <button className="search-btn secondary" onClick={() => { handleSearch(); setHasTriggeredAi(false); }}>
+ <button className="search-btn secondary" onClick={() => handleSearch()}>
  Search
  </button>
- <button className="search-btn primary" onClick={() => { handleSearch(); setHasTriggeredAi(true); }} disabled={localQuery.length < 5}>
+ <button className="search-btn primary" onClick={() => triggerBrainSearch()} disabled={!localQuery || !localQuery.trim()}>
  <Star size={14} /> Brain
  </button>
  </div>
@@ -800,7 +803,7 @@ export function SearchClient({ isPro, blacklist = [] }: { isPro: boolean; blackl
 
  <div className="quick-row">
  {QUICK.map((item) => (
- <button key={item} onClick={() => handleQueryChange(item)}>
+ <button key={item} onClick={() => triggerBrainSearch(item)}>
  {item}
  </button>
  ))}

@@ -926,7 +926,7 @@ export async function getAISearchAdvice(query: string) {
  query: query,
  response: response.advice,
  type: "search",
- metadata: { productsRecommended: response.products.map((p: any) => p.name) }
+ metadata: { productsRecommended: Array.isArray((response as any)?.products) ? (response as any).products.map((p: any) => p?.name || p) : (response?.recommendedIds || []) }
  }
  });
  } catch (e) {
