@@ -934,6 +934,7 @@ export default function ToolsHubClient() {
         <div className="persona-split">
           <Link
             href="/dashboard"
+            prefetch={true}
             scroll={true}
             onClick={() => window.scrollTo({ top: 0, left: 0, behavior: "instant" })}
             className="persona-card"

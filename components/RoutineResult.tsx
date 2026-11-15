@@ -350,19 +350,19 @@ export default function RoutineResult({
       // Attempt server sync
       const res = await syncQuizRoutineToVanity(pending);
       if (res?.unauthorized) {
-        // Redirect to signup with returnUrl
-        router.push('/signup?returnUrl=/dashboard/routines');
+        // Redirect to register with redirect URL
+        router.push('/register?redirect=/dashboard/routines');
       } else if (res?.success) {
         if (typeof window !== 'undefined') {
           localStorage.removeItem('mirha_pending_routine');
         }
         router.push('/dashboard/routines');
       } else {
-        router.push('/signup?returnUrl=/dashboard/routines');
+        router.push('/register?redirect=/dashboard/routines');
       }
     } catch (err) {
       console.error('Error saving to vanity:', err);
-      router.push('/signup?returnUrl=/dashboard/routines');
+      router.push('/register?redirect=/dashboard/routines');
     } finally {
       setSavingVanity(false);
     }

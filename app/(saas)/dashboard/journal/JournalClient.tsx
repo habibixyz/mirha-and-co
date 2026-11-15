@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useTransition, useRef, useMemo } from "react";
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { saveJournalEntry, analyzeSkinPhoto, getJournalAnalysis } from "../../actions";
 import { Calendar, Plus, Star, MoreVertical, Upload, X, Brain, TrendingUp, Info, Lightbulb } from "lucide-react";
@@ -388,7 +389,7 @@ export function SkinJournalClient({ initialEntries, isPro }: { initialEntries: a
  <div>
  <p style={{ margin: "0 0 0.4rem", fontWeight: 700 }}>Daily limit reached</p>
  <p style={{ margin: "0 0 0.8rem", fontSize: "0.9rem", opacity: 0.8 }}>Free users can add 2 entries per day. Upgrade to Pro for 10 daily entries and AI skin analysis.</p>
- <a href="/dashboard/subscription" style={{ color: "#B91C1C", fontWeight: 700, textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "0.2rem" }}>Upgrade to Pro →</a>
+ <Link href="/dashboard/subscription" prefetch={true} style={{ color: "#B91C1C", fontWeight: 700, textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "0.2rem" }}>Upgrade to Pro →</Link>
  </div>
  ) : (
  <span>{error}</span>

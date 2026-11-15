@@ -1204,9 +1204,9 @@ export default async function BeautyShopPage() {
                   }}
                 />
               </Link>
-              <a href="/register" rel="nofollow" className="secondary-btn">
+              <Link href="/register" prefetch={true} className="secondary-btn">
                 Create Free Profile
-              </a>
+              </Link>
             </div>
             <div className="saas-loop">
               <div className="saas-loop-item">
@@ -1234,7 +1234,7 @@ export default async function BeautyShopPage() {
                 <FaceScannerUI imageSrc={heroIndianFace} showMesh={false} />
               </Link>
               <div className="ai-stack-left">
-                <a href="/dashboard/routines" rel="nofollow" className="ai-card ai-card-routine">
+                <Link href="/dashboard/routines" prefetch={true} className="ai-card ai-card-routine">
                   <div className="ai-card-header">
                     <div className="ai-icon">
                       <Layers size={18} strokeWidth={1.5} />
@@ -1244,7 +1244,7 @@ export default async function BeautyShopPage() {
                       <p>AM & PM Regimens</p>
                     </div>
                   </div>
-                </a>
+                </Link>
                 <Link href="/tools/routine" className="ai-card ai-card-water">
                   <div className="ai-card-header">
                     <div className="ai-icon">
@@ -1425,9 +1425,9 @@ export default async function BeautyShopPage() {
                 />
               </Link>
 
-              <a
+              <Link
                 href="/dashboard"
-                rel="nofollow"
+                prefetch={true}
                 style={{
                   flexDirection: isRtl ? "row-reverse" : "row",
                 }}
@@ -1442,7 +1442,7 @@ export default async function BeautyShopPage() {
                     transform: isRtl ? "rotate(180deg)" : "none",
                   }}
                 />
-              </a>
+              </Link>
 
               <Link
                 href="/b2b"

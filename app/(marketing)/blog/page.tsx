@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { POSTS, getRelevantImage } from "@/lib/posts";
 import MoleculeWrapper from "@/components/MoleculeWrapper";
 import BlogSearchClient from "./BlogSearchClient";
@@ -836,8 +837,8 @@ export default async function BlogIndex() {
   {localizeContent("Guides, comparisons, and routines for Indian skin: clear enough for beginners, useful enough for people who already know their actives.")}
   </p>
  <div className="hero-actions">
- <a href="/dashboard/search" rel="nofollow" className="primary-btn">Search Mirha</a>
- <a href="/tools/routine" className="secondary-btn">Build Routine</a>
+ <Link href="/dashboard/search" prefetch={true} className="primary-btn">Search Mirha</Link>
+ <Link href="/tools/routine" prefetch={true} className="secondary-btn">Build Routine</Link>
  </div>
  </div>
 
@@ -1084,9 +1085,9 @@ export default async function BlogIndex() {
  <p>
  Answer a few questions and get a 4-step routine built around your skin type, concern, and budget.
  </p>
- <a href="/tools/routine" className="primary-btn" style={{ background: "#fff", color: "#111", borderColor: "#fff" }}>
+ <Link href="/tools/routine" prefetch={true} className="primary-btn" style={{ background: "#fff", color: "#111", borderColor: "#fff" }}>
  Get your routine
- </a>
+ </Link>
  </section>
  </div>
  </main>

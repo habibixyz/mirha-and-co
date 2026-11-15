@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import BlogFooterTools from "@/components/BlogFooterTools";
 
 export const metadata: Metadata = {
@@ -263,9 +264,9 @@ export default function ConsumerDashboardBlogPage() {
           <p className="cta-desc">
             Sign in to start tracking your skin journal and run your first formulation conflict check.
           </p>
-          <a href="/login" className="cta-btn">
+          <Link href="/login" prefetch={true} className="cta-btn">
             Open the Portal
-          </a>
+          </Link>
         </div>
 
         <BlogFooterTools />

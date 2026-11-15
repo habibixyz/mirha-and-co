@@ -191,6 +191,7 @@ export function PricingCards() {
 
             <Link
               href={plan.href}
+              prefetch={true}
               className={`plan-cta ${
                 plan.highlight ? "highlighted-cta" : "normal-cta"
               }`}
