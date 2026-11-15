@@ -11,7 +11,7 @@ export async function generateWithRetry(prompt: string | any[]): Promise<string>
     throw new Error("GEMINI_API_KEY is not configured");
   }
 
-  const candidateModels = ["gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-flash"];
+  const candidateModels = ["gemini-2.0-flash", "gemini-1.5-flash"];
   let lastError: any = null;
 
   for (const modelName of candidateModels) {

@@ -421,25 +421,21 @@ export async function getDashboardData() {
     if (!session || !session.user) return { routines: [], journal: null, user: null, error: "Unauthorized" };
 
     // Parallelize routines and journal lookups; session.user already contains subscription and user fields
-    const [routines, recentJournal, journalCount, recentEntries] = await Promise.all([
+    const [routines, recentEntries, journalCount] = await Promise.all([
       prisma.routine.findMany({
         where: { userId: session.userId },
         orderBy: { createdAt: "asc" }
-      }),
-      prisma.skinJournal.findFirst({
-        where: { userId: session.userId },
-        orderBy: { date: "desc" }
-      }),
-      prisma.skinJournal.count({
-        where: { userId: session.userId }
       }),
       prisma.skinJournal.findMany({
         where: { userId: session.userId },
         take: 5,
         orderBy: { date: "desc" },
-        select: { rating: true }
+      }),
+      prisma.skinJournal.count({
+        where: { userId: session.userId }
       }),
     ]);
+    const recentJournal = recentEntries.length > 0 ? recentEntries[0] : null;
     const subscription = session.user.subscription;
     const isPro = (subscription?.tier === "pro" && subscription?.status === "active") || Boolean(session.user.isAdmin) || session.user.email === "tanizcoldz@gmail.com";
 
@@ -958,8 +954,17 @@ export async function getJournalAnalysis() {
 
  if (entries.length < 3) return { error: 'NOT_ENOUGH_DATA' };
 
+ // Check cache first so dashboard loads in <1ms without calling AI LLM repeatedly
+ const cacheKey = `journal_analysis:${session.userId}:${entries[0]?.id || "latest"}`;
+ try {
+ const cached = await redisCache.get(cacheKey);
+ if (cached) return cached;
+ } catch {
+ // Continue if cache check fails
+ }
+
  // Fast 2.5s ceiling so remote AI API calls never stall client rendering
- return await Promise.race([
+ const analysis = await Promise.race([
  analyzeSkinJournal(entries),
  new Promise((resolve) => setTimeout(() => resolve({
  trend: "Stable",
@@ -967,6 +972,16 @@ export async function getJournalAnalysis() {
  tip: "Maintain routine consistency and prioritize hydration."
  }), 2500))
  ]);
+
+ if (analysis && typeof analysis === "object" && !("error" in (analysis as any))) {
+ try {
+ await redisCache.set(cacheKey, analysis, { ex: 86400 });
+ } catch {
+ // Ignore cache write error
+ }
+ }
+
+ return analysis;
 }
 
 // ? BRAIN: PHOTO/NOTE SKIN ANALYSIS

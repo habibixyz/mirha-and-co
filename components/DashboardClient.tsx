@@ -44,6 +44,20 @@ export function DashboardClient({ user, routines, recentJournal, stats, isPro = 
       setCoachStatus("need_pro");
       return;
     }
+
+    // Check client sessionStorage first for instant 0ms restoration
+    try {
+      const cached = sessionStorage.getItem("mirha_coach_insight");
+      if (cached) {
+        const parsed = JSON.parse(cached);
+        if (parsed?.trend) {
+          setCoachInsight(parsed);
+          setCoachStatus("unlocked");
+          return;
+        }
+      }
+    } catch {}
+
     let cancelled = false;
     const timer = setTimeout(async () => {
       try {
@@ -62,6 +76,9 @@ export function DashboardClient({ user, routines, recentJournal, stats, isPro = 
         } else {
           setCoachInsight(res as { trend: string; observation: string; tip: string });
           setCoachStatus("unlocked");
+          try {
+            sessionStorage.setItem("mirha_coach_insight", JSON.stringify(res));
+          } catch {}
         }
       } catch (e) {
         if (!cancelled) setCoachStatus("need_pro");

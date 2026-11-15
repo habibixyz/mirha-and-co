@@ -60,6 +60,13 @@ export default function SiteHeader() {
     document.body.style.overflow = "";
   }, [pathname]);
 
+  // Preload dashboard as soon as mobile menu is opened so tapping Launch App is instant
+  useEffect(() => {
+    if (menuOpen) {
+      router.prefetch("/dashboard");
+    }
+  }, [menuOpen, router]);
+
   // Reset mobile drawer & launch state if restored via mobile browser Back button (BFCache)
   useEffect(() => {
     const handlePageShow = () => {
@@ -118,11 +125,11 @@ export default function SiteHeader() {
     setTimeout(() => setMenuOpen(false), 80);
   };
 
-  // Native hard navigation across (marketing) -> (saas) root layouts avoids stale pre-auth Router Cache & RSC double-fetch
+  // Instant visual feedback and scroll lock when launching dashboard
   const handleLaunchClick = () => {
     setIsLaunching(true);
-    document.documentElement.style.overflow = "";
-    document.body.style.overflow = "";
+    document.documentElement.style.overflow = "hidden";
+    document.body.style.overflow = "hidden";
   };
 
   return (
@@ -168,7 +175,6 @@ export default function SiteHeader() {
             {/* Launch App / Dashboard CTA — fast client navigation with touch/hover prefetch */}
             <Link
               href="/dashboard"
-              prefetch={false}
               onMouseEnter={() => router.prefetch("/dashboard")}
               onTouchStart={() => router.prefetch("/dashboard")}
               onClick={handleLaunchClick}
@@ -315,13 +321,9 @@ export default function SiteHeader() {
             {/* Launch App CTA — fast client navigation with touch/hover prefetch */}
             <Link
               href="/dashboard"
-              prefetch={false}
               onMouseEnter={() => router.prefetch("/dashboard")}
               onTouchStart={() => router.prefetch("/dashboard")}
-              onClick={() => {
-                handleLaunchClick();
-                handleNavClick();
-              }}
+              onClick={handleLaunchClick}
               className="mt-1 flex items-center justify-center gap-2 rounded-xl bg-[#fc2779] px-4 py-3 text-[13px] font-bold uppercase tracking-[0.1em] text-white transition-all hover:bg-[#e01f69] active:scale-[0.98]"
             >
               {isLaunching ? "Launching App..." : "Launch App →"}
@@ -359,6 +361,23 @@ export default function SiteHeader() {
                   </a>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+      )}
+      {/* Fullscreen transition overlay when launching dashboard */}
+      {isLaunching && (
+        <div
+          className="fixed inset-0 z-[999999] flex flex-col items-center justify-center bg-[#fcfbf9]/95 backdrop-blur-md dark:bg-[#141312]/95"
+          style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: 0, width: "100vw", height: "100vh", zIndex: 999999 }}
+        >
+          <div className="flex flex-col items-center gap-3 text-center px-6">
+            <span className="font-bebas notranslate text-3xl tracking-[0.16em] text-[#11100f] dark:text-white">
+              MIRHA &amp; CO.
+            </span>
+            <div className="flex items-center gap-2.5 text-[13px] font-semibold text-[#fc2779]">
+              <div className="h-4 w-4 animate-spin rounded-full border-2 border-[#fc2779] border-t-transparent" />
+              Opening Dashboard...
             </div>
           </div>
         </div>
