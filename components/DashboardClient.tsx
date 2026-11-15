@@ -26,18 +26,16 @@ export function DashboardClient({ user, routines, recentJournal, stats, isPro = 
   const today = new Date().toISOString().split("T")[0];
  
  // Dynamic greeting based on hour
- const [greeting, setGreeting] = useState("Good Morning");
+ const [greeting, setGreeting] = useState(() => {
+   const hour = new Date().getHours();
+   if (hour >= 17) return "Good Evening";
+   if (hour >= 12) return "Good Afternoon";
+   return "Good Morning";
+ });
  const [coachInsight, setCoachInsight] = useState<{ trend: string; observation: string; tip: string } | null>(null);
  const [coachStatus, setCoachStatus] = useState<"loading" | "unlocked" | "need_pro" | "need_data">(
    isPro ? "loading" : "need_pro"
  );
- 
- useEffect(() => {
- const hour = new Date().getHours();
- if (hour >= 17) setGreeting("Good Evening");
- else if (hour >= 12) setGreeting("Good Afternoon");
- else setGreeting("Good Morning");
- }, []);
 
   useEffect(() => {
     if (!isPro) {
@@ -201,16 +199,13 @@ export function DashboardClient({ user, routines, recentJournal, stats, isPro = 
   };
 
   const containerVariants = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: { staggerChildren: 0.1 }
-    }
+    hidden: { opacity: 1 },
+    show: { opacity: 1 }
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 15 },
-    show: { opacity: 1, y: 0, transition: { type: "spring" as const, stiffness: 300, damping: 24 } }
+    hidden: { opacity: 1, y: 0 },
+    show: { opacity: 1, y: 0 }
   };
 
   const realRoutines = Array.isArray(localRoutines) ? localRoutines : (Array.isArray(routines) ? routines : []);

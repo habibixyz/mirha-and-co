@@ -368,7 +368,7 @@ export default function SiteHeader() {
       {/* Fullscreen transition overlay when launching dashboard */}
       {isLaunching && (
         <div
-          className="fixed inset-0 z-[999999] flex flex-col items-center justify-center bg-[#fcfbf9]/95 backdrop-blur-md dark:bg-[#141312]/95"
+          className="fixed inset-0 z-[999999] flex flex-col items-center justify-center bg-[#F8F6F3] dark:bg-[#0f0e0d]"
           style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: 0, width: "100vw", height: "100vh", zIndex: 999999 }}
         >
           <div className="flex flex-col items-center gap-3 text-center px-6">

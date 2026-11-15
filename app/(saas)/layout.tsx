@@ -185,7 +185,7 @@ export default function SaasLayout({
  html, body {
  height: 100%;
  width: 100%;
- background: #E8E4DF;
+ background: var(--dash-bg);
  }
 
  body {
