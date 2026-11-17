@@ -34,6 +34,7 @@ const nextConfig: NextConfig = {
     root: __dirname,
   },
   experimental: {
+    agentUpgrade: "security",
     mdxRs: true,
     serverActions: {
       bodySizeLimit: '10mb',

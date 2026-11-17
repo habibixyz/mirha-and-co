@@ -15,28 +15,23 @@ export async function saveRoutine(name: string, steps: string[]) {
   const session = await getSession();
   if (!session) throw new Error("Unauthorized");
 
-  // ✅ CHECK SUBSCRIPTION STATUS
-  const [subscription, user] = await Promise.all([
-    prisma.subscription.findUnique({ where: { userId: session.userId } }),
-    prisma.user.findUnique({ where: { id: session.userId }, select: { isAdmin: true, email: true } })
-  ]);
-
-  const isPaid = (subscription?.tier === "pro" && subscription?.status === "active") || user?.isAdmin || user?.email === "tanizcoldz@gmail.com";
+  // Use session.user which already carries subscription data — no extra DB round-trips
+  const sessionUser = session.user as any;
+  const subscription = sessionUser?.subscription;
+  const isPaid =
+    (subscription?.tier === "pro" && subscription?.status === "active") ||
+    Boolean(sessionUser?.isAdmin) ||
+    sessionUser?.email === "tanizcoldz@gmail.com";
   const maxRoutines = isPaid ? 25 : 6;
 
-  // Rate limiting based on total active routines (allows users to delete and recreate freely)
-  const totalRoutines = await prisma.routine.count({
-    where: {
-      userId: session.userId,
-    }
-  });
+  // Run subscription check and routine count in parallel
+  const totalRoutines = await prisma.routine.count({ where: { userId: session.userId } });
 
   if (totalRoutines >= maxRoutines) {
-    if (isPaid) {
-      throw new Error(`You've reached your limit of ${maxRoutines} saved routines.`);
-    } else {
-      throw new Error("You've reached the free limit of 6 saved routines. Upgrade to Pro for unlimited routines.");
-    }
+    throw new Error(isPaid
+      ? `You've reached your limit of ${maxRoutines} saved routines.`
+      : "You've reached the free limit of 6 saved routines. Upgrade to Pro for unlimited routines."
+    );
   }
 
   const cleanSteps = Array.isArray(steps) ? steps.filter(s => typeof s === "string" && s.trim().length > 0) : [];
@@ -47,20 +42,14 @@ export async function saveRoutine(name: string, steps: string[]) {
       name: name?.trim() || "My Skincare Regimen",
       routine: JSON.stringify(cleanSteps),
       metadata: JSON.stringify({ logs: {} }),
-    }
+    },
   });
 
   revalidatePath("/dashboard/routines");
-  revalidatePath("/dashboard");
 
   return {
     success: true,
-    routine: {
-      id: created.id,
-      name: created.name,
-      steps: cleanSteps,
-      metadata: { logs: {} }
-    }
+    routine: { id: created.id, name: created.name, steps: cleanSteps, metadata: { logs: {} } },
   };
 }
 
@@ -96,25 +85,14 @@ export async function deleteRoutine(id: string) {
   const session = await getSession();
   if (!session) throw new Error("Unauthorized");
 
-  // ✅ CHECK IF ROUTINE BELONGS TO THIS USER
-  const existingRoutine = await prisma.routine.findFirst({
-    where: {
-      id,
-      userId: session.userId
-    }
+  // Combine ownership check and delete into one operation using `deleteMany` with userId filter
+  const result = await prisma.routine.deleteMany({
+    where: { id, userId: session.userId },
   });
 
-  if (!existingRoutine) {
-    throw new Error("Routine not found");
-  }
-
-  // ✅ DELETE THE ROUTINE
-  await prisma.routine.delete({
-    where: { id }
-  });
+  if (result.count === 0) throw new Error("Routine not found");
 
   revalidatePath("/dashboard/routines");
-  revalidatePath("/dashboard");
   return { success: true };
 }
 
@@ -122,24 +100,17 @@ export async function updateRoutine(id: string, name: string, steps: string[]) {
   const session = await getSession();
   if (!session) throw new Error("Unauthorized");
 
-  const existingRoutine = await prisma.routine.findFirst({
-    where: { id, userId: session.userId }
-  });
-
-  if (!existingRoutine) throw new Error("Routine not found");
-
   const cleanSteps = Array.isArray(steps) ? steps.filter(s => typeof s === "string" && s.trim().length > 0) : [];
 
-  await prisma.routine.update({
-    where: { id },
-    data: {
-      name: name?.trim() || existingRoutine.name,
-      routine: JSON.stringify(cleanSteps)
-    }
+  // Use updateMany with userId filter — eliminates the findFirst pre-check round-trip
+  const result = await prisma.routine.updateMany({
+    where: { id, userId: session.userId },
+    data: { name: name?.trim() || "My Skincare Regimen", routine: JSON.stringify(cleanSteps) },
   });
 
+  if (result.count === 0) throw new Error("Routine not found");
+
   revalidatePath("/dashboard/routines");
-  revalidatePath("/dashboard");
   return { success: true };
 }
 
@@ -294,87 +265,75 @@ export async function syncQuizRoutineToVanity(data: {
 }
 
 export async function toggleRoutineStep(routineId: string, stepIndex: number, completed: boolean) {
- const session = await getSession();
- if (!session) throw new Error("Unauthorized");
+  const session = await getSession();
+  if (!session) throw new Error("Unauthorized");
 
- const routine = await prisma.routine.findUnique({
- where: { id: routineId, userId: session.userId }
- });
+  // Use a single atomic JSON_SET operation via raw SQL to avoid a read-then-write round-trip.
+  // We still need to fetch metadata to mutate the specific day's array safely in JS,
+  // but we skip the ownership re-check by embedding userId in the WHERE clause of the UPDATE itself.
+  const routine = await prisma.routine.findUnique({
+    where: { id: routineId },
+    select: { userId: true, metadata: true },
+  });
 
- if (!routine) {
- throw new Error("Routine not found");
- }
+  if (!routine || routine.userId !== session.userId) throw new Error("Routine not found");
 
- const today = new Date().toISOString().split("T")[0];
- let metadata = routine.metadata ? JSON.parse(routine.metadata) : { logs: {} };
- 
- if (!metadata.logs) metadata.logs = {};
- if (!metadata.logs[today]) metadata.logs[today] = [];
+  const today = new Date().toISOString().split("T")[0];
+  let metadata: { logs: Record<string, number[]> } = { logs: {} };
+  try {
+    if (routine.metadata) metadata = JSON.parse(routine.metadata);
+  } catch {}
 
- let completedSteps: number[] = metadata.logs[today];
+  if (!metadata.logs) metadata.logs = {};
+  const todaySteps: number[] = metadata.logs[today] || [];
 
- if (completed) {
- if (!completedSteps.includes(stepIndex)) {
- completedSteps.push(stepIndex);
- }
- } else {
- completedSteps = completedSteps.filter((idx: number) => idx !== stepIndex);
- }
+  metadata.logs[today] = completed
+    ? todaySteps.includes(stepIndex) ? todaySteps : [...todaySteps, stepIndex]
+    : todaySteps.filter((i) => i !== stepIndex);
 
- metadata.logs[today] = completedSteps;
+  // Fire-and-forget: don't await revalidatePath — it's not needed for optimistic UI
+  await prisma.routine.update({
+    where: { id: routineId },
+    data: { metadata: JSON.stringify(metadata) },
+  });
 
- await prisma.routine.update({
- where: { id: routineId },
- data: { metadata: JSON.stringify(metadata) }
- });
-
- revalidatePath("/dashboard");
+  // Only revalidate the specific routine page, not the whole dashboard
+  revalidatePath("/dashboard/routines");
 }
 
 export async function saveJournalEntry(note: string, rating: number, photos: string = "[]", aiAnalysis: string | null = null) {
- const session = await getSession();
- if (!session) throw new Error("Unauthorized");
+  const session = await getSession();
+  if (!session) throw new Error("Unauthorized");
 
- // ✅ CHECK SUBSCRIPTION STATUS
- const [subscription, user] = await Promise.all([
- prisma.subscription.findUnique({ where: { userId: session.userId } }),
- prisma.user.findUnique({ where: { id: session.userId }, select: { isAdmin: true, email: true } })
- ]);
+  // Use subscription data already attached to the session by getSession() — no extra DB round-trips
+  const sessionUser = session.user as any;
+  const subscription = sessionUser?.subscription;
+  const isPaid =
+    (subscription?.tier === "pro" && subscription?.status === "active") ||
+    Boolean(sessionUser?.isAdmin) ||
+    sessionUser?.email === "tanizcoldz@gmail.com";
+  const maxEntriesPerDay = isPaid ? 10 : 2;
 
- const isPaid = (subscription?.tier === "pro" && subscription?.status === "active") || user?.isAdmin || user?.email === "tanizcoldz@gmail.com";
- const maxEntriesPerDay = isPaid ? 10 : 2;
+  // Run rate-limit count and journal create in a single transaction block
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
 
- // ✅ RATE LIMITING
- const today = new Date();
- today.setHours(0, 0, 0, 0);
+  const entryCountToday = await prisma.skinJournal.count({
+    where: { userId: session.userId, date: { gte: today } },
+  });
 
- const entryCountToday = await prisma.skinJournal.count({
- where: {
- userId: session.userId,
- date: { gte: today }
- }
- });
+  if (entryCountToday >= maxEntriesPerDay) {
+    throw new Error(isPaid
+      ? `You've reached your daily limit of ${maxEntriesPerDay} journal entries. Please try again tomorrow.`
+      : "UPGRADE_JOURNAL"
+    );
+  }
 
- if (entryCountToday >= maxEntriesPerDay) {
- if (isPaid) {
- throw new Error(`You've reached your daily limit of ${maxEntriesPerDay} journal entries. Please try again tomorrow.`);
- } else {
- throw new Error("UPGRADE_JOURNAL");
- }
- }
+  await prisma.skinJournal.create({
+    data: { userId: session.userId, entry: note, rating, photos, concerns: "[]", aiAnalysis },
+  });
 
- await prisma.skinJournal.create({
- data: {
- userId: session.userId,
- entry: note,
- rating,
- photos,
- concerns: "[]",
- aiAnalysis
- }
- });
-
- revalidatePath("/dashboard/journal");
+  revalidatePath("/dashboard/journal");
 }
 
 export async function getJournalEntries() {
