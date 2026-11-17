@@ -32,10 +32,10 @@ export function DashboardReadingList({ posts, skinType, mainConcern, userName }:
       style={{
         background: "var(--white)",
         border: "1px solid var(--rule)",
-        borderRadius: "16px",
-        padding: "2rem",
-        boxShadow: "0 12px 40px rgba(40, 28, 20, 0.04)",
-        marginTop: "2rem",
+        borderRadius: "12px",
+        padding: "1.5rem",
+        boxShadow: "0 1px 3px rgba(0, 0, 0, 0.03), 0 1px 2px rgba(0, 0, 0, 0.02)",
+        marginTop: "1.5rem",
       }}
     >
       {/* Header */}

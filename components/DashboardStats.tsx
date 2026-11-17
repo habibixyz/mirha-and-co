@@ -65,21 +65,20 @@ export function DashboardStats({ stats }: any) {
  .stat-card-item {
  background: var(--dash-surface);
  border: 1px solid var(--dash-border);
- border-radius: 16px;
+ border-radius: 12px;
  padding: 1rem 0.6rem;
- box-shadow: 0 2px 10px rgba(0, 0, 0, 0.015);
+ box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03), 0 1px 2px rgba(0, 0, 0, 0.02);
  display: flex;
  flex-direction: column;
  align-items: center;
  text-align: center;
  gap: 0.4rem;
- transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+ transition: border-color 0.15s ease;
  min-width: 0;
  }
 
  .stat-card-item:hover {
- transform: translateY(-2px);
- box-shadow: 0 8px 24px rgba(40, 28, 20, 0.04);
+ border-color: rgba(252, 39, 121, 0.3);
  }
 
  @media (max-width: 768px) {

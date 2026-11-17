@@ -108,51 +108,45 @@ export function DashboardClient({ user, routines, recentJournal }: any) {
         .dash-card {
           background: var(--white);
           border: 1px solid var(--rule);
-          border-radius: 16px;
-          padding: 2rem;
-          box-shadow: 0 12px 40px rgba(40, 28, 20, 0.04);
+          border-radius: 12px;
+          padding: 1.5rem;
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03), 0 1px 2px rgba(0, 0, 0, 0.02);
         }
         .journal-btn {
           background: var(--rose);
           color: var(--white);
           border: none;
-          border-radius: 10px;
-          padding: 1rem;
-          font-size: 0.95rem;
+          border-radius: 8px;
+          padding: 0.75rem 1rem;
+          font-size: 0.88rem;
           cursor: pointer;
-          font-weight: 500;
+          font-weight: 600;
           width: 100%;
           display: flex;
           align-items: center;
           justify-content: center;
           gap: 0.5rem;
-          margin-top: 1.5rem;
-          box-shadow: 0 4px 14px rgba(252, 39, 121, 0.2);
-          transition: transform 0.1s, box-shadow 0.15s;
+          margin-top: 1.25rem;
+          transition: background 0.15s ease;
         }
         .journal-btn:hover {
-          transform: translateY(-1px);
-          box-shadow: 0 6px 20px rgba(252, 39, 121, 0.28);
-        }
-        .journal-btn:active {
-          transform: translateY(0);
-          box-shadow: 0 2px 8px rgba(252, 39, 121, 0.2);
+          background: #e01f69;
         }
       `}</style>
 
       <div className={`dash-client-wrap${show ? " visible" : ""}`}>
-        <header style={{ marginBottom: "3rem" }}>
+        <header style={{ marginBottom: "2rem" }}>
           <h1 style={{
-            fontFamily: "'DM Serif Display', serif",
-            fontSize: "clamp(2rem, 6vw, 2.8rem)",
+            fontFamily: "var(--font-dm-serif), serif",
+            fontSize: "clamp(1.75rem, 4vw, 2.25rem)",
             fontWeight: 400,
-            margin: "0 0 0.5rem",
+            margin: "0 0 0.25rem",
             color: "var(--ink)",
-            lineHeight: 1.1,
+            lineHeight: 1.15,
           }}>
             Good Morning, {user?.name ? user.name.split(" ")[0] : "Beautiful"}
           </h1>
-          <p style={{ color: "var(--muted)", margin: 0, fontSize: "1.05rem" }}>
+          <p style={{ color: "var(--muted)", margin: 0, fontSize: "0.92rem" }}>
             Here is your skin overview for today.
           </p>
         </header>
@@ -160,7 +154,7 @@ export function DashboardClient({ user, routines, recentJournal }: any) {
         <div style={{
           display: "grid",
           gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
-          gap: "2rem",
+          gap: "1.5rem",
         }}>
           {/* Card 1: Routine */}
           <div className="dash-card" style={{ position: "relative", overflow: "hidden" }}>

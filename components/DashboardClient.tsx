@@ -380,62 +380,56 @@ export function DashboardClient({ user, routines, recentJournal, stats, isPro = 
       <DashboardStats stats={stats} />
 
       <motion.header className="dash-header-card" variants={itemVariants} style={{ 
-        marginBottom: "2.5rem", 
+        marginBottom: "1.75rem", 
         display: "flex", 
         justifyContent: "space-between", 
         alignItems: "center",
         flexWrap: "wrap",
-        gap: "1.2rem",
+        gap: "1rem",
         position: "relative",
-        padding: "2rem",
-        background: "url('/indian_skincare_aesthetic.png') center right / cover no-repeat",
-        borderRadius: "32px",
+        padding: "1.5rem",
+        background: "var(--dash-surface)",
+        borderRadius: "12px",
         overflow: "hidden",
-        border: "1px solid var(--dash-border)"
+        border: "1px solid var(--dash-border)",
+        boxShadow: "0 1px 3px rgba(0,0,0,0.03), 0 1px 2px rgba(0,0,0,0.02)"
       }}>
-        <div style={{ 
-          position: "absolute", 
-          inset: 0, 
-          background: "linear-gradient(90deg, rgba(255,255,255,1) 30%, rgba(255,255,255,0.7) 60%, rgba(255,255,255,0) 100%)",
-          zIndex: 1
-        }}></div>
-
         <div style={{ flex: 1, minWidth: "0", position: "relative", zIndex: 2 }}>
           <h1 style={{
             fontFamily: "var(--dash-font-serif)",
             fontSize: "var(--font-h1)",
             fontWeight: 400,
-            margin: "0 0 0.4rem",
+            margin: "0 0 0.3rem",
             color: "var(--dash-ink)",
-            lineHeight: 1.1,
+            lineHeight: 1.15,
             letterSpacing: "-0.02em"
           }}>
             {greeting}, {user?.name ? user.name.split(' ')[0] : "Beautiful"}
           </h1>
-          <p style={{ color: "var(--dash-muted)", margin: 0, fontSize: "clamp(0.85rem, 2vw, 1rem)", opacity: 0.8 }}>Here is your skin overview for today.</p>
+          <p style={{ color: "var(--dash-muted)", margin: 0, fontSize: "clamp(0.85rem, 2vw, 0.95rem)", opacity: 0.85 }}>Here is your skin overview for today.</p>
         </div>
 
         <div className="desktop-only" style={{ position: "relative", zIndex: 2 }}>
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+          <button
             onClick={() => logoutAction()}
             className="dash-signout-btn"
             style={{
-              borderRadius: "14px",
-              padding: "0.6rem 1rem",
+              borderRadius: "8px",
+              padding: "0.55rem 0.9rem",
               fontSize: "0.8rem",
               cursor: "pointer",
-              fontWeight: 600,
+              fontWeight: 500,
               display: "flex",
               alignItems: "center",
               gap: "0.4rem",
-              transition: "all 0.2s",
-              boxShadow: "0 2px 6px rgba(0,0,0,0.02)"
+              background: "transparent",
+              border: "1px solid var(--dash-border)",
+              color: "var(--dash-muted)",
+              transition: "all 0.15s ease",
             }}
           >
-            <LogOut size={14} /> Sign Out
-          </motion.button>
+            <LogOut size={13} /> Sign Out
+          </button>
         </div>
       </motion.header>
 
@@ -447,10 +441,10 @@ export function DashboardClient({ user, routines, recentJournal, stats, isPro = 
         style={{
           background: "var(--dash-surface)",
           border: "1px solid var(--dash-border)",
-          borderRadius: "28px",
-          padding: "1.75rem",
-          marginBottom: "2.5rem",
-          boxShadow: "0 18px 42px rgba(40, 28, 20, 0.05)",
+          borderRadius: "12px",
+          padding: "1.5rem",
+          marginBottom: "1.75rem",
+          boxShadow: "0 1px 3px rgba(0,0,0,0.03), 0 1px 2px rgba(0,0,0,0.02)",
           position: "relative",
           overflow: "hidden"
         }}
@@ -508,7 +502,7 @@ export function DashboardClient({ user, routines, recentJournal, stats, isPro = 
                 alignItems: "center",
                 gap: "0.4rem",
                 padding: "0.5rem 0.85rem",
-                borderRadius: "12px",
+                borderRadius: "8px",
                 border: "1px solid var(--dash-border)",
                 background: "var(--dash-surface)",
                 color: "var(--dash-ink)",
@@ -533,8 +527,8 @@ export function DashboardClient({ user, routines, recentJournal, stats, isPro = 
             alignItems: "center",
             gap: "0.45rem",
             background: "var(--dash-bg)",
-            padding: "4px",
-            borderRadius: "16px",
+            padding: "3px",
+            borderRadius: "8px",
             border: "1px solid var(--dash-border)",
             marginBottom: "1.35rem",
             overflowX: "auto",
@@ -561,16 +555,16 @@ export function DashboardClient({ user, routines, recentJournal, stats, isPro = 
                     alignItems: "center",
                     justifyContent: "center",
                     gap: "0.45rem",
-                    padding: "0.55rem 0.95rem",
-                    borderRadius: "12px",
+                    padding: "0.5rem 0.85rem",
+                    borderRadius: "6px",
                     border: "none",
                     background: isActive ? "var(--dash-surface)" : "transparent",
                     color: isActive ? "var(--dash-ink)" : "var(--dash-muted)",
-                    fontWeight: isActive ? 700 : 500,
+                    fontWeight: isActive ? 600 : 500,
                     fontSize: "0.82rem",
                     cursor: "pointer",
                     whiteSpace: "nowrap",
-                    boxShadow: isActive ? "0 2px 8px rgba(0,0,0,0.06)" : "none",
+                    boxShadow: isActive ? "0 1px 3px rgba(0,0,0,0.06)" : "none",
                     transition: "all 0.15s ease",
                     touchAction: "manipulation"
                   }}
@@ -600,15 +594,15 @@ export function DashboardClient({ user, routines, recentJournal, stats, isPro = 
           <div style={{
             background: "var(--dash-bg)",
             border: "1px dashed var(--dash-border)",
-            borderRadius: "22px",
+            borderRadius: "12px",
             padding: "2.5rem 1.5rem",
             textAlign: "center",
             maxWidth: "600px",
             margin: "0 auto"
           }}>
             <div style={{
-              width: "48px",
-              height: "48px",
+              width: "44px",
+              height: "44px",
               borderRadius: "50%",
               background: "var(--dash-accent-soft)",
               color: "var(--dash-accent)",
@@ -617,15 +611,15 @@ export function DashboardClient({ user, routines, recentJournal, stats, isPro = 
               justifyContent: "center",
               margin: "0 auto 1rem"
             }}>
-              <Layers size={24} />
+              <Layers size={22} />
             </div>
-            <h3 style={{ fontSize: "1.2rem", color: "var(--dash-ink)", margin: "0 0 0.5rem", fontWeight: 600 }}>
+            <h3 style={{ fontSize: "1.15rem", color: "var(--dash-ink)", margin: "0 0 0.4rem", fontWeight: 600 }}>
               No Routines Saved Yet
             </h3>
-            <p style={{ color: "var(--dash-muted)", fontSize: "0.9rem", lineHeight: 1.6, margin: "0 0 1.5rem" }}>
+            <p style={{ color: "var(--dash-muted)", fontSize: "0.88rem", lineHeight: 1.6, margin: "0 0 1.25rem" }}>
               Start with our science-backed Morning &amp; Evening templates, or customize your own product formulations.
             </p>
-            <div style={{ display: "flex", justifyContent: "center", gap: "0.8rem", flexWrap: "wrap" }}>
+            <div style={{ display: "flex", justifyContent: "center", gap: "0.6rem", flexWrap: "wrap" }}>
               <button
                 onClick={handleLoadDefaults}
                 disabled={isLoadingDefaults}
@@ -633,18 +627,18 @@ export function DashboardClient({ user, routines, recentJournal, stats, isPro = 
                   background: "var(--dash-accent)",
                   color: "#ffffff",
                   border: "none",
-                  borderRadius: "14px",
-                  padding: "0.75rem 1.4rem",
-                  fontSize: "0.88rem",
+                  borderRadius: "8px",
+                  padding: "0.65rem 1.15rem",
+                  fontSize: "0.82rem",
                   fontWeight: 600,
                   cursor: isLoadingDefaults ? "not-allowed" : "pointer",
                   display: "inline-flex",
                   alignItems: "center",
-                  gap: "0.5rem",
-                  boxShadow: "0 8px 20px rgba(252, 39, 121, 0.25)"
+                  gap: "0.45rem",
+                  boxShadow: "none"
                 }}
               >
-                <RefreshCw size={15} className={isLoadingDefaults ? "animate-spin" : ""} />
+                <RefreshCw size={14} className={isLoadingDefaults ? "animate-spin" : ""} />
                 {isLoadingDefaults ? "Loading Templates..." : "Load Recommended AM & PM"}
               </button>
               <Link
@@ -659,9 +653,9 @@ export function DashboardClient({ user, routines, recentJournal, stats, isPro = 
                     background: "var(--dash-surface)",
                     color: "var(--dash-ink)",
                     border: "1px solid var(--dash-border)",
-                    borderRadius: "14px",
-                    padding: "0.75rem 1.25rem",
-                    fontSize: "0.88rem",
+                    borderRadius: "8px",
+                    padding: "0.65rem 1.15rem",
+                    fontSize: "0.82rem",
                     fontWeight: 600,
                     cursor: "pointer",
                     display: "inline-flex",
@@ -669,7 +663,7 @@ export function DashboardClient({ user, routines, recentJournal, stats, isPro = 
                     gap: "0.4rem"
                   }}
                 >
-                  Build Custom Routine <ArrowRight size={15} />
+                  Build Custom Routine <ArrowRight size={14} />
                 </button>
               </Link>
             </div>
@@ -688,14 +682,14 @@ export function DashboardClient({ user, routines, recentJournal, stats, isPro = 
               <div style={{
                 background: "var(--dash-bg)",
                 border: "1px dashed var(--dash-border)",
-                borderRadius: "20px",
-                padding: "2.2rem 1.5rem",
+                borderRadius: "12px",
+                padding: "2rem 1.5rem",
                 textAlign: "center"
               }}>
-                <h4 style={{ margin: "0 0 0.35rem", fontSize: "1.05rem", color: "var(--dash-ink)", fontWeight: 600 }}>
+                <h4 style={{ margin: "0 0 0.35rem", fontSize: "1rem", color: "var(--dash-ink)", fontWeight: 600 }}>
                   No Products in this {isPM ? "Evening" : "Morning"} Routine
                 </h4>
-                <p style={{ color: "var(--dash-muted)", fontSize: "0.88rem", maxWidth: "420px", margin: "0 auto 1.35rem", lineHeight: 1.5 }}>
+                <p style={{ color: "var(--dash-muted)", fontSize: "0.85rem", maxWidth: "420px", margin: "0 auto 1.25rem", lineHeight: 1.5 }}>
                   {isPM 
                     ? "Add your nighttime double cleanse, serums, and barrier night cream."
                     : "Add your morning gentle cleanser, hydration, and SPF50+."
@@ -708,18 +702,18 @@ export function DashboardClient({ user, routines, recentJournal, stats, isPro = 
                       background: "var(--dash-accent)",
                       color: "#fff",
                       border: "none",
-                      padding: "0.65rem 1.25rem",
-                      borderRadius: "14px",
-                      fontSize: "0.85rem",
+                      padding: "0.6rem 1.1rem",
+                      borderRadius: "8px",
+                      fontSize: "0.82rem",
                       fontWeight: 600,
                       cursor: "pointer",
                       display: "inline-flex",
                       alignItems: "center",
                       gap: "0.45rem",
-                      boxShadow: "0 4px 14px rgba(252, 39, 121, 0.25)"
+                      boxShadow: "none"
                     }}
                   >
-                    <RefreshCw size={14} /> Load Recommended Steps
+                    <RefreshCw size={13} /> Load Recommended Steps
                   </button>
                   <Link
                     href="/dashboard/routines"
@@ -733,13 +727,13 @@ export function DashboardClient({ user, routines, recentJournal, stats, isPro = 
                     background: "var(--dash-surface)",
                     border: "1px solid var(--dash-border)",
                     color: "var(--dash-ink)",
-                    padding: "0.65rem 1.15rem",
-                    borderRadius: "14px",
-                    fontSize: "0.85rem",
+                    padding: "0.6rem 1.1rem",
+                    borderRadius: "8px",
+                    fontSize: "0.82rem",
                     fontWeight: 600,
                     textDecoration: "none"
                   }}>
-                    Open Routine Builder <ArrowRight size={14} />
+                    Open Routine Builder <ArrowRight size={13} />
                   </Link>
                 </div>
               </div>

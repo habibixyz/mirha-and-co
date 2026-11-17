@@ -141,8 +141,8 @@ export default function SaasLayout({
 
  html.dark .dash-shell, .dark .dash-shell {
  background: #0f0e0d !important;
- border-color: rgba(255, 255, 255, 0.1) !important;
- box-shadow: 0 30px 100px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+ border: none !important;
+ box-shadow: none !important;
  }
 
  html.dark .dash-sidebar, .dark .dash-sidebar {
@@ -193,7 +193,7 @@ export default function SaasLayout({
  font-family: var(--dash-font-sans);
  line-height: 1.5;
  -webkit-font-smoothing: antialiased;
- padding: 16px;
+ padding: 0;
  overflow: hidden;
  }
 
@@ -201,14 +201,13 @@ export default function SaasLayout({
  .dash-shell {
  display: grid;
  grid-template-columns: var(--dash-sidebar-w) 1fr;
- height: calc(100vh - 32px);
+ height: 100vh;
+ width: 100vw;
  background: var(--dash-bg);
- border-radius: 40px;
+ border-radius: 0;
  overflow: hidden;
- box-shadow:
- 0 30px 100px rgba(40, 28, 20, 0.12),
- inset 0 1px 0 rgba(255,255,255,0.6);
- border: 1px solid rgba(255,255,255,0.4);
+ box-shadow: none;
+ border: none;
  }
 
  /* ── SIDEBAR ── */
@@ -234,21 +233,22 @@ export default function SaasLayout({
  }
 
  .dash-sidebar-brand {
- padding: 2rem 1.8rem;
+ padding: 1.5rem 1.4rem;
  border-bottom: 1px solid var(--dash-border);
  display: flex;
  flex-direction: column;
- gap: 0.5rem;
+ gap: 0.4rem;
  }
 
  .dash-sidebar-brand-name {
- font-family: var(--font-bebas), 'Bebas Neue', sans-serif;
- font-size: 1.3rem;
- letter-spacing: 0.15em;
+ font-family: var(--dash-font-sans);
+ font-size: 0.92rem;
+ letter-spacing: 0.16em;
  color: var(--dash-ink);
  text-decoration: none;
  line-height: 1;
  font-weight: 700;
+ text-transform: uppercase;
  }
 
  .dash-back-link {
@@ -286,28 +286,27 @@ export default function SaasLayout({
  .dash-nav-link {
  display: flex;
  align-items: center;
- gap: 0.9rem;
- padding: 0.85rem 1.2rem;
- font-size: 0.95rem;
+ gap: 0.75rem;
+ padding: 0.65rem 0.9rem;
+ font-size: 0.88rem;
  font-weight: 500;
  color: var(--dash-muted);
  text-decoration: none;
- transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
- border-radius: 18px;
- margin-bottom: 4px;
+ transition: background 0.15s ease, color 0.15s ease;
+ border-radius: 8px;
+ margin-bottom: 2px;
  }
 
  .dash-nav-link:hover {
  color: var(--dash-ink);
- background: rgba(0, 0, 0, 0.03);
- transform: translateX(4px);
+ background: rgba(0, 0, 0, 0.04);
  }
 
  .dash-nav-link.active {
  color: var(--dash-accent);
  background: var(--dash-accent-soft);
  font-weight: 600;
- box-shadow: 0 4px 12px rgba(252, 39, 121, 0.08);
+ box-shadow: none;
  }
 
  .dash-nav-icon {

@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Loader2 } from "lucide-react";
 import { useGlobalization } from "./GlobalizationContext";
 import GlobalizationSwitcher from "./GlobalizationSwitcher";
 import { ThemeToggle } from "./ThemeToggle";
@@ -52,7 +52,7 @@ export default function SiteHeader() {
   const pathname = usePathname();
   const router = useRouter();
 
-  // Always close drawer, clear launching state, and ensure scrolling is unlocked on route transition
+  // Always close drawer and reset launch feedback on route transition
   useEffect(() => {
     setMenuOpen(false);
     setIsLaunching(false);
@@ -67,11 +67,10 @@ export default function SiteHeader() {
     }
   }, [menuOpen, router]);
 
-  // Reset mobile drawer & launch state if restored via mobile browser Back button (BFCache)
+  // Reset mobile drawer if restored via mobile browser Back button (BFCache)
   useEffect(() => {
     const handlePageShow = () => {
       setMenuOpen(false);
-      setIsLaunching(false);
       document.documentElement.style.overflow = "";
       document.body.style.overflow = "";
     };
@@ -125,13 +124,6 @@ export default function SiteHeader() {
     setTimeout(() => setMenuOpen(false), 80);
   };
 
-  // Instant visual feedback and scroll lock when launching dashboard
-  const handleLaunchClick = () => {
-    setIsLaunching(true);
-    document.documentElement.style.overflow = "hidden";
-    document.body.style.overflow = "hidden";
-  };
-
   return (
     <header
       className="site-header relative z-[200] border-b border-[#ded7cf] transition-all duration-300 dark:border-white/10"
@@ -148,12 +140,22 @@ export default function SiteHeader() {
           : "none",
       }}
     >
+      {/* Top sleek loading bar — feedback during route navigation without screen takeover */}
+      {isLaunching && (
+        <div
+          className="absolute top-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-[#fc2779] via-[#ff75ad] to-[#fc2779] animate-pulse z-[300]"
+          style={{
+            boxShadow: "0 0 10px rgba(252, 39, 121, 0.7)",
+          }}
+        />
+      )}
       <div className="site-header-container">
 
         {/* Left — 4 balanced nav links: Diagnostics, K-Beauty, Men's Grooming, Blog */}
         <div className="site-header-left">
           <nav className="site-header-nav">
             <Link href="/tools" className="site-header-nav-link hidden lg:inline-flex">Diagnostics</Link>
+            <Link href="/circle" className="site-header-nav-link hidden lg:inline-flex">Circle</Link>
             <Link href="/k-beauty" className="site-header-nav-link hidden lg:inline-flex">{t("nav.kbeauty")}</Link>
             <Link href="/mens-grooming" className="site-header-nav-link hidden lg:inline-flex">{t("nav.men")}</Link>
             <Link href="/blog" className="site-header-nav-link hidden lg:inline-flex">{t("nav.blog")}</Link>
@@ -172,15 +174,23 @@ export default function SiteHeader() {
             <Link href="/b2b" className="site-header-nav-link hidden lg:inline-flex">B2B API</Link>
             <Link href="/about" className="site-header-nav-link hidden lg:inline-flex">{t("nav.about")}</Link>
 
-            {/* Launch App / Dashboard CTA — fast client navigation with touch/hover prefetch */}
+            {/* Launch App / Dashboard CTA */}
             <Link
               href="/dashboard"
-              onMouseEnter={() => router.prefetch("/dashboard")}
-              onTouchStart={() => router.prefetch("/dashboard")}
-              onClick={handleLaunchClick}
-              className="hidden lg:inline-flex items-center gap-1 rounded-full bg-[#fc2779] px-3.5 py-1.5 text-[10.5px] font-bold uppercase tracking-[0.1em] text-white transition-all hover:bg-[#e01f69] hover:shadow-[0_4px_16px_rgba(252,39,121,0.3)]"
+              prefetch={true}
+              onClick={() => setIsLaunching(true)}
+              className={`hidden lg:inline-flex items-center gap-1.5 rounded-full bg-[#fc2779] px-3.5 py-1.5 text-[10.5px] font-bold uppercase tracking-[0.1em] text-white transition-all hover:bg-[#e01f69] hover:shadow-[0_4px_16px_rgba(252,39,121,0.3)] ${
+                isLaunching ? "opacity-90 pointer-events-none" : ""
+              }`}
             >
-              {isLaunching ? "Launching..." : "Launch App →"}
+              {isLaunching ? (
+                <>
+                  <Loader2 size={11} className="animate-spin" />
+                  <span>Opening...</span>
+                </>
+              ) : (
+                <span>Launch App &rarr;</span>
+              )}
             </Link>
 
             <div className="flex items-center">
@@ -255,6 +265,13 @@ export default function SiteHeader() {
                 Diagnostic Tools
               </Link>
               <Link
+                href="/circle"
+                onClick={handleNavClick}
+                className="rounded-lg px-3 py-1.5 text-[13.5px] font-semibold text-[#2b2826] transition-all hover:bg-[#ffe6f0] hover:text-[#fc2779] dark:text-[#f7f5f2] dark:hover:bg-white/10 dark:hover:text-[#ff4d94]"
+              >
+                Mirha Circle (Community)
+              </Link>
+              <Link
                 href="/blog"
                 onClick={handleNavClick}
                 className="rounded-lg px-3 py-1.5 text-[13.5px] font-semibold text-[#2b2826] transition-all hover:bg-[#ffe6f0] hover:text-[#fc2779] dark:text-[#f7f5f2] dark:hover:bg-white/10 dark:hover:text-[#ff4d94]"
@@ -318,15 +335,23 @@ export default function SiteHeader() {
               </Link>
             </div>
 
-            {/* Launch App CTA — fast client navigation with touch/hover prefetch */}
+            {/* Launch App CTA */}
             <Link
               href="/dashboard"
-              onMouseEnter={() => router.prefetch("/dashboard")}
-              onTouchStart={() => router.prefetch("/dashboard")}
-              onClick={handleLaunchClick}
+              onClick={() => {
+                setIsLaunching(true);
+                handleNavClick();
+              }}
               className="mt-1 flex items-center justify-center gap-2 rounded-xl bg-[#fc2779] px-4 py-3 text-[13px] font-bold uppercase tracking-[0.1em] text-white transition-all hover:bg-[#e01f69] active:scale-[0.98]"
             >
-              {isLaunching ? "Launching App..." : "Launch App →"}
+              {isLaunching ? (
+                <>
+                  <Loader2 size={15} className="animate-spin" />
+                  <span>Opening Dashboard...</span>
+                </>
+              ) : (
+                <span>Launch App &rarr;</span>
+              )}
             </Link>
 
             {/* Controls Toolbar */}
@@ -365,14 +390,15 @@ export default function SiteHeader() {
           </div>
         </div>
       )}
+
       {/* Fullscreen transition overlay when launching dashboard */}
       {isLaunching && (
         <div
-          className="fixed inset-0 z-[999999] flex flex-col items-center justify-center bg-[#F8F6F3] dark:bg-[#0f0e0d]"
+          className="fixed inset-0 z-[999999] flex flex-col items-center justify-center bg-[#F8F6F3] dark:bg-[#080707]"
           style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: 0, width: "100vw", height: "100vh", zIndex: 999999 }}
         >
           <div className="flex flex-col items-center gap-3 text-center px-6">
-            <span className="font-bebas notranslate text-3xl tracking-[0.16em] text-[#11100f] dark:text-white">
+            <span className="notranslate text-2xl font-bold tracking-[0.18em] text-[#11100f] dark:text-white uppercase">
               MIRHA &amp; CO.
             </span>
             <div className="flex items-center gap-2.5 text-[13px] font-semibold text-[#fc2779]">

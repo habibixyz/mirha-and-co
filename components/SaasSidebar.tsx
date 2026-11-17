@@ -112,17 +112,19 @@ export function SaasSidebar() {
             document.body.classList.remove("sidebar-open");
           }}
           style={{
-          display: "block",
-          background: "var(--dash-accent)",
-          color: "white",
-          padding: "1rem",
-          borderRadius: "18px",
-          textDecoration: "none",
-          fontSize: "0.85rem",
-          fontWeight: 600,
-          textAlign: "center",
-          boxShadow: "0 8px 20px rgba(252, 39, 121, 0.15)"
-        }}>
+            display: "block",
+            background: "var(--dash-accent)",
+            color: "white",
+            padding: "0.65rem 1rem",
+            borderRadius: "8px",
+            textDecoration: "none",
+            fontSize: "0.82rem",
+            fontWeight: 600,
+            textAlign: "center",
+            letterSpacing: "0.02em",
+            transition: "opacity 0.15s ease",
+          }}
+        >
           Upgrade to Pro
         </Link>
 
@@ -135,17 +137,17 @@ export function SaasSidebar() {
           style={{
             background: "transparent",
             border: "1px solid var(--dash-border)",
-            borderRadius: "18px",
-            padding: "0.8rem",
+            borderRadius: "8px",
+            padding: "0.6rem 0.8rem",
             color: "var(--dash-muted)",
-            fontSize: "0.85rem",
-            fontWeight: 600,
+            fontSize: "0.82rem",
+            fontWeight: 500,
             cursor: "pointer",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            gap: "0.5rem",
-            transition: "all 0.2s"
+            gap: "0.45rem",
+            transition: "all 0.15s ease",
           }}
           onMouseOver={(e) => {
             e.currentTarget.style.background = "rgba(0,0,0,0.03)";
@@ -156,7 +158,7 @@ export function SaasSidebar() {
             e.currentTarget.style.color = "var(--dash-muted)";
           }}
         >
-          <LogOut size={16} /> Sign Out
+          <LogOut size={15} /> Sign Out
         </button>
       </div>
     </aside>
