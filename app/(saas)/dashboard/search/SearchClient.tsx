@@ -974,12 +974,12 @@ export function SearchClient({ isPro, blacklist = [] }: { isPro: boolean; blackl
  background: "#1c1917",
  border: "1px solid rgba(255, 255, 255, 0.15)",
  color: "white",
- borderRadius: "20px",
- padding: "1rem 2rem",
+ borderRadius: "10px",
+ padding: "0.85rem 1.5rem",
  display: "flex",
  alignItems: "center",
  gap: "1.5rem",
- boxShadow: "0 20px 40px rgba(0,0,0,0.3)",
+ boxShadow: "0 10px 30px rgba(0,0,0,0.2)",
  zIndex: 100,
  width: "90%",
  maxWidth: "500px",
@@ -1041,12 +1041,12 @@ export function SearchClient({ isPro, blacklist = [] }: { isPro: boolean; blackl
  }}>
  <div style={{
  background: "var(--dash-surface)",
- borderRadius: "28px",
+ borderRadius: "12px",
  width: "100%",
  maxWidth: "850px",
  maxHeight: "90vh",
  overflowY: "auto",
- boxShadow: "0 30px 70px rgba(0,0,0,0.25)",
+ boxShadow: "0 20px 40px rgba(0,0,0,0.15)",
  position: "relative",
  display: "flex",
  flexDirection: "column"
@@ -1101,7 +1101,7 @@ export function SearchClient({ isPro, blacklist = [] }: { isPro: boolean; blackl
  </div>
 
  {/* Image */}
- <div style={{ height: "180px", background: "var(--dash-bg)", borderRadius: "18px", display: "flex", alignItems: "center", justifyItems: "center", justifyContent: "center", overflow: "hidden", border: "1px solid var(--dash-border)" }}>
+ <div style={{ height: "180px", background: "var(--dash-bg)", borderRadius: "10px", display: "flex", alignItems: "center", justifyItems: "center", justifyContent: "center", overflow: "hidden", border: "1px solid var(--dash-border)" }}>
  {prod.image ? (
  <img src={prod.image} alt={prod.name} style={{ maxHeight: "80%", maxWidth: "80%", objectFit: "contain" }} />
  ) : (

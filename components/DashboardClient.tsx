@@ -790,21 +790,21 @@ export function DashboardClient({ user, routines, recentJournal, stats, isPro = 
                         display: "flex",
                         alignItems: "flex-start",
                         gap: "0.85rem",
-                        padding: "0.9rem 1rem",
-                        borderRadius: "18px",
+                        padding: "0.85rem 1rem",
+                        borderRadius: "10px",
                         background: isChecked ? "var(--dash-bg)" : "var(--dash-surface)",
                         border: isChecked ? "1px solid transparent" : "1px solid var(--dash-border)",
                         cursor: "pointer",
                         transition: "all 0.15s ease",
-                        boxShadow: isChecked ? "none" : "0 2px 8px rgba(0,0,0,0.02)",
+                        boxShadow: isChecked ? "none" : "0 1px 2px rgba(0,0,0,0.02)",
                         opacity: isChecked ? 0.75 : 1
                       }}
                     >
                       <div style={{
-                        width: "22px",
-                        height: "22px",
-                        borderRadius: "7px",
-                        border: isChecked ? "none" : "2px solid var(--dash-border)",
+                        width: "20px",
+                        height: "20px",
+                        borderRadius: "6px",
+                        border: isChecked ? "none" : "1.5px solid var(--dash-border)",
                         background: isChecked ? "#10b981" : "transparent",
                         display: "flex",
                         alignItems: "center",
@@ -814,7 +814,7 @@ export function DashboardClient({ user, routines, recentJournal, stats, isPro = 
                         marginTop: "2px",
                         transition: "all 0.15s ease"
                       }}>
-                        {isChecked && <Check size={14} strokeWidth={3} />}
+                        {isChecked && <Check size={13} strokeWidth={3} />}
                       </div>
 
                       <div style={{ flex: 1, minWidth: 0 }}>
@@ -889,13 +889,13 @@ export function DashboardClient({ user, routines, recentJournal, stats, isPro = 
       <motion.div className="dash-coach-card" variants={itemVariants} style={{
         background: "linear-gradient(135deg, #1c1917 0%, #292524 100%)",
         color: "white",
-        borderRadius: "28px",
-        padding: "2rem",
-        marginBottom: "2.5rem",
+        borderRadius: "12px",
+        padding: "1.5rem",
+        marginBottom: "2rem",
         position: "relative",
         overflow: "hidden",
-        border: "1px solid rgba(255, 255, 255, 0.05)",
-        boxShadow: "0 20px 40px rgba(0,0,0,0.12)"
+        border: "1px solid rgba(255, 255, 255, 0.08)",
+        boxShadow: "0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06)"
       }}>
         <div style={{ position: "absolute", top: "-10px", right: "-10px", opacity: 0.08 }}>
           <BrainCircuit size={120} color="white" />
@@ -903,7 +903,7 @@ export function DashboardClient({ user, routines, recentJournal, stats, isPro = 
 
         <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "1rem" }}>
           <BrainCircuit size={18} color="#fc2779" />
-          <span style={{ fontSize: "0.75rem", letterSpacing: "0.15em", textTransform: "uppercase", fontWeight: 700, color: "#fc2779" }}>AI Skincare Coach</span>
+          <span style={{ fontSize: "0.72rem", letterSpacing: "0.12em", textTransform: "uppercase", fontWeight: 700, color: "#fc2779" }}>AI Skincare Coach</span>
         </div>
 
         {coachStatus === "loading" && (
@@ -918,7 +918,7 @@ export function DashboardClient({ user, routines, recentJournal, stats, isPro = 
         {coachStatus === "need_pro" && (
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "1.2rem" }}>
             <div style={{ flex: 1, minWidth: "240px" }}>
-              <h4 style={{ margin: 0, fontSize: "1.2rem", fontFamily: "var(--dash-font-serif)", fontWeight: 400 }}>Unlock Weekly AI Skincare Coaching</h4>
+              <h4 style={{ margin: 0, fontSize: "1.15rem", fontFamily: "var(--dash-font-serif)", fontWeight: 400 }}>Unlock Weekly AI Skincare Coaching</h4>
               <p style={{ margin: "0.4rem 0 0", color: "#a89f97", fontSize: "0.85rem", lineHeight: 1.5 }}>
                 Get automated routines optimizations, checklist compliance insights, and personalized advice powered by Gemini.
               </p>
@@ -931,21 +931,20 @@ export function DashboardClient({ user, routines, recentJournal, stats, isPro = 
               style={{ textDecoration: "none" }}
             >
               <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
                 style={{
                   background: "#fc2779",
                   color: "white",
                   border: "none",
-                  borderRadius: "14px",
-                  padding: "0.75rem 1.25rem",
-                  fontSize: "0.85rem",
+                  borderRadius: "8px",
+                  padding: "0.65rem 1.15rem",
+                  fontSize: "0.84rem",
                   fontWeight: 600,
                   cursor: "pointer",
                   display: "flex",
                   alignItems: "center",
-                  gap: "0.4rem",
-                  boxShadow: "0 4px 12px rgba(252, 39, 121, 0.3)"
+                  gap: "0.4rem"
                 }}
               >
                 <Lock size={14} /> Upgrade to Pro
@@ -956,7 +955,7 @@ export function DashboardClient({ user, routines, recentJournal, stats, isPro = 
 
         {coachStatus === "need_data" && (
           <div>
-            <h4 style={{ margin: 0, fontSize: "1.2rem", fontFamily: "var(--dash-font-serif)", fontWeight: 400 }}>Awaiting Skin Entries</h4>
+            <h4 style={{ margin: 0, fontSize: "1.15rem", fontFamily: "var(--dash-font-serif)", fontWeight: 400 }}>Awaiting Skin Entries</h4>
             <p style={{ margin: "0.4rem 0 0", color: "#a89f97", fontSize: "0.85rem", lineHeight: 1.5 }}>
               Please add at least <strong>3 daily entries</strong> in your Skin Journal so the coach can analyze your skin trends and checklist compliance.
             </p>
@@ -967,7 +966,7 @@ export function DashboardClient({ user, routines, recentJournal, stats, isPro = 
               onTouchStart={() => router.prefetch("/dashboard/journal")}
               style={{ textDecoration: "none", display: "inline-block", marginTop: "1rem" }}
             >
-              <span style={{ color: "#fc2779", fontSize: "0.85rem", fontWeight: 600, display: "flex", alignItems: "center", gap: "0.2rem" }}>
+              <span style={{ color: "#fc2779", fontSize: "0.84rem", fontWeight: 600, display: "flex", alignItems: "center", gap: "0.2rem" }}>
                 Go to Journal &rarr;
               </span>
             </Link>
@@ -1004,9 +1003,9 @@ export function DashboardClient({ user, routines, recentJournal, stats, isPro = 
                       : coachInsight.trend.toLowerCase().includes("irritat")
                         ? "1px solid rgba(239, 68, 68, 0.3)"
                         : "1px solid rgba(245, 158, 11, 0.3)",
-                    padding: "4px 12px",
-                    borderRadius: "20px",
-                    fontSize: "0.8rem",
+                    padding: "3px 10px",
+                    borderRadius: "6px",
+                    fontSize: "0.78rem",
                     fontWeight: 600
                   }}>
                     {coachInsight.trend}
@@ -1025,8 +1024,8 @@ export function DashboardClient({ user, routines, recentJournal, stats, isPro = 
                 <div style={{
                   background: "rgba(252, 39, 121, 0.07)",
                   border: "1px solid rgba(252, 39, 121, 0.18)",
-                  borderRadius: "16px",
-                  padding: "1rem 1.1rem",
+                  borderRadius: "8px",
+                  padding: "0.9rem 1rem",
                   marginTop: "0.2rem"
                 }}>
                   <h4 style={{ margin: "0 0 0.25rem 0", fontSize: "0.85rem", color: "#fc2779", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.05em" }}>Actionable Tip</h4>
@@ -1036,7 +1035,7 @@ export function DashboardClient({ user, routines, recentJournal, stats, isPro = 
                 </div>
               )}
             </div>
-            <p style={{ margin: "1.5rem 0 0", fontSize: "0.75rem", color: "#a89f97", borderTop: "1px solid rgba(255,255,255,0.08)", paddingTop: "0.8rem" }}>
+            <p style={{ margin: "1.2rem 0 0", fontSize: "0.75rem", color: "#a89f97", borderTop: "1px solid rgba(255,255,255,0.08)", paddingTop: "0.8rem" }}>
               Routine recommendations are updated dynamically based on your last 7 days of logs.
             </p>
           </div>
@@ -1046,25 +1045,25 @@ export function DashboardClient({ user, routines, recentJournal, stats, isPro = 
       <div style={{
         display: "grid",
         gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-        gap: "1.5rem"
+        gap: "1.25rem"
       }}>
         {/* Diagnostics & Skin Toolkit */}
         <motion.div key="quick-tools-card" className="dash-bottom-card" variants={itemVariants} style={{
           background: 'var(--dash-surface)',
           border: "1px solid var(--dash-border)",
-          borderRadius: "28px",
-          padding: "2rem",
-          boxShadow: '0 8px 30px rgba(40, 28, 20, 0.04)',
+          borderRadius: "12px",
+          padding: "1.5rem",
+          boxShadow: '0 1px 3px rgba(0,0,0,0.03), 0 1px 2px rgba(0,0,0,0.02)',
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between"
         }}>
           <div>
-            <div style={{ marginBottom: "1.2rem" }}>
+            <div style={{ marginBottom: "1rem" }}>
               <span style={{ fontSize: "0.68rem", letterSpacing: "0.14em", textTransform: "uppercase", fontWeight: 700, color: "var(--dash-accent)" }}>Skin Toolkit</span>
-              <h3 style={{ fontSize: "1.25rem", margin: "0.2rem 0 0", color: "var(--dash-ink)", fontWeight: 600, fontFamily: "var(--dash-font-serif)" }}>Diagnostics &amp; Tools</h3>
+              <h3 style={{ fontSize: "1.15rem", margin: "0.2rem 0 0", color: "var(--dash-ink)", fontWeight: 600, fontFamily: "var(--dash-font-serif)" }}>Diagnostics &amp; Tools</h3>
             </div>
-            <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem" }}>
               <Link
                 href="/dashboard/conflicts"
                 prefetch={false}
@@ -1076,31 +1075,31 @@ export function DashboardClient({ user, routines, recentJournal, stats, isPro = 
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "space-between",
-                  padding: "0.9rem 1rem",
+                  padding: "0.75rem 0.9rem",
                   background: "var(--dash-bg)",
-                  borderRadius: "16px",
+                  borderRadius: "8px",
                   border: "1px solid var(--dash-border)",
                   transition: "all 0.15s ease"
                 }}>
                   <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
                     <div style={{
-                      width: "36px",
-                      height: "36px",
-                      borderRadius: "10px",
+                      width: "32px",
+                      height: "32px",
+                      borderRadius: "6px",
                       background: "rgba(239, 68, 68, 0.1)",
                       color: "#ef4444",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center"
                     }}>
-                      <ShieldAlert size={18} />
+                      <ShieldAlert size={16} />
                     </div>
                     <div>
-                      <div style={{ fontWeight: 600, fontSize: "0.9rem", color: "var(--dash-ink)" }}>Ingredient Conflict Scanner</div>
-                      <div style={{ fontSize: "0.78rem", color: "var(--dash-muted)" }}>Prevent acne &amp; barrier irritation</div>
+                      <div style={{ fontWeight: 600, fontSize: "0.88rem", color: "var(--dash-ink)" }}>Ingredient Conflict Scanner</div>
+                      <div style={{ fontSize: "0.76rem", color: "var(--dash-muted)" }}>Prevent acne &amp; barrier irritation</div>
                     </div>
                   </div>
-                  <ChevronRight size={16} color="var(--dash-muted)" />
+                  <ChevronRight size={15} color="var(--dash-muted)" />
                 </div>
               </Link>
 
@@ -1115,31 +1114,31 @@ export function DashboardClient({ user, routines, recentJournal, stats, isPro = 
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "space-between",
-                  padding: "0.9rem 1rem",
+                  padding: "0.75rem 0.9rem",
                   background: "var(--dash-bg)",
-                  borderRadius: "16px",
+                  borderRadius: "8px",
                   border: "1px solid var(--dash-border)",
                   transition: "all 0.15s ease"
                 }}>
                   <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
                     <div style={{
-                      width: "36px",
-                      height: "36px",
-                      borderRadius: "10px",
+                      width: "32px",
+                      height: "32px",
+                      borderRadius: "6px",
                       background: "rgba(139, 92, 246, 0.1)",
                       color: "#8b5cf6",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center"
                     }}>
-                      <ScanFace size={18} />
+                      <ScanFace size={16} />
                     </div>
                     <div>
-                      <div style={{ fontWeight: 600, fontSize: "0.9rem", color: "var(--dash-ink)" }}>AI Skin Analysis</div>
-                      <div style={{ fontSize: "0.78rem", color: "var(--dash-muted)" }}>Pore, barrier &amp; oiliness breakdown</div>
+                      <div style={{ fontWeight: 600, fontSize: "0.88rem", color: "var(--dash-ink)" }}>AI Skin Analysis</div>
+                      <div style={{ fontSize: "0.76rem", color: "var(--dash-muted)" }}>Pore, barrier &amp; oiliness breakdown</div>
                     </div>
                   </div>
-                  <ChevronRight size={16} color="var(--dash-muted)" />
+                  <ChevronRight size={15} color="var(--dash-muted)" />
                 </div>
               </Link>
 
@@ -1154,188 +1153,184 @@ export function DashboardClient({ user, routines, recentJournal, stats, isPro = 
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "space-between",
-                  padding: "0.9rem 1rem",
+                  padding: "0.75rem 0.9rem",
                   background: "var(--dash-bg)",
-                  borderRadius: "16px",
+                  borderRadius: "8px",
                   border: "1px solid var(--dash-border)",
                   transition: "all 0.15s ease"
                 }}>
                   <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
                     <div style={{
-                      width: "36px",
-                      height: "36px",
-                      borderRadius: "10px",
+                      width: "32px",
+                      height: "32px",
+                      borderRadius: "6px",
                       background: "var(--dash-accent-soft)",
                       color: "var(--dash-accent)",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center"
                     }}>
-                      <SlidersHorizontal size={18} />
+                      <SlidersHorizontal size={16} />
                     </div>
                     <div>
-                      <div style={{ fontWeight: 600, fontSize: "0.9rem", color: "var(--dash-ink)" }}>My Skincare Routines</div>
-                      <div style={{ fontSize: "0.78rem", color: "var(--dash-muted)" }}>Manage active products &amp; steps</div>
+                      <div style={{ fontWeight: 600, fontSize: "0.88rem", color: "var(--dash-ink)" }}>My Skincare Routines</div>
+                      <div style={{ fontSize: "0.76rem", color: "var(--dash-muted)" }}>Manage active products &amp; steps</div>
                     </div>
                   </div>
-                  <ChevronRight size={16} color="var(--dash-muted)" />
+                  <ChevronRight size={15} color="var(--dash-muted)" />
                 </div>
               </Link>
             </div>
           </div>
         </motion.div>
 
- {/* Card 2: Journal */}
- <motion.div className="dash-bottom-card" variants={itemVariants} style={{
- background: 'var(--dash-surface)',
- border: "1px solid var(--dash-border)",
- borderRadius: "28px",
- padding: "2rem",
- boxShadow: '0 20px 50px rgba(40, 28, 20, 0.05)',
- display: "flex",
- flexDirection: "column"
- }}>
- <h3 style={{ fontSize: "1.2rem", margin: "0 0 1.5rem", color: "var(--dash-ink)", fontWeight: 600, fontFamily: "var(--dash-font-serif)" }}>Recent Journal</h3>
+        {/* Card 2: Journal */}
+        <motion.div className="dash-bottom-card" variants={itemVariants} style={{
+          background: 'var(--dash-surface)',
+          border: "1px solid var(--dash-border)",
+          borderRadius: "12px",
+          padding: "1.5rem",
+          boxShadow: '0 1px 3px rgba(0,0,0,0.03), 0 1px 2px rgba(0,0,0,0.02)',
+          display: "flex",
+          flexDirection: "column"
+        }}>
+          <h3 style={{ fontSize: "1.15rem", margin: "0 0 1rem", color: "var(--dash-ink)", fontWeight: 600, fontFamily: "var(--dash-font-serif)" }}>Recent Journal</h3>
 
- {hasJournalToday && recentJournal ? (
- <div style={{
- background: 'var(--dash-bg)',
- borderRadius: "22px",
- padding: "1.2rem",
- color: "var(--dash-ink)",
- fontSize: "0.95rem",
- marginBottom: "auto",
- border: "1px solid var(--dash-border)"
- }}>
- <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.6rem", alignItems: "center" }}>
- <span suppressHydrationWarning style={{ fontWeight: 600, fontSize: "0.85rem", opacity: 0.7 }}>{formatJournalDateSafe(recentJournal.date)}</span>
- <span style={{ fontSize: "0.8rem", color: "white", background: "var(--dash-ink)", padding: "2px 8px", borderRadius: "8px" }}>★ {recentJournal.rating}/5</span>
- </div>
- <p style={{ margin: 0, color: "var(--dash-muted)", lineHeight: 1.5, fontSize: "0.9rem" }}>"{recentJournal.entry}"</p>
- </div>
- ) : !quickDone ? (
- <div style={{
-  background: 'var(--dash-bg)',
-  borderRadius: '22px',
-  padding: '1.5rem',
-  marginBottom: 'auto',
-  border: '1px solid var(--dash-border)',
- }}
- >
-  <p style={{ margin: '0 0 1rem', fontSize: '0.8rem', letterSpacing: '0.12em', textTransform: 'uppercase', fontWeight: 700, color: 'var(--dash-muted)' }}>How is your skin today?</p>
-  <div className="dash-quick-rate-row" style={{ display: 'flex', gap: '8px', marginBottom: '1rem' }}>
-   {[1, 2, 3, 4, 5].map((n) => (
-    <button
-     key={n}
-     onClick={() => setQuickRating(n)}
-     onMouseEnter={() => setQuickHover(n)}
-     onMouseLeave={() => setQuickHover(0)}
-     style={{
-      flex: 1,
-      height: '44px',
-      borderRadius: '12px',
-      border: quickRating === n ? '1px solid var(--dash-accent)' : '1px solid var(--dash-border)',
-      background: quickRating === n ? 'var(--dash-accent)' : (quickHover >= n ? 'var(--dash-accent-soft)' : 'var(--dash-surface)'),
-      color: quickRating === n ? '#fff' : 'var(--dash-ink)',
-      fontSize: '0.85rem',
-      fontWeight: 700,
-      cursor: 'pointer',
-      transition: 'all 0.15s ease',
-     }}
-    >{n}</button>
-   ))}
-  </div>
-  <button
-   disabled={!quickRating || quickSubmitting}
-   onClick={async () => {
-    if (!quickRating) return;
-    setQuickSubmitting(true);
-    try {
-     await saveJournalEntry('', quickRating);
-     setQuickDone(true);
-    } catch (e) {
-     console.error(e);
-    } finally {
-     setQuickSubmitting(false);
-    }
-   }}
-   style={{
-    width: '100%',
-    padding: '0.65rem',
-    borderRadius: '12px',
-    border: 'none',
-    background: quickRating ? 'var(--dash-ink)' : 'var(--dash-border)',
-    color: quickRating ? 'var(--dash-surface)' : 'var(--dash-muted)',
-    fontSize: '0.82rem',
-    fontWeight: 600,
-    cursor: quickRating ? 'pointer' : 'not-allowed',
-    letterSpacing: '0.06em',
-    transition: 'all 0.15s ease',
-   }}
-  >{quickSubmitting ? 'Saving...' : 'Log skin rating'}</button>
- </div>
- ) : quickDone ? (
- <div style={{
-  background: 'var(--dash-bg)',
-  borderRadius: '22px',
-  padding: '1.5rem',
-  marginBottom: 'auto',
-  border: '1px solid var(--dash-border)',
-  textAlign: 'center',
- }}
- >
-  <p style={{ margin: 0, fontSize: '0.9rem', color: 'var(--dash-muted)', lineHeight: 1.5 }}>Skin rated {quickRating}/5 for today. Logged.</p>
- </div>
- ) : (
- <div style={{
-  background: 'var(--dash-bg)',
-  borderRadius: '22px',
-  padding: '2rem',
-  color: 'var(--dash-muted)',
-  fontSize: '0.9rem',
-  marginBottom: 'auto',
-  border: '1px dashed var(--dash-border)',
-  textAlign: 'center',
- }}
- >
-  <p>No recent journal entries.</p>
- </div>
- )}
+          {hasJournalToday && recentJournal ? (
+            <div style={{
+              background: 'var(--dash-bg)',
+              borderRadius: "8px",
+              padding: "1rem",
+              color: "var(--dash-ink)",
+              fontSize: "0.92rem",
+              marginBottom: "auto",
+              border: "1px solid var(--dash-border)"
+            }}>
+              <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.5rem", alignItems: "center" }}>
+                <span suppressHydrationWarning style={{ fontWeight: 600, fontSize: "0.82rem", opacity: 0.7 }}>{formatJournalDateSafe(recentJournal.date)}</span>
+                <span style={{ fontSize: "0.78rem", color: "white", background: "var(--dash-ink)", padding: "2px 8px", borderRadius: "6px" }}>★ {recentJournal.rating}/5</span>
+              </div>
+              <p style={{ margin: 0, color: "var(--dash-muted)", lineHeight: 1.5, fontSize: "0.88rem" }}>"{recentJournal.entry}"</p>
+            </div>
+          ) : !quickDone ? (
+            <div style={{
+              background: 'var(--dash-bg)',
+              borderRadius: '8px',
+              padding: '1.15rem',
+              marginBottom: 'auto',
+              border: '1px solid var(--dash-border)',
+            }}>
+              <p style={{ margin: '0 0 0.85rem', fontSize: '0.78rem', letterSpacing: '0.08em', textTransform: 'uppercase', fontWeight: 700, color: 'var(--dash-muted)' }}>How is your skin today?</p>
+              <div className="dash-quick-rate-row" style={{ display: 'flex', gap: '8px', marginBottom: '0.85rem' }}>
+                {[1, 2, 3, 4, 5].map((n) => (
+                  <button
+                    key={n}
+                    onClick={() => setQuickRating(n)}
+                    onMouseEnter={() => setQuickHover(n)}
+                    onMouseLeave={() => setQuickHover(0)}
+                    style={{
+                      flex: 1,
+                      height: '38px',
+                      borderRadius: '8px',
+                      border: quickRating === n ? '1px solid var(--dash-accent)' : '1px solid var(--dash-border)',
+                      background: quickRating === n ? 'var(--dash-accent)' : (quickHover >= n ? 'var(--dash-accent-soft)' : 'var(--dash-surface)'),
+                      color: quickRating === n ? '#fff' : 'var(--dash-ink)',
+                      fontSize: '0.82rem',
+                      fontWeight: 700,
+                      cursor: 'pointer',
+                      transition: 'all 0.15s ease',
+                    }}
+                  >{n}</button>
+                ))}
+              </div>
+              <button
+                disabled={!quickRating || quickSubmitting}
+                onClick={async () => {
+                  if (!quickRating) return;
+                  setQuickSubmitting(true);
+                  try {
+                    await saveJournalEntry('', quickRating);
+                    setQuickDone(true);
+                  } catch (e) {
+                    console.error(e);
+                  } finally {
+                    setQuickSubmitting(false);
+                  }
+                }}
+                style={{
+                  width: '100%',
+                  padding: '0.6rem',
+                  borderRadius: '8px',
+                  border: 'none',
+                  background: quickRating ? 'var(--dash-ink)' : 'var(--dash-border)',
+                  color: quickRating ? 'var(--dash-surface)' : 'var(--dash-muted)',
+                  fontSize: '0.82rem',
+                  fontWeight: 600,
+                  cursor: quickRating ? 'pointer' : 'not-allowed',
+                  letterSpacing: '0.04em',
+                  transition: 'all 0.15s ease',
+                }}
+              >{quickSubmitting ? 'Saving...' : 'Log skin rating'}</button>
+            </div>
+          ) : quickDone ? (
+            <div style={{
+              background: 'var(--dash-bg)',
+              borderRadius: '8px',
+              padding: '1.25rem',
+              marginBottom: 'auto',
+              border: '1px solid var(--dash-border)',
+              textAlign: 'center',
+            }}>
+              <p style={{ margin: 0, fontSize: '0.88rem', color: 'var(--dash-muted)', lineHeight: 1.5 }}>Skin rated {quickRating}/5 for today. Logged.</p>
+            </div>
+          ) : (
+            <div style={{
+              background: 'var(--dash-bg)',
+              borderRadius: '8px',
+              padding: '1.5rem',
+              color: 'var(--dash-muted)',
+              fontSize: '0.88rem',
+              marginBottom: 'auto',
+              border: '1px dashed var(--dash-border)',
+              textAlign: 'center',
+            }}>
+              <p>No recent journal entries.</p>
+            </div>
+          )}
 
- <Link
-  href="/dashboard/journal"
-  prefetch={false}
-  onMouseEnter={() => router.prefetch("/dashboard/journal")}
-  onTouchStart={() => router.prefetch("/dashboard/journal")}
-  style={{ textDecoration: "none", width: "100%" }}
- >
- <motion.button
- whileHover={{ scale: 1.02, background: "var(--dash-accent)", filter: "brightness(1.1)" }}
- whileTap={{ scale: 0.98 }}
- style={{
- background: "var(--dash-accent)",
- color: "#ffffff",
- border: "none",
- borderRadius: "18px",
- padding: "1rem",
- fontSize: "0.95rem",
- cursor: "pointer",
- fontWeight: 600,
- width: "100%",
- display: "flex",
- alignItems: "center",
- justifyContent: "center",
- gap: "0.5rem",
- marginTop: "1.5rem",
- boxShadow: "0 10px 25px rgba(252, 39, 121, 0.25)",
- transition: "all 0.2s"
- }}
- >
- <CalendarPlus size={18} /> Add Today's Entry
- </motion.button>
- </Link>
- </motion.div>
- </div>
- </motion.div>
- );
+          <Link
+            href="/dashboard/journal"
+            prefetch={false}
+            onMouseEnter={() => router.prefetch("/dashboard/journal")}
+            onTouchStart={() => router.prefetch("/dashboard/journal")}
+            style={{ textDecoration: "none", width: "100%" }}
+          >
+            <motion.button
+              whileHover={{ scale: 1.01 }}
+              whileTap={{ scale: 0.99 }}
+              style={{
+                background: "var(--dash-accent)",
+                color: "#ffffff",
+                border: "none",
+                borderRadius: "8px",
+                padding: "0.75rem 1rem",
+                fontSize: "0.88rem",
+                cursor: "pointer",
+                fontWeight: 600,
+                width: "100%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "0.5rem",
+                marginTop: "1.25rem",
+                transition: "all 0.15s ease"
+              }}
+            >
+              <CalendarPlus size={16} /> Add Today's Entry
+            </motion.button>
+          </Link>
+        </motion.div>
+      </div>
+    </motion.div>
+  );
 }

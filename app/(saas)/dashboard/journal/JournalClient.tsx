@@ -371,7 +371,7 @@ export function SkinJournalClient({ initialEntries, isPro }: { initialEntries: a
  style={{
  background: "#FEF2F2",
  border: "1px solid #FEE2E2",
- borderRadius: "20px",
+ borderRadius: "8px",
  padding: "1.25rem 1.5rem",
  marginBottom: "2rem",
  color: "#991B1B",
@@ -406,13 +406,13 @@ export function SkinJournalClient({ initialEntries, isPro }: { initialEntries: a
  animate={{ opacity: 1, height: "auto" }}
  style={{
  background: "#1c1917",
- borderRadius: "24px",
- padding: "2rem",
- marginBottom: "2.5rem",
+ borderRadius: "12px",
+ padding: "1.5rem",
+ marginBottom: "2rem",
  color: "white",
  position: "relative",
  overflow: "hidden",
- boxShadow: "0 20px 50px rgba(0,0,0,0.12)",
+ boxShadow: "0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06)",
  maxWidth: "800px"
  }}
  >
@@ -458,10 +458,10 @@ export function SkinJournalClient({ initialEntries, isPro }: { initialEntries: a
  style={{
  background: 'var(--white)',
  border: "1px solid var(--rule)",
- borderRadius: "16px",
- padding: "2rem",
- marginBottom: "2rem",
- boxShadow: '0 12px 40px rgba(40, 28, 20, 0.04)',
+ borderRadius: "12px",
+ padding: "1.5rem",
+ marginBottom: "1.5rem",
+ boxShadow: '0 1px 3px rgba(0, 0, 0, 0.03)',
  maxWidth: "800px"
  }}
  >
@@ -596,10 +596,10 @@ export function SkinJournalClient({ initialEntries, isPro }: { initialEntries: a
  style={{
  background: 'var(--white)',
  border: '1px solid var(--rule)',
- borderRadius: '24px',
- padding: '24px',
- marginBottom: '2.5rem',
- boxShadow: '0 8px 30px rgba(40, 28, 20, 0.03)',
+ borderRadius: '12px',
+ padding: '20px',
+ marginBottom: '2rem',
+ boxShadow: '0 1px 3px rgba(0, 0, 0, 0.03)',
  maxWidth: '800px',
  }}
  >
@@ -609,7 +609,7 @@ export function SkinJournalClient({ initialEntries, isPro }: { initialEntries: a
  <div style={{
  width: '48px',
  height: '48px',
- borderRadius: '14px',
+ borderRadius: '8px',
  background: '#fff3f0',
  display: 'flex',
  alignItems: 'center',
@@ -634,7 +634,7 @@ export function SkinJournalClient({ initialEntries, isPro }: { initialEntries: a
  <div style={{
  width: '48px',
  height: '48px',
- borderRadius: '14px',
+ borderRadius: '8px',
  background: '#edf7f0',
  display: 'flex',
  alignItems: 'center',
@@ -659,7 +659,7 @@ export function SkinJournalClient({ initialEntries, isPro }: { initialEntries: a
  <div style={{
  width: '48px',
  height: '48px',
- borderRadius: '14px',
+ borderRadius: '8px',
  background: '#f5f0ff',
  display: 'flex',
  alignItems: 'center',

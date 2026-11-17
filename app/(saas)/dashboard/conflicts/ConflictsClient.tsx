@@ -241,7 +241,7 @@ export function ConflictsClient({ isPro, initialBlacklist = [] }: { isPro: boole
  background: "rgba(0, 0, 0, 0.4)",
  backdropFilter: "blur(8px)",
  WebkitBackdropFilter: "blur(8px)",
- borderRadius: "32px",
+ borderRadius: "12px",
  zIndex: 30,
  display: "flex",
  flexDirection: "column",
@@ -254,8 +254,8 @@ export function ConflictsClient({ isPro, initialBlacklist = [] }: { isPro: boole
  <div style={{
  background: "var(--dash-surface)",
  padding: "2.5rem 3rem",
- borderRadius: "28px",
- boxShadow: "0 25px 50px -12px rgba(40, 28, 20, 0.12)",
+ borderRadius: "12px",
+ boxShadow: "0 10px 25px rgba(0, 0, 0, 0.15)",
  maxWidth: "480px",
  border: "1px solid var(--dash-border)"
  }}>
@@ -264,7 +264,7 @@ export function ConflictsClient({ isPro, initialBlacklist = [] }: { isPro: boole
  color: "var(--dash-accent)",
  width: "56px",
  height: "56px",
- borderRadius: "16px",
+ borderRadius: "8px",
  display: "flex",
  alignItems: "center",
  justifyContent: "center",
@@ -296,11 +296,11 @@ export function ConflictsClient({ isPro, initialBlacklist = [] }: { isPro: boole
  background: "var(--dash-accent)",
  color: "white",
  padding: "1rem 2rem",
- borderRadius: "16px",
+ borderRadius: "8px",
  textDecoration: "none",
  fontSize: "0.95rem",
  fontWeight: 600,
- boxShadow: "0 10px 20px rgba(0,0,0,0.1)",
+ boxShadow: "none",
  transition: "all 0.2s"
  }}>
  Upgrade to Pro <ArrowRight size={16} />
@@ -313,9 +313,9 @@ export function ConflictsClient({ isPro, initialBlacklist = [] }: { isPro: boole
  <motion.div variants={itemVariants} style={{
  background: "var(--dash-surface)",
  border: "1px solid var(--dash-border)",
- borderRadius: "28px",
+ borderRadius: "12px",
  padding: "2.5rem",
- boxShadow: "0 20px 50px rgba(40, 28, 20, 0.05)",
+ boxShadow: "0 1px 3px rgba(0, 0, 0, 0.03)",
  opacity: isPro ? 1 : 0.45,
  pointerEvents: isPro ? "auto" : "none"
  }}>
@@ -334,7 +334,7 @@ export function ConflictsClient({ isPro, initialBlacklist = [] }: { isPro: boole
  fontSize: "0.95rem",
  padding: "1rem 1.25rem",
  border: "1px solid var(--dash-border)",
- borderRadius: "18px",
+ borderRadius: "8px",
  background: "var(--dash-bg)",
  color: "var(--dash-ink)",
  outline: "none",
@@ -358,7 +358,7 @@ export function ConflictsClient({ isPro, initialBlacklist = [] }: { isPro: boole
  fontSize: "0.95rem",
  padding: "1rem 1.25rem",
  border: "1px solid var(--dash-border)",
- borderRadius: "18px",
+ borderRadius: "8px",
  background: "var(--dash-bg)",
  color: "var(--dash-ink)",
  outline: "none",
@@ -379,7 +379,7 @@ export function ConflictsClient({ isPro, initialBlacklist = [] }: { isPro: boole
  background: "var(--dash-accent)",
  color: "white",
  border: "none",
- borderRadius: "18px",
+ borderRadius: "8px",
  padding: "1rem 2rem",
  fontSize: "0.95rem",
  fontWeight: 600,
@@ -390,7 +390,7 @@ export function ConflictsClient({ isPro, initialBlacklist = [] }: { isPro: boole
  gap: "0.5rem",
  width: "100%",
  maxWidth: "240px",
- boxShadow: "0 10px 25px rgba(252, 39, 121, 0.25)",
+ boxShadow: "none",
  transition: "all 0.2s",
  opacity: (!productA.trim() || !productB.trim()) ? 0.6 : 1
  }}
@@ -421,7 +421,7 @@ export function ConflictsClient({ isPro, initialBlacklist = [] }: { isPro: boole
  <div style={{
  background: "rgba(16, 185, 129, 0.06)",
  border: "1px solid rgba(16, 185, 129, 0.2)",
- borderRadius: "20px",
+ borderRadius: "8px",
  padding: "1.5rem 1.75rem",
  fontSize: "0.95rem",
  color: "#047857",
@@ -445,7 +445,7 @@ export function ConflictsClient({ isPro, initialBlacklist = [] }: { isPro: boole
  style={{
  background: style.bg,
  border: `1px solid ${style.border}`,
- borderRadius: "20px",
+ borderRadius: "8px",
  padding: "1.5rem 1.75rem",
  color: style.color
  }}
@@ -486,9 +486,9 @@ export function ConflictsClient({ isPro, initialBlacklist = [] }: { isPro: boole
  marginTop: "4rem",
  background: "var(--dash-surface)",
  border: "1px solid var(--dash-border)",
- borderRadius: "28px",
+ borderRadius: "12px",
  padding: "2.5rem",
- boxShadow: "0 20px 50px rgba(40, 28, 20, 0.03)",
+ boxShadow: "0 1px 3px rgba(0, 0, 0, 0.03)",
  }}>
  <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.5rem" }}>
  <Tag size={20} color="var(--dash-accent)" />
@@ -508,7 +508,7 @@ export function ConflictsClient({ isPro, initialBlacklist = [] }: { isPro: boole
  style={{
  flex: 1,
  padding: "0.8rem 1.2rem",
- borderRadius: "14px",
+ borderRadius: "8px",
  border: "1px solid var(--dash-border)",
  fontSize: "0.95rem",
  outline: "none",
@@ -522,7 +522,7 @@ export function ConflictsClient({ isPro, initialBlacklist = [] }: { isPro: boole
  background: "var(--dash-accent)",
  color: "white",
  border: "none",
- borderRadius: "14px",
+ borderRadius: "8px",
  padding: "0.8rem 1.5rem",
  fontSize: "0.9rem",
  fontWeight: 600,
@@ -542,7 +542,7 @@ export function ConflictsClient({ isPro, initialBlacklist = [] }: { isPro: boole
  <div style={{
  background: "var(--dash-bg)",
  border: "1px dashed var(--dash-border)",
- borderRadius: "18px",
+ borderRadius: "8px",
  padding: "1.5rem",
  textAlign: "center",
  color: "var(--dash-muted)",

@@ -1091,13 +1091,13 @@ export function RoutinesClient({ initialRoutines }: RoutinesClientProps) {
           background: "rgba(16, 185, 129, 0.12)",
           border: "1px solid rgba(16, 185, 129, 0.3)",
           color: "#10b981",
-          borderRadius: "14px",
-          padding: "0.85rem 1.25rem",
-          marginBottom: "1.5rem",
+          borderRadius: "8px",
+          padding: "0.75rem 1rem",
+          marginBottom: "1.25rem",
           display: "flex",
           alignItems: "center",
           gap: "0.6rem",
-          fontSize: "0.9rem",
+          fontSize: "0.88rem",
           fontWeight: 600,
         }}>
           <CheckCircle2 size={18} />
@@ -1109,11 +1109,11 @@ export function RoutinesClient({ initialRoutines }: RoutinesClientProps) {
         <div style={{
           background: "#FEF2F2",
           border: "1px solid #FEE2E2",
-          borderRadius: "14px",
-          padding: "0.9rem 1.2rem",
-          marginBottom: "1.5rem",
+          borderRadius: "8px",
+          padding: "0.75rem 1rem",
+          marginBottom: "1.25rem",
           color: "#991B1B",
-          fontSize: "0.9rem",
+          fontSize: "0.88rem",
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center"
@@ -1133,15 +1133,15 @@ export function RoutinesClient({ initialRoutines }: RoutinesClientProps) {
         <div className="empty-vanity-box" style={{
           background: "var(--dash-surface)",
           border: "1px solid var(--dash-border)",
-          borderRadius: "24px",
-          padding: "3rem 2rem",
+          borderRadius: "12px",
+          padding: "2.5rem 1.5rem",
           textAlign: "center",
-          boxShadow: "0 4px 20px rgba(0,0,0,0.02)",
+          boxShadow: "0 1px 3px rgba(0,0,0,0.03)",
           marginBottom: "2rem"
         }}>
           <div style={{
-            width: "56px",
-            height: "56px",
+            width: "48px",
+            height: "48px",
             borderRadius: "50%",
             background: "var(--dash-accent-soft)",
             color: "var(--dash-accent)",
@@ -1150,12 +1150,12 @@ export function RoutinesClient({ initialRoutines }: RoutinesClientProps) {
             justifyContent: "center",
             margin: "0 auto 1.25rem"
           }}>
-            <Calendar size={26} />
+            <Calendar size={24} />
           </div>
-          <h2 style={{ fontFamily: "var(--dash-font-serif)", fontSize: "1.7rem", margin: "0 0 0.5rem", color: "var(--dash-ink)", fontWeight: 500 }}>
+          <h2 style={{ fontFamily: "var(--dash-font-serif)", fontSize: "1.6rem", margin: "0 0 0.5rem", color: "var(--dash-ink)", fontWeight: 500 }}>
             Your Digital Vanity is Clean &amp; Empty
           </h2>
-          <p style={{ color: "var(--dash-muted)", maxWidth: "480px", margin: "0 auto 1.8rem", fontSize: "0.92rem", lineHeight: 1.6 }}>
+          <p style={{ color: "var(--dash-muted)", maxWidth: "480px", margin: "0 auto 1.5rem", fontSize: "0.9rem", lineHeight: 1.55 }}>
             You don&apos;t have any active regimens saved. Build your personalized routine step-by-step, or load our climate-calibrated AM and PM formulations.
           </p>
           <div className="empty-vanity-actions" style={{ display: "flex", gap: "0.75rem", justifyContent: "center", flexWrap: "wrap" }}>
@@ -1165,10 +1165,10 @@ export function RoutinesClient({ initialRoutines }: RoutinesClientProps) {
                 background: "var(--dash-accent)",
                 color: "#ffffff",
                 border: "none",
-                borderRadius: "14px",
-                padding: "0.8rem 1.4rem",
-                fontWeight: 700,
-                fontSize: "0.9rem",
+                borderRadius: "8px",
+                padding: "0.7rem 1.25rem",
+                fontWeight: 600,
+                fontSize: "0.88rem",
                 cursor: "pointer",
                 display: "inline-flex",
                 alignItems: "center",
@@ -1185,10 +1185,10 @@ export function RoutinesClient({ initialRoutines }: RoutinesClientProps) {
                 background: "var(--dash-surface)",
                 border: "1px solid var(--dash-border)",
                 color: "var(--dash-ink)",
-                borderRadius: "14px",
-                padding: "0.8rem 1.4rem",
+                borderRadius: "8px",
+                padding: "0.7rem 1.25rem",
                 fontWeight: 600,
-                fontSize: "0.9rem",
+                fontSize: "0.88rem",
                 cursor: "pointer",
                 display: "inline-flex",
                 alignItems: "center",
@@ -1387,13 +1387,13 @@ export function RoutinesClient({ initialRoutines }: RoutinesClientProps) {
                 style={{
                   background: "var(--dash-surface)",
                   border: "1px solid var(--dash-border)",
-                  borderRadius: "18px",
+                  borderRadius: "10px",
                   padding: "1.25rem",
                   marginBottom: "1.5rem",
                   display: "flex",
                   flexDirection: "column",
                   gap: "0.85rem",
-                  boxShadow: "0 4px 16px rgba(0,0,0,0.03)"
+                  boxShadow: "0 1px 3px rgba(0,0,0,0.03)"
                 }}
               >
                 {/* Category quick selectors */}
@@ -1557,7 +1557,7 @@ export function RoutinesClient({ initialRoutines }: RoutinesClientProps) {
               <div className="empty-regimen-box" style={{
                 background: "var(--dash-surface)",
                 border: "1px dashed var(--dash-border)",
-                borderRadius: "24px",
+                borderRadius: "12px",
                 padding: "2.5rem 1.75rem",
                 textAlign: "center",
                 marginBottom: "2rem"
@@ -1588,7 +1588,7 @@ export function RoutinesClient({ initialRoutines }: RoutinesClientProps) {
                       style={{
                         background: "var(--dash-bg)",
                         border: "1px solid var(--dash-border)",
-                        borderRadius: "16px",
+                        borderRadius: "8px",
                         padding: "1rem",
                         cursor: "pointer",
                         transition: "all 0.15s ease"
@@ -1814,11 +1814,11 @@ export function RoutinesClient({ initialRoutines }: RoutinesClientProps) {
               style={{
                 background: "var(--dash-surface)",
                 border: "1px solid var(--dash-border)",
-                borderRadius: "24px",
+                borderRadius: "12px",
                 padding: "2rem",
                 width: "100%",
                 maxWidth: "480px",
-                boxShadow: "0 20px 60px rgba(0,0,0,0.2)"
+                boxShadow: "0 20px 40px rgba(0,0,0,0.15)"
               }}
             >
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.25rem" }}>

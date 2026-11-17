@@ -474,7 +474,7 @@ export function AnalysisClient({
               style={{
                 fontSize: "0.75rem",
                 padding: "0.3rem 0.7rem",
-                borderRadius: "20px",
+                borderRadius: "6px",
                 border: "1px solid " + (selectedMetric === "all" ? "var(--ink)" : "var(--rule)"),
                 background: selectedMetric === "all" ? "var(--ink)" : "transparent",
                 color: selectedMetric === "all" ? "var(--white)" : "var(--ink)",
@@ -492,7 +492,7 @@ export function AnalysisClient({
                 style={{
                   fontSize: "0.75rem",
                   padding: "0.3rem 0.7rem",
-                  borderRadius: "20px",
+                  borderRadius: "6px",
                   border: `1px solid ${selectedMetric === m.id ? m.color : "var(--rule)"}`,
                   background: selectedMetric === m.id ? m.color : "transparent",
                   color: selectedMetric === m.id ? "white" : "var(--ink)",
@@ -819,7 +819,7 @@ export function AnalysisClient({
  background: "var(--dash-surface)",
  backdropFilter: "blur(8px)",
  border: "1px dashed var(--rule)",
- borderRadius: "16px",
+ borderRadius: "12px",
  padding: "3rem 2rem",
  display: "flex",
  flexDirection: "column",
@@ -983,7 +983,7 @@ export function AnalysisClient({
  <div className="detailed-report-grid" style={{
  background: "var(--dash-surface)",
  border: "1px solid var(--rule)",
- borderRadius: "16px",
+ borderRadius: "12px",
  padding: "clamp(1.1rem, 4vw, 2rem)",
  width: "100%",
  maxWidth: "100%",
@@ -1131,7 +1131,7 @@ export function AnalysisClient({
  style={{
  background: "var(--dash-surface)",
  border: "1px solid var(--rule)",
- borderRadius: "16px",
+ borderRadius: "12px",
  width: "100%",
  maxWidth: "540px",
  height: "550px",
