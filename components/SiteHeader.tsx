@@ -155,7 +155,6 @@ export default function SiteHeader() {
         <div className="site-header-left">
           <nav className="site-header-nav">
             <Link href="/tools" className="site-header-nav-link hidden lg:inline-flex">Diagnostics</Link>
-            <Link href="/circle" className="site-header-nav-link hidden lg:inline-flex">Circle</Link>
             <Link href="/k-beauty" className="site-header-nav-link hidden lg:inline-flex">{t("nav.kbeauty")}</Link>
             <Link href="/mens-grooming" className="site-header-nav-link hidden lg:inline-flex">{t("nav.men")}</Link>
             <Link href="/blog" className="site-header-nav-link hidden lg:inline-flex">{t("nav.blog")}</Link>
@@ -263,13 +262,6 @@ export default function SiteHeader() {
                 className="rounded-lg px-3 py-1.5 text-[13.5px] font-semibold text-[#2b2826] transition-all hover:bg-[#ffe6f0] hover:text-[#fc2779] dark:text-[#f7f5f2] dark:hover:bg-white/10 dark:hover:text-[#ff4d94]"
               >
                 Diagnostic Tools
-              </Link>
-              <Link
-                href="/circle"
-                onClick={handleNavClick}
-                className="rounded-lg px-3 py-1.5 text-[13.5px] font-semibold text-[#2b2826] transition-all hover:bg-[#ffe6f0] hover:text-[#fc2779] dark:text-[#f7f5f2] dark:hover:bg-white/10 dark:hover:text-[#ff4d94]"
-              >
-                Mirha Circle (Community)
               </Link>
               <Link
                 href="/blog"
