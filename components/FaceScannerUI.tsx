@@ -25,6 +25,16 @@ export default function FaceScannerUI({
   cursor: pointer;
   }
 
+  @media (max-width: 600px) {
+    .face-scan-container {
+      min-height: 340px;
+    }
+    .hud-corner {
+      width: 28px !important;
+      height: 28px !important;
+    }
+  }
+
   .portrait-img {
   position: absolute;
   inset: 0;

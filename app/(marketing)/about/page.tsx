@@ -5,30 +5,30 @@ import FaceScannerUI from "@/components/FaceScannerUI";
 import CollabForm from "@/components/CollabForm";
 
 export const metadata = {
- title: "About | Mirha & Co.",
- description:
- "Mirha & Co. is a global skincare intelligence platform and headless B2B API provider. We license a climate-aware, ingredient-intelligent skincare recommendation engine to enterprise beauty brands worldwide.",
+  title: "About | Mirha & Co.",
+  description:
+    "Mirha & Co. is a global skincare intelligence platform and headless B2B API provider. We license a climate-aware, ingredient-intelligent skincare recommendation engine to enterprise beauty brands worldwide.",
 };
 
 export default function AboutPage() {
- return (
- <main>
- <style>{`
- *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  return (
+    <main>
+      <style>{`
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   .about-page {
-  --black: #0c0a09;
-  --white: #fafaf8;
-  --rose: #a27b5c;
-  --rose-light: #fbf7f2;
-  --paper: #fffcf8;
-  --ink: #2b2826;
-  --muted: #8c8179;
-  --rule: #e8ded6;
-  background: var(--paper);
-  color: var(--ink);
-  font-family: var(--font-dm-sans), sans-serif;
-  overflow-x: hidden;
+    --black: #0c0a09;
+    --white: #fafaf8;
+    --rose: #a27b5c;
+    --rose-light: #fbf7f2;
+    --paper: #fffcf8;
+    --ink: #2b2826;
+    --muted: #8c8179;
+    --rule: #e8ded6;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-dm-sans), sans-serif;
+    overflow-x: hidden;
   }
 
   html.dark .about-page,
@@ -36,206 +36,206 @@ export default function AboutPage() {
     --black: #080707;
     --white: #f7f5f2;
     --rose: #ff4d94;
-    --rose-light: #1c1a18;
+    --rose-light: #181615;
     --paper: #0f0e0d;
     --ink: #f7f5f2;
     --muted: #aba49d;
-    --rule: rgba(255, 255, 255, 0.12);
+    --rule: rgba(255, 255, 255, 0.1);
     background: var(--paper) !important;
     color: var(--ink) !important;
   }
 
- .img-wrap {
- border-radius: 24px;
- overflow: hidden;
- background: #fff;
- position: relative;
- }
+  .img-wrap {
+    border-radius: 14px;
+    overflow: hidden;
+    background: #fff;
+    position: relative;
+  }
 
- .hero-img {
- height: 480px;
- width: 100%;
- grid-column: span 2;
- margin-top: 2rem;
- box-shadow: 0 20px 50px rgba(0,0,0,0.12);
- }
+  .hero-img {
+    height: 480px;
+    width: 100%;
+    grid-column: span 2;
+    margin-top: 2rem;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  }
 
- .side-img {
- height: 380px;
- width: 100%;
- margin-bottom: 0;
- box-shadow: 0 20px 40px rgba(0,0,0,0.04);
- }
+  .side-img {
+    height: 380px;
+    width: 100%;
+    margin-bottom: 0;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+  }
 
- .img-wrap img {
- width: 100%;
- height: 100%;
- object-fit: cover;
- transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
- }
+  .img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
 
- .img-wrap:hover img {
- transform: scale(1.04);
- }
+  .img-wrap:hover img {
+    transform: scale(1.03);
+  }
 
- .hero {
- background: #faf8f5;
- color: var(--ink);
- padding: 5rem 2rem 0rem;
- position: relative;
- border-bottom: 1px solid var(--rule);
- }
+  .hero {
+    background: #faf8f5;
+    color: var(--ink);
+    padding: 4.5rem 2rem 0rem;
+    position: relative;
+    border-bottom: 1px solid var(--rule);
+  }
 
- html.dark .hero,
- .dark .hero {
- background: var(--black) !important;
- color: var(--white) !important;
- border-bottom-color: rgba(255, 255, 255, 0.12) !important;
- }
+  html.dark .hero,
+  .dark .hero {
+    background: var(--black) !important;
+    color: var(--white) !important;
+    border-bottom-color: rgba(255, 255, 255, 0.1) !important;
+  }
 
- .hero::before {
- content: '';
- position: absolute;
- top: 0; right: 0; width: 50vw; height: 50vw;
- background: radial-gradient(circle, rgba(162,123,92,0.06) 0%, transparent 70%);
- pointer-events: none;
- }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0; width: 50vw; height: 50vw;
+    background: radial-gradient(circle, rgba(162,123,92,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
 
- html.dark .hero::before,
- .dark .hero::before {
- background: radial-gradient(circle, rgba(162,123,92,0.12) 0%, transparent 70%) !important;
- }
+  html.dark .hero::before,
+  .dark .hero::before {
+    background: radial-gradient(circle, rgba(162,123,92,0.12) 0%, transparent 70%) !important;
+  }
 
- .hero-inner {
- max-width: 1200px;
- margin: 0 auto;
- display: grid;
- grid-template-columns: 1.2fr 0.8fr;
- gap: 2.5rem;
- align-items: start;
- padding-bottom: 2.5rem;
- }
+  .hero-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 2.5rem;
+    align-items: start;
+    padding-bottom: 2.5rem;
+  }
 
- .eyebrow {
- font-size: 0.65rem;
- letter-spacing: 0.25em;
- text-transform: uppercase;
- color: var(--rose);
- margin-bottom: 1.5rem;
- font-weight: 700;
- display: flex;
- align-items: center;
- gap: 8px;
- }
+  .eyebrow {
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--rose);
+    margin-bottom: 1.25rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
 
- .hero h1 {
- font-family: var(--font-playfair), serif;
- font-size: clamp(2.8rem, 8vw, 5.5rem);
- line-height: 1.05;
- font-weight: 700;
- letter-spacing: -0.02em;
- word-break: normal;
- overflow-wrap: break-word;
- color: #11100f;
- }
+  .hero h1 {
+    font-family: var(--font-playfair), serif;
+    font-size: clamp(2.1rem, 7vw, 4.8rem);
+    line-height: 1.08;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    color: #11100f;
+  }
 
- html.dark .hero h1,
- .dark .hero h1 {
- background: linear-gradient(135deg, #ffffff 0%, #d99a8f 50%, #e8d3b5 100%) !important;
- background-size: 200% auto !important;
- -webkit-background-clip: text !important;
- -webkit-text-fill-color: transparent !important;
- animation: shine 6s linear infinite !important;
- }
+  html.dark .hero h1,
+  .dark .hero h1 {
+    background: linear-gradient(135deg, #ffffff 0%, #d99a8f 50%, #e8d3b5 100%) !important;
+    background-size: 200% auto !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    animation: shine 6s linear infinite !important;
+  }
 
- .hero h1 span {
- color: var(--rose);
- display: block;
- font-family: var(--font-playfair), serif;
- font-style: normal;
- font-weight: 600;
- font-size: clamp(2rem, 5.5vw, 3.8rem);
- letter-spacing: -0.02em;
- margin-top: 0.75rem;
- line-height: 1.1;
- -webkit-text-fill-color: initial;
- }
+  .hero h1 span {
+    color: var(--rose);
+    display: block;
+    font-family: var(--font-playfair), serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: clamp(1.6rem, 5vw, 3.4rem);
+    letter-spacing: -0.02em;
+    margin-top: 0.5rem;
+    line-height: 1.15;
+    -webkit-text-fill-color: initial;
+  }
 
- @keyframes shine {
- 0% { background-position: 0% center; }
- 50% { background-position: 100% center; }
- 100% { background-position: 0% center; }
- }
+  @keyframes shine {
+    0% { background-position: 0% center; }
+    50% { background-position: 100% center; }
+    100% { background-position: 0% center; }
+  }
 
- .hero-copy {
- font-family: var(--font-playfair), serif;
- font-size: 1.3rem;
- line-height: 1.6;
- color: #4a4542;
- margin-bottom: 1.5rem;
- font-style: normal;
- }
+  .hero-copy {
+    font-family: var(--font-playfair), serif;
+    font-size: 1.25rem;
+    line-height: 1.6;
+    color: #4a4542;
+    margin-bottom: 1.5rem;
+    font-style: normal;
+  }
 
- html.dark .hero-copy,
- .dark .hero-copy {
- color: rgba(255,255,255,0.7) !important;
- }
+  html.dark .hero-copy,
+  .dark .hero-copy {
+    color: rgba(255,255,255,0.7) !important;
+  }
 
- .strip {
- background: var(--rose);
- color: #fff;
- padding: 1.2rem 2rem;
- text-align: center;
- font-size: 0.75rem;
- letter-spacing: 0.25em;
- text-transform: uppercase;
- font-weight: 700;
- overflow: hidden;
- line-height: 1.6;
- }
+  .strip {
+    background: var(--rose);
+    color: #fff;
+    padding: 0.95rem 1.5rem;
+    text-align: center;
+    font-size: clamp(0.68rem, 2vw, 0.75rem);
+    letter-spacing: clamp(0.12em, 1.5vw, 0.22em);
+    text-transform: uppercase;
+    font-weight: 700;
+    overflow: hidden;
+    line-height: 1.5;
+  }
 
- .section {
- padding: 4.5rem 2rem;
- }
+  .section {
+    padding: 4.5rem 2rem;
+  }
 
- .honesty-section {
- background: #faf8f5;
- color: var(--ink);
- border-top: 1px solid var(--rule);
- border-bottom: 1px solid var(--rule);
- }
+  .honesty-section {
+    background: #faf8f5;
+    color: var(--ink);
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+  }
 
- html.dark .honesty-section,
- .dark .honesty-section {
- background: var(--black) !important;
- color: var(--white) !important;
- border-color: rgba(255, 255, 255, 0.08) !important;
- }
+  html.dark .honesty-section,
+  .dark .honesty-section {
+    background: var(--black) !important;
+    color: var(--white) !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+  }
 
- .section.rose {
- background: var(--rose-light);
- color: var(--ink);
- }
+  .section.rose {
+    background: var(--rose-light);
+    color: var(--ink);
+  }
 
- .inner {
- max-width: 1200px;
- margin: 0 auto;
- }
+  .inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
 
- .two-col {
- display: grid;
- grid-template-columns: 1fr 1fr;
- gap: 3.5rem;
- align-items: center;
- }
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3.5rem;
+    align-items: center;
+  }
 
   .section-title {
-  font-family: var(--font-playfair), serif;
-  font-size: clamp(2.5rem, 6vw, 3.8rem);
-  line-height: 1.1;
-  font-weight: 700;
-  margin-bottom: 2rem;
-  color: #111;
+    font-family: var(--font-playfair), serif;
+    font-size: clamp(2rem, 5.5vw, 3.4rem);
+    line-height: 1.12;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: #111;
   }
 
   html.dark .section-title,
@@ -243,54 +243,56 @@ export default function AboutPage() {
     color: #ffffff !important;
   }
 
- .section-title span {
- color: var(--rose);
- display: block;
- font-style: normal;
- }
+  .section-title span {
+    color: var(--rose);
+    display: block;
+    font-style: normal;
+    margin-top: 0.25rem;
+  }
 
- .body-copy p {
- font-size: 1.05rem;
- line-height: 1.8;
- color: var(--muted);
- margin-bottom: 1.8rem;
- }
+  .body-copy p {
+    font-size: 1.02rem;
+    line-height: 1.75;
+    color: var(--muted);
+    margin-bottom: 1.5rem;
+  }
 
- .dark .body-copy p {
- color: rgba(255,255,255,0.6);
- }
+  .dark .body-copy p {
+    color: rgba(255,255,255,0.6);
+  }
 
- .body-copy strong {
- color: var(--ink);
- font-weight: 600;
- }
+  .body-copy strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
 
- .dark .body-copy strong {
- color: var(--white);
- }
+  .dark .body-copy strong {
+    color: var(--white);
+  }
 
   .ecosystem-grid {
- display: grid;
- grid-template-columns: repeat(6, 1fr);
- gap: 1.25rem;
- margin-top: 2.5rem;
- }
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 1.25rem;
+    margin-top: 2.5rem;
+  }
 
- .ecosystem-card {
- background: #fff;
- border: 1px solid var(--rule);
- border-radius: 20px;
- padding: 2rem 1.75rem;
- transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
- position: relative;
- overflow: hidden;
- grid-column: span 2;
- }
+  .ecosystem-card {
+    background: #fff;
+    border: 1px solid var(--rule);
+    border-radius: 12px;
+    padding: 1.85rem 1.6rem;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    overflow: hidden;
+    grid-column: span 2;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+  }
 
   html.dark .ecosystem-card,
   .dark .ecosystem-card {
-    background: #181716 !important;
-    border-color: rgba(255, 255, 255, 0.12) !important;
+    background: #151413 !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
     color: #f7f5f2 !important;
   }
 
@@ -303,206 +305,393 @@ export default function AboutPage() {
   .dark .ecosystem-card p {
     color: #aba49d !important;
   }
+
   .ecosystem-card.wide {
     grid-column: span 3;
   }
 
- .ecosystem-card:hover {
- box-shadow: 0 20px 40px rgba(162, 123, 92, 0.05);
- border-color: rgba(162, 123, 92, 0.3);
- transform: translateY(-5px);
- }
+  .ecosystem-card:hover {
+    border-color: rgba(162, 123, 92, 0.35);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+  }
 
- .eco-icon {
- background: var(--rose-light);
- color: var(--rose);
- width: 60px; height: 60px;
- border-radius: 16px;
- display: flex; align-items: center; justify-content: center;
- margin-bottom: 1.5rem;
- }
+  .eco-icon {
+    background: var(--rose-light);
+    color: var(--rose);
+    width: 48px;
+    height: 48px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.25rem;
+  }
 
- .ecosystem-card h3 {
- font-family: var(--font-playfair), serif;
- font-weight: 700;
- font-size: 1.5rem;
- margin-bottom: 1rem;
- }
+  .ecosystem-card h3 {
+    font-family: var(--font-playfair), serif;
+    font-weight: 700;
+    font-size: 1.35rem;
+    margin-bottom: 0.75rem;
+  }
 
- .ecosystem-card p {
- color: var(--muted);
- line-height: 1.7;
- font-size: 0.95rem;
- }
+  .ecosystem-card p {
+    color: var(--muted);
+    line-height: 1.65;
+    font-size: 0.92rem;
+  }
 
- .honesty-list {
- display: flex;
- flex-direction: column;
- gap: 1rem;
- }
+  /* Free AI Skin Analysis Metrics */
+  .analysis-metrics-list {
+    list-style: none;
+    padding: 0;
+    margin: 1.5rem 0 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.95rem;
+  }
 
- .honesty-card {
- background: #ffffff;
- border: 1px solid #e8e2da;
- border-radius: 16px;
- padding: 1.4rem 1.6rem;
- transition: all 0.25s ease;
- box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
- display: flex;
- flex-direction: column;
- gap: 0.5rem;
- }
+  .analysis-metric-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
 
- html.dark .honesty-card,
- .dark .honesty-card {
- background: #181716 !important;
- border-color: rgba(255, 255, 255, 0.1) !important;
- box-shadow: none !important;
- }
+  .metric-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--rose);
+    display: inline-block;
+    flex-shrink: 0;
+    margin-top: 7px;
+  }
 
- .honesty-card:hover {
- transform: translateY(-2px);
- box-shadow: 0 8px 24px rgba(162, 123, 92, 0.08);
- border-color: #d1c7bc;
- }
+  .metric-content {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    flex-wrap: wrap;
+    color: var(--muted);
+  }
 
- html.dark .honesty-card:hover,
- .dark .honesty-card:hover {
- border-color: rgba(255, 255, 255, 0.2) !important;
- box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4) !important;
- }
+  .metric-title {
+    color: var(--ink);
+    font-weight: 600;
+    white-space: nowrap;
+  }
 
- .honesty-card-header {
- display: flex;
- align-items: center;
- gap: 0.75rem;
- }
+  .metric-sep {
+    color: var(--muted);
+    opacity: 0.6;
+  }
 
- .honesty-badge {
- font-size: 0.72rem;
- font-weight: 700;
- letter-spacing: 0.1em;
- color: var(--rose);
- background: var(--rose-light);
- padding: 0.2rem 0.55rem;
- border-radius: 6px;
- }
+  .metric-desc {
+    color: var(--muted);
+  }
 
- html.dark .honesty-badge,
- .dark .honesty-badge {
- background: rgba(255, 77, 148, 0.15) !important;
- color: #ff4d94 !important;
- }
+  .how-it-works-card {
+    background: var(--rose-light);
+    border: 1px solid var(--rule);
+    border-radius: 14px;
+    padding: 2.25rem;
+    display: flex;
+    flex-direction: column;
+    justifyContent: center;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+  }
 
- .honesty-card h3 {
- font-family: var(--font-playfair), serif;
- font-weight: 700;
- font-size: 1.22rem;
- color: #11100f;
- line-height: 1.3;
- margin: 0;
- }
+  html.dark .how-it-works-card,
+  .dark .how-it-works-card {
+    background: #151413 !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+  }
 
- html.dark .honesty-card h3,
- .dark .honesty-card h3 {
- color: #ffffff !important;
- }
+  .how-it-works-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--rose);
+    margin-bottom: 0.75rem;
+  }
 
- .honesty-card p {
- color: #57534e;
- line-height: 1.65;
- font-size: 0.95rem;
- margin: 0;
- }
+  .how-it-works-title {
+    font-family: var(--font-playfair), serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    color: var(--ink);
+  }
 
- html.dark .honesty-card p,
- .dark .honesty-card p {
- color: #aba49d !important;
- }
+  html.dark .how-it-works-title,
+  .dark .how-it-works-title {
+    color: #ffffff !important;
+  }
 
- .cta {
- padding: 4.5rem 2rem;
- background: var(--rose);
- color: white;
- text-align: center;
- }
+  .how-it-works-desc {
+    font-size: 0.94rem;
+    line-height: 1.65;
+    color: var(--muted);
+    margin-bottom: 1.5rem;
+  }
 
- .cta-box {
- max-width: 800px;
- margin: 0 auto;
- }
+  .how-it-works-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    border-top: 1px solid var(--rule);
+    padding-top: 1.25rem;
+  }
 
- .cta-box h2 {
- font-family: var(--font-playfair), serif;
- font-size: clamp(2.8rem, 8vw, 4.8rem);
- font-weight: 700;
- line-height: 1.1;
- margin-bottom: 1.5rem;
- }
+  html.dark .how-it-works-steps,
+  .dark .how-it-works-steps {
+    border-top-color: rgba(255, 255, 255, 0.08) !important;
+  }
 
- .cta-box p {
- color: rgba(255,255,255,0.85);
- font-size: 1.2rem;
- line-height: 1.6;
- margin-bottom: 2rem;
- font-family: var(--font-playfair), serif;
- font-style: normal;
- }
+  .how-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
 
- .btn-row {
- display: flex;
- gap: 1rem;
- justify-content: center;
- flex-wrap: wrap;
- }
+  .step-num {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--rose);
+    background: rgba(162, 123, 92, 0.12);
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin-top: 2px;
+    flex-shrink: 0;
+  }
 
- .btn {
- display: inline-flex;
- align-items: center;
- gap: 8px;
- text-decoration: none;
- padding: 1.2rem 2.5rem;
- border-radius: 12px;
- font-size: 0.72rem;
- letter-spacing: 0.15em;
- text-transform: uppercase;
- font-weight: 700;
- transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
- }
+  html.dark .step-num,
+  .dark .step-num {
+    background: rgba(255, 77, 148, 0.15) !important;
+    color: #ff4d94 !important;
+  }
 
- .btn.primary {
- background: #111;
- color: #fff;
- box-shadow: 0 10px 20px rgba(0,0,0,0.2);
- }
+  .step-name {
+    display: block;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--ink);
+  }
 
- html.dark .btn.primary,
- .dark .btn.primary {
-   background: #ffffff !important;
-   color: #0f0e0d !important;
- }
+  html.dark .step-name,
+  .dark .step-name {
+    color: #ffffff !important;
+  }
 
- html.dark .btn.primary:hover,
- .dark .btn.primary:hover {
-   background: #e8e4df !important;
- }
+  .step-sub {
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin: 0;
+    line-height: 1.4;
+  }
 
- .btn.primary:hover {
- background: #000;
- transform: translateY(-2px);
- box-shadow: 0 15px 30px rgba(0,0,0,0.3);
- }
+  /* Founder card */
+  .founder-card {
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    border-radius: 14px;
+    padding: 2.25rem;
+    display: flex;
+    gap: 2.25rem;
+    align-items: center;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+  }
 
- .btn.secondary {
- background: rgba(255,255,255,0.1);
- color: #fff;
- border: 1px solid rgba(255,255,255,0.2);
- }
+  html.dark .founder-card,
+  .dark .founder-card {
+    background: #141312 !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+  }
 
- .btn.secondary:hover {
- background: rgba(255,255,255,0.2);
- transform: translateY(-2px);
- }
+  .founder-avatar {
+    width: 76px;
+    height: 76px;
+    border-radius: 50%;
+    overflow: hidden;
+    position: relative;
+    flex-shrink: 0;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  }
+
+  .honesty-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+
+  .honesty-card {
+    background: #ffffff;
+    border: 1px solid #e8e2da;
+    border-radius: 12px;
+    padding: 1.35rem 1.5rem;
+    transition: all 0.25s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  html.dark .honesty-card,
+  .dark .honesty-card {
+    background: #151413 !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+    box-shadow: none !important;
+  }
+
+  .honesty-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.04);
+    border-color: #d1c7bc;
+  }
+
+  html.dark .honesty-card:hover,
+  .dark .honesty-card:hover {
+    border-color: rgba(255, 255, 255, 0.2) !important;
+  }
+
+  .honesty-card-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .honesty-badge {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--rose);
+    background: var(--rose-light);
+    padding: 0.2rem 0.55rem;
+    border-radius: 4px;
+  }
+
+  html.dark .honesty-badge,
+  .dark .honesty-badge {
+    background: rgba(255, 77, 148, 0.15) !important;
+    color: #ff4d94 !important;
+  }
+
+  .honesty-card h3 {
+    font-family: var(--font-playfair), serif;
+    font-weight: 700;
+    font-size: 1.18rem;
+    color: #11100f;
+    line-height: 1.3;
+    margin: 0;
+  }
+
+  html.dark .honesty-card h3,
+  .dark .honesty-card h3 {
+    color: #ffffff !important;
+  }
+
+  .honesty-card p {
+    color: #57534e;
+    line-height: 1.6;
+    font-size: 0.92rem;
+    margin: 0;
+  }
+
+  html.dark .honesty-card p,
+  .dark .honesty-card p {
+    color: #aba49d !important;
+  }
+
+  .cta {
+    padding: 4.5rem 2rem;
+    background: var(--rose);
+    color: white;
+    text-align: center;
+  }
+
+  .cta-box {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .cta-box h2 {
+    font-family: var(--font-playfair), serif;
+    font-size: clamp(2.2rem, 6.5vw, 4rem);
+    font-weight: 700;
+    line-height: 1.12;
+    margin-bottom: 1.25rem;
+  }
+
+  .cta-box p {
+    color: rgba(255,255,255,0.88);
+    font-size: 1.12rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    font-family: var(--font-playfair), serif;
+    font-style: normal;
+  }
+
+  .btn-row {
+    display: flex;
+    gap: 0.85rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    padding: 0.95rem 1.85rem;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 700;
+    transition: all 0.2s ease;
+  }
+
+  .btn.primary {
+    background: #111;
+    color: #fff;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+  }
+
+  html.dark .btn.primary,
+  .dark .btn.primary {
+    background: #ffffff !important;
+    color: #0f0e0d !important;
+  }
+
+  html.dark .btn.primary:hover,
+  .dark .btn.primary:hover {
+    background: #e8e4df !important;
+  }
+
+  .btn.primary:hover {
+    background: #000;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+  }
+
+  .btn.secondary {
+    background: rgba(255,255,255,0.12);
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.25);
+  }
+
+  .btn.secondary:hover {
+    background: rgba(255,255,255,0.22);
+    transform: translateY(-1px);
+  }
 
   @media (max-width: 900px) {
     .hero-inner,
@@ -512,12 +701,12 @@ export default function AboutPage() {
       gap: 2rem;
     }
 
-    .hero { padding: 3.5rem 1.25rem 0rem; }
- .section, .cta { padding: 3rem 1.25rem; }
+    .hero { padding: 3rem 1.25rem 0rem; }
+    .section, .cta { padding: 3rem 1.25rem; }
 
     .ecosystem-grid {
       grid-template-columns: repeat(2, 1fr) !important;
-      gap: 1.5rem;
+      gap: 1.25rem;
     }
     .ecosystem-card {
       grid-column: span 1 !important;
@@ -530,337 +719,419 @@ export default function AboutPage() {
     }
 
     .hero-img {
- grid-column: span 1 !important;
- height: 320px;
- margin-top: 1.5rem;
- }
+      grid-column: span 1 !important;
+      height: 360px;
+      margin-top: 1.25rem;
+    }
 
     .side-img {
- height: 260px;
- margin-top: 1.5rem;
- }
+      height: 260px;
+      margin-top: 1.25rem;
+    }
 
     .btn-row {
       flex-direction: column;
       width: 100%;
+      gap: 0.75rem;
     }
     .btn { width: 100%; justify-content: center; }
   }
 
   @media (max-width: 600px) {
+    .hero { padding: 2.5rem 1rem 0rem; }
+    .section, .cta { padding: 2.75rem 1rem; }
+
     .ecosystem-grid {
       grid-template-columns: 1fr !important;
-      gap: 1.25rem;
+      gap: 1rem;
     }
     .ecosystem-card,
     .ecosystem-card.wide,
     .ecosystem-card:last-child {
       grid-column: span 1 !important;
-      padding: 1.75rem !important;
+      padding: 1.35rem 1.25rem !important;
+    }
+
+    .analysis-metrics-list {
+      gap: 0.85rem;
+      margin: 1.25rem 0 1.5rem;
+    }
+    .analysis-metric-item {
+      gap: 10px;
+      font-size: 0.9rem;
+    }
+    .metric-dot {
+      margin-top: 6px;
+    }
+    .metric-content {
+      display: block;
+      line-height: 1.45;
+    }
+    .metric-title {
+      display: inline;
+      margin-right: 6px;
+      white-space: normal;
+    }
+    .metric-sep {
+      display: inline;
+      margin-right: 6px;
+    }
+    .metric-desc {
+      display: inline;
+    }
+
+    .how-it-works-card {
+      padding: 1.5rem 1.25rem;
+    }
+    .how-it-works-title {
+      font-size: 1.35rem;
+    }
+
+    .founder-card {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1.25rem;
+      padding: 1.5rem 1.25rem;
     }
   }
- `}</style>
+      `}</style>
 
- <div className="about-page">
- {/* HERO */}
- <section className="hero">
- <div className="hero-inner">
- <div>
- <p className="eyebrow"><Star size={14}/> About Mirha & Co.</p>
- <h1>
- Intelligence
- <br />
- meets skincare.
- <span>In your climate.</span>
- </h1>
- </div>
+      <div className="about-page">
+        {/* HERO */}
+        <section className="hero">
+          <div className="hero-inner">
+            <div>
+              <p className="eyebrow"><Star size={14}/> About Mirha &amp; Co.</p>
+              <h1>
+                Intelligence
+                <br />
+                meets skincare.
+                <span>In your climate.</span>
+              </h1>
+            </div>
 
- <div>
- <p className="hero-copy">
- The beauty industry is loud, crowded, and rarely explains how climate changes what your skin needs. We analyze skincare formulations to bring clarity back to your choices.
- </p>
- </div>
+            <div>
+              <p className="hero-copy">
+                The beauty industry is loud, crowded, and rarely explains how climate changes what your skin needs. We analyze skincare formulations to bring clarity back to your choices.
+              </p>
+            </div>
 
- <div className="img-wrap hero-img" style={{ position: "relative", overflow: "hidden", background: "radial-gradient(circle, #1a1615 0%, #080707 100%)", border: "1px solid rgba(255,255,255,0.06)" }}>
- <FaceScannerUI />
- </div>
- </div>
- </section>
+            <div className="img-wrap hero-img" style={{ position: "relative", overflow: "hidden", background: "radial-gradient(circle, #1a1615 0%, #080707 100%)", border: "1px solid rgba(255,255,255,0.06)" }}>
+              <FaceScannerUI />
+            </div>
+          </div>
+        </section>
 
- <div className="strip">
- No Hype • Deep Ingredient Research • Climate-Aware Curation • Simple Routines
- </div>
+        <div className="strip">
+          No Hype • Deep Ingredient Research • Climate-Aware Curation • Simple Routines
+        </div>
 
- {/* ECOSYSTEM */}
- <section className="section rose">
- <div className="inner">
- <div style={{ textAlign: 'center', maxWidth: '800px', margin: '0 auto' }}>
- <p className="eyebrow" style={{ justifyContent: 'center' }}>The Ecosystem</p>
- <h2 className="section-title" style={{ fontSize: 'clamp(2.2rem, 5vw, 3.5rem)' }}>
- Skincare shouldn't be a guessing game.<span>A clean database built for reality.</span>
- </h2>
- </div>
+        {/* ECOSYSTEM */}
+        <section className="section rose">
+          <div className="inner">
+            <div style={{ textAlign: "center", maxWidth: "800px", margin: "0 auto" }}>
+              <p className="eyebrow" style={{ justifyContent: "center" }}>The Ecosystem</p>
+              <h2 className="section-title" style={{ fontSize: "clamp(2rem, 5vw, 3.2rem)" }}>
+                Skincare shouldn&apos;t be a guessing game.<span>A clean database built for reality.</span>
+              </h2>
+            </div>
 
-  <div className="ecosystem-grid">
-    <div className="ecosystem-card">
-      <div className="eco-icon"><Brain size={28} /></div>
-      <h3>Curated Science Database</h3>
-      <p>
-        We compile clinical literature, formulation science, and user data into a clean, searchable index. You get straight, hype-free answers about what works, without marketing fluff.
-      </p>
-    </div>
+            <div className="ecosystem-grid">
+              <div className="ecosystem-card">
+                <div className="eco-icon"><Brain size={24} /></div>
+                <h3>Curated Science Database</h3>
+                <p>
+                  We compile clinical literature, formulation science, and user data into a clean, searchable index. You get straight, hype-free answers about what works, without marketing fluff.
+                </p>
+              </div>
 
-    <div className="ecosystem-card">
-      <div className="eco-icon"><BookOpen size={28} /></div>
-      <h3>Climate-Aware Builder</h3>
-      <p>
-        A cream that works in dry winters will clog pores in tropical humidity. We build recommendations based on regional tap water hardness and seasonal climate realities.
-      </p>
-    </div>
+              <div className="ecosystem-card">
+                <div className="eco-icon"><BookOpen size={24} /></div>
+                <h3>Climate-Aware Builder</h3>
+                <p>
+                  A cream that works in dry winters will clog pores in tropical humidity. We build recommendations based on regional tap water hardness and seasonal climate realities.
+                </p>
+              </div>
 
-    <div className="ecosystem-card">
-      <div className="eco-icon"><Fingerprint size={28} /></div>
-      <h3>Ingredient Checker</h3>
-      <p>
-        Layering active chemicals shouldn't be guesswork. Analyze conflicts instantly and generate structured, pH-balanced AM/PM routines to protect your skin barrier.
-      </p>
-    </div>
+              <div className="ecosystem-card">
+                <div className="eco-icon"><Fingerprint size={24} /></div>
+                <h3>Ingredient Checker</h3>
+                <p>
+                  Layering active chemicals shouldn&apos;t be guesswork. Analyze conflicts instantly and generate structured, pH-balanced AM/PM routines to protect your skin barrier.
+                </p>
+              </div>
 
-    <div className="ecosystem-card wide">
-      <div className="eco-icon"><Coins size={28} /></div>
-      <h3>Beauty Dupe Finder</h3>
-      <p>
-        Save on marketing, pay for active ingredients. Swap premium luxury products for their drugstore active-equivalents and calculate your annual savings.
-      </p>
-    </div>
+              <div className="ecosystem-card wide">
+                <div className="eco-icon"><Coins size={24} /></div>
+                <h3>Beauty Dupe Finder</h3>
+                <p>
+                  Save on marketing, pay for active ingredients. Swap premium luxury products for their drugstore active-equivalents and calculate your annual savings.
+                </p>
+              </div>
 
-     <div className="ecosystem-card wide" style={{ border: "1px solid rgba(252, 39, 121, 0.2)", background: "rgba(252, 39, 121, 0.02)" }}>
-       <div className="eco-icon" style={{ background: "rgba(252, 39, 121, 0.08)", color: "#fc2779" }}><Star size={28} /></div>
-       <h3 style={{ color: "#fc2779" }}>Enterprise B2B API</h3>
-       <p>
-         We license our headless skincare recommendation engine to beauty brands and marketplaces worldwide via a simple REST API. Enterprise clients get a dedicated API key, monthly call quotas, and climate-aware product recommendations that adapt to their customers&apos; local tap water hardness and humidity. <a href="/b2b" style={{ color: "#fc2779", fontWeight: 600, textDecoration: "none" }}>View pricing →</a>
-       </p>
-     </div>
-  </div>
- </div>
- </section>
+              <div className="ecosystem-card wide" style={{ border: "1px solid rgba(252, 39, 121, 0.25)", background: "rgba(252, 39, 121, 0.02)" }}>
+                <div className="eco-icon" style={{ background: "rgba(252, 39, 121, 0.08)", color: "#fc2779" }}><Star size={24} /></div>
+                <h3 style={{ color: "#fc2779" }}>Enterprise B2B API</h3>
+                <p>
+                  We license our headless skincare recommendation engine to beauty brands and marketplaces worldwide via a simple REST API. Enterprise clients get a dedicated API key, monthly call quotas, and climate-aware product recommendations that adapt to their customers&apos; local tap water hardness and humidity. <a href="/b2b" style={{ color: "#fc2779", fontWeight: 600, textDecoration: "none" }}>View pricing →</a>
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
 
-  {/* FREE SKIN ANALYSIS */}
-  <section className="section" style={{ borderTop: "1px solid var(--rule)" }}>
-    <div className="inner two-col">
-      <div className="body-copy">
-        <p className="eyebrow" style={{ color: "var(--rose)" }}><Fingerprint size={14}/> Instant Diagnostics</p>
-        <h2 className="section-title">
-          Free AI Skin Analysis.
-          <span>Understand your skin, instantly.</span>
-        </h2>
-        <p>
-          Skip the guesswork of trial-and-error products. Upload a single selfie to analyze your skin's health across four critical metrics:
-        </p>
-        <ul style={{ listStyle: "none", padding: 0, margin: "1.5rem 0", display: "flex", flexDirection: "column", gap: "0.8rem" }}>
-          <li style={{ display: "flex", alignItems: "center", gap: "10px", fontSize: "0.95rem", color: "var(--muted)" }}>
-            <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "var(--rose)", display: "inline-block", flexShrink: 0 }}></span>
-            <strong style={{ color: "var(--ink)" }}>Moisture Barrier</strong> — detects trans-epidermal water loss and flaking
-          </li>
-          <li style={{ display: "flex", alignItems: "center", gap: "10px", fontSize: "0.95rem", color: "var(--muted)" }}>
-            <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "var(--rose)", display: "inline-block", flexShrink: 0 }}></span>
-            <strong style={{ color: "var(--ink)" }}>Pore Congestion</strong> — identifies blackheads, whiteheads, and clogged zones
-          </li>
-          <li style={{ display: "flex", alignItems: "center", gap: "10px", fontSize: "0.95rem", color: "var(--muted)" }}>
-            <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "var(--rose)", display: "inline-block", flexShrink: 0 }}></span>
-            <strong style={{ color: "var(--ink)" }}>Inflamed Redness</strong> — tracks sensitive areas, flushing, and irritation
-          </li>
-          <li style={{ display: "flex", alignItems: "center", gap: "10px", fontSize: "0.95rem", color: "var(--muted)" }}>
-            <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "var(--rose)", display: "inline-block", flexShrink: 0 }}></span>
-            <strong style={{ color: "var(--ink)" }}>Sebum Levels</strong> — measures hyper-secretion and oily T-zone shine
-          </li>
-        </ul>
+        {/* FREE SKIN ANALYSIS */}
+        <section className="section" style={{ borderTop: "1px solid var(--rule)" }}>
+          <div className="inner two-col">
+            <div className="body-copy">
+              <p className="eyebrow" style={{ color: "var(--rose)" }}><Fingerprint size={14}/> Instant Diagnostics</p>
+              <h2 className="section-title">
+                Free AI Skin Analysis.
+                <span>Understand your skin, instantly.</span>
+              </h2>
+              <p>
+                Skip the guesswork of trial-and-error products. Upload a single selfie to analyze your skin&apos;s health across four critical metrics:
+              </p>
+
+              <ul className="analysis-metrics-list">
+                <li className="analysis-metric-item">
+                  <span className="metric-dot" aria-hidden="true" />
+                  <div className="metric-content">
+                    <strong className="metric-title">Moisture Barrier</strong>
+                    <span className="metric-sep">—</span>
+                    <span className="metric-desc">detects trans-epidermal water loss and flaking</span>
+                  </div>
+                </li>
+                <li className="analysis-metric-item">
+                  <span className="metric-dot" aria-hidden="true" />
+                  <div className="metric-content">
+                    <strong className="metric-title">Pore Congestion</strong>
+                    <span className="metric-sep">—</span>
+                    <span className="metric-desc">identifies blackheads, whiteheads, and clogged zones</span>
+                  </div>
+                </li>
+                <li className="analysis-metric-item">
+                  <span className="metric-dot" aria-hidden="true" />
+                  <div className="metric-content">
+                    <strong className="metric-title">Inflamed Redness</strong>
+                    <span className="metric-sep">—</span>
+                    <span className="metric-desc">tracks sensitive areas, flushing, and irritation</span>
+                  </div>
+                </li>
+                <li className="analysis-metric-item">
+                  <span className="metric-dot" aria-hidden="true" />
+                  <div className="metric-content">
+                    <strong className="metric-title">Sebum Levels</strong>
+                    <span className="metric-sep">—</span>
+                    <span className="metric-desc">measures hyper-secretion and oily T-zone shine</span>
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+            <div className="how-it-works-card">
+              <div className="how-it-works-badge">
+                <Fingerprint size={14} /> How it works
+              </div>
+              <h3 className="how-it-works-title">
+                3-Step Climate Skin Diagnosis
+              </h3>
+              <p className="how-it-works-desc">
+                Upload a clean photo. The AI diagnoses your concerns, calculates your localized environmental factors (like seasonal humidity and water hardness), and generates a custom, pH-balanced routine instantly.
+              </p>
+
+              <div className="how-it-works-steps">
+                <div className="how-step">
+                  <span className="step-num">01</span>
+                  <div>
+                    <strong className="step-name">Selfie capture</strong>
+                    <p className="step-sub">Neutral lighting, zero filters</p>
+                  </div>
+                </div>
+                <div className="how-step">
+                  <span className="step-num">02</span>
+                  <div>
+                    <strong className="step-name">Climate mapping</strong>
+                    <p className="step-sub">Local tap water hardness &amp; humidity</p>
+                  </div>
+                </div>
+                <div className="how-step">
+                  <span className="step-num">03</span>
+                  <div>
+                    <strong className="step-name">Barrier regimen</strong>
+                    <p className="step-sub">Active conflict-free recommendations</p>
+                  </div>
+                </div>
+              </div>
+
+              <Link href="/tools/analysis" className="btn primary" style={{ display: "inline-flex", justifyContent: "center", width: "100%", marginTop: "1.5rem" }}>
+                Start Free Skin Scan →
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        {/* WHY THIS EXISTS */}
+        <section className="section">
+          <div className="inner two-col">
+            <div className="body-copy">
+              <p className="eyebrow">Why we built this</p>
+              <h2 className="section-title">
+                Skincare is noisy.
+                <span>Buying shouldn&apos;t be.</span>
+              </h2>
+              <p>
+                Every week there is a new active, a new ingredient trend, or a multi-step routine claiming to fix everything. But your skin doesn&apos;t need ten steps. It needs consistency.
+              </p>
+              <p>
+                <strong>Mirha &amp; Co. exists to slow that decision down.</strong> 
+              </p>
+              <p>
+                We look at the formulation details, the price point, and the local environmental factors before curating any product. Our goal is to give you honest, straightforward facts, so you can make decisions that actually make sense for your skin.
+              </p>
+            </div>
+            <div className="img-wrap side-img">
+              <Image 
+                src="/images/about-lifestyle.png" 
+                alt="Personalized skincare routine" 
+                fill 
+                sizes="(max-width: 900px) 100vw, 40vw"
+              />
+            </div>
+          </div>
+        </section>
+
+        {/* MEET THE FOUNDER */}
+        <section className="section rose" style={{ borderTop: "1px solid var(--rule)" }}>
+          <div className="inner" style={{ maxWidth: "880px", margin: "0 auto" }}>
+            <div className="founder-card">
+              <div className="founder-avatar">
+                <Image 
+                  src="/images/tanvir.png" 
+                  alt="Tanvir Khan — Founder" 
+                  fill 
+                  style={{ objectFit: "cover" }}
+                  sizes="80px"
+                />
+              </div>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <p className="eyebrow" style={{ marginBottom: "0.25rem" }}>Behind the Brand</p>
+                <h3 style={{ 
+                  fontFamily: "var(--font-playfair), serif", 
+                  fontSize: "1.5rem", 
+                  fontWeight: 700, 
+                  marginBottom: "0.45rem",
+                  color: "var(--ink)"
+                }}>
+                  Tanvir Khan <span style={{ fontSize: "0.85rem", fontWeight: 400, color: "var(--rose)", display: "inline-block", marginLeft: "6px" }}>— Founder</span>
+                </h3>
+                <p style={{ 
+                  fontSize: "0.94rem", 
+                  lineHeight: "1.65", 
+                  color: "var(--muted)",
+                  margin: 0
+                }}>
+                  With over 8 years of sourcing operations experience managing premium beauty brands (including MAC, Kama Ayurveda, and Forest Essentials), Tanvir created Mirha &amp; Co. to demystify skincare formulations and bring climate-aware, science-backed transparency directly to consumers and brands globally.
+                </p>
+                <div style={{ marginTop: "0.85rem", display: "flex", gap: "1.2rem", fontSize: "0.82rem", flexWrap: "wrap" }}>
+                  <a href="mailto:tanizcoldz@gmail.com" style={{ color: "var(--rose)", textDecoration: "none", fontWeight: 600 }}>tanizcoldz@gmail.com</a>
+                  <a href="https://www.linkedin.com/in/tanvir-khan-849b003a6/" target="_blank" rel="noopener noreferrer" style={{ color: "var(--rose)", textDecoration: "none", fontWeight: 600 }}>LinkedIn →</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* HONESTY & ETHICS */}
+        <section className="section honesty-section">
+          <div className="inner two-col">
+            <div>
+              <p className="eyebrow">Our Baseline</p>
+              <h2 className="section-title">
+                Honest curation.
+                <span style={{ color: "var(--rose)" }}>No pretending.</span>
+              </h2>
+              <div className="img-wrap side-img" style={{ height: "300px", marginTop: "1.5rem" }}>
+                <Image 
+                  src="/images/about-hand.png" 
+                  alt="Expertly curated products" 
+                  fill 
+                  sizes="100vw"
+                />
+              </div>
+            </div>
+
+            <div className="honesty-list">
+              <div className="honesty-card">
+                <div className="honesty-card-header">
+                  <span className="honesty-badge">01</span>
+                  <h3>Real Curation, Not Fake Testing</h3>
+                </div>
+                <p>
+                  We don&apos;t pretend to personally test thousands of bottles in a laboratory. Our picks are based on deep clinical literature, formulation analysis, and aggregate user reviews. We tell you exactly where the facts come from.
+                </p>
+              </div>
+
+              <div className="honesty-card">
+                <div className="honesty-card-header">
+                  <span className="honesty-badge">02</span>
+                  <h3>Education, Not Medical Advice</h3>
+                </div>
+                <p>
+                  We share skincare science and ingredient analysis to help you understand your products. But serious skin concerns, breakouts, or persistent irritation require a dermatologist. We are here to educate, not to diagnose.
+                </p>
+              </div>
+
+              <div className="honesty-card">
+                <div className="honesty-card-header">
+                  <span className="honesty-badge">03</span>
+                  <h3>Transparent Affiliation</h3>
+                </div>
+                <p>
+                  We use affiliate links to support the platform&apos;s hosting and maintenance costs. But our recommendations are completely unbiased. If a highly-rated sunscreen leaves a visible white cast or breaks people out, we say so.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* COLLABORATIONS / BRAND REGISTRATION */}
+        <section className="section rose" style={{ borderTop: "1px solid var(--rule)" }}>
+          <div className="inner" style={{ maxWidth: "800px", margin: "0 auto", textAlign: "center" }}>
+            <p className="eyebrow" style={{ justifyContent: "center" }}>Enterprise Partnerships</p>
+            <h2 className="section-title">
+              Integrate the API
+              <span style={{ fontSize: "clamp(1.6rem, 4vw, 2.8rem)" }}>Power your recommendations with Mirha&nbsp;&amp;&nbsp;Co.</span>
+            </h2>
+            <p style={{ color: "var(--muted)", marginBottom: "2rem", fontSize: "0.98rem", lineHeight: "1.7" }}>
+              Are you an enterprise beauty brand or marketplace looking to integrate a climate-aware skincare recommendation engine into your platform? We provide a headless B2B API that sends your customers personalised routines based on their local water hardness, humidity and temperature — all via a simple REST call. Interested in a pilot or a custom SLA? Reach out directly at <strong style={{ color: "var(--rose)" }}>tanizcoldz@gmail.com</strong> or submit your details below.
+            </p>
+            <CollabForm />
+          </div>
+        </section>
+
+        {/* CTA */}
+        <section className="cta">
+          <div className="cta-box">
+            <h2>Your routine, simplified.</h2>
+            <p>
+              Stop guessing. Compare ingredients, understand formulations, and build a routine that actually matches your skin&apos;s needs.
+            </p>
+
+            <div className="btn-row">
+              <Link href="/b2b" className="btn primary">
+                View B2B Enterprise API
+              </Link>
+              <Link href="/tools/routine" className="btn secondary">
+                Build a Routine
+              </Link>
+              <Link href="/tools/ingredients" className="btn secondary">
+                Check Ingredients
+              </Link>
+            </div>
+          </div>
+        </section>
       </div>
-
-      <div style={{ background: "var(--rose-light)", border: "1px solid var(--rule)", borderRadius: "24px", padding: "2.25rem", display: "flex", flexDirection: "column", height: "100%", justifyContent: "center" }}>
-        <h3 style={{ fontFamily: "var(--font-playfair), serif", fontSize: "1.8rem", fontWeight: 700, marginBottom: "1rem", color: "var(--ink)" }}>
-          How it works
-        </h3>
-        <p style={{ fontSize: "0.98rem", lineHeight: "1.7", color: "var(--muted)", marginBottom: "2rem" }}>
-          Upload a clean photo. The AI diagnoses your concerns, calculates your localized environmental factors (like seasonal humidity and water hardness), and generates a custom, pH-balanced routine instantly.
-        </p>
-        <Link href="/tools/analysis" className="btn primary" style={{ display: "inline-flex", justifyContent: "center" }}>
-          Start Free Skin Scan →
-        </Link>
-      </div>
-    </div>
-  </section>
-
-  {/* WHY THIS EXISTS */}
- <section className="section">
- <div className="inner two-col">
- <div className="body-copy">
- <p className="eyebrow">Why we built this</p>
- <h2 className="section-title">
- Skincare is noisy.
- <span>Buying shouldn't be.</span>
- </h2>
- <p>
- Every week there is a new active, a new ingredient trend, or a multi-step routine claiming to fix everything. But your skin doesn't need ten steps. It needs consistency.
- </p>
- <p>
- <strong>Mirha & Co. exists to slow that decision down.</strong> 
- </p>
- <p>
- We look at the formulation details, the price point, and the local environmental factors before curating any product. Our goal is to give you honest, straightforward facts, so you can make decisions that actually make sense for your skin.
- </p>
- </div>
- <div className="img-wrap side-img">
- <Image 
- src="/images/about-lifestyle.png" 
- alt="Personalized skincare routine" 
- fill 
- sizes="(max-width: 900px) 100vw, 40vw"
- />
- </div>
- </div>
-  </section>
-
-  {/* MEET THE FOUNDER */}
-  <section className="section rose" style={{ borderTop: "1px solid var(--rule)", padding: "3rem 2rem" }}>
-  <div className="inner" style={{ maxWidth: "800px", margin: "0 auto" }}>
-  <div style={{ display: "flex", gap: "2.5rem", alignItems: "center", flexWrap: "wrap" }}>
-  <div style={{ 
-  width: "80px", 
-  height: "80px", 
-  borderRadius: "50%", 
-  overflow: "hidden",
-  position: "relative",
-  boxShadow: "0 8px 20px rgba(162, 123, 92, 0.2)",
-  flexShrink: 0,
-  }}>
-  <Image 
-  src="/images/tanvir.png" 
-  alt="Tanvir Khan — Founder" 
-  fill 
-  style={{ objectFit: "cover" }}
-  sizes="80px"
-  />
-  </div>
-  <div style={{ flex: 1, minWidth: "260px" }}>
-  <p className="eyebrow" style={{ marginBottom: "0.25rem" }}>Behind the Brand</p>
-  <h3 style={{ 
-  fontFamily: "var(--font-playfair), serif", 
-  fontSize: "1.6rem", 
-  fontWeight: 700, 
-  marginBottom: "0.5rem",
-  color: "var(--ink)"
-  }}>
-  Tanvir Khan <span style={{ fontSize: "0.85rem", fontWeight: 400, color: "var(--rose)", display: "inline-block", marginLeft: "6px" }}>— Founder</span>
-  </h3>
-  <p style={{ 
-  fontSize: "0.95rem", 
-  lineHeight: "1.6", 
-  color: "var(--muted)",
-  margin: 0
-  }}>
-  With over 8 years of sourcing operations experience managing premium beauty brands (including MAC, Kama Ayurveda, and Forest Essentials), Tanvir created Mirha & Co. to demystify skincare formulations and bring climate-aware, science-backed transparency directly to consumers and brands globally.
-  </p>
-  <div style={{ marginTop: "0.75rem", display: "flex", gap: "1.2rem", fontSize: "0.82rem" }}>
-  <a href="mailto:tanizcoldz@gmail.com" style={{ color: "var(--rose)", textDecoration: "none", fontWeight: 600 }}>tanizcoldz@gmail.com</a>
-  <a href="https://www.linkedin.com/in/tanvir-khan-849b003a6/" target="_blank" rel="noopener noreferrer" style={{ color: "var(--rose)", textDecoration: "none", fontWeight: 600 }}>LinkedIn →</a>
-  </div>
-  </div>
-  </div>
-  </div>
-  </section>
-
-  {/* HONESTY & ETHICS */}
- <section className="section honesty-section">
- <div className="inner two-col">
- <div>
- <p className="eyebrow">Our Baseline</p>
- <h2 className="section-title">
- Honest curation.
- <span style={{ color: 'var(--rose)' }}>No pretending.</span>
- </h2>
- <div className="img-wrap side-img" style={{ height: '320px', marginTop: '1.5rem' }}>
- <Image 
- src="/images/about-hand.png" 
- alt="Expertly curated products" 
- fill 
- sizes="100vw"
- />
- </div>
- </div>
-
- <div className="honesty-list">
- <div className="honesty-card">
- <div className="honesty-card-header">
- <span className="honesty-badge">01</span>
- <h3>Real Curation, Not Fake Testing</h3>
- </div>
- <p>
- We don't pretend to personally test thousands of bottles in a laboratory. Our picks are based on deep clinical literature, formulation analysis, and aggregate user reviews. We tell you exactly where the facts come from.
- </p>
- </div>
-
- <div className="honesty-card">
- <div className="honesty-card-header">
- <span className="honesty-badge">02</span>
- <h3>Education, Not Medical Advice</h3>
- </div>
- <p>
- We share skincare science and ingredient analysis to help you understand your products. But serious skin concerns, breakouts, or persistent irritation require a dermatologist. We are here to educate, not to diagnose.
- </p>
- </div>
-
- <div className="honesty-card">
- <div className="honesty-card-header">
- <span className="honesty-badge">03</span>
- <h3>Transparent Affiliation</h3>
- </div>
- <p>
- We use affiliate links to support the platform's hosting and maintenance costs. But our recommendations are completely unbiased. If a highly-rated sunscreen leaves a visible white cast or breaks people out, we say so.
- </p>
- </div>
- </div>
- </div>
- </section>
-
- {/* COLLABORATIONS / BRAND REGISTRATION */}
- <section className="section rose" style={{ borderTop: "1px solid var(--rule)" }}>
- <div className="inner" style={{ maxWidth: "800px", margin: "0 auto", textAlign: "center" }}>
- <p className="eyebrow" style={{ justifyContent: "center" }}>Enterprise Partnerships</p>
- <h2 className="section-title">
-  Integrate the API
-  <span style={{ fontSize: "clamp(1.8rem, 4vw, 3rem)" }}>Power your recommendations with Mirha&nbsp;&amp;&nbsp;Co.</span>
- </h2>
- <p style={{ color: "var(--muted)", marginBottom: "2rem", fontSize: "1.02rem", lineHeight: "1.7" }}>
-  Are you an enterprise beauty brand or marketplace looking to integrate a climate-aware skincare recommendation engine into your platform? We provide a headless B2B API that sends your customers personalised routines based on their local water hardness, humidity and temperature — all via a simple REST call. Interested in a pilot or a custom SLA? Reach out directly at <strong style={{ color: "var(--rose)" }}>tanizcoldz@gmail.com</strong> or submit your details below.
- </p>
- <CollabForm />
- </div>
- </section>
-
- {/* CTA */}
- <section className="cta">
- <div className="cta-box">
- <h2>Your routine, simplified.</h2>
- <p>
- Stop guessing. Compare ingredients, understand formulations, and build a routine that actually matches your skin's needs.
- </p>
-
-  <div className="btn-row">
-    <Link href="/b2b" className="btn primary">
-      View B2B Enterprise API
-    </Link>
-    <Link href="/tools/routine" className="btn secondary">
-      Build a Routine
-    </Link>
-    <Link href="/tools/ingredients" className="btn secondary">
-      Check Ingredients
-    </Link>
-  </div>
- </div>
- </section>
-
- </div>
- </main>
- );
+    </main>
+  );
 }
