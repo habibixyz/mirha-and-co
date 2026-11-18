@@ -886,8 +886,9 @@ const mappedHighIntent = HIGH_INTENT_POSTS.map(p => ({
 }));
 
 export const POSTS: Post[] = [
-  // Clean & Non-Comedogenic Makeup Series (Placed at absolute top per workspace rule 5)
+  // GTA 6 Gamer Skincare & High Intent Series (Placed at absolute top per workspace rule 5)
   ...mappedHighIntent.filter(p => [
+    "gta-6-gamer-skincare-dark-circles-headset-acne-india",
     "non-comedogenic-makeup-acne-prone-skin-india",
     "pore-clogging-ingredients-in-foundation-concealer",
     "makeup-breakouts-vs-purging-treatment",

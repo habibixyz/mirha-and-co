@@ -288,7 +288,28 @@ export async function SeoBlogPost({
     "keywords": tags ? tags.join(", ") : category
   };
 
-  const faqQuestions = slug === "diwali-skincare-prep-glow-protocol" ? [
+  const faqQuestions = slug === "gta-6-gamer-skincare-dark-circles-headset-acne-india" ? [
+    {
+      q: "Why do I get pimples exactly where my gaming headset sits?",
+      a: "This is acne mechanica. Over-ear gaming headphones clamp tightly across your temporal bones and jawline, trapping sweat, heat, and scalp oils against your pores. As you reposition your headset, friction rubs dead skin cells back into the follicle. Washing with a 1% Salicylic Acid cleanser and wiping the cushions weekly with 70% alcohol stops this cycle."
+    },
+    {
+      q: "Why does my forehead and nose look so oily at 3 AM in an AC room?",
+      a: "Air conditioning condenses and extracts humidity from the air, dropping ambient moisture below 25%. This causes rapid Trans-Epidermal Water Loss (TEWL), sucking moisture out of your skin like a sponge. Panicked by dehydration, your sebaceous glands overcompensate by pumping out thick sebum, leading to the classic 3 AM greasy T-zone."
+    },
+    {
+      q: "Can staring at a monitor all night permanently darken Indian under-eye circles?",
+      a: "It worsens vascular shadowing. South Asian skin has rich melanin and very thin (0.5mm) periorbital skin. Staring at 144Hz HDR displays drops blink rates and strains eye muscles, dilating orbital microcapillaries. Deoxygenated blood pools in these dilated veins, casting deep purple-brown shadows. Applying chilled 5% caffeine serum constricts these vessels and drains stagnant fluid in 15 minutes."
+    },
+    {
+      q: "Can I just splash water on my face before going to sleep at 4 AM?",
+      a: "No. Splashing with hard municipal tap water leaves behind drying calcium and magnesium mineral salts that irritate compromised barriers. Additionally, plain water cannot dissolve oxidized sebum or headset grease. A 60-second wash with a mild gel cleanser followed by an oil-free water gel locks in hydration without feeling sticky."
+    },
+    {
+      q: "Will these skincare products feel sticky or greasy while I game?",
+      a: "Zero stickiness. Every product in this protocol is 100% oil-free and designed for humid Indian weather: The Derma Co gel wash rinses completely clean, The Ordinary Caffeine and Niacinamide serums absorb like water in 20 seconds, and Sebamed Clear Face Care Gel has a cooling, non-greasy water-gel texture that will never stick to your controllers or headset."
+    }
+  ] : slug === "diwali-skincare-prep-glow-protocol" ? [
     {
       q: "How many days before Diwali should I start my skincare prep?",
       a: "Start 14 days prior. The first 4 days focus on detoxing residual makeup and pollution congestion, followed by 10 days of intensive barrier hydration with snail mucin and 3:1:1 physiological ceramides to ensure a luminous glass skin glow."

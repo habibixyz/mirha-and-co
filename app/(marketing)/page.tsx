@@ -11,6 +11,7 @@ import { DussehraHeroBadge } from "@/components/DussehraVisuals";
 
 const TICKER_HIGHLIGHTS = [
   { label: "AI Camera Skin & Barrier Scanner", href: "/tools/analysis" },
+  { label: "GTA 6 Gamer Skincare: Beat All-Nighters & Acne", href: "/blog/gta-6-gamer-skincare-dark-circles-headset-acne-india" },
   { label: "Makeup Lab & Real-Time Vibe Check", href: "/makeup" },
   { label: "Batch Expiry & Authenticity Checker", href: "/tools/batch-checker" },
   { label: "Climate & City Water Hardness Telemetry", href: "/tools/hard-water" },
@@ -1168,6 +1169,162 @@ export default async function BeautyShopPage() {
             letter-spacing: 0 !important;
           }
         }
+
+        /* ── GTA 6 Sleek Spotlight Banner ── */
+        .gta-spotlight-section {
+          margin: 0 auto;
+          max-width: 760px;
+          width: 100%;
+        }
+
+        .gta-spotlight-card {
+          width: 100%;
+          position: relative;
+          aspect-ratio: 16 / 9;
+          border-radius: 14px;
+          overflow: hidden;
+          background: #09090d;
+          border: 1px solid rgba(252, 39, 121, 0.28);
+          box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(255, 255, 255, 0.04);
+          transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease, box-shadow 0.25s ease;
+          display: block;
+          text-decoration: none;
+        }
+
+        .gta-spotlight-card:hover {
+          transform: translateY(-2px);
+          border-color: rgba(252, 39, 121, 0.55);
+          box-shadow: 0 18px 44px -12px rgba(252, 39, 121, 0.28), 0 0 0 1px rgba(252, 39, 121, 0.3);
+        }
+
+        .gta-spotlight-img {
+          object-fit: cover;
+          transition: transform 0.4s ease;
+        }
+
+        .gta-spotlight-card:hover .gta-spotlight-img {
+          transform: scale(1.025);
+        }
+
+        .gta-spotlight-overlay {
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(
+            to top,
+            rgba(9, 8, 13, 0.94) 0%,
+            rgba(9, 8, 13, 0.72) 40%,
+            rgba(9, 8, 13, 0.15) 72%,
+            transparent 100%
+          );
+          display: flex;
+          align-items: flex-end;
+          justify-content: space-between;
+          gap: 16px;
+          padding: 24px 28px;
+          z-index: 2;
+        }
+
+        .gta-spotlight-info {
+          display: flex;
+          flex-direction: column;
+          gap: 6px;
+          max-width: 520px;
+        }
+
+        .gta-spotlight-badge {
+          display: inline-flex;
+          align-items: center;
+          gap: 7px;
+          font-size: 10px;
+          font-weight: 800;
+          letter-spacing: 0.14em;
+          text-transform: uppercase;
+          color: #ff4d94;
+        }
+
+        .gta-pulse-dot {
+          width: 6px;
+          height: 6px;
+          border-radius: 50%;
+          background: #fc2779;
+          box-shadow: 0 0 8px #fc2779;
+          animation: gtaPulse 2s infinite;
+        }
+
+        @keyframes gtaPulse {
+          0%, 100% { opacity: 1; transform: scale(1); }
+          50% { opacity: 0.35; transform: scale(0.85); }
+        }
+
+        .gta-spotlight-title {
+          font-family: var(--font-playfair), serif;
+          font-size: clamp(1.2rem, 2.2vw, 1.55rem);
+          font-weight: 700;
+          line-height: 1.25;
+          color: #ffffff;
+          margin: 0;
+        }
+
+        .gta-spotlight-desc {
+          font-size: 12.5px;
+          line-height: 1.5;
+          color: rgba(255, 255, 255, 0.78);
+          margin: 0;
+        }
+
+        .gta-spotlight-cta {
+          flex-shrink: 0;
+          background: linear-gradient(135deg, #fc2779, #e01e6a);
+          border: 1px solid rgba(255, 255, 255, 0.2);
+          color: #ffffff;
+          font-size: 11px;
+          font-weight: 700;
+          letter-spacing: 0.06em;
+          text-transform: uppercase;
+          padding: 8px 16px;
+          border-radius: 8px;
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          transition: all 0.2s ease;
+          box-shadow: 0 4px 14px rgba(252, 39, 121, 0.35);
+        }
+
+        .gta-spotlight-card:hover .gta-spotlight-cta {
+          background: linear-gradient(135deg, #ff3d93, #f52977);
+          box-shadow: 0 6px 20px rgba(252, 39, 121, 0.5);
+          transform: translateX(2px);
+        }
+
+        @media (max-width: 640px) {
+          .gta-spotlight-overlay {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 16px 14px;
+            background: linear-gradient(
+              to top,
+              rgba(9, 8, 13, 0.96) 0%,
+              rgba(9, 8, 13, 0.82) 55%,
+              transparent 100%
+            );
+          }
+          .gta-spotlight-title {
+            font-size: 1.15rem;
+          }
+          .gta-spotlight-desc {
+            font-size: 11.5px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+          }
+          .gta-spotlight-cta {
+            font-size: 10px;
+            padding: 6px 12px;
+            border-radius: 6px;
+          }
+        }
       `}</style>
 
       <div
@@ -1487,6 +1644,56 @@ export default async function BeautyShopPage() {
         </section>
 
         <ShopFilterClientLazy />
+
+        {/* ── Cultural Protocol & Field Guide ── */}
+        <section className="section" style={{ paddingTop: "28px", paddingBottom: "28px" }}>
+          <div
+            className="section-head"
+            style={{
+              flexDirection: isRtl ? "row-reverse" : "row",
+              marginBottom: "20px",
+            }}
+          >
+            <div>
+              <p className="eyebrow" style={{ color: "#fc2779" }}>Cultural Field Guide</p>
+              <h2>Late-Night Screens &amp; Climate Protocols.</h2>
+            </div>
+            <span>Field-tested routines for screen fatigue, humidity &amp; all-nighters.</span>
+          </div>
+
+          <div className="gta-spotlight-section">
+            <Link
+              href="/blog/gta-6-gamer-skincare-dark-circles-headset-acne-india"
+              className="gta-spotlight-card"
+            >
+              <Image
+                src="https://azsofabirbgovazlfzvn.supabase.co/storage/v1/object/public/blog-images/gta6_minimalist_studio_banner.jpg"
+                alt="The GTA 6 All-Nighter Skincare Guide - Beat Gamer Skin, Dark Circles & Headset Acne in Indian Weather"
+                fill
+                className="gta-spotlight-img"
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 760px, 760px"
+              />
+              <div className="gta-spotlight-overlay">
+                <div className="gta-spotlight-info">
+                  <span className="gta-spotlight-badge">
+                    <span className="gta-pulse-dot" />
+                    GTA VI Survival Protocol
+                  </span>
+                  <h3 className="gta-spotlight-title">
+                    How to Beat 'Gamer Skin', Dark Circles &amp; Headset Acne
+                  </h3>
+                  <p className="gta-spotlight-desc">
+                    Field-tested night routine for screen fatigue, AC dehydration &amp; Indian humidity.
+                  </p>
+                </div>
+                <span className="gta-spotlight-cta">
+                  <span>Read Guide</span>
+                  <ArrowRight size={13} />
+                </span>
+              </div>
+            </Link>
+          </div>
+        </section>
 
         <section className="section">
           <div className="section-head">
