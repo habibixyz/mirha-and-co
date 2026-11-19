@@ -383,23 +383,7 @@ export default function SiteHeader() {
         </div>
       )}
 
-      {/* Fullscreen transition overlay when launching dashboard */}
-      {isLaunching && (
-        <div
-          className="fixed inset-0 z-[999999] flex flex-col items-center justify-center bg-[#F8F6F3] dark:bg-[#080707]"
-          style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: 0, width: "100vw", height: "100vh", zIndex: 999999 }}
-        >
-          <div className="flex flex-col items-center gap-3 text-center px-6">
-            <span className="notranslate text-2xl font-bold tracking-[0.18em] text-[#11100f] dark:text-white uppercase">
-              MIRHA &amp; CO.
-            </span>
-            <div className="flex items-center gap-2.5 text-[13px] font-semibold text-[#fc2779]">
-              <div className="h-4 w-4 animate-spin rounded-full border-2 border-[#fc2779] border-t-transparent" />
-              Opening Dashboard...
-            </div>
-          </div>
-        </div>
-      )}
+      {/* Fullscreen transition overlay removed in favor of instant streaming & top progress bar */}
     </header>
   );
 }

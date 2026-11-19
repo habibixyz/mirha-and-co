@@ -187,11 +187,17 @@ export default function MoleculeCanvas() {
 
  container.addEventListener("mousemove", handleMouseMove);
 
- // --- ANIMATION LOOP ---
+ // --- ANIMATION LOOP & VIEWPORT OBSERVER ---
+	let isVisible = true;
+	const observer = new IntersectionObserver(([entry]) => { isVisible = entry.isIntersecting; }, { threshold: 0.05 });
+	observer.observe(container);
+
  const clock = new THREE.Clock();
  let animationId: number;
 
  const animate = () => {
+		animationId = requestAnimationFrame(animate);
+		if (!isVisible) return;
  const elapsedTime = clock.getElapsedTime();
 
  // Damped mouse follow
@@ -219,7 +225,6 @@ export default function MoleculeCanvas() {
  particlesGeometry.attributes.position.needsUpdate = true;
 
  renderer.render(scene, camera);
- animationId = requestAnimationFrame(animate);
  };
 
  animate();
@@ -237,7 +242,8 @@ export default function MoleculeCanvas() {
 
  // --- CLEANUP ---
  return () => {
- cancelAnimationFrame(animationId);
+ observer.disconnect();
+		cancelAnimationFrame(animationId);
  window.removeEventListener("resize", handleResize);
  container.removeEventListener("mousemove", handleMouseMove);
  renderer.dispose();
