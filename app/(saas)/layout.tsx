@@ -71,9 +71,11 @@ export default function SaasLayout({
 }) {
  return (
   <html lang="en" suppressHydrationWarning className={`${dmSans.variable} ${playfairDisplay.variable} ${bebasNeue.variable}`}>
-   <head>
-     <script
-       dangerouslySetInnerHTML={{
+    <head suppressHydrationWarning>
+      <script
+        id="saas-theme-init"
+        suppressHydrationWarning
+        dangerouslySetInnerHTML={{
          __html: `
            (function() {
              try {

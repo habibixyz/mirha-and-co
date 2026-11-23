@@ -20,9 +20,13 @@ import {
   CheckCircle2,
   Calendar,
   Sparkles as _SparklesIconForbidden, // eslint-disable-line @typescript-eslint/no-unused-vars
-  AlertCircle
+  AlertCircle,
+  ShoppingCart,
+  ExternalLink
 } from "lucide-react";
 import Link from "next/link";
+import { PRODUCTS } from "@/lib/products";
+import { getAmazonCartBundleUrl } from "@/lib/globalization";
 import { 
   saveRoutine, 
   updateRoutine, 
@@ -184,6 +188,30 @@ export function RoutinesClient({ initialRoutines }: RoutinesClientProps) {
   // Determine active routine
   const activeRoutine = routines.find(r => r.id === selectedId) || routines[0] || null;
   const activeSteps: string[] = activeRoutine && Array.isArray(activeRoutine.steps) ? activeRoutine.steps : [];
+
+  // ── Match active steps to Amazon ASINs for 1-Click Bundle ──
+  const matchedBundleItems = activeSteps.map((rawStep) => {
+    const { name, role } = parseStepInfo(rawStep, 0, activeRoutine?.name || "");
+    const clean = name.toLowerCase();
+    const match = PRODUCTS.find((p) => {
+      const pName = p.name.toLowerCase();
+      return clean.includes(pName) || pName.includes(clean) || (clean.length > 8 && pName.includes(clean.slice(0, 15)));
+    });
+    return { rawStep, name, role, product: match };
+  });
+
+  const bundleAsins = matchedBundleItems
+    .map((item) => item.product?.asin)
+    .filter((asin): asin is string => typeof asin === "string" && asin.trim().length > 0);
+
+  const bundlePrice = matchedBundleItems.reduce((sum, item) => sum + (item.product?.price || 0), 0);
+  const bundleMrp = matchedBundleItems.reduce((sum, item) => sum + (item.product?.mrp || item.product?.price || 0), 0);
+  const bundleSavings = bundleMrp > bundlePrice ? bundleMrp - bundlePrice : 0;
+  const bundleSavingsPct = bundleMrp > 0 && bundleSavings > 0 ? Math.round((bundleSavings / bundleMrp) * 100) : 0;
+
+  const amazonBundleUrl = bundleAsins.length > 0
+    ? getAmazonCartBundleUrl(bundleAsins, "INR")
+    : `https://www.amazon.in/s?k=${encodeURIComponent(activeRoutine?.name ? activeRoutine.name + " skincare" : "skincare routine")}&tag=skinwithtanvi-21`;
 
   // Keep selectedId valid
   useEffect(() => {
@@ -1046,6 +1074,178 @@ export function RoutinesClient({ initialRoutines }: RoutinesClientProps) {
             width: 100% !important;
             justify-content: center !important;
           }
+
+          .dash-bundle-card {
+            flex-direction: column !important;
+            align-items: stretch !important;
+            gap: 1rem !important;
+            padding: 1.1rem 1rem !important;
+          }
+          .dash-bundle-right {
+            align-items: stretch !important;
+            width: 100% !important;
+          }
+          .dash-bundle-pricing {
+            justify-content: space-between !important;
+          }
+          .dash-bundle-cta-btn {
+            justify-content: center !important;
+            width: 100% !important;
+            padding: 0.75rem 1rem !important;
+          }
+          .dash-bundle-footnote {
+            text-align: center !important;
+          }
+        }
+
+        /* ── 1-Click Amazon Bundle Card for Dashboard ── */
+        .dash-bundle-card {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 1.5rem;
+          background: var(--dash-surface);
+          border: 1px solid var(--dash-border);
+          border-radius: 14px;
+          padding: 1.25rem 1.5rem;
+          margin-bottom: 1.5rem;
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+          transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .dash-bundle-card:hover {
+          border-color: rgba(252, 39, 121, 0.35);
+          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+        }
+        .dash-bundle-left {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          gap: 0.35rem;
+        }
+        .dash-bundle-badge-row {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          flex-wrap: wrap;
+        }
+        .dash-bundle-badge {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.35rem;
+          font-size: 0.68rem;
+          font-weight: 700;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          background: rgba(180, 83, 9, 0.1);
+          color: #b45309;
+          border: 1px solid rgba(180, 83, 9, 0.25);
+          padding: 0.2rem 0.55rem;
+          border-radius: 99px;
+          font-family: var(--dash-font-mono, monospace);
+        }
+        html.dark .dash-bundle-badge, .dark .dash-bundle-badge {
+          background: rgba(251, 191, 36, 0.15);
+          color: #fbbf24;
+          border-color: rgba(251, 191, 36, 0.3);
+        }
+        .dash-bundle-pill {
+          font-size: 0.72rem;
+          color: var(--dash-muted);
+          font-family: var(--dash-font-mono, monospace);
+        }
+        .dash-bundle-title {
+          margin: 0;
+          font-size: 1.15rem;
+          font-family: var(--dash-font-serif);
+          color: var(--dash-ink);
+          font-weight: 500;
+          letter-spacing: -0.01em;
+        }
+        .dash-bundle-desc {
+          margin: 0;
+          font-size: 0.8rem;
+          color: var(--dash-muted);
+          line-height: 1.45;
+        }
+        .dash-bundle-right {
+          flex-shrink: 0;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-end;
+          gap: 0.45rem;
+        }
+        .dash-bundle-pricing {
+          display: flex;
+          align-items: baseline;
+          gap: 0.5rem;
+        }
+        .dash-bundle-mrp {
+          font-size: 0.75rem;
+          color: var(--dash-muted);
+          text-decoration: line-through;
+        }
+        .dash-bundle-total-val {
+          font-size: 1.25rem;
+          font-weight: 800;
+          color: var(--dash-ink);
+          font-family: var(--dash-font-mono, monospace);
+        }
+        .dash-bundle-save-tag {
+          font-size: 0.65rem;
+          font-weight: 700;
+          color: #10b981;
+          background: rgba(16, 185, 129, 0.1);
+          padding: 0.15rem 0.45rem;
+          border-radius: 4px;
+        }
+        .dash-bundle-cta-btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.45rem;
+          background: var(--dash-ink);
+          color: var(--dash-surface) !important;
+          padding: 0.65rem 1.15rem;
+          border-radius: 10px;
+          font-size: 0.78rem;
+          font-weight: 700;
+          letter-spacing: 0.04em;
+          text-decoration: none;
+          transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+          white-space: nowrap;
+        }
+        .dash-bundle-cta-btn:hover {
+          opacity: 0.9;
+          transform: translateY(-1px);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.16);
+        }
+        html.dark .dash-bundle-cta-btn, .dark .dash-bundle-cta-btn {
+          background: #ffffff !important;
+          color: #11100f !important;
+        }
+        .dash-bundle-footnote {
+          font-size: 0.68rem;
+          color: var(--dash-muted);
+          font-family: var(--dash-font-mono, monospace);
+        }
+        .dash-step-buy-btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.35rem;
+          font-size: 0.72rem;
+          font-weight: 600;
+          color: var(--dash-muted);
+          padding: 0.3rem 0.6rem;
+          border-radius: 8px;
+          border: 1px solid var(--dash-border);
+          background: var(--dash-bg);
+          text-decoration: none;
+          transition: all 0.15s ease;
+        }
+        .dash-step-buy-btn:hover {
+          color: #b45309;
+          border-color: rgba(180, 83, 9, 0.35);
+          background: rgba(180, 83, 9, 0.05);
         }
       `}</style>
 
@@ -1489,6 +1689,56 @@ export function RoutinesClient({ initialRoutines }: RoutinesClientProps) {
             )}
           </AnimatePresence>
 
+          {/* ── 1-Click Amazon Refill Bundle Card ── */}
+          {activeSteps.length > 0 && (
+            <div className="dash-bundle-card">
+              <div className="dash-bundle-left">
+                <div className="dash-bundle-badge-row">
+                  <span className="dash-bundle-badge">
+                    <ShoppingCart size={11} />
+                    1-Click Amazon Refill
+                  </span>
+                  <span className="dash-bundle-pill">
+                    {bundleAsins.length} of {activeSteps.length} products matched
+                  </span>
+                </div>
+                <h3 className="dash-bundle-title">
+                  Refill Regimen on Amazon
+                </h3>
+                <p className="dash-bundle-desc">
+                  Pre-fills verified formulations from this routine directly into your Amazon Cart in 1 tap.
+                </p>
+              </div>
+
+              <div className="dash-bundle-right">
+                {bundlePrice > 0 && (
+                  <div className="dash-bundle-pricing">
+                    {bundleSavings > 0 && (
+                      <span className="dash-bundle-mrp">₹{bundleMrp.toLocaleString("en-IN")}</span>
+                    )}
+                    <span className="dash-bundle-total-val">₹{bundlePrice.toLocaleString("en-IN")}</span>
+                    {bundleSavingsPct > 0 && (
+                      <span className="dash-bundle-save-tag">Save {bundleSavingsPct}%</span>
+                    )}
+                  </div>
+                )}
+                <a
+                  href={amazonBundleUrl}
+                  target="_blank"
+                  rel="noopener noreferrer sponsored"
+                  className="dash-bundle-cta-btn"
+                >
+                  <ShoppingCart size={13} />
+                  <span>Order on Amazon</span>
+                  <ArrowRight size={12} />
+                </a>
+                <span className="dash-bundle-footnote">
+                  Prime eligible · Fulfilled by Amazon
+                </span>
+              </div>
+            </div>
+          )}
+
           {/* ── CASE 2A: EMPTY STEPS IN ACTIVE ROUTINE ── */}
           {activeSteps.length === 0 ? (() => {
             const isPm = activeRoutine?.name.toLowerCase().includes("evening") || 
@@ -1749,6 +1999,20 @@ export function RoutinesClient({ initialRoutines }: RoutinesClientProps) {
 
                     {/* Actions */}
                     <div className="step-actions">
+                      {matchedBundleItems[idx]?.product ? (
+                        <a
+                          href={`https://www.amazon.in/dp/${matchedBundleItems[idx].product?.asin}?tag=skinwithtanvi-21`}
+                          target="_blank"
+                          rel="noopener noreferrer sponsored"
+                          className="dash-step-buy-btn"
+                          title="Restock or view this formulation on Amazon"
+                        >
+                          <ShoppingCart size={11} />
+                          <span>₹{matchedBundleItems[idx].product?.price} on Amazon</span>
+                          <ExternalLink size={10} />
+                        </a>
+                      ) : null}
+
                       {isLuxuryBrand(name) ? (
                         <Link 
                           href={`/tools/dupes?query=${encodeURIComponent(name.split(" ")[0])}`}

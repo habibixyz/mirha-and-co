@@ -161,9 +161,10 @@ export default async function RootLayout({
     suppressHydrationWarning
     className={`${dmSans.variable} ${playfairDisplay.variable} ${bebasNeue.variable}`}
   >
-    <head>
+    <head suppressHydrationWarning>
       <script
         id="theme-init"
+        suppressHydrationWarning
         dangerouslySetInnerHTML={{
           __html: `
             (function() {

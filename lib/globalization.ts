@@ -387,6 +387,31 @@ export function getLocalBrandStorefrontUrl(
   return `https://www.${config.amazonDomain}/s?k=${query}&tag=${config.affiliateTag}`;
 }
 
+/**
+ * Format 1-Click Multi-Item Amazon Cart Bundle URL
+ * Uses Amazon's official remote cart endpoint to pre-fill the customer's cart
+ */
+export function getAmazonCartBundleUrl(
+  asins: string[],
+  targetCurrency: Currency = "INR"
+): string {
+  const config = CURRENCIES[targetCurrency] || CURRENCIES.INR;
+  const validAsins = asins.filter((a) => typeof a === "string" && a.trim().length > 0);
+
+  if (validAsins.length === 0) {
+    return `https://www.${config.amazonDomain}/?tag=${config.affiliateTag}`;
+  }
+
+  const params = new URLSearchParams();
+  params.set("AssociateTag", config.affiliateTag);
+  validAsins.forEach((asin, idx) => {
+    params.set(`ASIN.${idx + 1}`, asin.trim());
+    params.set(`Quantity.${idx + 1}`, "1");
+  });
+
+  return `https://www.${config.amazonDomain}/gp/aws/cart/add.html?${params.toString()}`;
+}
+
 
 /**
  * Dynamic price localization for blog post content

@@ -2,11 +2,12 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { RotateCcw, ExternalLink, Check, ArrowRight, Zap, Droplets, Target, Shield, Sun, BookmarkCheck } from 'lucide-react';
+import { RotateCcw, ExternalLink, Check, ArrowRight, Zap, Droplets, Target, Shield, Sun, BookmarkCheck, ShoppingCart } from 'lucide-react';
 import { RoutineRecommendation } from '@/lib/routineEngine';
 import { PRODUCTS, getProductAffiliateUrl } from '@/lib/products';
 import { useRoutineAnalytics } from '@/lib/hooks/useRoutineAnalytics';
 import { syncQuizRoutineToVanity } from '@/app/(saas)/actions';
+import { getAmazonCartBundleUrl } from '@/lib/globalization';
 
 const STEPS_ORDER = [
   {
@@ -187,6 +188,28 @@ export default function RoutineResult({
   onClimateChange,
 }: RoutineResultProps) {
   const { trackAffiliateClick } = useRoutineAnalytics();
+
+  // ── 1-Click Amazon Bundle Calculations ──
+  const bundleAsins = [
+    routine.cleanser?.asin,
+    routine.treatment?.asin,
+    routine.moisturiser?.asin,
+    routine.sunscreen?.asin,
+  ].filter((a): a is string => typeof a === 'string' && a.trim().length > 0);
+
+  const bundleProducts = bundleAsins
+    .map((asin) => PRODUCTS.find((p) => p.asin === asin))
+    .filter((p): p is (typeof PRODUCTS)[number] => Boolean(p));
+
+  const bundlePrice = bundleProducts.reduce((sum, p) => sum + (p?.price || 0), 0);
+  const bundleMrp = bundleProducts.reduce((sum, p) => sum + (p?.mrp || p?.price || 0), 0);
+  const bundleSavings = bundleMrp > bundlePrice ? bundleMrp - bundlePrice : 0;
+  const bundleSavingsPct = bundleMrp > 0 && bundleSavings > 0 ? Math.round((bundleSavings / bundleMrp) * 100) : 0;
+
+  const amazonBundleUrl = getAmazonCartBundleUrl(
+    bundleAsins,
+    (climate?.countryCode === 'US' ? 'USD' : climate?.countryCode === 'GB' ? 'GBP' : 'INR') as any
+  );
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -524,6 +547,197 @@ export default function RoutineResult({
         .rr-vanity-bridge-btn:disabled {
           opacity: 0.7;
           cursor: wait;
+        }
+
+        /* ── 1-Click Amazon Bundle Card ── */
+        .rr-bundle-card {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 24px;
+          background: #ffffff;
+          border: 1px solid #e7ded5;
+          border-radius: 16px;
+          padding: 22px 24px;
+          margin-bottom: 28px;
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+          transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .rr-bundle-card:hover {
+          border-color: #d1c5b8;
+          box-shadow: 0 8px 28px rgba(0, 0, 0, 0.06);
+        }
+        .rr-bundle-left {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          gap: 6px;
+        }
+        .rr-bundle-badge-row {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          margin-bottom: 2px;
+          flex-wrap: wrap;
+        }
+        .rr-bundle-badge {
+          display: inline-flex;
+          align-items: center;
+          gap: 5px;
+          font-size: 9.5px;
+          font-weight: 700;
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
+          background: #fdf5ec;
+          color: #b45309;
+          border: 1px solid rgba(180, 83, 9, 0.2);
+          padding: 3px 9px;
+          border-radius: 99px;
+          font-family: var(--font-mono, monospace);
+        }
+        .rr-bundle-pill {
+          font-size: 10px;
+          color: #78716c;
+          font-family: var(--font-mono, monospace);
+        }
+        .rr-bundle-title {
+          margin: 0;
+          font-size: 19px;
+          font-family: 'DM Serif Display', Georgia, serif;
+          color: #1c1917;
+          letter-spacing: -0.01em;
+          line-height: 1.25;
+        }
+        .rr-bundle-desc {
+          margin: 0;
+          font-size: 12px;
+          color: #78716c;
+          line-height: 1.5;
+        }
+        .rr-bundle-steps-mini {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          margin-top: 6px;
+          flex-wrap: wrap;
+        }
+        .rr-bundle-step-tag {
+          display: inline-flex;
+          align-items: center;
+          gap: 5px;
+          font-size: 10.5px;
+          background: #f5f2ed;
+          color: #44403c;
+          padding: 3px 8px;
+          border-radius: 6px;
+          white-space: nowrap;
+        }
+        .rr-bundle-step-num {
+          font-size: 9px;
+          font-weight: 700;
+          color: #a8a29e;
+          font-family: var(--font-mono, monospace);
+        }
+        .rr-bundle-right {
+          flex-shrink: 0;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-end;
+          gap: 8px;
+        }
+        .rr-bundle-pricing {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-end;
+          gap: 2px;
+        }
+        .rr-bundle-mrp-row {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+        }
+        .rr-bundle-mrp {
+          font-size: 11px;
+          color: #a8a29e;
+          text-decoration: line-through;
+        }
+        .rr-bundle-save-tag {
+          font-size: 9.5px;
+          font-weight: 700;
+          color: #15803d;
+          background: #f0fdf4;
+          padding: 1px 6px;
+          border-radius: 4px;
+        }
+        .rr-bundle-total {
+          display: flex;
+          align-items: baseline;
+          gap: 6px;
+        }
+        .rr-bundle-total-label {
+          font-size: 11px;
+          color: #78716c;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+        }
+        .rr-bundle-total-val {
+          font-size: 20px;
+          font-weight: 800;
+          color: #1c1917;
+          font-family: var(--font-mono, monospace);
+        }
+        .rr-bundle-cta-btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          background: #1c1917;
+          color: #ffffff !important;
+          padding: 12px 20px;
+          border-radius: 10px;
+          font-size: 12px;
+          font-weight: 700;
+          letter-spacing: 0.04em;
+          text-decoration: none;
+          transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+        }
+        .rr-bundle-cta-btn:hover {
+          background: #000000;
+          transform: translateY(-1px);
+          box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+        }
+        .rr-bundle-cta-btn:active {
+          transform: scale(0.98);
+        }
+        .rr-bundle-footnote {
+          font-size: 9.5px;
+          color: #a8a29e;
+          font-family: var(--font-mono, monospace);
+          letter-spacing: 0.02em;
+        }
+        .rr-bundle-btn-footer {
+          flex: 1.5;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 8px;
+          background: #1c1917;
+          color: #ffffff !important;
+          padding: 14px 20px;
+          border-radius: 12px;
+          font-size: 11.5px;
+          font-weight: 700;
+          text-transform: uppercase;
+          letter-spacing: 0.08em;
+          text-decoration: none;
+          font-family: var(--font-mono, monospace);
+          transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+          box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+        }
+        .rr-bundle-btn-footer:hover {
+          background: #000000;
+          transform: translateY(-1px);
+          box-shadow: 0 6px 18px rgba(0, 0, 0, 0.22);
         }
 
         /* Climate widget */
@@ -1186,6 +1400,48 @@ export default function RoutineResult({
           color: #ffffff !important;
         }
 
+        /* Bundle card in dark mode */
+        html.dark .rr-bundle-card, .dark .rr-bundle-card {
+          background: #181716 !important;
+          border-color: rgba(255, 255, 255, 0.09) !important;
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
+        }
+        html.dark .rr-bundle-card:hover, .dark .rr-bundle-card:hover {
+          border-color: rgba(255, 255, 255, 0.18) !important;
+        }
+        html.dark .rr-bundle-badge, .dark .rr-bundle-badge {
+          background: rgba(180, 83, 9, 0.2) !important;
+          color: #fbbf24 !important;
+          border-color: rgba(251, 191, 36, 0.3) !important;
+        }
+        html.dark .rr-bundle-title, .dark .rr-bundle-title {
+          color: #f5f5f4 !important;
+        }
+        html.dark .rr-bundle-desc, .dark .rr-bundle-desc {
+          color: #a8a29e !important;
+        }
+        html.dark .rr-bundle-step-tag, .dark .rr-bundle-step-tag {
+          background: rgba(255, 255, 255, 0.06) !important;
+          color: #e7e5e4 !important;
+        }
+        html.dark .rr-bundle-total-val, .dark .rr-bundle-total-val {
+          color: #ffffff !important;
+        }
+        html.dark .rr-bundle-cta-btn, .dark .rr-bundle-cta-btn {
+          background: #ffffff !important;
+          color: #11100f !important;
+        }
+        html.dark .rr-bundle-cta-btn:hover, .dark .rr-bundle-cta-btn:hover {
+          background: #f5f5f4 !important;
+        }
+        html.dark .rr-bundle-btn-footer, .dark .rr-bundle-btn-footer {
+          background: #ffffff !important;
+          color: #11100f !important;
+        }
+        html.dark .rr-bundle-btn-footer:hover, .dark .rr-bundle-btn-footer:hover {
+          background: #f5f5f4 !important;
+        }
+
         @media (max-width: 640px) {
           .rr-container { padding: 40px 16px 80px; }
           .rr-step-header { padding: 16px 18px 14px; }
@@ -1201,6 +1457,34 @@ export default function RoutineResult({
           .rr-vanity-bridge-btn {
             width: 100%;
             justify-content: center;
+          }
+          .rr-bundle-card {
+            flex-direction: column;
+            align-items: stretch;
+            gap: 16px;
+            padding: 18px 16px;
+          }
+          .rr-bundle-right {
+            align-items: stretch;
+            width: 100%;
+          }
+          .rr-bundle-pricing {
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+          }
+          html.dark .rr-bundle-pricing, .dark .rr-bundle-pricing {
+            border-bottom-color: rgba(255, 255, 255, 0.08);
+          }
+          .rr-bundle-cta-btn, .rr-bundle-btn-footer {
+            width: 100%;
+            justify-content: center;
+            padding: 13px 18px;
+          }
+          .rr-bundle-footnote {
+            text-align: center;
           }
         }
       `}</style>
@@ -1322,6 +1606,72 @@ export default function RoutineResult({
           </div>
         </div>
 
+        {/* ── 1-Click Amazon Bundle Card ── */}
+        {bundleAsins.length > 0 && (
+          <div className="rr-bundle-card">
+            <div className="rr-bundle-left">
+              <div className="rr-bundle-badge-row">
+                <span className="rr-bundle-badge">
+                  <ShoppingCart size={11} />
+                  1-Click Amazon Cart
+                </span>
+                <span className="rr-bundle-pill">4-Step Verified Regimen</span>
+              </div>
+              <h3 className="rr-bundle-title">
+                Order Complete Regimen on Amazon
+              </h3>
+              <p className="rr-bundle-desc">
+                Pre-fills all 4 dermatologist-reviewed products directly into your Amazon Cart in one tap. Zero markup, Prime eligible.
+              </p>
+              <div className="rr-bundle-steps-mini">
+                {bundleProducts.map((p, i) => (
+                  <span key={p?.id || i} className="rr-bundle-step-tag">
+                    <span className="rr-bundle-step-num">{i + 1}</span>
+                    {p?.name ? (p.name.length > 24 ? p.name.slice(0, 24) + '...' : p.name) : 'Step ' + (i + 1)}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            <div className="rr-bundle-right">
+              <div className="rr-bundle-pricing">
+                {bundleSavings > 0 && (
+                  <div className="rr-bundle-mrp-row">
+                    <span className="rr-bundle-mrp">₹{bundleMrp.toLocaleString('en-IN')}</span>
+                    <span className="rr-bundle-save-tag">Save {bundleSavingsPct}%</span>
+                  </div>
+                )}
+                <div className="rr-bundle-total">
+                  <span className="rr-bundle-total-label">Total:</span>
+                  <span className="rr-bundle-total-val">₹{bundlePrice.toLocaleString('en-IN')}</span>
+                </div>
+              </div>
+
+              <a
+                href={amazonBundleUrl}
+                target="_blank"
+                rel="noopener noreferrer sponsored"
+                onClick={() =>
+                  trackAffiliateClick({
+                    asin: bundleAsins.join(','),
+                    product: 'Complete 4-Step Regimen Bundle',
+                    step: 'bundle-hero',
+                  })
+                }
+                className="rr-bundle-cta-btn"
+              >
+                <ShoppingCart size={14} />
+                <span>Bundle on Amazon</span>
+                <ArrowRight size={13} />
+              </a>
+
+              <span className="rr-bundle-footnote">
+                100% Genuine · Fulfilled by Amazon · Prime Eligible
+              </span>
+            </div>
+          </div>
+        )}
+
         {/* ── Routine Steps — all expanded by default ── */}
         <div style={{ marginBottom: '48px' }}>
           {STEPS_ORDER.map((step) => {
@@ -1418,14 +1768,34 @@ export default function RoutineResult({
 
         {/* ── Actions ── */}
         <div className="rr-actions">
+          {bundleAsins.length > 0 && (
+            <a
+              href={amazonBundleUrl}
+              target="_blank"
+              rel="noopener noreferrer sponsored"
+              onClick={() =>
+                trackAffiliateClick({
+                  asin: bundleAsins.join(','),
+                  product: 'Complete 4-Step Regimen Bundle',
+                  step: 'bundle-footer',
+                })
+              }
+              className="rr-bundle-btn-footer"
+            >
+              <ShoppingCart size={14} />
+              <span>Order 4-Step Bundle on Amazon</span>
+              <ArrowRight size={13} />
+            </a>
+          )}
+
           <button
             onClick={handleSaveToVanity}
             disabled={savingVanity}
             className="rr-btn-primary"
-            style={{ flex: 1.4, fontSize: '11px', padding: '14px 20px', fontWeight: 700 }}
+            style={{ flex: 1.1, fontSize: '11px', padding: '14px 18px', fontWeight: 700 }}
           >
             <BookmarkCheck size={14} />
-            {savingVanity ? 'Syncing to Vanity...' : 'Save to Digital Vanity'}
+            {savingVanity ? 'Syncing...' : 'Save to Vanity'}
             <ArrowRight size={13} />
           </button>
 
