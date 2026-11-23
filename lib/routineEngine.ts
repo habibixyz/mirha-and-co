@@ -1,24 +1,34 @@
 export interface QuizAnswers {
- skinType: string;
- mainConcern: string;
- budget: string;
- experience: string;
+  skinType: string;
+  mainConcern: string;
+  secondaryConcern?: string;
+  budget: string;
+  experience?: string;
 }
 
 export interface RoutineRecommendation {
- cleanser: { asin: string; name: string; reason: string };
- treatment: { asin: string; name: string; reason: string };
- moisturiser: { asin: string; name: string; reason: string };
- sunscreen: { asin: string; name: string; reason: string };
- climateAdjustment?: {
- type: 'humid_heat' | 'cold_dry' | 'moderate';
- city: string;
- temp: number;
- humidity: number;
- alertText: string;
- swappedFields: string[];
- };
+  cleanser: { asin: string; name: string; reason: string };
+  treatment: { asin: string; name: string; reason: string };
+  moisturiser: { asin: string; name: string; reason: string };
+  sunscreen: { asin: string; name: string; reason: string };
+  primaryConcern?: string;
+  secondaryConcern?: string;
+  climateAdjustment?: {
+    type: 'humid_heat' | 'cold_dry' | 'moderate';
+    city: string;
+    temp: number;
+    humidity: number;
+    alertText: string;
+    swappedFields: string[];
+  };
 }
+
+export const CONCERN_LABELS: Record<string, string> = {
+  acne: 'Acne & Blemishes',
+  pigmentation: 'Dark Spots & Pigmentation',
+  dullness: 'Dullness & Radiance',
+  dehydration: 'Dehydration & Barrier Repair',
+};
 
 // ─── PRICE REFERENCE (verified) ───────────────────────────────────────────
 // cetaphil_facewash ₹384 ✓ under 500
@@ -594,11 +604,445 @@ export interface ClimateInput {
 
 // ─── GENERATE ROUTINE ─────────────────────────────────────────────────────────
 
+
+// ─── DUAL CONCERN SYNTHESIS ────────────────────────────────────────────────
+// Calibrates 4-product routine when a user selects 2 concurrent concerns.
+// Strictly maintains budget ceilings and prevents formulation clashes.
+function applyDualConcernSynthesis(
+  routine: RoutineRecommendation,
+  c1: string,
+  c2: string,
+  skinType: string,
+  budgetKey: string
+): void {
+  const set = new Set([c1, c2]);
+
+  // 1. DEHYDRATION + DULLNESS
+  if (set.has("dehydration") && set.has("dullness")) {
+    if (budgetKey === "budget_500") {
+      routine.cleanser = {
+        asin: ASIN.simple_facewash,
+        name: "Simple Kind To Skin Moisturising Facial Wash",
+        reason: "Dual Synergy [Dehydration + Dullness]: Soap-free formula with Pro-Vitamin B5 cleanses without depleting skin lipids, preventing micro-tears that cause dullness. ₹329.",
+      };
+      routine.treatment = {
+        asin: ASIN.plum_vitamin_c,
+        name: "Plum 15% Vitamin C Face Serum",
+        reason: "Dual Synergy [Dehydration + Dullness]: Concentrated antioxidant Vitamin C revives fatigued cells and restores radiance, buffered by soothing natural extracts. ₹445.",
+      };
+      routine.moisturiser = {
+        asin: (skinType === "dry" || skinType === "sensitive") ? ASIN.bioderma_atoderm : ASIN.sebamed_care_gel,
+        name: (skinType === "dry" || skinType === "sensitive") ? "Bioderma Atoderm Intensive Baume" : "Sebamed Clear Face Care Gel",
+        reason: "Dual Synergy [Dehydration + Dullness]: Seals in hydration with barrier-repairing humectants, giving skin a smooth, light-reflective bounce. Under ₹500.",
+      };
+      routine.sunscreen = {
+        asin: ASIN.foxtale_glow_spf,
+        name: "Foxtale Glow Sunscreen SPF 50 PA++++",
+        reason: "Dual Synergy [Dehydration + Dullness]: Vitamin C and Niacinamide infuse moisture while locking in all-day lit-from-within glow with broad spectrum protection. ₹345.",
+      };
+    } else if (budgetKey === "budget_1000") {
+      routine.cleanser = {
+        asin: ASIN.cetaphil_facewash,
+        name: "Cetaphil Gentle Skin Hydrating Face Wash",
+        reason: "Dual Synergy [Dehydration + Dullness]: Clinically proven hydrating wash preserves the vital skin mantle, leaving zero dull, tight residue.",
+      };
+      routine.treatment = {
+        asin: ASIN.cosrx_snail_mucin,
+        name: "COSRX Advanced Snail 96 Mucin Power Essence",
+        reason: "Dual Synergy [Dehydration + Dullness]: 96% filtered Snail Mucin drenches parched skin with intense cellular moisture while delivering viral glass-skin luminosity.",
+      };
+      routine.moisturiser = {
+        asin: ASIN.formularx_barrier_relief,
+        name: "Formularx Barrier Relief Lightweight Moisturizer",
+        reason: "Dual Synergy [Dehydration + Dullness]: Golden 3:1:1 lipid complex locks in water, repairs compromised moisture mantles, and eliminates dull texture. ₹594.",
+      };
+      routine.sunscreen = {
+        asin: ASIN.minimalist_spf,
+        name: "Minimalist Sunscreen SPF 50 PA+++ 100gm",
+        reason: "Dual Synergy [Dehydration + Dullness]: Multi-vitamin sunscreen (B3, B5, E) protects from moisture-depleting UV while giving a radiant, healthy finish without white cast.",
+      };
+    } else {
+      // budget_2000
+      routine.cleanser = {
+        asin: ASIN.cetaphil_facewash,
+        name: "Cetaphil Gentle Skin Hydrating Face Wash",
+        reason: "Dual Synergy [Dehydration + Dullness]: Preserves vital barrier moisture during cleansing so radiance actives can absorb deeply without stinging.",
+      };
+      routine.treatment = {
+        asin: ASIN.boj_rice_toner,
+        name: "Beauty of Joseon Glow Replenishing Rice Toner",
+        reason: "Dual Synergy [Dehydration + Dullness]: Traditional Hanbang rice extract and amino acids flood dehydrated layers with nutrients for a glass-skin, lit-from-within glow.",
+      };
+      routine.moisturiser = {
+        asin: ASIN.formularx_barrier_relief,
+        name: "Formularx Barrier Relief Lightweight Moisturizer",
+        reason: "Dual Synergy [Dehydration + Dullness]: Derm-formulated ceramides and fatty acids smooth cellular surface roughness to maximize light reflection and hydration bounce.",
+      };
+      routine.sunscreen = {
+        asin: ASIN.skin1004_hyalu_cica_spf,
+        name: "SKIN1004 Madagascar Centella Hyalu-Cica Water-Fit Sun Serum SPF50+ PA++++",
+        reason: "Dual Synergy [Dehydration + Dullness]: Cult K-Beauty sun serum fuses Hyaluronic Acid with Centella Asiatica for sheer, dewy, intensely hydrated sun defense.",
+      };
+    }
+    return;
+  }
+
+  // 2. ACNE + PIGMENTATION
+  if (set.has("acne") && set.has("pigmentation")) {
+    if (budgetKey === "budget_500") {
+      routine.cleanser = {
+        asin: ASIN.dermaco_salicylic_wash,
+        name: "The Derma Co 1% Salicylic Acid Gel Face Wash",
+        reason: "Dual Synergy [Acne + Pigmentation]: Dissolves pore sebum and clears active blemishes before they leave stubborn post-acne marks (PIH). ₹249.",
+      };
+      routine.treatment = {
+        asin: ASIN.plum_vitamin_c,
+        name: "Plum 15% Vitamin C Face Serum",
+        reason: "Dual Synergy [Acne + Pigmentation]: Pure stable Vitamin C inhibits tyrosinase to rapidly fade dark post-inflammatory spots while fighting free radical damage. ₹445.",
+      };
+      routine.moisturiser = {
+        asin: ASIN.sebamed_care_gel,
+        name: "Sebamed Clear Face Care Gel",
+        reason: "Dual Synergy [Acne + Pigmentation]: 100% oil-free water gel at pH 5.5 inhibits acne-causing bacteria while soothing redness and pigment inflammation. ₹464.",
+      };
+      routine.sunscreen = {
+        asin: ASIN.lakme_spf,
+        name: "Lakme SPF 50 PA++++ Sunscreen",
+        reason: "Dual Synergy [Acne + Pigmentation]: Non-comedogenic UV shield stops sunlight from permanently darkening fresh blemish marks. ₹282.",
+      };
+    } else if (budgetKey === "budget_1000") {
+      routine.cleanser = {
+        asin: ASIN.minimalist_ala_wash,
+        name: "Minimalist 7% ALA + Glycolic Face Wash",
+        reason: "Dual Synergy [Acne + Pigmentation]: Glycolic acid lifts pigmented surface cells while ALA controls excess sebum in acne-prone zones.",
+      };
+      routine.treatment = {
+        asin: ASIN.ordinary_niacinamide,
+        name: "The Ordinary Niacinamide 10% + Zinc 1%",
+        reason: "Dual Synergy [Acne + Pigmentation]: Benchmark formulation: 1% Zinc calms active acne flares while 10% Niacinamide blocks melanin transfer to clear dark marks.",
+      };
+      routine.moisturiser = {
+        asin: ASIN.formularx_barrier_relief,
+        name: "Formularx Barrier Relief Lightweight Moisturizer",
+        reason: "Dual Synergy [Acne + Pigmentation]: Ceramide complex repairs post-breakout barrier integrity and prevents hyperpigmentation rebound. ₹594.",
+      };
+      routine.sunscreen = {
+        asin: ASIN.reequil_matte_spf,
+        name: "RE' EQUIL Ultra Matte Dry Touch Sunscreen",
+        reason: "Dual Synergy [Acne + Pigmentation]: Matte velvet finish controls breakout shine while ensuring zero UV-induced pigmentation darkening.",
+      };
+    } else {
+      // budget_2000
+      routine.cleanser = {
+        asin: ASIN.cosrx_low_ph_wash,
+        name: "COSRX Low pH Good Morning Gel Cleanser",
+        reason: "Dual Synergy [Acne + Pigmentation]: Gentle botanical BHA purifies congested pores without irritating delicate pigmented marks.",
+      };
+      routine.treatment = {
+        asin: ASIN.boj_rice_toner,
+        name: "Beauty of Joseon Glow Replenishing Rice Toner",
+        reason: "Dual Synergy [Acne + Pigmentation]: Rice extracts fade dark post-inflammatory marks while balancing surface oil and clearing texture.",
+      };
+      routine.moisturiser = {
+        asin: ASIN.formularx_barrier_relief,
+        name: "Formularx Barrier Relief Lightweight Moisturizer",
+        reason: "Dual Synergy [Acne + Pigmentation]: Barrier lipid restoration accelerates cellular recovery from acne while fading uneven discoloration.",
+      };
+      routine.sunscreen = {
+        asin: ASIN.skin1004_hyalu_cica_spf,
+        name: "SKIN1004 Madagascar Centella Hyalu-Cica Water-Fit Sun Serum SPF50+ PA++++",
+        reason: "Dual Synergy [Acne + Pigmentation]: Centella soothes inflamed breakouts while broad-spectrum K-Beauty filters prevent dark spots from setting.",
+      };
+    }
+    return;
+  }
+
+  // 3. ACNE + DEHYDRATION
+  if (set.has("acne") && set.has("dehydration")) {
+    if (budgetKey === "budget_500") {
+      routine.cleanser = {
+        asin: ASIN.simple_facewash,
+        name: "Simple Kind To Skin Moisturising Facial Wash",
+        reason: "Dual Synergy [Acne + Dehydration]: Harsh acne washes worsen dehydration and trigger rebound oiliness. This soap-free wash cleanses gently without stripping. ₹329.",
+      };
+      routine.treatment = {
+        asin: ASIN.dotkey_hyaluronic,
+        name: "Dot & Key Watermelon Hyaluronic Serum",
+        reason: "Dual Synergy [Acne + Dehydration]: Infuses oil-free water hydration to restore barrier balance without clogging pores or triggering blemishes. ₹400.",
+      };
+      routine.moisturiser = {
+        asin: ASIN.sebamed_care_gel,
+        name: "Sebamed Clear Face Care Gel",
+        reason: "Dual Synergy [Acne + Dehydration]: Water-based gel with Hyaluronic Acid and Panthenol soothes inflamed breakouts and hydrates parched skin at pH 5.5. ₹464.",
+      };
+      routine.sunscreen = {
+        asin: ASIN.deconstruct_spf,
+        name: "Deconstruct Gel Sunscreen SPF 50 PA++++",
+        reason: "Dual Synergy [Acne + Dehydration]: Ultra-light gel texture won't congest acne-prone skin, providing hydrating UV defense without heavy residue. ₹281.",
+      };
+    } else if (budgetKey === "budget_1000") {
+      routine.cleanser = {
+        asin: ASIN.cosrx_low_ph_wash,
+        name: "COSRX Low pH Good Morning Gel Cleanser",
+        reason: "Dual Synergy [Acne + Dehydration]: Maintains skin's natural acidic mantle (pH 5.0–6.0) to clear acne bacteria without causing barrier water loss.",
+      };
+      routine.treatment = {
+        asin: ASIN.ordinary_niacinamide,
+        name: "The Ordinary Niacinamide 10% + Zinc 1%",
+        reason: "Dual Synergy [Acne + Dehydration]: Niacinamide stimulates internal ceramide synthesis to fix dehydration while Zinc PCA reduces acne oiliness.",
+      };
+      routine.moisturiser = {
+        asin: ASIN.formularx_barrier_relief,
+        name: "Formularx Barrier Relief Lightweight Moisturizer",
+        reason: "Dual Synergy [Acne + Dehydration]: Rebuilds the depleted moisture barrier with ceramides without heavy comedogenic waxes that clog pores. ₹594.",
+      };
+      routine.sunscreen = {
+        asin: ASIN.reequil_matte_spf,
+        name: "RE' EQUIL Ultra Matte Dry Touch Sunscreen",
+        reason: "Dual Synergy [Acne + Dehydration]: Dry-touch matte shield protects dehydrated skin from sun damage without greasiness.",
+      };
+    } else {
+      // budget_2000
+      routine.cleanser = {
+        asin: ASIN.cosrx_low_ph_wash,
+        name: "COSRX Low pH Good Morning Gel Cleanser",
+        reason: "Dual Synergy [Acne + Dehydration]: Low-pH formula purifies congested pores while respecting moisture-depleted epidermal lipids.",
+      };
+      routine.treatment = {
+        asin: ASIN.skin1004_centella_ampoule,
+        name: "SKIN1004 Madagascar Centella Ampoule",
+        reason: "Dual Synergy [Acne + Dehydration]: 100% Centella Asiatica deeply calms breakout inflammation and infuses essential barrier hydration.",
+      };
+      routine.moisturiser = {
+        asin: ASIN.formularx_barrier_relief,
+        name: "Formularx Barrier Relief Lightweight Moisturizer",
+        reason: "Dual Synergy [Acne + Dehydration]: Clinically calibrated 3:1:1 lipid ratio repairs compromised barriers while keeping skin lightweight and clear.",
+      };
+      routine.sunscreen = {
+        asin: ASIN.skin1004_hyalu_cica_spf,
+        name: "SKIN1004 Madagascar Centella Hyalu-Cica Water-Fit Sun Serum SPF50+ PA++++",
+        reason: "Dual Synergy [Acne + Dehydration]: Hydrating sun serum quenches cellular thirst and prevents acne irritation without leaving a greasy film.",
+      };
+    }
+    return;
+  }
+
+  // 4. ACNE + DULLNESS
+  if (set.has("acne") && set.has("dullness")) {
+    if (budgetKey === "budget_500") {
+      routine.cleanser = {
+        asin: ASIN.minimalist_ala_wash,
+        name: "Minimalist 7% ALA + Glycolic Face Wash",
+        reason: "Dual Synergy [Acne + Dullness]: Lifts dead surface buildup that causes dullness while clearing pore sebum to prevent acne breakouts. ₹380.",
+      };
+      routine.treatment = {
+        asin: ASIN.plum_vitamin_c,
+        name: "Plum 15% Vitamin C Face Serum",
+        reason: "Dual Synergy [Acne + Dullness]: Antioxidant Vitamin C boosts cellular turnover for glowing radiance and strengthens skin defense against breakouts. ₹445.",
+      };
+      routine.moisturiser = {
+        asin: ASIN.sebamed_care_gel,
+        name: "Sebamed Clear Face Care Gel",
+        reason: "Dual Synergy [Acne + Dullness]: Oil-free moisture at pH 5.5 prevents pore blockage while smoothing texture for natural radiance. ₹464.",
+      };
+      routine.sunscreen = {
+        asin: ASIN.foxtale_glow_spf,
+        name: "Foxtale Glow Sunscreen SPF 50 PA++++",
+        reason: "Dual Synergy [Acne + Dullness]: Vitamin C and Niacinamide give an instant lit-from-within glow with non-comedogenic matte finish. ₹345.",
+      };
+    } else if (budgetKey === "budget_1000") {
+      routine.cleanser = {
+        asin: ASIN.minimalist_ala_wash,
+        name: "Minimalist 7% ALA + Glycolic Face Wash",
+        reason: "Dual Synergy [Acne + Dullness]: Exfoliates dull surface debris and controls acne-prone shine.",
+      };
+      routine.treatment = {
+        asin: ASIN.ordinary_niacinamide,
+        name: "The Ordinary Niacinamide 10% + Zinc 1%",
+        reason: "Dual Synergy [Acne + Dullness]: Regulates acne sebum, refines textured pores, and clarifies complexion for a smooth, glowing canvas.",
+      };
+      routine.moisturiser = {
+        asin: ASIN.formularx_barrier_relief,
+        name: "Formularx Barrier Relief Lightweight Moisturizer",
+        reason: "Dual Synergy [Acne + Dullness]: Smooths rough flaky patches with ceramides, maximizing light bounce without triggering acne. ₹594.",
+      };
+      routine.sunscreen = {
+        asin: ASIN.foxtale_glow_spf,
+        name: "Foxtale Glow Sunscreen SPF 50 PA++++",
+        reason: "Dual Synergy [Acne + Dullness]: Broad-spectrum protection infused with radiance-boosting actives that won't clog acne-prone pores.",
+      };
+    } else {
+      // budget_2000
+      routine.cleanser = {
+        asin: ASIN.cosrx_low_ph_wash,
+        name: "COSRX Low pH Good Morning Gel Cleanser",
+        reason: "Dual Synergy [Acne + Dullness]: Gentle BHA removes dulling impurities while protecting natural pH balance.",
+      };
+      routine.treatment = {
+        asin: ASIN.boj_rice_toner,
+        name: "Beauty of Joseon Glow Replenishing Rice Toner",
+        reason: "Dual Synergy [Acne + Dullness]: Fermented rice filtrate refines pore texture and delivers an effortless, lit-from-within Korean glow.",
+      };
+      routine.moisturiser = {
+        asin: ASIN.formularx_barrier_relief,
+        name: "Formularx Barrier Relief Lightweight Moisturizer",
+        reason: "Dual Synergy [Acne + Dullness]: Rebuilds barrier lipids to prevent dullness and keeps breakout inflammation at bay.",
+      };
+      routine.sunscreen = {
+        asin: ASIN.skin1004_hyalu_cica_spf,
+        name: "SKIN1004 Madagascar Centella Hyalu-Cica Water-Fit Sun Serum SPF50+ PA++++",
+        reason: "Dual Synergy [Acne + Dullness]: Weightless sun serum leaves a natural glass-skin finish with zero acne congestion.",
+      };
+    }
+    return;
+  }
+
+  // 5. PIGMENTATION + DULLNESS
+  if (set.has("pigmentation") && set.has("dullness")) {
+    if (budgetKey === "budget_500") {
+      routine.cleanser = {
+        asin: ASIN.minimalist_ala_wash,
+        name: "Minimalist 7% ALA + Glycolic Face Wash",
+        reason: "Dual Synergy [Pigmentation + Dullness]: Lifts oxidized dull dead cells and accelerates epidermal shedding of stubborn surface pigment. ₹380.",
+      };
+      routine.treatment = {
+        asin: ASIN.plum_vitamin_c,
+        name: "Plum 15% Vitamin C Face Serum",
+        reason: "Dual Synergy [Pigmentation + Dullness]: 15% Ethyl Ascorbic Acid powerfully suppresses melanin synthesis while reviving tired, lackluster skin. ₹445.",
+      };
+      routine.moisturiser = {
+        asin: (skinType === "dry" || skinType === "sensitive") ? ASIN.bioderma_atoderm : ASIN.sebamed_care_gel,
+        name: (skinType === "dry" || skinType === "sensitive") ? "Bioderma Atoderm Intensive Baume" : "Sebamed Clear Face Care Gel",
+        reason: "Dual Synergy [Pigmentation + Dullness]: Rehydrates cellular layers to enhance skin translucency and optimize active absorption. Under ₹500.",
+      };
+      routine.sunscreen = {
+        asin: ASIN.foxtale_glow_spf,
+        name: "Foxtale Glow Sunscreen SPF 50 PA++++",
+        reason: "Dual Synergy [Pigmentation + Dullness]: Infused with brightening Vitamin C, shields against UV pigment triggers while giving an immediate healthy glow. ₹345.",
+      };
+    } else if (budgetKey === "budget_1000") {
+      routine.cleanser = {
+        asin: ASIN.minimalist_ala_wash,
+        name: "Minimalist 7% ALA + Glycolic Face Wash",
+        reason: "Dual Synergy [Pigmentation + Dullness]: Glycolic acid speeds up cell renewal to fade discoloration and reveal fresher, luminous skin.",
+      };
+      routine.treatment = {
+        asin: ASIN.plum_vitamin_c,
+        name: "Plum 15% Vitamin C Face Serum",
+        reason: "Dual Synergy [Pigmentation + Dullness]: High-potency Vitamin C targets melanin production and reverses environmental oxidation for glowing tone.",
+      };
+      routine.moisturiser = {
+        asin: ASIN.formularx_barrier_relief,
+        name: "Formularx Barrier Relief Lightweight Moisturizer",
+        reason: "Dual Synergy [Pigmentation + Dullness]: Niacinamide and ceramide blend strengthens the barrier while preventing pigment transfer. ₹594.",
+      };
+      routine.sunscreen = {
+        asin: ASIN.foxtale_glow_spf,
+        name: "Foxtale Glow Sunscreen SPF 50 PA++++",
+        reason: "Dual Synergy [Pigmentation + Dullness]: Blocks UVA/UVB rays that darken spots while infusing skin with radiance boosters.",
+      };
+    } else {
+      // budget_2000
+      routine.cleanser = {
+        asin: ASIN.cetaphil_facewash,
+        name: "Cetaphil Gentle Skin Hydrating Face Wash",
+        reason: "Dual Synergy [Pigmentation + Dullness]: Gentle, non-irritating wash preps skin for maximum absorption of brightening toners and serums.",
+      };
+      routine.treatment = {
+        asin: ASIN.boj_rice_toner,
+        name: "Beauty of Joseon Glow Replenishing Rice Toner",
+        reason: "Dual Synergy [Pigmentation + Dullness]: Traditional Hanbang rice bran water and amino acids clarify uneven dark spots and create luminous porcelain glow.",
+      };
+      routine.moisturiser = {
+        asin: ASIN.formularx_barrier_relief,
+        name: "Formularx Barrier Relief Lightweight Moisturizer",
+        reason: "Dual Synergy [Pigmentation + Dullness]: Smoothes cellular texture and repairs moisture barrier for long-lasting, light-reflecting glass skin.",
+      };
+      routine.sunscreen = {
+        asin: ASIN.skin1004_hyalu_cica_spf,
+        name: "SKIN1004 Madagascar Centella Hyalu-Cica Water-Fit Sun Serum SPF50+ PA++++",
+        reason: "Dual Synergy [Pigmentation + Dullness]: Gold standard K-Beauty SPF prevents sun-induced spots while imparting an instant dewy radiance.",
+      };
+    }
+    return;
+  }
+
+  // 6. DEHYDRATION + PIGMENTATION
+  if (set.has("dehydration") && set.has("pigmentation")) {
+    if (budgetKey === "budget_500") {
+      routine.cleanser = {
+        asin: ASIN.simple_facewash,
+        name: "Simple Kind To Skin Moisturising Facial Wash",
+        reason: "Dual Synergy [Dehydration + Pigmentation]: Compromised dehydrated skin cannot tolerate aggressive washes. Gentle Pro-Vitamin B5 formula cleanses barrier safely. ₹329.",
+      };
+      routine.treatment = {
+        asin: ASIN.plum_vitamin_c,
+        name: "Plum 15% Vitamin C Face Serum",
+        reason: "Dual Synergy [Dehydration + Pigmentation]: Targets melanin synthesis without stinging, delivering essential antioxidant repair. ₹445.",
+      };
+      routine.moisturiser = {
+        asin: (skinType === "dry" || skinType === "sensitive") ? ASIN.bioderma_atoderm : ASIN.dotkey_cica_gel,
+        name: (skinType === "dry" || skinType === "sensitive") ? "Bioderma Atoderm Intensive Baume" : "Dot & Key CICA Calming Gel",
+        reason: "Dual Synergy [Dehydration + Pigmentation]: Rebuilds the lipid barrier to prevent transepidermal water loss and soothe pigment-triggering irritation. Under ₹500.",
+      };
+      routine.sunscreen = {
+        asin: ASIN.lakme_spf,
+        name: "Lakme SPF 50 PA++++ Sunscreen",
+        reason: "Dual Synergy [Dehydration + Pigmentation]: Niacinamide-enriched SPF blocks UV rays that darken spots while retaining skin moisture. ₹282.",
+      };
+    } else if (budgetKey === "budget_1000") {
+      routine.cleanser = {
+        asin: ASIN.cetaphil_facewash,
+        name: "Cetaphil Gentle Skin Hydrating Face Wash",
+        reason: "Dual Synergy [Dehydration + Pigmentation]: Hydrating cleanser preserves moisture mantle so pigment-fading actives can work effectively.",
+      };
+      routine.treatment = {
+        asin: ASIN.cosrx_snail_mucin,
+        name: "COSRX Advanced Snail 96 Mucin Power Essence",
+        reason: "Dual Synergy [Dehydration + Pigmentation]: 96% snail secretion deeply hydrates parched cells and speeds up cellular recovery to fade marks.",
+      };
+      routine.moisturiser = {
+        asin: ASIN.formularx_barrier_relief,
+        name: "Formularx Barrier Relief Lightweight Moisturizer",
+        reason: "Dual Synergy [Dehydration + Pigmentation]: Ceramide + Niacinamide formula repairs moisture barrier and interrupts melanin transfer. ₹594.",
+      };
+      routine.sunscreen = {
+        asin: ASIN.minimalist_spf,
+        name: "Minimalist Sunscreen SPF 50 PA+++ 100gm",
+        reason: "Dual Synergy [Dehydration + Pigmentation]: Broad-spectrum UV filters prevent pigmentation rebound without drying out sensitive skin.",
+      };
+    } else {
+      // budget_2000
+      routine.cleanser = {
+        asin: ASIN.cetaphil_facewash,
+        name: "Cetaphil Gentle Skin Hydrating Face Wash",
+        reason: "Dual Synergy [Dehydration + Pigmentation]: Hydrating wash maintains healthy barrier lipids, crucial for healing hyperpigmentation.",
+      };
+      routine.treatment = {
+        asin: ASIN.boj_rice_toner,
+        name: "Beauty of Joseon Glow Replenishing Rice Toner",
+        reason: "Dual Synergy [Dehydration + Pigmentation]: Hanbang rice extract intensely hydrates and brightens dark discoloration without causing barrier stress.",
+      };
+      routine.moisturiser = {
+        asin: ASIN.formularx_barrier_relief,
+        name: "Formularx Barrier Relief Lightweight Moisturizer",
+        reason: "Dual Synergy [Dehydration + Pigmentation]: 3:1:1 physiological lipids reinforce skin barrier, locking in hydration while clearing pigmentation.",
+      };
+      routine.sunscreen = {
+        asin: ASIN.skin1004_hyalu_cica_spf,
+        name: "SKIN1004 Madagascar Centella Hyalu-Cica Water-Fit Sun Serum SPF50+ PA++++",
+        reason: "Dual Synergy [Dehydration + Pigmentation]: Hyaluronic acid + Centella protect against UV rays while quenching dehydrated skin.",
+      };
+    }
+    return;
+  }
+}
+
 export const generateRoutine = (
   answers: QuizAnswers,
   climate?: ClimateInput
 ): RoutineRecommendation => {
- const { skinType, mainConcern, budget } = answers;
+ const { skinType, mainConcern, secondaryConcern, budget } = answers;
 
  const budgetMap: Record<string, string> = {
  under_500: "budget_500",
@@ -617,7 +1061,14 @@ export const generateRoutine = (
  treatment: { ...baseRoutine.treatment },
  moisturiser: { ...baseRoutine.moisturiser },
  sunscreen: { ...baseRoutine.sunscreen },
+ primaryConcern: CONCERN_LABELS[mainConcern] || mainConcern,
+ secondaryConcern: secondaryConcern && secondaryConcern !== mainConcern ? CONCERN_LABELS[secondaryConcern] || secondaryConcern : undefined,
  };
+
+ // If secondary concern is provided, synthesize tailored dual-objective regimen
+ if (secondaryConcern && secondaryConcern !== mainConcern) {
+   applyDualConcernSynthesis(routine, mainConcern, secondaryConcern, skinType, budgetKey);
+ }
 
  if (climate) {
   const loc = resolveLocationData(climate);

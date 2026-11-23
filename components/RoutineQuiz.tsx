@@ -85,8 +85,8 @@ const QUIZ_STEPS: StepConfig[] = [
     id: 'mainConcern',
     stepNumber: '02',
     badge: 'Active Ingredient Target',
-    question: "What's your primary skin concern?",
-    subtitle: "We will build your treatment step around clinically backed dermatological actives formulated for this exact objective.",
+    question: "What are your skin concerns?",
+    subtitle: "Select up to 2 concerns (e.g. Dullness + Dehydration). We calibrate an exact 4-step ritual without formulation conflicts.",
     answers: [
       {
         id: 'acne',
@@ -322,10 +322,51 @@ export default function RoutineQuiz() {
 
   const step = QUIZ_STEPS[currentStep];
   const selectedAnswer = answers[step.id as keyof QuizAnswers];
-  const isAnswered = !!selectedAnswer;
+  const isAnswered = step.id === 'mainConcern' ? !!answers.mainConcern : !!selectedAnswer;
   const isLastStep = currentStep === QUIZ_STEPS.length - 1;
 
   const handleSelectAnswer = (answerId: string) => {
+    if (step.id === 'mainConcern') {
+      if (answers.mainConcern === answerId) {
+        if (answers.secondaryConcern) {
+          setAnswers({
+            ...answers,
+            mainConcern: answers.secondaryConcern,
+            secondaryConcern: undefined,
+          });
+        } else {
+          setAnswers({
+            ...answers,
+            mainConcern: undefined,
+            secondaryConcern: undefined,
+          });
+        }
+      } else if (answers.secondaryConcern === answerId) {
+        setAnswers({
+          ...answers,
+          secondaryConcern: undefined,
+        });
+      } else {
+        if (!answers.mainConcern) {
+          setAnswers({
+            ...answers,
+            mainConcern: answerId,
+          });
+        } else if (!answers.secondaryConcern) {
+          setAnswers({
+            ...answers,
+            secondaryConcern: answerId,
+          });
+        } else {
+          setAnswers({
+            ...answers,
+            secondaryConcern: answerId,
+          });
+        }
+      }
+      return;
+    }
+
     setAnswers({
       ...answers,
       [step.id]: answerId,
@@ -632,6 +673,32 @@ export default function RoutineQuiz() {
         .rq-option-btn.active .rq-icon-box {
           background: #111111;
           border-color: #111111;
+        }
+
+        .rq-concern-order-badge {
+          display: inline-flex;
+          align-items: center;
+          font-size: 10px;
+          font-family: var(--font-mono, monospace);
+          letter-spacing: 0.06em;
+          text-transform: uppercase;
+          padding: 2px 7px;
+          border-radius: 9999px;
+          background: #111111;
+          color: #ffffff;
+          font-weight: 700;
+        }
+        .rq-concern-order-badge-secondary {
+          background: #0284c7;
+          color: #ffffff;
+        }
+        html.dark .rq-concern-order-badge, .dark .rq-concern-order-badge {
+          background: #fc2779 !important;
+          color: #ffffff !important;
+        }
+        html.dark .rq-concern-order-badge-secondary, .dark .rq-concern-order-badge-secondary {
+          background: #38bdf8 !important;
+          color: #0f172a !important;
         }
 
         .rq-check-circle {
@@ -1047,7 +1114,9 @@ export default function RoutineQuiz() {
           {/* Answer Option Cards */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
             {step.answers.map((answer) => {
-              const isSelected = selectedAnswer === answer.id;
+              const isPrimary = step.id === 'mainConcern' && answers.mainConcern === answer.id;
+              const isSecondary = step.id === 'mainConcern' && answers.secondaryConcern === answer.id;
+              const isSelected = step.id === 'mainConcern' ? (isPrimary || isSecondary) : selectedAnswer === answer.id;
               return (
                 <button
                   key={answer.id}
@@ -1062,8 +1131,18 @@ export default function RoutineQuiz() {
                   {/* Option Text */}
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '8px', marginBottom: '4px' }}>
-                      <span className="rq-option-label">
+                      <span className="rq-option-label" style={{ display: 'inline-flex', alignItems: 'center', flexWrap: 'wrap', gap: '6px' }}>
                         {answer.label}
+                        {isPrimary && (
+                          <span className="rq-concern-order-badge">
+                            {answers.secondaryConcern ? '1 · Primary' : 'Selected'}
+                          </span>
+                        )}
+                        {isSecondary && (
+                          <span className="rq-concern-order-badge rq-concern-order-badge-secondary">
+                            2 · Secondary
+                          </span>
+                        )}
                       </span>
                       <span className="rq-option-badge">
                         {answer.badge}
@@ -1076,8 +1155,23 @@ export default function RoutineQuiz() {
                   </div>
 
                   {/* Selection Indicator */}
-                  <div className="rq-check-circle">
-                    {isSelected && <Check size={13} strokeWidth={3} />}
+                  <div
+                    className="rq-check-circle"
+                    style={
+                      step.id === 'mainConcern' && (isPrimary || isSecondary)
+                        ? { fontFamily: 'var(--font-mono, monospace)', fontSize: '11px', fontWeight: 700 }
+                        : undefined
+                    }
+                  >
+                    {step.id === 'mainConcern' ? (
+                      isPrimary ? (
+                        answers.secondaryConcern ? '1' : <Check size={13} strokeWidth={3} />
+                      ) : isSecondary ? (
+                        '2'
+                      ) : null
+                    ) : (
+                      isSelected && <Check size={13} strokeWidth={3} />
+                    )}
                   </div>
                 </button>
               );

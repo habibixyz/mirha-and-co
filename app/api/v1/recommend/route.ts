@@ -16,6 +16,7 @@ export async function POST(req: NextRequest) {
       apiKey,
       skinType,
       mainConcern,
+      secondaryConcern,
       budget = "under_1000",
       experience = "beginner",
       climate,
@@ -90,6 +91,7 @@ export async function POST(req: NextRequest) {
     const answers: QuizAnswers = {
       skinType,
       mainConcern: mainConcern || "acne",
+      secondaryConcern: secondaryConcern && allowedConcerns.includes(secondaryConcern) ? secondaryConcern : undefined,
       budget,
       experience,
     };

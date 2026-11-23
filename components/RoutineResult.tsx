@@ -1193,6 +1193,16 @@ export default function RoutineResult({
         }
 
         /* Chips in dark mode */
+        html.dark .rr-chip-primary, .dark .rr-chip-primary {
+          background: rgba(252, 39, 121, 0.15) !important;
+          border-color: rgba(252, 39, 121, 0.35) !important;
+          color: #fda4af !important;
+        }
+        html.dark .rr-chip-secondary, .dark .rr-chip-secondary {
+          background: rgba(14, 165, 233, 0.15) !important;
+          border-color: rgba(14, 165, 233, 0.35) !important;
+          color: #7dd3fc !important;
+        }
         html.dark .rr-chip-climate, .dark .rr-chip-climate {
           background: rgba(16, 185, 129, 0.12) !important;
           border-color: rgba(16, 185, 129, 0.3) !important;
@@ -1505,6 +1515,30 @@ export default function RoutineResult({
           </p>
           {/* Skin profile chips — populated from query params or placeholders */}
           <div className="rr-profile-chips">
+            {routine.primaryConcern && (
+              <span
+                className="rr-chip rr-chip-primary"
+                style={{
+                  background: '#fdf2f8',
+                  border: '1px solid #fbcfe8',
+                  color: '#be185d',
+                }}
+              >
+                🎯 Target: {routine.primaryConcern}
+              </span>
+            )}
+            {routine.secondaryConcern && (
+              <span
+                className="rr-chip rr-chip-secondary"
+                style={{
+                  background: '#f0f9ff',
+                  border: '1px solid #bae6fd',
+                  color: '#0369a1',
+                }}
+              >
+                + {routine.secondaryConcern}
+              </span>
+            )}
             {climate && (
               <button
                 className="rr-chip rr-chip-climate"
