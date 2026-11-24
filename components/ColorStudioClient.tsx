@@ -690,15 +690,8 @@ export default function ColorStudioClient() {
               href="/makeup"
               className="inline-flex items-center gap-2 rounded-xl bg-[#fc2779] px-4 py-2.5 text-xs font-bold text-white shadow-sm transition-all hover:bg-[#e01e69]"
             >
-              <span>Everyday Makeup Studio</span>
+              <span>All-in-One Makeup &amp; Batch Lab</span>
               <ChevronRight className="h-3.5 w-3.5 text-white" />
-            </Link>
-            <Link
-              href="/tools/batch-checker"
-              className="inline-flex items-center gap-2 rounded-xl border border-neutral-200 bg-[#faf8f5] px-4 py-2.5 text-xs font-bold text-neutral-900 shadow-2xs transition-all hover:border-[#fc2779] hover:bg-[#ffe6f0]/50 dark:border-white/10 dark:bg-neutral-800 dark:text-white"
-            >
-              <span>Batch &amp; Expiry Lab</span>
-              <ChevronRight className="h-3.5 w-3.5 text-[#fc2779]" />
             </Link>
             <Link
               href="/tools/dupes"

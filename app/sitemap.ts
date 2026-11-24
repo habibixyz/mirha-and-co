@@ -19,7 +19,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { route: "/tools/ingredients", changeFrequency: "weekly" as const, priority: 0.9 },
     { route: "/tools/hard-water", changeFrequency: "weekly" as const, priority: 0.9 },
     { route: "/tools/dupes", changeFrequency: "weekly" as const, priority: 0.9 },
-    { route: "/tools/batch-checker", changeFrequency: "weekly" as const, priority: 0.9 },
     { route: "/tools/color-studio", changeFrequency: "weekly" as const, priority: 0.9 },
     { route: "/blog", changeFrequency: "daily" as const, priority: 0.8 },
     { route: "/k-beauty", changeFrequency: "weekly" as const, priority: 0.8 },

@@ -12,8 +12,7 @@ import { DussehraHeroBadge } from "@/components/DussehraVisuals";
 const TICKER_HIGHLIGHTS = [
   { label: "AI Camera Skin & Barrier Scanner", href: "/tools/analysis" },
   { label: "GTA 6 Gamer Skincare: Beat All-Nighters & Acne", href: "/blog/gta-6-gamer-skincare-dark-circles-headset-acne-india" },
-  { label: "Makeup Lab & Real-Time Vibe Check", href: "/makeup" },
-  { label: "Batch Expiry & Authenticity Checker", href: "/tools/batch-checker" },
+  { label: "All-in-One Makeup & Batch Lab (70+ Brands)", href: "/makeup" },
   { label: "Climate & City Water Hardness Telemetry", href: "/tools/hard-water" },
   { label: "Luxury Skincare Dupe Finder", href: "/tools/dupes" },
   { label: "AM & PM AI Routine Builder", href: "/tools/routine" },
