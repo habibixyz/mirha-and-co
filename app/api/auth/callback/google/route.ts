@@ -5,19 +5,55 @@ import crypto from "crypto";
 
 export const dynamic = "force-dynamic";
 
+function sanitizeRedirectPath(raw: string | null): string {
+  if (!raw) return "/dashboard";
+  const trimmed = raw.trim();
+  if (!trimmed.startsWith("/") || trimmed.startsWith("//") || trimmed.includes("\\")) {
+    return "/dashboard";
+  }
+  return trimmed;
+}
+
 export async function GET(req: NextRequest) {
   const searchParams = req.nextUrl.searchParams;
   const code = searchParams.get("code");
   const state = searchParams.get("state");
   const error = searchParams.get("error");
 
-  const returnTo = state ? decodeURIComponent(state) : "/dashboard";
+  let returnTo = "/dashboard";
+  let stateNonce = "";
+  if (state) {
+    try {
+      const parsed = JSON.parse(Buffer.from(state, "base64url").toString("utf8"));
+      stateNonce = typeof parsed.nonce === "string" ? parsed.nonce : "";
+      returnTo = sanitizeRedirectPath(typeof parsed.redirect === "string" ? parsed.redirect : null);
+    } catch {
+      returnTo = "/dashboard";
+    }
+  }
+
+  const cookieNonce = req.cookies.get("google_oauth_nonce")?.value || "";
+  const isStateValid =
+    cookieNonce.length > 0 &&
+    stateNonce.length === cookieNonce.length &&
+    crypto.timingSafeEqual(Buffer.from(stateNonce), Buffer.from(cookieNonce));
+
+  if (!isStateValid) {
+    console.error("Google OAuth CSRF state mismatch");
+    const errRes = NextResponse.redirect(
+      new URL("/login?error=Session+expired+or+invalid+OAuth+state.+Please+try+again.", req.url)
+    );
+    errRes.cookies.delete("google_oauth_nonce");
+    return errRes;
+  }
 
   if (error || !code) {
     console.error("Google OAuth error or code missing:", error);
-    return NextResponse.redirect(
+    const errRes = NextResponse.redirect(
       new URL(`/login?error=${encodeURIComponent(error || "Google sign-in was cancelled")}`, req.url)
     );
+    errRes.cookies.delete("google_oauth_nonce");
+    return errRes;
   }
 
   const clientId = process.env.GOOGLE_CLIENT_ID;
@@ -68,9 +104,9 @@ export async function GET(req: NextRequest) {
     const name = profile.name || email.split("@")[0];
     const picture = profile.picture;
 
-    if (!email) {
+    if (!email || profile.email_verified !== true) {
       return NextResponse.redirect(
-        new URL("/login?error=Google+account+did+not+provide+an+email", req.url)
+        new URL("/login?error=Google+account+did+not+provide+a+verified+email", req.url)
       );
     }
 
@@ -103,8 +139,10 @@ export async function GET(req: NextRequest) {
     // 4. Create Session (sets mirha_session cookie)
     await createSession(user.id);
 
-    // 5. Redirect to destination
-    return NextResponse.redirect(new URL(returnTo, req.url));
+    // 5. Redirect to destination & clear OAuth nonce cookie
+    const response = NextResponse.redirect(new URL(sanitizeRedirectPath(returnTo), req.url));
+    response.cookies.delete("google_oauth_nonce");
+    return response;
   } catch (err: any) {
     console.error("Google OAuth callback error:", err);
     return NextResponse.redirect(

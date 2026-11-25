@@ -20,6 +20,18 @@ async function isWidgetIpLimited(ip: string): Promise<boolean> {
   return isRateLimited(`widget:ip:${ip}`, 30);
 }
 
+/** Escape HTML special characters and JS template delimiters for safe innerHTML injection. */
+function escapeWidgetHtml(str: unknown): string {
+  return String(str ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;")
+    .replace(/`/g, "&#96;")
+    .replace(/\$\{/g, "&#36;{");
+}
+
 /** Map a B2B auth error HTTP status to a user-facing JS comment message. */
 function widgetErrorMsg(status: number): string {
   if (status === 401) return "Invalid or missing API key. Obtain one at mirhaandco.com/b2b";
@@ -153,19 +165,19 @@ export async function GET(req: NextRequest) {
           💧 Hard Water &amp; Climate Shield
         </span>
         <span style="font-size: 11px; color: ${colors.badgeColor}; font-weight: 600; background: ${colors.badgeBg}; padding: 2px 8px; border-radius: 99px; border: 1px solid ${colors.badgeBorder};">
-          ${locationDetails.ppm} PPM (${locationDetails.waterCategory})
+          ${escapeWidgetHtml(locationDetails.ppm)} PPM (${escapeWidgetHtml(locationDetails.waterCategory)})
         </span>
       </div>
 
       <div style="margin-bottom: 8px;">
         <div style="font-size: 11px; color: ${colors.label}; text-transform: uppercase; margin-bottom: 2px;">Location Diagnostic</div>
-        <div style="font-size: 13px; font-weight: 600; color: ${colors.text};">${locationDetails.city}, ${locationDetails.country} (${locationDetails.temp}°C, ${locationDetails.humidity}% Humidity)</div>
+        <div style="font-size: 13px; font-weight: 600; color: ${colors.text};">${escapeWidgetHtml(locationDetails.city)}, ${escapeWidgetHtml(locationDetails.country)} (${escapeWidgetHtml(locationDetails.temp)}°C, ${escapeWidgetHtml(locationDetails.humidity)}% Humidity)</div>
       </div>
 
       <div style="background: ${colors.cardBg}; border: 1px solid ${colors.cardBorder}; border-radius: 8px; padding: 10px; margin-top: 8px;">
         <div style="font-size: 11px; font-weight: 600; color: ${colors.accentColor};">Recommended Compatible Formula</div>
-        <div style="font-size: 13px; font-weight: 700; color: ${colors.text}; margin-top: 2px;">${routine.cleanser.name}</div>
-        <div style="font-size: 11px; color: ${colors.subtext}; margin-top: 4px; line-height: 1.4;">${routine.cleanser.reason}</div>
+        <div style="font-size: 13px; font-weight: 700; color: ${colors.text}; margin-top: 2px;">${escapeWidgetHtml(routine.cleanser.name)}</div>
+        <div style="font-size: 11px; color: ${colors.subtext}; margin-top: 4px; line-height: 1.4;">${escapeWidgetHtml(routine.cleanser.reason)}</div>
       </div>
 
       <div style="margin-top: 10px; padding-top: 8px; border-top: 1px solid ${colors.border}; font-size: 10px; color: ${colors.label}; text-align: right;">
