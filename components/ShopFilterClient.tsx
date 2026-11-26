@@ -3,8 +3,9 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, Search } from "lucide-react";
+import { ArrowRight, Search, Plus, Check, ShoppingBag, X, ExternalLink } from "lucide-react";
 import { useGlobalization } from "@/components/GlobalizationContext";
+import { getAmazonCartBundleUrl } from "@/lib/globalization";
 import { PRODUCTS } from "@/lib/products";
 
 type Product = {
@@ -207,7 +208,15 @@ function productReason(product: Product) {
   return product.description;
 }
 
-function ProductCard({ product }: { product: Product }) {
+function ProductCard({
+  product,
+  isSelected,
+  onToggleBundle,
+}: {
+  product: Product;
+  isSelected: boolean;
+  onToggleBundle: (asin: string) => void;
+}) {
   const { formatPrice, t, isRtl } = useGlobalization();
   const save = discount(product.mrp, product.price);
 
@@ -218,6 +227,8 @@ function ProductCard({ product }: { product: Product }) {
       style={{
         direction: isRtl ? "rtl" : "ltr",
         textAlign: isRtl ? "right" : "left",
+        outline: isSelected ? "2px solid #fc2779" : undefined,
+        outlineOffset: isSelected ? "-2px" : undefined,
       }}
     >
       <div className="product-image">
@@ -279,27 +290,78 @@ function ProductCard({ product }: { product: Product }) {
         className="product-footer"
         style={{
           flexDirection: isRtl ? "row-reverse" : "row",
+          justifyContent: "space-between",
+          alignItems: "center",
+          gap: "8px",
         }}
       >
-        <span>{t("product.viewdetails")}</span>
-        <ArrowRight
-          size={13}
-          style={{
-            transform: isRtl ? "rotate(180deg)" : "none",
+        <button
+          type="button"
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            onToggleBundle(product.asin);
           }}
-        />
+          aria-label={isSelected ? `Remove ${product.name} from bag` : `Add ${product.name} to bag`}
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "5px",
+            padding: "5px 11px",
+            borderRadius: "999px",
+            border: isSelected ? "1px solid #fc2779" : "1px solid rgba(0,0,0,0.14)",
+            background: isSelected ? "#fc2779" : "transparent",
+            color: isSelected ? "#ffffff" : "inherit",
+            fontSize: "11px",
+            fontWeight: 600,
+            cursor: "pointer",
+            transition: "all 0.15s ease",
+          }}
+        >
+          {isSelected ? <Check size={11} /> : <Plus size={11} />}
+          {isSelected ? "In Bag" : "Add to Bag"}
+        </button>
+        <span style={{ display: "inline-flex", alignItems: "center", gap: "4px" }}>
+          <span>{t("product.viewdetails")}</span>
+          <ArrowRight
+            size={13}
+            style={{
+              transform: isRtl ? "rotate(180deg)" : "none",
+            }}
+          />
+        </span>
       </div>
     </Link>
   );
 }
 
 export default function ShopFilterClient({ activeConcernProp }: { activeConcernProp?: string | null }) {
-  const { t, isRtl } = useGlobalization();
+  const { t, isRtl, currency, formatPrice } = useGlobalization();
   const [query, setQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState("All");
   const [activeConcern, setActiveConcern] = useState<string | null>(activeConcernProp || null);
   const [veganOnly, setVeganOnly] = useState(false);
   const [crueltyFreeOnly, setCrueltyFreeOnly] = useState(false);
+  const [bundleAsins, setBundleAsins] = useState<string[]>([]);
+
+  const toggleBundle = (asin: string) => {
+    setBundleAsins((prev) =>
+      prev.includes(asin) ? prev.filter((a) => a !== asin) : [...prev, asin]
+    );
+  };
+
+  const bundleProducts = useMemo(
+    () => PRODUCT_LIST.filter((p) => bundleAsins.includes(p.asin)),
+    [bundleAsins]
+  );
+  const bundleTotal = useMemo(
+    () => bundleProducts.reduce((sum, p) => sum + (p.price || 0), 0),
+    [bundleProducts]
+  );
+  const amazonBundleUrl = useMemo(
+    () => getAmazonCartBundleUrl(bundleAsins, currency),
+    [bundleAsins, currency]
+  );
 
   const filtered = useMemo(() => {
     return PRODUCT_LIST.filter((product) => {
@@ -696,7 +758,12 @@ export default function ShopFilterClient({ activeConcernProp }: { activeConcernP
         {filtered.length ? (
           <div className="shop-grid">
             {filtered.map((product) => (
-              <ProductCard key={product.id} product={product} />
+              <ProductCard
+                key={product.id}
+                product={product}
+                isSelected={bundleAsins.includes(product.asin)}
+                onToggleBundle={toggleBundle}
+              />
             ))}
           </div>
         ) : (
@@ -717,6 +784,101 @@ export default function ShopFilterClient({ activeConcernProp }: { activeConcernP
           </div>
         )}
       </section>
+
+      {bundleAsins.length > 0 && (
+        <div
+          style={{
+            position: "fixed",
+            bottom: "18px",
+            left: "50%",
+            transform: "translateX(-50%)",
+            zIndex: 999,
+            width: "calc(100% - 24px)",
+            maxWidth: "620px",
+            background: "#161412",
+            color: "#ffffff",
+            borderRadius: "16px",
+            padding: "12px 16px",
+            boxShadow: "0 14px 40px rgba(0,0,0,0.28)",
+            border: "1px solid rgba(252, 39, 121, 0.45)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            gap: "12px",
+            flexWrap: "wrap",
+          }}
+        >
+          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            <div
+              style={{
+                width: "36px",
+                height: "36px",
+                borderRadius: "10px",
+                background: "rgba(252, 39, 121, 0.18)",
+                color: "#fc2779",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                flexShrink: 0,
+              }}
+            >
+              <ShoppingBag size={18} />
+            </div>
+            <div>
+              <div style={{ fontSize: "13px", fontWeight: 700, lineHeight: 1.2 }}>
+                {bundleAsins.length} {bundleAsins.length === 1 ? "item" : "items"} in bag · {formatPrice(bundleTotal)}
+              </div>
+              <div style={{ fontSize: "11px", color: "#a8a29e", marginTop: "2px" }}>
+                Adds all selected items to your Amazon cart
+              </div>
+            </div>
+          </div>
+
+          <div style={{ display: "flex", alignItems: "center", gap: "8px", marginLeft: "auto" }}>
+            <button
+              type="button"
+              onClick={() => setBundleAsins([])}
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "4px",
+                padding: "9px 12px",
+                borderRadius: "10px",
+                border: "1px solid rgba(255,255,255,0.16)",
+                background: "transparent",
+                color: "#d6d3d1",
+                fontSize: "12px",
+                fontWeight: 600,
+                cursor: "pointer",
+              }}
+            >
+              <X size={13} />
+              Clear
+            </button>
+            <a
+              href={amazonBundleUrl}
+              target="_blank"
+              rel="noopener noreferrer nofollow"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "6px",
+                padding: "10px 16px",
+                borderRadius: "10px",
+                background: "#fc2779",
+                color: "#ffffff",
+                fontSize: "12px",
+                fontWeight: 700,
+                textDecoration: "none",
+                boxShadow: "0 4px 14px rgba(252, 39, 121, 0.35)",
+              }}
+            >
+              Checkout on Amazon
+              <ExternalLink size={13} />
+            </a>
+          </div>
+        </div>
+      )}
     </>
   );
 }
