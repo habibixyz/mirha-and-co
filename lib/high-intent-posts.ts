@@ -15,6 +15,136 @@ export interface HighIntentPost {
 
 export const HIGH_INTENT_POSTS: HighIntentPost[] = [
   {
+    slug: "conscious-chemist-berry-bright-vs-round-lab-birch-juice-sunscreen-india",
+    title: "Conscious Chemist Berry Bright vs. Sundrink vs. Round Lab Birch Juice: Which Sunscreen Actually Works in India?",
+    category: "SKINCARE",
+    excerpt: "One costs ₹259, one costs ₹599, and one costs ₹1,559. Here is an honest, simple breakdown of which zero-white-cast sunscreen feels best in Indian heat and humidity.",
+    readTime: "5 min",
+    date: "November 2026",
+    thumbnail: "https://azsofabirbgovazlfzvn.supabase.co/storage/v1/object/public/blog-images/sunscreen_showdown_banner.jpg",
+    tags: ["conscious chemist", "round lab", "birch juice", "berry bright", "sunscreen", "india", "no white cast", "comparison"],
+    asins: ["B0BLW3SPQG", "B0C59HFZMP", "B0DJGWH3TC"],
+    sections: [
+      {
+        title: "Why Most Sunscreens Fail in Indian Weather",
+        body: [
+          "Picking a sunscreen in India is annoying. Half of them leave a grey or chalky layer on brown skin, and the other half melt into your eyes the second you step outside in Mumbai, Delhi, or Chennai humidity.",
+          "Right now, three sunscreens get talked about everywhere: **Conscious Chemist Berry Bright (₹259)**, **Conscious Chemist Sundrink Unwind (₹599)**, and **Round Lab Birch Juice (₹1,559)**.",
+          "All three promise SPF 50 protection and zero white cast. So why is one ₹259 and another ₹1,559? Let's keep it simple and compare how they actually feel on your face."
+        ]
+      },
+      {
+        title: "Quick Comparison: Price, Feel & Best Skin Type",
+        body: [
+          "Here is the side-by-side cheat sheet before you spend your money:",
+          "| Sunscreen | Price | Finish on Skin | Best For |",
+          "| :--- | :--- | :--- | :--- |",
+          "| **Conscious Chemist Berry Bright** | ₹259 | Light gel-cream, semi-matte | Daily college/office wear on a tight budget |",
+          "| **Conscious Chemist Sundrink Unwind** | ₹599 | Soft satin, sweat-resistant | Hot outdoors, commuting, humid cities |",
+          "| **Round Lab Birch Juice SPF 50+** | ₹1,559 | Feels like a hydrating lotion | Dry, sensitive, or AC-dried skin |",
+          "Every one of these blends in clear on medium to deep Indian skin tones without making you look ghostly."
+        ]
+      },
+      {
+        title: "1. Conscious Chemist Berry Bright (₹259) — The Everyday Budget Pick",
+        body: [
+          "If you want something cheap enough to apply generously every morning without worrying about the price tag, **Conscious Chemist Berry Bright** is hard to beat.",
+          "It has a light gel-cream texture with Niacinamide and Blackberry extract. It spreads fast, leaves no white cast, and settles into a clean semi-matte finish that works well for oily and combination skin.",
+          "**The honest catch:** If you are out in heavy afternoon sweat, it is not as sweat-proof as Sundrink, and it does have a mild fragrance. Still, at ₹259, it is one of the easiest daily sunscreens for indoor or short commute days."
+        ],
+        sectionAsins: ["B0BLW3SPQG"]
+      },
+      {
+        title: "2. Conscious Chemist Sundrink Unwind (₹599) — Built for Indian Sweat",
+        body: [
+          "If your biggest problem is sunscreen running into your eyes when you walk to the metro or ride a bike in summer, **Conscious Chemist Sundrink Unwind** is the better pick.",
+          "It is water- and sweat-resistant, packed with Ceramides and Niacinamide, and stays put better in sticky humidity. It feels slightly richer than Berry Bright when you first rub it in, then dries down to a smooth satin finish.",
+          "**Who should skip it:** If you have super oily skin and hate any kind of dewy shine, you may want to dab a little compact powder over your forehead after 10 minutes."
+        ],
+        sectionAsins: ["B0C59HFZMP"]
+      },
+      {
+        title: "3. Round Lab Birch Juice SPF 50+ (₹1,559) — The Korean Comfort Pick",
+        body: [
+          "**Round Lab Birch Juice** is famous in Korea for one simple reason: it does not feel like sunscreen at all. It feels like a light, soothing daily moisturizer.",
+          "Because it uses Silver Birch sap and Hyaluronic Acid, you can skip your morning moisturizer underneath it if you have normal or combination skin. It never stings around the eyes and sits cleanly under makeup without pilling.",
+          "**The honest catch:** It costs ₹1,559, and because it is imported K-beauty, always check the bottom of the tube with our [Batch Code Checker](/makeup) when your order arrives so you know it is fresh stock."
+        ],
+        sectionAsins: ["B0DJGWH3TC"]
+      },
+      {
+        title: "Final Verdict: Which One Should You Buy?",
+        body: [
+          "- **Buy Berry Bright (₹259)** if you are on a budget, stay mostly indoors or in AC, and want a light daily SPF.",
+          "- **Buy Sundrink Unwind (₹599)** if you sweat a lot, commute in the sun, or live in a humid city.",
+          "- **Buy Round Lab Birch Juice (₹1,559)** if your skin gets dry, tight, or irritated easily and you want a sunscreen that doubles as a moisturizer.",
+          "Still not sure which matches your local weather? Take our 60-second [Climate Routine Quiz](/tools/routine) to match your SPF to your city's exact humidity."
+        ]
+      }
+    ]
+  },
+  {
+    slug: "anua-niacinamide-txa-vs-hyphen-golden-hour-glow-serum-india",
+    title: "Anua Niacinamide + TXA vs. Hyphen Glow Serum (Plus Torriden & Heartleaf): Which Viral Serum Is Worth Buying?",
+    category: "SKINCARE",
+    excerpt: "Comparing ₹590 Indian glow drops against ₹1,879–₹2,999 Korean serums for dark spots, redness, and dry skin—in plain English without the hype.",
+    readTime: "6 min",
+    date: "November 2026",
+    thumbnail: "https://azsofabirbgovazlfzvn.supabase.co/storage/v1/object/public/blog-images/serum_showdown_banner.jpg",
+    tags: ["anua", "hyphen", "torriden", "heartleaf", "txa", "dark spots", "k-beauty", "comparison", "india"],
+    asins: ["B0DL92QM79", "B0CGVK7LKD", "B08CMS8P67", "B07WZ2YTDR"],
+    sections: [
+      {
+        title: "Too Many Viral Bottles, Very Different Jobs",
+        body: [
+          "Scroll through Instagram or Reddit for five minutes and you will see four bottles everywhere: **Anua Niacinamide 10% + TXA 4%**, **Hyphen Golden Hour Glow Serum**, **Anua Heartleaf 77% Toner**, and **Torriden DIVE-IN Hyaluronic Serum**.",
+          "People often treat them like they do the same thing, then get disappointed when a hydration serum doesn't fade acne marks, or a dark-spot serum stings red skin.",
+          "Here is what each one actually does in plain words, and which one belongs on your shelf."
+        ]
+      },
+      {
+        title: "Quick Comparison: What Each Bottle Actually Fixes",
+        body: [
+          "| Product | Price | Main Job | Buy It If... |",
+          "| :--- | :--- | :--- | :--- |",
+          "| **Hyphen Golden Hour Glow Serum** | ₹590 | Mild glow + daily hydration | You want an affordable morning glow under sunscreen |",
+          "| **Anua Niacinamide 10% + TXA 4%** | ₹1,879 | Fading stubborn dark spots | You have post-acne marks or uneven patches |",
+          "| **Anua Heartleaf 77% Toner** | ₹1,948 | Calming redness & bumps | Your skin gets red, warm, or irritated easily |",
+          "| **Torriden DIVE-IN Serum** | ₹2,999 | Deep water hydration | Your skin feels tight, flaky, or dehydrated in AC |"
+        ]
+      },
+      {
+        title: "Hyphen (₹590) vs. Anua TXA (₹1,879) for Dark Spots & Glow",
+        body: [
+          "Both products use Niacinamide and Alpha Arbutin, which is why people compare them. But they work at completely different strengths.",
+          "**Hyphen Golden Hour Glow Serum (₹590)** is a gentle, all-in-one morning serum with Niacinamide, Alpha Arbutin, Kakadu Plum, and Hyaluronic Acid. It gives your face an immediate fresh, dewy look and slowly helps with light dullness. It is a great starter serum if you do not have heavy acne scars.",
+          "**Anua Niacinamide 10% + TXA 4% (₹1,879)** is much stronger. Adding 4% Tranexamic Acid (TXA) specifically targets stubborn brown and red marks left behind after pimples heal. If you have real post-acne pigmentation that refuses to budge, Anua works noticeably faster—just start 3 nights a week so you don't overwhelm sensitive skin."
+        ],
+        sectionAsins: ["B0CGVK7LKD", "B0DL92QM79"]
+      },
+      {
+        title: "Where Anua Heartleaf Toner & Torriden DIVE-IN Fit In",
+        body: [
+          "Neither **Anua Heartleaf 77% Toner (₹1,948)** nor **Torriden DIVE-IN Serum (₹2,999)** is a dark-spot treatment. They are support players that stop your skin from getting wrecked by harsh weather or strong actives.",
+          "- **Anua Heartleaf 77% Soothing Toner** feels like cool water. Splash it on right after washing your face if your cheeks look red, itchy, or angry from sun and pimples. It calms things down fast before you put on any serum.",
+          "- **Torriden DIVE-IN Serum** uses 5 sizes of Hyaluronic Acid plus Panthenol. If you sit in air-conditioning all day and your skin feels tight even when it looks oily, two drops on damp skin plump it right back up with zero stickiness."
+        ],
+        sectionAsins: ["B08CMS8P67", "B07WZ2YTDR"]
+      },
+      {
+        title: "Simple Rule Before You Buy",
+        body: [
+          "Do not buy all four at once. Pick **one** based on what bothers you most in the mirror today:",
+          "- **Want easy daily glow under ₹600?** Grab **Hyphen Golden Hour Glow Serum**.",
+          "- **Have stubborn dark pimple marks?** Invest in **Anua Niacinamide 10% + TXA 4%**.",
+          "- **Face gets red and reactive?** Start with **Anua Heartleaf 77% Toner**.",
+          "- **Skin feels dry and tight in AC?** Go with **Torriden DIVE-IN Serum**.",
+          "If you are already using Vitamin C or Retinol at night, run your products through our free [Ingredient Clash Checker](/tools/ingredients) first so they don't irritate your barrier—or browse the full [Korean Beauty Shelf](/k-beauty)."
+        ]
+      }
+    ]
+  },
+  {
     slug: "gta-6-gamer-skincare-dark-circles-headset-acne-india",
     title: "The GTA 6 All-Nighter: How to Beat 'Gamer Skin', Dark Circles & Headset Acne in Indian Weather",
     category: "SKINCARE",

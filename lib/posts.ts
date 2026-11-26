@@ -888,6 +888,8 @@ const mappedHighIntent = HIGH_INTENT_POSTS.map(p => ({
 export const POSTS: Post[] = [
   // GTA 6 Gamer Skincare & High Intent Series (Placed at absolute top per workspace rule 5)
   ...mappedHighIntent.filter(p => [
+    "conscious-chemist-berry-bright-vs-round-lab-birch-juice-sunscreen-india",
+    "anua-niacinamide-txa-vs-hyphen-golden-hour-glow-serum-india",
     "gta-6-gamer-skincare-dark-circles-headset-acne-india",
     "non-comedogenic-makeup-acne-prone-skin-india",
     "pore-clogging-ingredients-in-foundation-concealer",
@@ -1200,6 +1202,8 @@ const SLUG_IMAGE_MAP: Record<string, string> = {
  "indoor-ac-skin-syndrome-barrier-repair": "/blog-thumbs/blog_ac_skin_syndrome.jpg",
  "azelaic-acid-niacinamide-hyperpigmentation-duo": "/blog-thumbs/blog_azelaic_niacinamide.jpg",
  "ac-face-air-conditioning-dehydration-fix": "https://azsofabirbgovazlfzvn.supabase.co/storage/v1/object/public/blog-images/ac_face_banner.jpg",
+ "conscious-chemist-berry-bright-vs-round-lab-birch-juice-sunscreen-india": "https://azsofabirbgovazlfzvn.supabase.co/storage/v1/object/public/blog-images/sunscreen_showdown_banner.jpg",
+ "anua-niacinamide-txa-vs-hyphen-golden-hour-glow-serum-india": "https://azsofabirbgovazlfzvn.supabase.co/storage/v1/object/public/blog-images/serum_showdown_banner.jpg",
 };
 
 export const getRelevantImage = (slug: string, _title: string, category: string): string => {
