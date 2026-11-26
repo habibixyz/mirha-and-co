@@ -7,6 +7,12 @@ import { Search, ArrowRight, BookOpen, Droplet, Layers, ExternalLink } from "luc
 import { useGlobalization } from "@/components/GlobalizationContext";
 
 const CATALOG: { asin: string; section: string }[] = [
+  { asin: "B08CMS8P67",  section: "barrier" }, // Anua Heartleaf 77% Soothing Toner
+  { asin: "B0DL92QM79",  section: "brightening" }, // Anua Niacinamide 10% + TXA 4% Serum
+  { asin: "B07WZ2YTDR",  section: "hydration" }, // Torriden DIVE-IN Hyaluronic Acid Serum
+  { asin: "B08HGZ5XPH",  section: "pore" }, // Medicube Zero Pore Pad 2.0
+  { asin: "B08FMCMGN6",  section: "cleansing" }, // Round Lab 1025 Dokdo Cleanser
+  { asin: "B0DJGWH3TC",  section: "sun" }, // Round Lab Birch Juice Moisturizing Sunscreen
   { asin: "B09GP7K353", section: "hydration" },
   { asin: "B09GXFVMCM", section: "hydration" },
   { asin: "B06Y15D1LH",  section: "hydration" },
@@ -62,6 +68,8 @@ const BRANDS = [
   { id: "mixsoon",          label: "Mixsoon" },
   { id: "Anua",             label: "Anua" },
   { id: "Round Lab",        label: "Round Lab" },
+  { id: "Torriden",         label: "Torriden" },
+  { id: "Medicube",         label: "Medicube" },
   { id: "SeoulCeuticals",   label: "SeoulCeuticals" },
 ];
 

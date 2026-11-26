@@ -80,6 +80,16 @@ const ASIN = {
   isntree_hyaluronic_spf: "B08D3L4BQP",
   skin1004_centella_ampoule: "B06Y15D1LH",
   boj_rice_toner: "B0D44T7RW9",
+  // Hyped Indian & K-Beauty Diagnostics Additions
+  hyphen_glow_serum: "B0CGVK7LKD",
+  conscious_berry_spf: "B0BLW3SPQG",
+  conscious_sundrink_spf: "B0C59HFZMP",
+  anua_heartleaf_toner: "B08CMS8P67",
+  anua_txa_serum: "B0DL92QM79",
+  torriden_divein_serum: "B07WZ2YTDR",
+  medicube_pore_pad: "B08HGZ5XPH",
+  roundlab_dokdo_wash: "B08FMCMGN6",
+  roundlab_birch_spf: "B0DJGWH3TC",
 };
 
 // ─── BUDGET TIERS ─────────────────────────────────────────────────────────
@@ -138,13 +148,13 @@ const ROUTINE_MAP: Record<string, Record<string, RoutineRecommendation>> = {
       cleanser: { asin: ASIN.minimalist_ala_wash, name: "Minimalist 7% ALA + Glycolic Face Wash", reason: "ALA + Glycolic clears dead cell buildup that makes oily skin look flat. ₹380." },
       treatment: { asin: ASIN.plum_vitamin_c, name: "Plum 15% Vitamin C Face Serum", reason: "Direct ingredient for radiant glow. Clinical-level 15% stable concentration. ₹445." },
       moisturiser: { asin: ASIN.dotkey_cica_gel, name: "Dot & Key CICA Calming Skin Renewing Night Gel", reason: "Niacinamide and Cica revive skin glow and replenish hydration without pore congestion. ₹345." },
-      sunscreen: { asin: ASIN.lakme_spf, name: "Lakme SPF 50 PA++++ Sunscreen", reason: "Shields against UV-induced dullness. Niacinamide adds brightening protection. ₹282." },
+      sunscreen: { asin: ASIN.conscious_berry_spf, name: "Conscious Chemist Berry Bright Sunscreen SPF 50 PA++++", reason: "Ultralight gel-cream SPF with Niacinamide & Blackberry Extract shields against UV dullness with zero white cast. ₹259." },
     },
     budget_1000: {
       cleanser: { asin: ASIN.minimalist_ala_wash, name: "Minimalist 7% ALA + Glycolic Face Wash", reason: "Chemical exfoliant that clears dead cell buildup to unveil fresh radiant skin." },
-      treatment: { asin: ASIN.plum_vitamin_c, name: "Plum 15% Vitamin C Face Serum", reason: "Pure mandarin peel extract targets surface dullness for an even, glowing skin tone." },
+      treatment: { asin: ASIN.hyphen_glow_serum, name: "Hyphen Golden Hour Glow Serum", reason: "10% Niacinamide, Alpha Arbutin & Kakadu Plum deliver an instant dewy glass-skin glow while fading dullness. ₹590." },
       moisturiser: { asin: ASIN.neutrogena_hydro_boost, name: "Neutrogena Hydro Boost Water Gel", reason: "Oil-free Hyaluronic acid gel plumps skin and restores healthy dewy bounce. ₹730." },
-      sunscreen: { asin: ASIN.foxtale_glow_spf, name: "Foxtale Glow Sunscreen SPF 50 PA++++", reason: "Vitamin C and Niacinamide infused SPF delivers instant brightness and UV defense." },
+      sunscreen: { asin: ASIN.conscious_sundrink_spf, name: "Conscious Chemist Sundrink Unwind Edition SPF 50 PA++++", reason: "Sweat- and water-resistant Ceramide + Niacinamide SPF built for humid Indian weather. ₹599." },
     },
     budget_2000: {
       cleanser: { asin: ASIN.cosrx_low_ph_wash, name: "COSRX Low pH Good Morning Gel Cleanser", reason: "Mild morning acid wash leaves skin clean, clear, and perfectly prepped for radiant actives." },
@@ -168,10 +178,10 @@ const ROUTINE_MAP: Record<string, Record<string, RoutineRecommendation>> = {
       sunscreen: { asin: ASIN.reequil_matte_spf, name: "RE' EQUIL Ultra Matte Dry Touch Sunscreen", reason: "Matte velvet finish locks in underlying hydration without looking greasy." },
     },
     budget_2000: {
-      cleanser: { asin: ASIN.cetaphil_facewash, name: "Cetaphil Gentle Skin Hydrating Face Wash", reason: "Niacinamide + Panthenol cleanser that actively supports the moisture barrier while cleansing." },
-      treatment: { asin: ASIN.cosrx_snail_mucin, name: "COSRX Advanced Snail 96 Mucin Power Essence", reason: "Cult global favorite containing 96% snail secretion filtrate to plump and rehydrate parched skin." },
+      cleanser: { asin: ASIN.roundlab_dokdo_wash, name: "Round Lab 1025 Dokdo Cleanser", reason: "Low-pH Ulleungdo deep-sea mineral cleanser removes fine dust and SPF without stripping delicate barrier lipids." },
+      treatment: { asin: ASIN.torriden_divein_serum, name: "Torriden DIVE-IN Low Molecular Hyaluronic Acid Serum", reason: "5D Low Molecular Weight Hyaluronic Acid + Panthenol delivers deep glass-skin hydration with zero stickiness." },
       moisturiser: { asin: ASIN.formularx_barrier_relief, name: "Formularx Barrier Relief Lightweight Moisturizer", reason: "Golden 3:1:1 ceramide-to-cholesterol ratio ends chronic dehydration and surface oil imbalance." },
-      sunscreen: { asin: ASIN.skin1004_hyalu_cica_spf, name: "SKIN1004 Madagascar Centella Hyalu-Cica Water-Fit Sun Serum SPF50+ PA++++", reason: "Centella Asiatica + Hyaluronic Acid creates a moisture reservoir while shielding from harsh sun." },
+      sunscreen: { asin: ASIN.roundlab_birch_spf, name: "Round Lab Birch Juice Moisturizing Sunscreen SPF 50+ PA++++", reason: "Korea's #1 hydrating essence-sunscreen with Silver Birch Sap keeps dehydrated skin quenched all day." },
     },
   },
 
@@ -299,7 +309,7 @@ const ROUTINE_MAP: Record<string, Record<string, RoutineRecommendation>> = {
     },
     budget_2000: {
       cleanser: { asin: ASIN.cetaphil_facewash, name: "Cetaphil Gentle Skin Hydrating Face Wash", reason: "Barrier-safe cleanser for combination skin using potent brightening actives." },
-      treatment: { asin: ASIN.boj_rice_toner, name: "Beauty of Joseon Glow Replenishing Rice Toner", reason: "Traditional fermented rice extract helps brighten stubborn post-acne marks and tone combination skin." },
+      treatment: { asin: ASIN.anua_txa_serum, name: "Anua Niacinamide 10% + TXA 4% Dark Spot Correcting Serum", reason: "10% Niacinamide, 4% Tranexamic Acid & 2% Arbutin fade stubborn post-acne marks without barrier irritation." },
       moisturiser: { asin: ASIN.formularx_barrier_relief, name: "Formularx Barrier Relief Lightweight Moisturizer", reason: "Keeps the skin barrier resilient so brightening actives work at maximum efficacy." },
       sunscreen: { asin: ASIN.skin1004_hyalu_cica_spf, name: "SKIN1004 Madagascar Centella Hyalu-Cica Water-Fit Sun Serum SPF50+ PA++++", reason: "Centella Asiatica and Hyaluronic Acid protect against UV-triggered melanin with zero white cast." },
     },
@@ -363,8 +373,8 @@ const ROUTINE_MAP: Record<string, Record<string, RoutineRecommendation>> = {
       sunscreen: { asin: ASIN.minimalist_spf, name: "Minimalist Sunscreen SPF 50 PA+++ 100gm", reason: "Soothes sensitive skin with multi-vitamins and photostable filters with zero eye-sting." },
     },
     budget_2000: {
-      cleanser: { asin: ASIN.cetaphil_facewash, name: "Cetaphil Gentle Skin Hydrating Face Wash", reason: "Clinically proven gentle formula that cleanses while defending against sensitive irritation." },
-      treatment: { asin: ASIN.skin1004_centella_ampoule, name: "SKIN1004 Madagascar Centella Ampoule", reason: "100% pure Madagascar Centella Asiatica immediately quenches flare-ups, reduces redness, and heals acne." },
+      cleanser: { asin: ASIN.roundlab_dokdo_wash, name: "Round Lab 1025 Dokdo Cleanser", reason: "Slightly acidic pH 5.0–6.0 mineral cleanser purifies sensitive skin without irritation." },
+      treatment: { asin: ASIN.anua_heartleaf_toner, name: "Anua Heartleaf 77% Soothing Toner", reason: "77% Heartleaf extract visibly calms redness, reactive flare-ups, and acne-prone sensitivity." },
       moisturiser: { asin: ASIN.formularx_barrier_relief, name: "Formularx Barrier Relief Lightweight Moisturizer", reason: "Ceramides, Cholesterol, and Fatty acids heal compromised skin without pore congestion." },
       sunscreen: { asin: ASIN.skin1004_hyalu_cica_spf, name: "SKIN1004 Madagascar Centella Hyalu-Cica Water-Fit Sun Serum SPF50+ PA++++", reason: "Soothing Centella + Hyaluronic Acid sun serum designed specifically for ultra-sensitive, reactive skin." },
     },

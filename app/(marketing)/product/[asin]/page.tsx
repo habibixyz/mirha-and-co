@@ -359,9 +359,9 @@ export default async function ProductPage({ params }: { params: Promise<{ asin: 
     const ptags = toList(product.tags).map((t: string) => t.toLowerCase());
     const savePct = product.mrp > product.price
       ? Math.round(((product.mrp - product.price) / product.mrp) * 100) : 0;
-    let note = `${product.brand}'s ${product.subcat} holds a ${product.rating}★ rating`;
-    if (product.reviews) note += ` from ${product.reviews} reviews`;
-    note += ".";
+    let note = product.rating > 0
+      ? `${product.brand}'s ${product.subcat} holds a ${product.rating}★ rating${product.reviews ? ` from ${product.reviews} reviews` : ""}.`
+      : `${product.brand}'s ${product.subcat} is part of our curated ${product.category.toLowerCase()} catalog.`;
     if (savePct > 20) note += ` Currently ${savePct}% off MRP — solid value window.`;
     if (ptags.includes("dermat") || (product.badge || "").toLowerCase().includes("dermat"))
       note += " Dermatologist-recommended.";
@@ -396,11 +396,15 @@ export default async function ProductPage({ params }: { params: Promise<{ asin: 
     description: product.description,
     sku: product.asin,
     category: product.category,
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: product.rating,
-      reviewCount: Number(String(product.reviews || "0").replace(/[^0-9]/g, "")) || 1,
-    },
+    ...(product.rating > 0
+      ? {
+          aggregateRating: {
+            "@type": "AggregateRating",
+            ratingValue: product.rating,
+            reviewCount: Number(String(product.reviews || "0").replace(/[^0-9]/g, "")) || 1,
+          },
+        }
+      : {}),
     offers: {
       "@type": "Offer",
       url: `https://www.mirhaandco.com/product/${product.asin}`,
@@ -1159,10 +1163,12 @@ export default async function ProductPage({ params }: { params: Promise<{ asin: 
  <small>{t("product.price")}</small>
  <b>{convertAndFormatPrice(product.price, currency)}</b>
  </div>
+ {product.rating > 0 && (
  <div>
  <small>{t("product.rating")}</small>
  <b>{product.rating}</b>
  </div>
+ )}
  <div>
  <small>{t("product.saving")}</small>
  <em>{save > 0 ? `${save}% ${t("product.off")}` : "Check price"}</em>
