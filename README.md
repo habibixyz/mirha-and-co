@@ -4,6 +4,8 @@
 
 **Live site:** [mirhaandco.com](https://www.mirhaandco.com) · **Stack:** Next.js · Prisma · PostgreSQL · Google Gemini · Razorpay · Dodo Payments · Vercel
 
+> **Proprietary & All Rights Reserved:** Copyright © 2026 **Mirha & Co.** This repository is made visible strictly for portfolio/engineering review. **No license is granted** to copy, clone, redistribute, white-label, or commercially use this codebase, brand name, design system, editorial content, or diagnostic engines without written permission. See [`LICENSE`](LICENSE).
+
 ---
 
 ## What is Mirha & Co?
@@ -396,9 +398,11 @@ See [`CONTRIBUTING.md`](CONTRIBUTING.md) for contribution guidelines.
 
 ---
 
-## License
+## License & Brand Protection
 
-See [`LICENSE`](LICENSE).
+**Copyright © 2026 Mirha & Co. — All Rights Reserved.**
+
+This codebase, including the **Mirha & Co.** brand identity, UI/UX design, diagnostic algorithms, B2B API, editorial guides, and database schemas, is **proprietary and confidential**. Unauthorized copying, forking for commercial use, cloning, scraping, or redistribution is strictly prohibited. See [`LICENSE`](LICENSE) for full terms.
 
 ---
 
