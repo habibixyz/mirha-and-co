@@ -297,6 +297,7 @@ function ProductCard({
       >
         <button
           type="button"
+          className="shop-bag-btn"
           onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();
@@ -321,7 +322,7 @@ function ProductCard({
           {isSelected ? <Check size={11} /> : <Plus size={11} />}
           {isSelected ? "In Bag" : "Add to Bag"}
         </button>
-        <span style={{ display: "inline-flex", alignItems: "center", gap: "4px" }}>
+        <span style={{ display: "inline-flex", alignItems: "center", justifyContent: "space-between", gap: "4px", whiteSpace: "nowrap" }}>
           <span>{t("product.viewdetails")}</span>
           <ArrowRight
             size={13}
@@ -340,9 +341,17 @@ export default function ShopFilterClient({ activeConcernProp }: { activeConcernP
   const [query, setQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState("All");
   const [activeConcern, setActiveConcern] = useState<string | null>(activeConcernProp || null);
+  const [activeBrand, setActiveBrand] = useState("All");
+  const [sortBy, setSortBy] = useState<"featured" | "price-asc" | "price-desc">("featured");
   const [veganOnly, setVeganOnly] = useState(false);
   const [crueltyFreeOnly, setCrueltyFreeOnly] = useState(false);
   const [bundleAsins, setBundleAsins] = useState<string[]>([]);
+  const [visibleCount, setVisibleCount] = useState(24);
+
+  const brands = useMemo(
+    () => Array.from(new Set(PRODUCT_LIST.map((p) => p.brand).filter(Boolean))).sort((a, b) => a.localeCompare(b)),
+    []
+  );
 
   const toggleBundle = (asin: string) => {
     setBundleAsins((prev) =>
@@ -364,7 +373,7 @@ export default function ShopFilterClient({ activeConcernProp }: { activeConcernP
   );
 
   const filtered = useMemo(() => {
-    return PRODUCT_LIST.filter((product) => {
+    const list = PRODUCT_LIST.filter((product) => {
       const categoryMatch =
         activeCategory === "All" ||
         (activeCategory === "Men's Grooming"
@@ -377,12 +386,21 @@ export default function ShopFilterClient({ activeConcernProp }: { activeConcernP
               (product.tags || []).some((t) => ["fragrance", "perfume", "deo", "deodorant"].includes(t.toLowerCase()))
             : normalize(product.category) === normalize(activeCategory));
 
+      const brandMatch = activeBrand === "All" || normalize(product.brand) === normalize(activeBrand);
       const veganMatch = !veganOnly || isVegan(product);
       const crueltyFreeMatch = !crueltyFreeOnly || isCrueltyFree(product);
 
-      return categoryMatch && veganMatch && crueltyFreeMatch && matchesConcern(product, activeConcern) && matchesQuery(product, query);
+      return categoryMatch && brandMatch && veganMatch && crueltyFreeMatch && matchesConcern(product, activeConcern) && matchesQuery(product, query);
     });
-  }, [activeCategory, activeConcern, query, veganOnly, crueltyFreeOnly]);
+
+    if (sortBy === "price-asc") {
+      return [...list].sort((a, b) => (a.price || 0) - (b.price || 0));
+    }
+    if (sortBy === "price-desc") {
+      return [...list].sort((a, b) => (b.price || 0) - (a.price || 0));
+    }
+    return list;
+  }, [activeCategory, activeBrand, activeConcern, query, veganOnly, crueltyFreeOnly, sortBy]);
 
   return (
     <>
@@ -517,6 +535,42 @@ export default function ShopFilterClient({ activeConcernProp }: { activeConcernP
           .section-head[data-rtl="true"] .section-subtitle {
             text-align: right !important;
           }
+
+          .shop-filter-select {
+            flex: 1 1 calc(50% - 5px) !important;
+            min-width: 0 !important;
+            max-width: 100% !important;
+            min-height: 36px !important;
+            text-overflow: ellipsis !important;
+          }
+
+          .product-footer {
+            flex-direction: column-reverse !important;
+            align-items: stretch !important;
+            gap: 8px !important;
+          }
+
+          .shop-bag-btn {
+            width: 100% !important;
+            justify-content: center !important;
+            padding: 8px 10px !important;
+            font-size: 11px !important;
+          }
+        }
+
+        .shop-bag-btn {
+          white-space: nowrap;
+          flex-shrink: 0;
+        }
+
+        .shop-filter-select {
+          appearance: none;
+          -webkit-appearance: none;
+          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23756b63' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+          background-repeat: no-repeat;
+          background-position: right 12px center;
+          padding: 7px 30px 7px 14px !important;
+          min-height: 34px;
         }
 
         /* SEARCH BAR CONTROLS */
@@ -676,14 +730,17 @@ export default function ShopFilterClient({ activeConcernProp }: { activeConcernP
                   {t(CATEGORY_KEYS[category] || category)}
                 </button>
               ))}
-              {activeConcern || query || activeCategory !== "All" || veganOnly || crueltyFreeOnly ? (
+              {activeConcern || query || activeCategory !== "All" || activeBrand !== "All" || sortBy !== "featured" || veganOnly || crueltyFreeOnly ? (
                 <button
                   onClick={() => {
                     setActiveCategory("All");
+                    setActiveBrand("All");
+                    setSortBy("featured");
                     setActiveConcern(null);
                     setQuery("");
                     setVeganOnly(false);
                     setCrueltyFreeOnly(false);
+                    setVisibleCount(24);
                   }}
                 >
                   Clear all
@@ -753,19 +810,129 @@ export default function ShopFilterClient({ activeConcernProp }: { activeConcernP
           >
             🐰 {t("filter.crueltyfree")}
           </button>
+
+          <select
+            className="shop-filter-select"
+            aria-label="Filter by brand"
+            value={activeBrand}
+            onChange={(e) => {
+              setActiveBrand(e.target.value);
+              setVisibleCount(24);
+            }}
+            style={{
+              padding: "6px 14px",
+              borderRadius: "20px",
+              fontSize: "12px",
+              border: activeBrand !== "All" ? "1px solid #fc2779" : "1px solid #ded3ca",
+              background: activeBrand !== "All" ? "#fff0f5" : "#ffffff",
+              color: activeBrand !== "All" ? "#fc2779" : "#756b63",
+              cursor: "pointer",
+              fontWeight: 500,
+              outline: "none",
+            }}
+          >
+            <option value="All">Brand: All ({brands.length})</option>
+            {brands.map((brand) => (
+              <option key={brand} value={brand}>
+                {brand}
+              </option>
+            ))}
+          </select>
+
+          <select
+            className="shop-filter-select"
+            aria-label="Sort products"
+            value={sortBy}
+            onChange={(e) => {
+              setSortBy(e.target.value as "featured" | "price-asc" | "price-desc");
+              setVisibleCount(24);
+            }}
+            style={{
+              padding: "6px 14px",
+              borderRadius: "20px",
+              fontSize: "12px",
+              border: sortBy !== "featured" ? "1px solid #fc2779" : "1px solid #ded3ca",
+              background: sortBy !== "featured" ? "#fff0f5" : "#ffffff",
+              color: sortBy !== "featured" ? "#fc2779" : "#756b63",
+              cursor: "pointer",
+              fontWeight: 500,
+              outline: "none",
+            }}
+          >
+            <option value="featured">Sort: Featured</option>
+            <option value="price-asc">Price: Low to High</option>
+            <option value="price-desc">Price: High to Low</option>
+          </select>
+
+          {(activeConcern || query || activeCategory !== "All" || activeBrand !== "All" || sortBy !== "featured" || veganOnly || crueltyFreeOnly) && (
+            <button
+              type="button"
+              onClick={() => {
+                setActiveCategory("All");
+                setActiveBrand("All");
+                setSortBy("featured");
+                setActiveConcern(null);
+                setQuery("");
+                setVeganOnly(false);
+                setCrueltyFreeOnly(false);
+                setVisibleCount(24);
+              }}
+              style={{
+                padding: "6px 14px",
+                borderRadius: "20px",
+                fontSize: "12px",
+                border: "1px solid rgba(252, 39, 121, 0.35)",
+                background: "#fff5f8",
+                color: "#fc2779",
+                cursor: "pointer",
+                fontWeight: 600,
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "4px",
+                minHeight: "34px",
+              }}
+            >
+              <X size={12} />
+              Clear all
+            </button>
+          )}
         </div>
 
         {filtered.length ? (
-          <div className="shop-grid">
-            {filtered.map((product) => (
-              <ProductCard
-                key={product.id}
-                product={product}
-                isSelected={bundleAsins.includes(product.asin)}
-                onToggleBundle={toggleBundle}
-              />
-            ))}
-          </div>
+          <>
+            <div className="shop-grid">
+              {filtered.slice(0, visibleCount).map((product) => (
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                  isSelected={bundleAsins.includes(product.asin)}
+                  onToggleBundle={toggleBundle}
+                />
+              ))}
+            </div>
+            {filtered.length > visibleCount && (
+              <div style={{ display: "flex", justifyContent: "center", marginTop: "32px" }}>
+                <button
+                  type="button"
+                  onClick={() => setVisibleCount((prev) => prev + 24)}
+                  style={{
+                    padding: "12px 28px",
+                    borderRadius: "999px",
+                    border: "1px solid #ded3ca",
+                    background: "#ffffff",
+                    color: "#1f1a17",
+                    fontSize: "13px",
+                    fontWeight: 700,
+                    cursor: "pointer",
+                    boxShadow: "0 4px 14px rgba(0,0,0,0.05)",
+                    transition: "all 0.2s ease",
+                  }}
+                >
+                  Load More Products ({filtered.length - visibleCount} more)
+                </button>
+              </div>
+            )}
+          </>
         ) : (
           <div className="empty-state">
             <h3>No products found</h3>

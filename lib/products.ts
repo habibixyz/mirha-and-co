@@ -5600,7 +5600,800 @@ id: 601,
   image: "/products/B09VPM5RP4.JPG",
   link: "https://link.amazon/B0ipAe5BH"
 }
-
+,
+{
+  "id": 5031,
+  "name": "CeraVe Foaming Facial Cleanser (236ml)",
+  "brand": "CeraVe",
+  "category": "Skincare",
+  "subcat": "Face Wash",
+  "mrp": 1149,
+  "price": 999,
+  "rating": 0,
+  "reviews": "",
+  "asin": "B07C5SKVL7",
+  "badge": "Derm Favorite",
+  "description": "CeraVe Foaming Cleanser For Normal To Oily Skin (236ml) - Dermatologist-Developed Facewash | Non-Comedogenic And Fragrance-Free Cleansers For Acne-Prone Skin",
+  "specs": {
+    "Skin Type": "Oily & Combination Skin",
+    "Key Ingredient": "cerave, face wash, skincare",
+    "Use": "AM & PM"
+  },
+  "tags": [
+    "cerave",
+    "face wash",
+    "skincare",
+    "derm",
+    "oily skin"
+  ],
+  "concerns": [
+    "acne"
+  ],
+  "image": "https://azsofabirbgovazlfzvn.supabase.co/storage/v1/object/public/products/B07C5SKVL7.JPG",
+  "link": "https://link.amazon/B0b4XT24n"
+},
+{
+  "id": 5032,
+  "name": "CeraVe Hydrating Facial Cleanser (236ml)",
+  "brand": "CeraVe",
+  "category": "Skincare",
+  "subcat": "Face Wash",
+  "mrp": 735,
+  "price": 639,
+  "rating": 0,
+  "reviews": "",
+  "asin": "B07C5R51Q9",
+  "badge": "Derm Favorite",
+  "description": "CeraVe Hydrating Cleanser For Normal To Dry Skin (236ml) - Non-Foaming Face Wash with Hyaluronic Acid And Ceramides | Non-Comedogenic, Non-Irritating And Fragrance-Free Cleanser",
+  "specs": {
+    "Skin Type": "Dry & Sensitive Skin",
+    "Key Ingredient": "cerave, face wash, skincare",
+    "Use": "AM & PM"
+  },
+  "tags": [
+    "cerave",
+    "face wash",
+    "skincare",
+    "derm",
+    "ceramides",
+    "hyaluronic acid"
+  ],
+  "concerns": [
+    "barrier repair"
+  ],
+  "image": "https://azsofabirbgovazlfzvn.supabase.co/storage/v1/object/public/products/B07C5R51Q9.JPG",
+  "link": "https://link.amazon/B0iRfyj1t"
+},
+{
+  "id": 5033,
+  "name": "CeraVe SA Smoothing Cleanser (236ml)",
+  "brand": "CeraVe",
+  "category": "Skincare",
+  "subcat": "Face Wash",
+  "mrp": 1195,
+  "price": 1039,
+  "rating": 0,
+  "reviews": "",
+  "asin": "B00U1YCRD8",
+  "badge": "Derm Favorite",
+  "description": "Salicylic acid and ceramide cleanser that gently exfoliates rough, bumpy, and acne-prone skin texture.",
+  "specs": {
+    "Skin Type": "All Skin Types",
+    "Key Ingredient": "cerave, face wash, skincare",
+    "Use": "AM & PM"
+  },
+  "tags": [
+    "cerave",
+    "face wash",
+    "skincare",
+    "derm",
+    "ceramides",
+    "salicylic acid"
+  ],
+  "concerns": [
+    "acne",
+    "barrier repair"
+  ],
+  "image": "https://azsofabirbgovazlfzvn.supabase.co/storage/v1/object/public/products/B00U1YCRD8.JPG",
+  "link": "https://link.amazon/B0cApxxIq"
+},
+{
+  "id": 5034,
+  "name": "CeraVe Moisturising Cream 50ML",
+  "brand": "CeraVe",
+  "category": "Skincare",
+  "subcat": "Moisturizer",
+  "mrp": 404,
+  "price": 351,
+  "rating": 0,
+  "reviews": "",
+  "asin": "B07CH8F17Q",
+  "badge": "Derm Favorite",
+  "description": "Rich, non-greasy barrier cream with 3 essential ceramides and MVE technology for 24-hour hydration.",
+  "specs": {
+    "Skin Type": "All Skin Types",
+    "Key Ingredient": "cerave, moisturizer, skincare",
+    "Use": "AM & PM"
+  },
+  "tags": [
+    "cerave",
+    "moisturizer",
+    "skincare",
+    "derm",
+    "ceramides"
+  ],
+  "concerns": [
+    "barrier repair"
+  ],
+  "image": "https://azsofabirbgovazlfzvn.supabase.co/storage/v1/object/public/products/B07CH8F17Q.JPG",
+  "link": "https://link.amazon/B0aCB1wXG"
+},
+{
+  "id": 5035,
+  "name": "CeraVe Moisturising Lotion (236ml)",
+  "brand": "CeraVe",
+  "category": "Skincare",
+  "subcat": "Lotion",
+  "mrp": 1250,
+  "price": 1087,
+  "rating": 0,
+  "reviews": "",
+  "asin": "B07CG2TD9F",
+  "badge": "Derm Favorite",
+  "description": "Lightweight daily face and body lotion with ceramides and hyaluronic acid for dry to normal skin.",
+  "specs": {
+    "Skin Type": "Dry & Sensitive Skin",
+    "Key Ingredient": "cerave, lotion, skincare",
+    "Use": "AM & PM"
+  },
+  "tags": [
+    "cerave",
+    "lotion",
+    "skincare",
+    "derm",
+    "ceramides",
+    "hyaluronic acid"
+  ],
+  "concerns": [
+    "barrier repair"
+  ],
+  "image": "https://azsofabirbgovazlfzvn.supabase.co/storage/v1/object/public/products/B07CG2TD9F.JPG",
+  "link": "https://link.amazon/B0ex3cKSA"
+},
+{
+  "id": 5036,
+  "name": "CeraVe AM Facial Moisturising Lotion SPF 30",
+  "brand": "CeraVe",
+  "category": "Skincare",
+  "subcat": "Sunscreen",
+  "mrp": 1242,
+  "price": 1080,
+  "rating": 0,
+  "reviews": "",
+  "asin": "B0BT6VDJ5M",
+  "badge": "Derm SPF",
+  "description": "Oil-free daytime moisturizer with broad-spectrum SPF 30, niacinamide, and ceramides.",
+  "specs": {
+    "Skin Type": "All Skin Types",
+    "Key Ingredient": "cerave, sunscreen, skincare",
+    "Use": "AM"
+  },
+  "tags": [
+    "cerave",
+    "sunscreen",
+    "skincare",
+    "derm",
+    "ceramides",
+    "niacinamide",
+    "spf"
+  ],
+  "concerns": [
+    "sun protection",
+    "barrier repair"
+  ],
+  "image": "https://azsofabirbgovazlfzvn.supabase.co/storage/v1/object/public/products/B0BT6VDJ5M.JPG",
+  "link": "https://link.amazon/B029KWzUZ"
+},
+{
+  "id": 5037,
+  "name": "CeraVe PM Facial Moisturising Lotion (52ml)",
+  "brand": "CeraVe",
+  "category": "Skincare",
+  "subcat": "Lotion",
+  "mrp": 1196,
+  "price": 1040,
+  "rating": 0,
+  "reviews": "",
+  "asin": "B07C5XYT19",
+  "badge": "Derm Favorite",
+  "description": "Ultra-lightweight night lotion with niacinamide and ceramides to calm and repair the skin barrier.",
+  "specs": {
+    "Skin Type": "All Skin Types",
+    "Key Ingredient": "cerave, lotion, skincare",
+    "Use": "AM & PM"
+  },
+  "tags": [
+    "cerave",
+    "lotion",
+    "skincare",
+    "derm",
+    "ceramides",
+    "niacinamide"
+  ],
+  "concerns": [
+    "barrier repair",
+    "sensitivity"
+  ],
+  "image": "https://azsofabirbgovazlfzvn.supabase.co/storage/v1/object/public/products/B07C5XYT19.JPG",
+  "link": "https://link.amazon/B0iSlMJtO"
+},
+{
+  "id": 5038,
+  "name": "CeraVe Resurfacing Retinol Serum (30ml)",
+  "brand": "CeraVe",
+  "category": "Skincare",
+  "subcat": "Serum",
+  "mrp": 1471,
+  "price": 1279,
+  "rating": 0,
+  "reviews": "",
+  "asin": "B07VWSN95S",
+  "badge": "Derm Favorite",
+  "description": "Encapsulated retinol serum with licorice root extract and ceramides to fade post-acne marks and refine pores.",
+  "specs": {
+    "Skin Type": "All Skin Types",
+    "Key Ingredient": "cerave, serum, skincare",
+    "Use": "AM & PM"
+  },
+  "tags": [
+    "cerave",
+    "serum",
+    "skincare",
+    "derm",
+    "ceramides",
+    "retinol"
+  ],
+  "concerns": [
+    "acne",
+    "pigmentation",
+    "barrier repair"
+  ],
+  "image": "https://azsofabirbgovazlfzvn.supabase.co/storage/v1/object/public/products/B07VWSN95S.JPG",
+  "link": "https://link.amazon/B0cWht4Lg"
+},
+{
+  "id": 5039,
+  "name": "CeraVe Blemish Control Gel (40ml)",
+  "brand": "CeraVe",
+  "category": "Skincare",
+  "subcat": "Treatment",
+  "mrp": 830,
+  "price": 722,
+  "rating": 0,
+  "reviews": "",
+  "asin": "B0B7RQC9N4",
+  "badge": "Derm Favorite",
+  "description": "AHA/BHA acne treatment gel with 2% salicylic acid, glycolic acid, and lactic acid to clear breakouts.",
+  "specs": {
+    "Skin Type": "All Skin Types",
+    "Key Ingredient": "cerave, treatment, skincare",
+    "Use": "AM & PM"
+  },
+  "tags": [
+    "cerave",
+    "treatment",
+    "skincare",
+    "derm",
+    "salicylic acid"
+  ],
+  "concerns": [
+    "acne"
+  ],
+  "image": "https://azsofabirbgovazlfzvn.supabase.co/storage/v1/object/public/products/B0B7RQC9N4.JPG",
+  "link": "https://link.amazon/B03Q81M1s"
+},
+{
+  "id": 5040,
+  "name": "Cetaphil Oily Skin Cleanser (118ml)",
+  "brand": "Cetaphil",
+  "category": "Skincare",
+  "subcat": "Face Wash",
+  "mrp": 528,
+  "price": 459,
+  "rating": 0,
+  "reviews": "",
+  "asin": "B01CCGW732",
+  "badge": "Derm Favorite",
+  "description": "Low-lather foaming cleanser formulated to remove excess sebum and impurities without over-drying.",
+  "specs": {
+    "Skin Type": "Dry & Sensitive Skin",
+    "Key Ingredient": "cetaphil, face wash, skincare",
+    "Use": "AM & PM"
+  },
+  "tags": [
+    "cetaphil",
+    "face wash",
+    "skincare",
+    "derm",
+    "oily skin"
+  ],
+  "concerns": [
+    "acne",
+    "barrier repair"
+  ],
+  "image": "https://azsofabirbgovazlfzvn.supabase.co/storage/v1/object/public/products/B01CCGW732.JPG",
+  "link": "https://link.amazon/B00qyHxfg"
+},
+{
+  "id": 5041,
+  "name": "Cetaphil Moisturising Lotion (236ml)",
+  "brand": "Cetaphil",
+  "category": "Skincare",
+  "subcat": "Lotion",
+  "mrp": 1379,
+  "price": 1199,
+  "rating": 0,
+  "reviews": "",
+  "asin": "B01IPBVK36",
+  "badge": "Derm Favorite",
+  "description": "Lightweight daily lotion with avocado oil, vitamin E, and niacinamide for 48-hour hydration.",
+  "specs": {
+    "Skin Type": "All Skin Types",
+    "Key Ingredient": "cetaphil, lotion, skincare",
+    "Use": "AM & PM"
+  },
+  "tags": [
+    "cetaphil",
+    "lotion",
+    "skincare",
+    "derm",
+    "niacinamide"
+  ],
+  "concerns": [
+    "barrier repair"
+  ],
+  "image": "https://azsofabirbgovazlfzvn.supabase.co/storage/v1/object/public/products/B01IPBVK36.JPG",
+  "link": "https://link.amazon/B09l0gDj7"
+},
+{
+  "id": 5042,
+  "name": "Cetaphil DAM Daily Advance Ultra Hydrating Lotion",
+  "brand": "Cetaphil",
+  "category": "Skincare",
+  "subcat": "Lotion",
+  "mrp": 241,
+  "price": 210,
+  "rating": 0,
+  "reviews": "",
+  "asin": "B01N9975KN",
+  "badge": "Derm Favorite",
+  "description": "Intensive moisture lotion with 5 key humectants and shea butter for chronically dry, sensitive skin.",
+  "specs": {
+    "Skin Type": "Dry & Sensitive Skin",
+    "Key Ingredient": "cetaphil, lotion, skincare",
+    "Use": "AM & PM"
+  },
+  "tags": [
+    "cetaphil",
+    "lotion",
+    "skincare",
+    "derm",
+    "sensitive skin"
+  ],
+  "concerns": [
+    "barrier repair",
+    "sensitivity"
+  ],
+  "image": "https://azsofabirbgovazlfzvn.supabase.co/storage/v1/object/public/products/B01N9975KN.JPG",
+  "link": "https://link.amazon/B0321SsZv"
+},
+{
+  "id": 5043,
+  "name": "Cetaphil Bright Healthy Radiance Brightness Reveal Wash",
+  "brand": "Cetaphil",
+  "category": "Skincare",
+  "subcat": "Face Wash",
+  "mrp": 779,
+  "price": 677,
+  "rating": 0,
+  "reviews": "",
+  "asin": "B08L91MJJH",
+  "badge": "Derm Favorite",
+  "description": "Gentle creamy cleanser with niacinamide and sea daffodil to brighten uneven tone without irritation.",
+  "specs": {
+    "Skin Type": "All Skin Types",
+    "Key Ingredient": "cetaphil, face wash, skincare",
+    "Use": "AM & PM"
+  },
+  "tags": [
+    "cetaphil",
+    "face wash",
+    "skincare",
+    "derm",
+    "niacinamide"
+  ],
+  "concerns": [
+    "pigmentation"
+  ],
+  "image": "https://azsofabirbgovazlfzvn.supabase.co/storage/v1/object/public/products/B08L91MJJH.JPG",
+  "link": "https://link.amazon/B0eeeT98l"
+},
+{
+  "id": 5044,
+  "name": "Cetaphil Bright Healthy Radiance Night Comfort Cream",
+  "brand": "Cetaphil",
+  "category": "Skincare",
+  "subcat": "Moisturizer",
+  "mrp": 1356,
+  "price": 1179,
+  "rating": 0,
+  "reviews": "",
+  "asin": "B08L95888H",
+  "badge": "Derm Favorite",
+  "description": "Soothing night cream with niacinamide that helps fade dark spots and restore radiance overnight.",
+  "specs": {
+    "Skin Type": "All Skin Types",
+    "Key Ingredient": "cetaphil, moisturizer, skincare",
+    "Use": "AM & PM"
+  },
+  "tags": [
+    "cetaphil",
+    "moisturizer",
+    "skincare",
+    "derm",
+    "niacinamide"
+  ],
+  "concerns": [
+    "pigmentation",
+    "sensitivity"
+  ],
+  "image": "https://azsofabirbgovazlfzvn.supabase.co/storage/v1/object/public/products/B08L95888H.JPG",
+  "link": "https://link.amazon/B01iw2exf"
+},
+{
+  "id": 5045,
+  "name": "Cetaphil PRO Oil Control Foam Wash (236ml)",
+  "brand": "Cetaphil",
+  "category": "Skincare",
+  "subcat": "Face Wash",
+  "mrp": 1074,
+  "price": 934,
+  "rating": 0,
+  "reviews": "",
+  "asin": "B09MWD6F4W",
+  "badge": "Derm Favorite",
+  "description": "Zinc-infused foaming wash designed specifically for acne-prone skin undergoing drying treatments.",
+  "specs": {
+    "Skin Type": "Dry & Sensitive Skin",
+    "Key Ingredient": "cetaphil, face wash, skincare",
+    "Use": "AM & PM"
+  },
+  "tags": [
+    "cetaphil",
+    "face wash",
+    "skincare",
+    "derm"
+  ],
+  "concerns": [
+    "acne",
+    "barrier repair"
+  ],
+  "image": "https://azsofabirbgovazlfzvn.supabase.co/storage/v1/object/public/products/B09MWD6F4W.JPG",
+  "link": "https://link.amazon/B03lwmd5E"
+},
+{
+  "id": 5046,
+  "name": "Cetaphil Sun SPF 50+ Light Gel (50ml)",
+  "brand": "Cetaphil",
+  "category": "Skincare",
+  "subcat": "Sunscreen",
+  "mrp": 1034,
+  "price": 899,
+  "rating": 0,
+  "reviews": "",
+  "asin": "B07G7L7SQP",
+  "badge": "Derm SPF",
+  "description": "High-protection, non-comedogenic broad-spectrum sunscreen gel suited for sensitive and acne-prone skin.",
+  "specs": {
+    "Skin Type": "All Skin Types",
+    "Key Ingredient": "cetaphil, sunscreen, skincare",
+    "Use": "AM"
+  },
+  "tags": [
+    "cetaphil",
+    "sunscreen",
+    "skincare",
+    "derm",
+    "spf",
+    "sensitive skin"
+  ],
+  "concerns": [
+    "acne",
+    "sun protection",
+    "sensitivity"
+  ],
+  "image": "https://azsofabirbgovazlfzvn.supabase.co/storage/v1/object/public/products/B07G7L7SQP.JPG",
+  "link": "https://link.amazon/B00KYr6u3"
+},
+{
+  "id": 5047,
+  "name": "Cetaphil Optimal Hydration Healthy Glow Daily Cream",
+  "brand": "Cetaphil",
+  "category": "Skincare",
+  "subcat": "Moisturizer",
+  "mrp": 1208,
+  "price": 1050,
+  "rating": 0,
+  "reviews": "",
+  "asin": "B0C4XXJZJS",
+  "badge": "Derm Favorite",
+  "description": "48-hour hydrating day cream with hyaluronic acid and HydroSensitiv complex for dehydrated skin.",
+  "specs": {
+    "Skin Type": "All Skin Types",
+    "Key Ingredient": "cetaphil, moisturizer, skincare",
+    "Use": "AM & PM"
+  },
+  "tags": [
+    "cetaphil",
+    "moisturizer",
+    "skincare",
+    "derm",
+    "hyaluronic acid"
+  ],
+  "concerns": [
+    "barrier repair"
+  ],
+  "image": "https://azsofabirbgovazlfzvn.supabase.co/storage/v1/object/public/products/B0C4XXJZJS.JPG",
+  "link": "https://link.amazon/B0hYH8fGI"
+},
+{
+  "id": 5048,
+  "name": "Cetaphil Baby Daily Lotion with Organic Calendula",
+  "brand": "Cetaphil",
+  "category": "Skincare",
+  "subcat": "Lotion",
+  "mrp": 1093,
+  "price": 950,
+  "rating": 0,
+  "reviews": "",
+  "asin": "B00OKJGLI2",
+  "badge": "Derm Favorite",
+  "description": "Mild, pediatrician-tested lotion for ultra-sensitive skin and barrier comfort.",
+  "specs": {
+    "Skin Type": "All Skin Types",
+    "Key Ingredient": "cetaphil, lotion, skincare",
+    "Use": "AM & PM"
+  },
+  "tags": [
+    "cetaphil",
+    "lotion",
+    "skincare",
+    "derm",
+    "sensitive skin"
+  ],
+  "concerns": [
+    "barrier repair",
+    "sensitivity"
+  ],
+  "image": "https://azsofabirbgovazlfzvn.supabase.co/storage/v1/object/public/products/B00OKJGLI2.JPG",
+  "link": "https://link.amazon/B0eyMpBCC"
+},
+{
+  "id": 5049,
+  "name": "La Roche-Posay Effaclar Purifying Foaming Gel (200ml)",
+  "brand": "La Roche-Posay",
+  "category": "Skincare",
+  "subcat": "Treatment",
+  "mrp": 1449,
+  "price": 1260,
+  "rating": 0,
+  "reviews": "",
+  "asin": "B002P3L99G",
+  "badge": "Derm Favorite",
+  "description": "Zinc PCA foaming gel cleanser that purifies oily, acne-prone skin and removes excess shine.",
+  "specs": {
+    "Skin Type": "Oily & Combination Skin",
+    "Key Ingredient": "la roche-posay, treatment, skincare",
+    "Use": "AM & PM"
+  },
+  "tags": [
+    "la roche-posay",
+    "treatment",
+    "skincare",
+    "derm",
+    "oily skin"
+  ],
+  "concerns": [
+    "acne"
+  ],
+  "image": "https://azsofabirbgovazlfzvn.supabase.co/storage/v1/object/public/products/B002P3L99G.JPG",
+  "link": "https://link.amazon/B0fjXg4wJ"
+},
+{
+  "id": 5050,
+  "name": "La Roche-Posay Effaclar Duo+M (40ml)",
+  "brand": "La Roche-Posay",
+  "category": "Skincare",
+  "subcat": "Skincare",
+  "mrp": 1529,
+  "price": 1330,
+  "rating": 0,
+  "reviews": "",
+  "asin": "B00HVV2G5S",
+  "badge": "Derm Favorite",
+  "description": "Targeted anti-blemish moisturizer with niacinamide and procerad to clear breakouts and prevent marks.",
+  "specs": {
+    "Skin Type": "All Skin Types",
+    "Key Ingredient": "la roche-posay, skincare, derm",
+    "Use": "AM & PM"
+  },
+  "tags": [
+    "la roche-posay",
+    "skincare",
+    "derm",
+    "niacinamide"
+  ],
+  "concerns": [
+    "acne",
+    "pigmentation",
+    "barrier repair"
+  ],
+  "image": "https://azsofabirbgovazlfzvn.supabase.co/storage/v1/object/public/products/B00HVV2G5S.JPG",
+  "link": "https://link.amazon/B0j33kFJd"
+},
+{
+  "id": 5051,
+  "name": "La Roche-Posay Anthelios UVMune 400 Invisible Fluid SPF 50+",
+  "brand": "La Roche-Posay",
+  "category": "Skincare",
+  "subcat": "Sunscreen",
+  "mrp": 1449,
+  "price": 1260,
+  "rating": 0,
+  "reviews": "",
+  "asin": "B09SLF5ZH8",
+  "badge": "Derm SPF",
+  "description": "Ultra-lightweight fluid sunscreen offering high UVA/UVB protection with zero white cast.",
+  "specs": {
+    "Skin Type": "All Skin Types",
+    "Key Ingredient": "la roche-posay, sunscreen, skincare",
+    "Use": "AM"
+  },
+  "tags": [
+    "la roche-posay",
+    "sunscreen",
+    "skincare",
+    "derm",
+    "spf"
+  ],
+  "concerns": [
+    "sun protection"
+  ],
+  "image": "https://azsofabirbgovazlfzvn.supabase.co/storage/v1/object/public/products/B09SLF5ZH8.JPG",
+  "link": "https://link.amazon/B088ADeL3"
+},
+{
+  "id": 5052,
+  "name": "Bioderma Sensibio H2O Micellar Water (100ml)",
+  "brand": "Bioderma",
+  "category": "Skincare",
+  "subcat": "Micellar Water",
+  "mrp": 631,
+  "price": 549,
+  "rating": 0,
+  "reviews": "",
+  "asin": "B006RBR7NO",
+  "badge": "Derm Favorite",
+  "description": "Dermatological micellar cleansing water that gently removes makeup and pollution without rinsing.",
+  "specs": {
+    "Skin Type": "All Skin Types",
+    "Key Ingredient": "bioderma, micellar water, skincare",
+    "Use": "AM & PM"
+  },
+  "tags": [
+    "bioderma",
+    "micellar water",
+    "skincare",
+    "derm"
+  ],
+  "concerns": [
+    "daily care"
+  ],
+  "image": "https://azsofabirbgovazlfzvn.supabase.co/storage/v1/object/public/products/B006RBR7NO.JPG",
+  "link": "https://link.amazon/B09SDDtml"
+},
+{
+  "id": 5053,
+  "name": "Bioderma Sebium Gel Moussant (200ml)",
+  "brand": "Bioderma",
+  "category": "Skincare",
+  "subcat": "Treatment",
+  "mrp": 1839,
+  "price": 1599,
+  "rating": 0,
+  "reviews": "",
+  "asin": "B099H32XMV",
+  "badge": "Derm Favorite",
+  "description": "Purifying soap-free cleansing gel with zinc and copper sulfate for combination and oily skin.",
+  "specs": {
+    "Skin Type": "Oily & Combination Skin",
+    "Key Ingredient": "bioderma, treatment, skincare",
+    "Use": "AM & PM"
+  },
+  "tags": [
+    "bioderma",
+    "treatment",
+    "skincare",
+    "derm",
+    "oily skin"
+  ],
+  "concerns": [
+    "acne"
+  ],
+  "image": "https://azsofabirbgovazlfzvn.supabase.co/storage/v1/object/public/products/B099H32XMV.JPG",
+  "link": "https://link.amazon/B0bypybUP"
+},
+{
+  "id": 5054,
+  "name": "Bioderma Atoderm Creme Ultra (200ml)",
+  "brand": "Bioderma",
+  "category": "Skincare",
+  "subcat": "Moisturizer",
+  "mrp": 1839,
+  "price": 1599,
+  "rating": 0,
+  "reviews": "",
+  "asin": "B09ND6NT2C",
+  "badge": "Derm Favorite",
+  "description": "Nourishing daily face and body cream with niacinamide and omega fatty acids for dry skin.",
+  "specs": {
+    "Skin Type": "Dry & Sensitive Skin",
+    "Key Ingredient": "bioderma, moisturizer, skincare",
+    "Use": "AM & PM"
+  },
+  "tags": [
+    "bioderma",
+    "moisturizer",
+    "skincare",
+    "derm",
+    "niacinamide"
+  ],
+  "concerns": [
+    "barrier repair"
+  ],
+  "image": "https://azsofabirbgovazlfzvn.supabase.co/storage/v1/object/public/products/B09ND6NT2C.JPG",
+  "link": "https://link.amazon/B02GxUYeq"
+},
+{
+  "id": 5055,
+  "name": "Bioderma Pigmentbio Foaming Cream (200ml)",
+  "brand": "Bioderma",
+  "category": "Skincare",
+  "subcat": "Moisturizer",
+  "mrp": 1241,
+  "price": 1079,
+  "rating": 0,
+  "reviews": "",
+  "asin": "B07VMBN63R",
+  "badge": "Derm Favorite",
+  "description": "Brightening exfoliating cleanser with AHA and azelaic acid derivatives for hyperpigmentation.",
+  "specs": {
+    "Skin Type": "All Skin Types",
+    "Key Ingredient": "bioderma, moisturizer, skincare",
+    "Use": "AM & PM"
+  },
+  "tags": [
+    "bioderma",
+    "moisturizer",
+    "skincare",
+    "derm"
+  ],
+  "concerns": [
+    "pigmentation"
+  ],
+  "image": "https://azsofabirbgovazlfzvn.supabase.co/storage/v1/object/public/products/B07VMBN63R.JPG",
+  "link": "https://link.amazon/B00sN1YfE"
+}
 ];
 
 
