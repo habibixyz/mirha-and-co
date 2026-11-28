@@ -888,6 +888,7 @@ const mappedHighIntent = HIGH_INTENT_POSTS.map(p => ({
 export const POSTS: Post[] = [
   // GTA 6 Gamer Skincare & High Intent Series (Placed at absolute top per workspace rule 5)
   ...mappedHighIntent.filter(p => [
+    "cerave-vs-cetaphil-vs-la-roche-posay-vs-bioderma-india-guide",
     "conscious-chemist-berry-bright-vs-round-lab-birch-juice-sunscreen-india",
     "anua-niacinamide-txa-vs-hyphen-golden-hour-glow-serum-india",
     "gta-6-gamer-skincare-dark-circles-headset-acne-india",

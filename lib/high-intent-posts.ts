@@ -15,6 +15,87 @@ export interface HighIntentPost {
 
 export const HIGH_INTENT_POSTS: HighIntentPost[] = [
   {
+    slug: "cerave-vs-cetaphil-vs-la-roche-posay-vs-bioderma-india-guide",
+    title: "CeraVe vs. Cetaphil vs. La Roche-Posay vs. Bioderma: Which Derm Brand Is Actually Worth Your Money in India?",
+    category: "SKINCARE",
+    excerpt: "All four sit on the same pharmacy shelf, yet prices jump from ₹210 to ₹1,599. Here is the honest, no-hype guide to where each brand actually shines—and where you can save.",
+    readTime: "6 min",
+    date: "November 2026",
+    thumbnail: "https://azsofabirbgovazlfzvn.supabase.co/storage/v1/object/public/blog-images/derm_showdown_banner.jpg",
+    tags: ["cerave", "cetaphil", "la roche-posay", "bioderma", "dermatologist", "pharmacy skincare", "india", "comparison"],
+    asins: [
+      "B01CCGW732",
+      "B07CH8F17Q",
+      "B006RBR7NO",
+      "B09SLF5ZH8"
+    ],
+    sections: [
+      {
+        title: "Same Pharmacy Shelf, Very Different Prices",
+        body: [
+          "If you ask an Indian dermatologist or browse skincare threads for five minutes, the same four names always come up: **Cetaphil**, **CeraVe**, **Bioderma**, and **La Roche-Posay**.",
+          "On the surface, they sound identical—gentle, fragrance-free, barrier-friendly. Yet in India, one bottle costs ₹459 while another from the brand next to it costs ₹1,300+.",
+          "The secret is that you do not need to buy a full routine from any single brand. Each of these four does one job noticeably better than the others. Once you know which is which, building a routine gets much simpler—and much cheaper."
+        ]
+      },
+      {
+        title: "At a Glance: What Each Brand Does Best",
+        body: [
+          "| Brand | Where It Wins | Worth Skipping When... |",
+          "| :--- | :--- | :--- |",
+          "| **Cetaphil** | Simple, affordable daily cleansers | You want targeted acne or anti-aging actives |",
+          "| **CeraVe** | Ceramide-rich barrier repair moisturizers | Your skin feels congested by heavier creams |",
+          "| **Bioderma** | Ultra-gentle makeup & SPF removal | You want a high-strength exfoliating routine |",
+          "| **La Roche-Posay** | Next-gen European UV protection | You are shopping on a strict monthly budget |"
+        ]
+      },
+      {
+        title: "1. Cetaphil — Where You Should Save Your Money",
+        body: [
+          "A face wash stays on your skin for less than a minute before it goes down the drain. Unless you are treating stubborn acne with a medicated wash, spending ₹1,500 on a cleanser rarely changes your skin.",
+          "That is where **Cetaphil** wins. Its formulas are boring in the best way—predictable, low-foam, and easy to find at any local chemist. If your skin gets greasy by noon in Indian humidity, the **Cetaphil Oily Skin Cleanser** cleans away sweat and sunscreen without leaving your cheeks tight.",
+          "**The takeaway:** Put your savings into a simple Cetaphil wash and spend the rest of your budget where it stays on your face all day."
+        ],
+        sectionAsins: ["B01CCGW732"]
+      },
+      {
+        title: "2. CeraVe — Best When Your Skin Barrier Feels Wrecked",
+        body: [
+          "Overdid salicylic acid, started a new retinol, or spent all day in harsh office AC? **CeraVe** is built specifically for that tight, flaky, irritated stage.",
+          "What sets CeraVe apart from basic lotions is its blend of three skin-identical ceramides and hyaluronic acid that slowly release moisture instead of sitting like grease on top. The travel-friendly **CeraVe Moisturising Cream (50ml)** is an easy, low-risk way to test it before committing to a giant tub.",
+          "**The honest catch:** If you have very oily skin in peak summer, the cream can feel rich—use a pea-sized amount at night rather than layering it under heavy daytime SPF."
+        ],
+        sectionAsins: ["B07CH8F17Q"]
+      },
+      {
+        title: "3. Bioderma — The Gold Standard for Sensitive, Stinging Skin",
+        body: [
+          "When your skin is so reactive that even water and cotton pads make your cheeks flush, **Bioderma** is usually the first name makeup artists and dermatologists reach for.",
+          "**Bioderma Sensibio H2O Micellar Water** lifts waterproof mascara, city pollution, and stubborn sunscreen cleanly without harsh rubbing or oily residue. You do not even feel a sticky film afterward, which is why it has stayed a cult favorite for decades.",
+          "**The takeaway:** Keep a bottle on your dresser for days when you wear makeup or water-resistant SPF and want zero drama."
+        ],
+        sectionAsins: ["B006RBR7NO"]
+      },
+      {
+        title: "4. La Roche-Posay — The One Place Worth Splurging",
+        body: [
+          "If there is one step in an Indian skincare routine worth spending ₹1,200+ on, it is sunscreen—especially if you struggle with tanning, melasma, or stubborn post-acne marks.",
+          "**La Roche-Posay Anthelios UVMune 400 Invisible Fluid SPF 50+** uses Mexoryl 400, a European UV filter designed to block ultra-long UVA rays that regular sunscreens miss. Better yet, it dries down weightless with zero white cast on medium to deep skin tones.",
+          "**The honest catch:** It is pricey for daily reapplication. Many people save it for outdoor days, travel, or peak afternoon sun, and use a lighter Indian pharmacy SPF on indoor workdays."
+        ],
+        sectionAsins: ["B09SLF5ZH8"]
+      },
+      {
+        title: "One Quick Check Before You Open Any Imported Bottle",
+        body: [
+          "**Want the complete 4-step routine?** Because none of these four overlap—Bioderma to remove SPF, Cetaphil to wash, CeraVe to repair your barrier, and La Roche-Posay to shield from UVA—you can pick just one or add all four to your Amazon cart in one click below.",
+          "Because **CeraVe, Bioderma, and La Roche-Posay** are heavily imported in India, old-stock bottles pop up on marketplaces all the time. Before putting any new bottle on your face, flip it over and check the stamped code in our free [Batch Code & Expiry Checker](/makeup) to make sure it is fresh.",
+          "Still figuring out which cleanser or SPF suits your city's humidity and tap water? Try our 60-second [Climate Routine Quiz](/tools/routine), or browse all dermatologist-backed picks by brand in the [Shop](/shop)."
+        ]
+      }
+    ]
+  },
+  {
     slug: "conscious-chemist-berry-bright-vs-round-lab-birch-juice-sunscreen-india",
     title: "Conscious Chemist Berry Bright vs. Sundrink vs. Round Lab Birch Juice: Which Sunscreen Actually Works in India?",
     category: "SKINCARE",

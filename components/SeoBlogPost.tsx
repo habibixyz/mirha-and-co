@@ -1,7 +1,7 @@
 import Link from "next/link";
 import BlogFooterTools from "@/components/BlogFooterTools";
 import { AffiliateCard } from "@/components/AffiliateCard";
-import { getLocalizedContent, Currency } from "@/lib/globalization";
+import { getLocalizedContent, getAmazonCartBundleUrl, Currency } from "@/lib/globalization";
 import { getRelatedPosts } from "@/lib/blog-utils";
 
 type Section = {
@@ -872,79 +872,128 @@ export async function SeoBlogPost({
           margin: 0;
         }
 
-        /* ── Dark Mode Overrides */
+        /* ── Dark Mode Overrides (Unified Warm Charcoal Palette) */
         html.dark .seo-post, .dark .seo-post {
-          background: #0b0f19 !important;
-          color: #f8fafc !important;
+          background: #0f0e0d !important;
+          color: #f7f5f2 !important;
         }
         html.dark .hero-meta-sep, .dark .hero-meta-sep {
-          border-bottom-color: #283044 !important;
+          border-bottom-color: rgba(255, 255, 255, 0.09) !important;
         }
         html.dark .post-faq, .dark .post-faq {
-          border-top-color: #283044 !important;
+          border-top-color: rgba(255, 255, 255, 0.09) !important;
         }
         html.dark .post-faq-item, .dark .post-faq-item {
-          background: #111827 !important;
-          border-color: #1f2937 !important;
+          background: #181615 !important;
+          border-color: rgba(255, 255, 255, 0.08) !important;
         }
         html.dark .post-faq-q, .dark .post-faq-q {
-          color: #f9fafb !important;
+          color: #f7f5f2 !important;
         }
         html.dark .post-faq-a, .dark .post-faq-a {
-          color: #cbd5e1 !important;
+          color: #c8c2ba !important;
         }
         html.dark .post-hero h1, .dark .post-hero h1,
         html.dark .post-section h2, .dark .post-section h2,
         html.dark .post-section strong, .dark .post-section strong {
-          color: #ffffff !important;
+          color: #f7f5f2 !important;
         }
         html.dark .post-description, .dark .post-description,
         html.dark .post-section p, .dark .post-section p,
         html.dark .post-section li, .dark .post-section li {
-          color: #d1d5db !important;
+          color: #c8c2ba !important;
         }
         html.dark .post-section blockquote, .dark .post-section blockquote {
-          background: #181c2a !important;
-          color: #f1f5f9 !important;
+          background: #181615 !important;
+          color: #f7f5f2 !important;
           border-left-color: #fc2779 !important;
         }
         html.dark code, .dark code {
-          background: #1e293b !important;
-          color: #f472b6 !important;
+          background: #211e1c !important;
+          color: #ff7eb3 !important;
         }
         html.dark .trust-box, .dark .trust-box {
-          background: #111827 !important;
-          border-color: #1f2937 !important;
+          background: #181615 !important;
+          border-color: rgba(255, 255, 255, 0.08) !important;
           border-left-color: #fc2779 !important;
         }
         html.dark .trust-box h2, .dark .trust-box h2 {
-          color: #f472b6 !important;
+          color: #ff7eb3 !important;
         }
         html.dark .trust-box p, .dark .trust-box p {
-          color: #cbd5e1 !important;
+          color: #c8c2ba !important;
         }
         html.dark .section-picks, .dark .section-picks,
         html.dark .picks-rail, .dark .picks-rail {
-          background: #111827 !important;
-          border-color: #1f2937 !important;
+          background: #181615 !important;
+          border-color: rgba(255, 255, 255, 0.08) !important;
         }
         html.dark .picks-heading, .dark .picks-heading {
-          color: #ffffff !important;
+          color: #f7f5f2 !important;
         }
         html.dark .table-wrap table, .dark .table-wrap table {
-          background: #111827 !important;
+          background: #181615 !important;
         }
         html.dark .table-wrap th, .dark .table-wrap th {
-          background: #1f2937 !important;
+          background: #211e1c !important;
           color: #fc2779 !important;
-          border-color: #374151 !important;
+          border-color: rgba(255, 255, 255, 0.1) !important;
         }
         html.dark .table-wrap td, .dark .table-wrap td {
-          color: #f8fafc !important;
-          border-color: #1f2937 !important;
+          color: #e9e4de !important;
+          border-color: rgba(255, 255, 255, 0.07) !important;
         }
         html.dark .table-wrap tr:nth-child(even) td, .dark .table-wrap tr:nth-child(even) td {
-          background: #0f172a !important;
+          background: #141211 !important;
+        }
+        .bundle-cta-card {
+          display: flex;
+          flex-wrap: wrap;
+          align-items: center;
+          justify-content: space-between;
+          gap: 14px;
+          margin: 2rem 0 0;
+          padding: 18px 20px;
+          border-radius: 14px;
+          background: #fff5f9;
+          border: 1px solid rgba(252, 39, 121, 0.22);
+        }
+        .bundle-cta-title {
+          font-weight: 700;
+          font-size: 0.95rem;
+          color: #161412;
+          margin: 0 0 3px;
+        }
+        .bundle-cta-sub {
+          font-size: 0.8rem;
+          color: #5c5249;
+          margin: 0;
+        }
+        .bundle-cta-btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          padding: 10px 18px;
+          border-radius: 999px;
+          background: #fc2779;
+          color: #ffffff !important;
+          font-size: 0.8rem;
+          font-weight: 700;
+          text-decoration: none;
+          white-space: nowrap;
+        }
+        .bundle-cta-btn:hover {
+          background: #e01a69;
+        }
+        html.dark .bundle-cta-card, .dark .bundle-cta-card {
+          background: #181615 !important;
+          border-color: rgba(252, 39, 121, 0.35) !important;
+        }
+        html.dark .bundle-cta-title, .dark .bundle-cta-title {
+          color: #f7f5f2 !important;
+        }
+        html.dark .bundle-cta-sub, .dark .bundle-cta-sub {
+          color: #c8c2ba !important;
         }
       `}</style>
 
@@ -981,6 +1030,26 @@ export async function SeoBlogPost({
             </section>
           );
         })}
+
+        {/* 1-Click Amazon Bundle Bar for concise 2-5 product routine guides */}
+        {asins && asins.length >= 2 && asins.length <= 5 && (
+          <div className="bundle-cta-card">
+            <div>
+              <p className="bundle-cta-title">Want all {asins.length} picks together?</p>
+              <p className="bundle-cta-sub">
+                Add all {asins.length} featured products to your Amazon cart in one click.
+              </p>
+            </div>
+            <a
+              href={getAmazonCartBundleUrl(asins, currency)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bundle-cta-btn"
+            >
+              Add All {asins.length} to Amazon Cart →
+            </a>
+          </div>
+        )}
 
         {/* Fallback bottom recommendations section */}
         {showFallbackPicks && (
