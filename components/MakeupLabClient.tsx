@@ -143,7 +143,43 @@ const BRANDS: BrandItem[] = [
   { id: "avene", name: "Avène", country: "France", category: "clinical", aliases: ["avene", "avène", "eau thermale avene"], group: "standard", hint: "6 chars on crimp (e.g. 240301)", example: "240301", shelfMonths: 36 },
   { id: "neutrogena", name: "Neutrogena", country: "USA", category: "everyday", aliases: ["neutrogena", "hydro boost"], group: "standard", hint: "6-8 digits on crimp (e.g. 240311)", example: "240311", shelfMonths: 36 },
   { id: "eucerin", name: "Eucerin", country: "Germany", category: "clinical", aliases: ["eucerin", "beiersdorf"], group: "standard", hint: "8 digits or EXP stamped", example: "24031102", shelfMonths: 36 },
-  { id: "nivea", name: "Nivea", country: "Germany", category: "everyday", aliases: ["nivea"], group: "standard", hint: "8 digits stamped on base", example: "24031150", shelfMonths: 36 }
+  { id: "nivea", name: "Nivea", country: "Germany", category: "everyday", aliases: ["nivea"], group: "standard", hint: "8 digits stamped on base", example: "24031150", shelfMonths: 36 },
+
+  // --- Extended L'Oréal Group ---
+  { id: "kerastase", name: "Kérastase", country: "France", category: "luxury", aliases: ["kerastase", "kérastase"], group: "loreal", hint: "6 chars (e.g. 44X301)", example: "44X301", shelfMonths: 36 },
+  { id: "loreal-pro", name: "L'Oréal Professionnel", country: "France", category: "clinical", aliases: ["loreal professionnel", "serie expert"], group: "loreal", hint: "6 chars (e.g. 44X201)", example: "44X201", shelfMonths: 36 },
+  { id: "redken", name: "Redken", country: "USA", category: "clinical", aliases: ["redken"], group: "loreal", hint: "6 chars (e.g. 18X301)", example: "18X301", shelfMonths: 36 },
+  { id: "vichy", name: "Vichy", country: "France", category: "clinical", aliases: ["vichy", "mineral 89"], group: "loreal", hint: "6 chars (e.g. 54X301)", example: "54X301", shelfMonths: 36 },
+  { id: "biotherm", name: "Biotherm", country: "France", category: "luxury", aliases: ["biotherm"], group: "loreal", hint: "6 chars (e.g. 40X201)", example: "40X201", shelfMonths: 36 },
+  { id: "valentino", name: "Valentino Beauty", country: "Italy", category: "luxury", aliases: ["valentino", "born in roma"], group: "loreal", hint: "6 chars (e.g. 38X401)", example: "38X401", shelfMonths: 36 },
+  { id: "prada-beauty", name: "Prada Beauty", country: "Italy", category: "luxury", aliases: ["prada", "prada beauty", "paradoxe"], group: "loreal", hint: "6 chars (e.g. 38X501)", example: "38X501", shelfMonths: 36 },
+  { id: "viktor-rolf", name: "Viktor&Rolf", country: "Netherlands", category: "luxury", aliases: ["viktor rolf", "flowerbomb", "spicebomb"], group: "loreal", hint: "6 chars (e.g. 38X101)", example: "38X101", shelfMonths: 36 },
+
+  // --- Extended Estée Lauder Group ---
+  { id: "la-mer", name: "La Mer", country: "USA", category: "luxury", aliases: ["la mer", "creme de la mer"], group: "estee", hint: "3 chars (e.g. A34)", example: "A34", shelfMonths: 36 },
+  { id: "le-labo", name: "Le Labo", country: "USA", category: "luxury", aliases: ["le labo", "santal 33"], group: "estee", hint: "3 chars (e.g. A24)", example: "A24", shelfMonths: 36 },
+  { id: "kilian", name: "Kilian Paris", country: "France", category: "luxury", aliases: ["kilian", "by kilian", "love dont be shy"], group: "estee", hint: "3 chars (e.g. A14)", example: "A14", shelfMonths: 36 },
+  { id: "bumble-and-bumble", name: "Bumble and bumble", country: "USA", category: "luxury", aliases: ["bumble", "bumble and bumble"], group: "estee", hint: "3 chars (e.g. B44)", example: "B44", shelfMonths: 36 },
+
+  // --- Extended Coty Group ---
+  { id: "kylie-cosmetics", name: "Kylie Cosmetics", country: "USA", category: "luxury", aliases: ["kylie", "kylie cosmetics", "kylie skin"], group: "coty", hint: "4 digits (e.g. 4045)", example: "4045", shelfMonths: 36 },
+  { id: "marc-jacobs", name: "Marc Jacobs Fragrances", country: "USA", category: "luxury", aliases: ["marc jacobs", "daisy"], group: "coty", hint: "4 digits (e.g. 4050)", example: "4050", shelfMonths: 36 },
+  { id: "chloe", name: "Chloé", country: "France", category: "luxury", aliases: ["chloe", "chloé"], group: "coty", hint: "4 digits (e.g. 4035)", example: "4035", shelfMonths: 36 },
+  { id: "calvin-klein", name: "Calvin Klein", country: "USA", category: "everyday", aliases: ["calvin klein", "ck", "ck one", "euphoria"], group: "coty", hint: "4 digits (e.g. 4042)", example: "4042", shelfMonths: 36 },
+  { id: "hugo-boss", name: "Hugo Boss", country: "Germany", category: "luxury", aliases: ["hugo boss", "boss bottled"], group: "coty", hint: "4 digits (e.g. 4055)", example: "4055", shelfMonths: 36 },
+  { id: "philosophy", name: "Philosophy", country: "USA", category: "clinical", aliases: ["philosophy", "purity made simple"], group: "coty", hint: "4 digits (e.g. 4030)", example: "4030", shelfMonths: 36 },
+
+  // --- Extended LVMH / Dior Group ---
+  { id: "ole-henriksen", name: "Ole Henriksen", country: "USA", category: "clinical", aliases: ["ole henriksen", "banana bright"], group: "dior", hint: "4 chars (e.g. 4B01)", example: "4B01", shelfMonths: 36 },
+  { id: "kvd-beauty", name: "KVD Beauty", country: "USA", category: "luxury", aliases: ["kvd", "kat von d", "tattoo liner"], group: "dior", hint: "4 chars (e.g. 4A01)", example: "4A01", shelfMonths: 36 },
+  { id: "kayali", name: "Kayali Fragrances", country: "UAE / France", category: "luxury", aliases: ["kayali", "vanilla 28", "mona kattan"], group: "standard", hint: "4-6 chars (e.g. 4012B)", example: "4012B", shelfMonths: 36 },
+
+  // --- Extended Viral K-Beauty ---
+  { id: "medicube", name: "Medicube", country: "South Korea", category: "kbeauty", aliases: ["medicube", "zero pore pad"], group: "kbeauty", hint: "Stamped date or 6 chars", example: "M24031", shelfMonths: 36 },
+  { id: "numbuzin", name: "Numbuzin", country: "South Korea", category: "kbeauty", aliases: ["numbuzin"], group: "kbeauty", hint: "Stamped date or 6 chars", example: "N24021", shelfMonths: 36 },
+  { id: "tirtir", name: "TIRTIR", country: "South Korea", category: "kbeauty", aliases: ["tirtir", "mask fit"], group: "kbeauty", hint: "Stamped date or 6 chars", example: "T24041", shelfMonths: 36 },
+  { id: "klairs", name: "Dear, Klairs", country: "South Korea", category: "kbeauty", aliases: ["klairs", "dear klairs"], group: "kbeauty", hint: "Stamped date or 6 chars", example: "K24031", shelfMonths: 36 },
+  { id: "isntree", name: "Isntree", country: "South Korea", category: "kbeauty", aliases: ["isntree"], group: "kbeauty", hint: "Stamped date or 6 chars", example: "I24021", shelfMonths: 36 }
 ];
 
 type BatchResult =
@@ -632,56 +668,60 @@ export default function MakeupLabClient() {
         {/* TAB 1: CHECK PRODUCT EXPIRY */}
         {/* ================================================================= */}
         {activeTab === "expiry" && (
-          <section className="rounded-3xl border border-black/5 bg-white p-6 shadow-sm sm:p-8 dark:border-white/10 dark:bg-neutral-900 space-y-6">
+          <section className="rounded-3xl border border-black/5 bg-white p-5 shadow-sm sm:p-8 dark:border-white/10 dark:bg-neutral-900 space-y-5">
             
-            <div>
-              <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#fc2779]">
-                <ShieldCheck className="h-4 w-4" /> Freshness & Safety Engine
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+              <div>
+                <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#fc2779]">
+                  <ShieldCheck className="h-4 w-4" /> Freshness &amp; Safety Engine
+                </div>
+                <h2 className="mt-1 font-serif text-2xl font-normal text-neutral-950 dark:text-white">
+                  Check any makeup or skincare product
+                </h2>
+                <p className="mt-1 text-xs text-neutral-500 dark:text-neutral-400">
+                  Pick your brand and enter the 3–6 character code stamped on the bottom of the bottle, box, or tube crimp.
+                </p>
               </div>
-              <h2 className="mt-1 font-serif text-2xl font-normal text-neutral-950 dark:text-white">
-                Check any makeup or skincare product
-              </h2>
-              <p className="mt-1 text-xs text-neutral-500 dark:text-neutral-400">
-                Search across 70+ global & Indian brands, or type any unlisted brand to decode factory dates instantly.
-              </p>
             </div>
 
-            {/* Inputs Row */}
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            {/* Category quick filter bar */}
+            <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1 sm:flex-wrap sm:pb-0">
+              <span className="shrink-0 text-[11px] font-semibold text-neutral-400">Category:</span>
+              {(["all", "luxury", "kbeauty", "indian", "clinical", "everyday"] as const).map(cat => (
+                <button
+                  key={cat}
+                  type="button"
+                  onClick={() => {
+                    setSelectedCategory(cat);
+                    setIsBrandDropdownOpen(true);
+                  }}
+                  className={`shrink-0 rounded-full px-3 py-1 text-[11px] font-semibold capitalize transition ${
+                    selectedCategory === cat
+                      ? "bg-[#fc2779] text-white shadow-xs"
+                      : "bg-neutral-100 text-neutral-600 hover:bg-neutral-200 dark:bg-neutral-800 dark:text-neutral-300 dark:hover:bg-neutral-700"
+                  }`}
+                >
+                  {cat === "all" ? "All Brands" : cat === "kbeauty" ? "K-Beauty" : cat}
+                </button>
+              ))}
+            </div>
+
+            {/* Aligned 2-Step Inputs Row */}
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:items-end">
               
-              {/* Brand Search Combobox */}
+              {/* Step 1: Brand Search Combobox */}
               <div ref={brandDropdownRef} className="relative">
-                <div className="flex items-center justify-between">
-                  <label htmlFor="brand-search-input" className="block text-xs font-bold uppercase tracking-wider text-neutral-500 dark:text-neutral-400">
-                    Search Brand
+                <div className="mb-1.5 flex items-center justify-between gap-2">
+                  <label htmlFor="brand-search-input" className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-neutral-600 dark:text-neutral-300">
+                    <span className="inline-flex h-4 w-4 items-center justify-center rounded-full bg-[#fc2779]/15 text-[10px] font-extrabold text-[#fc2779]">1</span>
+                    Select Brand
                   </label>
-                  <span className="truncate max-w-[200px] text-[11px] font-bold text-[#fc2779]">
-                    Active: {selectedBrand.name}
+                  <span className="truncate max-w-[180px] rounded-md bg-[#fc2779]/10 px-2 py-0.5 text-[11px] font-bold text-[#fc2779]">
+                    {selectedBrand.name}
                   </span>
                 </div>
 
-                {/* Category quick filter pills */}
-                <div className="mt-2 flex overflow-x-auto no-scrollbar gap-1 pb-1 sm:flex-wrap sm:pb-0">
-                  {(["all", "luxury", "kbeauty", "indian", "clinical", "everyday"] as const).map(cat => (
-                    <button
-                      key={cat}
-                      type="button"
-                      onClick={() => {
-                        setSelectedCategory(cat);
-                        setIsBrandDropdownOpen(true);
-                      }}
-                      className={`shrink-0 rounded-lg px-2.5 py-1 text-[11px] font-semibold capitalize transition sm:px-2 sm:py-0.5 sm:text-[10px] ${
-                        selectedCategory === cat
-                          ? "bg-[#fc2779] text-white"
-                          : "bg-neutral-100 text-neutral-600 hover:bg-neutral-200 dark:bg-neutral-800 dark:text-neutral-300"
-                      }`}
-                    >
-                      {cat === "all" ? "All" : cat === "kbeauty" ? "K-Beauty" : cat}
-                    </button>
-                  ))}
-                </div>
-
-                <div className="relative mt-2">
+                <div className="relative">
                   <Search className="absolute left-3.5 top-3.5 h-4 w-4 text-neutral-400" />
                   <input
                     id="brand-search-input"
@@ -706,7 +746,7 @@ export default function MakeupLabClient() {
                         }
                       }
                     }}
-                    placeholder={`Search any brand (e.g. Dior, Rare, CeraVe, Sugar)...`}
+                    placeholder="Search brand (e.g. Dior, CeraVe, Kérastase)..."
                     className="h-11 w-full rounded-xl border border-black/10 bg-neutral-50 pl-10 pr-10 text-base font-semibold text-neutral-900 focus:border-[#fc2779] focus:bg-white focus:outline-none sm:text-xs dark:border-white/10 dark:bg-neutral-800 dark:text-white"
                   />
                   {brandSearchQuery ? (
@@ -794,28 +834,33 @@ export default function MakeupLabClient() {
                 )}
               </div>
 
+              {/* Step 2: Stamped Batch Code */}
               <div>
-                <div className="flex items-center justify-between">
-                  <label htmlFor="batch-code-input" className="block text-xs font-bold uppercase tracking-wider text-neutral-500 dark:text-neutral-400">
-                    Stamped Batch Code
+                <div className="mb-1.5 flex items-center justify-between gap-2">
+                  <label htmlFor="batch-code-input" className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-neutral-600 dark:text-neutral-300">
+                    <span className="inline-flex h-4 w-4 items-center justify-center rounded-full bg-[#fc2779]/15 text-[10px] font-extrabold text-[#fc2779]">2</span>
+                    Enter Batch Code
                   </label>
-                  <span className="text-[11px] text-neutral-400">Format: {selectedBrand.hint}</span>
+                  <span className="truncate max-w-[190px] text-[11px] text-neutral-400">
+                    Format: {selectedBrand.hint}
+                  </span>
                 </div>
-                <div className="relative mt-1.5">
+                <div className="relative">
                   <input
                     id="batch-code-input"
                     type="text"
                     value={batchCodeInput}
                     onChange={(e) => setBatchCodeInput(e.target.value.toUpperCase())}
-                    placeholder="e.g. A34, 28X301"
-                    className="h-11 w-full rounded-xl border border-black/10 bg-neutral-50 px-3 font-mono text-base font-bold tracking-wider text-neutral-900 uppercase focus:border-[#fc2779] focus:outline-none sm:text-sm dark:border-white/10 dark:bg-neutral-800 dark:text-white"
+                    placeholder={`e.g. ${selectedBrand.example}`}
+                    className="h-11 w-full rounded-xl border border-black/10 bg-neutral-50 px-3.5 pr-10 font-mono text-base font-bold tracking-wider text-neutral-900 uppercase focus:border-[#fc2779] focus:bg-white focus:outline-none sm:text-sm dark:border-white/10 dark:bg-neutral-800 dark:text-white"
                   />
                   {batchCodeInput && (
                     <button
                       type="button"
                       onClick={() => setBatchCodeInput("")}
-                      className="absolute right-3 top-3 text-neutral-400 hover:text-neutral-600"
+                      className="absolute right-1 top-1 flex h-9 w-9 items-center justify-center text-neutral-400 hover:text-neutral-600"
                       title="Clear code"
+                      aria-label="Clear batch code"
                     >
                       <RotateCcw className="h-4 w-4" />
                     </button>
@@ -826,8 +871,8 @@ export default function MakeupLabClient() {
             </div>
 
             {/* Quick Test Chips */}
-            <div className="flex flex-wrap items-center gap-1.5 text-xs">
-              <span className="text-[11px] text-neutral-500">Quick tests:</span>
+            <div className="flex flex-wrap items-center gap-1.5 border-t border-black/5 pt-3 text-xs dark:border-white/5">
+              <span className="text-[11px] font-medium text-neutral-400">Try an example:</span>
               <button type="button" onClick={() => { setSelectedBrandId("mac"); setBatchCodeInput("A34"); }} className="rounded-md bg-neutral-100 px-2 py-0.5 text-[11px] font-medium text-neutral-700 hover:bg-neutral-200 dark:bg-neutral-800 dark:text-neutral-300">M·A·C (A34)</button>
               <button type="button" onClick={() => { setSelectedBrandId("maybelline"); setBatchCodeInput("28X301"); }} className="rounded-md bg-neutral-100 px-2 py-0.5 text-[11px] font-medium text-neutral-700 hover:bg-neutral-200 dark:bg-neutral-800 dark:text-neutral-300">Maybelline (28X301)</button>
               <button type="button" onClick={() => { setSelectedBrandId("dior"); setBatchCodeInput("4B01"); }} className="rounded-md bg-neutral-100 px-2 py-0.5 text-[11px] font-medium text-neutral-700 hover:bg-neutral-200 dark:bg-neutral-800 dark:text-neutral-300">Dior (4B01)</button>
